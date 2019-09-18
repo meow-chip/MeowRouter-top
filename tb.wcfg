@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="30768000000fs"></ZoomStartTime>
+      <ZoomEndTime time="42228000001fs"></ZoomEndTime>
+      <Cursor1Time time="40318000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="120"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="53" />
+   <wvobject fp_name="/tb/clk_50M" type="logic">
+      <obj_property name="ElementShortName">clk_50M</obj_property>
+      <obj_property name="ObjectShortName">clk_50M</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/clk_11M0592" type="logic">
+      <obj_property name="ElementShortName">clk_11M0592</obj_property>
+      <obj_property name="ObjectShortName">clk_11M0592</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/clk_125M" type="logic">
+      <obj_property name="ElementShortName">clk_125M</obj_property>
+      <obj_property name="ObjectShortName">clk_125M</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/clk_125M_90deg" type="logic">
+      <obj_property name="ElementShortName">clk_125M_90deg</obj_property>
+      <obj_property name="ObjectShortName">clk_125M_90deg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/clock_btn" type="logic">
+      <obj_property name="ElementShortName">clock_btn</obj_property>
+      <obj_property name="ObjectShortName">clock_btn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/reset_btn" type="logic">
+      <obj_property name="ElementShortName">reset_btn</obj_property>
+      <obj_property name="ObjectShortName">reset_btn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/touch_btn" type="array">
+      <obj_property name="ElementShortName">touch_btn[3:0]</obj_property>
+      <obj_property name="ObjectShortName">touch_btn[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dip_sw" type="array">
+      <obj_property name="ElementShortName">dip_sw[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dip_sw[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/leds" type="array">
+      <obj_property name="ElementShortName">leds[15:0]</obj_property>
+      <obj_property name="ObjectShortName">leds[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dpy0" type="array">
+      <obj_property name="ElementShortName">dpy0[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dpy0[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dpy1" type="array">
+      <obj_property name="ElementShortName">dpy1[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dpy1[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/txd" type="logic">
+      <obj_property name="ElementShortName">txd</obj_property>
+      <obj_property name="ObjectShortName">txd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/rxd" type="logic">
+      <obj_property name="ElementShortName">rxd</obj_property>
+      <obj_property name="ObjectShortName">rxd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/base_ram_data" type="array">
+      <obj_property name="ElementShortName">base_ram_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">base_ram_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/base_ram_addr" type="array">
+      <obj_property name="ElementShortName">base_ram_addr[19:0]</obj_property>
+      <obj_property name="ObjectShortName">base_ram_addr[19:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/base_ram_be_n" type="array">
+      <obj_property name="ElementShortName">base_ram_be_n[3:0]</obj_property>
+      <obj_property name="ObjectShortName">base_ram_be_n[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/base_ram_ce_n" type="logic">
+      <obj_property name="ElementShortName">base_ram_ce_n</obj_property>
+      <obj_property name="ObjectShortName">base_ram_ce_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/base_ram_oe_n" type="logic">
+      <obj_property name="ElementShortName">base_ram_oe_n</obj_property>
+      <obj_property name="ObjectShortName">base_ram_oe_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/base_ram_we_n" type="logic">
+      <obj_property name="ElementShortName">base_ram_we_n</obj_property>
+      <obj_property name="ObjectShortName">base_ram_we_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/ext_ram_data" type="array">
+      <obj_property name="ElementShortName">ext_ram_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ext_ram_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/ext_ram_addr" type="array">
+      <obj_property name="ElementShortName">ext_ram_addr[19:0]</obj_property>
+      <obj_property name="ObjectShortName">ext_ram_addr[19:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/ext_ram_be_n" type="array">
+      <obj_property name="ElementShortName">ext_ram_be_n[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ext_ram_be_n[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/ext_ram_ce_n" type="logic">
+      <obj_property name="ElementShortName">ext_ram_ce_n</obj_property>
+      <obj_property name="ObjectShortName">ext_ram_ce_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/ext_ram_oe_n" type="logic">
+      <obj_property name="ElementShortName">ext_ram_oe_n</obj_property>
+      <obj_property name="ObjectShortName">ext_ram_oe_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/ext_ram_we_n" type="logic">
+      <obj_property name="ElementShortName">ext_ram_we_n</obj_property>
+      <obj_property name="ObjectShortName">ext_ram_we_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/flash_a" type="array">
+      <obj_property name="ElementShortName">flash_a[22:0]</obj_property>
+      <obj_property name="ObjectShortName">flash_a[22:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/flash_d" type="array">
+      <obj_property name="ElementShortName">flash_d[15:0]</obj_property>
+      <obj_property name="ObjectShortName">flash_d[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/flash_rp_n" type="logic">
+      <obj_property name="ElementShortName">flash_rp_n</obj_property>
+      <obj_property name="ObjectShortName">flash_rp_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/flash_vpen" type="logic">
+      <obj_property name="ElementShortName">flash_vpen</obj_property>
+      <obj_property name="ObjectShortName">flash_vpen</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/flash_ce_n" type="logic">
+      <obj_property name="ElementShortName">flash_ce_n</obj_property>
+      <obj_property name="ObjectShortName">flash_ce_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/flash_oe_n" type="logic">
+      <obj_property name="ElementShortName">flash_oe_n</obj_property>
+      <obj_property name="ObjectShortName">flash_oe_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/flash_we_n" type="logic">
+      <obj_property name="ElementShortName">flash_we_n</obj_property>
+      <obj_property name="ObjectShortName">flash_we_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/flash_byte_n" type="logic">
+      <obj_property name="ElementShortName">flash_byte_n</obj_property>
+      <obj_property name="ObjectShortName">flash_byte_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/uart_rdn" type="logic">
+      <obj_property name="ElementShortName">uart_rdn</obj_property>
+      <obj_property name="ObjectShortName">uart_rdn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/uart_wrn" type="logic">
+      <obj_property name="ElementShortName">uart_wrn</obj_property>
+      <obj_property name="ObjectShortName">uart_wrn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/uart_dataready" type="logic">
+      <obj_property name="ElementShortName">uart_dataready</obj_property>
+      <obj_property name="ObjectShortName">uart_dataready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/uart_tbre" type="logic">
+      <obj_property name="ElementShortName">uart_tbre</obj_property>
+      <obj_property name="ObjectShortName">uart_tbre</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/uart_tsre" type="logic">
+      <obj_property name="ElementShortName">uart_tsre</obj_property>
+      <obj_property name="ObjectShortName">uart_tsre</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/eth_rgmii_rd" type="array">
+      <obj_property name="ElementShortName">eth_rgmii_rd[3:0]</obj_property>
+      <obj_property name="ObjectShortName">eth_rgmii_rd[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/eth_rgmii_rx_ctl" type="logic">
+      <obj_property name="ElementShortName">eth_rgmii_rx_ctl</obj_property>
+      <obj_property name="ObjectShortName">eth_rgmii_rx_ctl</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/eth_rgmii_rxc" type="logic">
+      <obj_property name="ElementShortName">eth_rgmii_rxc</obj_property>
+      <obj_property name="ObjectShortName">eth_rgmii_rxc</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/BASE_RAM_INIT_FILE" type="array">
+      <obj_property name="ElementShortName">BASE_RAM_INIT_FILE[103:0]</obj_property>
+      <obj_property name="ObjectShortName">BASE_RAM_INIT_FILE[103:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/EXT_RAM_INIT_FILE" type="array">
+      <obj_property name="ElementShortName">EXT_RAM_INIT_FILE[103:0]</obj_property>
+      <obj_property name="ObjectShortName">EXT_RAM_INIT_FILE[103:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/FLASH_INIT_FILE" type="array">
+      <obj_property name="ElementShortName">FLASH_INIT_FILE[119:0]</obj_property>
+      <obj_property name="ObjectShortName">FLASH_INIT_FILE[119:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group443" type="group">
+      <obj_property name="label">header</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_0" type="array">
+         <obj_property name="ElementShortName">header_0[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_0[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_1" type="array">
+         <obj_property name="ElementShortName">header_1[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_1[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_2" type="array">
+         <obj_property name="ElementShortName">header_2[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_2[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_3" type="array">
+         <obj_property name="ElementShortName">header_3[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_3[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_4" type="array">
+         <obj_property name="ElementShortName">header_4[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_4[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_5" type="array">
+         <obj_property name="ElementShortName">header_5[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_5[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_6" type="array">
+         <obj_property name="ElementShortName">header_6[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_6[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_7" type="array">
+         <obj_property name="ElementShortName">header_7[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_7[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_8" type="array">
+         <obj_property name="ElementShortName">header_8[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_8[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_9" type="array">
+         <obj_property name="ElementShortName">header_9[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_9[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_10" type="array">
+         <obj_property name="ElementShortName">header_10[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_10[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_11" type="array">
+         <obj_property name="ElementShortName">header_11[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_11[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_12" type="array">
+         <obj_property name="ElementShortName">header_12[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_12[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_13" type="array">
+         <obj_property name="ElementShortName">header_13[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_13[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_14" type="array">
+         <obj_property name="ElementShortName">header_14[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_14[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_15" type="array">
+         <obj_property name="ElementShortName">header_15[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_15[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_16" type="array">
+         <obj_property name="ElementShortName">header_16[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_16[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/header_17" type="array">
+         <obj_property name="ElementShortName">header_17[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_17[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/t/router/Acceptor/io_sender_addr" type="array">
+      <obj_property name="ElementShortName">io_sender_addr[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_sender_addr[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/t/router/Acceptor/io_recv_addr" type="array">
+      <obj_property name="ElementShortName">io_recv_addr[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_recv_addr[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/t/router/Acceptor/io_port" type="array">
+      <obj_property name="ElementShortName">io_port[2:0]</obj_property>
+      <obj_property name="ObjectShortName">io_port[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/io_output_tpa" type="array">
+      <obj_property name="ElementShortName">io_output_tpa[31:0]</obj_property>
+      <obj_property name="ObjectShortName">io_output_tpa[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/io_output_spa" type="array">
+      <obj_property name="ElementShortName">io_output_spa[31:0]</obj_property>
+      <obj_property name="ObjectShortName">io_output_spa[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/io_output_tha" type="array">
+      <obj_property name="ElementShortName">io_output_tha[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_output_tha[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/io_output_sha" type="array">
+      <obj_property name="ElementShortName">io_output_sha[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_output_sha[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group479" type="group">
+      <obj_property name="label">buf</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_0" type="array">
+         <obj_property name="ElementShortName">buf_0[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_0[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_1" type="array">
+         <obj_property name="ElementShortName">buf_1[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_1[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_2" type="array">
+         <obj_property name="ElementShortName">buf_2[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_2[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_3" type="array">
+         <obj_property name="ElementShortName">buf_3[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_3[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_4" type="array">
+         <obj_property name="ElementShortName">buf_4[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_4[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_5" type="array">
+         <obj_property name="ElementShortName">buf_5[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_5[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_6" type="array">
+         <obj_property name="ElementShortName">buf_6[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_6[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_7" type="array">
+         <obj_property name="ElementShortName">buf_7[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_7[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_8" type="array">
+         <obj_property name="ElementShortName">buf_8[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_8[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_9" type="array">
+         <obj_property name="ElementShortName">buf_9[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_9[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_10" type="array">
+         <obj_property name="ElementShortName">buf_10[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_10[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_11" type="array">
+         <obj_property name="ElementShortName">buf_11[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_11[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_12" type="array">
+         <obj_property name="ElementShortName">buf_12[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_12[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_13" type="array">
+         <obj_property name="ElementShortName">buf_13[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_13[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_14" type="array">
+         <obj_property name="ElementShortName">buf_14[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_14[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_15" type="array">
+         <obj_property name="ElementShortName">buf_15[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_15[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_16" type="array">
+         <obj_property name="ElementShortName">buf_16[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_16[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_17" type="array">
+         <obj_property name="ElementShortName">buf_17[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_17[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_18" type="array">
+         <obj_property name="ElementShortName">buf_18[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_18[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_19" type="array">
+         <obj_property name="ElementShortName">buf_19[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_19[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_20" type="array">
+         <obj_property name="ElementShortName">buf_20[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_20[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_21" type="array">
+         <obj_property name="ElementShortName">buf_21[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_21[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_22" type="array">
+         <obj_property name="ElementShortName">buf_22[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_22[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_23" type="array">
+         <obj_property name="ElementShortName">buf_23[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_23[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_24" type="array">
+         <obj_property name="ElementShortName">buf_24[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_24[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_25" type="array">
+         <obj_property name="ElementShortName">buf_25[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_25[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_26" type="array">
+         <obj_property name="ElementShortName">buf_26[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_26[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb/dut/t/router/Acceptor/arpAcceptor/buf_27" type="array">
+         <obj_property name="ElementShortName">buf_27[7:0]</obj_property>
+         <obj_property name="ObjectShortName">buf_27[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
