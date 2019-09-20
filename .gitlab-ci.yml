@@ -2,7 +2,6 @@ variables:
   GIT_SUBMODULE_STRATEGY: none
 
 before_script:
-  - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
   - which ssh-agent
   - eval $(ssh-agent -s)
   - cat "./.gitlab-ci/id_rsa" | tr -d '\r' | ssh-add -
