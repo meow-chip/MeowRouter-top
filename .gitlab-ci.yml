@@ -1,6 +1,13 @@
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
+before_script:
+  - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
+  - eval $(ssh-agent -s)
+  - cat "./.gitlab-ci/id_rsa" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
 stages:
   - build
   - test
