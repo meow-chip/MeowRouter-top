@@ -8,6 +8,7 @@ before_script:
   - cat "./.gitlab-ci/id_rsa" | tr -d '\r' | ssh-add -
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
+  - echo $(ssh-keyscan git.tsinghua.edu.cn) >> ~/.ssh/known_hosts
   - git submodule sync --recursive
   - git submodule update --init --recursive
 
