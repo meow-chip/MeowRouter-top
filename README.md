@@ -1,7 +1,44 @@
-Thinpad 模板工程
----------------
+# MeowRouter on ThinRouter
 
-工程包含示例代码和所有引脚约束，可以直接编译。
+> Meow?
 
-代码中包含中文注释，编码为utf-8，在Windows版Vivado下可能出现乱码问题。  
-请用别的代码编辑器打开文件，并将编码改为GBK。
+This repository contains the top modules and integrated tests for MeowRouter.
+
+MeowRouter is a hardware router written in Chisel, specifically designed for ThinRouter. It is written in Chisel3, and hosted in another repo.
+
+## Setup
+Source code for MeowRouter is presented as a submodule in this repo. To setup your workspace, do:
+
+```bash
+git clone <URI to this repo> [local path]
+cd [local path]
+git submodule update --init --recursive
+./build_chisel.sh
+```
+
+This will generate a verilog RTL file at `./thinpad_top.srcs/sources_1/new/Router.v`. Then you can use Vivado to simulate or elaborate the entire design.
+
+## Edit MeowRouter
+
+You may need to get your commit pushed into MeowRouter's repo. To do so:
+
+```bash
+# Inside MeowRouter
+# Commit your changes and push to *MeowRouter*
+git commit -m "Meaningful message"
+git push
+
+# Go back to the top repo, and update the ref to MeowRouter
+cd ..
+git commit -m "Update MeowRouter"
+git push
+```
+
+## Update MeowRouter
+If other guys edited MeowRouter, to follow other's edit:
+```bash
+git submodule update --recursive
+./build_chisel.sh
+```
+
+Now your module is kept up-to-date
