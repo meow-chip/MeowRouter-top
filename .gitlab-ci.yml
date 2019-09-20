@@ -1,5 +1,5 @@
 variables:
-  GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULE_STRATEGY: none
 
 before_script:
   - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
@@ -8,6 +8,8 @@ before_script:
   - cat "./.gitlab-ci/id_rsa" | tr -d '\r' | ssh-add -
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
+  - git submodule sync --recursive
+  - git submodule update --init --recursive
 
 stages:
   - build
