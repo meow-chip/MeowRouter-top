@@ -20,6 +20,7 @@ chisel:
   stage: build_chisel
   image: chisel
   script:
+    - chmod +x ./build_chisel.sh
     - ./build_chisel.sh
   artifacts:
     paths:
