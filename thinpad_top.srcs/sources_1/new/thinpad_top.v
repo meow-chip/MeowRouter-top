@@ -234,10 +234,10 @@ wire [7:0] eth_rx_axis_mac_tdata;
 wire eth_rx_axis_mac_tvalid;
 wire eth_rx_axis_mac_tlast;
 wire eth_rx_axis_mac_tuser;
-wire [7:0] eth_tx_axis_mac_tdata = 0;
-wire eth_tx_axis_mac_tvalid = 0;
-wire eth_tx_axis_mac_tlast = 0;
-wire eth_tx_axis_mac_tuser = 0;
+wire [7:0] eth_tx_axis_mac_tdata;
+wire eth_tx_axis_mac_tvalid;
+wire eth_tx_axis_mac_tlast;
+wire eth_tx_axis_mac_tuser;
 wire eth_tx_axis_mac_tready;
 
 wire eth_rx_mac_aclk;
@@ -288,6 +288,7 @@ eth_mac eth_mac_inst (
 Top t(
   .clock(clk_125M),
   .io_rx_clk(eth_rx_mac_aclk),
+  .io_tx_clk(eth_tx_mac_aclk),
   .reset(reset_btn),
   .io_rx_tdata(eth_rx_axis_mac_tdata),
   .io_rx_tvalid(eth_rx_axis_mac_tvalid),
@@ -296,7 +297,8 @@ Top t(
   .io_tx_tdata(eth_tx_axis_mac_tdata),
   .io_tx_tvalid(eth_tx_axis_mac_tvalid),
   .io_tx_tlast(eth_tx_axis_mac_tlast),
-  .io_tx_tready(eth_tx_axis_mac_tready)
+  .io_tx_tready(eth_tx_axis_mac_tready),
+  .io_tx_tuser(eth_tx_axis_mac_tuser)
 );
 
 endmodule
