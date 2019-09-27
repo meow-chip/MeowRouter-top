@@ -60,6 +60,8 @@ INFO: [VRFC 10-311] analyzing module AsyncBridge_2
 INFO: [VRFC 10-311] analyzing module ARPAcceptor
 INFO: [VRFC 10-311] analyzing module IPAcceptor
 INFO: [VRFC 10-311] analyzing module Acceptor
+INFO: [VRFC 10-311] analyzing module Ctrl
+INFO: [VRFC 10-311] analyzing module LLFT
 INFO: [VRFC 10-311] analyzing module Encoder
 INFO: [VRFC 10-311] analyzing module Transmitter
 INFO: [VRFC 10-311] analyzing module Router

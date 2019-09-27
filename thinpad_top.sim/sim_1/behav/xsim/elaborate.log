@@ -131,6 +131,8 @@ Compiling module xil_defaultlib.AsyncBridge_2
 Compiling module xil_defaultlib.ARPAcceptor
 Compiling module xil_defaultlib.IPAcceptor
 Compiling module xil_defaultlib.Acceptor
+Compiling module xil_defaultlib.Ctrl
+Compiling module xil_defaultlib.LLFT
 Compiling module xil_defaultlib.Encoder
 Compiling module xil_defaultlib.Transmitter
 Compiling module xil_defaultlib.Router
