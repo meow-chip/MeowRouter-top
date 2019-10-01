@@ -240,6 +240,7 @@ end
 rgmii_model rgmii(
     .clk_125M(clk_125M),
     .clk_125M_90deg(clk_125M_90deg),
+    .rst (reset_btn),
 
     .rgmii_rd(eth_rgmii_rd),
     .rgmii_rxc(eth_rgmii_rxc),
