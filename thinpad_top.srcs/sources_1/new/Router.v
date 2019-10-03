@@ -149,7 +149,7 @@ module AsyncBridge( // @[:@24.2]
   wire [15:0] _T_47_ip_chksum; // @[asyncBridge.scala 77:41:@73.4 asyncBridge.scala 77:41:@81.4]
   wire [31:0] _T_47_ip_src; // @[asyncBridge.scala 77:41:@73.4 asyncBridge.scala 77:41:@79.4]
   wire [31:0] _T_47_ip_dest; // @[asyncBridge.scala 77:41:@73.4 asyncBridge.scala 77:41:@77.4]
-  xpm_fifo_async #(.READ_DATA_WIDTH(485), .WRITE_DATA_WIDTH(485), .FIFO_WRITE_DEPTH(16), .READ_MODE("fwft"), .FIFO_MEMORY_TYPE("distributed"), .PROG_FULL_THRESH(5), .FIFO_READ_LATENCY(0)) inner ( // @[asyncBridge.scala 65:21:@29.4]
+  xpm_fifo_async #(.READ_DATA_WIDTH(485), .WRITE_DATA_WIDTH(485), .FIFO_WRITE_DEPTH(16), .READ_MODE("fwft"), .FIFO_MEMORY_TYPE("distributed"), .PROG_FULL_THRESH(7), .FIFO_READ_LATENCY(0)) inner ( // @[asyncBridge.scala 65:21:@29.4]
     .prog_full(inner_prog_full),
     .empty(inner_empty),
     .dout(inner_dout),
@@ -306,7 +306,7 @@ module AsyncBridge_1( // @[:@177.2]
   wire [7:0] _T_27; // @[asyncBridge.scala 77:41:@207.4]
   wire [7:0] _T_23_data; // @[asyncBridge.scala 77:41:@202.4 asyncBridge.scala 77:41:@208.4]
   wire  _T_23_last; // @[asyncBridge.scala 77:41:@202.4 asyncBridge.scala 77:41:@206.4]
-  xpm_fifo_async #(.READ_DATA_WIDTH(9), .WRITE_DATA_WIDTH(9), .FIFO_WRITE_DEPTH(16), .READ_MODE("fwft"), .FIFO_MEMORY_TYPE("distributed"), .PROG_FULL_THRESH(5), .FIFO_READ_LATENCY(0)) inner ( // @[asyncBridge.scala 65:21:@182.4]
+  xpm_fifo_async #(.READ_DATA_WIDTH(9), .WRITE_DATA_WIDTH(9), .FIFO_WRITE_DEPTH(16), .READ_MODE("fwft"), .FIFO_MEMORY_TYPE("distributed"), .PROG_FULL_THRESH(7), .FIFO_READ_LATENCY(0)) inner ( // @[asyncBridge.scala 65:21:@182.4]
     .prog_full(inner_prog_full),
     .empty(inner_empty),
     .dout(inner_dout),
