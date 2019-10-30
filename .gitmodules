@@ -1,3 +1,6 @@
 [submodule "MeowRouter"]
 	path = MeowRouter
 	url = git@git.tsinghua.edu.cn:meow/MeowRouter.git
+[submodule "MeowV64"]
+	path = MeowV64
+	url = git@git.tsinghua.edu.cn:meow/MeowV64.git

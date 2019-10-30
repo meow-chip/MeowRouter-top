@@ -3,6 +3,11 @@
 CUR_DIR=$(dirname $(readlink -f $0))
 
 cd $CUR_DIR/MeowRouter
-sbt 'runMain Main --target-dir build --top-name Top --no-dce'
-cd ..
-mv MeowRouter/build/Top.v ./thinpad_top.srcs/sources_1/new/Router.v
+sbt 'runMain Main --target-dir build --top-name Router --no-dce'
+cd $CUR_DIR
+mv MeowRouter/build/Router.v ./thinpad_top.srcs/sources_1/new/Router.v
+
+cd $CUR_DIR/MeowV64
+sbt 'runMain Main --target-dir build --top-name Core --no-dce'
+cd $CUR_DIR
+mv MeowV64/build/Core.v ./thinpad_top.srcs/sources_1/new/Core.v
