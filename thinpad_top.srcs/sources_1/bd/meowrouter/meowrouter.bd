@@ -25,10 +25,10 @@
         "s01_mmu": ""
       },
       "BootROMCtrl": "",
-      "blk_mem_gen_0": "",
+      "EthBuf": "",
       "EthBufCtrl": "",
-      "blk_mem_gen_1": "",
-      "util_vector_logic_0": "",
+      "BootROM": "",
+      "NRST": "",
       "Reset": "",
       "Peripheral": {
         "xbar": "",
@@ -39,13 +39,51 @@
           "auto_pc": ""
         }
       },
-      "axi_uartlite_0": "",
-      "CPU": ""
+      "UART": "",
+      "CPU": "",
+      "Router": ""
     },
     "interface_ports": {
       "UART": {
         "mode": "Master",
         "vlnv": "xilinx.com:interface:uart_rtl:1.0"
+      },
+      "io_rx": {
+        "mode": "Slave",
+        "vlnv": "xilinx.com:interface:axis_rtl:1.0",
+        "parameters": {
+          "HAS_TKEEP": {
+            "value": "0"
+          },
+          "HAS_TLAST": {
+            "value": "1"
+          },
+          "HAS_TREADY": {
+            "value": "0"
+          },
+          "HAS_TSTRB": {
+            "value": "0"
+          },
+          "LAYERED_METADATA": {
+            "value": "undef"
+          },
+          "TDATA_NUM_BYTES": {
+            "value": "1"
+          },
+          "TDEST_WIDTH": {
+            "value": "0"
+          },
+          "TID_WIDTH": {
+            "value": "0"
+          },
+          "TUSER_WIDTH": {
+            "value": "0"
+          }
+        }
+      },
+      "io_tx": {
+        "mode": "Master",
+        "vlnv": "xilinx.com:interface:axis_rtl:1.0"
       }
     },
     "ports": {
@@ -64,6 +102,33 @@
         "parameters": {
           "POLARITY": {
             "value": "ACTIVE_HIGH"
+          }
+        }
+      },
+      "rt_clk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "FREQ_HZ": {
+            "value": "125000000"
+          }
+        }
+      },
+      "rx_clk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "FREQ_HZ": {
+            "value": "125000000"
+          }
+        }
+      },
+      "tx_clk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "FREQ_HZ": {
+            "value": "125000000"
           }
         }
       }
@@ -775,7 +840,7 @@
           }
         }
       },
-      "blk_mem_gen_0": {
+      "EthBuf": {
         "vlnv": "xilinx.com:ip:blk_mem_gen:8.4",
         "xci_name": "meowrouter_blk_mem_gen_0_0",
         "parameters": {
@@ -808,7 +873,7 @@
           }
         }
       },
-      "blk_mem_gen_1": {
+      "BootROM": {
         "vlnv": "xilinx.com:ip:blk_mem_gen:8.4",
         "xci_name": "meowrouter_blk_mem_gen_0_1",
         "parameters": {
@@ -829,12 +894,15 @@
           }
         }
       },
-      "util_vector_logic_0": {
+      "NRST": {
         "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
         "xci_name": "meowrouter_util_vector_logic_0_0",
         "parameters": {
           "C_OPERATION": {
             "value": "not"
+          },
+          "C_SIZE": {
+            "value": "1"
           }
         }
       },
@@ -1250,7 +1318,7 @@
           }
         }
       },
-      "axi_uartlite_0": {
+      "UART": {
         "vlnv": "xilinx.com:ip:axi_uartlite:2.0",
         "xci_name": "meowrouter_axi_uartlite_0_0"
       },
@@ -1905,12 +1973,157 @@
             }
           }
         }
+      },
+      "Router": {
+        "vlnv": "xilinx.com:module_ref:Top:1.0",
+        "xci_name": "meowrouter_Top_0_1",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "Top",
+          "boundary_crc": "0x0"
+        },
+        "interface_ports": {
+          "io_rx": {
+            "mode": "Slave",
+            "vlnv": "xilinx.com:interface:axis_rtl:1.0",
+            "parameters": {
+              "HAS_TKEEP": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "HAS_TLAST": {
+                "value": "1",
+                "value_src": "constant"
+              },
+              "HAS_TREADY": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "HAS_TSTRB": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "TDATA_NUM_BYTES": {
+                "value": "1",
+                "value_src": "constant"
+              },
+              "TDEST_WIDTH": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "TID_WIDTH": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "TUSER_WIDTH": {
+                "value": "0",
+                "value_src": "constant"
+              }
+            },
+            "port_maps": {
+              "TDATA": {
+                "physical_name": "io_rx_tdata",
+                "direction": "I",
+                "left": "7",
+                "right": "0"
+              },
+              "TLAST": {
+                "physical_name": "io_rx_tlast",
+                "direction": "I"
+              },
+              "TVALID": {
+                "physical_name": "io_rx_tvalid",
+                "direction": "I"
+              }
+            }
+          },
+          "io_tx": {
+            "mode": "Master",
+            "vlnv": "xilinx.com:interface:axis_rtl:1.0",
+            "parameters": {
+              "HAS_TKEEP": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "HAS_TLAST": {
+                "value": "1",
+                "value_src": "constant"
+              },
+              "HAS_TREADY": {
+                "value": "1",
+                "value_src": "constant"
+              },
+              "HAS_TSTRB": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "TDATA_NUM_BYTES": {
+                "value": "1",
+                "value_src": "constant"
+              },
+              "TDEST_WIDTH": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "TID_WIDTH": {
+                "value": "0",
+                "value_src": "constant"
+              },
+              "TUSER_WIDTH": {
+                "value": "1",
+                "value_src": "constant"
+              }
+            },
+            "port_maps": {
+              "TDATA": {
+                "physical_name": "io_tx_tdata",
+                "direction": "O",
+                "left": "7",
+                "right": "0"
+              },
+              "TLAST": {
+                "physical_name": "io_tx_tlast",
+                "direction": "O"
+              },
+              "TUSER": {
+                "physical_name": "io_tx_tuser",
+                "direction": "O"
+              },
+              "TVALID": {
+                "physical_name": "io_tx_tvalid",
+                "direction": "O"
+              },
+              "TREADY": {
+                "physical_name": "io_tx_tready",
+                "direction": "I"
+              }
+            }
+          }
+        },
+        "ports": {
+          "clock": {
+            "type": "clk",
+            "direction": "I"
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "io_rx_clk": {
+            "type": "clk",
+            "direction": "I"
+          },
+          "io_tx_clk": {
+            "type": "clk",
+            "direction": "I"
+          }
+        }
       }
     },
     "interface_nets": {
       "axi_interconnect_1_M01_AXI": {
         "interface_ports": [
-          "axi_uartlite_0/S_AXI",
+          "UART/S_AXI",
           "Peripheral/M01_AXI"
         ]
       },
@@ -1922,7 +2135,7 @@
       },
       "axi_bram_ctrl_0_BRAM_PORTA": {
         "interface_ports": [
-          "blk_mem_gen_1/BRAM_PORTA",
+          "BootROM/BRAM_PORTA",
           "BootROMCtrl/BRAM_PORTA"
         ]
       },
@@ -1935,7 +2148,7 @@
       "axi_bram_ctrl_1_BRAM_PORTA": {
         "interface_ports": [
           "EthBufCtrl/BRAM_PORTA",
-          "blk_mem_gen_0/BRAM_PORTA"
+          "EthBuf/BRAM_PORTA"
         ]
       },
       "axi_interconnect_0_M01_AXI": {
@@ -1950,10 +2163,16 @@
           "Primary/M00_AXI"
         ]
       },
+      "io_rx_1": {
+        "interface_ports": [
+          "io_rx",
+          "Router/io_rx"
+        ]
+      },
       "axi_uartlite_0_UART": {
         "interface_ports": [
           "UART",
-          "axi_uartlite_0/UART"
+          "UART/UART"
         ]
       },
       "Core_0_io_iaxi": {
@@ -1961,19 +2180,26 @@
           "CPU/io_iaxi",
           "Primary/S01_AXI"
         ]
+      },
+      "Router_io_tx": {
+        "interface_ports": [
+          "io_tx",
+          "Router/io_tx"
+        ]
       }
     },
     "nets": {
       "proc_sys_reset_0_mb_reset": {
         "ports": [
           "Reset/mb_reset",
-          "util_vector_logic_0/Op1",
-          "CPU/reset"
+          "NRST/Op1",
+          "CPU/reset",
+          "Router/reset"
         ]
       },
       "util_vector_logic_0_Res": {
         "ports": [
-          "util_vector_logic_0/Res",
+          "NRST/Res",
           "EthBufCtrl/s_axi_aresetn",
           "BootROMCtrl/s_axi_aresetn",
           "Primary/S00_ARESETN",
@@ -1996,7 +2222,7 @@
           "Peripheral/M01_ARESETN",
           "Peripheral/M00_ARESETN",
           "Peripheral/S00_ARESETN",
-          "axi_uartlite_0/s_axi_aresetn"
+          "UART/s_axi_aresetn"
         ]
       },
       "clk_1": {
@@ -2015,7 +2241,7 @@
           "Peripheral/S00_ACLK",
           "Peripheral/M00_ACLK",
           "Peripheral/M01_ACLK",
-          "axi_uartlite_0/s_axi_aclk",
+          "UART/s_axi_aclk",
           "Primary/S01_ACLK"
         ]
       },
@@ -2023,6 +2249,24 @@
         "ports": [
           "rst",
           "Reset/ext_reset_in"
+        ]
+      },
+      "rtclk_1": {
+        "ports": [
+          "rt_clk",
+          "Router/clock"
+        ]
+      },
+      "rx_clk_1": {
+        "ports": [
+          "rx_clk",
+          "Router/io_rx_clk"
+        ]
+      },
+      "tx_clk_1": {
+        "ports": [
+          "tx_clk",
+          "Router/io_tx_clk"
         ]
       }
     },
