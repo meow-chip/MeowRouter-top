@@ -41,7 +41,8 @@
       },
       "UART": "",
       "CPU": "",
-      "Router": ""
+      "Router": "",
+      "axi_gpio_0": ""
     },
     "interface_ports": {
       "UART": {
@@ -84,6 +85,10 @@
       "io_tx": {
         "mode": "Master",
         "vlnv": "xilinx.com:interface:axis_rtl:1.0"
+      },
+      "GPIO": {
+        "mode": "Master",
+        "vlnv": "xilinx.com:interface:gpio_rtl:1.0"
       }
     },
     "ports": {
@@ -2118,6 +2123,10 @@
             "direction": "I"
           }
         }
+      },
+      "axi_gpio_0": {
+        "vlnv": "xilinx.com:ip:axi_gpio:2.0",
+        "xci_name": "meowrouter_axi_gpio_0_0"
       }
     },
     "interface_nets": {
@@ -2186,6 +2195,18 @@
           "io_tx",
           "Router/io_tx"
         ]
+      },
+      "Peripheral_M00_AXI": {
+        "interface_ports": [
+          "axi_gpio_0/S_AXI",
+          "Peripheral/M00_AXI"
+        ]
+      },
+      "axi_gpio_0_GPIO": {
+        "interface_ports": [
+          "GPIO",
+          "axi_gpio_0/GPIO"
+        ]
       }
     },
     "nets": {
@@ -2222,7 +2243,8 @@
           "Peripheral/M01_ARESETN",
           "Peripheral/M00_ARESETN",
           "Peripheral/S00_ARESETN",
-          "UART/s_axi_aresetn"
+          "UART/s_axi_aresetn",
+          "axi_gpio_0/s_axi_aresetn"
         ]
       },
       "clk_1": {
@@ -2242,7 +2264,8 @@
           "Peripheral/M00_ACLK",
           "Peripheral/M01_ACLK",
           "UART/s_axi_aclk",
-          "Primary/S01_ACLK"
+          "Primary/S01_ACLK",
+          "axi_gpio_0/s_axi_aclk"
         ]
       },
       "rst_1": {
@@ -2275,11 +2298,45 @@
         "address_spaces": {
           "io_daxi": {
             "range": "256T",
-            "width": "32"
+            "width": "32",
+            "segments": {
+              "SEG_BootROMCtrl_Mem0": {
+                "address_block": "/BootROMCtrl/S_AXI/Mem0",
+                "offset": "0xFFFFFFFF8000",
+                "range": "32K"
+              },
+              "SEG_EthBufCtrl_Mem0": {
+                "address_block": "/EthBufCtrl/S_AXI/Mem0",
+                "offset": "0xFFFFFF000000",
+                "range": "32K"
+              },
+              "SEG_UART_Reg": {
+                "address_block": "/UART/S_AXI/Reg",
+                "offset": "0xFFFFFFFF0000",
+                "range": "32K"
+              }
+            }
           },
           "io_iaxi": {
             "range": "256T",
-            "width": "32"
+            "width": "32",
+            "segments": {
+              "SEG_BootROMCtrl_Mem0": {
+                "address_block": "/BootROMCtrl/S_AXI/Mem0",
+                "offset": "0xFFFFFFFF8000",
+                "range": "32K"
+              },
+              "SEG_EthBufCtrl_Mem0": {
+                "address_block": "/EthBufCtrl/S_AXI/Mem0",
+                "offset": "0xFFFFFF000000",
+                "range": "32K"
+              },
+              "SEG_UART_Reg": {
+                "address_block": "/UART/S_AXI/Reg",
+                "offset": "0xFFFFFFFF0000",
+                "range": "32K"
+              }
+            }
           }
         }
       }
