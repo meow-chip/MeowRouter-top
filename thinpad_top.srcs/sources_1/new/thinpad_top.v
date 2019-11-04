@@ -159,61 +159,6 @@ reg[7:0] number;
 SEG7_LUT segL(.oSEG1(dpy0), .iDIG(number[3:0])); //dpy0是低位数码管
 SEG7_LUT segH(.oSEG1(dpy1), .iDIG(number[7:4])); //dpy1是高位数码管
 
-reg[15:0] led_bits;
-assign leds = led_bits;
-
-always@(posedge clock_btn or posedge reset_btn) begin
-    if(reset_btn)begin //复位按下，设置LED和数码管为初始�??
-        number<=0;
-        led_bits <= 16'h1;
-    end
-    else begin //每次按下时钟按钮，数码管显示值加1，LED循环左移
-        number <= number+1;
-        led_bits <= {led_bits[14:0],led_bits[15]};
-    end
-end
-
-//直连串口接收发�?�演示，从直连串口收到的数据再发送出�?
-wire [7:0] ext_uart_rx;
-reg  [7:0] ext_uart_buffer, ext_uart_tx;
-wire ext_uart_ready, ext_uart_busy;
-reg ext_uart_start, ext_uart_avai;
-
-async_receiver #(.ClkFrequency(50000000),.Baud(9600)) //接收模块�?9600无检验位
-    ext_uart_r(
-        .clk(clk_50M),                       //外部时钟信号
-        .RxD(rxd),                           //外部串行信号输入
-        .RxD_data_ready(ext_uart_ready),  //数据接收到标�?
-        .RxD_clear(ext_uart_ready),       //清除接收标志
-        .RxD_data(ext_uart_rx)             //接收到的�?字节数据
-    );
-    
-always @(posedge clk_50M) begin //接收到缓冲区ext_uart_buffer
-    if(ext_uart_ready)begin
-        ext_uart_buffer <= ext_uart_rx;
-        ext_uart_avai <= 1;
-    end else if(!ext_uart_busy && ext_uart_avai)begin 
-        ext_uart_avai <= 0;
-    end
-end
-always @(posedge clk_50M) begin //将缓冲区ext_uart_buffer发�?�出�?
-    if(!ext_uart_busy && ext_uart_avai)begin 
-        ext_uart_tx <= ext_uart_buffer;
-        ext_uart_start <= 1;
-    end else begin 
-        ext_uart_start <= 0;
-    end
-end
-
-async_transmitter #(.ClkFrequency(50000000),.Baud(9600)) //发�?�模块，9600无检验位
-    ext_uart_t(
-        .clk(clk_50M),                  //外部时钟信号
-        .TxD(txd),                      //串行信号输出
-        .TxD_busy(ext_uart_busy),       //发�?�器忙状态指�?
-        .TxD_start(ext_uart_start),    //�?始发送信�?
-        .TxD_data(ext_uart_tx)        //待发送的数据
-    );
-
 //图像输出演示，分辨率800x600@75Hz，像素时钟为50MHz
 wire [11:0] hdata;
 assign video_red = hdata < 266 ? 3'b111 : 0; //红色竖条
@@ -285,20 +230,28 @@ eth_mac eth_mac_inst (
 
 `default_nettype reg
 
-Top t(
-  .clock(clk_125M),
-  .io_rx_clk(eth_rx_mac_aclk),
-  .io_tx_clk(eth_tx_mac_aclk),
-  .reset(reset_btn),
-  .io_rx_tdata(eth_rx_axis_mac_tdata),
-  .io_rx_tvalid(eth_rx_axis_mac_tvalid),
-  .io_rx_tlast(eth_rx_axis_mac_tlast),
+meowrouter mr(
+  .cpu_clk(clk_50M),
+  .rst(reset_btn),
   
-  .io_tx_tdata(eth_tx_axis_mac_tdata),
-  .io_tx_tvalid(eth_tx_axis_mac_tvalid),
-  .io_tx_tlast(eth_tx_axis_mac_tlast),
-  .io_tx_tready(eth_tx_axis_mac_tready),
-  .io_tx_tuser(eth_tx_axis_mac_tuser)
+  .UART_rx(rxd),
+  .UART_tx(txd),
+  
+  .data_clk(clk_125M),
+  .data_rx_clk(eth_rx_mac_aclk),
+  .data_tx_clk(eth_tx_mac_aclk),
+  
+  .data_rx_tdata(eth_rx_axis_mac_tdata),
+  .data_rx_tvalid(eth_rx_axis_mac_tvalid),
+  .data_rx_tlast(eth_rx_axis_mac_tlast),
+  
+  .data_tx_tdata(eth_tx_axis_mac_tdata),
+  .data_tx_tvalid(eth_tx_axis_mac_tvalid),
+  .data_tx_tready(eth_tx_axis_mac_tready),
+  .data_tx_tlast(eth_tx_axis_mac_tlast),
+  
+  .DISP({ number, leds }),
+  .SWITCH(touch_btn)
 );
 
 endmodule

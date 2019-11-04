@@ -40,16 +40,16 @@
         }
       },
       "UART": "",
+      "Board": "",
       "CPU": "",
-      "Router": "",
-      "axi_gpio_0": ""
+      "Router": ""
     },
     "interface_ports": {
       "UART": {
         "mode": "Master",
         "vlnv": "xilinx.com:interface:uart_rtl:1.0"
       },
-      "io_rx": {
+      "data_rx": {
         "mode": "Slave",
         "vlnv": "xilinx.com:interface:axis_rtl:1.0",
         "parameters": {
@@ -82,17 +82,21 @@
           }
         }
       },
-      "io_tx": {
+      "data_tx": {
         "mode": "Master",
         "vlnv": "xilinx.com:interface:axis_rtl:1.0"
       },
-      "GPIO": {
+      "SWITCH": {
+        "mode": "Master",
+        "vlnv": "xilinx.com:interface:gpio_rtl:1.0"
+      },
+      "LED": {
         "mode": "Master",
         "vlnv": "xilinx.com:interface:gpio_rtl:1.0"
       }
     },
     "ports": {
-      "clk": {
+      "cpu_clk": {
         "type": "clk",
         "direction": "I",
         "parameters": {
@@ -110,7 +114,7 @@
           }
         }
       },
-      "rt_clk": {
+      "data_clk": {
         "type": "clk",
         "direction": "I",
         "parameters": {
@@ -119,7 +123,7 @@
           }
         }
       },
-      "rx_clk": {
+      "data_rx_clk": {
         "type": "clk",
         "direction": "I",
         "parameters": {
@@ -128,7 +132,7 @@
           }
         }
       },
-      "tx_clk": {
+      "data_tx_clk": {
         "type": "clk",
         "direction": "I",
         "parameters": {
@@ -636,16 +640,16 @@
               }
             },
             "interface_nets": {
-              "m02_couplers_to_auto_ds": {
-                "interface_ports": [
-                  "S_AXI",
-                  "auto_ds/S_AXI"
-                ]
-              },
               "auto_ds_to_m02_couplers": {
                 "interface_ports": [
                   "M_AXI",
                   "auto_ds/M_AXI"
+                ]
+              },
+              "m02_couplers_to_auto_ds": {
+                "interface_ports": [
+                  "S_AXI",
+                  "auto_ds/S_AXI"
                 ]
               }
             },
@@ -674,16 +678,10 @@
           }
         },
         "interface_nets": {
-          "s00_couplers_to_xbar": {
+          "xbar_to_m00_couplers": {
             "interface_ports": [
-              "s00_couplers/M_AXI",
-              "xbar/S00_AXI"
-            ]
-          },
-          "s01_couplers_to_xbar": {
-            "interface_ports": [
-              "s01_couplers/M_AXI",
-              "xbar/S01_AXI"
+              "xbar/M00_AXI",
+              "m00_couplers/S_AXI"
             ]
           },
           "m00_couplers_to_axi_interconnect_0": {
@@ -698,22 +696,16 @@
               "m01_couplers/M_AXI"
             ]
           },
-          "xbar_to_m00_couplers": {
+          "s00_mmu_M_AXI": {
             "interface_ports": [
-              "xbar/M00_AXI",
-              "m00_couplers/S_AXI"
+              "s00_mmu/M_AXI",
+              "s00_couplers/S_AXI"
             ]
           },
-          "xbar_to_m01_couplers": {
+          "S01_AXI_1": {
             "interface_ports": [
-              "xbar/M01_AXI",
-              "m01_couplers/S_AXI"
-            ]
-          },
-          "m02_couplers_to_axi_interconnect_0": {
-            "interface_ports": [
-              "M02_AXI",
-              "m02_couplers/M_AXI"
+              "S01_AXI",
+              "s01_mmu/S_AXI"
             ]
           },
           "xbar_to_m02_couplers": {
@@ -728,22 +720,34 @@
               "s00_mmu/S_AXI"
             ]
           },
-          "s00_mmu_M_AXI": {
+          "s00_couplers_to_xbar": {
             "interface_ports": [
-              "s00_mmu/M_AXI",
-              "s00_couplers/S_AXI"
+              "s00_couplers/M_AXI",
+              "xbar/S00_AXI"
             ]
           },
-          "S01_AXI_1": {
+          "s01_couplers_to_xbar": {
             "interface_ports": [
-              "S01_AXI",
-              "s01_mmu/S_AXI"
+              "s01_couplers/M_AXI",
+              "xbar/S01_AXI"
             ]
           },
           "s01_mmu_M_AXI": {
             "interface_ports": [
               "s01_mmu/M_AXI",
               "s01_couplers/S_AXI"
+            ]
+          },
+          "xbar_to_m01_couplers": {
+            "interface_ports": [
+              "xbar/M01_AXI",
+              "m01_couplers/S_AXI"
+            ]
+          },
+          "m02_couplers_to_axi_interconnect_0": {
+            "interface_ports": [
+              "M02_AXI",
+              "m02_couplers/M_AXI"
             ]
           }
         },
@@ -1191,6 +1195,12 @@
               }
             },
             "interface_nets": {
+              "auto_ds_to_auto_pc": {
+                "interface_ports": [
+                  "auto_ds/M_AXI",
+                  "auto_pc/S_AXI"
+                ]
+              },
               "m01_couplers_to_auto_ds": {
                 "interface_ports": [
                   "S_AXI",
@@ -1201,12 +1211,6 @@
                 "interface_ports": [
                   "M_AXI",
                   "auto_pc/M_AXI"
-                ]
-              },
-              "auto_ds_to_auto_pc": {
-                "interface_ports": [
-                  "auto_ds/M_AXI",
-                  "auto_pc/S_AXI"
                 ]
               }
             },
@@ -1235,16 +1239,16 @@
               "s00_couplers/S_AXI"
             ]
           },
-          "m00_couplers_to_axi_interconnect_1": {
-            "interface_ports": [
-              "M00_AXI",
-              "m00_couplers/M_AXI"
-            ]
-          },
           "s00_couplers_to_xbar": {
             "interface_ports": [
               "s00_couplers/M_AXI",
               "xbar/S00_AXI"
+            ]
+          },
+          "m00_couplers_to_axi_interconnect_1": {
+            "interface_ports": [
+              "M00_AXI",
+              "m00_couplers/M_AXI"
             ]
           },
           "xbar_to_m00_couplers": {
@@ -1327,6 +1331,27 @@
         "vlnv": "xilinx.com:ip:axi_uartlite:2.0",
         "xci_name": "meowrouter_axi_uartlite_0_0"
       },
+      "Board": {
+        "vlnv": "xilinx.com:ip:axi_gpio:2.0",
+        "xci_name": "meowrouter_axi_gpio_0_0",
+        "parameters": {
+          "C_ALL_INPUTS": {
+            "value": "1"
+          },
+          "C_ALL_OUTPUTS_2": {
+            "value": "1"
+          },
+          "C_GPIO2_WIDTH": {
+            "value": "32"
+          },
+          "C_GPIO_WIDTH": {
+            "value": "16"
+          },
+          "C_IS_DUAL": {
+            "value": "1"
+          }
+        }
+      },
       "CPU": {
         "vlnv": "xilinx.com:module_ref:Core:1.0",
         "xci_name": "meowrouter_Core_0_0",
@@ -1357,17 +1382,9 @@
                 "value": "0",
                 "value_src": "constant"
               },
-              "CLK_DOMAIN": {
-                "value": "meowrouter_clk",
-                "value_src": "default_prop"
-              },
               "DATA_WIDTH": {
                 "value": "64",
                 "value_src": "constant"
-              },
-              "FREQ_HZ": {
-                "value": "50000000",
-                "value_src": "user_prop"
               },
               "HAS_BRESP": {
                 "value": "1",
@@ -1664,17 +1681,9 @@
                 "value": "0",
                 "value_src": "constant"
               },
-              "CLK_DOMAIN": {
-                "value": "meowrouter_clk",
-                "value_src": "default_prop"
-              },
               "DATA_WIDTH": {
                 "value": "64",
                 "value_src": "constant"
-              },
-              "FREQ_HZ": {
-                "value": "50000000",
-                "value_src": "user_prop"
               },
               "HAS_BRESP": {
                 "value": "1",
@@ -2123,29 +2132,19 @@
             "direction": "I"
           }
         }
-      },
-      "axi_gpio_0": {
-        "vlnv": "xilinx.com:ip:axi_gpio:2.0",
-        "xci_name": "meowrouter_axi_gpio_0_0"
       }
     },
     "interface_nets": {
-      "axi_interconnect_1_M01_AXI": {
+      "Peripheral_M00_AXI": {
         "interface_ports": [
-          "UART/S_AXI",
-          "Peripheral/M01_AXI"
+          "Board/S_AXI",
+          "Peripheral/M00_AXI"
         ]
       },
-      "Core_0_io_daxi": {
+      "axi_gpio_0_GPIO": {
         "interface_ports": [
-          "CPU/io_daxi",
-          "Primary/S00_AXI"
-        ]
-      },
-      "axi_bram_ctrl_0_BRAM_PORTA": {
-        "interface_ports": [
-          "BootROM/BRAM_PORTA",
-          "BootROMCtrl/BRAM_PORTA"
+          "SWITCH",
+          "Board/GPIO"
         ]
       },
       "axi_interconnect_0_M02_AXI": {
@@ -2154,10 +2153,28 @@
           "EthBufCtrl/S_AXI"
         ]
       },
-      "axi_bram_ctrl_1_BRAM_PORTA": {
+      "axi_uartlite_0_UART": {
         "interface_ports": [
-          "EthBufCtrl/BRAM_PORTA",
-          "EthBuf/BRAM_PORTA"
+          "UART",
+          "UART/UART"
+        ]
+      },
+      "Core_0_io_daxi": {
+        "interface_ports": [
+          "CPU/io_daxi",
+          "Primary/S00_AXI"
+        ]
+      },
+      "io_rx_1": {
+        "interface_ports": [
+          "data_rx",
+          "Router/io_rx"
+        ]
+      },
+      "axi_interconnect_1_M01_AXI": {
+        "interface_ports": [
+          "UART/S_AXI",
+          "Peripheral/M01_AXI"
         ]
       },
       "axi_interconnect_0_M01_AXI": {
@@ -2166,22 +2183,16 @@
           "Primary/M01_AXI"
         ]
       },
-      "S00_AXI_1": {
+      "axi_bram_ctrl_0_BRAM_PORTA": {
         "interface_ports": [
-          "Peripheral/S00_AXI",
-          "Primary/M00_AXI"
+          "BootROM/BRAM_PORTA",
+          "BootROMCtrl/BRAM_PORTA"
         ]
       },
-      "io_rx_1": {
+      "axi_bram_ctrl_1_BRAM_PORTA": {
         "interface_ports": [
-          "io_rx",
-          "Router/io_rx"
-        ]
-      },
-      "axi_uartlite_0_UART": {
-        "interface_ports": [
-          "UART",
-          "UART/UART"
+          "EthBufCtrl/BRAM_PORTA",
+          "EthBuf/BRAM_PORTA"
         ]
       },
       "Core_0_io_iaxi": {
@@ -2192,20 +2203,20 @@
       },
       "Router_io_tx": {
         "interface_ports": [
-          "io_tx",
+          "data_tx",
           "Router/io_tx"
         ]
       },
-      "Peripheral_M00_AXI": {
+      "S00_AXI_1": {
         "interface_ports": [
-          "axi_gpio_0/S_AXI",
-          "Peripheral/M00_AXI"
+          "Peripheral/S00_AXI",
+          "Primary/M00_AXI"
         ]
       },
-      "axi_gpio_0_GPIO": {
+      "axi_gpio_0_GPIO2": {
         "interface_ports": [
-          "GPIO",
-          "axi_gpio_0/GPIO"
+          "LED",
+          "Board/GPIO2"
         ]
       }
     },
@@ -2244,13 +2255,12 @@
           "Peripheral/M00_ARESETN",
           "Peripheral/S00_ARESETN",
           "UART/s_axi_aresetn",
-          "axi_gpio_0/s_axi_aresetn"
+          "Board/s_axi_aresetn"
         ]
       },
       "clk_1": {
         "ports": [
-          "clk",
-          "CPU/clock",
+          "cpu_clk",
           "Reset/slowest_sync_clk",
           "Primary/S00_ACLK",
           "Primary/M00_ACLK",
@@ -2265,7 +2275,8 @@
           "Peripheral/M01_ACLK",
           "UART/s_axi_aclk",
           "Primary/S01_ACLK",
-          "axi_gpio_0/s_axi_aclk"
+          "Board/s_axi_aclk",
+          "CPU/clock"
         ]
       },
       "rst_1": {
@@ -2276,19 +2287,19 @@
       },
       "rtclk_1": {
         "ports": [
-          "rt_clk",
+          "data_clk",
           "Router/clock"
         ]
       },
       "rx_clk_1": {
         "ports": [
-          "rx_clk",
+          "data_rx_clk",
           "Router/io_rx_clk"
         ]
       },
       "tx_clk_1": {
         "ports": [
-          "tx_clk",
+          "data_tx_clk",
           "Router/io_tx_clk"
         ]
       }
@@ -2307,13 +2318,18 @@
               },
               "SEG_EthBufCtrl_Mem0": {
                 "address_block": "/EthBufCtrl/S_AXI/Mem0",
-                "offset": "0xFFFFFF000000",
+                "offset": "0xFFFFF0000000",
                 "range": "32K"
               },
               "SEG_UART_Reg": {
                 "address_block": "/UART/S_AXI/Reg",
-                "offset": "0xFFFFFFFF0000",
+                "offset": "0xFFFFF2000000",
                 "range": "32K"
+              },
+              "SEG_axi_gpio_0_Reg": {
+                "address_block": "/Board/S_AXI/Reg",
+                "offset": "0xFFFFF1000000",
+                "range": "4K"
               }
             }
           },
@@ -2335,6 +2351,11 @@
                 "address_block": "/UART/S_AXI/Reg",
                 "offset": "0xFFFFFFFF0000",
                 "range": "32K"
+              },
+              "SEG_axi_gpio_0_Reg": {
+                "address_block": "/Board/S_AXI/Reg",
+                "offset": "0x000040000000",
+                "range": "64K"
               }
             }
           }
