@@ -16,7 +16,6 @@
         <UsedIn Val="SIMULATION"/>
       </File>
       <File Name="ip\meowrouter_axi_interconnect_0_0\meowrouter_axi_interconnect_0_0.xci" Type="IP">
-        <Instance HierarchyPath="Primary"/>
         <Properties IsEditable="false" IsVisible="false" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
@@ -80,7 +79,6 @@
         <UsedIn Val="SIMULATION"/>
       </File>
       <File Name="ip\meowrouter_axi_interconnect_1_0\meowrouter_axi_interconnect_1_0.xci" Type="IP">
-        <Instance HierarchyPath="Peripheral"/>
         <Properties IsEditable="false" IsVisible="false" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
