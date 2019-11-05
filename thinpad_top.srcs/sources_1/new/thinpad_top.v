@@ -1,4 +1,4 @@
-`default_nettype none
+`default_nettype wire
 
 module thinpad_top(
     input wire clk_50M,           //50MHz 时钟输入
@@ -155,7 +155,7 @@ assign uart_wrn = 1'b1;
 //           // ---d---  p
 
 // 7段数码管译码器演示，将number�?16进制显示在数码管上面
-reg[7:0] number;
+wire[7:0] number;
 SEG7_LUT segL(.oSEG1(dpy0), .iDIG(number[3:0])); //dpy0是低位数码管
 SEG7_LUT segH(.oSEG1(dpy1), .iDIG(number[7:4])); //dpy1是高位数码管
 
@@ -228,14 +228,12 @@ eth_mac eth_mac_inst (
 );
 /* =========== Demo code end =========== */
 
-`default_nettype reg
-
 meowrouter mr(
   .cpu_clk(clk_50M),
   .rst(reset_btn),
   
-  .UART_rx(rxd),
-  .UART_tx(txd),
+  .UART_rxd(rxd),
+  .UART_txd(txd),
   
   .data_clk(clk_125M),
   .data_rx_clk(eth_rx_mac_aclk),
@@ -249,9 +247,10 @@ meowrouter mr(
   .data_tx_tvalid(eth_tx_axis_mac_tvalid),
   .data_tx_tready(eth_tx_axis_mac_tready),
   .data_tx_tlast(eth_tx_axis_mac_tlast),
+  .data_tx_tuser(eth_tx_axis_mac_tuser),
   
-  .DISP({ number, leds }),
-  .SWITCH(touch_btn)
+  .DISP_tri_o({ number, leds }),
+  .SWITCH_tri_i(touch_btn)
 );
 
 endmodule
