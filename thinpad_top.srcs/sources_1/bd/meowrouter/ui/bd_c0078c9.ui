@@ -2,54 +2,54 @@
    "ExpandedHierarchyInLayout":"",
    "PinnedBlocks":"/Peripheral|/Primary|/CPU|/BootROMCtrl|/EthBufCtrl|/UART|",
    "commentid":"",
-   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS-threadsafe
 #  -string -flagsOSRD
 preplace port UART -pg 1 -y 160 -defaultsOSRD
 preplace port SWITCH -pg 1 -y 20 -defaultsOSRD
 preplace port DISP -pg 1 -y 40 -defaultsOSRD
-preplace port cpu_clk -pg 1 -y 10 -defaultsOSRD
-preplace port rst -pg 1 -y 230 -defaultsOSRD
-preplace port data_tx -pg 1 -y 680 -defaultsOSRD
-preplace port data_tx_clk -pg 1 -y 750 -defaultsOSRD
-preplace port data_clk -pg 1 -y 690 -defaultsOSRD
-preplace port data_rx_clk -pg 1 -y 730 -defaultsOSRD
+preplace port cpu_clk -pg 1 -y -10 -defaultsOSRD
+preplace port rst -pg 1 -y 160 -defaultsOSRD
+preplace port data_tx -pg 1 -y 650 -defaultsOSRD
+preplace port data_tx_clk -pg 1 -y 690 -defaultsOSRD
+preplace port data_clk -pg 1 -y 630 -defaultsOSRD
+preplace port data_rx_clk -pg 1 -y 670 -defaultsOSRD
 preplace port data_rx -pg 1 -y 610 -defaultsOSRD
 preplace inst Primary -pg 1 -lvl 2 -y 280 -defaultsOSRD
-preplace inst CPU -pg 1 -lvl 1 -y 90 -defaultsOSRD
-preplace inst BootROM -pg 1 -lvl 4 -y 337 -defaultsOSRD
-preplace inst UART -pg 1 -lvl 4 -y 170 -defaultsOSRD
-preplace inst EthBuf -pg 1 -lvl 4 -y 497 -defaultsOSRD
+preplace inst CPU -pg 1 -lvl 1 -y 0 -defaultsOSRD
+preplace inst BootROM -pg 1 -lvl 5 -y 337 -defaultsOSRD
+preplace inst UART -pg 1 -lvl 5 -y 170 -defaultsOSRD
+preplace inst EthBuf -pg 1 -lvl 5 -y 497 -defaultsOSRD
 preplace inst NRST -pg 1 -lvl 2 -y 510 -defaultsOSRD
-preplace inst Board -pg 1 -lvl 4 -y 30 -defaultsOSRD
-preplace inst Router -pg 1 -lvl 2 -y 680 -defaultsOSRD
-preplace inst Reset -pg 1 -lvl 1 -y 250 -defaultsOSRD
-preplace inst Peripheral -pg 1 -lvl 3 -y 130 -defaultsOSRD
-preplace inst EthBufCtrl -pg 1 -lvl 3 -y 487 -defaultsOSRD
-preplace inst BootROMCtrl -pg 1 -lvl 3 -y 337 -defaultsOSRD -resize 235 123
-preplace netloc Board_GPIO 1 4 1 N
-preplace netloc axi_interconnect_1_M01_AXI 1 3 1 1230
-preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 3 1 NJ
+preplace inst Board -pg 1 -lvl 5 -y 30 -defaultsOSRD
+preplace inst Router -pg 1 -lvl 2 -y 650 -defaultsOSRD
+preplace inst Reset -pg 1 -lvl 1 -y 180 -defaultsOSRD
+preplace inst Peripheral -pg 1 -lvl 4 -y 130 -defaultsOSRD
+preplace inst EthBufCtrl -pg 1 -lvl 4 -y 487 -defaultsOSRD
+preplace inst BootROMCtrl -pg 1 -lvl 4 -y 337 -defaultsOSRD -resize 235 123
+preplace netloc Primary_M00_AXI 1 2 2 980 50 N
+preplace netloc axi_interconnect_1_M01_AXI 1 4 1 1580
+preplace netloc Board_GPIO 1 5 1 N
+preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 4 1 NJ
 preplace netloc rst_1 1 0 1 NJ
-preplace netloc Peripheral_M00_AXI 1 3 1 1230
-preplace netloc axi_interconnect_0_M02_AXI 1 2 1 880
-preplace netloc Core_0_io_daxi 1 1 1 510
-preplace netloc util_vector_logic_0_Res 1 1 2 530 80 890
-preplace netloc proc_sys_reset_0_mb_reset 1 0 2 0 350 480
-preplace netloc rtclk_1 1 0 2 NJ 690 N
-preplace netloc Router_io_tx 1 2 3 N 680 N 680 NJ
-preplace netloc Core_0_io_iaxi 1 1 1 480
-preplace netloc tx_clk_1 1 0 2 NJ 750 N
-preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 2 490 90 NJ
-preplace netloc clk_1 1 0 4 -10 10 500 10 910 -20 1240J
-preplace netloc axi_gpio_0_GPIO2 1 4 1 N
+preplace netloc Peripheral_M00_AXI 1 4 1 1580
+preplace netloc axi_interconnect_0_M02_AXI 1 2 2 960 467 N
+preplace netloc util_vector_logic_0_Res 1 1 3 500 70 970 477 1150
+preplace netloc proc_sys_reset_0_mb_reset 1 0 2 -220 280 440
+preplace netloc rtclk_1 1 0 2 NJ 630 N
+preplace netloc Core_0_io_iaxi 1 1 1 460
+preplace netloc Router_io_tx 1 2 4 N 650 N 650 N 650 NJ
+preplace netloc tx_clk_1 1 0 2 NJ 690 N
+preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 3 490 90 NJ 90 NJ
+preplace netloc clk_1 1 0 5 -230 80 450 80 N 80 1140J -20 1590J
+preplace netloc axi_gpio_0_GPIO2 1 5 1 N
 preplace netloc io_rx_1 1 0 2 NJ 610 N
-preplace netloc S00_AXI_1 1 2 1 920
-preplace netloc axi_uartlite_0_UART 1 4 1 NJ
-preplace netloc rx_clk_1 1 0 2 NJ 730 N
-preplace netloc proc_sys_reset_0_peripheral_aresetn 1 1 3 520 70 880 -10 1220J
-preplace netloc axi_interconnect_0_M01_AXI 1 2 1 900
-preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 3 1 NJ
-levelinfo -pg 1 -30 310 720 1070 1370 1520 -top -450 -bot 1360
+preplace netloc axi_uartlite_0_UART 1 5 1 NJ
+preplace netloc rx_clk_1 1 0 2 NJ 670 N
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 1 4 470 40 N 40 1150J -10 1570J
+preplace netloc axi_interconnect_0_M01_AXI 1 2 2 N 280 1130
+preplace netloc CPU_io_daxi 1 1 1 480
+preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 4 1 NJ
+levelinfo -pg 1 -250 270 800 1110 1420 1720 1870 -top -450 -bot 1440
 "
 }
 0

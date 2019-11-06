@@ -8,6 +8,15 @@ outer:
   mv t0, a0
 
 inner:
-  sb t0, 0(s0)
+  sb t0, 4(s0)
   addi t0, t0, 1
+
+  li t1, 0
+  li t2, 1000000
+delayloop:
+  addi t1, t1, 1
+  ble t1, t2, delayloop
+
   ble t0, a1, inner
+
+  j outer

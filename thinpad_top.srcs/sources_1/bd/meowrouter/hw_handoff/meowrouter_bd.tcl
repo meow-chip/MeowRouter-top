@@ -220,23 +220,25 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.Assume_Synchronous_Clk {false} \
    CONFIG.Byte_Size {8} \
+   CONFIG.Coe_File {../../../../../../software/boot/boot.coe} \
    CONFIG.EN_SAFETY_CKT {true} \
    CONFIG.Enable_32bit_Address {true} \
    CONFIG.Enable_B {Always_Enabled} \
-   CONFIG.Memory_Type {Single_Port_RAM} \
-   CONFIG.Port_A_Write_Rate {50} \
+   CONFIG.Load_Init_File {true} \
+   CONFIG.Memory_Type {Single_Port_ROM} \
+   CONFIG.Port_A_Write_Rate {0} \
    CONFIG.Port_B_Clock {0} \
    CONFIG.Port_B_Enable_Rate {0} \
    CONFIG.Port_B_Write_Rate {0} \
-   CONFIG.Read_Width_A {32} \
-   CONFIG.Read_Width_B {32} \
+   CONFIG.Read_Width_A {64} \
+   CONFIG.Read_Width_B {64} \
    CONFIG.Register_PortA_Output_of_Memory_Primitives {false} \
    CONFIG.Register_PortB_Output_of_Memory_Primitives {false} \
-   CONFIG.Use_Byte_Write_Enable {true} \
+   CONFIG.Use_Byte_Write_Enable {false} \
    CONFIG.Use_RSTA_Pin {true} \
    CONFIG.Use_RSTB_Pin {false} \
-   CONFIG.Write_Width_A {32} \
-   CONFIG.Write_Width_B {32} \
+   CONFIG.Write_Width_A {64} \
+   CONFIG.Write_Width_B {64} \
    CONFIG.use_bram_block {BRAM_Controller} \
  ] $BootROM
 
@@ -288,14 +290,22 @@ proc create_root_design { parentCell } {
 
   # Create instance: Peripheral, and set properties
   set Peripheral [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 Peripheral ]
+  set_property -dict [ list \
+   CONFIG.ENABLE_ADVANCED_OPTIONS {0} \
+   CONFIG.S00_HAS_DATA_FIFO {2} \
+   CONFIG.STRATEGY {2} \
+   CONFIG.XBAR_DATA_WIDTH {64} \
+ ] $Peripheral
 
   # Create instance: Primary, and set properties
   set Primary [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 Primary ]
   set_property -dict [ list \
    CONFIG.ENABLE_ADVANCED_OPTIONS {0} \
+   CONFIG.M00_HAS_DATA_FIFO {0} \
    CONFIG.NUM_MI {3} \
    CONFIG.NUM_SI {2} \
-   CONFIG.S00_HAS_DATA_FIFO {0} \
+   CONFIG.S00_HAS_DATA_FIFO {2} \
+   CONFIG.S01_HAS_DATA_FIFO {2} \
    CONFIG.STRATEGY {0} \
  ] $Primary
 
@@ -315,14 +325,17 @@ proc create_root_design { parentCell } {
   
   # Create instance: UART, and set properties
   set UART [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uartlite:2.0 UART ]
+  set_property -dict [ list \
+   CONFIG.C_BAUDRATE {19200} \
+ ] $UART
 
   # Create interface connections
   connect_bd_intf_net -intf_net Board_GPIO [get_bd_intf_ports SWITCH] [get_bd_intf_pins Board/GPIO]
-  connect_bd_intf_net -intf_net Core_0_io_daxi [get_bd_intf_pins CPU/io_daxi] [get_bd_intf_pins Primary/S00_AXI]
+  connect_bd_intf_net -intf_net CPU_io_daxi [get_bd_intf_pins CPU/io_daxi] [get_bd_intf_pins Primary/S00_AXI]
   connect_bd_intf_net -intf_net Core_0_io_iaxi [get_bd_intf_pins CPU/io_iaxi] [get_bd_intf_pins Primary/S01_AXI]
   connect_bd_intf_net -intf_net Peripheral_M00_AXI [get_bd_intf_pins Board/S_AXI] [get_bd_intf_pins Peripheral/M00_AXI]
+  connect_bd_intf_net -intf_net Primary_M00_AXI [get_bd_intf_pins Peripheral/S00_AXI] [get_bd_intf_pins Primary/M00_AXI]
   connect_bd_intf_net -intf_net Router_io_tx [get_bd_intf_ports data_tx] [get_bd_intf_pins Router/io_tx]
-  connect_bd_intf_net -intf_net S00_AXI_1 [get_bd_intf_pins Peripheral/S00_AXI] [get_bd_intf_pins Primary/M00_AXI]
   connect_bd_intf_net -intf_net axi_bram_ctrl_0_BRAM_PORTA [get_bd_intf_pins BootROM/BRAM_PORTA] [get_bd_intf_pins BootROMCtrl/BRAM_PORTA]
   connect_bd_intf_net -intf_net axi_bram_ctrl_1_BRAM_PORTA [get_bd_intf_pins EthBuf/BRAM_PORTA] [get_bd_intf_pins EthBufCtrl/BRAM_PORTA]
   connect_bd_intf_net -intf_net axi_gpio_0_GPIO2 [get_bd_intf_ports DISP] [get_bd_intf_pins Board/GPIO2]

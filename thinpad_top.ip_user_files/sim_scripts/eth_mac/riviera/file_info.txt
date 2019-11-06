@@ -1,4 +1,5 @@
 xpm_cdc.sv,systemverilog,xil_defaultlib,D:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,
+xpm_fifo.sv,systemverilog,xil_defaultlib,D:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv,
 xpm_memory.sv,systemverilog,xil_defaultlib,D:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv,
 xpm_VCOMP.vhd,vhdl,xpm,D:/Xilinx/Vivado/2018.3/data/ip/xpm/xpm_VCOMP.vhd,
 xbip_utils_v3_0_vh_rfs.vhd,vhdl,xbip_utils_v3_0_9,../../../ipstatic/hdl/xbip_utils_v3_0_vh_rfs.vhd,

@@ -7,7 +7,7 @@ O=$(SRCS:.S=.o)
 all: $(O) $(COES)
 
 %.coe: %.bin
-	echo "memory_initialization_radix=16" > $@
+	echo "memory_initialization_radix=16;" > $@
 	echo "memory_initialization_vector=" >> $@
 	hexdump $< -ve '1/8 "%016x" ",\n"' >> $@
 	# Replace last comma

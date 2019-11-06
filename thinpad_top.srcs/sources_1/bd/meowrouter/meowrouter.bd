@@ -11,8 +11,12 @@
     "design_tree": {
       "Primary": {
         "xbar": "",
-        "s00_couplers": {},
-        "s01_couplers": {},
+        "s00_couplers": {
+          "s00_data_fifo": ""
+        },
+        "s01_couplers": {
+          "s01_data_fifo": ""
+        },
         "m00_couplers": {
           "auto_ds": "",
           "auto_pc": ""
@@ -28,7 +32,9 @@
       "Reset": "",
       "Peripheral": {
         "xbar": "",
-        "s00_couplers": {},
+        "s00_couplers": {
+          "s00_data_fifo": ""
+        },
         "m00_couplers": {},
         "m01_couplers": {}
       },
@@ -267,6 +273,9 @@
           "ENABLE_ADVANCED_OPTIONS": {
             "value": "0"
           },
+          "M00_HAS_DATA_FIFO": {
+            "value": "0"
+          },
           "NUM_MI": {
             "value": "3"
           },
@@ -274,7 +283,10 @@
             "value": "2"
           },
           "S00_HAS_DATA_FIFO": {
-            "value": "0"
+            "value": "2"
+          },
+          "S01_HAS_DATA_FIFO": {
+            "value": "2"
           },
           "STRATEGY": {
             "value": "0"
@@ -462,11 +474,37 @@
                 "direction": "I"
               }
             },
+            "components": {
+              "s00_data_fifo": {
+                "vlnv": "xilinx.com:ip:axi_data_fifo:2.1",
+                "xci_name": "meowrouter_s00_data_fifo_0"
+              }
+            },
             "interface_nets": {
-              "s00_couplers_to_s00_couplers": {
+              "s00_couplers_to_s00_data_fifo": {
                 "interface_ports": [
                   "S_AXI",
-                  "M_AXI"
+                  "s00_data_fifo/S_AXI"
+                ]
+              },
+              "s00_data_fifo_to_s00_couplers": {
+                "interface_ports": [
+                  "M_AXI",
+                  "s00_data_fifo/M_AXI"
+                ]
+              }
+            },
+            "nets": {
+              "M_ACLK_1": {
+                "ports": [
+                  "M_ACLK",
+                  "s00_data_fifo/aclk"
+                ]
+              },
+              "M_ARESETN_1": {
+                "ports": [
+                  "M_ARESETN",
+                  "s00_data_fifo/aresetn"
                 ]
               }
             }
@@ -516,11 +554,37 @@
                 "direction": "I"
               }
             },
+            "components": {
+              "s01_data_fifo": {
+                "vlnv": "xilinx.com:ip:axi_data_fifo:2.1",
+                "xci_name": "meowrouter_s01_data_fifo_0"
+              }
+            },
             "interface_nets": {
-              "s01_couplers_to_s01_couplers": {
+              "s01_couplers_to_s01_data_fifo": {
                 "interface_ports": [
                   "S_AXI",
-                  "M_AXI"
+                  "s01_data_fifo/S_AXI"
+                ]
+              },
+              "s01_data_fifo_to_s01_couplers": {
+                "interface_ports": [
+                  "M_AXI",
+                  "s01_data_fifo/M_AXI"
+                ]
+              }
+            },
+            "nets": {
+              "M_ACLK_1": {
+                "ports": [
+                  "M_ACLK",
+                  "s01_data_fifo/aclk"
+                ]
+              },
+              "M_ARESETN_1": {
+                "ports": [
+                  "M_ARESETN",
+                  "s01_data_fifo/aresetn"
                 ]
               }
             }
@@ -597,10 +661,10 @@
               }
             },
             "interface_nets": {
-              "auto_ds_to_auto_pc": {
+              "m00_couplers_to_auto_ds": {
                 "interface_ports": [
-                  "auto_ds/M_AXI",
-                  "auto_pc/S_AXI"
+                  "S_AXI",
+                  "auto_ds/S_AXI"
                 ]
               },
               "auto_pc_to_m00_couplers": {
@@ -609,10 +673,10 @@
                   "auto_pc/M_AXI"
                 ]
               },
-              "m00_couplers_to_auto_ds": {
+              "auto_ds_to_auto_pc": {
                 "interface_ports": [
-                  "S_AXI",
-                  "auto_ds/S_AXI"
+                  "auto_ds/M_AXI",
+                  "auto_pc/S_AXI"
                 ]
               }
             },
@@ -755,6 +819,12 @@
               "xbar/S00_AXI"
             ]
           },
+          "s01_couplers_to_xbar": {
+            "interface_ports": [
+              "s01_couplers/M_AXI",
+              "xbar/S01_AXI"
+            ]
+          },
           "Primary_to_s01_couplers": {
             "interface_ports": [
               "S01_AXI",
@@ -767,22 +837,16 @@
               "m00_couplers/M_AXI"
             ]
           },
-          "s01_couplers_to_xbar": {
+          "m01_couplers_to_Primary": {
             "interface_ports": [
-              "s01_couplers/M_AXI",
-              "xbar/S01_AXI"
+              "M01_AXI",
+              "m01_couplers/M_AXI"
             ]
           },
           "xbar_to_m00_couplers": {
             "interface_ports": [
               "xbar/M00_AXI",
               "m00_couplers/S_AXI"
-            ]
-          },
-          "m01_couplers_to_Primary": {
-            "interface_ports": [
-              "M01_AXI",
-              "m01_couplers/M_AXI"
             ]
           },
           "m02_couplers_to_Primary": {
@@ -941,17 +1005,23 @@
         "vlnv": "xilinx.com:ip:blk_mem_gen:8.4",
         "xci_name": "meowrouter_blk_mem_gen_0_1",
         "parameters": {
+          "Coe_File": {
+            "value": "../../../../../../software/boot/boot.coe"
+          },
           "EN_SAFETY_CKT": {
             "value": "true"
           },
           "Enable_32bit_Address": {
             "value": "true"
           },
+          "Load_Init_File": {
+            "value": "true"
+          },
           "Memory_Type": {
-            "value": "Single_Port_RAM"
+            "value": "Single_Port_ROM"
           },
           "Port_A_Write_Rate": {
-            "value": "50"
+            "value": "0"
           },
           "Port_B_Clock": {
             "value": "0"
@@ -962,9 +1032,6 @@
           "Port_B_Write_Rate": {
             "value": "0"
           },
-          "Read_Width_A": {
-            "value": "32"
-          },
           "Register_PortA_Output_of_Memory_Primitives": {
             "value": "false"
           },
@@ -972,7 +1039,7 @@
             "value": "true"
           },
           "Write_Width_A": {
-            "value": "32"
+            "value": "64"
           },
           "use_bram_block": {
             "value": "BRAM_Controller"
@@ -998,6 +1065,20 @@
       "Peripheral": {
         "vlnv": "xilinx.com:ip:axi_interconnect:2.1",
         "xci_name": "meowrouter_axi_interconnect_1_0",
+        "parameters": {
+          "ENABLE_ADVANCED_OPTIONS": {
+            "value": "0"
+          },
+          "S00_HAS_DATA_FIFO": {
+            "value": "2"
+          },
+          "STRATEGY": {
+            "value": "2"
+          },
+          "XBAR_DATA_WIDTH": {
+            "value": "64"
+          }
+        },
         "interface_ports": {
           "S00_AXI": {
             "mode": "Slave",
@@ -1087,7 +1168,7 @@
                 "value": "1"
               },
               "STRATEGY": {
-                "value": "0"
+                "value": "2"
               }
             }
           },
@@ -1136,11 +1217,37 @@
                 "direction": "I"
               }
             },
+            "components": {
+              "s00_data_fifo": {
+                "vlnv": "xilinx.com:ip:axi_data_fifo:2.1",
+                "xci_name": "meowrouter_s00_data_fifo_1"
+              }
+            },
             "interface_nets": {
-              "s00_couplers_to_s00_couplers": {
+              "s00_couplers_to_s00_data_fifo": {
                 "interface_ports": [
                   "S_AXI",
-                  "M_AXI"
+                  "s00_data_fifo/S_AXI"
+                ]
+              },
+              "s00_data_fifo_to_s00_couplers": {
+                "interface_ports": [
+                  "M_AXI",
+                  "s00_data_fifo/M_AXI"
+                ]
+              }
+            },
+            "nets": {
+              "M_ACLK_1": {
+                "ports": [
+                  "M_ACLK",
+                  "s00_data_fifo/aclk"
+                ]
+              },
+              "M_ARESETN_1": {
+                "ports": [
+                  "M_ARESETN",
+                  "s00_data_fifo/aresetn"
                 ]
               }
             }
@@ -1261,10 +1368,16 @@
               "s00_couplers/S_AXI"
             ]
           },
-          "xbar_to_m01_couplers": {
+          "m00_couplers_to_Peripheral": {
             "interface_ports": [
-              "xbar/M01_AXI",
-              "m01_couplers/S_AXI"
+              "M00_AXI",
+              "m00_couplers/M_AXI"
+            ]
+          },
+          "s00_couplers_to_xbar": {
+            "interface_ports": [
+              "s00_couplers/M_AXI",
+              "xbar/S00_AXI"
             ]
           },
           "xbar_to_m00_couplers": {
@@ -1279,16 +1392,10 @@
               "m01_couplers/M_AXI"
             ]
           },
-          "m00_couplers_to_Peripheral": {
+          "xbar_to_m01_couplers": {
             "interface_ports": [
-              "M00_AXI",
-              "m00_couplers/M_AXI"
-            ]
-          },
-          "s00_couplers_to_xbar": {
-            "interface_ports": [
-              "s00_couplers/M_AXI",
-              "xbar/S00_AXI"
+              "xbar/M01_AXI",
+              "m01_couplers/S_AXI"
             ]
           }
         },
@@ -1351,7 +1458,12 @@
       },
       "UART": {
         "vlnv": "xilinx.com:ip:axi_uartlite:2.0",
-        "xci_name": "meowrouter_axi_uartlite_0_0"
+        "xci_name": "meowrouter_axi_uartlite_0_0",
+        "parameters": {
+          "C_BAUDRATE": {
+            "value": "19200"
+          }
+        }
       },
       "Board": {
         "vlnv": "xilinx.com:ip:axi_gpio:2.0",
@@ -2257,40 +2369,10 @@
       }
     },
     "interface_nets": {
-      "Board_GPIO": {
+      "Core_0_io_iaxi": {
         "interface_ports": [
-          "SWITCH",
-          "Board/GPIO"
-        ]
-      },
-      "axi_uartlite_0_UART": {
-        "interface_ports": [
-          "UART",
-          "UART/UART"
-        ]
-      },
-      "Peripheral_M00_AXI": {
-        "interface_ports": [
-          "Board/S_AXI",
-          "Peripheral/M00_AXI"
-        ]
-      },
-      "axi_interconnect_0_M02_AXI": {
-        "interface_ports": [
-          "Primary/M02_AXI",
-          "EthBufCtrl/S_AXI"
-        ]
-      },
-      "Core_0_io_daxi": {
-        "interface_ports": [
-          "CPU/io_daxi",
-          "Primary/S00_AXI"
-        ]
-      },
-      "io_rx_1": {
-        "interface_ports": [
-          "data_rx",
-          "Router/io_rx"
+          "CPU/io_iaxi",
+          "Primary/S01_AXI"
         ]
       },
       "axi_interconnect_0_M01_AXI": {
@@ -2299,16 +2381,10 @@
           "Primary/M01_AXI"
         ]
       },
-      "axi_bram_ctrl_0_BRAM_PORTA": {
+      "Board_GPIO": {
         "interface_ports": [
-          "BootROM/BRAM_PORTA",
-          "BootROMCtrl/BRAM_PORTA"
-        ]
-      },
-      "axi_bram_ctrl_1_BRAM_PORTA": {
-        "interface_ports": [
-          "EthBufCtrl/BRAM_PORTA",
-          "EthBuf/BRAM_PORTA"
+          "SWITCH",
+          "Board/GPIO"
         ]
       },
       "axi_gpio_0_GPIO2": {
@@ -2317,16 +2393,16 @@
           "Board/GPIO2"
         ]
       },
-      "axi_interconnect_1_M01_AXI": {
+      "axi_bram_ctrl_1_BRAM_PORTA": {
         "interface_ports": [
-          "UART/S_AXI",
-          "Peripheral/M01_AXI"
+          "EthBufCtrl/BRAM_PORTA",
+          "EthBuf/BRAM_PORTA"
         ]
       },
-      "Core_0_io_iaxi": {
+      "axi_uartlite_0_UART": {
         "interface_ports": [
-          "CPU/io_iaxi",
-          "Primary/S01_AXI"
+          "UART",
+          "UART/UART"
         ]
       },
       "Router_io_tx": {
@@ -2335,10 +2411,46 @@
           "Router/io_tx"
         ]
       },
-      "S00_AXI_1": {
+      "io_rx_1": {
         "interface_ports": [
-          "Peripheral/S00_AXI",
-          "Primary/M00_AXI"
+          "data_rx",
+          "Router/io_rx"
+        ]
+      },
+      "axi_bram_ctrl_0_BRAM_PORTA": {
+        "interface_ports": [
+          "BootROM/BRAM_PORTA",
+          "BootROMCtrl/BRAM_PORTA"
+        ]
+      },
+      "axi_interconnect_0_M02_AXI": {
+        "interface_ports": [
+          "Primary/M02_AXI",
+          "EthBufCtrl/S_AXI"
+        ]
+      },
+      "Peripheral_M00_AXI": {
+        "interface_ports": [
+          "Board/S_AXI",
+          "Peripheral/M00_AXI"
+        ]
+      },
+      "axi_interconnect_1_M01_AXI": {
+        "interface_ports": [
+          "UART/S_AXI",
+          "Peripheral/M01_AXI"
+        ]
+      },
+      "CPU_io_daxi": {
+        "interface_ports": [
+          "CPU/io_daxi",
+          "Primary/S00_AXI"
+        ]
+      },
+      "Primary_M00_AXI": {
+        "interface_ports": [
+          "Primary/M00_AXI",
+          "Peripheral/S00_AXI"
         ]
       }
     },

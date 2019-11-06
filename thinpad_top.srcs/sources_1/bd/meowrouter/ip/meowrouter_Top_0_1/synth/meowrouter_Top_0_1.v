@@ -70,23 +70,23 @@ module meowrouter_Top_0_1 (
   io_tx_tuser
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clock, ASSOCIATED_BUSIF io_rx:io_tx, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_rt_clk, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clock, ASSOCIATED_BUSIF io_rx:io_tx, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_data_clk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clock CLK" *)
 input wire clock;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME reset, POLARITY ACTIVE_HIGH, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 reset RST" *)
 input wire reset;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_rx_clk, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_rx_clk, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_rx_clk, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_data_rx_clk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 io_rx_clk CLK" *)
 input wire io_rx_clk;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_tx_clk, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_tx_clk, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_tx_clk, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_data_tx_clk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 io_tx_clk CLK" *)
 input wire io_tx_clk;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 io_rx TDATA" *)
 input wire [7 : 0] io_rx_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 io_rx TVALID" *)
 input wire io_rx_tvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_rx, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_rt_clk, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_rx, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_data_clk, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 io_rx TLAST" *)
 input wire io_rx_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 io_tx TDATA" *)
@@ -97,7 +97,7 @@ output wire io_tx_tvalid;
 output wire io_tx_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 io_tx TREADY" *)
 input wire io_tx_tready;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_tx, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 1, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_rt_clk, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_tx, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 1, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_data_clk, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 io_tx TUSER" *)
 output wire io_tx_tuser;
 
