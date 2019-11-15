@@ -17,7 +17,9 @@ all: $(O) $(COES)
 	$(PREFIX)objcopy -O binary $< $@
 
 %.o: %.S
-	$(PREFIX)as -march=rv64imc $< -o $@
+	$(PREFIX)as -march=rv64imc $< -o $@.tmp
+	$(PREFIX)ld $@.tmp -o $@ -T boot.ld
+	rm $@.tmp
 
 clean:
 	rm -f *.coe *.o *.bin
