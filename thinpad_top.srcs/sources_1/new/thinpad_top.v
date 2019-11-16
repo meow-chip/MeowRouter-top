@@ -229,7 +229,7 @@ wire[63:0] ram_dq_i;
 wire[63:0] ram_dq_o;
 wire[63:0] ram_dq_t;
 wire[17:0] ram_addr;
-wire[3:0] ram_be_n;
+wire[7:0] ram_be_n;
 wire ram_oe_n;
 wire ram_we_n;
 wire ram_ce_n;
@@ -253,8 +253,6 @@ endgenerate
 
 assign base_ram_addr = ram_addr;
 assign ext_ram_addr = ram_addr;
-assign base_ram_be_n = ram_be_n;
-assign ext_ram_be_n = ram_be_n;
 assign base_ram_oe_n = ram_oe_n;
 assign ext_ram_oe_n = ram_oe_n;
 assign base_ram_ce_n = ram_ce_n;
@@ -306,8 +304,8 @@ meowrouter mr(
   .RAMEMC_dq_i(ram_dq_i),
   .RAMEMC_dq_o(ram_dq_o),
   .RAMEMC_dq_t(ram_dq_t),
-  .RAMEMC_addr({9'bxxxxxxxxxx, ram_addr, 3'bxxx}),
-  .RAMEMC_ben(ram_be_n),
+  .RAMEMC_addr({9'bxxxxxxxxx, ram_addr, 3'bxxx}),
+  .RAMEMC_ben({ ext_ram_be_n, base_ram_be_n }),
   .RAMEMC_ce_n(ram_ce_n),
   .RAMEMC_oen(ram_oe_n),
   .RAMEMC_wen(ram_we_n),
