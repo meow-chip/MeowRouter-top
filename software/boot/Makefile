@@ -14,11 +14,11 @@ all: $(O) $(COES)
 	sed -i '$$s/,/;/g' $@
 
 %.bin: %.o
-	$(PREFIX)objcopy -O binary $< $@
+	$(PREFIX)objcopy --set-start=0xFFFFFFFF8000 -O binary $< $@
 
 %.o: %.S
 	$(PREFIX)as -march=rv64imc $< -o $@.tmp
-	$(PREFIX)ld $@.tmp -o $@ -T boot.ld
+	$(PREFIX)ld $@.tmp -m elf64lriscv -o $@ -T boot.ld
 	rm $@.tmp
 
 clean:

@@ -83,6 +83,11 @@ module thinpad_top(
     output wire video_de           //行数据有效信号，用于区分消隐�?
 );
 
+wire rst;
+wire vio_rst;
+
+assign rst = reset_btn || vio_rst;
+
 /* =========== Demo code begin =========== */
 
 // PLL分频示例
@@ -95,13 +100,13 @@ pll_example clock_gen
   .clk_out3(clk_125M), // 时钟输出3，频率在IP配置界面中设�?
   .clk_out4(clk_200M), // 时钟输出4，频率在IP配置界面中设�?
   // Status and control signals
-  .reset(reset_btn), // PLL复位输入
+  .reset(rst), // PLL复位输入
   .locked(locked), // 锁定输出�?"1"表示时钟稳定，可作为后级电路复位
  // Clock in ports
   .clk_in1(clk_50M) // 外部时钟输入
  );
 
-assign eth_rst_n = ~reset_btn;
+assign eth_rst_n = ~rst;
 // 以太网交换机寄存器配�?
 eth_conf conf(
     .clk(clk_50M),
@@ -132,14 +137,6 @@ always@(posedge clk_10M or posedge reset_of_clk10M) begin
 end
 
 // 不使用内存�?�串口时，禁用其使能信号
-assign base_ram_ce_n = 1'b1;
-assign base_ram_oe_n = 1'b1;
-assign base_ram_we_n = 1'b1;
-
-assign ext_ram_ce_n = 1'b1;
-assign ext_ram_oe_n = 1'b1;
-assign ext_ram_we_n = 1'b1;
-
 assign uart_rdn = 1'b1;
 assign uart_wrn = 1'b1;
 
@@ -228,9 +225,63 @@ eth_mac eth_mac_inst (
 );
 /* =========== Demo code end =========== */
 
+wire[63:0] ram_dq_i;
+wire[63:0] ram_dq_o;
+wire[63:0] ram_dq_t;
+wire[17:0] ram_addr;
+wire[3:0] ram_be_n;
+wire ram_oe_n;
+wire ram_we_n;
+wire ram_ce_n;
+generate
+for(genvar i = 0; i < 32; i=i+1) begin: RAM_IOBUF_GEN
+  IOBUF baseram_iobuf(
+    .I(ram_dq_o[i]),
+    .O(ram_dq_i[i]),
+    .T(ram_dq_t[i]),
+    .IO(base_ram_data[i])
+  );
+  
+  IOBUF extram_iobuf(
+    .I(ram_dq_o[i+32]),
+    .O(ram_dq_i[i+32]),
+    .T(ram_dq_t[i+32]),
+    .IO(ext_ram_data[i])
+  );
+end
+endgenerate
+
+assign base_ram_addr = ram_addr;
+assign ext_ram_addr = ram_addr;
+assign base_ram_be_n = ram_be_n;
+assign ext_ram_be_n = ram_be_n;
+assign base_ram_oe_n = ram_oe_n;
+assign ext_ram_oe_n = ram_oe_n;
+assign base_ram_ce_n = ram_ce_n;
+assign ext_ram_ce_n = ram_ce_n;
+assign base_ram_we_n = ram_we_n;
+assign ext_ram_we_n = ram_we_n;
+
+assign flash_byte_n = 1;
+assign flash_vpen = 1;
+
+wire[16:0] flash_dq_i;
+wire[16:0] flash_dq_o;
+wire[16:0] flash_dq_t;
+generate
+for(genvar i = 0; i < 16; i=i+1) begin: FLASH_IOBUF_GEN
+  IOBUF flash_iobuf(
+    .I(flash_dq_o[i]),
+    .O(flash_dq_i[i]),
+    .T(flash_dq_t[i]),
+    .IO(flash_d[i])
+  );
+end
+endgenerate
+
 meowrouter mr(
   .cpu_clk(clk_50M),
-  .rst(reset_btn),
+  .rst(rst),
   
   .UART_rxd(rxd),
   .UART_txd(txd),
@@ -250,7 +301,27 @@ meowrouter mr(
   .data_tx_tuser(eth_tx_axis_mac_tuser),
   
   .DISP_tri_o({ number, leds }),
-  .SWITCH_tri_i(touch_btn)
+  .SWITCH_tri_i(touch_btn),
+ 
+  .RAMEMC_dq_i(ram_dq_i),
+  .RAMEMC_dq_o(ram_dq_o),
+  .RAMEMC_dq_t(ram_dq_t),
+  .RAMEMC_addr({9'bxxxxxxxxxx, ram_addr, 3'bxxx}),
+  .RAMEMC_ben(ram_be_n),
+  .RAMEMC_ce_n(ram_ce_n),
+  .RAMEMC_oen(ram_oe_n),
+  .RAMEMC_wen(ram_we_n),
+  
+  .FlashEMC_addr({9'bxxxxxxxxx, flash_a}),
+  .FlashEMC_dq_i(flash_dq_i),
+  .FlashEMC_dq_o(flash_dq_o),
+  .FlashEMC_dq_t(flash_dq_t),
+  .FlashEMC_rpn(flash_rp_n),
+  .FlashEMC_ce_n(flash_ce_n),
+  .FlashEMC_oen(flash_oe_n),
+  .FlashEMC_wen(flash_we_n),
+  
+  .vio_rst(vio_rst)
 );
 
 endmodule

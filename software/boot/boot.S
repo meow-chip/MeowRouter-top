@@ -12,18 +12,8 @@ print:
 _start:
   li s0, 0xFFFFF0000000
 
-  li t0, 97
-  sb t0, 4(s0)
-  li t0, 98
-  sb t0, 4(s0)
-  li t0, 99
-  sb t0, 4(s0)
-  li t0, 100
-  sb t0, 4(s0)
-
   mv a1, s0
-  lui a0, %hi(bootmsg)
-  addi a0, a0, %lo(bootmsg)
+  la a0, bootmsg
   call print
 
   # Load data from flash into memory.
@@ -32,16 +22,14 @@ _start:
   li t1, 0xFFFFF3000000
   ld t0, 0(t1)
 printhex:
-  ori t1, t0, 0xF
-  addi t1, t1, 97
+  andi t1, t0, 0xF
+  addi t1, t1, 0x41
   sb t1, 4(s0)
-  slli t1, t1, 4
-  bne t1, zero, printhex
+  srli t0, t0, 4
+  bne t0, zero, printhex
 
 spin:
   j spin
 
-  # Little endian
-
 bootmsg:
-  .string "MeowRouter boot..."
+  .string "Meow..\n\r"

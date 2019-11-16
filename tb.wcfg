@@ -15,15 +15,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="3600000000fs"></ZoomStartTime>
-      <ZoomEndTime time="4626000001fs"></ZoomEndTime>
-      <Cursor1Time time="4000000000fs"></Cursor1Time>
+      <ZoomStartTime time="36241666666fs"></ZoomStartTime>
+      <ZoomEndTime time="37431666667fs"></ZoomEndTime>
+      <Cursor1Time time="36650000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="84"></NameColumnWidth>
+      <NameColumnWidth column_width="76"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="71" />
+   <WVObjectSize size="52" />
    <wvobject fp_name="/tb/clk_50M" type="logic">
       <obj_property name="ElementShortName">clk_50M</obj_property>
       <obj_property name="ObjectShortName">clk_50M</obj_property>
@@ -200,62 +200,6 @@
       <obj_property name="ElementShortName">FLASH_INIT_FILE[119:0]</obj_property>
       <obj_property name="ObjectShortName">FLASH_INIT_FILE[119:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_axi_AWADDR" type="array">
-      <obj_property name="ElementShortName">io_axi_AWADDR[47:0]</obj_property>
-      <obj_property name="ObjectShortName">io_axi_AWADDR[47:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_axi_AWREADY" type="logic">
-      <obj_property name="ElementShortName">io_axi_AWREADY</obj_property>
-      <obj_property name="ObjectShortName">io_axi_AWREADY</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_axi_WDATA" type="array">
-      <obj_property name="ElementShortName">io_axi_WDATA[63:0]</obj_property>
-      <obj_property name="ObjectShortName">io_axi_WDATA[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_axi_WLAST" type="logic">
-      <obj_property name="ElementShortName">io_axi_WLAST</obj_property>
-      <obj_property name="ObjectShortName">io_axi_WLAST</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_axi_WREADY" type="logic">
-      <obj_property name="ElementShortName">io_axi_WREADY</obj_property>
-      <obj_property name="ObjectShortName">io_axi_WREADY</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_axi_BVALID" type="logic">
-      <obj_property name="ElementShortName">io_axi_BVALID</obj_property>
-      <obj_property name="ObjectShortName">io_axi_BVALID</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_axi_BREADY" type="logic">
-      <obj_property name="ElementShortName">io_axi_BREADY</obj_property>
-      <obj_property name="ObjectShortName">io_axi_BREADY</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_awaddr" type="array">
-      <obj_property name="ElementShortName">s_axi_awaddr[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axi_awaddr[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_awvalid" type="logic">
-      <obj_property name="ElementShortName">s_axi_awvalid</obj_property>
-      <obj_property name="ObjectShortName">s_axi_awvalid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_awready" type="logic">
-      <obj_property name="ElementShortName">s_axi_awready</obj_property>
-      <obj_property name="ObjectShortName">s_axi_awready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_wdata" type="array">
-      <obj_property name="ElementShortName">s_axi_wdata[31:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axi_wdata[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_wvalid" type="logic">
-      <obj_property name="ElementShortName">s_axi_wvalid</obj_property>
-      <obj_property name="ObjectShortName">s_axi_wvalid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_wready" type="logic">
-      <obj_property name="ElementShortName">s_axi_wready</obj_property>
-      <obj_property name="ObjectShortName">s_axi_wready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_bvalid" type="logic">
-      <obj_property name="ElementShortName">s_axi_bvalid</obj_property>
-      <obj_property name="ObjectShortName">s_axi_bvalid</obj_property>
-   </wvobject>
    <wvobject fp_name="group628" type="group">
       <obj_property name="label">IF</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -317,52 +261,32 @@
          <obj_property name="ObjectShortName">rxd</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/Peripheral/M01_AXI_awaddr" type="array">
-      <obj_property name="ElementShortName">M01_AXI_awaddr[47:0]</obj_property>
-      <obj_property name="ObjectShortName">M01_AXI_awaddr[47:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/UART/interrupt" type="logic">
+      <obj_property name="ElementShortName">interrupt</obj_property>
+      <obj_property name="ObjectShortName">interrupt</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/Peripheral/M01_AXI_awvalid" type="logic">
-      <obj_property name="ElementShortName">M01_AXI_awvalid</obj_property>
-      <obj_property name="ObjectShortName">M01_AXI_awvalid</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/io_pc" type="array">
+      <obj_property name="ElementShortName">io_pc[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_pc[47:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/Peripheral/S00_AXI_awaddr" type="array">
-      <obj_property name="ElementShortName">S00_AXI_awaddr[47:0]</obj_property>
-      <obj_property name="ObjectShortName">S00_AXI_awaddr[47:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_addr" type="array">
+      <obj_property name="ElementShortName">io_addr[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_addr[47:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/Peripheral/S00_AXI_awvalid" type="array">
-      <obj_property name="ElementShortName">S00_AXI_awvalid[0:0]</obj_property>
-      <obj_property name="ObjectShortName">S00_AXI_awvalid[0:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_write" type="logic">
+      <obj_property name="ElementShortName">io_write</obj_property>
+      <obj_property name="ObjectShortName">io_write</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/Primary/M00_AXI_awaddr" type="array">
-      <obj_property name="ElementShortName">M00_AXI_awaddr[47:0]</obj_property>
-      <obj_property name="ObjectShortName">M00_AXI_awaddr[47:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_wdata" type="array">
+      <obj_property name="ElementShortName">io_wdata[63:0]</obj_property>
+      <obj_property name="ObjectShortName">io_wdata[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/Primary/M00_AXI_awvalid" type="array">
-      <obj_property name="ElementShortName">M00_AXI_awvalid[0:0]</obj_property>
-      <obj_property name="ObjectShortName">M00_AXI_awvalid[0:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_read" type="logic">
+      <obj_property name="ElementShortName">io_read</obj_property>
+      <obj_property name="ObjectShortName">io_read</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/Primary/S00_AXI_awvalid" type="logic">
-      <obj_property name="ElementShortName">S00_AXI_awvalid</obj_property>
-      <obj_property name="ObjectShortName">S00_AXI_awvalid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/Primary/S01_AXI_awvalid" type="logic">
-      <obj_property name="ElementShortName">S01_AXI_awvalid</obj_property>
-      <obj_property name="ObjectShortName">S01_AXI_awvalid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_wdata" type="array">
-      <obj_property name="ElementShortName">s_axi_wdata[31:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axi_wdata[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_wvalid" type="logic">
-      <obj_property name="ElementShortName">s_axi_wvalid</obj_property>
-      <obj_property name="ObjectShortName">s_axi_wvalid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_wstrb" type="array">
-      <obj_property name="ElementShortName">s_axi_wstrb[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axi_wstrb[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/tx" type="logic">
-      <obj_property name="ElementShortName">tx</obj_property>
-      <obj_property name="ObjectShortName">tx</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_rdata" type="array">
+      <obj_property name="ElementShortName">io_rdata[63:0]</obj_property>
+      <obj_property name="ObjectShortName">io_rdata[63:0]</obj_property>
    </wvobject>
 </wave_config>

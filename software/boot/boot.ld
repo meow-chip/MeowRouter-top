@@ -1,4 +1,4 @@
 SECTIONS {
-  . = 0x0;
+  . = 0xFFFFFFFF8000;
   .text : { *(.text) }
 }
