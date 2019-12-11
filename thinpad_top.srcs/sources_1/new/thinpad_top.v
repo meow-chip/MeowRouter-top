@@ -91,12 +91,12 @@ assign rst = reset_btn || vio_rst;
 /* =========== Demo code begin =========== */
 
 // PLL分频示例
-wire locked, clk_10M, clk_20M, clk_125M, clk_200M;
+wire locked, clk_10M, clk_CPU, clk_125M, clk_200M;
 pll_example clock_gen 
  (
   // Clock out ports
   .clk_out1(clk_10M), // 时钟输出1，频率在IP配置界面中设�?
-  .clk_out2(clk_20M), // 时钟输出2，频率在IP配置界面中设�?
+  .clk_CPU(clk_CPU), // 时钟输出2，频率在IP配置界面中设�?
   .clk_out3(clk_125M), // 时钟输出3，频率在IP配置界面中设�?
   .clk_out4(clk_200M), // 时钟输出4，频率在IP配置界面中设�?
   // Status and control signals
@@ -228,7 +228,7 @@ eth_mac eth_mac_inst (
 wire[63:0] ram_dq_i;
 wire[63:0] ram_dq_o;
 wire[63:0] ram_dq_t;
-wire[17:0] ram_addr;
+wire[31:0] ram_addr;
 wire[7:0] ram_be_n;
 wire ram_oe_n;
 wire ram_we_n;
@@ -251,8 +251,8 @@ for(genvar i = 0; i < 32; i=i+1) begin: RAM_IOBUF_GEN
 end
 endgenerate
 
-assign base_ram_addr = ram_addr;
-assign ext_ram_addr = ram_addr;
+assign base_ram_addr = ram_addr[22:3];
+assign ext_ram_addr = ram_addr[22:3];
 assign base_ram_oe_n = ram_oe_n;
 assign ext_ram_oe_n = ram_oe_n;
 assign base_ram_ce_n = ram_ce_n;
@@ -278,7 +278,7 @@ end
 endgenerate
 
 meowrouter mr(
-  .cpu_clk(clk_50M),
+  .cpu_clk(clk_CPU),
   .rst(rst),
   
   .UART_rxd(rxd),
@@ -304,13 +304,13 @@ meowrouter mr(
   .RAMEMC_dq_i(ram_dq_i),
   .RAMEMC_dq_o(ram_dq_o),
   .RAMEMC_dq_t(ram_dq_t),
-  .RAMEMC_addr({9'bxxxxxxxxx, ram_addr, 3'bxxx}),
+  .RAMEMC_addr(ram_addr),
   .RAMEMC_ben({ ext_ram_be_n, base_ram_be_n }),
   .RAMEMC_ce_n(ram_ce_n),
   .RAMEMC_oen(ram_oe_n),
   .RAMEMC_wen(ram_we_n),
   
-  .FlashEMC_addr({9'bxxxxxxxxx, flash_a}),
+  .FlashEMC_addr(flash_a),
   .FlashEMC_dq_i(flash_dq_i),
   .FlashEMC_dq_o(flash_dq_o),
   .FlashEMC_dq_t(flash_dq_t),

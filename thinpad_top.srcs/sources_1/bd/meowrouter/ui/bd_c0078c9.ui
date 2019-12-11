@@ -4,58 +4,62 @@
    "commentid":"",
    "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
 #  -string -flagsOSRD
-preplace port RAMEMC -pg 1 -y 230 -defaultsOSRD
-preplace port UART -pg 1 -y 700 -defaultsOSRD
+preplace port RAMEMC -pg 1 -y 300 -defaultsOSRD
+preplace port UART -pg 1 -y 1010 -defaultsOSRD
 preplace port SWITCH -pg 1 -y 70 -defaultsOSRD
 preplace port DISP -pg 1 -y 90 -defaultsOSRD
-preplace port cpu_clk -pg 1 -y 200 -defaultsOSRD
-preplace port rst -pg 1 -y 280 -defaultsOSRD
-preplace port FlashEMC -pg 1 -y 530 -defaultsOSRD
-preplace port data_tx -pg 1 -y 840 -defaultsOSRD
-preplace port data_tx_clk -pg 1 -y 880 -defaultsOSRD
-preplace port data_clk -pg 1 -y 820 -defaultsOSRD
-preplace port data_rx_clk -pg 1 -y 860 -defaultsOSRD
-preplace port data_rx -pg 1 -y 800 -defaultsOSRD
-preplace portBus vio_rst -pg 1 -y 620 -defaultsOSRD
-preplace inst Primary -pg 1 -lvl 4 -y 360 -defaultsOSRD
-preplace inst CPU -pg 1 -lvl 2 -y 210 -defaultsOSRD
-preplace inst UART -pg 1 -lvl 5 -y 710 -defaultsOSRD
-preplace inst RAMEMC -pg 1 -lvl 5 -y 230 -defaultsOSRD
-preplace inst EthBuf -pg 1 -lvl 6 -y 390 -defaultsOSRD
-preplace inst NRST -pg 1 -lvl 2 -y 100 -defaultsOSRD
-preplace inst axi_vip_0 -pg 1 -lvl 3 -y 220 -defaultsOSRD
-preplace inst FlashEMC -pg 1 -lvl 5 -y 530 -defaultsOSRD
+preplace port cpu_clk -pg 1 -y 420 -defaultsOSRD
+preplace port rst -pg 1 -y 500 -defaultsOSRD
+preplace port FlashEMC -pg 1 -y 650 -defaultsOSRD
+preplace port data_tx -pg 1 -y 200 -defaultsOSRD
+preplace port data_tx_clk -pg 1 -y 220 -defaultsOSRD
+preplace port data_clk -pg 1 -y 180 -defaultsOSRD
+preplace port data_rx_clk -pg 1 -y 200 -defaultsOSRD
+preplace port data_rx -pg 1 -y 160 -defaultsOSRD
+preplace portBus vio_rst -pg 1 -y 920 -defaultsOSRD
+preplace inst Primary -pg 1 -lvl 4 -y 470 -defaultsOSRD
+preplace inst CPU -pg 1 -lvl 2 -y 480 -defaultsOSRD
+preplace inst UART -pg 1 -lvl 5 -y 1020 -defaultsOSRD
+preplace inst RAMEMC -pg 1 -lvl 5 -y 300 -defaultsOSRD
+preplace inst EthBuf -pg 1 -lvl 6 -y 490 -defaultsOSRD
+preplace inst NRST -pg 1 -lvl 2 -y 340 -defaultsOSRD
+preplace inst axi_vip_0 -pg 1 -lvl 3 -y 310 -defaultsOSRD
+preplace inst FlashEMC -pg 1 -lvl 5 -y 650 -defaultsOSRD
 preplace inst Board -pg 1 -lvl 5 -y 80 -defaultsOSRD
-preplace inst Router -pg 1 -lvl 6 -y 840 -defaultsOSRD
-preplace inst Reset -pg 1 -lvl 1 -y 300 -defaultsOSRD
-preplace inst VIO -pg 1 -lvl 6 -y 620 -defaultsOSRD
-preplace inst EthBufCtrl -pg 1 -lvl 5 -y 380 -defaultsOSRD
-preplace netloc CPU_io_axi 1 2 1 N
-preplace netloc FlashEMC_EMC_INTF 1 5 2 NJ 530 NJ
-preplace netloc Primary_M00_AXI 1 4 1 1230
+preplace inst Router -pg 1 -lvl 6 -y 200 -defaultsOSRD
+preplace inst IntCont -pg 1 -lvl 5 -y 830 -defaultsOSRD
+preplace inst Reset -pg 1 -lvl 1 -y 520 -defaultsOSRD
+preplace inst VIO -pg 1 -lvl 6 -y 920 -defaultsOSRD
+preplace inst EthBufCtrl -pg 1 -lvl 5 -y 480 -defaultsOSRD
+preplace netloc FlashEMC_EMC_INTF 1 5 2 NJ 650 NJ
+preplace netloc CPU_io_axi 1 2 1 690
+preplace netloc Primary_M00_AXI 1 4 1 1250
 preplace netloc Board_GPIO 1 5 2 NJ 70 NJ
-preplace netloc rst_1 1 0 1 NJ
+preplace netloc rst_1 1 0 6 -10 180 NJ 180 NJ 180 NJ 180 NJ 180 1610
 preplace netloc axi_interconnect_0_M02_AXI 1 4 1 N
-preplace netloc Primary_M03_AXI 1 4 1 1220
-preplace netloc util_vector_logic_0_Res 1 2 2 670 310 900
-preplace netloc proc_sys_reset_0_mb_reset 1 1 5 370 840 NJ 840 NJ 840 NJ 840 NJ
-preplace netloc rtclk_1 1 0 6 NJ 820 NJ 820 NJ 820 NJ 820 NJ 820 NJ
-preplace netloc axi_vip_0_M_AXI 1 3 1 N
-preplace netloc axi_uart16550_0_UART 1 5 2 NJ 700 NJ
-preplace netloc Primary_M04_AXI 1 4 1 1220
+preplace netloc Primary_M05_AXI 1 4 1 1240
+preplace netloc Primary_M03_AXI 1 4 1 1240
+preplace netloc proc_sys_reset_0_mb_reset 1 1 1 350
+preplace netloc util_vector_logic_0_Res 1 2 2 670 230 900
+preplace netloc rtclk_1 1 0 6 -20J 190 NJ 190 NJ 190 NJ 190 NJ 190 1620J
 preplace netloc Router_io_tx 1 6 1 NJ
-preplace netloc tx_clk_1 1 0 6 NJ 880 NJ 880 NJ 880 NJ 880 NJ 880 NJ
+preplace netloc axi_vip_0_M_AXI 1 3 1 N
+preplace netloc Primary_M04_AXI 1 4 1 1260
+preplace netloc axi_uart16550_0_UART 1 5 2 NJ 1010 NJ
+preplace netloc tx_clk_1 1 0 6 0J 210 NJ 210 NJ 210 NJ 210 NJ 210 1590J
 preplace netloc vio_0_probe_out0 1 6 1 NJ
-preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 3 N 320 NJ 320 880J
-preplace netloc clk_1 1 0 6 20 200 360 40 680 300 890 560 1240 620 NJ
-preplace netloc io_rx_1 1 0 6 NJ 800 NJ 800 NJ 800 NJ 800 NJ 800 NJ
+preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 3 360J 400 NJ 400 890
+preplace netloc clk_1 1 0 6 -20 420 340 280 680 220 910 220 1270 920 NJ
+preplace netloc io_rx_1 1 0 6 NJ 160 NJ 160 NJ 160 NJ 160 NJ 160 NJ
 preplace netloc axi_gpio_0_GPIO2 1 5 2 NJ 90 NJ
-preplace netloc rx_clk_1 1 0 6 NJ 860 NJ 860 NJ 860 NJ 860 NJ 860 NJ
-preplace netloc proc_sys_reset_0_peripheral_aresetn 1 1 4 N 340 NJ 340 880 570 1250
-preplace netloc Primary_M01_AXI 1 4 1 1230
+preplace netloc rx_clk_1 1 0 6 NJ 200 NJ 200 NJ 200 NJ 200 NJ 200 1600J
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 1 4 NJ 560 NJ 560 920 690 1280
+preplace netloc Primary_M01_AXI 1 4 1 1250
+preplace netloc UART_ip2intc_irpt 1 4 2 1290 740 1570
 preplace netloc axi_bram_ctrl_1_BRAM_PORTA 1 5 1 NJ
-preplace netloc RAMEMC_EMC_INTF 1 5 2 NJ 230 NJ
-levelinfo -pg 1 0 190 520 780 1060 1390 1670 1820 -top 0 -bot 940
+preplace netloc RAMEMC_EMC_INTF 1 5 2 NJ 300 NJ
+preplace netloc axi_intc_0_irq 1 1 5 370 150 NJ 150 NJ 150 1290J 170 1580
+levelinfo -pg 1 -40 170 520 790 1080 1430 1750 1900 -top 0 -bot 1390
 "
 }
 0

@@ -6,24 +6,28 @@
       <db_ref path="tb_behav.wdb" id="1">
          <top_modules>
             <top_module name="axi_bram_ctrl_funcs" />
+            <top_module name="axi_vip_pkg" />
+            <top_module name="emc_pkg" />
             <top_module name="glbl" />
             <top_module name="ipif_pkg" />
             <top_module name="lib_pkg" />
+            <top_module name="std" />
             <top_module name="tb" />
             <top_module name="vcomponents" />
+            <top_module name="xil_common_vip_pkg" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="36241666666fs"></ZoomStartTime>
-      <ZoomEndTime time="37431666667fs"></ZoomEndTime>
-      <Cursor1Time time="36650000000fs"></Cursor1Time>
+      <ZoomStartTime time="11555951666fs"></ZoomStartTime>
+      <ZoomEndTime time="13695951667fs"></ZoomEndTime>
+      <Cursor1Time time="12339285000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="76"></NameColumnWidth>
-      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+      <NameColumnWidth column_width="109"></NameColumnWidth>
+      <ValueColumnWidth column_width="118"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="52" />
+   <WVObjectSize size="55" />
    <wvobject fp_name="/tb/clk_50M" type="logic">
       <obj_property name="ElementShortName">clk_50M</obj_property>
       <obj_property name="ObjectShortName">clk_50M</obj_property>
@@ -197,60 +201,15 @@
       <obj_property name="ObjectShortName">EXT_RAM_INIT_FILE[103:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/FLASH_INIT_FILE" type="array">
-      <obj_property name="ElementShortName">FLASH_INIT_FILE[119:0]</obj_property>
-      <obj_property name="ObjectShortName">FLASH_INIT_FILE[119:0]</obj_property>
+      <obj_property name="ElementShortName">FLASH_INIT_FILE[335:0]</obj_property>
+      <obj_property name="ObjectShortName">FLASH_INIT_FILE[335:0]</obj_property>
    </wvobject>
    <wvobject fp_name="group628" type="group">
       <obj_property name="label">IF</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_icache_addr" type="array">
-         <obj_property name="ElementShortName">io_icache_addr[47:0]</obj_property>
-         <obj_property name="ObjectShortName">io_icache_addr[47:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_icache_data" type="array">
-         <obj_property name="ElementShortName">io_icache_data[31:0]</obj_property>
-         <obj_property name="ObjectShortName">io_icache_data[31:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_output_0_addr" type="array">
-         <obj_property name="ElementShortName">io_output_0_addr[47:0]</obj_property>
-         <obj_property name="ObjectShortName">io_output_0_addr[47:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_output_0_instr_base" type="array">
-         <obj_property name="ElementShortName">io_output_0_instr_base[2:0]</obj_property>
-         <obj_property name="ObjectShortName">io_output_0_instr_base[2:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_output_0_instr_op" type="array">
-         <obj_property name="ElementShortName">io_output_0_instr_op[4:0]</obj_property>
-         <obj_property name="ObjectShortName">io_output_0_instr_op[4:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_output_0_vacant" type="logic">
-         <obj_property name="ElementShortName">io_output_0_vacant</obj_property>
-         <obj_property name="ObjectShortName">io_output_0_vacant</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_output_1_addr" type="array">
-         <obj_property name="ElementShortName">io_output_1_addr[47:0]</obj_property>
-         <obj_property name="ObjectShortName">io_output_1_addr[47:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_output_1_instr_base" type="array">
-         <obj_property name="ElementShortName">io_output_1_instr_base[2:0]</obj_property>
-         <obj_property name="ObjectShortName">io_output_1_instr_base[2:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_output_1_instr_op" type="array">
-         <obj_property name="ElementShortName">io_output_1_instr_op[4:0]</obj_property>
-         <obj_property name="ObjectShortName">io_output_1_instr_op[4:0]</obj_property>
-         <obj_property name="Radix">BINARYRADIX</obj_property>
-      </wvobject>
       <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/tailFailed" type="logic">
          <obj_property name="ElementShortName">tailFailed</obj_property>
          <obj_property name="ObjectShortName">tailFailed</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/fetch/io_output_1_vacant" type="logic">
-         <obj_property name="ElementShortName">io_output_1_vacant</obj_property>
-         <obj_property name="ObjectShortName">io_output_1_vacant</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_axi_AWADDR" type="array">
-         <obj_property name="ElementShortName">io_axi_AWADDR[47:0]</obj_property>
-         <obj_property name="ObjectShortName">io_axi_AWADDR[47:0]</obj_property>
       </wvobject>
       <wvobject fp_name="/tb/dut/txd" type="logic">
          <obj_property name="ElementShortName">txd</obj_property>
@@ -261,32 +220,44 @@
          <obj_property name="ObjectShortName">rxd</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/interrupt" type="logic">
-      <obj_property name="ElementShortName">interrupt</obj_property>
-      <obj_property name="ObjectShortName">interrupt</obj_property>
-   </wvobject>
    <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/io_pc" type="array">
-      <obj_property name="ElementShortName">io_pc[47:0]</obj_property>
-      <obj_property name="ObjectShortName">io_pc[47:0]</obj_property>
+      <obj_property name="ElementShortName">io_pc[63:0]</obj_property>
+      <obj_property name="ObjectShortName">io_pc[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_addr" type="array">
-      <obj_property name="ElementShortName">io_addr[47:0]</obj_property>
-      <obj_property name="ObjectShortName">io_addr[47:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_ARADDR" type="array">
+      <obj_property name="ElementShortName">io_axi_ARADDR[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_axi_ARADDR[47:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_write" type="logic">
-      <obj_property name="ElementShortName">io_write</obj_property>
-      <obj_property name="ObjectShortName">io_write</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_ARVALID" type="logic">
+      <obj_property name="ElementShortName">io_axi_ARVALID</obj_property>
+      <obj_property name="ObjectShortName">io_axi_ARVALID</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_wdata" type="array">
-      <obj_property name="ElementShortName">io_wdata[63:0]</obj_property>
-      <obj_property name="ObjectShortName">io_wdata[63:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_RDATA" type="array">
+      <obj_property name="ElementShortName">io_axi_RDATA[63:0]</obj_property>
+      <obj_property name="ObjectShortName">io_axi_RDATA[63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_read" type="logic">
-      <obj_property name="ElementShortName">io_read</obj_property>
-      <obj_property name="ObjectShortName">io_read</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_RVALID" type="logic">
+      <obj_property name="ElementShortName">io_axi_RVALID</obj_property>
+      <obj_property name="ObjectShortName">io_axi_RVALID</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/exec/dcache/io_rdata" type="array">
-      <obj_property name="ElementShortName">io_rdata[63:0]</obj_property>
-      <obj_property name="ObjectShortName">io_rdata[63:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_RLAST" type="logic">
+      <obj_property name="ElementShortName">io_axi_RLAST</obj_property>
+      <obj_property name="ObjectShortName">io_axi_RLAST</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/FlashEMC/s_axi_mem_arvalid" type="logic">
+      <obj_property name="ElementShortName">s_axi_mem_arvalid</obj_property>
+      <obj_property name="ObjectShortName">s_axi_mem_arvalid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/FlashEMC/s_axi_mem_arlen" type="array">
+      <obj_property name="ElementShortName">s_axi_mem_arlen[7:0]</obj_property>
+      <obj_property name="ObjectShortName">s_axi_mem_arlen[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/FlashEMC/s_axi_mem_arsize" type="array">
+      <obj_property name="ElementShortName">s_axi_mem_arsize[2:0]</obj_property>
+      <obj_property name="ObjectShortName">s_axi_mem_arsize[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/FlashEMC/s_axi_mem_rvalid" type="logic">
+      <obj_property name="ElementShortName">s_axi_mem_rvalid</obj_property>
+      <obj_property name="ObjectShortName">s_axi_mem_rvalid</obj_property>
    </wvobject>
 </wave_config>

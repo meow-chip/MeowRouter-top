@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Mon Sep 16 00:27:45 2019
+-- Date        : Tue Dec 10 19:23:27 2019
 -- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
---               C:/workspace/Network/thinpad_top/thinpad_top.srcs/sources_1/ip/pll_example/pll_example_sim_netlist.vhdl
+--               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/ip/pll_example/pll_example_sim_netlist.vhdl
 -- Design      : pll_example
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -17,7 +17,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity pll_example_pll_example_clk_wiz is
   port (
     clk_out1 : out STD_LOGIC;
-    clk_out2 : out STD_LOGIC;
+    clk_CPU : out STD_LOGIC;
     clk_out3 : out STD_LOGIC;
     clk_out4 : out STD_LOGIC;
     reset : in STD_LOGIC;
@@ -29,9 +29,9 @@ entity pll_example_pll_example_clk_wiz is
 end pll_example_pll_example_clk_wiz;
 
 architecture STRUCTURE of pll_example_pll_example_clk_wiz is
+  signal clk_CPU_pll_example : STD_LOGIC;
   signal clk_in1_pll_example : STD_LOGIC;
   signal clk_out1_pll_example : STD_LOGIC;
-  signal clk_out2_pll_example : STD_LOGIC;
   signal clk_out3_pll_example : STD_LOGIC;
   signal clk_out4_pll_example : STD_LOGIC;
   signal clkfbout_buf_pll_example : STD_LOGIC;
@@ -84,8 +84,8 @@ clkout1_buf: unisim.vcomponents.BUFG
     );
 clkout2_buf: unisim.vcomponents.BUFG
      port map (
-      I => clk_out2_pll_example,
-      O => clk_out2
+      I => clk_CPU_pll_example,
+      O => clk_CPU
     );
 clkout3_buf: unisim.vcomponents.BUFG
      port map (
@@ -100,24 +100,24 @@ clkout4_buf: unisim.vcomponents.BUFG
 mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
     generic map(
       BANDWIDTH => "OPTIMIZED",
-      CLKFBOUT_MULT_F => 20.000000,
+      CLKFBOUT_MULT_F => 63.000000,
       CLKFBOUT_PHASE => 0.000000,
       CLKFBOUT_USE_FINE_PS => false,
       CLKIN1_PERIOD => 20.000000,
       CLKIN2_PERIOD => 0.000000,
-      CLKOUT0_DIVIDE_F => 100.000000,
+      CLKOUT0_DIVIDE_F => 63.000000,
       CLKOUT0_DUTY_CYCLE => 0.500000,
       CLKOUT0_PHASE => 0.000000,
       CLKOUT0_USE_FINE_PS => false,
-      CLKOUT1_DIVIDE => 50,
+      CLKOUT1_DIVIDE => 9,
       CLKOUT1_DUTY_CYCLE => 0.500000,
       CLKOUT1_PHASE => 0.000000,
       CLKOUT1_USE_FINE_PS => false,
-      CLKOUT2_DIVIDE => 8,
+      CLKOUT2_DIVIDE => 5,
       CLKOUT2_DUTY_CYCLE => 0.500000,
       CLKOUT2_PHASE => 0.000000,
       CLKOUT2_USE_FINE_PS => false,
-      CLKOUT3_DIVIDE => 5,
+      CLKOUT3_DIVIDE => 3,
       CLKOUT3_DUTY_CYCLE => 0.500000,
       CLKOUT3_PHASE => 0.000000,
       CLKOUT3_USE_FINE_PS => false,
@@ -135,7 +135,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKOUT6_PHASE => 0.000000,
       CLKOUT6_USE_FINE_PS => false,
       COMPENSATION => "ZHOLD",
-      DIVCLK_DIVIDE => 1,
+      DIVCLK_DIVIDE => 5,
       IS_CLKINSEL_INVERTED => '0',
       IS_PSEN_INVERTED => '0',
       IS_PSINCDEC_INVERTED => '0',
@@ -159,7 +159,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKINSTOPPED => NLW_mmcm_adv_inst_CLKINSTOPPED_UNCONNECTED,
       CLKOUT0 => clk_out1_pll_example,
       CLKOUT0B => NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED,
-      CLKOUT1 => clk_out2_pll_example,
+      CLKOUT1 => clk_CPU_pll_example,
       CLKOUT1B => NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED,
       CLKOUT2 => clk_out3_pll_example,
       CLKOUT2B => NLW_mmcm_adv_inst_CLKOUT2B_UNCONNECTED,
@@ -191,7 +191,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity pll_example is
   port (
     clk_out1 : out STD_LOGIC;
-    clk_out2 : out STD_LOGIC;
+    clk_CPU : out STD_LOGIC;
     clk_out3 : out STD_LOGIC;
     clk_out4 : out STD_LOGIC;
     reset : in STD_LOGIC;
@@ -206,9 +206,9 @@ architecture STRUCTURE of pll_example is
 begin
 inst: entity work.pll_example_pll_example_clk_wiz
      port map (
+      clk_CPU => clk_CPU,
       clk_in1 => clk_in1,
       clk_out1 => clk_out1,
-      clk_out2 => clk_out2,
       clk_out3 => clk_out3,
       clk_out4 => clk_out4,
       locked => locked,

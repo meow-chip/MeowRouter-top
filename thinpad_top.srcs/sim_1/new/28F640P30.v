@@ -1506,6 +1506,11 @@ end
           if(fd)begin
             if (Info) $display("[%t] Load Memory from file: %s",$time, FILENAME_MEM);
             init_size = $fread(memory, fd) / 2;
+            $display("[%t] Init Size: %d",$time, init_size);
+            $display("[%t] memory[0]: %h",$time, memory[0]);
+            $display("[%t] memory[1]: %h",$time, memory[1]);
+            $display("[%t] memory[2]: %h",$time, memory[2]);
+            $display("[%t] memory[3]: %h",$time, memory[3]);
             $fclose(fd);
             for (i = 0; i < init_size; i = i + 1)
               memory[i] = {memory[i][0+:8],memory[i][8+:8]};

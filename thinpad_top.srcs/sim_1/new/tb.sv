@@ -52,7 +52,7 @@ wire eth_rgmii_rxc;      //RGMII RX 时钟
 //Windows�?要注意路径分隔符的转义，例如"D:\\foo\\bar.bin"
 parameter BASE_RAM_INIT_FILE = "/tmp/main.bin"; //BaseRAM初始化文件，请修改为实际的绝对路�?
 parameter EXT_RAM_INIT_FILE = "/tmp/eram.bin";    //ExtRAM初始化文件，请修改为实际的绝对路�?
-parameter FLASH_INIT_FILE = "/tmp/kernel.elf";    //Flash初始化文件，请修改为实际的绝对路�?
+parameter FLASH_INIT_FILE = "../../../../software/firmware/firmware.bin";    //Flash初始化文件，请修改为实际的绝对路�?
 
 assign rxd = 1'b1; //idle state
 
