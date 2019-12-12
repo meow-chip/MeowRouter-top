@@ -66,7 +66,12 @@ module meowrouter_Router_0 (
   io_tx_tvalid,
   io_tx_tlast,
   io_tx_tready,
-  io_tx_tuser
+  io_tx_tuser,
+  io_buf_clk,
+  io_buf_addr,
+  io_buf_din,
+  io_buf_dout,
+  io_buf_we
 );
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clock, ASSOCIATED_BUSIF io_rx:io_tx, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_data_clk, INSERT_VIP 0" *)
@@ -99,6 +104,13 @@ input wire io_tx_tready;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_tx, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 1, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN meowrouter_data_clk, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 io_tx TUSER" *)
 output wire io_tx_tuser;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_buf_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN meowrouter_Router_0_io_buf_clk, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 io_buf_clk CLK" *)
+output wire io_buf_clk;
+output wire [31 : 0] io_buf_addr;
+output wire [7 : 0] io_buf_din;
+input wire [7 : 0] io_buf_dout;
+output wire io_buf_we;
 
   Top inst (
     .clock(clock),
@@ -112,6 +124,11 @@ output wire io_tx_tuser;
     .io_tx_tvalid(io_tx_tvalid),
     .io_tx_tlast(io_tx_tlast),
     .io_tx_tready(io_tx_tready),
-    .io_tx_tuser(io_tx_tuser)
+    .io_tx_tuser(io_tx_tuser),
+    .io_buf_clk(io_buf_clk),
+    .io_buf_addr(io_buf_addr),
+    .io_buf_din(io_buf_din),
+    .io_buf_dout(io_buf_dout),
+    .io_buf_we(io_buf_we)
   );
 endmodule

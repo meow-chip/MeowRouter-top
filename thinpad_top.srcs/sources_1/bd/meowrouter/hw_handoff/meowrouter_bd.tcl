@@ -208,6 +208,9 @@ proc create_root_design { parentCell } {
  ] $rst
   set vio_rst [ create_bd_port -dir O -from 0 -to 0 vio_rst ]
 
+  # Create instance: AXIVerif, and set properties
+  set AXIVerif [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_vip:1.1 AXIVerif ]
+
   # Create instance: Board, and set properties
   set Board [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 Board ]
   set_property -dict [ list \
@@ -217,6 +220,14 @@ proc create_root_design { parentCell } {
    CONFIG.C_GPIO_WIDTH {16} \
    CONFIG.C_IS_DUAL {1} \
  ] $Board
+
+  # Create instance: BufAddrSlice, and set properties
+  set BufAddrSlice [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 BufAddrSlice ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {31} \
+   CONFIG.DIN_TO {2} \
+   CONFIG.DOUT_WIDTH {30} \
+ ] $BufAddrSlice
 
   # Create instance: CPU, and set properties
   set block_name Core
@@ -235,32 +246,36 @@ proc create_root_design { parentCell } {
    CONFIG.Assume_Synchronous_Clk {false} \
    CONFIG.Byte_Size {8} \
    CONFIG.EN_SAFETY_CKT {true} \
-   CONFIG.Enable_32bit_Address {true} \
+   CONFIG.Enable_32bit_Address {false} \
    CONFIG.Enable_B {Use_ENB_Pin} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
    CONFIG.Port_B_Clock {100} \
    CONFIG.Port_B_Enable_Rate {100} \
    CONFIG.Port_B_Write_Rate {50} \
-   CONFIG.Read_Width_A {64} \
-   CONFIG.Read_Width_B {64} \
-   CONFIG.Register_PortA_Output_of_Memory_Primitives {false} \
+   CONFIG.Read_Width_A {32} \
+   CONFIG.Read_Width_B {8} \
+   CONFIG.Register_PortA_Output_of_Memory_Core {false} \
+   CONFIG.Register_PortA_Output_of_Memory_Primitives {true} \
    CONFIG.Register_PortB_Output_of_Memory_Core {false} \
    CONFIG.Register_PortB_Output_of_Memory_Primitives {false} \
    CONFIG.Reset_Memory_Latch_A {false} \
    CONFIG.Reset_Memory_Latch_B {false} \
    CONFIG.Use_Byte_Write_Enable {true} \
    CONFIG.Use_RSTA_Pin {true} \
-   CONFIG.Use_RSTB_Pin {true} \
-   CONFIG.Write_Width_A {64} \
-   CONFIG.Write_Width_B {64} \
-   CONFIG.use_bram_block {BRAM_Controller} \
+   CONFIG.Use_RSTB_Pin {false} \
+   CONFIG.Write_Depth_A {4096} \
+   CONFIG.Write_Width_A {32} \
+   CONFIG.Write_Width_B {8} \
+   CONFIG.use_bram_block {Stand_Alone} \
  ] $EthBuf
 
   # Create instance: EthBufCtrl, and set properties
   set EthBufCtrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 EthBufCtrl ]
   set_property -dict [ list \
-   CONFIG.DATA_WIDTH {64} \
+   CONFIG.DATA_WIDTH {32} \
    CONFIG.ECC_TYPE {0} \
+   CONFIG.PROTOCOL {AXI4} \
+   CONFIG.READ_LATENCY {2} \
    CONFIG.SINGLE_PORT_BRAM {1} \
  ] $EthBufCtrl
 
@@ -349,12 +364,10 @@ proc create_root_design { parentCell } {
    CONFIG.C_NUM_PROBE_OUT {1} \
  ] $VIO
 
-  # Create instance: axi_vip_0, and set properties
-  set axi_vip_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_vip:1.1 axi_vip_0 ]
-
   # Create interface connections
   connect_bd_intf_net -intf_net Board_GPIO [get_bd_intf_ports SWITCH] [get_bd_intf_pins Board/GPIO]
-  connect_bd_intf_net -intf_net CPU_io_axi [get_bd_intf_pins CPU/io_axi] [get_bd_intf_pins axi_vip_0/S_AXI]
+  connect_bd_intf_net -intf_net CPU_io_axi [get_bd_intf_pins AXIVerif/S_AXI] [get_bd_intf_pins CPU/io_axi]
+  connect_bd_intf_net -intf_net EthBufCtrl_BRAM_PORTA [get_bd_intf_pins EthBuf/BRAM_PORTA] [get_bd_intf_pins EthBufCtrl/BRAM_PORTA]
   connect_bd_intf_net -intf_net FlashEMC_EMC_INTF [get_bd_intf_ports FlashEMC] [get_bd_intf_pins FlashEMC/EMC_INTF]
   connect_bd_intf_net -intf_net Primary_M00_AXI [get_bd_intf_pins Board/S_AXI] [get_bd_intf_pins Primary/M00_AXI]
   connect_bd_intf_net -intf_net Primary_M01_AXI [get_bd_intf_pins Primary/M01_AXI] [get_bd_intf_pins UART/S_AXI]
@@ -363,17 +376,28 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net Primary_M05_AXI [get_bd_intf_pins IntCont/s_axi] [get_bd_intf_pins Primary/M05_AXI]
   connect_bd_intf_net -intf_net RAMEMC_EMC_INTF [get_bd_intf_ports RAMEMC] [get_bd_intf_pins RAMEMC/EMC_INTF]
   connect_bd_intf_net -intf_net Router_io_tx [get_bd_intf_ports data_tx] [get_bd_intf_pins Router/io_tx]
-  connect_bd_intf_net -intf_net axi_bram_ctrl_1_BRAM_PORTA [get_bd_intf_pins EthBuf/BRAM_PORTA] [get_bd_intf_pins EthBufCtrl/BRAM_PORTA]
   connect_bd_intf_net -intf_net axi_gpio_0_GPIO2 [get_bd_intf_ports DISP] [get_bd_intf_pins Board/GPIO2]
   connect_bd_intf_net -intf_net axi_interconnect_0_M02_AXI [get_bd_intf_pins EthBufCtrl/S_AXI] [get_bd_intf_pins Primary/M02_AXI]
   connect_bd_intf_net -intf_net axi_uart16550_0_UART [get_bd_intf_ports UART] [get_bd_intf_pins UART/UART]
-  connect_bd_intf_net -intf_net axi_vip_0_M_AXI [get_bd_intf_pins Primary/S00_AXI] [get_bd_intf_pins axi_vip_0/M_AXI]
+  connect_bd_intf_net -intf_net axi_vip_0_M_AXI [get_bd_intf_pins AXIVerif/M_AXI] [get_bd_intf_pins Primary/S00_AXI]
   connect_bd_intf_net -intf_net io_rx_1 [get_bd_intf_ports data_rx] [get_bd_intf_pins Router/io_rx]
 
   # Create port connections
+  connect_bd_net -net EthBufCtrl_bram_addr_a [get_bd_pins BufAddrSlice/Din] [get_bd_pins EthBufCtrl/bram_addr_a]
+  connect_bd_net -net EthBufCtrl_bram_clk_a [get_bd_pins EthBuf/clka] [get_bd_pins EthBufCtrl/bram_clk_a]
+  connect_bd_net -net EthBufCtrl_bram_en_a [get_bd_pins EthBuf/ena] [get_bd_pins EthBufCtrl/bram_en_a]
+  connect_bd_net -net EthBufCtrl_bram_rst_a [get_bd_pins EthBuf/rsta] [get_bd_pins EthBufCtrl/bram_rst_a]
+  connect_bd_net -net EthBufCtrl_bram_we_a [get_bd_pins EthBuf/wea] [get_bd_pins EthBufCtrl/bram_we_a]
+  connect_bd_net -net EthBufCtrl_bram_wrdata_a [get_bd_pins EthBuf/dina] [get_bd_pins EthBufCtrl/bram_wrdata_a]
+  connect_bd_net -net EthBuf_douta [get_bd_pins EthBuf/douta] [get_bd_pins EthBufCtrl/bram_rddata_a]
+  connect_bd_net -net EthBuf_doutb [get_bd_pins EthBuf/doutb] [get_bd_pins Router/io_buf_dout]
+  connect_bd_net -net Router_io_buf_addr [get_bd_pins EthBuf/addrb] [get_bd_pins Router/io_buf_addr]
+  connect_bd_net -net Router_io_buf_clk [get_bd_pins EthBuf/clkb] [get_bd_pins Router/io_buf_clk]
+  connect_bd_net -net Router_io_buf_din [get_bd_pins EthBuf/dinb] [get_bd_pins Router/io_buf_din]
+  connect_bd_net -net Router_io_buf_we [get_bd_pins EthBuf/web] [get_bd_pins Router/io_buf_we]
   connect_bd_net -net UART_ip2intc_irpt [get_bd_pins IntCont/intr] [get_bd_pins UART/ip2intc_irpt]
   connect_bd_net -net axi_intc_0_irq [get_bd_pins CPU/io_eint] [get_bd_pins IntCont/irq]
-  connect_bd_net -net clk_1 [get_bd_ports cpu_clk] [get_bd_pins Board/s_axi_aclk] [get_bd_pins CPU/clock] [get_bd_pins EthBufCtrl/s_axi_aclk] [get_bd_pins FlashEMC/rdclk] [get_bd_pins FlashEMC/s_axi_aclk] [get_bd_pins IntCont/s_axi_aclk] [get_bd_pins Primary/ACLK] [get_bd_pins Primary/M00_ACLK] [get_bd_pins Primary/M01_ACLK] [get_bd_pins Primary/M02_ACLK] [get_bd_pins Primary/M03_ACLK] [get_bd_pins Primary/M04_ACLK] [get_bd_pins Primary/M05_ACLK] [get_bd_pins Primary/S00_ACLK] [get_bd_pins RAMEMC/rdclk] [get_bd_pins RAMEMC/s_axi_aclk] [get_bd_pins Reset/slowest_sync_clk] [get_bd_pins UART/s_axi_aclk] [get_bd_pins VIO/clk] [get_bd_pins axi_vip_0/aclk]
+  connect_bd_net -net clk_1 [get_bd_ports cpu_clk] [get_bd_pins AXIVerif/aclk] [get_bd_pins Board/s_axi_aclk] [get_bd_pins CPU/clock] [get_bd_pins EthBufCtrl/s_axi_aclk] [get_bd_pins FlashEMC/rdclk] [get_bd_pins FlashEMC/s_axi_aclk] [get_bd_pins IntCont/s_axi_aclk] [get_bd_pins Primary/ACLK] [get_bd_pins Primary/M00_ACLK] [get_bd_pins Primary/M01_ACLK] [get_bd_pins Primary/M02_ACLK] [get_bd_pins Primary/M03_ACLK] [get_bd_pins Primary/M04_ACLK] [get_bd_pins Primary/M05_ACLK] [get_bd_pins Primary/S00_ACLK] [get_bd_pins RAMEMC/rdclk] [get_bd_pins RAMEMC/s_axi_aclk] [get_bd_pins Reset/slowest_sync_clk] [get_bd_pins UART/s_axi_aclk] [get_bd_pins VIO/clk]
   connect_bd_net -net proc_sys_reset_0_interconnect_aresetn [get_bd_pins Primary/ARESETN] [get_bd_pins Reset/interconnect_aresetn]
   connect_bd_net -net proc_sys_reset_0_mb_reset [get_bd_pins CPU/reset] [get_bd_pins NRST/Op1] [get_bd_pins Reset/mb_reset]
   connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins Board/s_axi_aresetn] [get_bd_pins EthBufCtrl/s_axi_aresetn] [get_bd_pins FlashEMC/s_axi_aresetn] [get_bd_pins IntCont/s_axi_aresetn] [get_bd_pins Primary/M00_ARESETN] [get_bd_pins Primary/M01_ARESETN] [get_bd_pins Primary/M02_ARESETN] [get_bd_pins Primary/M03_ARESETN] [get_bd_pins Primary/M04_ARESETN] [get_bd_pins Primary/M05_ARESETN] [get_bd_pins RAMEMC/s_axi_aresetn] [get_bd_pins Reset/peripheral_aresetn] [get_bd_pins UART/s_axi_aresetn]
@@ -381,12 +405,13 @@ proc create_root_design { parentCell } {
   connect_bd_net -net rtclk_1 [get_bd_ports data_clk] [get_bd_pins Router/clock]
   connect_bd_net -net rx_clk_1 [get_bd_ports data_rx_clk] [get_bd_pins Router/io_rx_clk]
   connect_bd_net -net tx_clk_1 [get_bd_ports data_tx_clk] [get_bd_pins Router/io_tx_clk]
-  connect_bd_net -net util_vector_logic_0_Res [get_bd_pins NRST/Res] [get_bd_pins Primary/S00_ARESETN] [get_bd_pins axi_vip_0/aresetn]
+  connect_bd_net -net util_vector_logic_0_Res [get_bd_pins AXIVerif/aresetn] [get_bd_pins NRST/Res] [get_bd_pins Primary/S00_ARESETN]
   connect_bd_net -net vio_0_probe_out0 [get_bd_ports vio_rst] [get_bd_pins VIO/probe_out0]
+  connect_bd_net -net xlslice_0_Dout [get_bd_pins BufAddrSlice/Dout] [get_bd_pins EthBuf/addra]
 
   # Create address segments
   create_bd_addr_seg -range 0x00010000 -offset 0xFFFF10000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs Board/S_AXI/Reg] SEG_Board_Reg
-  create_bd_addr_seg -range 0x00002000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
   create_bd_addr_seg -range 0x00800000 -offset 0xFFFF20000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs FlashEMC/S_AXI_MEM/Mem0] SEG_FlashEMC_Mem0
   create_bd_addr_seg -range 0x00800000 -offset 0x00000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs RAMEMC/S_AXI_MEM/Mem0] SEG_RAMEMC_Mem0
   create_bd_addr_seg -range 0x00010000 -offset 0xFFFF00000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs UART/S_AXI/Reg] SEG_UART_Reg

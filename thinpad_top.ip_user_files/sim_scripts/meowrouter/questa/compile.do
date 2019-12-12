@@ -26,6 +26,7 @@ vlib questa_lib/msim/axi_emc_v3_0_18
 vlib questa_lib/msim/axi_uart16550_v2_0_20
 vlib questa_lib/msim/axi_vip_v1_1_4
 vlib questa_lib/msim/axi_intc_v4_1_12
+vlib questa_lib/msim/xlslice_v1_0_1
 vlib questa_lib/msim/axi_protocol_converter_v2_1_18
 vlib questa_lib/msim/axi_clock_converter_v2_1_17
 vlib questa_lib/msim/axi_dwidth_converter_v2_1_18
@@ -55,6 +56,7 @@ vmap axi_emc_v3_0_18 questa_lib/msim/axi_emc_v3_0_18
 vmap axi_uart16550_v2_0_20 questa_lib/msim/axi_uart16550_v2_0_20
 vmap axi_vip_v1_1_4 questa_lib/msim/axi_vip_v1_1_4
 vmap axi_intc_v4_1_12 questa_lib/msim/axi_intc_v4_1_12
+vmap xlslice_v1_0_1 questa_lib/msim/xlslice_v1_0_1
 vmap axi_protocol_converter_v2_1_18 questa_lib/msim/axi_protocol_converter_v2_1_18
 vmap axi_clock_converter_v2_1_17 questa_lib/msim/axi_clock_converter_v2_1_17
 vmap axi_dwidth_converter_v2_1_18 questa_lib/msim/axi_dwidth_converter_v2_1_18
@@ -192,7 +194,11 @@ vcom -work axi_intc_v4_1_12 -64 -93 \
 vcom -work xil_defaultlib -64 -93 \
 "../../../bd/meowrouter/ip/meowrouter_axi_intc_0_0/sim/meowrouter_axi_intc_0_0.vhd" \
 
+vlog -work xlslice_v1_0_1 -64 "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/ec67/hdl" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/1b7e/hdl/verilog" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/122e/hdl/verilog" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/46fd/hdl" "+incdir+D:/Xilinx/Vivado/2018.3/data/xilinx_vip/include" \
+"../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/f3db/hdl/xlslice_v1_0_vl_rfs.v" \
+
 vlog -work xil_defaultlib -64 "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/ec67/hdl" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/1b7e/hdl/verilog" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/122e/hdl/verilog" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/46fd/hdl" "+incdir+D:/Xilinx/Vivado/2018.3/data/xilinx_vip/include" \
+"../../../bd/meowrouter/ip/meowrouter_xlslice_0_1/sim/meowrouter_xlslice_0_1.v" \
 "../../../bd/meowrouter/ip/meowrouter_s00_data_fifo_0/sim/meowrouter_s00_data_fifo_0.v" \
 
 vlog -work axi_protocol_converter_v2_1_18 -64 "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/ec67/hdl" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/1b7e/hdl/verilog" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/122e/hdl/verilog" "+incdir+../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/46fd/hdl" "+incdir+D:/Xilinx/Vivado/2018.3/data/xilinx_vip/include" \
@@ -211,6 +217,7 @@ vlog -work xil_defaultlib -64 "+incdir+../../../../thinpad_top.srcs/sources_1/bd
 "../../../bd/meowrouter/ip/meowrouter_auto_pc_1/sim/meowrouter_auto_pc_1.v" \
 "../../../bd/meowrouter/ip/meowrouter_auto_ds_2/sim/meowrouter_auto_ds_2.v" \
 "../../../bd/meowrouter/ip/meowrouter_auto_ds_3/sim/meowrouter_auto_ds_3.v" \
+"../../../bd/meowrouter/ip/meowrouter_auto_ds_4/sim/meowrouter_auto_ds_4.v" \
 "../../../bd/meowrouter/ip/meowrouter_auto_pc_2/sim/meowrouter_auto_pc_2.v" \
 
 vlog -work xil_defaultlib \

@@ -131,7 +131,11 @@
 -makelib ies_lib/xil_defaultlib \
   "../../../bd/meowrouter/ip/meowrouter_axi_intc_0_0/sim/meowrouter_axi_intc_0_0.vhd" \
 -endlib
+-makelib ies_lib/xlslice_v1_0_1 \
+  "../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/f3db/hdl/xlslice_v1_0_vl_rfs.v" \
+-endlib
 -makelib ies_lib/xil_defaultlib \
+  "../../../bd/meowrouter/ip/meowrouter_xlslice_0_1/sim/meowrouter_xlslice_0_1.v" \
   "../../../bd/meowrouter/ip/meowrouter_s00_data_fifo_0/sim/meowrouter_s00_data_fifo_0.v" \
 -endlib
 -makelib ies_lib/axi_protocol_converter_v2_1_18 \
@@ -150,6 +154,7 @@
   "../../../bd/meowrouter/ip/meowrouter_auto_pc_1/sim/meowrouter_auto_pc_1.v" \
   "../../../bd/meowrouter/ip/meowrouter_auto_ds_2/sim/meowrouter_auto_ds_2.v" \
   "../../../bd/meowrouter/ip/meowrouter_auto_ds_3/sim/meowrouter_auto_ds_3.v" \
+  "../../../bd/meowrouter/ip/meowrouter_auto_ds_4/sim/meowrouter_auto_ds_4.v" \
   "../../../bd/meowrouter/ip/meowrouter_auto_pc_2/sim/meowrouter_auto_pc_2.v" \
 -endlib
 -makelib ies_lib/xil_defaultlib \

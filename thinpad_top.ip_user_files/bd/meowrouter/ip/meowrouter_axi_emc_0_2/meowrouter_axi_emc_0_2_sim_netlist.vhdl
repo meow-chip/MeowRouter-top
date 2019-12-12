@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Mon Nov 11 23:50:23 2019
+-- Date        : Thu Dec 12 14:27:18 2019
 -- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_axi_emc_0_2 -prefix
---               meowrouter_axi_emc_0_2_ meowrouter_axi_emc_0_2_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim
+--               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_axi_emc_0_2/meowrouter_axi_emc_0_2_sim_netlist.vhdl
 -- Design      : meowrouter_axi_emc_0_2
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -28,12 +28,13 @@ entity meowrouter_axi_emc_0_2_axi_emc_addr_gen is
     \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[11]_0\ : out STD_LOGIC_VECTOR ( 5 downto 0 );
     \FSM_sequential_emc_addr_ps_reg[2]_1\ : out STD_LOGIC;
     enable_cs_cmb : out STD_LOGIC;
-    s_axi_mem_awvalid_0 : out STD_LOGIC;
+    s_axi_mem_arburst_1_sp_1 : out STD_LOGIC;
+    rw_flag_reg_reg : out STD_LOGIC;
     s_axi_mem_rready_0 : out STD_LOGIC;
     \burst_data_cnt_reg[5]\ : out STD_LOGIC;
     \FSM_sequential_emc_addr_ps_reg[1]\ : out STD_LOGIC;
     \burst_addr_cnt_reg[7]\ : out STD_LOGIC;
-    \burst_addr_cnt_reg[4]\ : out STD_LOGIC;
+    \burst_addr_cnt_reg[2]\ : out STD_LOGIC;
     \rd_data_count_reg[5]\ : out STD_LOGIC;
     bus2ip_addr_temp : out STD_LOGIC_VECTOR ( 19 downto 0 );
     s_axi_aclk : in STD_LOGIC;
@@ -44,12 +45,12 @@ entity meowrouter_axi_emc_0_2_axi_emc_addr_gen is
     \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[2]_1\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     s_axi_mem_awburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
     \bus2ip_addr_i_reg[31]_0\ : in STD_LOGIC;
-    s_axi_mem_awvalid : in STD_LOGIC;
-    \FSM_sequential_emc_addr_ps_reg[0]\ : in STD_LOGIC;
+    s_axi_mem_awready : in STD_LOGIC;
     s_axi_mem_arvalid : in STD_LOGIC;
-    s_axi_mem_arburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    \FSM_sequential_emc_addr_ps_reg[0]_0\ : in STD_LOGIC;
+    s_axi_mem_wvalid : in STD_LOGIC;
+    s_axi_mem_awvalid : in STD_LOGIC;
     bus2ip_rnw : in STD_LOGIC;
+    s_axi_mem_arburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
     Bus2IP_RdReq_d1_i_2 : in STD_LOGIC_VECTOR ( 3 downto 0 );
     ip2bus_rdack : in STD_LOGIC;
     \burst_addr_cnt_reg[7]_0\ : in STD_LOGIC_VECTOR ( 7 downto 0 );
@@ -63,6 +64,8 @@ entity meowrouter_axi_emc_0_2_axi_emc_addr_gen is
     \BUS2IP_ADDR_GEN_DATA_WDTH_32.internal_count_reg[0]_1\ : in STD_LOGIC;
     E : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_axi_emc_addr_gen : entity is "axi_emc_addr_gen";
 end meowrouter_axi_emc_0_2_axi_emc_addr_gen;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_addr_gen is
@@ -100,47 +103,50 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_addr_gen is
   signal addr_3_cmb : STD_LOGIC;
   signal addr_4_cmb : STD_LOGIC;
   signal addr_5_cmb : STD_LOGIC;
-  signal \^burst_addr_cnt_reg[4]\ : STD_LOGIC;
+  signal \^burst_addr_cnt_reg[2]\ : STD_LOGIC;
   signal \derived_size_reg[1]_i_4_n_0\ : STD_LOGIC;
   signal \^enable_cs_cmb\ : STD_LOGIC;
   signal p_1_in : STD_LOGIC_VECTOR ( 19 downto 0 );
   signal \^rd_data_count_reg[5]\ : STD_LOGIC;
   signal \^rnw_reg_reg\ : STD_LOGIC;
+  signal \^rw_flag_reg_reg\ : STD_LOGIC;
   signal \^s_axi_aresetn_0\ : STD_LOGIC;
+  signal s_axi_mem_arburst_1_sn_1 : STD_LOGIC;
   signal s_axi_mem_awburst_0_sn_1 : STD_LOGIC;
-  signal \^s_axi_mem_awvalid_0\ : STD_LOGIC;
   signal \^s_axi_mem_rready_0\ : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[10]_i_2\ : label is "soft_lutpair7";
-  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[11]_i_3\ : label is "soft_lutpair7";
-  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[11]_i_4\ : label is "soft_lutpair9";
-  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[2]_i_5\ : label is "soft_lutpair6";
-  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[6]_i_2\ : label is "soft_lutpair5";
-  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[7]_i_2\ : label is "soft_lutpair5";
-  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[8]_i_3\ : label is "soft_lutpair6";
-  attribute SOFT_HLUTNM of Bus2IP_RdReq_d1_i_3 : label is "soft_lutpair8";
-  attribute SOFT_HLUTNM of Bus2IP_RdReq_d1_i_5 : label is "soft_lutpair8";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[0]_i_4\ : label is "soft_lutpair9";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[12]_i_1\ : label is "soft_lutpair10";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[13]_i_1\ : label is "soft_lutpair11";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[14]_i_1\ : label is "soft_lutpair12";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[15]_i_1\ : label is "soft_lutpair13";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[16]_i_1\ : label is "soft_lutpair14";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[17]_i_1\ : label is "soft_lutpair11";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[18]_i_1\ : label is "soft_lutpair10";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[19]_i_1\ : label is "soft_lutpair13";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[20]_i_1\ : label is "soft_lutpair12";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[21]_i_1\ : label is "soft_lutpair14";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[22]_i_1\ : label is "soft_lutpair15";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[23]_i_1\ : label is "soft_lutpair15";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[24]_i_1\ : label is "soft_lutpair16";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[25]_i_1\ : label is "soft_lutpair16";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[26]_i_1\ : label is "soft_lutpair17";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[27]_i_1\ : label is "soft_lutpair17";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[28]_i_1\ : label is "soft_lutpair18";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[29]_i_1\ : label is "soft_lutpair18";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[30]_i_1\ : label is "soft_lutpair19";
-  attribute SOFT_HLUTNM of \bus2ip_addr_i[31]_i_2\ : label is "soft_lutpair19";
+  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[10]_i_2\ : label is "soft_lutpair9";
+  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[11]_i_3\ : label is "soft_lutpair9";
+  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[11]_i_4\ : label is "soft_lutpair10";
+  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[2]_i_5\ : label is "soft_lutpair7";
+  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[6]_i_2\ : label is "soft_lutpair8";
+  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[7]_i_2\ : label is "soft_lutpair8";
+  attribute SOFT_HLUTNM of \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[8]_i_3\ : label is "soft_lutpair7";
+  attribute SOFT_HLUTNM of Bus2IP_RdReq_d1_i_3 : label is "soft_lutpair11";
+  attribute SOFT_HLUTNM of Bus2IP_RdReq_d1_i_5 : label is "soft_lutpair11";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[0]_i_4\ : label is "soft_lutpair10";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[2]_i_11\ : label is "soft_lutpair6";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[12]_i_1\ : label is "soft_lutpair12";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[13]_i_1\ : label is "soft_lutpair13";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[14]_i_1\ : label is "soft_lutpair14";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[15]_i_1\ : label is "soft_lutpair15";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[16]_i_1\ : label is "soft_lutpair13";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[17]_i_1\ : label is "soft_lutpair12";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[18]_i_1\ : label is "soft_lutpair15";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[19]_i_1\ : label is "soft_lutpair14";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[20]_i_1\ : label is "soft_lutpair16";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[21]_i_1\ : label is "soft_lutpair16";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[22]_i_1\ : label is "soft_lutpair17";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[23]_i_1\ : label is "soft_lutpair17";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[24]_i_1\ : label is "soft_lutpair18";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[25]_i_1\ : label is "soft_lutpair18";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[26]_i_1\ : label is "soft_lutpair19";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[27]_i_1\ : label is "soft_lutpair19";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[28]_i_1\ : label is "soft_lutpair20";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[29]_i_1\ : label is "soft_lutpair20";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[30]_i_1\ : label is "soft_lutpair21";
+  attribute SOFT_HLUTNM of \bus2ip_addr_i[31]_i_2\ : label is "soft_lutpair21";
+  attribute SOFT_HLUTNM of \derived_size_reg[1]_i_4\ : label is "soft_lutpair6";
 begin
   \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[11]_0\(5 downto 0) <= \^bus2ip_addr_gen_data_wdth_32.bus2ip_addr_i_reg[11]_0\(5 downto 0);
   \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[2]_0\ <= \^bus2ip_addr_gen_data_wdth_32.bus2ip_addr_i_reg[2]_0\;
@@ -149,13 +155,14 @@ begin
   \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[5]_0\ <= \^bus2ip_addr_gen_data_wdth_32.bus2ip_addr_i_reg[5]_0\;
   \FSM_sequential_emc_addr_ps_reg[2]\ <= \^fsm_sequential_emc_addr_ps_reg[2]\;
   \FSM_sequential_emc_addr_ps_reg[2]_1\ <= \^fsm_sequential_emc_addr_ps_reg[2]_1\;
-  \burst_addr_cnt_reg[4]\ <= \^burst_addr_cnt_reg[4]\;
+  \burst_addr_cnt_reg[2]\ <= \^burst_addr_cnt_reg[2]\;
   enable_cs_cmb <= \^enable_cs_cmb\;
   \rd_data_count_reg[5]\ <= \^rd_data_count_reg[5]\;
   rnw_reg_reg <= \^rnw_reg_reg\;
+  rw_flag_reg_reg <= \^rw_flag_reg_reg\;
   s_axi_aresetn_0 <= \^s_axi_aresetn_0\;
+  s_axi_mem_arburst_1_sp_1 <= s_axi_mem_arburst_1_sn_1;
   s_axi_mem_awburst_0_sp_1 <= s_axi_mem_awburst_0_sn_1;
-  s_axi_mem_awvalid_0 <= \^s_axi_mem_awvalid_0\;
   s_axi_mem_rready_0 <= \^s_axi_mem_rready_0\;
 \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[10]_i_1\: unisim.vcomponents.LUT6
     generic map(
@@ -699,18 +706,6 @@ Bus2IP_RdReq_d1_i_5: unisim.vcomponents.LUT3
       I2 => Q(0),
       O => \FSM_sequential_emc_addr_ps_reg[2]_0\
     );
-\FSM_sequential_emc_addr_ps[0]_i_12\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"00000008"
-    )
-        port map (
-      I0 => s_axi_mem_rready,
-      I1 => last_data_acked,
-      I2 => \^rd_data_count_reg[5]\,
-      I3 => \FSM_sequential_emc_addr_ps[0]_i_7\(6),
-      I4 => \FSM_sequential_emc_addr_ps[0]_i_7\(7),
-      O => \^s_axi_mem_rready_0\
-    );
 \FSM_sequential_emc_addr_ps[0]_i_4\: unisim.vcomponents.LUT4
     generic map(
       INIT => X"0001"
@@ -722,18 +717,27 @@ Bus2IP_RdReq_d1_i_5: unisim.vcomponents.LUT3
       I3 => s_axi_mem_awburst_0_sn_1,
       O => \^fsm_sequential_emc_addr_ps_reg[2]\
     );
-\FSM_sequential_emc_addr_ps[0]_i_6\: unisim.vcomponents.LUT6
+\FSM_sequential_emc_addr_ps[0]_i_8\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"7070700000000000"
+      INIT => X"00000008"
     )
         port map (
-      I0 => s_axi_mem_awvalid,
-      I1 => \FSM_sequential_emc_addr_ps_reg[0]\,
-      I2 => s_axi_mem_arvalid,
-      I3 => s_axi_mem_arburst(0),
-      I4 => s_axi_mem_arburst(1),
-      I5 => \FSM_sequential_emc_addr_ps_reg[0]_0\,
-      O => \^s_axi_mem_awvalid_0\
+      I0 => s_axi_mem_rready,
+      I1 => last_data_acked,
+      I2 => \^rd_data_count_reg[5]\,
+      I3 => \FSM_sequential_emc_addr_ps[0]_i_7\(6),
+      I4 => \FSM_sequential_emc_addr_ps[0]_i_7\(7),
+      O => \^s_axi_mem_rready_0\
+    );
+\FSM_sequential_emc_addr_ps[1]_i_4\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"01"
+    )
+        port map (
+      I0 => \^burst_addr_cnt_reg[2]\,
+      I1 => \burst_addr_cnt_reg[7]_0\(7),
+      I2 => \burst_addr_cnt_reg[7]_0\(6),
+      O => \burst_addr_cnt_reg[7]\
     );
 \FSM_sequential_emc_addr_ps[2]_i_1\: unisim.vcomponents.LUT1
     generic map(
@@ -743,17 +747,30 @@ Bus2IP_RdReq_d1_i_5: unisim.vcomponents.LUT3
       I0 => s_axi_aresetn,
       O => \^s_axi_aresetn_0\
     );
-\burst_addr_cnt[5]_i_2\: unisim.vcomponents.LUT5
+\FSM_sequential_emc_addr_ps[2]_i_11\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FFFFFFFE"
+      INIT => X"00E0E0E0"
     )
         port map (
-      I0 => \burst_addr_cnt_reg[7]_0\(4),
-      I1 => \burst_addr_cnt_reg[7]_0\(2),
-      I2 => \burst_addr_cnt_reg[7]_0\(0),
-      I3 => \burst_addr_cnt_reg[7]_0\(1),
-      I4 => \burst_addr_cnt_reg[7]_0\(3),
-      O => \^burst_addr_cnt_reg[4]\
+      I0 => s_axi_mem_arburst(1),
+      I1 => s_axi_mem_arburst(0),
+      I2 => s_axi_mem_arvalid,
+      I3 => s_axi_mem_awready,
+      I4 => s_axi_mem_awvalid,
+      O => s_axi_mem_arburst_1_sn_1
+    );
+\burst_addr_cnt[6]_i_2\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FFFFFFFFFFFFFFFE"
+    )
+        port map (
+      I0 => \burst_addr_cnt_reg[7]_0\(2),
+      I1 => \burst_addr_cnt_reg[7]_0\(0),
+      I2 => \burst_addr_cnt_reg[7]_0\(1),
+      I3 => \burst_addr_cnt_reg[7]_0\(3),
+      I4 => \burst_addr_cnt_reg[7]_0\(5),
+      I5 => \burst_addr_cnt_reg[7]_0\(4),
+      O => \^burst_addr_cnt_reg[2]\
     );
 \bus2ip_addr_i[12]_i_1\: unisim.vcomponents.LUT3
     generic map(
@@ -966,15 +983,16 @@ Bus2IP_RdReq_d1_i_5: unisim.vcomponents.LUT3
       I2 => s_axi_mem_araddr(31),
       O => p_1_in(19)
     );
-\bus2ip_addr_i[31]_i_3\: unisim.vcomponents.LUT4
+\bus2ip_addr_i[31]_i_3\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0155"
+      INIT => X"55FF01FF"
     )
         port map (
-      I0 => \^s_axi_mem_awvalid_0\,
+      I0 => s_axi_mem_arburst_1_sn_1,
       I1 => s_axi_mem_awburst(0),
       I2 => s_axi_mem_awburst(1),
       I3 => \bus2ip_addr_i_reg[31]_0\,
+      I4 => \^rw_flag_reg_reg\,
       O => s_axi_mem_awburst_0_sn_1
     );
 \bus2ip_addr_i_reg[12]\: unisim.vcomponents.FDRE
@@ -1216,9 +1234,20 @@ Bus2IP_RdReq_d1_i_5: unisim.vcomponents.LUT3
     )
         port map (
       I0 => s_axi_mem_awvalid,
-      I1 => \FSM_sequential_emc_addr_ps_reg[0]\,
+      I1 => s_axi_mem_awready,
       I2 => s_axi_mem_arvalid,
       O => \derived_size_reg[1]_i_4_n_0\
+    );
+s_axi_mem_awready_INST_0_i_2: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"4FFF"
+    )
+        port map (
+      I0 => s_axi_mem_awready,
+      I1 => s_axi_mem_arvalid,
+      I2 => s_axi_mem_wvalid,
+      I3 => s_axi_mem_awvalid,
+      O => \^rw_flag_reg_reg\
     );
 s_axi_mem_rlast_INST_0_i_1: unisim.vcomponents.LUT6
     generic map(
@@ -1233,17 +1262,6 @@ s_axi_mem_rlast_INST_0_i_1: unisim.vcomponents.LUT6
       I5 => \FSM_sequential_emc_addr_ps[0]_i_7\(4),
       O => \^rd_data_count_reg[5]\
     );
-s_axi_mem_wready_INST_0_i_4: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"FFFE"
-    )
-        port map (
-      I0 => \burst_addr_cnt_reg[7]_0\(7),
-      I1 => \burst_addr_cnt_reg[7]_0\(6),
-      I2 => \burst_addr_cnt_reg[7]_0\(5),
-      I3 => \^burst_addr_cnt_reg[4]\,
-      O => \burst_addr_cnt_reg[7]\
-    );
 end STRUCTURE;
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -1253,80 +1271,105 @@ entity meowrouter_axi_emc_0_2_axi_emc_address_decode is
   port (
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ : out STD_LOGIC;
     \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ : out STD_LOGIC;
-    IP2Bus_RdAck0 : out STD_LOGIC;
-    \burstlength_reg_reg[5]\ : out STD_LOGIC;
+    bus2ip_wr_req_reg_reg : out STD_LOGIC;
     pend_rdreq_reg : out STD_LOGIC;
-    readreq_th_reset : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\ : out STD_LOGIC;
+    \burstlength_reg_reg[0]\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ : out STD_LOGIC;
     S : out STD_LOGIC_VECTOR ( 0 to 0 );
     s_axi_mem_bready : out STD_LOGIC;
+    D : out STD_LOGIC_VECTOR ( 1 downto 0 );
     \burst_data_cnt_reg[7]\ : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\ : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ : out STD_LOGIC;
+    pend_rdreq_reg_0 : out STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\ : out STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_3\ : out STD_LOGIC;
-    pend_rdreq_reg_0 : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_4\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_3\ : out STD_LOGIC;
+    readreq_th_reset : out STD_LOGIC;
+    IP2Bus_RdAck0 : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
+    Cycle_cnt_en_int : out STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
     \burst_data_cnt_reg[1]\ : out STD_LOGIC;
     \in\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     rd_fifo_wr_en : out STD_LOGIC;
     reset_fifo : out STD_LOGIC;
-    \burstlength_reg_reg[0]\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_4\ : out STD_LOGIC;
     \s_axi_mem_bresp_reg_reg[1]\ : out STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
-    \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\ : in STD_LOGIC;
-    SS : in STD_LOGIC_VECTOR ( 0 to 0 );
+    pend_wrreq_reg : in STD_LOGIC;
+    pend_wrreq : in STD_LOGIC;
+    Bus2IP_RdReq_d1_reg : in STD_LOGIC;
+    pend_rdreq : in STD_LOGIC;
     ip2bus_rdack : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 0 to 0 );
     enable_cs_cmb : in STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
-    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\ : in STD_LOGIC;
-    Bus2IP_RdReq_d1_reg : in STD_LOGIC;
-    D : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_4\ : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_reg : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_reg_0 : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_reg_1 : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]_0\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]_1\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]_2\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]_3\ : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_reg_2 : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_reg_3 : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[1]\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[1]_0\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[1]_1\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[1]_2\ : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_reg_4 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_reg_5 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_reg_6 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_reg_7 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_reg_8 : in STD_LOGIC;
-    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_3\ : in STD_LOGIC;
-    \s_axi_mem_bresp_reg_reg[1]_0\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[1]_3\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[1]_4\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[1]_5\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[1]_6\ : in STD_LOGIC;
+    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_5\ : in STD_LOGIC;
+    pend_wrreq_reg_0 : in STD_LOGIC;
     s_axi_aresetn : in STD_LOGIC;
-    pend_rdreq : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state[0]_i_4\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state[0]_i_4_0\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state[0]_i_4_1\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state[3]_i_5\ : in STD_LOGIC;
-    pend_wrreq : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]_4\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]_5\ : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_i_3_0 : in STD_LOGIC;
+    addr_sm_ps_IDLE_reg_i_4_0 : in STD_LOGIC;
     s_axi_mem_wvalid : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_i_3_1 : in STD_LOGIC;
     addr_sm_ps_IDLE_reg_i_3_2 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_i_4_0 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_i_4_1 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_i_4_2 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_i_5_0 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_i_5_1 : in STD_LOGIC;
-    cycle_cnt : in STD_LOGIC_VECTOR ( 0 to 0 );
-    Cycle_cnt_en_int : in STD_LOGIC;
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : in STD_LOGIC_VECTOR ( 0 to 0 );
-    axi_trans_size_reg_int : in STD_LOGIC_VECTOR ( 0 to 0 );
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps[1]_i_13_0\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps[1]_i_13_1\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state[0]_i_4\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state[0]_i_4_0\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state[0]_i_4_1\ : in STD_LOGIC;
+    \burst_addr_cnt[7]_i_3\ : in STD_LOGIC;
+    \burst_addr_cnt[7]_i_3_0\ : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \burst_addr_cnt[7]_i_3_1\ : in STD_LOGIC;
+    \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2\ : in STD_LOGIC;
+    SS : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\ : in STD_LOGIC;
+    cycle_cnt : in STD_LOGIC_VECTOR ( 0 to 1 );
+    axi_trans_size_reg_int : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : in STD_LOGIC;
     last_data_acked_reg : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    \burst_addr_cnt[7]_i_12_0\ : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    \FSM_sequential_emc_addr_ps[2]_i_13_0\ : in STD_LOGIC_VECTOR ( 7 downto 0 );
     Type_of_xfer : in STD_LOGIC;
+    transaction_done_i : in STD_LOGIC;
+    bus2ip_burst : in STD_LOGIC;
     s_axi_mem_bresp : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \s_axi_mem_bresp_reg_reg[1]_0\ : in STD_LOGIC;
     addr_sm_ps_idle_cmb : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_axi_emc_address_decode : entity is "axi_emc_address_decode";
 end meowrouter_axi_emc_0_2_axi_emc_address_decode;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_address_decode is
-  signal \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_9_n_0\ : STD_LOGIC;
+  signal \^cycle_cnt_en_int\ : STD_LOGIC;
+  signal \^d\ : STD_LOGIC_VECTOR ( 1 downto 0 );
+  signal \FSM_sequential_emc_addr_ps[1]_i_13_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[1]_i_2_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[2]_i_3_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[2]_i_9_n_0\ : STD_LOGIC;
   signal IP2Bus_RdAck_i_3_n_0 : STD_LOGIC;
   signal \MEM_DECODE_GEN[0].cs_out_i[0]_i_1_n_0\ : STD_LOGIC;
   signal \MEM_DECODE_GEN[0].cs_out_i[0]_i_2_n_0\ : STD_LOGIC;
@@ -1338,42 +1381,44 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_address_decode is
   signal addr_sm_ps_IDLE_reg_i_3_n_0 : STD_LOGIC;
   signal addr_sm_ps_IDLE_reg_i_4_n_0 : STD_LOGIC;
   signal addr_sm_ps_IDLE_reg_i_5_n_0 : STD_LOGIC;
-  signal addr_sm_ps_IDLE_reg_i_6_n_0 : STD_LOGIC;
-  signal addr_sm_ps_IDLE_reg_i_8_n_0 : STD_LOGIC;
   signal axi_trans_size_reg0 : STD_LOGIC;
   signal \^burst_data_cnt_reg[1]\ : STD_LOGIC;
   signal \^burst_data_cnt_reg[7]\ : STD_LOGIC;
-  signal \^burstlength_reg_reg[5]\ : STD_LOGIC;
+  signal \^burstlength_reg_reg[0]\ : STD_LOGIC;
   signal cs_reg : STD_LOGIC;
   signal \^pend_rdreq_reg\ : STD_LOGIC;
   signal \^pend_rdreq_reg_0\ : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
   attribute SOFT_HLUTNM of \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[0].RDACK_PIPE_ASYNC_i_1\ : label is "soft_lutpair3";
   attribute SOFT_HLUTNM of Bus2IP_RdReq_d1_i_1 : label is "soft_lutpair1";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_5\ : label is "soft_lutpair2";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_8\ : label is "soft_lutpair2";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_9\ : label is "soft_lutpair2";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_9\ : label is "soft_lutpair4";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_7\ : label is "soft_lutpair2";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[2]_i_13\ : label is "soft_lutpair0";
   attribute SOFT_HLUTNM of \INFERRED_GEN.data_reg[255][0]_srl32_i_1\ : label is "soft_lutpair4";
-  attribute SOFT_HLUTNM of \INFERRED_GEN.data_reg[255][0]_srl32_i_2\ : label is "soft_lutpair4";
+  attribute SOFT_HLUTNM of \INFERRED_GEN.data_reg[255][0]_srl32_i_2\ : label is "soft_lutpair5";
   attribute SOFT_HLUTNM of IP2Bus_RdAck_i_1 : label is "soft_lutpair3";
   attribute SOFT_HLUTNM of IP2Bus_RdAck_i_2 : label is "soft_lutpair0";
-  attribute SOFT_HLUTNM of \burst_addr_cnt[7]_i_12\ : label is "soft_lutpair0";
-  attribute SOFT_HLUTNM of s_axi_mem_wready_INST_0_i_6 : label is "soft_lutpair1";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[7].FF_RST0_GEN.FDRE_i1_i_1\ : label is "soft_lutpair5";
+  attribute SOFT_HLUTNM of s_axi_mem_wready_INST_0_i_3 : label is "soft_lutpair1";
 begin
+  Cycle_cnt_en_int <= \^cycle_cnt_en_int\;
+  D(1 downto 0) <= \^d\(1 downto 0);
   \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ <= \^mem_decode_gen[0].cs_out_i_reg[0]_0\;
   \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ <= \^mem_decode_gen[0].rdce_out_i_reg[0]_0\;
   \burst_data_cnt_reg[1]\ <= \^burst_data_cnt_reg[1]\;
   \burst_data_cnt_reg[7]\ <= \^burst_data_cnt_reg[7]\;
-  \burstlength_reg_reg[5]\ <= \^burstlength_reg_reg[5]\;
+  \burstlength_reg_reg[0]\ <= \^burstlength_reg_reg[0]\;
   pend_rdreq_reg <= \^pend_rdreq_reg\;
   pend_rdreq_reg_0 <= \^pend_rdreq_reg_0\;
 \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[0].RDACK_PIPE_ASYNC_i_1\: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"F1"
+      INIT => X"AB"
     )
         port map (
-      I0 => \^burstlength_reg_reg[5]\,
+      I0 => SS(0),
       I1 => \^pend_rdreq_reg\,
-      I2 => SS(0),
+      I2 => \^burstlength_reg_reg[0]\,
       O => readreq_th_reset
     );
 Bus2IP_RdReq_d1_i_1: unisim.vcomponents.LUT4
@@ -1381,7 +1426,7 @@ Bus2IP_RdReq_d1_i_1: unisim.vcomponents.LUT4
       INIT => X"00E0"
     )
         port map (
-      I0 => \^burstlength_reg_reg[5]\,
+      I0 => \^burstlength_reg_reg[0]\,
       I1 => pend_rdreq,
       I2 => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
       I3 => Bus2IP_RdReq_d1_reg,
@@ -1397,63 +1442,139 @@ Cnt_p10_carry_i_5: unisim.vcomponents.LUT3
       I2 => Q(0),
       O => S(0)
     );
-\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_5\: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"0001"
-    )
-        port map (
-      I0 => \burst_addr_cnt[7]_i_12_0\(0),
-      I1 => \burst_addr_cnt[7]_i_12_0\(3),
-      I2 => \burst_addr_cnt[7]_i_12_0\(1),
-      I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_9_n_0\,
-      O => \burstlength_reg_reg[0]\
-    );
-\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_9\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"FFFFFFFFFFFFFEFF"
-    )
-        port map (
-      I0 => \burst_addr_cnt[7]_i_12_0\(4),
-      I1 => \burst_addr_cnt[7]_i_12_0\(7),
-      I2 => \burst_addr_cnt[7]_i_12_0\(5),
-      I3 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      I4 => \burst_addr_cnt[7]_i_12_0\(6),
-      I5 => \burst_addr_cnt[7]_i_12_0\(2),
-      O => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_9_n_0\
-    );
 \FSM_sequential_crnt_state[0]_i_11\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"DDDDDDDDFF0FFFFF"
+      INIT => X"DDFFDDFFDD0FDDFF"
     )
         port map (
       I0 => \FSM_sequential_crnt_state[0]_i_4_0\,
-      I1 => \^burstlength_reg_reg[5]\,
+      I1 => \^burstlength_reg_reg[0]\,
       I2 => \FSM_sequential_crnt_state[0]_i_4\,
-      I3 => \^pend_rdreq_reg\,
+      I3 => \FSM_sequential_crnt_state[0]_i_4_1\,
       I4 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      I5 => \FSM_sequential_crnt_state[0]_i_4_1\,
-      O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\
+      I5 => \^pend_rdreq_reg\,
+      O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_3\
     );
-\FSM_sequential_crnt_state[2]_i_5\: unisim.vcomponents.LUT3
+\FSM_sequential_crnt_state[0]_i_9\: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"04"
+      INIT => X"15"
     )
         port map (
-      I0 => \^pend_rdreq_reg\,
-      I1 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      I2 => \FSM_sequential_crnt_state[0]_i_4\,
+      I0 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
+      I1 => pend_wrreq_reg,
+      I2 => pend_wrreq,
       O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\
     );
-\FSM_sequential_crnt_state[3]_i_8\: unisim.vcomponents.LUT4
+\FSM_sequential_crnt_state[2]_i_9\: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"0444"
+      INIT => X"02"
     )
         port map (
-      I0 => \^pend_rdreq_reg\,
-      I1 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      I2 => \FSM_sequential_crnt_state[3]_i_5\,
-      I3 => pend_wrreq,
-      O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_3\
+      I0 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
+      I1 => \^pend_rdreq_reg\,
+      I2 => \FSM_sequential_crnt_state[0]_i_4\,
+      O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\
+    );
+\FSM_sequential_crnt_state[3]_i_7\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"0070"
+    )
+        port map (
+      I0 => pend_wrreq_reg,
+      I1 => pend_wrreq,
+      I2 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
+      I3 => \^pend_rdreq_reg\,
+      O => bus2ip_wr_req_reg_reg
+    );
+\FSM_sequential_emc_addr_ps[1]_i_1\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"000000D0CCCCDDDD"
+    )
+        port map (
+      I0 => \FSM_sequential_emc_addr_ps[1]_i_2_n_0\,
+      I1 => \FSM_sequential_emc_addr_ps_reg[1]\,
+      I2 => \FSM_sequential_emc_addr_ps_reg[1]_0\,
+      I3 => \FSM_sequential_emc_addr_ps_reg[1]_1\,
+      I4 => \FSM_sequential_emc_addr_ps_reg[1]_2\,
+      I5 => addr_sm_ps_IDLE_reg_reg_0,
+      O => \^d\(0)
+    );
+\FSM_sequential_emc_addr_ps[1]_i_13\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FFFFFFFFFF510000"
+    )
+        port map (
+      I0 => \FSM_sequential_emc_addr_ps_reg[2]_4\,
+      I1 => \FSM_sequential_emc_addr_ps_reg[2]_5\,
+      I2 => \FSM_sequential_emc_addr_ps[2]_i_9_n_0\,
+      I3 => \FSM_sequential_emc_addr_ps_reg[2]\,
+      I4 => addr_sm_ps_IDLE_reg_i_3_0,
+      I5 => addr_sm_ps_IDLE_reg_i_4_0,
+      O => \FSM_sequential_emc_addr_ps[1]_i_13_n_0\
+    );
+\FSM_sequential_emc_addr_ps[1]_i_2\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"00000000FFFF0004"
+    )
+        port map (
+      I0 => \FSM_sequential_emc_addr_ps_reg[1]_3\,
+      I1 => \FSM_sequential_emc_addr_ps_reg[1]_4\,
+      I2 => \FSM_sequential_emc_addr_ps_reg[1]_5\,
+      I3 => \FSM_sequential_emc_addr_ps_reg[1]_6\,
+      I4 => addr_sm_ps_IDLE_reg_reg_4,
+      I5 => \FSM_sequential_emc_addr_ps[1]_i_13_n_0\,
+      O => \FSM_sequential_emc_addr_ps[1]_i_2_n_0\
+    );
+\FSM_sequential_emc_addr_ps[2]_i_13\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"AAAAAAAB"
+    )
+        port map (
+      I0 => pend_rdreq,
+      I1 => IP2Bus_RdAck_i_3_n_0,
+      I2 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(1),
+      I3 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(3),
+      I4 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(0),
+      O => \^pend_rdreq_reg_0\
+    );
+\FSM_sequential_emc_addr_ps[2]_i_2\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"F2F2F2F2F2FFF2F2"
+    )
+        port map (
+      I0 => \FSM_sequential_emc_addr_ps[2]_i_3_n_0\,
+      I1 => \FSM_sequential_emc_addr_ps_reg[2]\,
+      I2 => \FSM_sequential_emc_addr_ps_reg[2]_0\,
+      I3 => \FSM_sequential_emc_addr_ps_reg[2]_1\,
+      I4 => \FSM_sequential_emc_addr_ps_reg[2]_2\,
+      I5 => \FSM_sequential_emc_addr_ps_reg[2]_3\,
+      O => \^d\(1)
+    );
+\FSM_sequential_emc_addr_ps[2]_i_3\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"00000000AE000000"
+    )
+        port map (
+      I0 => \FSM_sequential_emc_addr_ps_reg[2]_4\,
+      I1 => \FSM_sequential_emc_addr_ps_reg[2]_5\,
+      I2 => \FSM_sequential_emc_addr_ps[2]_i_9_n_0\,
+      I3 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(1),
+      I4 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(0),
+      I5 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(2),
+      O => \FSM_sequential_emc_addr_ps[2]_i_3_n_0\
+    );
+\FSM_sequential_emc_addr_ps[2]_i_9\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"00000000BAAAFFFF"
+    )
+        port map (
+      I0 => \FSM_sequential_emc_addr_ps[1]_i_13_0\,
+      I1 => Bus2IP_RdReq_d1_reg,
+      I2 => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
+      I3 => \^pend_rdreq_reg_0\,
+      I4 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
+      I5 => \FSM_sequential_emc_addr_ps[1]_i_13_1\,
+      O => \FSM_sequential_emc_addr_ps[2]_i_9_n_0\
     );
 \INFERRED_GEN.data_reg[255][0]_srl32_i_1\: unisim.vcomponents.LUT2
     generic map(
@@ -1476,36 +1597,36 @@ Cnt_p10_carry_i_5: unisim.vcomponents.LUT3
     );
 IP2Bus_RdAck_i_1: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"E0"
+      INIT => X"A8"
     )
         port map (
-      I0 => \^burstlength_reg_reg[5]\,
+      I0 => \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\,
       I1 => \^pend_rdreq_reg\,
-      I2 => \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\,
+      I2 => \^burstlength_reg_reg[0]\,
       O => IP2Bus_RdAck0
     );
 IP2Bus_RdAck_i_2: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"0002"
+      INIT => X"0001"
     )
         port map (
-      I0 => IP2Bus_RdAck_i_3_n_0,
-      I1 => \burst_addr_cnt[7]_i_12_0\(5),
-      I2 => \burst_addr_cnt[7]_i_12_0\(4),
-      I3 => \burst_addr_cnt[7]_i_12_0\(3),
-      O => \^burstlength_reg_reg[5]\
+      I0 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(0),
+      I1 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(3),
+      I2 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(1),
+      I3 => IP2Bus_RdAck_i_3_n_0,
+      O => \^burstlength_reg_reg[0]\
     );
 IP2Bus_RdAck_i_3: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000000000000100"
+      INIT => X"FFFFFFFEFFFFFFFF"
     )
         port map (
-      I0 => \burst_addr_cnt[7]_i_12_0\(0),
-      I1 => \burst_addr_cnt[7]_i_12_0\(2),
-      I2 => \burst_addr_cnt[7]_i_12_0\(7),
-      I3 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      I4 => \burst_addr_cnt[7]_i_12_0\(6),
-      I5 => \burst_addr_cnt[7]_i_12_0\(1),
+      I0 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(4),
+      I1 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(7),
+      I2 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(6),
+      I3 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(5),
+      I4 => \FSM_sequential_emc_addr_ps[2]_i_13_0\(2),
+      I5 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
       O => IP2Bus_RdAck_i_3_n_0
     );
 \MEM_DECODE_GEN[0].cs_out_i[0]_i_1\: unisim.vcomponents.LUT6
@@ -1523,19 +1644,19 @@ IP2Bus_RdAck_i_3: unisim.vcomponents.LUT6
     );
 \MEM_DECODE_GEN[0].cs_out_i[0]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0000FFDF"
+      INIT => X"A8AAAAAA"
     )
         port map (
-      I0 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(2),
-      I1 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(1),
-      I2 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(0),
-      I3 => \s_axi_mem_bresp_reg_reg[1]_0\,
-      I4 => \MEM_DECODE_GEN[0].cs_out_i[0]_i_3_n_0\,
+      I0 => \MEM_DECODE_GEN[0].cs_out_i[0]_i_3_n_0\,
+      I1 => pend_wrreq_reg_0,
+      I2 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(1),
+      I3 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(0),
+      I4 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(2),
       O => \MEM_DECODE_GEN[0].cs_out_i[0]_i_2_n_0\
     );
 \MEM_DECODE_GEN[0].cs_out_i[0]_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"33F333F33F733333"
+      INIT => X"CC0CCC0CC08CCCCC"
     )
         port map (
       I0 => \^burst_data_cnt_reg[7]\,
@@ -1583,7 +1704,7 @@ IP2Bus_RdAck_i_3: unisim.vcomponents.LUT6
         port map (
       I0 => \MEM_DECODE_GEN[0].cs_out_i[0]_i_2_n_0\,
       I1 => cs_reg,
-      I2 => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\,
+      I2 => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_4\,
       I3 => axi_trans_size_reg0,
       I4 => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
       I5 => Bus2IP_RdReq_d1_reg,
@@ -1595,7 +1716,7 @@ IP2Bus_RdAck_i_3: unisim.vcomponents.LUT6
     )
         port map (
       I0 => enable_cs_cmb,
-      I1 => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_3\,
+      I1 => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_5\,
       O => axi_trans_size_reg0
     );
 \MEM_DECODE_GEN[0].rdce_out_i_reg[0]\: unisim.vcomponents.FDRE
@@ -1606,20 +1727,39 @@ IP2Bus_RdAck_i_3: unisim.vcomponents.LUT6
       Q => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
       R => '0'
     );
+\PERBIT_GEN[0].XORCY_i1_i_1__1\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"2"
+    )
+        port map (
+      I0 => \^cycle_cnt_en_int\,
+      I1 => cycle_cnt(0),
+      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\
+    );
+\PERBIT_GEN[1].MULT_AND_i1_i_1\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"0B"
+    )
+        port map (
+      I0 => axi_trans_size_reg_int(1),
+      I1 => \^pend_rdreq_reg\,
+      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\,
+      O => \^cycle_cnt_en_int\
+    );
 \PERBIT_GEN[1].MUXCY_i1_i_1__1\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"88B8BBBB88B88888"
     )
         port map (
-      I0 => cycle_cnt(0),
-      I1 => Cycle_cnt_en_int,
-      I2 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\(0),
+      I0 => cycle_cnt(1),
+      I1 => \^cycle_cnt_en_int\,
+      I2 => axi_trans_size_reg_int(1),
       I3 => axi_trans_size_reg_int(0),
       I4 => \^pend_rdreq_reg\,
-      I5 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\,
+      I5 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\,
       O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\
     );
-\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2\: unisim.vcomponents.LUT6
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_4\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"4440000000000000"
     )
@@ -1627,10 +1767,10 @@ IP2Bus_RdAck_i_3: unisim.vcomponents.LUT6
       I0 => Bus2IP_RdReq_d1_reg,
       I1 => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
       I2 => pend_rdreq,
-      I3 => \^burstlength_reg_reg[5]\,
-      I4 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      I3 => \^burstlength_reg_reg[0]\,
+      I4 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2\,
       I5 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      O => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\
+      O => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_3\
     );
 \PERBIT_GEN[7].FF_RST0_GEN.FDRE_i1_i_1\: unisim.vcomponents.LUT2
     generic map(
@@ -1646,7 +1786,7 @@ addr_sm_ps_IDLE_reg_i_1: unisim.vcomponents.LUT6
       INIT => X"0100000001010101"
     )
         port map (
-      I0 => D(0),
+      I0 => \^d\(1),
       I1 => addr_sm_ps_IDLE_reg_reg,
       I2 => addr_sm_ps_IDLE_reg_i_3_n_0,
       I3 => addr_sm_ps_IDLE_reg_reg_0,
@@ -1662,9 +1802,9 @@ addr_sm_ps_IDLE_reg_i_3: unisim.vcomponents.LUT6
       I0 => addr_sm_ps_IDLE_reg_i_5_n_0,
       I1 => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(2),
       I2 => addr_sm_ps_IDLE_reg_reg_2,
-      I3 => addr_sm_ps_IDLE_reg_reg_3,
-      I4 => addr_sm_ps_IDLE_reg_reg_4,
-      I5 => addr_sm_ps_IDLE_reg_reg_5,
+      I3 => \FSM_sequential_emc_addr_ps_reg[2]_3\,
+      I4 => \FSM_sequential_emc_addr_ps_reg[2]_2\,
+      I5 => addr_sm_ps_IDLE_reg_reg_3,
       O => addr_sm_ps_IDLE_reg_i_3_n_0
     );
 addr_sm_ps_IDLE_reg_i_4: unisim.vcomponents.LUT6
@@ -1672,64 +1812,39 @@ addr_sm_ps_IDLE_reg_i_4: unisim.vcomponents.LUT6
       INIT => X"AAAAAAAAFFFFAAFB"
     )
         port map (
-      I0 => addr_sm_ps_IDLE_reg_reg_6,
-      I1 => addr_sm_ps_IDLE_reg_reg_4,
-      I2 => addr_sm_ps_IDLE_reg_reg_3,
-      I3 => addr_sm_ps_IDLE_reg_reg_7,
-      I4 => addr_sm_ps_IDLE_reg_i_6_n_0,
-      I5 => addr_sm_ps_IDLE_reg_reg_8,
+      I0 => \FSM_sequential_emc_addr_ps_reg[1]\,
+      I1 => \FSM_sequential_emc_addr_ps_reg[2]_2\,
+      I2 => \FSM_sequential_emc_addr_ps_reg[2]_3\,
+      I3 => addr_sm_ps_IDLE_reg_reg_4,
+      I4 => \FSM_sequential_emc_addr_ps[1]_i_13_n_0\,
+      I5 => \FSM_sequential_emc_addr_ps_reg[1]_2\,
       O => addr_sm_ps_IDLE_reg_i_4_n_0
     );
 addr_sm_ps_IDLE_reg_i_5: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"20222020AAAAAAAA"
+      INIT => X"000000004454FFFF"
     )
         port map (
-      I0 => addr_sm_ps_IDLE_reg_i_3_0,
-      I1 => s_axi_mem_wvalid,
-      I2 => addr_sm_ps_IDLE_reg_i_3_1,
-      I3 => addr_sm_ps_IDLE_reg_i_8_n_0,
-      I4 => addr_sm_ps_IDLE_reg_i_3_2,
-      I5 => addr_sm_ps_IDLE_reg_i_4_0,
+      I0 => s_axi_mem_wvalid,
+      I1 => addr_sm_ps_IDLE_reg_i_3_1,
+      I2 => \FSM_sequential_emc_addr_ps_reg[2]_5\,
+      I3 => \FSM_sequential_emc_addr_ps[2]_i_9_n_0\,
+      I4 => addr_sm_ps_IDLE_reg_i_3_0,
+      I5 => addr_sm_ps_IDLE_reg_i_3_2,
       O => addr_sm_ps_IDLE_reg_i_5_n_0
     );
-addr_sm_ps_IDLE_reg_i_6: unisim.vcomponents.LUT6
+\burst_addr_cnt[7]_i_11\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFBABBAAAAAAAA"
+      INIT => X"FFFFFFFF0000FFBF"
     )
         port map (
-      I0 => addr_sm_ps_IDLE_reg_i_4_1,
-      I1 => addr_sm_ps_IDLE_reg_i_3_1,
-      I2 => addr_sm_ps_IDLE_reg_i_8_n_0,
-      I3 => addr_sm_ps_IDLE_reg_i_3_2,
-      I4 => addr_sm_ps_IDLE_reg_i_4_2,
-      I5 => addr_sm_ps_IDLE_reg_i_4_0,
-      O => addr_sm_ps_IDLE_reg_i_6_n_0
-    );
-addr_sm_ps_IDLE_reg_i_8: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"8AAA8A8A8A8A8A8A"
-    )
-        port map (
-      I0 => addr_sm_ps_IDLE_reg_i_5_0,
-      I1 => addr_sm_ps_IDLE_reg_i_5_1,
-      I2 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      I3 => Bus2IP_RdReq_d1_reg,
-      I4 => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
-      I5 => \^pend_rdreq_reg_0\,
-      O => addr_sm_ps_IDLE_reg_i_8_n_0
-    );
-\burst_addr_cnt[7]_i_12\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"AAABAAAA"
-    )
-        port map (
-      I0 => pend_rdreq,
-      I1 => \burst_addr_cnt[7]_i_12_0\(3),
-      I2 => \burst_addr_cnt[7]_i_12_0\(4),
-      I3 => \burst_addr_cnt[7]_i_12_0\(5),
-      I4 => IP2Bus_RdAck_i_3_n_0,
-      O => \^pend_rdreq_reg_0\
+      I0 => Bus2IP_RdReq_d1_reg,
+      I1 => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
+      I2 => \^pend_rdreq_reg_0\,
+      I3 => \burst_addr_cnt[7]_i_3\,
+      I4 => \burst_addr_cnt[7]_i_3_0\(0),
+      I5 => \burst_addr_cnt[7]_i_3_1\,
+      O => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\
     );
 \burst_data_cnt[4]_i_2\: unisim.vcomponents.LUT4
     generic map(
@@ -1754,9 +1869,22 @@ addr_sm_ps_IDLE_reg_i_8: unisim.vcomponents.LUT6
       I4 => last_data_acked_reg(5),
       O => \^burst_data_cnt_reg[7]\
     );
+pend_wrreq_i_1: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"AA80AA80AA800080"
+    )
+        port map (
+      I0 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
+      I1 => transaction_done_i,
+      I2 => pend_wrreq_reg,
+      I3 => pend_wrreq,
+      I4 => pend_wrreq_reg_0,
+      I5 => bus2ip_burst,
+      O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_4\
+    );
 \s_axi_mem_bresp_reg[1]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0000AABA"
+      INIT => X"0000AAEA"
     )
         port map (
       I0 => s_axi_mem_bresp(0),
@@ -1766,17 +1894,17 @@ addr_sm_ps_IDLE_reg_i_8: unisim.vcomponents.LUT6
       I4 => addr_sm_ps_idle_cmb,
       O => \s_axi_mem_bresp_reg_reg[1]\
     );
-s_axi_mem_wready_INST_0_i_6: unisim.vcomponents.LUT5
+s_axi_mem_wready_INST_0_i_3: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"8A8A8AAA"
+      INIT => X"4440FFFF"
     )
         port map (
-      I0 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      I1 => Bus2IP_RdReq_d1_reg,
-      I2 => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
-      I3 => pend_rdreq,
-      I4 => \^burstlength_reg_reg[5]\,
-      O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_4\
+      I0 => Bus2IP_RdReq_d1_reg,
+      I1 => \^mem_decode_gen[0].rdce_out_i_reg[0]_0\,
+      I2 => pend_rdreq,
+      I3 => \^burstlength_reg_reg[0]\,
+      I4 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
+      O => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\
     );
 end STRUCTURE;
 library IEEE;
@@ -1801,6 +1929,8 @@ entity meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f is
     SS : in STD_LOGIC_VECTOR ( 0 to 0 );
     s_axi_aclk : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f : entity is "cntr_incr_decr_addn_f";
 end meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f is
@@ -1841,8 +1971,8 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f is
   attribute ORIG_CELL_NAME of \INFERRED_GEN.cnt_i_reg[4]_rep\ : label is "INFERRED_GEN.cnt_i_reg[4]";
   attribute ORIG_CELL_NAME of \INFERRED_GEN.cnt_i_reg[4]_rep__0\ : label is "INFERRED_GEN.cnt_i_reg[4]";
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \MEM_DECODE_GEN[0].rdce_out_i[0]_i_2\ : label is "soft_lutpair20";
-  attribute SOFT_HLUTNM of s_axi_mem_rvalid_INST_0 : label is "soft_lutpair20";
+  attribute SOFT_HLUTNM of \MEM_DECODE_GEN[0].rdce_out_i[0]_i_2\ : label is "soft_lutpair22";
+  attribute SOFT_HLUTNM of s_axi_mem_rvalid_INST_0 : label is "soft_lutpair22";
 begin
   Q(7 downto 0) <= \^q\(7 downto 0);
 Cnt_p10_carry: unisim.vcomponents.CARRY4
@@ -2174,6 +2304,8 @@ entity meowrouter_axi_emc_0_2_dynshreg_f is
     A : in STD_LOGIC_VECTOR ( 1 downto 0 );
     addr : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_dynshreg_f : entity is "dynshreg_f";
 end meowrouter_axi_emc_0_2_dynshreg_f;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_dynshreg_f is
@@ -3434,38 +3566,38 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_dynshreg_f is
   attribute srl_bus_name of \INFERRED_GEN.data_reg[255][9]_srl32__6\ : label is "\U0/AXI_EMC_NATIVE_INTERFACE_I/RDATA_FIFO_I/DYNSHREG_F_I/INFERRED_GEN.data_reg[255] ";
   attribute srl_name of \INFERRED_GEN.data_reg[255][9]_srl32__6\ : label is "\U0/AXI_EMC_NATIVE_INTERFACE_I/RDATA_FIFO_I/DYNSHREG_F_I/INFERRED_GEN.data_reg[255][9]_srl32__6 ";
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[0]_INST_0\ : label is "soft_lutpair21";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[10]_INST_0\ : label is "soft_lutpair26";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[11]_INST_0\ : label is "soft_lutpair26";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[12]_INST_0\ : label is "soft_lutpair27";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[13]_INST_0\ : label is "soft_lutpair27";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[14]_INST_0\ : label is "soft_lutpair28";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[15]_INST_0\ : label is "soft_lutpair28";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[16]_INST_0\ : label is "soft_lutpair29";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[17]_INST_0\ : label is "soft_lutpair29";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[18]_INST_0\ : label is "soft_lutpair30";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[19]_INST_0\ : label is "soft_lutpair30";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[1]_INST_0\ : label is "soft_lutpair21";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[20]_INST_0\ : label is "soft_lutpair31";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[21]_INST_0\ : label is "soft_lutpair31";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[22]_INST_0\ : label is "soft_lutpair32";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[23]_INST_0\ : label is "soft_lutpair32";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[24]_INST_0\ : label is "soft_lutpair33";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[25]_INST_0\ : label is "soft_lutpair33";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[26]_INST_0\ : label is "soft_lutpair34";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[27]_INST_0\ : label is "soft_lutpair34";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[28]_INST_0\ : label is "soft_lutpair35";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[29]_INST_0\ : label is "soft_lutpair35";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[2]_INST_0\ : label is "soft_lutpair22";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[30]_INST_0\ : label is "soft_lutpair36";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[31]_INST_0\ : label is "soft_lutpair36";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[3]_INST_0\ : label is "soft_lutpair22";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[4]_INST_0\ : label is "soft_lutpair23";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[5]_INST_0\ : label is "soft_lutpair23";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[6]_INST_0\ : label is "soft_lutpair24";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[7]_INST_0\ : label is "soft_lutpair24";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[8]_INST_0\ : label is "soft_lutpair25";
-  attribute SOFT_HLUTNM of \s_axi_mem_rdata[9]_INST_0\ : label is "soft_lutpair25";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[0]_INST_0\ : label is "soft_lutpair23";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[10]_INST_0\ : label is "soft_lutpair28";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[11]_INST_0\ : label is "soft_lutpair28";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[12]_INST_0\ : label is "soft_lutpair29";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[13]_INST_0\ : label is "soft_lutpair29";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[14]_INST_0\ : label is "soft_lutpair30";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[15]_INST_0\ : label is "soft_lutpair30";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[16]_INST_0\ : label is "soft_lutpair31";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[17]_INST_0\ : label is "soft_lutpair31";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[18]_INST_0\ : label is "soft_lutpair32";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[19]_INST_0\ : label is "soft_lutpair32";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[1]_INST_0\ : label is "soft_lutpair23";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[20]_INST_0\ : label is "soft_lutpair33";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[21]_INST_0\ : label is "soft_lutpair33";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[22]_INST_0\ : label is "soft_lutpair34";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[23]_INST_0\ : label is "soft_lutpair34";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[24]_INST_0\ : label is "soft_lutpair35";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[25]_INST_0\ : label is "soft_lutpair35";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[26]_INST_0\ : label is "soft_lutpair36";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[27]_INST_0\ : label is "soft_lutpair36";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[28]_INST_0\ : label is "soft_lutpair37";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[29]_INST_0\ : label is "soft_lutpair37";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[2]_INST_0\ : label is "soft_lutpair24";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[30]_INST_0\ : label is "soft_lutpair38";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[31]_INST_0\ : label is "soft_lutpair38";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[3]_INST_0\ : label is "soft_lutpair24";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[4]_INST_0\ : label is "soft_lutpair25";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[5]_INST_0\ : label is "soft_lutpair25";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[6]_INST_0\ : label is "soft_lutpair26";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[7]_INST_0\ : label is "soft_lutpair26";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[8]_INST_0\ : label is "soft_lutpair27";
+  attribute SOFT_HLUTNM of \s_axi_mem_rdata[9]_INST_0\ : label is "soft_lutpair27";
 begin
 \INFERRED_GEN.data_reg[255][0]_mux\: unisim.vcomponents.MUXF7
      port map (
@@ -8638,7 +8770,7 @@ entity meowrouter_axi_emc_0_2_io_registers is
     mem_CEN_cmb : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
     mem_OEN_cmb : in STD_LOGIC;
-    mem_wen_reg_reg_0 : in STD_LOGIC;
+    mem_WEN_cmb : in STD_LOGIC;
     mem_ce_int : in STD_LOGIC;
     mem_RNW_cmb : in STD_LOGIC;
     mem_dq_i : in STD_LOGIC_VECTOR ( 15 downto 0 );
@@ -8648,6 +8780,8 @@ entity meowrouter_axi_emc_0_2_io_registers is
     \mem_qwen_reg_reg[0]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     \mem_ben_reg_reg[0]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_io_registers : entity is "io_registers";
 end meowrouter_axi_emc_0_2_io_registers;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_io_registers is
@@ -9179,7 +9313,7 @@ mem_wen_reg_reg: unisim.vcomponents.FDSE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => mem_wen_reg_reg_0,
+      D => mem_WEN_cmb,
       Q => mem_wen_reg,
       S => bus2ip_reset
     );
@@ -9191,7 +9325,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity meowrouter_axi_emc_0_2_ld_arith_reg is
   port (
     burst_cnt_i : out STD_LOGIC_VECTOR ( 0 to 7 );
-    \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
+    \PERBIT_GEN[5].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
     bus2ip_burst_reg_reg : out STD_LOGIC;
     ip2bus_addrack : in STD_LOGIC;
     S : in STD_LOGIC;
@@ -9211,10 +9345,12 @@ entity meowrouter_axi_emc_0_2_ld_arith_reg is
     set_pend_rdreq : in STD_LOGIC;
     pend_rdreq_reg_0 : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_ld_arith_reg : entity is "ld_arith_reg";
 end meowrouter_axi_emc_0_2_ld_arith_reg;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_ld_arith_reg is
-  signal \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
+  signal \^perbit_gen[5].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
   signal \^burst_cnt_i\ : STD_LOGIC_VECTOR ( 0 to 7 );
   signal cry : STD_LOGIC_VECTOR ( 7 downto 1 );
   signal gen_cry_kill_n_0 : STD_LOGIC;
@@ -9275,7 +9411,7 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_ld_arith_reg is
   attribute OPT_MODIFIED of \PERBIT_GEN[7].MUXCY_i1_CARRY4\ : label is "MLO ";
   attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[7].MUXCY_i1_CARRY4\ : label is "(MUXCY,XORCY)";
 begin
-  \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\;
+  \PERBIT_GEN[5].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[5].ff_rst0_gen.fdre_i1_0\;
   burst_cnt_i(0 to 7) <= \^burst_cnt_i\(0 to 7);
 \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\: unisim.vcomponents.FDRE
     generic map(
@@ -9495,7 +9631,7 @@ pend_rdreq_i_1: unisim.vcomponents.LUT6
     )
         port map (
       I0 => bus2ip_burst,
-      I1 => \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\,
+      I1 => \^perbit_gen[5].ff_rst0_gen.fdre_i1_0\,
       I2 => pend_rdreq_reg,
       I3 => temp_bus2ip_cs,
       I4 => set_pend_rdreq,
@@ -9507,22 +9643,22 @@ pend_rdreq_i_2: unisim.vcomponents.LUT5
       INIT => X"00000001"
     )
         port map (
-      I0 => \^burst_cnt_i\(2),
-      I1 => \^burst_cnt_i\(5),
+      I0 => \^burst_cnt_i\(5),
+      I1 => \^burst_cnt_i\(6),
       I2 => \^burst_cnt_i\(7),
-      I3 => \^burst_cnt_i\(6),
+      I3 => \^burst_cnt_i\(2),
       I4 => pend_rdreq_i_4_n_0,
-      O => \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\
+      O => \^perbit_gen[5].ff_rst0_gen.fdre_i1_0\
     );
 pend_rdreq_i_4: unisim.vcomponents.LUT4
     generic map(
       INIT => X"FFFE"
     )
         port map (
-      I0 => \^burst_cnt_i\(1),
-      I1 => \^burst_cnt_i\(4),
-      I2 => \^burst_cnt_i\(0),
-      I3 => \^burst_cnt_i\(3),
+      I0 => \^burst_cnt_i\(4),
+      I1 => \^burst_cnt_i\(3),
+      I2 => \^burst_cnt_i\(1),
+      I3 => \^burst_cnt_i\(0),
       O => pend_rdreq_i_4_n_0
     );
 end STRUCTURE;
@@ -9535,34 +9671,44 @@ entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized0\ is
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
     \FSM_sequential_crnt_state_reg[3]\ : out STD_LOGIC;
+    bus2ip_wr_req_reg_reg : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ : out STD_LOGIC;
-    pend_wrreq_reg : out STD_LOGIC;
+    \burst_addr_cnt_reg[7]\ : out STD_LOGIC;
+    \burst_addr_cnt_reg[7]_0\ : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_2\ : out STD_LOGIC;
+    pend_wrreq_reg : out STD_LOGIC;
+    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\ : out STD_LOGIC;
     pend_wrreq_reg_0 : out STD_LOGIC;
+    \burst_addr_cnt_reg[7]_1\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ : out STD_LOGIC;
+    read_data_en_cmb : out STD_LOGIC;
+    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_4\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\ : out STD_LOGIC;
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\ : out STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\ : out STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ : out STD_LOGIC;
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_4\ : in STD_LOGIC;
+    Cycle_cnt_en_int : in STD_LOGIC;
     S : in STD_LOGIC;
     \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
     CE : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
-    Q : in STD_LOGIC_VECTOR ( 0 to 0 );
-    bus2Mem_RdReq : in STD_LOGIC;
+    Q : in STD_LOGIC_VECTOR ( 2 downto 0 );
     temp_bus2ip_cs : in STD_LOGIC;
+    bus2Mem_RdReq : in STD_LOGIC;
     \DATA_STORE_GEN[0].WRDATA_REG\ : in STD_LOGIC;
-    read_data_en_cmb : in STD_LOGIC;
+    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\ : in STD_LOGIC;
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
     bus2ip_wrreq_i : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state[1]_i_3\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]\ : in STD_LOGIC;
+    read_ack_reg_reg : in STD_LOGIC;
+    read_ack_reg_reg_0 : in STD_LOGIC;
+    read_ack_reg_reg_1 : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]_0\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]_1\ : in STD_LOGIC;
+    \s_axi_mem_bresp_reg_reg[1]\ : in STD_LOGIC;
+    \s_axi_mem_bresp_reg_reg[1]_0\ : in STD_LOGIC;
+    \s_axi_mem_bresp_reg_reg[1]_1\ : in STD_LOGIC;
+    \burst_addr_cnt_reg[7]_2\ : in STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_0\ : in STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\ : in STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_2\ : in STD_LOGIC;
@@ -9573,13 +9719,15 @@ entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized0\ is
 end \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized0\;
 
 architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized0\ is
+  signal \FSM_sequential_crnt_state[2]_i_8_n_0\ : STD_LOGIC;
   signal \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
-  signal \^perbit_gen[0].ff_rst0_gen.fdre_i1_1\ : STD_LOGIC;
+  signal \^perbit_gen[0].ff_rst0_gen.fdre_i1_2\ : STD_LOGIC;
   signal \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
   signal \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\ : STD_LOGIC;
+  signal \^burst_addr_cnt_reg[7]_0\ : STD_LOGIC;
+  signal \^bus2ip_wr_req_reg_reg\ : STD_LOGIC;
   signal cry : STD_LOGIC_VECTOR ( 1 to 1 );
   signal gen_cry_kill_n_0 : STD_LOGIC;
-  signal \^pend_wrreq_reg\ : STD_LOGIC;
   signal xorcy_out_0 : STD_LOGIC;
   signal xorcy_out_1 : STD_LOGIC;
   signal \NLW_PERBIT_GEN[1].MUXCY_i1_CARRY4_CO_UNCONNECTED\ : STD_LOGIC_VECTOR ( 3 downto 1 );
@@ -9587,68 +9735,69 @@ architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized0\ 
   signal \NLW_PERBIT_GEN[1].MUXCY_i1_CARRY4_O_UNCONNECTED\ : STD_LOGIC_VECTOR ( 3 downto 2 );
   signal \NLW_PERBIT_GEN[1].MUXCY_i1_CARRY4_S_UNCONNECTED\ : STD_LOGIC_VECTOR ( 3 downto 2 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_2\ : label is "soft_lutpair64";
-  attribute SOFT_HLUTNM of \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_4\ : label is "soft_lutpair65";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_7\ : label is "soft_lutpair66";
+  attribute SOFT_HLUTNM of \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ : label is "soft_lutpair65";
+  attribute SOFT_HLUTNM of \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_4\ : label is "soft_lutpair64";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_14\ : label is "soft_lutpair64";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_8\ : label is "soft_lutpair65";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_8\ : label is "soft_lutpair63";
   attribute BOX_TYPE : string;
   attribute BOX_TYPE of \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : label is "PRIMITIVE";
   attribute BOX_TYPE of \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ : label is "PRIMITIVE";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_2\ : label is "soft_lutpair62";
   attribute BOX_TYPE of \PERBIT_GEN[1].MULT_AND_i1\ : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM : string;
   attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[1].MULT_AND_i1\ : label is "MULT_AND";
   attribute XILINX_TRANSFORM_PINMAP : string;
   attribute XILINX_TRANSFORM_PINMAP of \PERBIT_GEN[1].MULT_AND_i1\ : label is "LO:O";
-  attribute SOFT_HLUTNM of \PERBIT_GEN[1].MULT_AND_i1_i_3\ : label is "soft_lutpair64";
   attribute BOX_TYPE of \PERBIT_GEN[1].MUXCY_i1_CARRY4\ : label is "PRIMITIVE";
   attribute OPT_MODIFIED : string;
   attribute OPT_MODIFIED of \PERBIT_GEN[1].MUXCY_i1_CARRY4\ : label is "MLO ";
   attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[1].MUXCY_i1_CARRY4\ : label is "(MUXCY,XORCY)";
-  attribute SOFT_HLUTNM of read_ack_reg_i_1 : label is "soft_lutpair66";
-  attribute SOFT_HLUTNM of read_data_en_reg_i_2 : label is "soft_lutpair65";
-  attribute SOFT_HLUTNM of s_axi_mem_wready_INST_0_i_3 : label is "soft_lutpair63";
-  attribute SOFT_HLUTNM of s_axi_mem_wready_INST_0_i_5 : label is "soft_lutpair63";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1\ : label is "soft_lutpair62";
+  attribute SOFT_HLUTNM of \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_5\ : label is "soft_lutpair63";
 begin
   \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\;
-  \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ <= \^perbit_gen[0].ff_rst0_gen.fdre_i1_1\;
+  \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ <= \^perbit_gen[0].ff_rst0_gen.fdre_i1_2\;
   \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\;
   \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\;
-  pend_wrreq_reg <= \^pend_wrreq_reg\;
+  \burst_addr_cnt_reg[7]_0\ <= \^burst_addr_cnt_reg[7]_0\;
+  bus2ip_wr_req_reg_reg <= \^bus2ip_wr_req_reg_reg\;
 \ADDRESS_STORE_GEN[0].ADDRESS_REG_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000100055555555"
+      INIT => X"4454444444444444"
     )
         port map (
-      I0 => Q(0),
-      I1 => bus2Mem_RdReq,
+      I0 => Q(2),
+      I1 => \^bus2ip_wr_req_reg_reg\,
       I2 => temp_bus2ip_cs,
-      I3 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\,
-      I4 => \DATA_STORE_GEN[0].WRDATA_REG\,
-      I5 => \^pend_wrreq_reg\,
+      I3 => bus2Mem_RdReq,
+      I4 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\,
+      I5 => \DATA_STORE_GEN[0].WRDATA_REG\,
       O => \FSM_sequential_crnt_state_reg[3]\
     );
 \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"557F0000AA800000"
+      INIT => X"4444CC4C88880080"
     )
         port map (
       I0 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_0\,
-      I1 => bus2Mem_RdReq,
-      I2 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\,
-      I3 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_1\,
-      I4 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_2\,
+      I1 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\,
+      I2 => bus2Mem_RdReq,
+      I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_2\,
+      I4 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_2\,
       I5 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_3\,
       O => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\
     );
-\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_2\: unisim.vcomponents.LUT4
+\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"E000"
+      INIT => X"A800"
     )
         port map (
-      I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
-      I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I2 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
+      I0 => \s_axi_mem_bresp_reg_reg[1]_0\,
+      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      I2 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
       I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\,
-      O => \^perbit_gen[0].ff_rst0_gen.fdre_i1_1\
+      O => \^perbit_gen[0].ff_rst0_gen.fdre_i1_2\
     );
 \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_4\: unisim.vcomponents.LUT4
     generic map(
@@ -9658,19 +9807,54 @@ begin
       I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
       I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
       I2 => bus2Mem_RdReq,
-      I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\,
-      O => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\
+      I3 => read_ack_reg_reg_1,
+      O => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\
     );
-\FSM_sequential_crnt_state[1]_i_7\: unisim.vcomponents.LUT4
+\FSM_sequential_crnt_state[0]_i_14\: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"FFFE"
+      INIT => X"01"
     )
         port map (
-      I0 => \FSM_sequential_crnt_state[1]_i_3\,
-      I1 => bus2Mem_RdReq,
-      I2 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
-      I3 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      O => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\
+      I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      I2 => bus2Mem_RdReq,
+      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_4\
+    );
+\FSM_sequential_crnt_state[2]_i_2\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"AEEEAAAAAEEEAEEE"
+    )
+        port map (
+      I0 => \FSM_sequential_crnt_state_reg[2]_0\,
+      I1 => \FSM_sequential_crnt_state[2]_i_8_n_0\,
+      I2 => \^bus2ip_wr_req_reg_reg\,
+      I3 => \FSM_sequential_crnt_state_reg[2]\,
+      I4 => \FSM_sequential_crnt_state_reg[2]_1\,
+      I5 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\,
+      O => pend_wrreq_reg_0
+    );
+\FSM_sequential_crnt_state[2]_i_8\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"0155"
+    )
+        port map (
+      I0 => Q(0),
+      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      I2 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\,
+      O => \FSM_sequential_crnt_state[2]_i_8_n_0\
+    );
+\FSM_sequential_crnt_state[3]_i_8\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"0E00FFFF"
+    )
+        port map (
+      I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      I2 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\,
+      I3 => Q(2),
+      I4 => Q(1),
+      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_2\
     );
 \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\: unisim.vcomponents.FDRE
     generic map(
@@ -9695,9 +9879,9 @@ begin
       I1 => bus2ip_wrreq_i,
       I2 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
       I3 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
-      I4 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
-      I5 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\,
-      O => pend_wrreq_reg_0
+      I4 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\,
+      I5 => \FSM_sequential_crnt_state_reg[2]\,
+      O => pend_wrreq_reg
     );
 \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\: unisim.vcomponents.FDRE
     generic map(
@@ -9713,30 +9897,33 @@ begin
       Q => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
       R => bus2ip_reset
     );
+\PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_2\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"00000080"
+    )
+        port map (
+      I0 => bus2ip_wrreq_i,
+      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      I2 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\,
+      I3 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      I4 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      O => \^bus2ip_wr_req_reg_reg\
+    );
 \PERBIT_GEN[1].MULT_AND_i1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"8"
     )
         port map (
       I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I1 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_4\,
+      I1 => Cycle_cnt_en_int,
       O => gen_cry_kill_n_0
-    );
-\PERBIT_GEN[1].MULT_AND_i1_i_3\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"1"
-    )
-        port map (
-      I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
-      I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      O => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\
     );
 \PERBIT_GEN[1].MUXCY_i1_CARRY4\: unisim.vcomponents.CARRY4
      port map (
       CI => '0',
       CO(3 downto 1) => \NLW_PERBIT_GEN[1].MUXCY_i1_CARRY4_CO_UNCONNECTED\(3 downto 1),
       CO(0) => cry(1),
-      CYINIT => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_4\,
+      CYINIT => Cycle_cnt_en_int,
       DI(3 downto 1) => \NLW_PERBIT_GEN[1].MUXCY_i1_CARRY4_DI_UNCONNECTED\(3 downto 1),
       DI(0) => gen_cry_kill_n_0,
       O(3 downto 2) => \NLW_PERBIT_GEN[1].MUXCY_i1_CARRY4_O_UNCONNECTED\(3 downto 2),
@@ -9746,39 +9933,7 @@ begin
       S(1) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       S(0) => S
     );
-read_ack_reg_i_1: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"02"
-    )
-        port map (
-      I0 => read_data_en_cmb,
-      I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I2 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
-      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_2\
-    );
-read_data_en_reg_i_2: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"01"
-    )
-        port map (
-      I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
-      I2 => bus2Mem_RdReq,
-      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\
-    );
-s_axi_mem_wready_INST_0_i_3: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"FFFFFF7F"
-    )
-        port map (
-      I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I2 => bus2ip_wrreq_i,
-      I3 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I4 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
-      O => \^pend_wrreq_reg\
-    );
-s_axi_mem_wready_INST_0_i_5: unisim.vcomponents.LUT4
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1\: unisim.vcomponents.LUT4
     generic map(
       INIT => X"0111"
     )
@@ -9788,6 +9943,76 @@ s_axi_mem_wready_INST_0_i_5: unisim.vcomponents.LUT4
       I2 => bus2ip_wrreq_i,
       I3 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
       O => \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\
+    );
+\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_5\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"1"
+    )
+        port map (
+      I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      O => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\
+    );
+\burst_addr_cnt[7]_i_4\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"0000000000F7FFFF"
+    )
+        port map (
+      I0 => \DATA_STORE_GEN[0].WRDATA_REG\,
+      I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\,
+      I2 => \s_axi_mem_bresp_reg_reg[1]\,
+      I3 => \^bus2ip_wr_req_reg_reg\,
+      I4 => \s_axi_mem_bresp_reg_reg[1]_0\,
+      I5 => \burst_addr_cnt_reg[7]_2\,
+      O => \burst_addr_cnt_reg[7]_1\
+    );
+read_ack_reg_i_1: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"0000100011111111"
+    )
+        port map (
+      I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      I2 => bus2Mem_RdReq,
+      I3 => read_ack_reg_reg,
+      I4 => read_ack_reg_reg_0,
+      I5 => read_ack_reg_reg_1,
+      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\
+    );
+read_data_en_reg_i_1: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"0000FE00FFFFFFFF"
+    )
+        port map (
+      I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      I2 => bus2Mem_RdReq,
+      I3 => read_ack_reg_reg,
+      I4 => read_ack_reg_reg_0,
+      I5 => read_ack_reg_reg_1,
+      O => read_data_en_cmb
+    );
+s_axi_mem_bvalid_reg_i_2: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"8"
+    )
+        port map (
+      I0 => \^burst_addr_cnt_reg[7]_0\,
+      I1 => \DATA_STORE_GEN[0].WRDATA_REG\,
+      O => \burst_addr_cnt_reg[7]\
+    );
+s_axi_mem_wready_INST_0_i_2: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FFFFFFFFFF080000"
+    )
+        port map (
+      I0 => \DATA_STORE_GEN[0].WRDATA_REG\,
+      I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\,
+      I2 => \s_axi_mem_bresp_reg_reg[1]\,
+      I3 => \^bus2ip_wr_req_reg_reg\,
+      I4 => \s_axi_mem_bresp_reg_reg[1]_0\,
+      I5 => \s_axi_mem_bresp_reg_reg[1]_1\,
+      O => \^burst_addr_cnt_reg[7]_0\
     );
 end STRUCTURE;
 library IEEE;
@@ -9802,24 +10027,21 @@ entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1\ is
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ : out STD_LOGIC_VECTOR ( 0 to 0 );
     pend_rdreq_reg : out STD_LOGIC;
     \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_1\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ : out STD_LOGIC;
-    tpacc_cnt_en : in STD_LOGIC;
+    \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_0\ : in STD_LOGIC;
     \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_2\ : in STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\ : in STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\ : in STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\ : in STD_LOGIC;
+    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_10\ : in STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_11\ : in STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_12\ : in STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
-    CE_14 : in STD_LOGIC;
+    CE_13 : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
     \burst_addr_cnt[7]_i_3\ : in STD_LOGIC;
     \burst_addr_cnt[7]_i_3_0\ : in STD_LOGIC;
     rdce_out_i : in STD_LOGIC;
     \burst_addr_cnt[7]_i_3_1\ : in STD_LOGIC;
-    Q : in STD_LOGIC_VECTOR ( 2 downto 0 );
-    \FSM_sequential_crnt_state_reg[4]\ : in STD_LOGIC;
-    \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\ : in STD_LOGIC;
-    bus2Mem_RdReq : in STD_LOGIC
+    Q : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \FSM_sequential_crnt_state_reg[4]\ : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1\ : entity is "ld_arith_reg";
@@ -9899,7 +10121,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_14,
+      CE => CE_13,
       D => xorcy_out_4,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(0),
       S => bus2ip_reset
@@ -9913,7 +10135,7 @@ begin
       O(3 downto 1) => \NLW_PERBIT_GEN[0].XORCY_i1_CARRY4_O_UNCONNECTED\(3 downto 1),
       O(0) => xorcy_out_4,
       S(3 downto 1) => \NLW_PERBIT_GEN[0].XORCY_i1_CARRY4_S_UNCONNECTED\(3 downto 1),
-      S(0) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\
+      S(0) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_12\
     );
 \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1\: unisim.vcomponents.FDSE
     generic map(
@@ -9924,7 +10146,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_14,
+      CE => CE_13,
       D => xorcy_out_3,
       Q => \^perbit_gen[1].ff_rst1_gen.fdse_i1_0\,
       S => bus2ip_reset
@@ -9935,7 +10157,7 @@ begin
     )
         port map (
       I0 => \^perbit_gen[1].ff_rst1_gen.fdse_i1_0\,
-      I1 => tpacc_cnt_en,
+      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_0\,
       O => gen_cry_kill_n_3
     );
 \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1\: unisim.vcomponents.FDSE
@@ -9947,7 +10169,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_14,
+      CE => CE_13,
       D => xorcy_out_2,
       Q => \^perbit_gen[2].ff_rst1_gen.fdse_i1_0\,
       S => bus2ip_reset
@@ -9958,7 +10180,7 @@ begin
     )
         port map (
       I0 => \^perbit_gen[2].ff_rst1_gen.fdse_i1_0\,
-      I1 => tpacc_cnt_en,
+      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_0\,
       O => gen_cry_kill_n_2
     );
 \PERBIT_GEN[3].FF_RST1_GEN.FDSE_i1\: unisim.vcomponents.FDSE
@@ -9970,18 +10192,18 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_14,
+      CE => CE_13,
       D => xorcy_out_1,
       Q => \^perbit_gen[3].ff_rst1_gen.fdse_i1_0\,
       S => bus2ip_reset
     );
-\PERBIT_GEN[3].MUXCY_i1_i_1__4\: unisim.vcomponents.LUT2
+\PERBIT_GEN[3].MUXCY_i1_i_1__5\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"7"
     )
         port map (
       I0 => \^perbit_gen[3].ff_rst1_gen.fdse_i1_0\,
-      I1 => tpacc_cnt_en,
+      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_0\,
       O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\
     );
 \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1\: unisim.vcomponents.FDSE
@@ -9993,7 +10215,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_14,
+      CE => CE_13,
       D => xorcy_out_0,
       Q => tpacc_cnt(4),
       S => bus2ip_reset
@@ -10004,14 +10226,14 @@ begin
     )
         port map (
       I0 => tpacc_cnt(4),
-      I1 => tpacc_cnt_en,
+      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_0\,
       O => gen_cry_kill_n_0
     );
 \PERBIT_GEN[4].MUXCY_i1_CARRY4\: unisim.vcomponents.CARRY4
      port map (
       CI => '0',
       CO(3 downto 0) => cry(4 downto 1),
-      CYINIT => tpacc_cnt_en,
+      CYINIT => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_0\,
       DI(3) => gen_cry_kill_n_3,
       DI(2) => gen_cry_kill_n_2,
       DI(1) => \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_2\,
@@ -10020,34 +10242,21 @@ begin
       O(2) => xorcy_out_2,
       O(1) => xorcy_out_1,
       O(0) => xorcy_out_0,
-      S(3) => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\,
-      S(2) => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\,
+      S(3) => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_11\,
+      S(2) => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_10\,
       S(1) => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       S(0) => S
     );
-\PERBIT_GEN[4].MUXCY_i1_i_1__4\: unisim.vcomponents.LUT2
+\PERBIT_GEN[4].MUXCY_i1_i_1__5\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"8"
     )
         port map (
       I0 => tpacc_cnt(4),
-      I1 => tpacc_cnt_en,
+      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_0\,
       O => S
     );
-\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_3\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"00000A0A03000F0F"
-    )
-        port map (
-      I0 => \^perbit_gen[2].ff_rst1_gen.fdse_i1_1\,
-      I1 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\,
-      I2 => bus2Mem_RdReq,
-      I3 => \FSM_sequential_crnt_state_reg[4]\,
-      I4 => Q(0),
-      I5 => Q(1),
-      O => \FSM_sequential_crnt_state_reg[0]\
-    );
-\burst_addr_cnt[7]_i_7\: unisim.vcomponents.LUT6
+\burst_addr_cnt[7]_i_9\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"FFFF57FFFFFFFFFF"
     )
@@ -10057,10 +10266,10 @@ begin
       I2 => \burst_addr_cnt[7]_i_3_0\,
       I3 => rdce_out_i,
       I4 => \burst_addr_cnt[7]_i_3_1\,
-      I5 => Q(2),
+      I5 => Q(0),
       O => pend_rdreq_reg
     );
-new_page_d1_i_3: unisim.vcomponents.LUT5
+new_page_d1_i_2: unisim.vcomponents.LUT5
     generic map(
       INIT => X"00000001"
     )
@@ -10080,15 +10289,20 @@ use UNISIM.VCOMPONENTS.ALL;
 entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_1\ is
   port (
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    \FSM_sequential_crnt_state_reg[1]\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ : out STD_LOGIC;
     trd_cnt_en : in STD_LOGIC;
     \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\ : in STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\ : in STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\ : in STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\ : in STD_LOGIC;
+    \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1_0\ : in STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_7\ : in STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_8\ : in STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
-    CE_10 : in STD_LOGIC;
-    s_axi_aclk : in STD_LOGIC
+    CE_9 : in STD_LOGIC;
+    s_axi_aclk : in STD_LOGIC;
+    \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\ : in STD_LOGIC;
+    Q : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\ : in STD_LOGIC;
+    bus2Mem_RdReq : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_1\ : entity is "ld_arith_reg";
@@ -10096,11 +10310,12 @@ end \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_1\;
 
 architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_1\ is
   signal \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\ : STD_LOGIC_VECTOR ( 3 downto 0 );
+  signal \^perbit_gen[0].ff_rst1_gen.fdse_i1_1\ : STD_LOGIC;
+  signal \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal S : STD_LOGIC;
   signal cry : STD_LOGIC_VECTOR ( 4 downto 1 );
   signal gen_cry_kill_n_0 : STD_LOGIC;
   signal gen_cry_kill_n_1 : STD_LOGIC;
-  signal gen_cry_kill_n_2 : STD_LOGIC;
   signal gen_cry_kill_n_3 : STD_LOGIC;
   signal trd_cnt : STD_LOGIC_VECTOR ( 4 to 4 );
   signal xorcy_out_0 : STD_LOGIC;
@@ -10125,9 +10340,6 @@ architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_1
   attribute XILINX_TRANSFORM_PINMAP : string;
   attribute XILINX_TRANSFORM_PINMAP of \PERBIT_GEN[1].MULT_AND_i1\ : label is "LO:O";
   attribute BOX_TYPE of \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1\ : label is "PRIMITIVE";
-  attribute BOX_TYPE of \PERBIT_GEN[2].MULT_AND_i1\ : label is "PRIMITIVE";
-  attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[2].MULT_AND_i1\ : label is "MULT_AND";
-  attribute XILINX_TRANSFORM_PINMAP of \PERBIT_GEN[2].MULT_AND_i1\ : label is "LO:O";
   attribute BOX_TYPE of \PERBIT_GEN[3].FF_RST1_GEN.FDSE_i1\ : label is "PRIMITIVE";
   attribute BOX_TYPE of \PERBIT_GEN[3].MULT_AND_i1\ : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[3].MULT_AND_i1\ : label is "MULT_AND";
@@ -10141,6 +10353,7 @@ architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_1
   attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[4].MUXCY_i1_CARRY4\ : label is "(MUXCY,XORCY)";
 begin
   \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\(3 downto 0) <= \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(3 downto 0);
+  \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ <= \^perbit_gen[0].ff_rst1_gen.fdse_i1_1\;
 \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\: unisim.vcomponents.FDSE
     generic map(
       INIT => '1',
@@ -10150,7 +10363,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_10,
+      CE => CE_9,
       D => xorcy_out_4,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(3),
       S => bus2ip_reset
@@ -10164,7 +10377,7 @@ begin
       O(3 downto 1) => \NLW_PERBIT_GEN[0].XORCY_i1_CARRY4_O_UNCONNECTED\(3 downto 1),
       O(0) => xorcy_out_4,
       S(3 downto 1) => \NLW_PERBIT_GEN[0].XORCY_i1_CARRY4_S_UNCONNECTED\(3 downto 1),
-      S(0) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\
+      S(0) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_8\
     );
 \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1\: unisim.vcomponents.FDSE
     generic map(
@@ -10175,7 +10388,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_10,
+      CE => CE_9,
       D => xorcy_out_3,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(2),
       S => bus2ip_reset
@@ -10198,19 +10411,19 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_10,
+      CE => CE_9,
       D => xorcy_out_2,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(1),
       S => bus2ip_reset
     );
-\PERBIT_GEN[2].MULT_AND_i1\: unisim.vcomponents.LUT2
+\PERBIT_GEN[2].MUXCY_i1_i_1\: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"8"
+      INIT => X"7"
     )
         port map (
       I0 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(1),
       I1 => trd_cnt_en,
-      O => gen_cry_kill_n_2
+      O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\
     );
 \PERBIT_GEN[3].FF_RST1_GEN.FDSE_i1\: unisim.vcomponents.FDSE
     generic map(
@@ -10221,7 +10434,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_10,
+      CE => CE_9,
       D => xorcy_out_1,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(0),
       S => bus2ip_reset
@@ -10244,7 +10457,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_10,
+      CE => CE_9,
       D => xorcy_out_0,
       Q => trd_cnt(4),
       S => bus2ip_reset
@@ -10264,30 +10477,43 @@ begin
       CO(3 downto 0) => cry(4 downto 1),
       CYINIT => trd_cnt_en,
       DI(3) => gen_cry_kill_n_3,
-      DI(2) => gen_cry_kill_n_2,
+      DI(2) => \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1_0\,
       DI(1) => gen_cry_kill_n_1,
       DI(0) => gen_cry_kill_n_0,
       O(3) => xorcy_out_3,
       O(2) => xorcy_out_2,
       O(1) => xorcy_out_1,
       O(0) => xorcy_out_0,
-      S(3) => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\,
-      S(2) => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\,
+      S(3) => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_7\,
+      S(2) => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
       S(1) => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\,
       S(0) => S
     );
-\PERBIT_GEN[4].MUXCY_i1_i_1__0\: unisim.vcomponents.LUT2
+\PERBIT_GEN[4].MUXCY_i1_i_1\: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"B"
+      INIT => X"8"
     )
         port map (
       I0 => trd_cnt(4),
       I1 => trd_cnt_en,
       O => S
     );
-\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_4\: unisim.vcomponents.LUT5
+\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFE"
+      INIT => X"000000000808FF0F"
+    )
+        port map (
+      I0 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_1\,
+      I1 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\,
+      I2 => Q(1),
+      I3 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
+      I4 => Q(0),
+      I5 => bus2Mem_RdReq,
+      O => \FSM_sequential_crnt_state_reg[1]\
+    );
+\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_3\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"00000001"
     )
         port map (
       I0 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(3),
@@ -10295,7 +10521,7 @@ begin
       I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(0),
       I3 => trd_cnt(4),
       I4 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(1),
-      O => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\
+      O => \^perbit_gen[0].ff_rst1_gen.fdse_i1_1\
     );
 end STRUCTURE;
 library IEEE;
@@ -10513,7 +10739,7 @@ begin
       S(1) => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       S(0) => S
     );
-\PERBIT_GEN[4].MUXCY_i1_i_1__5\: unisim.vcomponents.LUT2
+\PERBIT_GEN[4].MUXCY_i1_i_1__4\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"8"
     )
@@ -10532,36 +10758,30 @@ entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2\ is
     bus2ip_wr_req_reg_reg : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ : out STD_LOGIC;
     \FSM_sequential_crnt_state_reg[3]\ : out STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
-    CE_20 : in STD_LOGIC;
+    CE_19 : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
     bus2ip_wrreq_i : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
+    \mem_a_int_reg[1]\ : in STD_LOGIC;
     temp_bus2ip_cs : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_0\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_1\ : in STD_LOGIC;
     bus2Mem_RdReq : in STD_LOGIC;
     \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ : in STD_LOGIC;
     \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 0 to 0 );
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3_0\ : in STD_LOGIC
+    \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_2\ : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2\ : entity is "ld_arith_reg";
 end \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2\;
 
 architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2\ is
-  signal \^mem_decode_gen[0].cs_out_i_reg[0]_0\ : STD_LOGIC;
   signal \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
   signal \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
-  signal \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\ : STD_LOGIC;
+  signal \PERBIT_GEN[4].MULT_AND_i1_i_1__1_n_0\ : STD_LOGIC;
   signal S : STD_LOGIC;
   signal \^bus2ip_wr_req_reg_reg\ : STD_LOGIC;
   signal cry : STD_LOGIC_VECTOR ( 4 downto 1 );
@@ -10607,33 +10827,18 @@ architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2\ 
   attribute OPT_MODIFIED of \PERBIT_GEN[4].MUXCY_i1_CARRY4\ : label is "MLO ";
   attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[4].MUXCY_i1_CARRY4\ : label is "(MUXCY,XORCY)";
 begin
-  \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ <= \^mem_decode_gen[0].cs_out_i_reg[0]_0\;
   \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\;
   bus2ip_wr_req_reg_reg <= \^bus2ip_wr_req_reg_reg\;
-\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_8\: unisim.vcomponents.LUT5
+\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_7\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"00AAC0AA"
+      INIT => X"E222"
     )
         port map (
       I0 => \^bus2ip_wr_req_reg_reg\,
-      I1 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\,
+      I1 => Q(0),
       I2 => bus2Mem_RdReq,
-      I3 => Q(0),
-      I4 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3_0\,
+      I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_2\,
       O => \FSM_sequential_crnt_state_reg[3]\
-    );
-\FSM_sequential_crnt_state[0]_i_3\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"005C5C5C005C005C"
-    )
-        port map (
-      I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I1 => temp_bus2ip_cs,
-      I2 => \FSM_sequential_crnt_state_reg[0]\,
-      I3 => \FSM_sequential_crnt_state_reg[0]_0\,
-      I4 => \FSM_sequential_crnt_state_reg[0]_1\,
-      I5 => \^mem_decode_gen[0].cs_out_i_reg[0]_0\,
-      O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]\
     );
 \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\: unisim.vcomponents.FDRE
     generic map(
@@ -10644,7 +10849,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_20,
+      CE => CE_19,
       D => xorcy_out_4,
       Q => thz_cnt(0),
       R => bus2ip_reset
@@ -10660,7 +10865,7 @@ begin
       S(3 downto 1) => \NLW_PERBIT_GEN[0].XORCY_i1_CARRY4_S_UNCONNECTED\(3 downto 1),
       S(0) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\
     );
-\PERBIT_GEN[0].XORCY_i1_i_1__4\: unisim.vcomponents.LUT5
+\PERBIT_GEN[0].XORCY_i1_i_1__3\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"00FF00FE"
     )
@@ -10681,7 +10886,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_20,
+      CE => CE_19,
       D => xorcy_out_3,
       Q => thz_cnt(1),
       R => bus2ip_reset
@@ -10692,10 +10897,10 @@ begin
     )
         port map (
       I0 => thz_cnt(1),
-      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
+      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__1_n_0\,
       O => gen_cry_kill_n_3
     );
-\PERBIT_GEN[1].MUXCY_i1_i_1__4\: unisim.vcomponents.LUT5
+\PERBIT_GEN[1].MUXCY_i1_i_1__3\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"0000FFFE"
     )
@@ -10716,7 +10921,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_20,
+      CE => CE_19,
       D => xorcy_out_2,
       Q => thz_cnt(2),
       R => bus2ip_reset
@@ -10727,10 +10932,10 @@ begin
     )
         port map (
       I0 => thz_cnt(2),
-      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
+      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__1_n_0\,
       O => gen_cry_kill_n_2
     );
-\PERBIT_GEN[2].MUXCY_i1_i_1__3\: unisim.vcomponents.LUT5
+\PERBIT_GEN[2].MUXCY_i1_i_1__2\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"55555554"
     )
@@ -10751,7 +10956,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_20,
+      CE => CE_19,
       D => xorcy_out_1,
       Q => thz_cnt(3),
       R => bus2ip_reset
@@ -10762,10 +10967,10 @@ begin
     )
         port map (
       I0 => thz_cnt(3),
-      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
+      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__1_n_0\,
       O => gen_cry_kill_n_1
     );
-\PERBIT_GEN[3].MUXCY_i1_i_1__3\: unisim.vcomponents.LUT5
+\PERBIT_GEN[3].MUXCY_i1_i_1__2\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"0F0F0F0E"
     )
@@ -10786,12 +10991,12 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_20,
+      CE => CE_19,
       D => xorcy_out_0,
       Q => thz_cnt(4),
       R => bus2ip_reset
     );
-\PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_3\: unisim.vcomponents.LUT5
+\PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"00000001"
     )
@@ -10809,10 +11014,10 @@ begin
     )
         port map (
       I0 => thz_cnt(4),
-      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
+      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__1_n_0\,
       O => gen_cry_kill_n_0
     );
-\PERBIT_GEN[4].MULT_AND_i1_i_1__2\: unisim.vcomponents.LUT5
+\PERBIT_GEN[4].MULT_AND_i1_i_1__1\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"FFFFFFFE"
     )
@@ -10822,13 +11027,13 @@ begin
       I2 => thz_cnt(3),
       I3 => thz_cnt(0),
       I4 => thz_cnt(1),
-      O => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\
+      O => \PERBIT_GEN[4].MULT_AND_i1_i_1__1_n_0\
     );
 \PERBIT_GEN[4].MUXCY_i1_CARRY4\: unisim.vcomponents.CARRY4
      port map (
       CI => '0',
       CO(3 downto 0) => cry(4 downto 1),
-      CYINIT => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
+      CYINIT => \PERBIT_GEN[4].MULT_AND_i1_i_1__1_n_0\,
       DI(3) => gen_cry_kill_n_3,
       DI(2) => gen_cry_kill_n_2,
       DI(1) => gen_cry_kill_n_1,
@@ -10842,7 +11047,7 @@ begin
       S(1) => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       S(0) => S
     );
-\PERBIT_GEN[4].MUXCY_i1_i_1__3\: unisim.vcomponents.LUT5
+\PERBIT_GEN[4].MUXCY_i1_i_1__2\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"CCCCCCCD"
     )
@@ -10861,7 +11066,7 @@ begin
         port map (
       I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
       I1 => bus2ip_wrreq_i,
-      I2 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      I2 => \mem_a_int_reg[1]\,
       O => \^bus2ip_wr_req_reg_reg\
     );
 transaction_complete_reg_i_4: unisim.vcomponents.LUT5
@@ -10874,7 +11079,7 @@ transaction_complete_reg_i_4: unisim.vcomponents.LUT5
       I2 => bus2Mem_RdReq,
       I3 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\,
       I4 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\,
-      O => \^mem_decode_gen[0].cs_out_i_reg[0]_0\
+      O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]\
     );
 end STRUCTURE;
 library IEEE;
@@ -10885,18 +11090,13 @@ entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_0\ is
   port (
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[3]\ : out STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ : out STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
     CE_5 : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
     bus2Mem_RdReq : in STD_LOGIC;
     temp_bus2ip_cs : in STD_LOGIC;
-    transaction_done_reg_reg : in STD_LOGIC;
-    bus2ip_wrreq_i : in STD_LOGIC;
-    transaction_done_reg_reg_0 : in STD_LOGIC;
-    Q : in STD_LOGIC_VECTOR ( 0 to 0 );
-    \FSM_sequential_crnt_state[3]_i_4\ : in STD_LOGIC
+    transaction_done_reg_reg : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_0\ : entity is "ld_arith_reg";
@@ -10908,7 +11108,7 @@ architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_0
   signal \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
-  signal \PERBIT_GEN[4].MULT_AND_i1_i_1__0_n_0\ : STD_LOGIC;
+  signal \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\ : STD_LOGIC;
   signal S : STD_LOGIC;
   signal cry : STD_LOGIC_VECTOR ( 4 downto 1 );
   signal gen_cry_kill_n_0 : STD_LOGIC;
@@ -10954,18 +11154,6 @@ architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_0
   attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[4].MUXCY_i1_CARRY4\ : label is "(MUXCY,XORCY)";
 begin
   \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\;
-\FSM_sequential_crnt_state[3]_i_6\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"00F0F8F0"
-    )
-        port map (
-      I0 => bus2Mem_RdReq,
-      I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I2 => Q(0),
-      I3 => temp_bus2ip_cs,
-      I4 => \FSM_sequential_crnt_state[3]_i_4\,
-      O => \FSM_sequential_crnt_state_reg[3]\
-    );
 \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
@@ -10991,7 +11179,7 @@ begin
       S(3 downto 1) => \NLW_PERBIT_GEN[0].XORCY_i1_CARRY4_S_UNCONNECTED\(3 downto 1),
       S(0) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\
     );
-\PERBIT_GEN[0].XORCY_i1_i_1__2\: unisim.vcomponents.LUT5
+\PERBIT_GEN[0].XORCY_i1_i_1__4\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"00FF00FE"
     )
@@ -11023,10 +11211,10 @@ begin
     )
         port map (
       I0 => tlz_cnt(1),
-      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__0_n_0\,
+      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
       O => gen_cry_kill_n_3
     );
-\PERBIT_GEN[1].MUXCY_i1_i_1__2\: unisim.vcomponents.LUT5
+\PERBIT_GEN[1].MUXCY_i1_i_1__4\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"0000FFFE"
     )
@@ -11058,10 +11246,10 @@ begin
     )
         port map (
       I0 => tlz_cnt(2),
-      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__0_n_0\,
+      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
       O => gen_cry_kill_n_2
     );
-\PERBIT_GEN[2].MUXCY_i1_i_1__1\: unisim.vcomponents.LUT5
+\PERBIT_GEN[2].MUXCY_i1_i_1__3\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"55555554"
     )
@@ -11093,10 +11281,10 @@ begin
     )
         port map (
       I0 => tlz_cnt(3),
-      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__0_n_0\,
+      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
       O => gen_cry_kill_n_1
     );
-\PERBIT_GEN[3].MUXCY_i1_i_1__1\: unisim.vcomponents.LUT5
+\PERBIT_GEN[3].MUXCY_i1_i_1__3\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"0F0F0F0E"
     )
@@ -11140,10 +11328,10 @@ begin
     )
         port map (
       I0 => tlz_cnt(4),
-      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__0_n_0\,
+      I1 => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
       O => gen_cry_kill_n_0
     );
-\PERBIT_GEN[4].MULT_AND_i1_i_1__0\: unisim.vcomponents.LUT5
+\PERBIT_GEN[4].MULT_AND_i1_i_1__2\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"FFFFFFFE"
     )
@@ -11153,13 +11341,13 @@ begin
       I2 => tlz_cnt(3),
       I3 => tlz_cnt(0),
       I4 => tlz_cnt(1),
-      O => \PERBIT_GEN[4].MULT_AND_i1_i_1__0_n_0\
+      O => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\
     );
 \PERBIT_GEN[4].MUXCY_i1_CARRY4\: unisim.vcomponents.CARRY4
      port map (
       CI => '0',
       CO(3 downto 0) => cry(4 downto 1),
-      CYINIT => \PERBIT_GEN[4].MULT_AND_i1_i_1__0_n_0\,
+      CYINIT => \PERBIT_GEN[4].MULT_AND_i1_i_1__2_n_0\,
       DI(3) => gen_cry_kill_n_3,
       DI(2) => gen_cry_kill_n_2,
       DI(1) => gen_cry_kill_n_1,
@@ -11173,7 +11361,7 @@ begin
       S(1) => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       S(0) => S
     );
-\PERBIT_GEN[4].MUXCY_i1_i_1__1\: unisim.vcomponents.LUT5
+\PERBIT_GEN[4].MUXCY_i1_i_1__3\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"CCCCCCCD"
     )
@@ -11198,17 +11386,15 @@ begin
       I5 => tlz_cnt(1),
       O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\
     );
-transaction_done_reg_i_2: unisim.vcomponents.LUT6
+transaction_done_reg_i_2: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"F080808080808080"
+      INIT => X"F080"
     )
         port map (
       I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
       I1 => bus2Mem_RdReq,
       I2 => temp_bus2ip_cs,
       I3 => transaction_done_reg_reg,
-      I4 => bus2ip_wrreq_i,
-      I5 => transaction_done_reg_reg_0,
       O => \MEM_DECODE_GEN[0].cs_out_i_reg[0]\
     );
 end STRUCTURE;
@@ -11218,11 +11404,7 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_2\ is
   port (
-    \PERBIT_GEN[3].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
-    \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC_VECTOR ( 0 to 0 );
-    \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_1\ : out STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC_VECTOR ( 3 downto 0 );
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ : out STD_LOGIC;
     twph_cnt_en : in STD_LOGIC;
     \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_0\ : in STD_LOGIC;
@@ -11231,18 +11413,14 @@ entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_2\ is
     \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_3\ : in STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
     CE_4 : in STD_LOGIC;
-    s_axi_aclk : in STD_LOGIC;
-    \FSM_sequential_crnt_state[3]_i_5\ : in STD_LOGIC
+    s_axi_aclk : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_2\ : entity is "ld_arith_reg";
 end \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_2\;
 
 architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_2\ is
-  signal \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
-  signal \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
-  signal \^perbit_gen[3].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
+  signal \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal S : STD_LOGIC;
   signal cry : STD_LOGIC_VECTOR ( 4 downto 1 );
   signal gen_cry_kill_n_0 : STD_LOGIC;
@@ -11287,23 +11465,7 @@ architecture STRUCTURE of \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_2
   attribute OPT_MODIFIED of \PERBIT_GEN[4].MUXCY_i1_CARRY4\ : label is "MLO ";
   attribute XILINX_LEGACY_PRIM of \PERBIT_GEN[4].MUXCY_i1_CARRY4\ : label is "(MUXCY,XORCY)";
 begin
-  \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\(0) <= \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(0);
-  \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\;
-  \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\;
-  \PERBIT_GEN[3].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[3].ff_rst0_gen.fdre_i1_0\;
-\FSM_sequential_crnt_state[3]_i_7\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"5555555555555554"
-    )
-        port map (
-      I0 => \FSM_sequential_crnt_state[3]_i_5\,
-      I1 => \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\,
-      I2 => twph_cnt(4),
-      I3 => \^perbit_gen[3].ff_rst0_gen.fdre_i1_0\,
-      I4 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I5 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(0),
-      O => \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_1\
-    );
+  \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\(3 downto 0) <= \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(3 downto 0);
 \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0',
@@ -11315,7 +11477,7 @@ begin
       C => s_axi_aclk,
       CE => CE_4,
       D => xorcy_out_4,
-      Q => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(0),
+      Q => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(3),
       R => bus2ip_reset
     );
 \PERBIT_GEN[0].XORCY_i1_CARRY4\: unisim.vcomponents.CARRY4
@@ -11340,7 +11502,7 @@ begin
       C => s_axi_aclk,
       CE => CE_4,
       D => xorcy_out_3,
-      Q => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      Q => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(2),
       R => bus2ip_reset
     );
 \PERBIT_GEN[1].MULT_AND_i1\: unisim.vcomponents.LUT2
@@ -11348,21 +11510,9 @@ begin
       INIT => X"8"
     )
         port map (
-      I0 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(2),
       I1 => twph_cnt_en,
       O => gen_cry_kill_n_3
-    );
-\PERBIT_GEN[1].MULT_AND_i1_i_4\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"00000001"
-    )
-        port map (
-      I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(0),
-      I1 => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      I2 => \^perbit_gen[3].ff_rst0_gen.fdre_i1_0\,
-      I3 => twph_cnt(4),
-      I4 => \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\,
-      O => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\
     );
 \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1\: unisim.vcomponents.FDRE
     generic map(
@@ -11375,7 +11525,7 @@ begin
       C => s_axi_aclk,
       CE => CE_4,
       D => xorcy_out_2,
-      Q => \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\,
+      Q => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(1),
       R => bus2ip_reset
     );
 \PERBIT_GEN[2].MULT_AND_i1\: unisim.vcomponents.LUT2
@@ -11383,7 +11533,7 @@ begin
       INIT => X"8"
     )
         port map (
-      I0 => \^perbit_gen[2].ff_rst0_gen.fdre_i1_0\,
+      I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(1),
       I1 => twph_cnt_en,
       O => gen_cry_kill_n_2
     );
@@ -11398,7 +11548,7 @@ begin
       C => s_axi_aclk,
       CE => CE_4,
       D => xorcy_out_1,
-      Q => \^perbit_gen[3].ff_rst0_gen.fdre_i1_0\,
+      Q => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(0),
       R => bus2ip_reset
     );
 \PERBIT_GEN[3].MULT_AND_i1\: unisim.vcomponents.LUT2
@@ -11406,7 +11556,7 @@ begin
       INIT => X"8"
     )
         port map (
-      I0 => \^perbit_gen[3].ff_rst0_gen.fdre_i1_0\,
+      I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(0),
       I1 => twph_cnt_en,
       O => gen_cry_kill_n_1
     );
@@ -11423,6 +11573,18 @@ begin
       D => xorcy_out_0,
       Q => twph_cnt(4),
       R => bus2ip_reset
+    );
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3__0\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"00000001"
+    )
+        port map (
+      I0 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(3),
+      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(2),
+      I2 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(0),
+      I3 => twph_cnt(4),
+      I4 => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\(1),
+      O => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\
     );
 \PERBIT_GEN[4].MULT_AND_i1\: unisim.vcomponents.LUT2
     generic map(
@@ -11451,7 +11613,7 @@ begin
       S(1) => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_0\,
       S(0) => S
     );
-\PERBIT_GEN[4].MUXCY_i1_i_1__2\: unisim.vcomponents.LUT2
+\PERBIT_GEN[4].MUXCY_i1_i_1__1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"B"
     )
@@ -11468,7 +11630,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized3\ is
   port (
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ : out STD_LOGIC_VECTOR ( 14 downto 0 );
-    \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\ : out STD_LOGIC;
+    \PERBIT_GEN[11].FF_RST1_GEN.FDSE_i1_0\ : out STD_LOGIC;
     twr_rec_cnt_en_int : in STD_LOGIC;
     \PERBIT_GEN[13].FF_RST1_GEN.FDSE_i1_0\ : in STD_LOGIC;
     \PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
@@ -11481,12 +11643,12 @@ entity \meowrouter_axi_emc_0_2_ld_arith_reg__parameterized3\ is
     \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
     \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
     \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
-    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\ : in STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\ : in STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\ : in STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\ : in STD_LOGIC;
+    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_14\ : in STD_LOGIC;
+    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_15\ : in STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_16\ : in STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_17\ : in STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
-    CE_19 : in STD_LOGIC;
+    CE_18 : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -11619,7 +11781,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_15,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(14),
       S => bus2ip_reset
@@ -11633,7 +11795,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_5,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(4),
       S => bus2ip_reset
@@ -11656,7 +11818,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_4,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(3),
       S => bus2ip_reset
@@ -11697,7 +11859,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_3,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(2),
       S => bus2ip_reset
@@ -11720,7 +11882,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_2,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(1),
       S => bus2ip_reset
@@ -11743,7 +11905,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_1,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(0),
       S => bus2ip_reset
@@ -11766,7 +11928,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_0,
       Q => twr_rec_cnt(15),
       S => bus2ip_reset
@@ -11786,22 +11948,22 @@ begin
     )
         port map (
       I0 => \PERBIT_GEN[15].MULT_AND_i1_i_3_n_0\,
-      I1 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(12),
-      I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(14),
-      I3 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(11),
-      I4 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(13),
+      I1 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(3),
+      I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(6),
+      I3 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(4),
+      I4 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(5),
       I5 => \PERBIT_GEN[15].MULT_AND_i1_i_4_n_0\,
-      O => \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\
+      O => \PERBIT_GEN[11].FF_RST1_GEN.FDSE_i1_0\
     );
 \PERBIT_GEN[15].MULT_AND_i1_i_3\: unisim.vcomponents.LUT4
     generic map(
       INIT => X"FFFE"
     )
         port map (
-      I0 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(9),
-      I1 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(10),
-      I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(7),
-      I3 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(8),
+      I0 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(2),
+      I1 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(0),
+      I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(13),
+      I3 => twr_rec_cnt(15),
       O => \PERBIT_GEN[15].MULT_AND_i1_i_3_n_0\
     );
 \PERBIT_GEN[15].MULT_AND_i1_i_4\: unisim.vcomponents.LUT5
@@ -11809,10 +11971,10 @@ begin
       INIT => X"FFFFFFFE"
     )
         port map (
-      I0 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(5),
-      I1 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(4),
-      I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(6),
-      I3 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(3),
+      I0 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(7),
+      I1 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(9),
+      I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(12),
+      I3 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(11),
       I4 => \PERBIT_GEN[15].MULT_AND_i1_i_5_n_0\,
       O => \PERBIT_GEN[15].MULT_AND_i1_i_4_n_0\
     );
@@ -11821,9 +11983,9 @@ begin
       INIT => X"FFFE"
     )
         port map (
-      I0 => twr_rec_cnt(15),
-      I1 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(2),
-      I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(0),
+      I0 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(8),
+      I1 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(10),
+      I2 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(14),
       I3 => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(1),
       O => \PERBIT_GEN[15].MULT_AND_i1_i_5_n_0\
     );
@@ -11863,7 +12025,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_14,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(13),
       S => bus2ip_reset
@@ -11886,7 +12048,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_13,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(12),
       S => bus2ip_reset
@@ -11909,7 +12071,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_12,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(11),
       S => bus2ip_reset
@@ -11937,10 +12099,10 @@ begin
       O(2) => xorcy_out_14,
       O(1) => xorcy_out_13,
       O(0) => xorcy_out_12,
-      S(3) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\,
-      S(2) => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\,
-      S(1) => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\,
-      S(0) => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\
+      S(3) => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_17\,
+      S(2) => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_16\,
+      S(1) => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_15\,
+      S(0) => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_14\
     );
 \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1\: unisim.vcomponents.FDSE
     generic map(
@@ -11951,7 +12113,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_11,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(10),
       S => bus2ip_reset
@@ -11974,7 +12136,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_10,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(9),
       S => bus2ip_reset
@@ -11997,7 +12159,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_9,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(8),
       S => bus2ip_reset
@@ -12020,7 +12182,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_8,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(7),
       S => bus2ip_reset
@@ -12061,7 +12223,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_7,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(6),
       S => bus2ip_reset
@@ -12084,7 +12246,7 @@ begin
     )
         port map (
       C => s_axi_aclk,
-      CE => CE_19,
+      CE => CE_18,
       D => xorcy_out_6,
       Q => \^perbit_gen[0].ff_rst1_gen.fdse_i1_0\(5),
       S => bus2ip_reset
@@ -12106,72 +12268,68 @@ use UNISIM.VCOMPONENTS.ALL;
 entity meowrouter_axi_emc_0_2_mem_state_machine is
   port (
     read_data_en : out STD_LOGIC;
-    read_data_en_cmb : out STD_LOGIC;
     read_ack : out STD_LOGIC;
     transaction_done_i : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[4]_0\ : out STD_LOGIC;
-    Q : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    Q : out STD_LOGIC_VECTOR ( 3 downto 0 );
     \FSM_sequential_crnt_state_reg[1]_0\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_0\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[3]_0\ : out STD_LOGIC;
     CE : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[3]_1\ : out STD_LOGIC;
     twr_cnt_en : out STD_LOGIC;
     CE_0 : out STD_LOGIC;
     twph_cnt_en : out STD_LOGIC;
     s_axi_mem_awvalid_0 : out STD_LOGIC;
     \FSM_sequential_crnt_state_reg[1]_1\ : out STD_LOGIC;
     SR : out STD_LOGIC_VECTOR ( 0 to 0 );
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
-    data_strobe_c : out STD_LOGIC;
     CE_1 : out STD_LOGIC;
-    \axi_trans_size_reg_reg[1]\ : out STD_LOGIC;
-    mem_dqt_t_d_reg : out STD_LOGIC_VECTOR ( 0 to 0 );
+    twr_rec_cnt_en_int : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]_0\ : out STD_LOGIC;
+    pend_wrreq_reg : out STD_LOGIC;
+    mem_RNW_cmb : out STD_LOGIC;
     mem_CEN_cmb : out STD_LOGIC;
     mem_ce_int : out STD_LOGIC;
     CE_2 : out STD_LOGIC;
-    CE_3 : out STD_LOGIC;
-    twr_rec_cnt_en_int : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[4]_1\ : out STD_LOGIC;
-    transaction_complete_reg_reg_0 : out STD_LOGIC;
+    mem_dqt_t_d_reg : out STD_LOGIC_VECTOR ( 0 to 0 );
+    mem_WEN_cmb : out STD_LOGIC;
     mem_OEN_cmb : out STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
-    bus2ip_wr_req_reg_reg : out STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
+    CE_3 : out STD_LOGIC;
+    trd_cnt_en : out STD_LOGIC;
     \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
+    data_strobe_c : out STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_4\ : out STD_LOGIC;
+    bus2ip_wr_req_reg_reg : out STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_5\ : out STD_LOGIC;
+    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
+    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\ : out STD_LOGIC;
     \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
     \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
     \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
     S : out STD_LOGIC;
-    CE_4 : out STD_LOGIC;
+    CE_7 : out STD_LOGIC;
     ip2bus_addrack : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_1\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_2\ : out STD_LOGIC;
-    CE_5 : out STD_LOGIC;
-    trd_cnt_en : out STD_LOGIC;
-    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\ : out STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\ : out STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\ : out STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\ : out STD_LOGIC;
-    CE_10 : out STD_LOGIC;
-    tpacc_cnt_en : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_3\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[0]_0\ : out STD_LOGIC;
+    CE_8 : out STD_LOGIC;
+    CE_9 : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]_1\ : out STD_LOGIC;
     \FSM_sequential_crnt_state_reg[1]_2\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[1]_3\ : out STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_11\ : out STD_LOGIC;
-    CE_12 : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[2]_0\ : out STD_LOGIC;
-    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_13\ : out STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_14\ : out STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_15\ : out STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_16\ : out STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_17\ : out STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_18\ : out STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
+    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
+    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_10\ : out STD_LOGIC;
+    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\ : out STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\ : out STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[4]_0\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[4]_1\ : out STD_LOGIC;
+    CE_14 : out STD_LOGIC;
+    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\ : out STD_LOGIC;
+    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\ : out STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\ : out STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\ : out STD_LOGIC;
     \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_19\ : out STD_LOGIC;
-    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_20\ : out STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_20\ : out STD_LOGIC;
     \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_21\ : out STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_22\ : out STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_23\ : out STD_LOGIC;
-    mem_RNW_cmb : out STD_LOGIC;
     \PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
     \PERBIT_GEN[12].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
     \PERBIT_GEN[11].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
@@ -12179,172 +12337,166 @@ entity meowrouter_axi_emc_0_2_mem_state_machine is
     \PERBIT_GEN[9].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
     \PERBIT_GEN[8].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
     \PERBIT_GEN[7].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
-    \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg_24\ : out STD_LOGIC;
-    \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg_25\ : out STD_LOGIC;
-    \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg_26\ : out STD_LOGIC;
-    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_27\ : out STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_28\ : out STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_29\ : out STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_30\ : out STD_LOGIC;
-    bus2ip_burst_reg_reg : out STD_LOGIC;
+    \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg_22\ : out STD_LOGIC;
+    \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg_23\ : out STD_LOGIC;
+    \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg_24\ : out STD_LOGIC;
+    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_25\ : out STD_LOGIC;
+    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_26\ : out STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_27\ : out STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_28\ : out STD_LOGIC;
+    \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1\ : out STD_LOGIC;
     \PERBIT_GEN[3].FF_RST1_GEN.FDSE_i1\ : out STD_LOGIC;
     \PERBIT_GEN[14].FF_RST1_GEN.FDSE_i1\ : out STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ : out STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
     s_axi_aclk : in STD_LOGIC;
     bus2Mem_RdReq : in STD_LOGIC;
+    read_data_en_cmb : in STD_LOGIC;
     read_ack_reg_reg_0 : in STD_LOGIC;
     temp_bus2ip_cs : in STD_LOGIC;
+    \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[0]_1\ : in STD_LOGIC;
+    \mem_a_int_reg[1]\ : in STD_LOGIC;
     read_break_reg_d1_reg_0 : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[4]_2\ : in STD_LOGIC;
+    addr_sm_ps_IDLE_reg_i_5 : in STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ : in STD_LOGIC;
-    read_data_en_reg_reg_0 : in STD_LOGIC;
-    \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\ : in STD_LOGIC;
+    new_page_d1_reg_0 : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ : in STD_LOGIC;
     s_axi_mem_awvalid : in STD_LOGIC;
     s_axi_mem_wvalid : in STD_LOGIC;
     s_axi_mem_arvalid : in STD_LOGIC;
     rw_flag_reg : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\ : in STD_LOGIC;
-    transaction_done_reg_reg_0 : in STD_LOGIC;
-    \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ : in STD_LOGIC;
-    \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[3]_0\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_2\ : in STD_LOGIC;
-    \DATA_STORE_GEN[0].WRDATA_REG\ : in STD_LOGIC;
-    mem_dqt_t_d : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_4\ : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ : in STD_LOGIC;
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ : in STD_LOGIC;
-    pend_wrreq_reg : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]_2\ : in STD_LOGIC;
+    wlast_reg_reg_0 : in STD_LOGIC;
     bus2ip_wrreq_i : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ : in STD_LOGIC;
+    s_axi_mem_wlast : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\ : in STD_LOGIC;
+    mem_dqt_t_d : in STD_LOGIC;
+    \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\ : in STD_LOGIC;
     \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\ : in STD_LOGIC;
-    Bus2IP_RdReq_emc : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\ : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\ : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    \FSM_sequential_crnt_state_reg[0]_2\ : in STD_LOGIC;
+    \DATA_STORE_GEN[0].WRDATA_REG\ : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\ : in STD_LOGIC_VECTOR ( 7 downto 0 );
     burst_cnt_i : in STD_LOGIC_VECTOR ( 0 to 7 );
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\ : in STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_6\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[1]_3\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[3]_2\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[3]_3\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[0]_3\ : in STD_LOGIC;
+    Cycle_cnt_en_int : in STD_LOGIC;
     pend_rdreq_reg : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\ : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    \FSM_sequential_crnt_state_reg[1]_4\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[4]_2\ : in STD_LOGIC;
+    pend_rdreq_reg_0 : in STD_LOGIC;
     \burst_addr_cnt[7]_i_3_0\ : in STD_LOGIC;
     rdce_out_i : in STD_LOGIC;
     \burst_addr_cnt[7]_i_3_1\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[2]_1\ : in STD_LOGIC;
+    cycle_cnt : in STD_LOGIC_VECTOR ( 0 to 1 );
+    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ : in STD_LOGIC;
+    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\ : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\ : in STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_7\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[3]_1\ : in STD_LOGIC;
-    \burst_addr_cnt[7]_i_3_2\ : in STD_LOGIC;
-    read_data_en_reg_reg_1 : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_5\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[3]_2\ : in STD_LOGIC;
-    pend_wrreq_reg_0 : in STD_LOGIC;
-    \FSM_sequential_emc_addr_ps_reg[2]\ : in STD_LOGIC;
-    \FSM_sequential_emc_addr_ps_reg[2]_0\ : in STD_LOGIC;
-    pend_wrreq_reg_1 : in STD_LOGIC;
-    cycle_cnt : in STD_LOGIC_VECTOR ( 0 to 0 );
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\ : in STD_LOGIC_VECTOR ( 0 to 0 );
-    addr_sm_ps_IDLE_reg_i_5 : in STD_LOGIC;
-    \FSM_sequential_crnt_state[1]_i_8_0\ : in STD_LOGIC;
-    s_axi_mem_wlast : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    transaction_done_reg_reg_0 : in STD_LOGIC;
+    Bus2IP_RdReq_emc : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[0]_4\ : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\ : in STD_LOGIC_VECTOR ( 14 downto 0 );
-    bus2ip_burst : in STD_LOGIC;
+    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_2\ : in STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_3\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_4\ : in STD_LOGIC;
     D : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_mem_state_machine : entity is "mem_state_machine";
 end meowrouter_axi_emc_0_2_mem_state_machine;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_mem_state_machine is
   signal Bus2IP_RdReq_d1 : STD_LOGIC;
+  signal \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_5_n_0\ : STD_LOGIC;
   signal \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_6_n_0\ : STD_LOGIC;
-  signal \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_7_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_10_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_12_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_13_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_crnt_state[0]_i_14_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[0]_i_15_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[0]_i_16_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_1_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_2_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[0]_i_3_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_4_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_5_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_6_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[0]_i_7_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_crnt_state[1]_i_10_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[0]_i_8_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[1]_i_1_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[1]_i_2_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[1]_i_3_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[1]_i_4_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[1]_i_5_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[1]_i_6_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[1]_i_7_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[1]_i_8_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[1]_i_9_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[2]_i_10_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[2]_i_11_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[2]_i_12_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[2]_i_1_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_crnt_state[2]_i_2_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[2]_i_3_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[2]_i_4_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[2]_i_5_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[2]_i_6_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_crnt_state[2]_i_7_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_crnt_state[2]_i_8_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_crnt_state[2]_i_9_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[3]_i_1_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[3]_i_2_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[3]_i_3_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[3]_i_4_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[3]_i_5_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_crnt_state[3]_i_9_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[3]_i_6_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[4]_i_1_n_0\ : STD_LOGIC;
   signal \FSM_sequential_crnt_state[4]_i_2_n_0\ : STD_LOGIC;
   signal \^fsm_sequential_crnt_state_reg[0]_0\ : STD_LOGIC;
-  signal \^fsm_sequential_crnt_state_reg[0]_1\ : STD_LOGIC;
-  signal \^fsm_sequential_crnt_state_reg[0]_2\ : STD_LOGIC;
-  signal \^fsm_sequential_crnt_state_reg[0]_3\ : STD_LOGIC;
-  signal \^fsm_sequential_crnt_state_reg[1]_0\ : STD_LOGIC;
   signal \^fsm_sequential_crnt_state_reg[1]_1\ : STD_LOGIC;
-  signal \^fsm_sequential_crnt_state_reg[1]_3\ : STD_LOGIC;
-  signal \^fsm_sequential_crnt_state_reg[4]_1\ : STD_LOGIC;
+  signal \^fsm_sequential_crnt_state_reg[1]_2\ : STD_LOGIC;
+  signal \^fsm_sequential_crnt_state_reg[2]_1\ : STD_LOGIC;
+  signal \^fsm_sequential_crnt_state_reg[3]_0\ : STD_LOGIC;
+  signal \^fsm_sequential_crnt_state_reg[3]_1\ : STD_LOGIC;
   signal \^perbit_gen[0].ff_rst0_gen.fdre_i1\ : STD_LOGIC;
   signal \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_2_n_0\ : STD_LOGIC;
   signal \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_3_n_0\ : STD_LOGIC;
   signal \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_4_n_0\ : STD_LOGIC;
-  signal \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_2_n_0\ : STD_LOGIC;
+  signal \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_6_n_0\ : STD_LOGIC;
+  signal \^perbit_gen[1].ff_rst0_gen.fdre_i1\ : STD_LOGIC;
   signal \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_3_n_0\ : STD_LOGIC;
   signal \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_4_n_0\ : STD_LOGIC;
-  signal \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2_n_0\ : STD_LOGIC;
+  signal \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_5_n_0\ : STD_LOGIC;
+  signal \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_6_n_0\ : STD_LOGIC;
+  signal \PERBIT_GEN[1].MULT_AND_i1_i_3_n_0\ : STD_LOGIC;
   signal \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0\ : STD_LOGIC;
-  signal \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1_n_0\ : STD_LOGIC;
+  signal \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2_n_0\ : STD_LOGIC;
   signal \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3_n_0\ : STD_LOGIC;
-  signal \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_4_n_0\ : STD_LOGIC;
+  signal \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5__0_n_0\ : STD_LOGIC;
   signal \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5_n_0\ : STD_LOGIC;
   signal \PERBIT_GEN[4].MULT_AND_i1_i_2_n_0\ : STD_LOGIC;
-  signal \^q\ : STD_LOGIC_VECTOR ( 2 downto 0 );
+  signal \^q\ : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_2_n_0\ : STD_LOGIC;
-  signal \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_3_n_0\ : STD_LOGIC;
-  signal \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_4_n_0\ : STD_LOGIC;
-  signal \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_5_n_0\ : STD_LOGIC;
-  signal \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2_n_0\ : STD_LOGIC;
-  signal \^axi_trans_size_reg_reg[1]\ : STD_LOGIC;
+  signal \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_4_n_0\ : STD_LOGIC;
   signal \burst_addr_cnt[7]_i_10_n_0\ : STD_LOGIC;
-  signal \burst_addr_cnt[7]_i_11_n_0\ : STD_LOGIC;
-  signal \burst_addr_cnt[7]_i_6_n_0\ : STD_LOGIC;
+  signal \burst_addr_cnt[7]_i_7_n_0\ : STD_LOGIC;
   signal \burst_addr_cnt[7]_i_8_n_0\ : STD_LOGIC;
-  signal \burst_addr_cnt[7]_i_9_n_0\ : STD_LOGIC;
   signal \^bus2ip_wr_req_reg_reg\ : STD_LOGIC;
-  signal crnt_state : STD_LOGIC_VECTOR ( 4 downto 2 );
+  signal crnt_state : STD_LOGIC_VECTOR ( 4 to 4 );
   signal \mem_ce_reg[0]_i_2_n_0\ : STD_LOGIC;
   signal \mem_ce_reg[0]_i_3_n_0\ : STD_LOGIC;
   signal \mem_oen_reg[0]_i_2_n_0\ : STD_LOGIC;
   signal \mem_oen_reg[0]_i_3_n_0\ : STD_LOGIC;
   signal new_page : STD_LOGIC;
   signal new_page_d1 : STD_LOGIC;
-  signal new_page_d1_i_2_n_0 : STD_LOGIC;
+  signal new_page_d1_i_3_n_0 : STD_LOGIC;
   signal p_0_in : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal read_break_reg : STD_LOGIC;
   signal read_break_reg_d1 : STD_LOGIC;
@@ -12355,15 +12507,12 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_mem_state_machine is
   signal read_complete_d_4 : STD_LOGIC;
   signal read_complete_d_5 : STD_LOGIC;
   signal read_complete_d_6 : STD_LOGIC;
-  signal \^read_data_en_cmb\ : STD_LOGIC;
-  signal s_axi_mem_wready_INST_0_i_8_n_0 : STD_LOGIC;
-  signal \^tpacc_cnt_en\ : STD_LOGIC;
+  signal s_axi_mem_wready_INST_0_i_5_n_0 : STD_LOGIC;
   signal transaction_complete : STD_LOGIC;
   signal transaction_complete_reg : STD_LOGIC;
   signal transaction_complete_reg_i_2_n_0 : STD_LOGIC;
-  signal \^transaction_complete_reg_reg_0\ : STD_LOGIC;
+  signal transaction_complete_reg_i_3_n_0 : STD_LOGIC;
   signal transaction_done_cmb : STD_LOGIC;
-  signal \^transaction_done_i\ : STD_LOGIC;
   signal transaction_done_reg_i_3_n_0 : STD_LOGIC;
   signal \^trd_cnt_en\ : STD_LOGIC;
   signal \^twph_cnt_en\ : STD_LOGIC;
@@ -12373,93 +12522,91 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_mem_state_machine is
   signal wlast_reg : STD_LOGIC;
   signal wlast_reg_i_2_n_0 : STD_LOGIC;
   signal wlast_reg_i_3_n_0 : STD_LOGIC;
-  signal wlast_reg_i_4_n_0 : STD_LOGIC;
-  signal wlast_reg_i_5_n_0 : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_12\ : label is "soft_lutpair85";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_14\ : label is "soft_lutpair76";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_2\ : label is "soft_lutpair79";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_5\ : label is "soft_lutpair71";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_2\ : label is "soft_lutpair79";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_4\ : label is "soft_lutpair73";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_9\ : label is "soft_lutpair85";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_10\ : label is "soft_lutpair73";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_7\ : label is "soft_lutpair76";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_8\ : label is "soft_lutpair84";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_9\ : label is "soft_lutpair74";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_2\ : label is "soft_lutpair88";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_3\ : label is "soft_lutpair80";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_9\ : label is "soft_lutpair86";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[4]_i_1\ : label is "soft_lutpair80";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_10\ : label is "soft_lutpair71";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_12\ : label is "soft_lutpair70";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_13\ : label is "soft_lutpair78";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_15\ : label is "soft_lutpair83";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_16\ : label is "soft_lutpair69";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_5\ : label is "soft_lutpair72";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_2\ : label is "soft_lutpair71";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_4\ : label is "soft_lutpair78";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_7\ : label is "soft_lutpair88";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_9\ : label is "soft_lutpair83";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_10\ : label is "soft_lutpair76";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_11\ : label is "soft_lutpair89";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_12\ : label is "soft_lutpair73";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_3\ : label is "soft_lutpair79";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[2]_i_5\ : label is "soft_lutpair85";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_2\ : label is "soft_lutpair89";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_3\ : label is "soft_lutpair77";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[3]_i_5\ : label is "soft_lutpair80";
+  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[4]_i_1\ : label is "soft_lutpair77";
   attribute FSM_ENCODED_STATES : string;
   attribute FSM_ENCODED_STATES of \FSM_sequential_crnt_state_reg[0]\ : label is "page_read:01110,linear_flash_sync_rd:01100,read:01101,deassert_cen:00010,address_set:00001,wait_rddata_ack:10000,write:00011,assert_cen:00111,idle:00000,wr_rec_period:01001,wait_write_ack:01000,dassert_wen:00100,wait_temp:00110,write_wait:00101,deassert_rcen:01011,address_rset:01010,deassert_oen:01111";
   attribute FSM_ENCODED_STATES of \FSM_sequential_crnt_state_reg[1]\ : label is "page_read:01110,linear_flash_sync_rd:01100,read:01101,deassert_cen:00010,address_set:00001,wait_rddata_ack:10000,write:00011,assert_cen:00111,idle:00000,wr_rec_period:01001,wait_write_ack:01000,dassert_wen:00100,wait_temp:00110,write_wait:00101,deassert_rcen:01011,address_rset:01010,deassert_oen:01111";
   attribute FSM_ENCODED_STATES of \FSM_sequential_crnt_state_reg[2]\ : label is "page_read:01110,linear_flash_sync_rd:01100,read:01101,deassert_cen:00010,address_set:00001,wait_rddata_ack:10000,write:00011,assert_cen:00111,idle:00000,wr_rec_period:01001,wait_write_ack:01000,dassert_wen:00100,wait_temp:00110,write_wait:00101,deassert_rcen:01011,address_rset:01010,deassert_oen:01111";
   attribute FSM_ENCODED_STATES of \FSM_sequential_crnt_state_reg[3]\ : label is "page_read:01110,linear_flash_sync_rd:01100,read:01101,deassert_cen:00010,address_set:00001,wait_rddata_ack:10000,write:00011,assert_cen:00111,idle:00000,wr_rec_period:01001,wait_write_ack:01000,dassert_wen:00100,wait_temp:00110,write_wait:00101,deassert_rcen:01011,address_rset:01010,deassert_oen:01111";
   attribute FSM_ENCODED_STATES of \FSM_sequential_crnt_state_reg[4]\ : label is "page_read:01110,linear_flash_sync_rd:01100,read:01101,deassert_cen:00010,address_set:00001,wait_rddata_ack:10000,write:00011,assert_cen:00111,idle:00000,wr_rec_period:01001,wait_write_ack:01000,dassert_wen:00100,wait_temp:00110,write_wait:00101,deassert_rcen:01011,address_rset:01010,deassert_oen:01111";
-  attribute SOFT_HLUTNM of \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_3\ : label is "soft_lutpair86";
-  attribute SOFT_HLUTNM of \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_4\ : label is "soft_lutpair82";
-  attribute SOFT_HLUTNM of \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2\ : label is "soft_lutpair87";
-  attribute SOFT_HLUTNM of \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_4\ : label is "soft_lutpair75";
-  attribute SOFT_HLUTNM of \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5\ : label is "soft_lutpair81";
-  attribute SOFT_HLUTNM of \PERBIT_GEN[4].MULT_AND_i1_i_2\ : label is "soft_lutpair72";
-  attribute SOFT_HLUTNM of \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_5\ : label is "soft_lutpair87";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_2\ : label is "soft_lutpair84";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_3\ : label is "soft_lutpair81";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_5\ : label is "soft_lutpair82";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_6\ : label is "soft_lutpair82";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_1\ : label is "soft_lutpair85";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_1\ : label is "soft_lutpair86";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0\ : label is "soft_lutpair88";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_4__0\ : label is "soft_lutpair68";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[4].MULT_AND_i1_i_2\ : label is "soft_lutpair69";
   attribute BOX_TYPE : string;
   attribute BOX_TYPE of \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\ : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM : string;
   attribute XILINX_LEGACY_PRIM of \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\ : label is "FDR";
-  attribute SOFT_HLUTNM of \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2\ : label is "soft_lutpair83";
   attribute BOX_TYPE of \READ_COMPLETE_PIPE_GEN[1].READ_COMPLETE_PIPE\ : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM of \READ_COMPLETE_PIPE_GEN[1].READ_COMPLETE_PIPE\ : label is "FDR";
   attribute BOX_TYPE of \READ_COMPLETE_PIPE_GEN[2].READ_COMPLETE_PIPE\ : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM of \READ_COMPLETE_PIPE_GEN[2].READ_COMPLETE_PIPE\ : label is "FDR";
-  attribute SOFT_HLUTNM of \burst_addr_cnt[7]_i_11\ : label is "soft_lutpair71";
-  attribute SOFT_HLUTNM of \burst_addr_cnt[7]_i_6\ : label is "soft_lutpair75";
+  attribute SOFT_HLUTNM of \burst_addr_cnt[7]_i_14\ : label is "soft_lutpair72";
+  attribute SOFT_HLUTNM of \burst_addr_cnt[7]_i_7\ : label is "soft_lutpair80";
   attribute SOFT_HLUTNM of \burst_addr_cnt[7]_i_8\ : label is "soft_lutpair81";
-  attribute SOFT_HLUTNM of \mem_ce_reg[0]_i_3\ : label is "soft_lutpair82";
-  attribute SOFT_HLUTNM of mem_dqt_t_d_i_1 : label is "soft_lutpair70";
-  attribute SOFT_HLUTNM of \mem_oen_reg[0]_i_2\ : label is "soft_lutpair83";
-  attribute SOFT_HLUTNM of mem_rnw_reg_i_1 : label is "soft_lutpair78";
-  attribute SOFT_HLUTNM of read_break_reg_d1_i_3 : label is "soft_lutpair78";
-  attribute SOFT_HLUTNM of read_break_reg_d1_i_4 : label is "soft_lutpair88";
-  attribute SOFT_HLUTNM of s_axi_mem_arready_INST_0_i_2 : label is "soft_lutpair72";
-  attribute SOFT_HLUTNM of s_axi_mem_wready_INST_0_i_2 : label is "soft_lutpair70";
-  attribute SOFT_HLUTNM of s_axi_mem_wready_INST_0_i_8 : label is "soft_lutpair74";
-  attribute SOFT_HLUTNM of transaction_complete_reg_i_2 : label is "soft_lutpair77";
-  attribute SOFT_HLUTNM of transaction_complete_reg_i_3 : label is "soft_lutpair77";
-  attribute SOFT_HLUTNM of transaction_done_reg_i_3 : label is "soft_lutpair84";
+  attribute SOFT_HLUTNM of \mem_ce_reg[0]_i_3\ : label is "soft_lutpair87";
+  attribute SOFT_HLUTNM of mem_dqt_t_d_i_1 : label is "soft_lutpair74";
+  attribute SOFT_HLUTNM of \mem_oen_reg[0]_i_3\ : label is "soft_lutpair84";
+  attribute SOFT_HLUTNM of mem_rnw_reg_i_1 : label is "soft_lutpair75";
+  attribute SOFT_HLUTNM of new_page_d1_i_1 : label is "soft_lutpair73";
+  attribute SOFT_HLUTNM of read_break_reg_d1_i_3 : label is "soft_lutpair70";
+  attribute SOFT_HLUTNM of read_break_reg_d1_i_4 : label is "soft_lutpair87";
+  attribute SOFT_HLUTNM of read_data_en_reg_i_2 : label is "soft_lutpair75";
+  attribute SOFT_HLUTNM of s_axi_mem_awready_INST_0_i_1 : label is "soft_lutpair68";
+  attribute SOFT_HLUTNM of s_axi_mem_wready_INST_0_i_5 : label is "soft_lutpair76";
+  attribute SOFT_HLUTNM of transaction_complete_reg_i_2 : label is "soft_lutpair79";
+  attribute SOFT_HLUTNM of transaction_complete_reg_i_3 : label is "soft_lutpair74";
+  attribute SOFT_HLUTNM of transaction_done_reg_i_3 : label is "soft_lutpair86";
 begin
   \FSM_sequential_crnt_state_reg[0]_0\ <= \^fsm_sequential_crnt_state_reg[0]_0\;
-  \FSM_sequential_crnt_state_reg[0]_1\ <= \^fsm_sequential_crnt_state_reg[0]_1\;
-  \FSM_sequential_crnt_state_reg[0]_2\ <= \^fsm_sequential_crnt_state_reg[0]_2\;
-  \FSM_sequential_crnt_state_reg[0]_3\ <= \^fsm_sequential_crnt_state_reg[0]_3\;
-  \FSM_sequential_crnt_state_reg[1]_0\ <= \^fsm_sequential_crnt_state_reg[1]_0\;
   \FSM_sequential_crnt_state_reg[1]_1\ <= \^fsm_sequential_crnt_state_reg[1]_1\;
-  \FSM_sequential_crnt_state_reg[1]_3\ <= \^fsm_sequential_crnt_state_reg[1]_3\;
-  \FSM_sequential_crnt_state_reg[4]_1\ <= \^fsm_sequential_crnt_state_reg[4]_1\;
+  \FSM_sequential_crnt_state_reg[1]_2\ <= \^fsm_sequential_crnt_state_reg[1]_2\;
+  \FSM_sequential_crnt_state_reg[2]_1\ <= \^fsm_sequential_crnt_state_reg[2]_1\;
+  \FSM_sequential_crnt_state_reg[3]_0\ <= \^fsm_sequential_crnt_state_reg[3]_0\;
+  \FSM_sequential_crnt_state_reg[3]_1\ <= \^fsm_sequential_crnt_state_reg[3]_1\;
   \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ <= \^perbit_gen[0].ff_rst0_gen.fdre_i1\;
-  Q(2 downto 0) <= \^q\(2 downto 0);
-  \axi_trans_size_reg_reg[1]\ <= \^axi_trans_size_reg_reg[1]\;
+  \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1\;
+  Q(3 downto 0) <= \^q\(3 downto 0);
   bus2ip_wr_req_reg_reg <= \^bus2ip_wr_req_reg_reg\;
-  read_data_en_cmb <= \^read_data_en_cmb\;
-  tpacc_cnt_en <= \^tpacc_cnt_en\;
-  transaction_complete_reg_reg_0 <= \^transaction_complete_reg_reg_0\;
-  transaction_done_i <= \^transaction_done_i\;
   trd_cnt_en <= \^trd_cnt_en\;
   twph_cnt_en <= \^twph_cnt_en\;
   twr_cnt_en <= \^twr_cnt_en\;
   twr_rec_cnt_en_int <= \^twr_rec_cnt_en_int\;
 \ADDRESS_STORE_GEN[0].ADDRESS_REG_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"AAAAAAAAAAAA888A"
+      INIT => X"AAA8AAA8AAA8AAAA"
     )
         port map (
-      I0 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_2_n_0\,
+      I0 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_3_n_0\,
       I1 => \DATA_STORE_GEN[0].WRDATA_REG\,
-      I2 => \^q\(2),
-      I3 => crnt_state(2),
-      I4 => \^q\(0),
-      I5 => \^q\(1),
+      I2 => \^q\(0),
+      I3 => \^q\(1),
+      I4 => \^q\(3),
+      I5 => \^q\(2),
       O => data_strobe_c
     );
 Bus2IP_Mem_CS_d1_reg: unisim.vcomponents.FDRE
@@ -12486,131 +12633,162 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       Q => Bus2IP_RdReq_d1,
       R => bus2ip_reset
     );
-\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\: unisim.vcomponents.LUT6
+\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"D000D0D0D0D0D0D0"
+      INIT => X"0D000D0D"
     )
         port map (
       I0 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\,
-      I1 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\,
-      I2 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_6_n_0\,
-      I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_7_n_0\,
-      I4 => \FSM_sequential_crnt_state[0]_i_2_n_0\,
-      I5 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_2\,
+      I1 => read_break_reg_d1_reg_0,
+      I2 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_5_n_0\,
+      I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_6_n_0\,
+      I4 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\,
       O => \^perbit_gen[0].ff_rst0_gen.fdre_i1\
+    );
+\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_5\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"000000000000033B"
+    )
+        port map (
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
+      I1 => \^q\(2),
+      I2 => \^q\(3),
+      I3 => crnt_state(4),
+      I4 => \^q\(1),
+      I5 => \^q\(0),
+      O => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_5_n_0\
     );
 \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_6\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFCFFFCFFF8"
+      INIT => X"FFEFFFAFFFEFFFEF"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\,
-      I1 => crnt_state(2),
+      I0 => \FSM_sequential_crnt_state[2]_i_12_n_0\,
+      I1 => read_break_reg_d1_reg_0,
       I2 => \^q\(1),
-      I3 => \^q\(0),
-      I4 => \^q\(2),
-      I5 => crnt_state(4),
+      I3 => crnt_state(4),
+      I4 => \^q\(3),
+      I5 => \mem_a_int_reg[1]\,
       O => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_6_n_0\
-    );
-\DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_7\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"B"
-    )
-        port map (
-      I0 => crnt_state(4),
-      I1 => crnt_state(2),
-      O => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_7_n_0\
     );
 \DATAWIDTH_MATCH_GEN.addr_cnt_i[1]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"003FAAAAFFC0AAAA"
+      INIT => X"2222EE2EEEEE22E2"
     )
         port map (
-      I0 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_3\,
-      I1 => bus2Mem_RdReq,
-      I2 => \^fsm_sequential_crnt_state_reg[1]_0\,
-      I3 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_4\,
-      I4 => \^perbit_gen[0].ff_rst0_gen.fdre_i1\,
+      I0 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_2\,
+      I1 => \^perbit_gen[0].ff_rst0_gen.fdre_i1\,
+      I2 => bus2Mem_RdReq,
+      I3 => \^perbit_gen[1].ff_rst0_gen.fdre_i1\,
+      I4 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_3\,
       I5 => D(0),
       O => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\
     );
 \FSM_sequential_crnt_state[0]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFFFFFFF200"
+      INIT => X"FFFFFFFFFFFFFD00"
     )
         port map (
       I0 => \FSM_sequential_crnt_state[0]_i_2_n_0\,
-      I1 => \FSM_sequential_crnt_state_reg[0]_4\,
+      I1 => \FSM_sequential_crnt_state[0]_i_3_n_0\,
       I2 => \FSM_sequential_crnt_state[0]_i_4_n_0\,
       I3 => \FSM_sequential_crnt_state[0]_i_5_n_0\,
       I4 => \FSM_sequential_crnt_state[0]_i_6_n_0\,
       I5 => \FSM_sequential_crnt_state[0]_i_7_n_0\,
       O => \FSM_sequential_crnt_state[0]_i_1_n_0\
     );
-\FSM_sequential_crnt_state[0]_i_10\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"0040004055400040"
-    )
-        port map (
-      I0 => crnt_state(2),
-      I1 => temp_bus2ip_cs,
-      I2 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I3 => \^q\(0),
-      I4 => \^q\(1),
-      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      O => \FSM_sequential_crnt_state[0]_i_10_n_0\
-    );
-\FSM_sequential_crnt_state[0]_i_12\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"2"
-    )
-        port map (
-      I0 => crnt_state(2),
-      I1 => \^q\(1),
-      O => \FSM_sequential_crnt_state[0]_i_12_n_0\
-    );
-\FSM_sequential_crnt_state[0]_i_13\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"A0220022AAAA00AA"
-    )
-        port map (
-      I0 => \FSM_sequential_crnt_state[0]_i_14_n_0\,
-      I1 => crnt_state(2),
-      I2 => new_page,
-      I3 => \^q\(1),
-      I4 => \FSM_sequential_crnt_state_reg[4]_2\,
-      I5 => bus2Mem_RdReq,
-      O => \FSM_sequential_crnt_state[0]_i_13_n_0\
-    );
-\FSM_sequential_crnt_state[0]_i_14\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"2"
-    )
-        port map (
-      I0 => \^q\(2),
-      I1 => \^q\(0),
-      O => \FSM_sequential_crnt_state[0]_i_14_n_0\
-    );
-\FSM_sequential_crnt_state[0]_i_2\: unisim.vcomponents.LUT2
+\FSM_sequential_crnt_state[0]_i_10\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^q\(1),
       I1 => \^q\(0),
+      O => \FSM_sequential_crnt_state[0]_i_10_n_0\
+    );
+\FSM_sequential_crnt_state[0]_i_12\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"FF20FFFF"
+    )
+        port map (
+      I0 => \^q\(2),
+      I1 => \^q\(1),
+      I2 => bus2Mem_RdReq,
+      I3 => \^q\(0),
+      I4 => \^q\(3),
+      O => \FSM_sequential_crnt_state[0]_i_12_n_0\
+    );
+\FSM_sequential_crnt_state[0]_i_13\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"20202F20"
+    )
+        port map (
+      I0 => crnt_state(4),
+      I1 => read_complete_d_4,
+      I2 => \^q\(0),
+      I3 => \^q\(1),
+      I4 => \^q\(2),
+      O => \FSM_sequential_crnt_state[0]_i_13_n_0\
+    );
+\FSM_sequential_crnt_state[0]_i_15\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"FB"
+    )
+        port map (
+      I0 => crnt_state(4),
+      I1 => \^q\(2),
+      I2 => \^q\(0),
+      O => \FSM_sequential_crnt_state[0]_i_15_n_0\
+    );
+\FSM_sequential_crnt_state[0]_i_16\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"00000402"
+    )
+        port map (
+      I0 => crnt_state(4),
+      I1 => \^q\(1),
+      I2 => \^q\(2),
+      I3 => \^q\(0),
+      I4 => \^q\(3),
+      O => \FSM_sequential_crnt_state[0]_i_16_n_0\
+    );
+\FSM_sequential_crnt_state[0]_i_2\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"0000002FFFFFFFFF"
+    )
+        port map (
+      I0 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\,
+      I1 => transaction_complete_reg_i_3_n_0,
+      I2 => \FSM_sequential_crnt_state[0]_i_8_n_0\,
+      I3 => \FSM_sequential_crnt_state_reg[0]_1\,
+      I4 => \mem_a_int_reg[1]\,
+      I5 => \FSM_sequential_crnt_state[0]_i_10_n_0\,
       O => \FSM_sequential_crnt_state[0]_i_2_n_0\
+    );
+\FSM_sequential_crnt_state[0]_i_3\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"0040004055400040"
+    )
+        port map (
+      I0 => \^q\(2),
+      I1 => temp_bus2ip_cs,
+      I2 => \mem_a_int_reg[1]\,
+      I3 => \^q\(0),
+      I4 => \^q\(1),
+      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
+      O => \FSM_sequential_crnt_state[0]_i_3_n_0\
     );
 \FSM_sequential_crnt_state[0]_i_4\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FAFFFEFEAAAAAAAA"
+      INIT => X"4444044444440040"
     )
         port map (
-      I0 => \FSM_sequential_crnt_state[0]_i_10_n_0\,
-      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
-      I2 => \^q\(0),
-      I3 => \FSM_sequential_crnt_state_reg[0]_5\,
-      I4 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
-      I5 => \FSM_sequential_crnt_state[0]_i_12_n_0\,
+      I0 => \^q\(1),
+      I1 => \^q\(2),
+      I2 => \FSM_sequential_crnt_state_reg[0]_2\,
+      I3 => \FSM_sequential_crnt_state_reg[0]_3\,
+      I4 => \^q\(0),
+      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
       O => \FSM_sequential_crnt_state[0]_i_4_n_0\
     );
 \FSM_sequential_crnt_state[0]_i_5\: unisim.vcomponents.LUT2
@@ -12618,21 +12796,21 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       INIT => X"1"
     )
         port map (
-      I0 => \^q\(2),
+      I0 => \^q\(3),
       I1 => crnt_state(4),
       O => \FSM_sequential_crnt_state[0]_i_5_n_0\
     );
 \FSM_sequential_crnt_state[0]_i_6\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"AABAFFBAAABAAABA"
+      INIT => X"FFFFFFFF45455545"
     )
         port map (
-      I0 => \FSM_sequential_crnt_state[0]_i_13_n_0\,
-      I1 => crnt_state(2),
+      I0 => \FSM_sequential_crnt_state[0]_i_12_n_0\,
+      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0\,
       I2 => \^q\(1),
       I3 => \^q\(0),
-      I4 => read_complete_d_4,
-      I5 => crnt_state(4),
+      I4 => \FSM_sequential_crnt_state_reg[4]_2\,
+      I5 => \FSM_sequential_crnt_state[0]_i_13_n_0\,
       O => \FSM_sequential_crnt_state[0]_i_6_n_0\
     );
 \FSM_sequential_crnt_state[0]_i_7\: unisim.vcomponents.LUT6
@@ -12640,24 +12818,26 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       INIT => X"2222A8882222A800"
     )
         port map (
-      I0 => \^q\(2),
-      I1 => crnt_state(2),
+      I0 => \^q\(3),
+      I1 => \^q\(2),
       I2 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\,
       I3 => \^q\(0),
       I4 => \^q\(1),
-      I5 => read_data_en_reg_reg_1,
+      I5 => \FSM_sequential_crnt_state_reg[0]_4\,
       O => \FSM_sequential_crnt_state[0]_i_7_n_0\
     );
-\FSM_sequential_crnt_state[0]_i_9\: unisim.vcomponents.LUT4
+\FSM_sequential_crnt_state[0]_i_8\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"BAAA"
+      INIT => X"BABABABAAABAAAAA"
     )
         port map (
       I0 => transaction_complete_reg,
       I1 => p_0_in(0),
       I2 => p_0_in(1),
-      I3 => transaction_complete_reg_i_2_n_0,
-      O => \^transaction_complete_reg_reg_0\
+      I3 => \FSM_sequential_crnt_state[0]_i_15_n_0\,
+      I4 => \^q\(3),
+      I5 => \FSM_sequential_crnt_state[0]_i_16_n_0\,
+      O => \FSM_sequential_crnt_state[0]_i_8_n_0\
     );
 \FSM_sequential_crnt_state[1]_i_1\: unisim.vcomponents.LUT6
     generic map(
@@ -12666,185 +12846,196 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \FSM_sequential_crnt_state[1]_i_2_n_0\,
       I1 => \FSM_sequential_crnt_state[1]_i_3_n_0\,
-      I2 => crnt_state(2),
+      I2 => \^q\(2),
       I3 => \FSM_sequential_crnt_state[1]_i_4_n_0\,
-      I4 => \^q\(2),
+      I4 => \^q\(3),
       I5 => \FSM_sequential_crnt_state[1]_i_5_n_0\,
       O => \FSM_sequential_crnt_state[1]_i_1_n_0\
     );
-\FSM_sequential_crnt_state[1]_i_10\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"FFFFFFFFFFFFF444"
-    )
-        port map (
-      I0 => \^q\(0),
-      I1 => \FSM_sequential_crnt_state[1]_i_8_0\,
-      I2 => \^q\(1),
-      I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      I4 => crnt_state(2),
-      I5 => crnt_state(4),
-      O => \FSM_sequential_crnt_state[1]_i_10_n_0\
-    );
 \FSM_sequential_crnt_state[1]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FFEFFFFF"
+      INIT => X"FFFFFFFB"
     )
         port map (
-      I0 => \FSM_sequential_crnt_state[1]_i_6_n_0\,
-      I1 => read_break_reg_d1_i_2_n_0,
-      I2 => \^q\(0),
-      I3 => \^q\(1),
-      I4 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
+      I0 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\,
+      I1 => \^q\(0),
+      I2 => \^q\(1),
+      I3 => read_break_reg_d1_i_2_n_0,
+      I4 => \FSM_sequential_crnt_state[1]_i_6_n_0\,
       O => \FSM_sequential_crnt_state[1]_i_2_n_0\
     );
 \FSM_sequential_crnt_state[1]_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0535353537373737"
+      INIT => X"00000F000F8F0F8F"
     )
         port map (
-      I0 => \FSM_sequential_crnt_state_reg[1]_4\,
-      I1 => \^q\(0),
-      I2 => \^q\(1),
-      I3 => new_page,
-      I4 => \FSM_sequential_crnt_state_reg[4]_2\,
+      I0 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\,
+      I1 => \FSM_sequential_crnt_state_reg[0]_2\,
+      I2 => \^q\(0),
+      I3 => \^q\(1),
+      I4 => \FSM_sequential_crnt_state[1]_i_7_n_0\,
       I5 => bus2Mem_RdReq,
       O => \FSM_sequential_crnt_state[1]_i_3_n_0\
     );
 \FSM_sequential_crnt_state[1]_i_4\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"1010F010"
+      INIT => X"1F001100"
     )
         port map (
-      I0 => crnt_state(2),
+      I0 => \^q\(2),
       I1 => \^q\(0),
-      I2 => \^q\(1),
-      I3 => crnt_state(4),
-      I4 => read_complete_d_4,
+      I2 => read_complete_d_4,
+      I3 => \^q\(1),
+      I4 => crnt_state(4),
       O => \FSM_sequential_crnt_state[1]_i_4_n_0\
     );
 \FSM_sequential_crnt_state[1]_i_5\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"00A2A2A2A2A2A2A2"
+      INIT => X"00000000FFFFF7FF"
     )
         port map (
-      I0 => \FSM_sequential_crnt_state[1]_i_8_n_0\,
-      I1 => \FSM_sequential_crnt_state[0]_i_2_n_0\,
-      I2 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I3 => \FSM_sequential_crnt_state[1]_i_9_n_0\,
-      I4 => \FSM_sequential_crnt_state_reg[2]_1\,
-      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
+      I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      I1 => \FSM_sequential_crnt_state_reg[1]_3\,
+      I2 => \^q\(1),
+      I3 => \^q\(2),
+      I4 => \^q\(0),
+      I5 => \FSM_sequential_crnt_state[1]_i_8_n_0\,
       O => \FSM_sequential_crnt_state[1]_i_5_n_0\
     );
 \FSM_sequential_crnt_state[1]_i_6\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFF55151517"
+      INIT => X"FFFFFFFF45055557"
     )
         port map (
       I0 => read_break_reg_d1,
-      I1 => \^q\(2),
-      I2 => crnt_state(2),
+      I1 => \^q\(1),
+      I2 => \^q\(2),
       I3 => \^q\(0),
-      I4 => \^q\(1),
+      I4 => \^q\(3),
       I5 => crnt_state(4),
       O => \FSM_sequential_crnt_state[1]_i_6_n_0\
     );
+\FSM_sequential_crnt_state[1]_i_7\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"8"
+    )
+        port map (
+      I0 => new_page,
+      I1 => \FSM_sequential_crnt_state_reg[4]_2\,
+      O => \FSM_sequential_crnt_state[1]_i_7_n_0\
+    );
 \FSM_sequential_crnt_state[1]_i_8\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFF00001555"
+      INIT => X"3333333311FF1030"
     )
         port map (
-      I0 => \^q\(0),
-      I1 => temp_bus2ip_cs,
-      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_7\,
-      I3 => bus2Mem_RdReq,
+      I0 => temp_bus2ip_cs,
+      I1 => \FSM_sequential_crnt_state[1]_i_9_n_0\,
+      I2 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\,
+      I3 => \mem_a_int_reg[1]\,
       I4 => \^q\(1),
-      I5 => \FSM_sequential_crnt_state[1]_i_10_n_0\,
+      I5 => \^q\(0),
       O => \FSM_sequential_crnt_state[1]_i_8_n_0\
     );
-\FSM_sequential_crnt_state[1]_i_9\: unisim.vcomponents.LUT3
+\FSM_sequential_crnt_state[1]_i_9\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"04"
+      INIT => X"FEEE"
     )
         port map (
-      I0 => \^q\(1),
-      I1 => crnt_state(2),
-      I2 => \^q\(0),
+      I0 => crnt_state(4),
+      I1 => \^q\(2),
+      I2 => \^q\(1),
+      I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
       O => \FSM_sequential_crnt_state[1]_i_9_n_0\
     );
 \FSM_sequential_crnt_state[2]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000000073407373"
+      INIT => X"00000000FFFF0455"
     )
         port map (
-      I0 => read_complete_d_4,
-      I1 => crnt_state(4),
-      I2 => crnt_state(2),
-      I3 => \FSM_sequential_crnt_state[2]_i_2_n_0\,
-      I4 => \FSM_sequential_crnt_state[2]_i_3_n_0\,
-      I5 => \FSM_sequential_crnt_state[2]_i_4_n_0\,
+      I0 => crnt_state(4),
+      I1 => \FSM_sequential_crnt_state_reg[2]_2\,
+      I2 => \FSM_sequential_crnt_state[2]_i_3_n_0\,
+      I3 => \FSM_sequential_crnt_state[2]_i_4_n_0\,
+      I4 => \FSM_sequential_crnt_state[2]_i_5_n_0\,
+      I5 => \FSM_sequential_crnt_state[2]_i_6_n_0\,
       O => \FSM_sequential_crnt_state[2]_i_1_n_0\
     );
-\FSM_sequential_crnt_state[2]_i_10\: unisim.vcomponents.LUT4
+\FSM_sequential_crnt_state[2]_i_10\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FFF4"
+      INIT => X"FF05FCFF"
     )
         port map (
-      I0 => read_complete_d_4,
-      I1 => crnt_state(4),
-      I2 => \^q\(0),
-      I3 => \^q\(1),
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
+      I1 => \mem_a_int_reg[1]\,
+      I2 => \^q\(3),
+      I3 => \^q\(2),
+      I4 => \^q\(0),
       O => \FSM_sequential_crnt_state[2]_i_10_n_0\
     );
-\FSM_sequential_crnt_state[2]_i_2\: unisim.vcomponents.LUT6
+\FSM_sequential_crnt_state[2]_i_11\: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"00000000FF0D0000"
+      INIT => X"1"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
-      I1 => \FSM_sequential_crnt_state_reg[2]_1\,
-      I2 => \FSM_sequential_crnt_state[2]_i_6_n_0\,
-      I3 => \FSM_sequential_crnt_state[2]_i_7_n_0\,
-      I4 => crnt_state(2),
-      I5 => \FSM_sequential_crnt_state[2]_i_8_n_0\,
-      O => \FSM_sequential_crnt_state[2]_i_2_n_0\
+      I0 => \^q\(1),
+      I1 => \^q\(3),
+      O => \FSM_sequential_crnt_state[2]_i_11_n_0\
     );
-\FSM_sequential_crnt_state[2]_i_3\: unisim.vcomponents.LUT6
+\FSM_sequential_crnt_state[2]_i_12\: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"FFFFFFFF33FB3333"
+      INIT => X"B"
     )
         port map (
-      I0 => crnt_state(2),
-      I1 => \^q\(1),
-      I2 => \FSM_sequential_crnt_state_reg[4]_2\,
-      I3 => \^q\(0),
-      I4 => \^q\(2),
-      I5 => \FSM_sequential_crnt_state[2]_i_9_n_0\,
+      I0 => \^q\(0),
+      I1 => \^q\(2),
+      O => \FSM_sequential_crnt_state[2]_i_12_n_0\
+    );
+\FSM_sequential_crnt_state[2]_i_3\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"D0FF"
+    )
+        port map (
+      I0 => \^q\(3),
+      I1 => \^q\(0),
+      I2 => \^q\(1),
+      I3 => \^q\(2),
       O => \FSM_sequential_crnt_state[2]_i_3_n_0\
     );
 \FSM_sequential_crnt_state[2]_i_4\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"00000000000E0000"
+      INIT => X"FFFFFFFF33FB3333"
+    )
+        port map (
+      I0 => \^q\(2),
+      I1 => \^q\(1),
+      I2 => \FSM_sequential_crnt_state_reg[4]_2\,
+      I3 => \^q\(0),
+      I4 => \^q\(3),
+      I5 => \FSM_sequential_crnt_state[2]_i_10_n_0\,
+      O => \FSM_sequential_crnt_state[2]_i_4_n_0\
+    );
+\FSM_sequential_crnt_state[2]_i_5\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"40"
+    )
+        port map (
+      I0 => read_complete_d_4,
+      I1 => crnt_state(4),
+      I2 => \^q\(2),
+      O => \FSM_sequential_crnt_state[2]_i_5_n_0\
+    );
+\FSM_sequential_crnt_state[2]_i_6\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"000000E000000000"
     )
         port map (
       I0 => wlast,
       I1 => s_axi_mem_wvalid,
-      I2 => \FSM_sequential_crnt_state[2]_i_10_n_0\,
-      I3 => \^q\(2),
-      I4 => crnt_state(2),
-      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\,
-      O => \FSM_sequential_crnt_state[2]_i_4_n_0\
-    );
-\FSM_sequential_crnt_state[2]_i_6\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"EAAAAAAAFAFAFAFA"
-    )
-        port map (
-      I0 => \^q\(0),
-      I1 => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\,
-      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
-      I3 => pend_wrreq_reg,
-      I4 => bus2ip_wrreq_i,
-      I5 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
+      I2 => \FSM_sequential_crnt_state[2]_i_11_n_0\,
+      I3 => \FSM_sequential_crnt_state[3]_i_3_n_0\,
+      I4 => \FSM_sequential_crnt_state[2]_i_12_n_0\,
+      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
       O => \FSM_sequential_crnt_state[2]_i_6_n_0\
     );
 \FSM_sequential_crnt_state[2]_i_7\: unisim.vcomponents.LUT5
@@ -12852,45 +13043,23 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       INIT => X"FFFF7F00"
     )
         port map (
-      I0 => s_axi_mem_wvalid,
-      I1 => pend_wrreq_reg,
-      I2 => bus2ip_wrreq_i,
+      I0 => wlast_reg_reg_0,
+      I1 => bus2ip_wrreq_i,
+      I2 => s_axi_mem_wvalid,
       I3 => \^q\(0),
-      I4 => \^q\(2),
-      O => \FSM_sequential_crnt_state[2]_i_7_n_0\
-    );
-\FSM_sequential_crnt_state[2]_i_8\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"8A"
-    )
-        port map (
-      I0 => \^q\(1),
-      I1 => \^q\(0),
-      I2 => \^q\(2),
-      O => \FSM_sequential_crnt_state[2]_i_8_n_0\
-    );
-\FSM_sequential_crnt_state[2]_i_9\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"FFEE03FF"
-    )
-        port map (
-      I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I1 => \^q\(2),
-      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      I3 => \^q\(0),
-      I4 => crnt_state(2),
-      O => \FSM_sequential_crnt_state[2]_i_9_n_0\
+      I4 => \^q\(3),
+      O => pend_wrreq_reg
     );
 \FSM_sequential_crnt_state[3]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"EFEF0F00EFEF0F0F"
+      INIT => X"FFFFFFF0EE00EE00"
     )
         port map (
       I0 => \FSM_sequential_crnt_state[3]_i_2_n_0\,
       I1 => \FSM_sequential_crnt_state[3]_i_3_n_0\,
-      I2 => \FSM_sequential_crnt_state[3]_i_4_n_0\,
-      I3 => \^q\(0),
-      I4 => \^q\(2),
+      I2 => \^q\(0),
+      I3 => \^q\(3),
+      I4 => \FSM_sequential_crnt_state[3]_i_4_n_0\,
       I5 => \FSM_sequential_crnt_state[3]_i_5_n_0\,
       O => \FSM_sequential_crnt_state[3]_i_1_n_0\
     );
@@ -12899,7 +13068,7 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       INIT => X"6"
     )
         port map (
-      I0 => crnt_state(2),
+      I0 => \^q\(2),
       I1 => \^q\(1),
       O => \FSM_sequential_crnt_state[3]_i_2_n_0\
     );
@@ -12914,38 +13083,41 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
     );
 \FSM_sequential_crnt_state[3]_i_4\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FF0055003300FF0F"
+      INIT => X"000000000000AA02"
     )
         port map (
-      I0 => \^q\(1),
-      I1 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\,
-      I2 => \FSM_sequential_crnt_state_reg[3]_1\,
-      I3 => \^q\(0),
-      I4 => \^q\(2),
-      I5 => crnt_state(2),
+      I0 => \FSM_sequential_crnt_state[3]_i_6_n_0\,
+      I1 => \FSM_sequential_crnt_state_reg[3]_2\,
+      I2 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
+      I3 => \FSM_sequential_crnt_state_reg[3]_3\,
+      I4 => \^q\(1),
+      I5 => crnt_state(4),
       O => \FSM_sequential_crnt_state[3]_i_4_n_0\
     );
-\FSM_sequential_crnt_state[3]_i_5\: unisim.vcomponents.LUT6
+\FSM_sequential_crnt_state[3]_i_5\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"70707000FFFFFFFF"
+      INIT => X"3FB333B3"
+    )
+        port map (
+      I0 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\,
+      I1 => \^q\(0),
+      I2 => \^q\(3),
+      I3 => \^q\(2),
+      I4 => \^q\(1),
+      O => \FSM_sequential_crnt_state[3]_i_5_n_0\
+    );
+\FSM_sequential_crnt_state[3]_i_6\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"BFBABFAABFAABFAA"
     )
         port map (
       I0 => \^q\(2),
-      I1 => \FSM_sequential_crnt_state_reg[3]_0\,
-      I2 => crnt_state(2),
-      I3 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\,
-      I4 => \FSM_sequential_crnt_state_reg[3]_2\,
-      I5 => \FSM_sequential_crnt_state[3]_i_9_n_0\,
-      O => \FSM_sequential_crnt_state[3]_i_5_n_0\
-    );
-\FSM_sequential_crnt_state[3]_i_9\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"1"
-    )
-        port map (
-      I0 => \^q\(1),
-      I1 => crnt_state(4),
-      O => \FSM_sequential_crnt_state[3]_i_9_n_0\
+      I1 => \mem_a_int_reg[1]\,
+      I2 => temp_bus2ip_cs,
+      I3 => \^q\(3),
+      I4 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_7\,
+      I5 => bus2Mem_RdReq,
+      O => \FSM_sequential_crnt_state[3]_i_6_n_0\
     );
 \FSM_sequential_crnt_state[4]_i_1\: unisim.vcomponents.LUT5
     generic map(
@@ -12961,15 +13133,15 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
     );
 \FSM_sequential_crnt_state[4]_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0FFFFDFF0FFFFFFF"
+      INIT => X"55FFFFF755FFFFFF"
     )
         port map (
-      I0 => \^q\(0),
-      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      I2 => \^q\(2),
-      I3 => \^q\(1),
-      I4 => crnt_state(2),
-      I5 => crnt_state(4),
+      I0 => \^q\(1),
+      I1 => crnt_state(4),
+      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
+      I3 => \^q\(3),
+      I4 => \^q\(2),
+      I5 => \^q\(0),
       O => \FSM_sequential_crnt_state[4]_i_2_n_0\
     );
 \FSM_sequential_crnt_state_reg[0]\: unisim.vcomponents.FDRE
@@ -13002,7 +13174,7 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       C => s_axi_aclk,
       CE => '1',
       D => \FSM_sequential_crnt_state[2]_i_1_n_0\,
-      Q => crnt_state(2),
+      Q => \^q\(2),
       R => bus2ip_reset
     );
 \FSM_sequential_crnt_state_reg[3]\: unisim.vcomponents.FDRE
@@ -13013,7 +13185,7 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       C => s_axi_aclk,
       CE => '1',
       D => \FSM_sequential_crnt_state[3]_i_1_n_0\,
-      Q => \^q\(2),
+      Q => \^q\(3),
       R => bus2ip_reset
     );
 \FSM_sequential_crnt_state_reg[4]\: unisim.vcomponents.FDRE
@@ -13027,84 +13199,62 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       Q => crnt_state(4),
       R => bus2ip_reset
     );
-\FSM_sequential_emc_addr_ps[1]_i_4\: unisim.vcomponents.LUT4
+\FSM_sequential_emc_addr_ps[1]_i_5\: unisim.vcomponents.LUT4
     generic map(
       INIT => X"4F44"
     )
         port map (
-      I0 => \^fsm_sequential_crnt_state_reg[0]_1\,
-      I1 => \^fsm_sequential_crnt_state_reg[0]_2\,
+      I0 => \^fsm_sequential_crnt_state_reg[0]_0\,
+      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\,
       I2 => bus2ip_wrreq_i,
       I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_6\,
       O => \^bus2ip_wr_req_reg_reg\
     );
-\FSM_sequential_emc_addr_ps[2]_i_4\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"00000000AEFFAAAA"
-    )
-        port map (
-      I0 => \^fsm_sequential_crnt_state_reg[1]_3\,
-      I1 => pend_wrreq_reg_0,
-      I2 => \FSM_sequential_emc_addr_ps_reg[2]\,
-      I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\,
-      I4 => \^fsm_sequential_crnt_state_reg[0]_0\,
-      I5 => \FSM_sequential_emc_addr_ps_reg[2]_0\,
-      O => \FSM_sequential_crnt_state_reg[1]_2\
-    );
-\PERBIT_GEN[0].XORCY_i1_i_1\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"8B"
-    )
-        port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(7),
-      I1 => \^bus2ip_wr_req_reg_reg\,
-      I2 => burst_cnt_i(0),
-      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\
-    );
-\PERBIT_GEN[0].XORCY_i1_i_1__0\: unisim.vcomponents.LUT2
+\PERBIT_GEN[0].XORCY_i1_i_1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^trd_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\(3),
-      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\
+      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(3),
+      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\
     );
-\PERBIT_GEN[0].XORCY_i1_i_1__1\: unisim.vcomponents.LUT2
+\PERBIT_GEN[0].XORCY_i1_i_1__0\: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"2"
+      INIT => X"8B"
     )
         port map (
-      I0 => \^axi_trans_size_reg_reg[1]\,
-      I1 => cycle_cnt(0),
-      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_11\
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(7),
+      I1 => \^bus2ip_wr_req_reg_reg\,
+      I2 => burst_cnt_i(0),
+      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_4\
     );
-\PERBIT_GEN[0].XORCY_i1_i_1__3\: unisim.vcomponents.LUT2
+\PERBIT_GEN[0].XORCY_i1_i_1__2\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^twph_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\(3),
-      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_16\
+      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(3),
+      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\
     );
 \PERBIT_GEN[0].XORCY_i1_i_1__5\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
-      I0 => \^tpacc_cnt_en\,
+      I0 => \^twr_cnt_en\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(3),
-      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_19\
+      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\
     );
 \PERBIT_GEN[0].XORCY_i1_i_1__6\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
-      I0 => \^twr_cnt_en\,
+      I0 => \^fsm_sequential_crnt_state_reg[3]_0\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(3),
-      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_23\
+      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_19\
     );
 \PERBIT_GEN[0].XORCY_i1_i_1__7\: unisim.vcomponents.LUT2
     generic map(
@@ -13113,7 +13263,7 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^twr_rec_cnt_en_int\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(14),
-      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_30\
+      O => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_28\
     );
 \PERBIT_GEN[10].MUXCY_i1_i_1\: unisim.vcomponents.LUT2
     generic map(
@@ -13168,179 +13318,203 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       I0 => \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_2_n_0\,
       I1 => \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_3_n_0\,
       I2 => \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_4_n_0\,
-      I3 => \^fsm_sequential_crnt_state_reg[0]_0\,
-      I4 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\,
+      I3 => \^fsm_sequential_crnt_state_reg[3]_1\,
+      I4 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
       I5 => \^twr_rec_cnt_en_int\,
-      O => CE_3
+      O => CE_1
     );
-\PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_2\: unisim.vcomponents.LUT6
+\PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_2\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"FFFFFFFFFF80FFFF"
+      INIT => X"FFEF"
     )
         port map (
-      I0 => pend_wrreq_reg,
-      I1 => bus2ip_wrreq_i,
-      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\,
-      I3 => \^q\(0),
-      I4 => crnt_state(2),
-      I5 => \^q\(2),
+      I0 => \^q\(3),
+      I1 => \^q\(0),
+      I2 => \^q\(2),
+      I3 => crnt_state(4),
       O => \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_2_n_0\
     );
-\PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_3\: unisim.vcomponents.LUT2
+\PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_3\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"2"
+      INIT => X"2AAA"
     )
         port map (
       I0 => \^q\(1),
-      I1 => crnt_state(4),
+      I1 => wlast_reg_reg_0,
+      I2 => bus2ip_wrreq_i,
+      I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\,
       O => \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_3_n_0\
     );
 \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_4\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"D0D0D0D0D0FFFFFF"
+      INIT => X"DDD0DDD0DDD0FFFF"
     )
         port map (
       I0 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\,
-      I1 => \^fsm_sequential_crnt_state_reg[4]_1\,
-      I2 => \^transaction_complete_reg_reg_0\,
-      I3 => pend_wrreq_reg,
-      I4 => bus2ip_wrreq_i,
+      I1 => transaction_complete_reg_i_3_n_0,
+      I2 => transaction_complete_reg,
+      I3 => \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_6_n_0\,
+      I4 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\,
       I5 => temp_bus2ip_cs,
       O => \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_4_n_0\
     );
+\PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_6\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"00000000AAAE0000"
+    )
+        port map (
+      I0 => \FSM_sequential_crnt_state[0]_i_16_n_0\,
+      I1 => \^q\(3),
+      I2 => \FSM_sequential_crnt_state[2]_i_12_n_0\,
+      I3 => crnt_state(4),
+      I4 => p_0_in(1),
+      I5 => p_0_in(0),
+      O => \PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_6_n_0\
+    );
 \PERBIT_GEN[15].MULT_AND_i1_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000000B00000000"
+      INIT => X"0000000000000B00"
     )
         port map (
       I0 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\,
       I1 => \^q\(0),
-      I2 => \^q\(1),
-      I3 => crnt_state(4),
-      I4 => crnt_state(2),
-      I5 => \^q\(2),
+      I2 => \^q\(2),
+      I3 => \^q\(3),
+      I4 => \^q\(1),
+      I5 => crnt_state(4),
       O => \^twr_rec_cnt_en_int\
     );
 \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFF337F0000"
-    )
-        port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\,
-      I1 => transaction_done_reg_i_3_n_0,
-      I2 => crnt_state(2),
-      I3 => \^q\(2),
-      I4 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_2_n_0\,
-      I5 => \^axi_trans_size_reg_reg[1]\,
-      O => CE_1
-    );
-\PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_2\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"00000000EF4F4F4F"
+      INIT => X"FFFFFFFF3F370000"
     )
         port map (
       I0 => \^q\(2),
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I2 => \FSM_sequential_crnt_state[0]_i_2_n_0\,
-      I3 => \FSM_sequential_crnt_state_reg[4]_2\,
-      I4 => bus2Mem_RdReq,
-      I5 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_3_n_0\,
-      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_2_n_0\
+      I1 => transaction_done_reg_i_3_n_0,
+      I2 => \^q\(3),
+      I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
+      I4 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_3_n_0\,
+      I5 => Cycle_cnt_en_int,
+      O => CE_8
     );
 \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFFFFFFF700"
+      INIT => X"00000000E222FFFF"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
-      I1 => bus2Mem_RdReq,
-      I2 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5_n_0\,
-      I3 => \^q\(0),
-      I4 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_4_n_0\,
-      I5 => crnt_state(4),
+      I0 => \mem_a_int_reg[1]\,
+      I1 => \^q\(3),
+      I2 => bus2Mem_RdReq,
+      I3 => \FSM_sequential_crnt_state_reg[4]_2\,
+      I4 => \FSM_sequential_crnt_state[0]_i_10_n_0\,
+      I5 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_4_n_0\,
       O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_3_n_0\
     );
-\PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_4\: unisim.vcomponents.LUT3
+\PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_4\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FFFFFFFFFFFF7F00"
+    )
+        port map (
+      I0 => \FSM_sequential_crnt_state_reg[0]_2\,
+      I1 => bus2Mem_RdReq,
+      I2 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_5_n_0\,
+      I3 => \^q\(0),
+      I4 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_6_n_0\,
+      I5 => crnt_state(4),
+      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_4_n_0\
+    );
+\PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_5\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"0800"
+    )
+        port map (
+      I0 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\,
+      I1 => \^q\(2),
+      I2 => \^q\(1),
+      I3 => \^q\(3),
+      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_5_n_0\
+    );
+\PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_6\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"04"
     )
         port map (
       I0 => \^q\(0),
       I1 => \^q\(1),
-      I2 => crnt_state(2),
-      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_4_n_0\
-    );
-\PERBIT_GEN[1].MULT_AND_i1_i_1\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"BAAA0000BAAABAAA"
-    )
-        port map (
-      I0 => \^fsm_sequential_crnt_state_reg[1]_0\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
-      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
-      I3 => \^fsm_sequential_crnt_state_reg[0]_0\,
-      I4 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(0),
-      I5 => bus2Mem_RdReq,
-      O => \^axi_trans_size_reg_reg[1]\
+      I2 => \^q\(2),
+      O => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_6_n_0\
     );
 \PERBIT_GEN[1].MULT_AND_i1_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000004000000540"
+      INIT => X"020202FF222222FF"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
-      I1 => read_data_en_reg_reg_0,
-      I2 => \^q\(1),
-      I3 => \^q\(0),
-      I4 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2_n_0\,
-      I5 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
-      O => \^fsm_sequential_crnt_state_reg[1]_0\
+      I0 => \^fsm_sequential_crnt_state_reg[2]_1\,
+      I1 => \PERBIT_GEN[1].MULT_AND_i1_i_3_n_0\,
+      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
+      I3 => cycle_cnt(1),
+      I4 => cycle_cnt(0),
+      I5 => \^fsm_sequential_crnt_state_reg[3]_1\,
+      O => \^perbit_gen[1].ff_rst0_gen.fdre_i1\
     );
-\PERBIT_GEN[1].MUXCY_i1_i_1\: unisim.vcomponents.LUT3
+\PERBIT_GEN[1].MULT_AND_i1_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"8B"
+      INIT => X"0000080000000000"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(6),
-      I1 => \^bus2ip_wr_req_reg_reg\,
-      I2 => burst_cnt_i(1),
-      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\
+      I0 => new_page_d1_reg_0,
+      I1 => \^q\(3),
+      I2 => \^q\(0),
+      I3 => \^q\(2),
+      I4 => crnt_state(4),
+      I5 => \^q\(1),
+      O => \PERBIT_GEN[1].MULT_AND_i1_i_3_n_0\
     );
-\PERBIT_GEN[1].MUXCY_i1_i_1__0\: unisim.vcomponents.LUT2
+\PERBIT_GEN[1].MUXCY_i1_i_1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^trd_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\(2),
-      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\
+      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(2),
+      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\
     );
-\PERBIT_GEN[1].MUXCY_i1_i_1__3\: unisim.vcomponents.LUT2
+\PERBIT_GEN[1].MUXCY_i1_i_1__0\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"8B"
+    )
+        port map (
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(6),
+      I1 => \^bus2ip_wr_req_reg_reg\,
+      I2 => burst_cnt_i(1),
+      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_5\
+    );
+\PERBIT_GEN[1].MUXCY_i1_i_1__2\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^twph_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\(2),
-      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_15\
+      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(2),
+      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\
     );
 \PERBIT_GEN[1].MUXCY_i1_i_1__5\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
-      I0 => \^tpacc_cnt_en\,
+      I0 => \^twr_cnt_en\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(2),
-      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_18\
+      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\
     );
 \PERBIT_GEN[1].MUXCY_i1_i_1__6\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
-      I0 => \^twr_cnt_en\,
+      I0 => \^fsm_sequential_crnt_state_reg[3]_0\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(2),
-      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_22\
+      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_20\
     );
 \PERBIT_GEN[1].MUXCY_i1_i_1__7\: unisim.vcomponents.LUT2
     generic map(
@@ -13349,51 +13523,42 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^twr_rec_cnt_en_int\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(13),
-      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_29\
+      O => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_27\
     );
-\PERBIT_GEN[2].MUXCY_i1_i_1\: unisim.vcomponents.LUT3
+\PERBIT_GEN[2].MUXCY_i1_i_1__0\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"8B"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(5),
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(5),
       I1 => \^bus2ip_wr_req_reg_reg\,
       I2 => burst_cnt_i(2),
       O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\
     );
-\PERBIT_GEN[2].MUXCY_i1_i_1__0\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"2"
-    )
-        port map (
-      I0 => \^trd_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\(1),
-      O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\
-    );
-\PERBIT_GEN[2].MUXCY_i1_i_1__2\: unisim.vcomponents.LUT2
+\PERBIT_GEN[2].MUXCY_i1_i_1__1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^twph_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\(1),
-      O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_14\
+      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(1),
+      O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\
     );
 \PERBIT_GEN[2].MUXCY_i1_i_1__4\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
-      I0 => \^tpacc_cnt_en\,
+      I0 => \^twr_cnt_en\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(1),
-      O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_17\
+      O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\
     );
 \PERBIT_GEN[2].MUXCY_i1_i_1__5\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
-      I0 => \^twr_cnt_en\,
+      I0 => \^fsm_sequential_crnt_state_reg[3]_0\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(1),
       O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_21\
     );
@@ -13404,44 +13569,53 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^twr_rec_cnt_en_int\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(12),
-      O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_28\
+      O => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_26\
     );
-\PERBIT_GEN[3].MUXCY_i1_i_1\: unisim.vcomponents.LUT3
+\PERBIT_GEN[2].MUXCY_i1_i_2\: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"8B"
+      INIT => X"8"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(4),
-      I1 => \^bus2ip_wr_req_reg_reg\,
-      I2 => burst_cnt_i(3),
-      O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\
+      I0 => \^trd_cnt_en\,
+      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(1),
+      O => \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1\
     );
-\PERBIT_GEN[3].MUXCY_i1_i_1__0\: unisim.vcomponents.LUT2
+\PERBIT_GEN[3].MUXCY_i1_i_1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^trd_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\(0),
+      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(0),
+      O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\
+    );
+\PERBIT_GEN[3].MUXCY_i1_i_1__0\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"8B"
+    )
+        port map (
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(4),
+      I1 => \^bus2ip_wr_req_reg_reg\,
+      I2 => burst_cnt_i(3),
       O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\
     );
-\PERBIT_GEN[3].MUXCY_i1_i_1__2\: unisim.vcomponents.LUT2
+\PERBIT_GEN[3].MUXCY_i1_i_1__1\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^twph_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\(0),
-      O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_13\
+      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(0),
+      O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_10\
     );
-\PERBIT_GEN[3].MUXCY_i1_i_1__5\: unisim.vcomponents.LUT2
+\PERBIT_GEN[3].MUXCY_i1_i_1__4\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"2"
     )
         port map (
       I0 => \^twr_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(0),
-      O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_20\
+      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(0),
+      O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\
     );
 \PERBIT_GEN[3].MUXCY_i1_i_1__6\: unisim.vcomponents.LUT2
     generic map(
@@ -13450,230 +13624,216 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^twr_rec_cnt_en_int\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(11),
-      O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_27\
+      O => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_25\
     );
 \PERBIT_GEN[3].MUXCY_i1_i_2\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"8"
     )
         port map (
-      I0 => \^tpacc_cnt_en\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(0),
+      I0 => \^fsm_sequential_crnt_state_reg[3]_0\,
+      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(0),
       O => \PERBIT_GEN[3].FF_RST1_GEN.FDSE_i1\
     );
-\PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_1\: unisim.vcomponents.LUT6
+\PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_1\: unisim.vcomponents.LUT4
     generic map(
-      INIT => X"02000000FFFFFFFF"
+      INIT => X"80FF"
     )
         port map (
-      I0 => read_complete_d_4,
-      I1 => \^q\(1),
-      I2 => \^q\(0),
-      I3 => \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2_n_0\,
-      I4 => crnt_state(4),
-      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\,
+      I0 => read_break_reg_d1_i_3_n_0,
+      I1 => crnt_state(4),
+      I2 => read_complete_d_4,
+      I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\,
       O => CE_2
     );
 \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_1__0\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"00000010FFFFFFFF"
+      INIT => X"5555555555555575"
     )
         port map (
-      I0 => \^q\(1),
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_7\,
       I1 => \^q\(0),
-      I2 => \^q\(2),
-      I3 => crnt_state(2),
-      I4 => crnt_state(4),
-      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_7\,
-      O => CE_12
+      I2 => \^q\(3),
+      I3 => \^q\(1),
+      I4 => \^q\(2),
+      I5 => crnt_state(4),
+      O => CE_14
     );
 \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_1__1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFF4F444444"
-    )
-        port map (
-      I0 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1_n_0\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
-      I3 => \^fsm_sequential_crnt_state_reg[0]_0\,
-      I4 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
-      I5 => \^twph_cnt_en\,
-      O => CE_0
-    );
-\PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"1"
-    )
-        port map (
-      I0 => crnt_state(2),
-      I1 => \^q\(2),
-      O => \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2_n_0\
-    );
-\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_1\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"FFFFFFFF33100000"
+      INIT => X"FFFFFFFF40FF4040"
     )
         port map (
       I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I1 => crnt_state(4),
-      I2 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\,
-      I3 => \^q\(2),
-      I4 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3_n_0\,
-      I5 => \^trd_cnt_en\,
-      O => CE_5
+      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
+      I2 => \^fsm_sequential_crnt_state_reg[3]_1\,
+      I3 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5_n_0\,
+      I4 => \mem_a_int_reg[1]\,
+      I5 => \^twph_cnt_en\,
+      O => CE_0
+    );
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_1\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"BBBA"
+    )
+        port map (
+      I0 => \^trd_cnt_en\,
+      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2_n_0\,
+      I2 => \^q\(0),
+      I3 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3_n_0\,
+      O => CE_3
     );
 \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_1__0\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"F4FCF0FCFFFCF0FC"
+      INIT => X"000400040004FFFF"
     )
         port map (
-      I0 => new_page,
-      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0\,
-      I2 => \^tpacc_cnt_en\,
-      I3 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
-      I4 => bus2Mem_RdReq,
-      I5 => \^fsm_sequential_crnt_state_reg[0]_3\,
-      O => CE_10
+      I0 => \^fsm_sequential_crnt_state_reg[2]_1\,
+      I1 => bus2Mem_RdReq,
+      I2 => cycle_cnt(1),
+      I3 => cycle_cnt(0),
+      I4 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0\,
+      I5 => \^fsm_sequential_crnt_state_reg[1]_2\,
+      O => CE_9
     );
 \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_1__1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFF4F444444"
+      INIT => X"FFFFFFFF40FF4040"
     )
         port map (
-      I0 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1_n_0\,
-      I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
-      I3 => \^fsm_sequential_crnt_state_reg[0]_0\,
-      I4 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
+      I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
+      I2 => \^fsm_sequential_crnt_state_reg[3]_1\,
+      I3 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5_n_0\,
+      I4 => \mem_a_int_reg[1]\,
       I5 => \^twr_cnt_en\,
       O => CE
     );
-\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0\: unisim.vcomponents.LUT6
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0008000000000000"
+      INIT => X"BABBFFFFBABBBABB"
     )
         port map (
-      I0 => read_data_en_reg_reg_0,
-      I1 => \^q\(1),
-      I2 => \^q\(0),
-      I3 => crnt_state(4),
-      I4 => \^q\(2),
-      I5 => crnt_state(2),
-      O => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0\
+      I0 => crnt_state(4),
+      I1 => \^q\(3),
+      I2 => \mem_a_int_reg[1]\,
+      I3 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\,
+      I4 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5__0_n_0\,
+      I5 => \^q\(0),
+      O => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2_n_0\
     );
-\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1\: unisim.vcomponents.LUT6
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0\: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"FEFFFFFEFEFFFFFF"
+      INIT => X"B0"
     )
         port map (
-      I0 => \^q\(0),
-      I1 => \^q\(2),
-      I2 => crnt_state(4),
-      I3 => crnt_state(2),
-      I4 => \^q\(1),
-      I5 => temp_bus2ip_cs,
-      O => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1_n_0\
+      I0 => new_page,
+      I1 => bus2Mem_RdReq,
+      I2 => \FSM_sequential_crnt_state_reg[4]_2\,
+      O => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0\
     );
 \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000909000FF9090"
+      INIT => X"8000111100001111"
     )
         port map (
-      I0 => \^q\(2),
-      I1 => crnt_state(2),
-      I2 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_4_n_0\,
-      I3 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5_n_0\,
-      I4 => \^q\(0),
-      I5 => read_data_en_reg_reg_1,
+      I0 => \^q\(1),
+      I1 => \^q\(3),
+      I2 => \FSM_sequential_crnt_state_reg[4]_2\,
+      I3 => bus2Mem_RdReq,
+      I4 => \^q\(2),
+      I5 => new_page_d1,
       O => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3_n_0\
     );
-\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3__0\: unisim.vcomponents.LUT6
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_4__0\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FFFBFFFFFFFFFFFF"
+      INIT => X"00000100"
     )
         port map (
-      I0 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
-      I1 => \^q\(0),
+      I0 => \^q\(3),
+      I1 => \^q\(1),
+      I2 => \^q\(0),
+      I3 => \^q\(2),
+      I4 => crnt_state(4),
+      O => \^fsm_sequential_crnt_state_reg[3]_1\
+    );
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FFFFFFFFFFFFFF3D"
+    )
+        port map (
+      I0 => temp_bus2ip_cs,
+      I1 => \^q\(2),
       I2 => \^q\(1),
       I3 => crnt_state(4),
-      I4 => \^q\(2),
-      I5 => crnt_state(2),
-      O => \^fsm_sequential_crnt_state_reg[0]_3\
-    );
-\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_4\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"800F000F"
-    )
-        port map (
-      I0 => bus2Mem_RdReq,
-      I1 => \FSM_sequential_crnt_state_reg[4]_2\,
-      I2 => \^q\(1),
-      I3 => crnt_state(2),
-      I4 => new_page_d1,
-      O => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_4_n_0\
-    );
-\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5\: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"FFBF"
-    )
-        port map (
-      I0 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
-      I1 => crnt_state(2),
-      I2 => \^q\(2),
-      I3 => \^q\(1),
+      I4 => \^q\(0),
+      I5 => \^q\(3),
       O => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5_n_0\
+    );
+\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5__0\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"2000000020002000"
+    )
+        port map (
+      I0 => \^q\(3),
+      I1 => \^q\(1),
+      I2 => \^q\(2),
+      I3 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\,
+      I4 => bus2Mem_RdReq,
+      I5 => \FSM_sequential_crnt_state_reg[0]_2\,
+      O => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5__0_n_0\
     );
 \PERBIT_GEN[4].MULT_AND_i1_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"000C000800000008"
+      INIT => X"0000030002000200"
     )
         port map (
       I0 => bus2Mem_RdReq,
-      I1 => \mem_oen_reg[0]_i_2_n_0\,
-      I2 => crnt_state(4),
-      I3 => \^q\(1),
-      I4 => \^q\(0),
-      I5 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
+      I1 => crnt_state(4),
+      I2 => \^q\(1),
+      I3 => \mem_oen_reg[0]_i_3_n_0\,
+      I4 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\,
+      I5 => \^q\(0),
       O => \^trd_cnt_en\
     );
-\PERBIT_GEN[4].MULT_AND_i1_i_1__1\: unisim.vcomponents.LUT6
+\PERBIT_GEN[4].MULT_AND_i1_i_1__0\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"1110FFF011100000"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
-      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
-      I2 => \^fsm_sequential_crnt_state_reg[0]_0\,
+      I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
+      I2 => \^fsm_sequential_crnt_state_reg[3]_1\,
       I3 => \PERBIT_GEN[4].MULT_AND_i1_i_2_n_0\,
-      I4 => crnt_state(2),
+      I4 => \^q\(2),
       I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
       O => \^twph_cnt_en\
     );
 \PERBIT_GEN[4].MULT_AND_i1_i_1__3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0004000000000000"
+      INIT => X"0000000001000000"
     )
         port map (
-      I0 => read_data_en_reg_reg_0,
-      I1 => \^q\(1),
-      I2 => \^q\(0),
-      I3 => crnt_state(4),
-      I4 => \^q\(2),
-      I5 => crnt_state(2),
-      O => \^tpacc_cnt_en\
+      I0 => crnt_state(4),
+      I1 => \^q\(3),
+      I2 => \^q\(2),
+      I3 => \^q\(0),
+      I4 => \^q\(1),
+      I5 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
+      O => \^twr_cnt_en\
     );
 \PERBIT_GEN[4].MULT_AND_i1_i_1__4\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000000000000008"
+      INIT => X"0000040000000000"
     )
         port map (
-      I0 => \^q\(1),
-      I1 => \^q\(0),
-      I2 => \^q\(2),
-      I3 => crnt_state(4),
-      I4 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      I5 => crnt_state(2),
-      O => \^twr_cnt_en\
+      I0 => new_page_d1_reg_0,
+      I1 => \^q\(3),
+      I2 => \^q\(0),
+      I3 => \^q\(2),
+      I4 => crnt_state(4),
+      I5 => \^q\(1),
+      O => \^fsm_sequential_crnt_state_reg[3]_0\
     );
 \PERBIT_GEN[4].MULT_AND_i1_i_2\: unisim.vcomponents.LUT5
     generic map(
@@ -13683,16 +13843,16 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       I0 => \^q\(1),
       I1 => \^q\(0),
       I2 => \^q\(2),
-      I3 => crnt_state(4),
-      I4 => crnt_state(2),
+      I3 => \^q\(3),
+      I4 => crnt_state(4),
       O => \PERBIT_GEN[4].MULT_AND_i1_i_2_n_0\
     );
-\PERBIT_GEN[4].MUXCY_i1_i_1\: unisim.vcomponents.LUT3
+\PERBIT_GEN[4].MUXCY_i1_i_1__0\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"8B"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(3),
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(3),
       I1 => \^bus2ip_wr_req_reg_reg\,
       I2 => burst_cnt_i(4),
       O => \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\
@@ -13704,14 +13864,14 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^twr_rec_cnt_en_int\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(10),
-      O => \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg_26\
+      O => \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg_24\
     );
 \PERBIT_GEN[5].MUXCY_i1_i_1\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"8B"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(2),
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(2),
       I1 => \^bus2ip_wr_req_reg_reg\,
       I2 => burst_cnt_i(5),
       O => \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\
@@ -13723,14 +13883,14 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^twr_rec_cnt_en_int\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(9),
-      O => \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg_25\
+      O => \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg_23\
     );
 \PERBIT_GEN[6].MUXCY_i1_i_1\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"8B"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(1),
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(1),
       I1 => \^bus2ip_wr_req_reg_reg\,
       I2 => burst_cnt_i(6),
       O => \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\
@@ -13742,7 +13902,7 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^twr_rec_cnt_en_int\,
       I1 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(8),
-      O => \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg_24\
+      O => \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg_22\
     );
 \PERBIT_GEN[7].FF_RST0_GEN.FDRE_i1_i_2\: unisim.vcomponents.LUT3
     generic map(
@@ -13752,7 +13912,7 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       I0 => \^bus2ip_wr_req_reg_reg\,
       I1 => temp_bus2ip_cs,
       I2 => p_0_in(0),
-      O => CE_4
+      O => CE_7
     );
 \PERBIT_GEN[7].MULT_AND_i1_i_1\: unisim.vcomponents.LUT1
     generic map(
@@ -13767,7 +13927,7 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
       INIT => X"B8"
     )
         port map (
-      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(0),
+      I0 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(0),
       I1 => \^bus2ip_wr_req_reg_reg\,
       I2 => burst_cnt_i(7),
       O => S
@@ -13801,12 +13961,12 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
     );
 \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFFFF151515"
+      INIT => X"FFFFFFFFFFD0D0D0"
     )
         port map (
-      I0 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_2_n_0\,
-      I1 => \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2_n_0\,
-      I2 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\,
+      I0 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\,
+      I1 => \^q\(3),
+      I2 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_2_n_0\,
       I3 => crnt_state(4),
       I4 => read_complete_d_4,
       I5 => bus2ip_reset,
@@ -13814,51 +13974,16 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
     );
 \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"EEFFEEFEEEEEEEFF"
-    )
-        port map (
-      I0 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_3_n_0\,
-      I1 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_4_n_0\,
-      I2 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\,
-      I3 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_5_n_0\,
-      I4 => \^q\(1),
-      I5 => \^q\(0),
-      O => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_2_n_0\
-    );
-\RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_3\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"00EF000000FF0000"
+      INIT => X"000000000F0F0F2F"
     )
         port map (
       I0 => \^q\(0),
-      I1 => \^q\(1),
-      I2 => crnt_state(4),
-      I3 => \^q\(2),
-      I4 => crnt_state(2),
-      I5 => \FSM_sequential_crnt_state_reg[3]_0\,
-      O => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_3_n_0\
-    );
-\RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_4\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"FFFFFFFFEAAAE0A0"
-    )
-        port map (
-      I0 => \^q\(2),
-      I1 => \^q\(0),
-      I2 => \^q\(1),
-      I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      I4 => crnt_state(2),
+      I1 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\,
+      I2 => \^q\(3),
+      I3 => \^q\(1),
+      I4 => \^q\(2),
       I5 => crnt_state(4),
-      O => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_4_n_0\
-    );
-\RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_5\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"B"
-    )
-        port map (
-      I0 => crnt_state(2),
-      I1 => \^q\(2),
-      O => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_5_n_0\
+      O => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_2_n_0\
     );
 \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\: unisim.vcomponents.FDRE
     generic map(
@@ -13873,26 +13998,25 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
     );
 \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"4444544444444444"
-    )
-        port map (
-      I0 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2_n_0\,
-      I1 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\,
-      I2 => read_break_reg,
-      I3 => \^q\(0),
-      I4 => \^q\(1),
-      I5 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
-      O => read_complete_cmb
-    );
-\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"BF"
+      INIT => X"4044404040404040"
     )
         port map (
       I0 => crnt_state(4),
-      I1 => \^q\(2),
-      I2 => crnt_state(2),
-      O => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2_n_0\
+      I1 => \mem_oen_reg[0]_i_3_n_0\,
+      I2 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
+      I3 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\,
+      I4 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_4_n_0\,
+      I5 => read_break_reg,
+      O => read_complete_cmb
+    );
+\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_4\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"2"
+    )
+        port map (
+      I0 => \^q\(0),
+      I1 => \^q\(1),
+      O => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_4_n_0\
     );
 \READ_COMPLETE_PIPE_GEN[1].READ_COMPLETE_PIPE\: unisim.vcomponents.FDRE
     generic map(
@@ -13918,106 +14042,118 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
     );
 \burst_addr_cnt[7]_i_10\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"A8AAAAAAAAAAAAAA"
+      INIT => X"A2AAAAAAAAAAAAAA"
     )
         port map (
       I0 => \^q\(0),
-      I1 => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_5_n_0\,
+      I1 => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_i_5_n_0\,
       I2 => \burst_addr_cnt[7]_i_3_0\,
       I3 => rdce_out_i,
       I4 => \burst_addr_cnt[7]_i_3_1\,
-      I5 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
+      I5 => \FSM_sequential_crnt_state_reg[0]_2\,
       O => \burst_addr_cnt[7]_i_10_n_0\
     );
-\burst_addr_cnt[7]_i_11\: unisim.vcomponents.LUT5
+\burst_addr_cnt[7]_i_12\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"0000000000000020"
+    )
+        port map (
+      I0 => \mem_a_int_reg[1]\,
+      I1 => addr_sm_ps_IDLE_reg_i_5,
+      I2 => \^q\(1),
+      I3 => \^q\(3),
+      I4 => \FSM_sequential_crnt_state[0]_i_15_n_0\,
+      I5 => read_break_reg_d1_reg_0,
+      O => \FSM_sequential_crnt_state_reg[1]_0\
+    );
+\burst_addr_cnt[7]_i_14\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"BAAAAAAA"
     )
         port map (
       I0 => crnt_state(4),
-      I1 => \^q\(2),
-      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\,
+      I1 => \^q\(3),
+      I2 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\,
       I3 => bus2ip_wrreq_i,
-      I4 => pend_wrreq_reg,
-      O => \burst_addr_cnt[7]_i_11_n_0\
+      I4 => wlast_reg_reg_0,
+      O => \FSM_sequential_crnt_state_reg[4]_1\
     );
 \burst_addr_cnt[7]_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"000000000000FFF2"
+      INIT => X"000000000000EEFE"
     )
         port map (
-      I0 => \burst_addr_cnt[7]_i_6_n_0\,
-      I1 => pend_rdreq_reg,
-      I2 => \^q\(0),
-      I3 => \burst_addr_cnt[7]_i_8_n_0\,
-      I4 => \burst_addr_cnt[7]_i_9_n_0\,
-      I5 => \burst_addr_cnt[7]_i_10_n_0\,
-      O => \^fsm_sequential_crnt_state_reg[0]_1\
+      I0 => \^q\(0),
+      I1 => \burst_addr_cnt[7]_i_7_n_0\,
+      I2 => \burst_addr_cnt[7]_i_8_n_0\,
+      I3 => pend_rdreq_reg,
+      I4 => \burst_addr_cnt[7]_i_10_n_0\,
+      I5 => pend_rdreq_reg_0,
+      O => \^fsm_sequential_crnt_state_reg[0]_0\
     );
-\burst_addr_cnt[7]_i_6\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"8"
-    )
-        port map (
-      I0 => crnt_state(2),
-      I1 => \^q\(1),
-      O => \burst_addr_cnt[7]_i_6_n_0\
-    );
-\burst_addr_cnt[7]_i_8\: unisim.vcomponents.LUT3
+\burst_addr_cnt[7]_i_7\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"01"
     )
         port map (
-      I0 => \^q\(2),
-      I1 => crnt_state(2),
+      I0 => \^q\(3),
+      I1 => \^q\(2),
       I2 => \^q\(1),
-      O => \burst_addr_cnt[7]_i_8_n_0\
+      O => \burst_addr_cnt[7]_i_7_n_0\
     );
-\burst_addr_cnt[7]_i_9\: unisim.vcomponents.LUT6
+\burst_addr_cnt[7]_i_8\: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"AAAAAAAAFFFFEFFF"
+      INIT => X"8"
     )
         port map (
-      I0 => \burst_addr_cnt[7]_i_11_n_0\,
-      I1 => \burst_addr_cnt[7]_i_3_0\,
-      I2 => rdce_out_i,
-      I3 => \burst_addr_cnt[7]_i_3_1\,
-      I4 => \burst_addr_cnt[7]_i_3_2\,
-      I5 => \^q\(2),
-      O => \burst_addr_cnt[7]_i_9_n_0\
+      I0 => \^q\(2),
+      I1 => \^q\(1),
+      O => \burst_addr_cnt[7]_i_8_n_0\
+    );
+\bus2ip_BE_reg[3]_i_7\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"80800080"
+    )
+        port map (
+      I0 => \^fsm_sequential_crnt_state_reg[1]_1\,
+      I1 => s_axi_mem_awvalid,
+      I2 => s_axi_mem_wvalid,
+      I3 => s_axi_mem_arvalid,
+      I4 => rw_flag_reg,
+      O => s_axi_mem_awvalid_0
     );
 \mem_a_int[31]_i_1\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"0002000000010001"
     )
         port map (
-      I0 => crnt_state(2),
-      I1 => \^q\(0),
-      I2 => \^q\(2),
-      I3 => crnt_state(4),
-      I4 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      I0 => \^q\(2),
+      I1 => crnt_state(4),
+      I2 => \^q\(0),
+      I3 => \^q\(3),
+      I4 => \mem_a_int_reg[1]\,
       I5 => \^q\(1),
       O => \FSM_sequential_crnt_state_reg[2]_0\
     );
 \mem_ce_reg[0]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"AAAAAAAA08AA8822"
+      INIT => X"AAAAAAAA20AAA00A"
     )
         port map (
       I0 => \mem_ce_reg[0]_i_2_n_0\,
-      I1 => \^q\(2),
-      I2 => read_break_reg,
-      I3 => crnt_state(2),
+      I1 => read_break_reg,
+      I2 => \^q\(3),
+      I3 => \^q\(2),
       I4 => \^q\(0),
       I5 => crnt_state(4),
       O => mem_ce_int
     );
 \mem_ce_reg[0]_i_2\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FDFDFDFDFDFD0C00"
+      INIT => X"5555555555550400"
     )
         port map (
-      I0 => \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2_n_0\,
+      I0 => read_break_reg_d1_i_3_n_0,
       I1 => \^q\(1),
       I2 => \^q\(0),
       I3 => read_break_reg_d1_i_2_n_0,
@@ -14032,81 +14168,81 @@ Bus2IP_RdReq_d1_reg: unisim.vcomponents.FDRE
         port map (
       I0 => \^q\(0),
       I1 => Bus2IP_RdReq_emc,
-      I2 => crnt_state(2),
+      I2 => \^q\(2),
       I3 => \^q\(1),
       O => \mem_ce_reg[0]_i_3_n_0\
     );
 \mem_cen_reg[0]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"41015050FFFFFFFF"
+      INIT => X"41500150FFFFFFFF"
     )
         port map (
       I0 => crnt_state(4),
       I1 => \^q\(0),
-      I2 => crnt_state(2),
-      I3 => read_break_reg,
-      I4 => \^q\(2),
+      I2 => \^q\(2),
+      I3 => \^q\(3),
+      I4 => read_break_reg,
       I5 => \mem_ce_reg[0]_i_2_n_0\,
       O => mem_CEN_cmb
     );
 \mem_dq_t_reg[8]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000000288AAAA8A"
+      INIT => X"222202202222022A"
     )
         port map (
       I0 => mem_dqt_t_d,
-      I1 => \^q\(2),
-      I2 => crnt_state(2),
+      I1 => crnt_state(4),
+      I2 => \^q\(1),
       I3 => \^q\(0),
-      I4 => \^q\(1),
-      I5 => crnt_state(4),
+      I4 => \^q\(3),
+      I5 => \^q\(2),
       O => mem_dqt_t_d_reg(0)
     );
 mem_dqt_t_d_i_1: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"55551417"
+      INIT => X"0001CFFD"
     )
         port map (
-      I0 => crnt_state(4),
-      I1 => \^q\(1),
-      I2 => \^q\(0),
-      I3 => crnt_state(2),
-      I4 => \^q\(2),
-      O => \FSM_sequential_crnt_state_reg[4]_0\
-    );
-\mem_oen_reg[0]_i_1\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"0C0C5DFD0C0C5D5D"
-    )
-        port map (
-      I0 => \mem_oen_reg[0]_i_2_n_0\,
-      I1 => \mem_oen_reg[0]_i_3_n_0\,
+      I0 => \^q\(2),
+      I1 => \^q\(3),
       I2 => \^q\(0),
       I3 => \^q\(1),
       I4 => crnt_state(4),
-      I5 => read_break_reg,
+      O => mem_WEN_cmb
+    );
+\mem_oen_reg[0]_i_1\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"0C550C550C55FFFF"
+    )
+        port map (
+      I0 => \mem_oen_reg[0]_i_2_n_0\,
+      I1 => read_break_reg,
+      I2 => \^q\(1),
+      I3 => \^q\(0),
+      I4 => crnt_state(4),
+      I5 => \mem_oen_reg[0]_i_3_n_0\,
       O => mem_OEN_cmb
     );
-\mem_oen_reg[0]_i_2\: unisim.vcomponents.LUT2
+\mem_oen_reg[0]_i_2\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FAFCFAFCFAFCFA00"
+    )
+        port map (
+      I0 => read_break_reg_d1_i_2_n_0,
+      I1 => Bus2IP_RdReq_emc,
+      I2 => crnt_state(4),
+      I3 => \^q\(1),
+      I4 => \^q\(3),
+      I5 => \^q\(2),
+      O => \mem_oen_reg[0]_i_2_n_0\
+    );
+\mem_oen_reg[0]_i_3\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"8"
     )
         port map (
-      I0 => crnt_state(2),
-      I1 => \^q\(2),
-      O => \mem_oen_reg[0]_i_2_n_0\
-    );
-\mem_oen_reg[0]_i_3\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"1013101310131F1F"
-    )
-        port map (
-      I0 => read_break_reg_d1_i_2_n_0,
-      I1 => crnt_state(4),
-      I2 => \^q\(1),
-      I3 => Bus2IP_RdReq_emc,
-      I4 => \^q\(2),
-      I5 => crnt_state(2),
+      I0 => \^q\(2),
+      I1 => \^q\(3),
       O => \mem_oen_reg[0]_i_3_n_0\
     );
 mem_rnw_reg_i_1: unisim.vcomponents.LUT5
@@ -14114,37 +14250,37 @@ mem_rnw_reg_i_1: unisim.vcomponents.LUT5
       INIT => X"0001F9F9"
     )
         port map (
-      I0 => \^q\(1),
-      I1 => crnt_state(2),
-      I2 => \^q\(2),
+      I0 => \^q\(2),
+      I1 => \^q\(1),
+      I2 => \^q\(3),
       I3 => \^q\(0),
       I4 => crnt_state(4),
       O => mem_RNW_cmb
     );
 new_page_d1_i_1: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"55550010"
+      INIT => X"0000FF04"
     )
         port map (
-      I0 => new_page_d1_i_2_n_0,
-      I1 => read_data_en_reg_reg_0,
-      I2 => crnt_state(2),
-      I3 => \^q\(0),
-      I4 => new_page_d1,
+      I0 => new_page_d1_reg_0,
+      I1 => \^q\(2),
+      I2 => \^q\(0),
+      I3 => new_page_d1,
+      I4 => new_page_d1_i_3_n_0,
       O => new_page
     );
-new_page_d1_i_2: unisim.vcomponents.LUT6
+new_page_d1_i_3: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFF4041555D"
+      INIT => X"FFFFFFFF50015575"
     )
         port map (
       I0 => \^q\(1),
-      I1 => crnt_state(2),
+      I1 => \^q\(0),
       I2 => \^q\(2),
-      I3 => \^q\(0),
+      I3 => \^q\(3),
       I4 => new_page_d1,
       I5 => crnt_state(4),
-      O => new_page_d1_i_2_n_0
+      O => new_page_d1_i_3_n_0
     );
 new_page_d1_reg: unisim.vcomponents.FDRE
      port map (
@@ -14153,19 +14289,6 @@ new_page_d1_reg: unisim.vcomponents.FDRE
       D => new_page,
       Q => new_page_d1,
       R => bus2ip_reset
-    );
-pend_wrreq_i_1: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"E0E0E0E0F0000000"
-    )
-        port map (
-      I0 => \^fsm_sequential_crnt_state_reg[0]_2\,
-      I1 => bus2ip_burst,
-      I2 => temp_bus2ip_cs,
-      I3 => \^transaction_done_i\,
-      I4 => bus2ip_wrreq_i,
-      I5 => pend_wrreq_reg,
-      O => bus2ip_burst_reg_reg
     );
 read_ack_reg_reg: unisim.vcomponents.FDRE
      port map (
@@ -14177,15 +14300,15 @@ read_ack_reg_reg: unisim.vcomponents.FDRE
     );
 read_break_reg_d1_i_1: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0100010101000100"
+      INIT => X"0101010001000100"
     )
         port map (
       I0 => read_break_reg_d1_i_2_n_0,
       I1 => crnt_state(4),
       I2 => read_break_reg_d1_i_3_n_0,
       I3 => read_break_reg_d1,
-      I4 => read_break_reg_d1_i_4_n_0,
-      I5 => \mem_oen_reg[0]_i_2_n_0\,
+      I4 => \mem_oen_reg[0]_i_3_n_0\,
+      I5 => read_break_reg_d1_i_4_n_0,
       O => read_break_reg
     );
 read_break_reg_d1_i_2: unisim.vcomponents.LUT4
@@ -14204,15 +14327,15 @@ read_break_reg_d1_i_3: unisim.vcomponents.LUT4
       INIT => X"0001"
     )
         port map (
-      I0 => \^q\(2),
-      I1 => crnt_state(2),
+      I0 => \^q\(1),
+      I1 => \^q\(2),
       I2 => \^q\(0),
-      I3 => \^q\(1),
+      I3 => \^q\(3),
       O => read_break_reg_d1_i_3_n_0
     );
 read_break_reg_d1_i_4: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"8"
+      INIT => X"7"
     )
         port map (
       I0 => \^q\(1),
@@ -14227,98 +14350,73 @@ read_break_reg_d1_reg: unisim.vcomponents.FDRE
       Q => read_break_reg_d1,
       R => bus2ip_reset
     );
-read_data_en_reg_i_1: unisim.vcomponents.LUT6
+read_data_en_reg_i_2: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"00000400000F0400"
+      INIT => X"FFDFFFFF"
     )
         port map (
-      I0 => read_data_en_reg_reg_1,
-      I1 => read_data_en_reg_reg_0,
-      I2 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2_n_0\,
-      I3 => \^q\(1),
+      I0 => \^q\(1),
+      I1 => crnt_state(4),
+      I2 => \^q\(2),
+      I3 => \^q\(0),
+      I4 => \^q\(3),
+      O => \^fsm_sequential_crnt_state_reg[1]_2\
+    );
+read_data_en_reg_i_3: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FFF7FFFFFFFFFFFF"
+    )
+        port map (
+      I0 => \^q\(2),
+      I1 => \^q\(3),
+      I2 => \^q\(1),
+      I3 => crnt_state(4),
       I4 => \^q\(0),
-      I5 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\,
-      O => \^read_data_en_cmb\
+      I5 => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\,
+      O => \^fsm_sequential_crnt_state_reg[2]_1\
     );
 read_data_en_reg_reg: unisim.vcomponents.FDRE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => \^read_data_en_cmb\,
+      D => read_data_en_cmb,
       Q => read_data_en,
       R => bus2ip_reset
     );
-s_axi_mem_arready_INST_0_i_2: unisim.vcomponents.LUT5
+s_axi_mem_awready_INST_0_i_1: unisim.vcomponents.LUT5
     generic map(
       INIT => X"00000001"
     )
         port map (
       I0 => \^q\(1),
-      I1 => \^q\(0),
-      I2 => crnt_state(2),
-      I3 => \^q\(2),
+      I1 => \^q\(2),
+      I2 => \^q\(3),
+      I3 => \^q\(0),
       I4 => crnt_state(4),
       O => \^fsm_sequential_crnt_state_reg[1]_1\
     );
-s_axi_mem_awready_INST_0_i_1: unisim.vcomponents.LUT5
+s_axi_mem_wready_INST_0_i_4: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"80800080"
+      INIT => X"0000040000000000"
     )
         port map (
-      I0 => \^fsm_sequential_crnt_state_reg[1]_1\,
-      I1 => s_axi_mem_awvalid,
-      I2 => s_axi_mem_wvalid,
-      I3 => s_axi_mem_arvalid,
-      I4 => rw_flag_reg,
-      O => s_axi_mem_awvalid_0
+      I0 => crnt_state(4),
+      I1 => \^q\(1),
+      I2 => read_break_reg_d1_reg_0,
+      I3 => s_axi_mem_wready_INST_0_i_5_n_0,
+      I4 => addr_sm_ps_IDLE_reg_i_5,
+      I5 => \mem_a_int_reg[1]\,
+      O => \FSM_sequential_crnt_state_reg[4]_0\
     );
-s_axi_mem_wready_INST_0_i_1: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"00000000D5DDDDDD"
-    )
-        port map (
-      I0 => \^fsm_sequential_crnt_state_reg[0]_0\,
-      I1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\,
-      I2 => pend_wrreq_reg_1,
-      I3 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
-      I4 => pend_wrreq_reg_0,
-      I5 => \^fsm_sequential_crnt_state_reg[1]_3\,
-      O => \^fsm_sequential_crnt_state_reg[0]_2\
-    );
-s_axi_mem_wready_INST_0_i_2: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"00000004"
-    )
-        port map (
-      I0 => \^q\(0),
-      I1 => crnt_state(2),
-      I2 => \^q\(1),
-      I3 => crnt_state(4),
-      I4 => \^q\(2),
-      O => \^fsm_sequential_crnt_state_reg[0]_0\
-    );
-s_axi_mem_wready_INST_0_i_7: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"0000000000200000"
-    )
-        port map (
-      I0 => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      I1 => addr_sm_ps_IDLE_reg_i_5,
-      I2 => \^q\(1),
-      I3 => crnt_state(4),
-      I4 => s_axi_mem_wready_INST_0_i_8_n_0,
-      I5 => read_break_reg_d1_reg_0,
-      O => \^fsm_sequential_crnt_state_reg[1]_3\
-    );
-s_axi_mem_wready_INST_0_i_8: unisim.vcomponents.LUT3
+s_axi_mem_wready_INST_0_i_5: unisim.vcomponents.LUT3
     generic map(
       INIT => X"04"
     )
         port map (
-      I0 => \^q\(2),
-      I1 => crnt_state(2),
+      I0 => \^q\(3),
+      I1 => \^q\(2),
       I2 => \^q\(0),
-      O => s_axi_mem_wready_INST_0_i_8_n_0
+      O => s_axi_mem_wready_INST_0_i_5_n_0
     );
 transaction_complete_reg_i_1: unisim.vcomponents.LUT6
     generic map(
@@ -14329,33 +14427,33 @@ transaction_complete_reg_i_1: unisim.vcomponents.LUT6
       I1 => p_0_in(1),
       I2 => p_0_in(0),
       I3 => transaction_complete_reg,
-      I4 => \^fsm_sequential_crnt_state_reg[4]_1\,
+      I4 => transaction_complete_reg_i_3_n_0,
       I5 => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\,
       O => transaction_complete
     );
 transaction_complete_reg_i_2: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"00300108"
+      INIT => X"00012420"
     )
         port map (
-      I0 => \^q\(1),
+      I0 => \^q\(3),
       I1 => \^q\(0),
       I2 => \^q\(2),
-      I3 => crnt_state(4),
-      I4 => crnt_state(2),
+      I3 => \^q\(1),
+      I4 => crnt_state(4),
       O => transaction_complete_reg_i_2_n_0
     );
 transaction_complete_reg_i_3: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"55555556"
+      INIT => X"0001FFFE"
     )
         port map (
-      I0 => crnt_state(4),
-      I1 => \^q\(0),
-      I2 => crnt_state(2),
-      I3 => \^q\(1),
-      I4 => \^q\(2),
-      O => \^fsm_sequential_crnt_state_reg[4]_1\
+      I0 => \^q\(3),
+      I1 => \^q\(2),
+      I2 => \^q\(1),
+      I3 => \^q\(0),
+      I4 => crnt_state(4),
+      O => transaction_complete_reg_i_3_n_0
     );
 transaction_complete_reg_reg: unisim.vcomponents.FDRE
      port map (
@@ -14367,15 +14465,15 @@ transaction_complete_reg_reg: unisim.vcomponents.FDRE
     );
 transaction_done_reg_i_1: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0331030100000000"
+      INIT => X"0033000030110000"
     )
         port map (
       I0 => transaction_done_reg_reg_0,
-      I1 => crnt_state(2),
-      I2 => crnt_state(4),
-      I3 => \^q\(2),
-      I4 => read_complete_d_4,
-      I5 => transaction_done_reg_i_3_n_0,
+      I1 => \^q\(2),
+      I2 => read_complete_d_4,
+      I3 => crnt_state(4),
+      I4 => transaction_done_reg_i_3_n_0,
+      I5 => \^q\(3),
       O => transaction_done_cmb
     );
 transaction_done_reg_i_3: unisim.vcomponents.LUT2
@@ -14392,56 +14490,46 @@ transaction_done_reg_reg: unisim.vcomponents.FDRE
       C => s_axi_aclk,
       CE => '1',
       D => transaction_done_cmb,
-      Q => \^transaction_done_i\,
+      Q => transaction_done_i,
       R => bus2ip_reset
+    );
+wlast_reg_i_1: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"BAAAAAAA"
+    )
+        port map (
+      I0 => wlast_reg_i_2_n_0,
+      I1 => crnt_state(4),
+      I2 => s_axi_mem_wlast,
+      I3 => s_axi_mem_wvalid,
+      I4 => wlast_reg_i_3_n_0,
+      O => wlast
     );
 wlast_reg_i_2: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"0000CCCF004488CC"
+      INIT => X"222222202222222A"
     )
         port map (
-      I0 => \^q\(1),
-      I1 => wlast_reg,
-      I2 => wlast_reg_i_4_n_0,
-      I3 => \^q\(2),
-      I4 => crnt_state(4),
-      I5 => crnt_state(2),
+      I0 => wlast_reg,
+      I1 => crnt_state(4),
+      I2 => \^q\(2),
+      I3 => \^q\(1),
+      I4 => \^q\(0),
+      I5 => \^q\(3),
       O => wlast_reg_i_2_n_0
     );
 wlast_reg_i_3: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"00000000CFCCEEEE"
+      INIT => X"005500AA00D50000"
     )
         port map (
-      I0 => wlast_reg_i_5_n_0,
-      I1 => wlast_reg,
-      I2 => wlast_reg_i_4_n_0,
-      I3 => \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2_n_0\,
-      I4 => \^q\(1),
-      I5 => crnt_state(4),
+      I0 => \^q\(0),
+      I1 => bus2ip_wrreq_i,
+      I2 => wlast_reg_reg_0,
+      I3 => \^q\(3),
+      I4 => \^q\(2),
+      I5 => \^q\(1),
       O => wlast_reg_i_3_n_0
-    );
-wlast_reg_i_4: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"7"
-    )
-        port map (
-      I0 => s_axi_mem_wvalid,
-      I1 => s_axi_mem_wlast,
-      O => wlast_reg_i_4_n_0
-    );
-wlast_reg_i_5: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"0080000000000000"
-    )
-        port map (
-      I0 => bus2ip_wrreq_i,
-      I1 => pend_wrreq_reg,
-      I2 => crnt_state(2),
-      I3 => \^q\(2),
-      I4 => s_axi_mem_wvalid,
-      I5 => s_axi_mem_wlast,
-      O => wlast_reg_i_5_n_0
     );
 wlast_reg_reg: unisim.vcomponents.FDRE
      port map (
@@ -14450,13 +14538,6 @@ wlast_reg_reg: unisim.vcomponents.FDRE
       D => wlast,
       Q => wlast_reg,
       R => bus2ip_reset
-    );
-wlast_reg_reg_i_1: unisim.vcomponents.MUXF7
-     port map (
-      I0 => wlast_reg_i_2_n_0,
-      I1 => wlast_reg_i_3_n_0,
-      O => wlast,
-      S => \^q\(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -14477,10 +14558,12 @@ entity meowrouter_axi_emc_0_2_mem_steer is
     read_ack : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 15 downto 0 );
     read_data_en : in STD_LOGIC;
-    mem_dqt_t_d_reg_0 : in STD_LOGIC;
+    mem_WEN_cmb : in STD_LOGIC;
     \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[0]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     SR : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_mem_steer : entity is "mem_steer";
 end meowrouter_axi_emc_0_2_mem_steer;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_mem_steer is
@@ -15755,7 +15838,7 @@ mem_dqt_t_d_reg: unisim.vcomponents.FDSE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => mem_dqt_t_d_reg_0,
+      D => mem_WEN_cmb,
       Q => mem_dqt_t_d,
       S => bus2ip_reset
     );
@@ -15767,7 +15850,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity meowrouter_axi_emc_0_2_addr_counter_mux is
   port (
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
-    cycle_cnt : out STD_LOGIC_VECTOR ( 0 to 0 );
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
     \ADDRESS_STORE_GEN[0].ADDRESS_REG__0\ : out STD_LOGIC;
     \ADDRESS_STORE_GEN[1].ADDRESS_REG__0\ : out STD_LOGIC;
     \ADDRESS_STORE_GEN[2].ADDRESS_REG__0\ : out STD_LOGIC;
@@ -15801,18 +15884,23 @@ entity meowrouter_axi_emc_0_2_addr_counter_mux is
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_0\ : out STD_LOGIC;
     D : out STD_LOGIC_VECTOR ( 0 to 0 );
     \FSM_sequential_crnt_state_reg[3]\ : out STD_LOGIC;
+    bus2ip_wr_req_reg_reg : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
-    pend_wrreq_reg : out STD_LOGIC;
+    \burst_addr_cnt_reg[7]\ : out STD_LOGIC;
+    \burst_addr_cnt_reg[7]_0\ : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ : out STD_LOGIC;
-    pend_wrreq_reg_0 : out STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
-    \BEN_STORE_GEN[0].BEN_REG_0\ : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ : out STD_LOGIC;
+    pend_wrreq_reg : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_2\ : out STD_LOGIC;
+    pend_wrreq_reg_0 : out STD_LOGIC;
+    \BEN_STORE_GEN[0].BEN_REG_0\ : out STD_LOGIC_VECTOR ( 1 downto 0 );
+    \burst_addr_cnt_reg[7]_1\ : out STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
+    read_data_en_cmb : out STD_LOGIC;
+    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\ : out STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ : out STD_LOGIC;
     \BEN_STORE_GEN[2].BEN_REG_0\ : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\ : in STD_LOGIC;
+    Cycle_cnt_en_int : in STD_LOGIC;
     S : in STD_LOGIC;
     \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
@@ -15822,27 +15910,34 @@ entity meowrouter_axi_emc_0_2_addr_counter_mux is
     bus2ip_addr_temp : in STD_LOGIC_VECTOR ( 29 downto 0 );
     bus2ip_ben_fixed : in STD_LOGIC_VECTOR ( 0 to 3 );
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ : in STD_LOGIC;
-    Q : in STD_LOGIC_VECTOR ( 0 to 0 );
-    bus2Mem_RdReq : in STD_LOGIC;
+    Q : in STD_LOGIC_VECTOR ( 2 downto 0 );
     temp_bus2ip_cs : in STD_LOGIC;
+    bus2Mem_RdReq : in STD_LOGIC;
     \DATA_STORE_GEN[0].WRDATA_REG\ : in STD_LOGIC;
-    read_data_en_cmb : in STD_LOGIC;
+    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\ : in STD_LOGIC;
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
     bus2ip_wrreq_i : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\ : in STD_LOGIC;
-    \mem_qwen_reg_reg[1]\ : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state[1]_i_3\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]\ : in STD_LOGIC;
+    read_ack_reg_reg : in STD_LOGIC;
+    read_ack_reg_reg_0 : in STD_LOGIC;
+    read_ack_reg_reg_1 : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]_0\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[2]_1\ : in STD_LOGIC;
+    mem_WEN_cmb : in STD_LOGIC;
+    \s_axi_mem_bresp_reg_reg[1]\ : in STD_LOGIC;
+    \s_axi_mem_bresp_reg_reg[1]_0\ : in STD_LOGIC;
+    \s_axi_mem_bresp_reg_reg[1]_1\ : in STD_LOGIC;
+    \burst_addr_cnt_reg[7]_2\ : in STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_2\ : in STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_3\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_addr_counter_mux : entity is "addr_counter_mux";
 end meowrouter_axi_emc_0_2_addr_counter_mux;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_addr_counter_mux is
   signal \^d\ : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I_n_12\ : STD_LOGIC;
+  signal \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I_n_17\ : STD_LOGIC;
   signal \^datawidth_match_gen.addr_cnt_i_reg[0]_0\ : STD_LOGIC;
   signal bus2ip_ben_int : STD_LOGIC_VECTOR ( 0 to 3 );
   attribute BOX_TYPE : string;
@@ -15881,9 +15976,9 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_addr_counter_mux is
   attribute BOX_TYPE of \BEN_STORE_GEN[2].BEN_REG\ : label is "PRIMITIVE";
   attribute BOX_TYPE of \BEN_STORE_GEN[3].BEN_REG\ : label is "PRIMITIVE";
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \mem_ben_reg[0]_i_1\ : label is "soft_lutpair68";
+  attribute SOFT_HLUTNM of \mem_ben_reg[0]_i_1\ : label is "soft_lutpair66";
   attribute SOFT_HLUTNM of \mem_ben_reg[1]_i_1\ : label is "soft_lutpair67";
-  attribute SOFT_HLUTNM of \mem_qwen_reg[0]_i_1\ : label is "soft_lutpair68";
+  attribute SOFT_HLUTNM of \mem_qwen_reg[0]_i_1\ : label is "soft_lutpair66";
   attribute SOFT_HLUTNM of \mem_qwen_reg[1]_i_1\ : label is "soft_lutpair67";
 begin
   D(0) <= \^d\(0);
@@ -16367,46 +16462,56 @@ begin
 \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I\: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized0\
      port map (
       CE => CE,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\,
+      Cycle_cnt_en_int => Cycle_cnt_en_int,
       \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\,
       \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_0\ => \^d\(0),
       \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_2\,
       \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_2\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_3\,
       \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_3\ => \^datawidth_match_gen.addr_cnt_i_reg[0]_0\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I_n_12\,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I_n_17\,
       \DATA_STORE_GEN[0].WRDATA_REG\ => \DATA_STORE_GEN[0].WRDATA_REG\,
-      \FSM_sequential_crnt_state[1]_i_3\ => \FSM_sequential_crnt_state[1]_i_3\,
+      \FSM_sequential_crnt_state_reg[2]\ => \FSM_sequential_crnt_state_reg[2]\,
+      \FSM_sequential_crnt_state_reg[2]_0\ => \FSM_sequential_crnt_state_reg[2]_0\,
+      \FSM_sequential_crnt_state_reg[2]_1\ => \FSM_sequential_crnt_state_reg[2]_1\,
       \FSM_sequential_crnt_state_reg[3]\ => \FSM_sequential_crnt_state_reg[3]\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => cycle_cnt(0),
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\,
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\,
       \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\,
       \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\,
       \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_2\ => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\,
       \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\ => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_2\,
       \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_4\ => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\,
-      Q(0) => Q(0),
+      Q(2 downto 0) => Q(2 downto 0),
       S => S,
+      \burst_addr_cnt_reg[7]\ => \burst_addr_cnt_reg[7]\,
+      \burst_addr_cnt_reg[7]_0\ => \burst_addr_cnt_reg[7]_0\,
+      \burst_addr_cnt_reg[7]_1\ => \burst_addr_cnt_reg[7]_1\,
+      \burst_addr_cnt_reg[7]_2\ => \burst_addr_cnt_reg[7]_2\,
       bus2Mem_RdReq => bus2Mem_RdReq,
       bus2ip_reset => bus2ip_reset,
+      bus2ip_wr_req_reg_reg => bus2ip_wr_req_reg_reg,
       bus2ip_wrreq_i => bus2ip_wrreq_i,
       pend_wrreq_reg => pend_wrreq_reg,
       pend_wrreq_reg_0 => pend_wrreq_reg_0,
+      read_ack_reg_reg => read_ack_reg_reg,
+      read_ack_reg_reg_0 => read_ack_reg_reg_0,
+      read_ack_reg_reg_1 => read_ack_reg_reg_1,
       read_data_en_cmb => read_data_en_cmb,
       s_axi_aclk => s_axi_aclk,
+      \s_axi_mem_bresp_reg_reg[1]\ => \s_axi_mem_bresp_reg_reg[1]\,
+      \s_axi_mem_bresp_reg_reg[1]_0\ => \s_axi_mem_bresp_reg_reg[1]_0\,
+      \s_axi_mem_bresp_reg_reg[1]_1\ => \s_axi_mem_bresp_reg_reg[1]_1\,
       temp_bus2ip_cs => temp_bus2ip_cs
     );
 \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]\: unisim.vcomponents.FDRE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I_n_12\,
+      D => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I_n_17\,
       Q => \^datawidth_match_gen.addr_cnt_i_reg[0]_0\,
       R => bus2ip_reset
     );
@@ -16445,7 +16550,7 @@ begin
       INIT => X"FAFBFFFB"
     )
         port map (
-      I0 => \mem_qwen_reg_reg[1]\,
+      I0 => mem_WEN_cmb,
       I1 => bus2ip_ben_int(0),
       I2 => \^datawidth_match_gen.addr_cnt_i_reg[0]_0\,
       I3 => \^d\(0),
@@ -16457,7 +16562,7 @@ begin
       INIT => X"FAFBFFFB"
     )
         port map (
-      I0 => \mem_qwen_reg_reg[1]\,
+      I0 => mem_WEN_cmb,
       I1 => bus2ip_ben_int(1),
       I2 => \^datawidth_match_gen.addr_cnt_i_reg[0]_0\,
       I3 => \^d\(0),
@@ -16480,20 +16585,17 @@ entity meowrouter_axi_emc_0_2_counters is
     \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1\ : out STD_LOGIC;
     bus2ip_wr_req_reg_reg : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
-    \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ : out STD_LOGIC;
     \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[1]\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\ : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ : out STD_LOGIC;
     \FSM_sequential_crnt_state_reg[3]\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[3]_0\ : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\ : out STD_LOGIC;
-    \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\ : out STD_LOGIC;
+    \PERBIT_GEN[11].FF_RST1_GEN.FDSE_i1\ : out STD_LOGIC;
     twr_cnt_en : in STD_LOGIC;
     \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
     \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
@@ -16511,16 +16613,16 @@ entity meowrouter_axi_emc_0_2_counters is
     CE_5 : in STD_LOGIC;
     trd_cnt_en : in STD_LOGIC;
     \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\ : in STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\ : in STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\ : in STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\ : in STD_LOGIC;
-    CE_10 : in STD_LOGIC;
-    tpacc_cnt_en : in STD_LOGIC;
-    \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_1\ : in STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\ : in STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\ : in STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\ : in STD_LOGIC;
-    CE_14 : in STD_LOGIC;
+    \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_7\ : in STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_8\ : in STD_LOGIC;
+    CE_9 : in STD_LOGIC;
+    \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
+    \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\ : in STD_LOGIC;
+    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_10\ : in STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_11\ : in STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_12\ : in STD_LOGIC;
+    CE_13 : in STD_LOGIC;
     twr_rec_cnt_en_int : in STD_LOGIC;
     \PERBIT_GEN[13].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
     \PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
@@ -16533,54 +16635,43 @@ entity meowrouter_axi_emc_0_2_counters is
     \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
     \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
     \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
-    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\ : in STD_LOGIC;
-    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\ : in STD_LOGIC;
-    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\ : in STD_LOGIC;
-    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\ : in STD_LOGIC;
+    \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_14\ : in STD_LOGIC;
+    \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_15\ : in STD_LOGIC;
+    \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_16\ : in STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_17\ : in STD_LOGIC;
+    CE_18 : in STD_LOGIC;
     CE_19 : in STD_LOGIC;
-    CE_20 : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ : in STD_LOGIC;
     \burst_addr_cnt[7]_i_3\ : in STD_LOGIC;
-    rdce_out_i : in STD_LOGIC;
     \burst_addr_cnt[7]_i_3_0\ : in STD_LOGIC;
+    rdce_out_i : in STD_LOGIC;
+    \burst_addr_cnt[7]_i_3_1\ : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\ : in STD_LOGIC;
     bus2ip_wrreq_i : in STD_LOGIC;
-    transaction_done_reg_reg : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[4]\ : in STD_LOGIC;
+    \mem_a_int_reg[1]\ : in STD_LOGIC;
     temp_bus2ip_cs : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_0\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_1\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_2\ : in STD_LOGIC;
     bus2Mem_RdReq : in STD_LOGIC;
     \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_counters : entity is "counters";
 end meowrouter_axi_emc_0_2_counters;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_counters is
-  signal \^perbit_gen[0].ff_rst1_gen.fdse_i1_3\ : STD_LOGIC;
-  signal \^perbit_gen[1].ff_rst0_gen.fdre_i1\ : STD_LOGIC;
   signal \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
   signal \^perbit_gen[2].ff_rst1_gen.fdse_i1\ : STD_LOGIC;
   signal \^bus2ip_wr_req_reg_reg\ : STD_LOGIC;
 begin
-  \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\ <= \^perbit_gen[0].ff_rst1_gen.fdse_i1_3\;
-  \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1\;
   \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\;
   \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1\ <= \^perbit_gen[2].ff_rst1_gen.fdse_i1\;
   bus2ip_wr_req_reg_reg <= \^bus2ip_wr_req_reg_reg\;
 THZCNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2\
      port map (
-      CE_20 => CE_20,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ => \^perbit_gen[2].ff_rst1_gen.fdse_i1\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3_0\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\,
-      \FSM_sequential_crnt_state_reg[0]\ => \FSM_sequential_crnt_state_reg[0]_0\,
-      \FSM_sequential_crnt_state_reg[0]_0\ => \FSM_sequential_crnt_state_reg[0]_1\,
-      \FSM_sequential_crnt_state_reg[0]_1\ => \FSM_sequential_crnt_state_reg[0]_2\,
-      \FSM_sequential_crnt_state_reg[3]\ => \FSM_sequential_crnt_state_reg[3]_0\,
+      CE_19 => CE_19,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_2\ => \^perbit_gen[2].ff_rst1_gen.fdse_i1\,
+      \FSM_sequential_crnt_state_reg[3]\ => \FSM_sequential_crnt_state_reg[3]\,
       \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]\,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => transaction_done_reg_reg,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1\,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\,
       Q(0) => Q(2),
       \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
       \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\ => \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\,
@@ -16588,62 +16679,60 @@ THZCNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2\
       bus2ip_reset => bus2ip_reset,
       bus2ip_wr_req_reg_reg => \^bus2ip_wr_req_reg_reg\,
       bus2ip_wrreq_i => bus2ip_wrreq_i,
+      \mem_a_int_reg[1]\ => \mem_a_int_reg[1]\,
       s_axi_aclk => s_axi_aclk,
       temp_bus2ip_cs => temp_bus2ip_cs
     );
 TLZCNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_0\
      port map (
       CE_5 => CE_5,
-      \FSM_sequential_crnt_state[3]_i_4\ => \^bus2ip_wr_req_reg_reg\,
-      \FSM_sequential_crnt_state_reg[3]\ => \FSM_sequential_crnt_state_reg[3]\,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\,
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\,
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\,
       \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      Q(0) => Q(2),
       bus2Mem_RdReq => bus2Mem_RdReq,
       bus2ip_reset => bus2ip_reset,
-      bus2ip_wrreq_i => bus2ip_wrreq_i,
       s_axi_aclk => s_axi_aclk,
       temp_bus2ip_cs => temp_bus2ip_cs,
-      transaction_done_reg_reg => \^perbit_gen[1].ff_rst0_gen.fdre_i1\,
-      transaction_done_reg_reg_0 => transaction_done_reg_reg
+      transaction_done_reg_reg => \^bus2ip_wr_req_reg_reg\
     );
 TPACCCNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1\
      port map (
-      CE_14 => CE_14,
-      \FSM_sequential_crnt_state_reg[0]\ => \FSM_sequential_crnt_state_reg[0]\,
-      \FSM_sequential_crnt_state_reg[4]\ => \FSM_sequential_crnt_state_reg[4]\,
+      CE_13 => CE_13,
+      \FSM_sequential_crnt_state_reg[4]\ => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\,
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\(0) => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\(3),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_12\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_12\,
       \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\(2),
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\ => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_11\ => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_11\,
       \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\(1),
       \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_1\ => \^perbit_gen[2].ff_rst1_gen.fdse_i1\,
-      \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_2\ => \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_1\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\ => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\,
+      \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_2\ => \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\,
+      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_10\ => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_10\,
       \PERBIT_GEN[3].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\(0),
-      Q(2 downto 0) => Q(2 downto 0),
-      \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\ => \^perbit_gen[0].ff_rst1_gen.fdse_i1_3\,
-      \burst_addr_cnt[7]_i_3\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\,
-      \burst_addr_cnt[7]_i_3_0\ => \burst_addr_cnt[7]_i_3\,
-      \burst_addr_cnt[7]_i_3_1\ => \burst_addr_cnt[7]_i_3_0\,
-      bus2Mem_RdReq => bus2Mem_RdReq,
+      \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1\,
+      Q(0) => Q(2),
+      \burst_addr_cnt[7]_i_3\ => \burst_addr_cnt[7]_i_3\,
+      \burst_addr_cnt[7]_i_3_0\ => \burst_addr_cnt[7]_i_3_0\,
+      \burst_addr_cnt[7]_i_3_1\ => \burst_addr_cnt[7]_i_3_1\,
       bus2ip_reset => bus2ip_reset,
       pend_rdreq_reg => pend_rdreq_reg,
       rdce_out_i => rdce_out_i,
-      s_axi_aclk => s_axi_aclk,
-      tpacc_cnt_en => tpacc_cnt_en
+      s_axi_aclk => s_axi_aclk
     );
 TRDCNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_1\
      port map (
-      CE_10 => CE_10,
+      CE_9 => CE_9,
+      \FSM_sequential_crnt_state_reg[1]\ => \FSM_sequential_crnt_state_reg[1]\,
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\(3 downto 0) => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\(3 downto 0),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ => \^perbit_gen[0].ff_rst1_gen.fdse_i1_3\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\ => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\ => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\,
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_8\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_8\,
+      \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_7\ => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_7\,
       \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\ => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\,
+      Q(1 downto 0) => Q(1 downto 0),
+      \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\ => \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\,
+      \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\ => \^perbit_gen[2].ff_rst1_gen.fdse_i1\,
+      bus2Mem_RdReq => bus2Mem_RdReq,
       bus2ip_reset => bus2ip_reset,
       s_axi_aclk => s_axi_aclk,
       trd_cnt_en => trd_cnt_en
@@ -16651,16 +16740,11 @@ TRDCNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_1\
 TWPHCNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized2_2\
      port map (
       CE_4 => CE_4,
-      \FSM_sequential_crnt_state[3]_i_5\ => \FSM_sequential_crnt_state_reg[4]\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\(0) => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(3),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\(3 downto 0) => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(3 downto 0),
       \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
       \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_3\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_3\,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(2),
       \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_2\ => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_2\,
-      \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(1),
-      \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_1\ => \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1\,
       \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_1\ => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_1\,
-      \PERBIT_GEN[3].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(0),
       \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_0\ => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_0\,
       bus2ip_reset => bus2ip_reset,
       s_axi_aclk => s_axi_aclk,
@@ -16681,18 +16765,18 @@ TWRCNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized1_3\
     );
 T_WRREC_CNT_I: entity work.\meowrouter_axi_emc_0_2_ld_arith_reg__parameterized3\
      port map (
-      CE_19 => CE_19,
+      CE_18 => CE_18,
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\(14 downto 0) => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(14 downto 0),
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_17\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_17\,
       \PERBIT_GEN[10].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[10].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[11].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[11].FF_RST1_GEN.FDSE_i1\,
       \PERBIT_GEN[11].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[11].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[12].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[12].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[13].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[13].FF_RST1_GEN.FDSE_i1\,
       \PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\ => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\,
-      \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\ => \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\ => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\,
-      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\ => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_16\ => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_16\,
+      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_15\ => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_15\,
+      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_14\ => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_14\,
       \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\,
@@ -16715,8 +16799,7 @@ entity meowrouter_axi_emc_0_2_ipic_if is
     pend_rdreq_reg_0 : out STD_LOGIC;
     pend_wrreq_reg_0 : out STD_LOGIC;
     pend_wrreq_reg_1 : out STD_LOGIC;
-    pend_wrreq_reg_2 : out STD_LOGIC;
-    \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
+    \PERBIT_GEN[5].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
     \IP2Bus_Data_reg[0]_0\ : out STD_LOGIC_VECTOR ( 31 downto 0 );
     ip2bus_addrack : in STD_LOGIC;
     S : in STD_LOGIC;
@@ -16732,16 +16815,17 @@ entity meowrouter_axi_emc_0_2_ipic_if is
     s_axi_aclk : in STD_LOGIC;
     bus2ip_reset : in STD_LOGIC;
     IP2Bus_RdAck0 : in STD_LOGIC;
-    pend_wrreq_reg_3 : in STD_LOGIC;
-    bus2ip_wrreq_i : in STD_LOGIC;
-    \FSM_sequential_crnt_state[1]_i_10\ : in STD_LOGIC;
+    pend_wrreq_reg_2 : in STD_LOGIC;
     temp_bus2ip_cs : in STD_LOGIC;
     transaction_done_i : in STD_LOGIC;
     pend_rdreq_reg_1 : in STD_LOGIC;
+    bus2ip_wrreq_i : in STD_LOGIC;
     bus2ip_burst : in STD_LOGIC;
     pend_rdreq_reg_2 : in STD_LOGIC;
     D : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_ipic_if : entity is "ipic_if";
 end meowrouter_axi_emc_0_2_ipic_if;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_ipic_if is
@@ -16749,9 +16833,6 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_ipic_if is
   signal \^pend_rdreq_reg_0\ : STD_LOGIC;
   signal \^pend_wrreq_reg_0\ : STD_LOGIC;
   signal set_pend_rdreq : STD_LOGIC;
-  attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[0]_i_8\ : label is "soft_lutpair69";
-  attribute SOFT_HLUTNM of \FSM_sequential_crnt_state[1]_i_11\ : label is "soft_lutpair69";
 begin
   pend_rdreq_reg_0 <= \^pend_rdreq_reg_0\;
   pend_wrreq_reg_0 <= \^pend_wrreq_reg_0\;
@@ -16760,10 +16841,10 @@ BURST_CNT: entity work.meowrouter_axi_emc_0_2_ld_arith_reg
       CE => CE,
       \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1\,
       \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[5].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[5].FF_RST0_GEN.FDRE_i1\,
       \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\,
       S => S,
@@ -16777,26 +16858,6 @@ BURST_CNT: entity work.meowrouter_axi_emc_0_2_ld_arith_reg
       s_axi_aclk => s_axi_aclk,
       set_pend_rdreq => set_pend_rdreq,
       temp_bus2ip_cs => temp_bus2ip_cs
-    );
-\FSM_sequential_crnt_state[0]_i_8\: unisim.vcomponents.LUT2
-    generic map(
-      INIT => X"8"
-    )
-        port map (
-      I0 => \^pend_wrreq_reg_0\,
-      I1 => bus2ip_wrreq_i,
-      O => pend_wrreq_reg_2
-    );
-\FSM_sequential_crnt_state[1]_i_11\: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"8000"
-    )
-        port map (
-      I0 => \^pend_wrreq_reg_0\,
-      I1 => bus2ip_wrreq_i,
-      I2 => \FSM_sequential_crnt_state[1]_i_10\,
-      I3 => temp_bus2ip_cs,
-      O => pend_wrreq_reg_1
     );
 \IP2Bus_Data_reg[0]\: unisim.vcomponents.FDRE
      port map (
@@ -17062,6 +17123,15 @@ IP2Bus_RdAck_reg: unisim.vcomponents.FDRE
       Q => ip2bus_rdack,
       R => bus2ip_reset
     );
+\PERBIT_GEN[15].FF_RST1_GEN.FDSE_i1_i_7\: unisim.vcomponents.LUT2
+    generic map(
+      INIT => X"8"
+    )
+        port map (
+      I0 => \^pend_wrreq_reg_0\,
+      I1 => bus2ip_wrreq_i,
+      O => pend_wrreq_reg_1
+    );
 pend_rdreq_i_3: unisim.vcomponents.LUT4
     generic map(
       INIT => X"0040"
@@ -17085,7 +17155,7 @@ pend_wrreq_reg: unisim.vcomponents.FDRE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => pend_wrreq_reg_3,
+      D => pend_wrreq_reg_2,
       Q => \^pend_wrreq_reg_0\,
       R => bus2ip_reset
     );
@@ -17126,9 +17196,9 @@ entity meowrouter_axi_emc_0_2_srl_fifo_rbu_f is
     \burst_addr_cnt_reg[7]_1\ : in STD_LOGIC;
     \burst_addr_cnt_reg[7]_2\ : in STD_LOGIC;
     \burst_addr_cnt_reg[7]_3\ : in STD_LOGIC;
-    \FSM_sequential_emc_addr_ps_reg[0]_4\ : in STD_LOGIC;
     \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ : in STD_LOGIC;
     \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    \FSM_sequential_emc_addr_ps_reg[0]_4\ : in STD_LOGIC;
     rdce_out_i : in STD_LOGIC;
     \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_1\ : in STD_LOGIC;
     \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_2\ : in STD_LOGIC;
@@ -17138,6 +17208,8 @@ entity meowrouter_axi_emc_0_2_srl_fifo_rbu_f is
     rd_fifo_wr_en : in STD_LOGIC;
     \in\ : in STD_LOGIC_VECTOR ( 0 to 32 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_srl_fifo_rbu_f : entity is "srl_fifo_rbu_f";
 end meowrouter_axi_emc_0_2_srl_fifo_rbu_f;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_srl_fifo_rbu_f is
@@ -17169,7 +17241,7 @@ begin
   bus2ip_wr_req_reg_reg <= \^bus2ip_wr_req_reg_reg\;
 \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[11]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"55105500"
+      INIT => X"55015500"
     )
         port map (
       I0 => \^fifo_full_reg_0\,
@@ -17181,7 +17253,7 @@ begin
     );
 \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i[2]_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"00000000FFFF2202"
+      INIT => X"00000000FFFF1101"
     )
         port map (
       I0 => \burst_addr_cnt_reg[7]_0\,
@@ -17290,20 +17362,20 @@ FIFO_Full_reg: unisim.vcomponents.FDRE
     );
 \FSM_sequential_emc_addr_ps[0]_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFFFFFFFFF4F44"
+      INIT => X"FFFFFFFF75FF7575"
     )
         port map (
-      I0 => \burst_addr_cnt_reg[7]_2\,
-      I1 => \burst_addr_cnt_reg[7]_1\,
-      I2 => \burst_addr_cnt_reg[7]_3\,
-      I3 => \^mem_decode_gen[0].rdce_out_i_reg[0]\,
-      I4 => \burst_addr_cnt_reg[7]_0\,
+      I0 => \burst_addr_cnt_reg[7]_0\,
+      I1 => \burst_addr_cnt_reg[7]_2\,
+      I2 => \burst_addr_cnt_reg[7]_1\,
+      I3 => \burst_addr_cnt_reg[7]_3\,
+      I4 => \^mem_decode_gen[0].rdce_out_i_reg[0]\,
       I5 => \FSM_sequential_emc_addr_ps_reg[0]_4\,
       O => \^bus2ip_wr_req_reg_reg\
     );
 \burst_addr_cnt[7]_i_1\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"EFAAEFEFAAAAAAAA"
+      INIT => X"AAAAAAAAEFAAEFEF"
     )
         port map (
       I0 => enable_cs_cmb,
@@ -17314,7 +17386,7 @@ FIFO_Full_reg: unisim.vcomponents.FDRE
       I5 => \burst_addr_cnt_reg[7]_0\,
       O => bus2ip_wr_req_reg_reg_0(0)
     );
-\burst_addr_cnt[7]_i_4\: unisim.vcomponents.LUT2
+\burst_addr_cnt[7]_i_5\: unisim.vcomponents.LUT2
     generic map(
       INIT => X"B"
     )
@@ -17331,8 +17403,8 @@ use UNISIM.VCOMPONENTS.ALL;
 entity meowrouter_axi_emc_0_2_EMC is
   port (
     ip2bus_rdack : out STD_LOGIC;
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC_VECTOR ( 0 to 0 );
-    Cycle_cnt_en_int : out STD_LOGIC;
+    transaction_done_i : out STD_LOGIC;
+    cycle_cnt : out STD_LOGIC_VECTOR ( 0 to 1 );
     \ADDRESS_STORE_GEN[0].ADDRESS_REG__0\ : out STD_LOGIC;
     \ADDRESS_STORE_GEN[1].ADDRESS_REG__0\ : out STD_LOGIC;
     \ADDRESS_STORE_GEN[2].ADDRESS_REG__0\ : out STD_LOGIC;
@@ -17372,21 +17444,27 @@ entity meowrouter_axi_emc_0_2_EMC is
     mem_rnw : out STD_LOGIC;
     pend_rdreq : out STD_LOGIC;
     pend_wrreq : out STD_LOGIC;
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
-    pend_wrreq_reg : out STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]\ : out STD_LOGIC;
-    s_axi_mem_awvalid_0 : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[1]\ : out STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ : out STD_LOGIC;
-    pend_wrreq_reg_0 : out STD_LOGIC;
-    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ : out STD_LOGIC;
+    Q : out STD_LOGIC_VECTOR ( 0 to 0 );
     bus2ip_wr_req_reg_reg : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_0\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_1\ : out STD_LOGIC;
+    \burst_addr_cnt_reg[7]\ : out STD_LOGIC;
+    \burst_addr_cnt_reg[7]_0\ : out STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[1]\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[3]\ : out STD_LOGIC;
+    s_axi_mem_awvalid_0 : out STD_LOGIC;
     \FSM_sequential_crnt_state_reg[1]_0\ : out STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[1]_1\ : out STD_LOGIC;
+    pend_wrreq_reg : out STD_LOGIC;
+    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ : out STD_LOGIC;
     \FSM_sequential_crnt_state_reg[2]\ : out STD_LOGIC;
+    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[4]\ : out STD_LOGIC;
+    bus2ip_wr_req_reg_reg_0 : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[0]\ : out STD_LOGIC;
+    \burst_addr_cnt_reg[7]_1\ : out STD_LOGIC;
+    \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ : out STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[4]_0\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ : out STD_LOGIC;
     \IP2Bus_Data_reg[0]\ : out STD_LOGIC_VECTOR ( 31 downto 0 );
     mem_dq_o : out STD_LOGIC_VECTOR ( 15 downto 0 );
     mem_dq_t : out STD_LOGIC_VECTOR ( 15 downto 0 );
@@ -17397,52 +17475,56 @@ entity meowrouter_axi_emc_0_2_EMC is
     bus2ip_reset : in STD_LOGIC;
     IP2Bus_RdAck0 : in STD_LOGIC;
     bus2Mem_RdReq : in STD_LOGIC;
+    Cycle_cnt_en_int : in STD_LOGIC;
     S : in STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : in STD_LOGIC;
     bus2ip_addr_temp : in STD_LOGIC_VECTOR ( 29 downto 0 );
     bus2ip_ben_fixed : in STD_LOGIC_VECTOR ( 0 to 3 );
     \DATA_STORE_GEN[24].WRDATA_REG\ : in STD_LOGIC_VECTOR ( 31 downto 0 );
     readreq_th_reset : in STD_LOGIC;
     temp_bus2ip_cs : in STD_LOGIC;
+    pend_wrreq_reg_0 : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[0]_0\ : in STD_LOGIC;
+    \DATA_STORE_GEN[0].WRDATA_REG\ : in STD_LOGIC;
     read_break_reg_d1_reg : in STD_LOGIC;
     rdce_out_i : in STD_LOGIC;
     \burst_addr_cnt[7]_i_3\ : in STD_LOGIC;
-    pend_wrreq_reg_1 : in STD_LOGIC;
     bus2ip_wrreq_i : in STD_LOGIC;
     s_axi_mem_awvalid : in STD_LOGIC;
     s_axi_mem_wvalid : in STD_LOGIC;
     s_axi_mem_arvalid : in STD_LOGIC;
     rw_flag_reg : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ : in STD_LOGIC;
-    Bus2IP_RdReq_emc : in STD_LOGIC;
-    Q : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
-    \burst_addr_cnt[7]_i_3_0\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[2]_0\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[0]_2\ : in STD_LOGIC;
-    \FSM_sequential_crnt_state_reg[3]\ : in STD_LOGIC;
-    pend_wrreq_reg_2 : in STD_LOGIC;
-    \FSM_sequential_emc_addr_ps_reg[2]\ : in STD_LOGIC;
-    \FSM_sequential_emc_addr_ps_reg[2]_0\ : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \FSM_sequential_crnt_state_reg[1]_1\ : in STD_LOGIC;
     s_axi_mem_wlast : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ : in STD_LOGIC;
+    \s_axi_mem_bresp_reg_reg[1]\ : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    \FSM_sequential_crnt_state_reg[3]_0\ : in STD_LOGIC;
+    \FSM_sequential_crnt_state_reg[0]_1\ : in STD_LOGIC;
+    pend_rdreq_reg : in STD_LOGIC;
+    \burst_addr_cnt[7]_i_3_0\ : in STD_LOGIC;
+    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
+    Bus2IP_RdReq_emc : in STD_LOGIC;
     bus2ip_burst : in STD_LOGIC;
-    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\ : in STD_LOGIC;
+    \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ : in STD_LOGIC;
     mem_dq_i : in STD_LOGIC_VECTOR ( 15 downto 0 );
     rdclk : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_EMC : entity is "EMC";
 end meowrouter_axi_emc_0_2_EMC;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_EMC is
   signal ADDR_COUNTER_MUX_I_n_32 : STD_LOGIC;
   signal ADDR_COUNTER_MUX_I_n_34 : STD_LOGIC;
-  signal ADDR_COUNTER_MUX_I_n_37 : STD_LOGIC;
-  signal ADDR_COUNTER_MUX_I_n_38 : STD_LOGIC;
+  signal ADDR_COUNTER_MUX_I_n_36 : STD_LOGIC;
   signal ADDR_COUNTER_MUX_I_n_39 : STD_LOGIC;
+  signal ADDR_COUNTER_MUX_I_n_40 : STD_LOGIC;
+  signal ADDR_COUNTER_MUX_I_n_41 : STD_LOGIC;
   signal ADDR_COUNTER_MUX_I_n_42 : STD_LOGIC;
-  signal ADDR_COUNTER_MUX_I_n_43 : STD_LOGIC;
-  signal ADDR_COUNTER_MUX_I_n_44 : STD_LOGIC;
-  signal ADDR_COUNTER_MUX_I_n_45 : STD_LOGIC;
+  signal ADDR_COUNTER_MUX_I_n_46 : STD_LOGIC;
+  signal ADDR_COUNTER_MUX_I_n_48 : STD_LOGIC;
+  signal ADDR_COUNTER_MUX_I_n_49 : STD_LOGIC;
   signal \BURST_CNT/CE\ : STD_LOGIC;
   signal \BURST_CNT/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \BURST_CNT/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
@@ -17457,41 +17539,37 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_EMC is
   signal COUNTERS_I_n_33 : STD_LOGIC;
   signal COUNTERS_I_n_34 : STD_LOGIC;
   signal COUNTERS_I_n_35 : STD_LOGIC;
-  signal COUNTERS_I_n_36 : STD_LOGIC;
   signal COUNTERS_I_n_37 : STD_LOGIC;
+  signal COUNTERS_I_n_38 : STD_LOGIC;
   signal COUNTERS_I_n_39 : STD_LOGIC;
   signal COUNTERS_I_n_40 : STD_LOGIC;
-  signal COUNTERS_I_n_41 : STD_LOGIC;
   signal COUNTERS_I_n_42 : STD_LOGIC;
-  signal COUNTERS_I_n_43 : STD_LOGIC;
   signal COUNTERS_I_n_44 : STD_LOGIC;
   signal COUNTERS_I_n_45 : STD_LOGIC;
-  signal COUNTERS_I_n_47 : STD_LOGIC;
-  signal COUNTERS_I_n_48 : STD_LOGIC;
-  signal \^cycle_cnt_en_int\ : STD_LOGIC;
   signal \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/CE\ : STD_LOGIC;
-  signal \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \^datawidth_match_gen.addr_cnt_i_reg[1]\ : STD_LOGIC;
   signal \^fsm_sequential_crnt_state_reg[0]\ : STD_LOGIC;
-  signal \^fsm_sequential_crnt_state_reg[0]_0\ : STD_LOGIC;
   signal \^fsm_sequential_crnt_state_reg[1]\ : STD_LOGIC;
-  signal IPIC_IF_I_n_11 : STD_LOGIC;
-  signal IPIC_IF_I_n_13 : STD_LOGIC;
+  signal \^fsm_sequential_crnt_state_reg[1]_0\ : STD_LOGIC;
+  signal \^fsm_sequential_crnt_state_reg[3]\ : STD_LOGIC;
+  signal \^fsm_sequential_crnt_state_reg[4]\ : STD_LOGIC;
+  signal IPIC_IF_I_n_12 : STD_LOGIC;
   signal MEM_STATE_MACHINE_I_n_16 : STD_LOGIC;
-  signal MEM_STATE_MACHINE_I_n_17 : STD_LOGIC;
-  signal MEM_STATE_MACHINE_I_n_27 : STD_LOGIC;
-  signal MEM_STATE_MACHINE_I_n_28 : STD_LOGIC;
-  signal MEM_STATE_MACHINE_I_n_4 : STD_LOGIC;
-  signal MEM_STATE_MACHINE_I_n_51 : STD_LOGIC;
+  signal MEM_STATE_MACHINE_I_n_20 : STD_LOGIC;
+  signal MEM_STATE_MACHINE_I_n_48 : STD_LOGIC;
+  signal MEM_STATE_MACHINE_I_n_49 : STD_LOGIC;
+  signal MEM_STATE_MACHINE_I_n_50 : STD_LOGIC;
   signal MEM_STATE_MACHINE_I_n_8 : STD_LOGIC;
+  signal MEM_STATE_MACHINE_I_n_80 : STD_LOGIC;
+  signal MEM_STATE_MACHINE_I_n_81 : STD_LOGIC;
+  signal MEM_STATE_MACHINE_I_n_82 : STD_LOGIC;
   signal MEM_STATE_MACHINE_I_n_83 : STD_LOGIC;
-  signal MEM_STATE_MACHINE_I_n_84 : STD_LOGIC;
-  signal MEM_STATE_MACHINE_I_n_85 : STD_LOGIC;
-  signal MEM_STATE_MACHINE_I_n_86 : STD_LOGIC;
   signal Mem_DQ_I_v : STD_LOGIC_VECTOR ( 0 to 15 );
   signal \^perbit_gen[0].ff_rst0_gen.fdre_i1\ : STD_LOGIC;
+  signal \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
+  signal \^perbit_gen[1].ff_rst0_gen.fdre_i1\ : STD_LOGIC;
   signal \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\ : STD_LOGIC;
-  signal \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\ : STD_LOGIC;
+  signal \^q\ : STD_LOGIC_VECTOR ( 0 to 0 );
   signal \THZCNT_I/CE\ : STD_LOGIC;
   signal \TLZCNT_I/CE\ : STD_LOGIC;
   signal \TPACCCNT_I/CE\ : STD_LOGIC;
@@ -17501,7 +17579,6 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_EMC is
   signal \TRDCNT_I/CE\ : STD_LOGIC;
   signal \TRDCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \TRDCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
-  signal \TRDCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \TRDCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \TWPHCNT_I/CE\ : STD_LOGIC;
   signal \TWPHCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
@@ -17528,15 +17605,18 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_EMC is
   signal \T_WRREC_CNT_I/PERBIT_GEN[7].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \T_WRREC_CNT_I/PERBIT_GEN[8].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \T_WRREC_CNT_I/PERBIT_GEN[9].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
+  signal \^burst_addr_cnt_reg[7]_1\ : STD_LOGIC;
   signal burst_cnt_i : STD_LOGIC_VECTOR ( 0 to 7 );
-  signal crnt_state : STD_LOGIC_VECTOR ( 3 downto 0 );
-  signal cycle_cnt : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^bus2ip_wr_req_reg_reg\ : STD_LOGIC;
+  signal crnt_state : STD_LOGIC_VECTOR ( 2 downto 0 );
+  signal \^cycle_cnt\ : STD_LOGIC_VECTOR ( 0 to 1 );
   signal data_strobe_c : STD_LOGIC;
   signal ip2bus_addrack : STD_LOGIC;
   signal mem2Bus_Data : STD_LOGIC_VECTOR ( 0 to 31 );
   signal mem_CEN_cmb : STD_LOGIC;
   signal mem_OEN_cmb : STD_LOGIC;
   signal mem_RNW_cmb : STD_LOGIC;
+  signal mem_WEN_cmb : STD_LOGIC;
   signal mem_ben_int : STD_LOGIC_VECTOR ( 0 to 1 );
   signal mem_ce_int : STD_LOGIC;
   signal mem_dq_o_int : STD_LOGIC_VECTOR ( 0 to 15 );
@@ -17547,13 +17627,11 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_EMC is
   signal \^pend_rdreq\ : STD_LOGIC;
   signal \^pend_wrreq\ : STD_LOGIC;
   signal \^pend_wrreq_reg\ : STD_LOGIC;
-  signal \^pend_wrreq_reg_0\ : STD_LOGIC;
   signal read_ack : STD_LOGIC;
   signal read_data_en : STD_LOGIC;
   signal read_data_en_cmb : STD_LOGIC;
   signal tpacc_cnt : STD_LOGIC_VECTOR ( 0 to 3 );
-  signal tpacc_cnt_en : STD_LOGIC;
-  signal transaction_done_i : STD_LOGIC;
+  signal \^transaction_done_i\ : STD_LOGIC;
   signal trd_cnt : STD_LOGIC_VECTOR ( 0 to 3 );
   signal trd_cnt_en : STD_LOGIC;
   signal twph_cnt : STD_LOGIC_VECTOR ( 0 to 3 );
@@ -17562,18 +17640,24 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_EMC is
   signal twr_rec_cnt : STD_LOGIC_VECTOR ( 0 to 14 );
   signal twr_rec_cnt_en_int : STD_LOGIC;
 begin
-  Cycle_cnt_en_int <= \^cycle_cnt_en_int\;
   \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ <= \^datawidth_match_gen.addr_cnt_i_reg[1]\;
   \FSM_sequential_crnt_state_reg[0]\ <= \^fsm_sequential_crnt_state_reg[0]\;
-  \FSM_sequential_crnt_state_reg[0]_0\ <= \^fsm_sequential_crnt_state_reg[0]_0\;
   \FSM_sequential_crnt_state_reg[1]\ <= \^fsm_sequential_crnt_state_reg[1]\;
+  \FSM_sequential_crnt_state_reg[1]_0\ <= \^fsm_sequential_crnt_state_reg[1]_0\;
+  \FSM_sequential_crnt_state_reg[3]\ <= \^fsm_sequential_crnt_state_reg[3]\;
+  \FSM_sequential_crnt_state_reg[4]\ <= \^fsm_sequential_crnt_state_reg[4]\;
   \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ <= \^perbit_gen[0].ff_rst0_gen.fdre_i1\;
+  \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\;
+  \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1\;
   \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\;
-  \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ <= \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\;
+  Q(0) <= \^q\(0);
+  \burst_addr_cnt_reg[7]_1\ <= \^burst_addr_cnt_reg[7]_1\;
+  bus2ip_wr_req_reg_reg <= \^bus2ip_wr_req_reg_reg\;
+  cycle_cnt(0 to 1) <= \^cycle_cnt\(0 to 1);
   pend_rdreq <= \^pend_rdreq\;
   pend_wrreq <= \^pend_wrreq\;
   pend_wrreq_reg <= \^pend_wrreq_reg\;
-  pend_wrreq_reg_0 <= \^pend_wrreq_reg_0\;
+  transaction_done_i <= \^transaction_done_i\;
 ADDR_COUNTER_MUX_I: entity work.meowrouter_axi_emc_0_2_addr_counter_mux
      port map (
       \ADDRESS_STORE_GEN[0].ADDRESS_REG__0\ => \ADDRESS_STORE_GEN[0].ADDRESS_REG__0\,
@@ -17611,71 +17695,76 @@ ADDR_COUNTER_MUX_I: entity work.meowrouter_axi_emc_0_2_addr_counter_mux
       \BEN_STORE_GEN[2].BEN_REG_0\(1) => mem_ben_int(0),
       \BEN_STORE_GEN[2].BEN_REG_0\(0) => mem_ben_int(1),
       CE => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/CE\,
+      Cycle_cnt_en_int => Cycle_cnt_en_int,
       D(0) => \^datawidth_match_gen.addr_cnt_i_reg[1]\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ => MEM_STATE_MACHINE_I_n_51,
       \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_0\ => ADDR_COUNTER_MUX_I_n_32,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\ => \^fsm_sequential_crnt_state_reg[0]\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_2\ => MEM_STATE_MACHINE_I_n_8,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_3\ => MEM_STATE_MACHINE_I_n_17,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ => MEM_STATE_MACHINE_I_n_86,
-      \DATA_STORE_GEN[0].WRDATA_REG\ => pend_wrreq_reg_1,
-      \FSM_sequential_crnt_state[1]_i_3\ => COUNTERS_I_n_40,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_1\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_2\ => MEM_STATE_MACHINE_I_n_50,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[0]_3\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ => MEM_STATE_MACHINE_I_n_83,
+      \DATA_STORE_GEN[0].WRDATA_REG\ => \DATA_STORE_GEN[0].WRDATA_REG\,
+      \FSM_sequential_crnt_state_reg[2]\ => read_break_reg_d1_reg,
+      \FSM_sequential_crnt_state_reg[2]_0\ => MEM_STATE_MACHINE_I_n_20,
+      \FSM_sequential_crnt_state_reg[2]_1\ => \FSM_sequential_crnt_state_reg[1]_1\,
       \FSM_sequential_crnt_state_reg[3]\ => ADDR_COUNTER_MUX_I_n_34,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ => ADDR_COUNTER_MUX_I_n_39,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => ADDR_COUNTER_MUX_I_n_42,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ => ADDR_COUNTER_MUX_I_n_43,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ => ADDR_COUNTER_MUX_I_n_45,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ => \^cycle_cnt\(0),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => ADDR_COUNTER_MUX_I_n_46,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ => ADDR_COUNTER_MUX_I_n_49,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1\,
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => \^pend_wrreq\,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1\,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ => read_break_reg_d1_reg,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ => \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\(0),
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ => ADDR_COUNTER_MUX_I_n_37,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_2\ => ADDR_COUNTER_MUX_I_n_44,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\ => \^cycle_cnt_en_int\,
-      Q(0) => crnt_state(3),
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ => \^cycle_cnt\(1),
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => ADDR_COUNTER_MUX_I_n_36,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ => ADDR_COUNTER_MUX_I_n_39,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_2\ => ADDR_COUNTER_MUX_I_n_41,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_3\ => ADDR_COUNTER_MUX_I_n_48,
+      Q(2) => \^q\(0),
+      Q(1) => crnt_state(2),
+      Q(0) => crnt_state(0),
       S => S,
+      \burst_addr_cnt_reg[7]\ => \burst_addr_cnt_reg[7]\,
+      \burst_addr_cnt_reg[7]_0\ => \burst_addr_cnt_reg[7]_0\,
+      \burst_addr_cnt_reg[7]_1\ => \^burst_addr_cnt_reg[7]_1\,
+      \burst_addr_cnt_reg[7]_2\ => \^fsm_sequential_crnt_state_reg[1]\,
       bus2Mem_RdReq => bus2Mem_RdReq,
       bus2ip_addr_temp(29 downto 0) => bus2ip_addr_temp(29 downto 0),
       bus2ip_ben_fixed(0 to 3) => bus2ip_ben_fixed(0 to 3),
       bus2ip_reset => bus2ip_reset,
+      bus2ip_wr_req_reg_reg => \^bus2ip_wr_req_reg_reg\,
       bus2ip_wrreq_i => bus2ip_wrreq_i,
-      cycle_cnt(0) => cycle_cnt(0),
       data_strobe_c => data_strobe_c,
-      \mem_qwen_reg_reg[1]\ => MEM_STATE_MACHINE_I_n_4,
-      pend_wrreq_reg => \^pend_wrreq_reg\,
-      pend_wrreq_reg_0 => ADDR_COUNTER_MUX_I_n_38,
+      mem_WEN_cmb => mem_WEN_cmb,
+      pend_wrreq_reg => ADDR_COUNTER_MUX_I_n_40,
+      pend_wrreq_reg_0 => ADDR_COUNTER_MUX_I_n_42,
+      read_ack_reg_reg => COUNTERS_I_n_42,
+      read_ack_reg_reg_0 => MEM_STATE_MACHINE_I_n_49,
+      read_ack_reg_reg_1 => MEM_STATE_MACHINE_I_n_48,
       read_data_en_cmb => read_data_en_cmb,
       s_axi_aclk => s_axi_aclk,
+      \s_axi_mem_bresp_reg_reg[1]\ => \s_axi_mem_bresp_reg_reg[1]\,
+      \s_axi_mem_bresp_reg_reg[1]_0\ => \^fsm_sequential_crnt_state_reg[3]\,
+      \s_axi_mem_bresp_reg_reg[1]_1\ => \^fsm_sequential_crnt_state_reg[4]\,
       temp_bus2ip_cs => temp_bus2ip_cs
     );
 COUNTERS_I: entity work.meowrouter_axi_emc_0_2_counters
      port map (
       CE => \TWRCNT_I/CE\,
-      CE_10 => \TRDCNT_I/CE\,
-      CE_14 => \TPACCCNT_I/CE\,
-      CE_19 => \T_WRREC_CNT_I/CE\,
-      CE_20 => \THZCNT_I/CE\,
+      CE_13 => \TPACCCNT_I/CE\,
+      CE_18 => \T_WRREC_CNT_I/CE\,
+      CE_19 => \THZCNT_I/CE\,
       CE_4 => \TWPHCNT_I/CE\,
       CE_5 => \TLZCNT_I/CE\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i[0]_i_3\ => read_break_reg_d1_reg,
-      \FSM_sequential_crnt_state_reg[0]\ => COUNTERS_I_n_39,
-      \FSM_sequential_crnt_state_reg[0]_0\ => \^pend_wrreq_reg_0\,
-      \FSM_sequential_crnt_state_reg[0]_1\ => MEM_STATE_MACHINE_I_n_28,
-      \FSM_sequential_crnt_state_reg[0]_2\ => MEM_STATE_MACHINE_I_n_27,
-      \FSM_sequential_crnt_state_reg[3]\ => COUNTERS_I_n_42,
-      \FSM_sequential_crnt_state_reg[3]_0\ => COUNTERS_I_n_43,
-      \FSM_sequential_crnt_state_reg[4]\ => ADDR_COUNTER_MUX_I_n_45,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ => COUNTERS_I_n_36,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ => COUNTERS_I_n_37,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ => COUNTERS_I_n_41,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\ => COUNTERS_I_n_44,
+      CE_9 => \TRDCNT_I/CE\,
+      \FSM_sequential_crnt_state_reg[1]\ => COUNTERS_I_n_37,
+      \FSM_sequential_crnt_state_reg[3]\ => COUNTERS_I_n_40,
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ => COUNTERS_I_n_35,
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ => COUNTERS_I_n_39,
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]\,
       \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(3) => twph_cnt(0),
       \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(2) => twph_cnt(1),
       \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(1) => twph_cnt(2),
       \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\(0) => twph_cnt(3),
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\(3) => p_0_in(0),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\(2) => p_0_in(1),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\(1) => p_0_in(2),
@@ -17703,60 +17792,61 @@ COUNTERS_I: entity work.meowrouter_axi_emc_0_2_counters
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(2) => twr_rec_cnt(12),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(1) => twr_rec_cnt(13),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(0) => twr_rec_cnt(14),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\ => COUNTERS_I_n_40,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\ => COUNTERS_I_n_45,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\ => COUNTERS_I_n_47,
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\ => COUNTERS_I_n_38,
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\ => COUNTERS_I_n_42,
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\ => COUNTERS_I_n_44,
       \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \TWRCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\ => \TPACCCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\ => \T_WRREC_CNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_12\ => \TPACCCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_17\ => \T_WRREC_CNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_3\ => \TWPHCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\ => \TRDCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_8\ => \TRDCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[10].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[10].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[11].FF_RST1_GEN.FDSE_i1\ => COUNTERS_I_n_45,
       \PERBIT_GEN[11].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[11].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[12].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[12].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[13].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_85,
+      \PERBIT_GEN[13].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_82,
       \PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ => COUNTERS_I_n_34,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1\,
+      \PERBIT_GEN[1].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_80,
       \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ => \TWRCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\ => \TPACCCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\ => \T_WRREC_CNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_11\ => \TPACCCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_16\ => \T_WRREC_CNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_2\ => \TWPHCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\ => \TRDCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1\ => COUNTERS_I_n_35,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_7\ => \TRDCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1\ => COUNTERS_I_n_32,
-      \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\ => COUNTERS_I_n_48,
-      \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_1\ => MEM_STATE_MACHINE_I_n_84,
+      \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1_0\ => MEM_STATE_MACHINE_I_n_81,
       \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ => \TWRCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_1\ => \TWPHCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\ => \TPACCCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\ => \T_WRREC_CNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\ => \TRDCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_10\ => \TPACCCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_15\ => \T_WRREC_CNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ => \TWRCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_0\ => \TWPHCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\ => \T_WRREC_CNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_14\ => \T_WRREC_CNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\ => \TRDCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_8,
       \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[7].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[7].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[8].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[8].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[9].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[9].Q_I_GEN_SUB.q_i_ns_reg\,
-      Q(2) => crnt_state(3),
+      Q(2) => \^q\(0),
       Q(1 downto 0) => crnt_state(1 downto 0),
-      \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ => \^fsm_sequential_crnt_state_reg[1]\,
-      \burst_addr_cnt[7]_i_3\ => \^pend_rdreq\,
-      \burst_addr_cnt[7]_i_3_0\ => \burst_addr_cnt[7]_i_3\,
+      \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ => \^fsm_sequential_crnt_state_reg[1]_0\,
+      \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1\,
+      \burst_addr_cnt[7]_i_3\ => read_break_reg_d1_reg,
+      \burst_addr_cnt[7]_i_3_0\ => \^pend_rdreq\,
+      \burst_addr_cnt[7]_i_3_1\ => \burst_addr_cnt[7]_i_3\,
       bus2Mem_RdReq => bus2Mem_RdReq,
       bus2ip_reset => bus2ip_reset,
       bus2ip_wr_req_reg_reg => COUNTERS_I_n_33,
       bus2ip_wrreq_i => bus2ip_wrreq_i,
+      \mem_a_int_reg[1]\ => \^pend_wrreq\,
       pend_rdreq_reg => COUNTERS_I_n_31,
       rdce_out_i => rdce_out_i,
       s_axi_aclk => s_axi_aclk,
       temp_bus2ip_cs => temp_bus2ip_cs,
-      tpacc_cnt_en => tpacc_cnt_en,
-      transaction_done_reg_reg => \^pend_wrreq\,
       trd_cnt_en => trd_cnt_en,
       twph_cnt_en => twph_cnt_en,
       twr_cnt_en => twr_cnt_en,
@@ -17800,6 +17890,7 @@ IO_REGISTERS_I: entity work.meowrouter_axi_emc_0_2_io_registers
       mem_CEN_cmb => mem_CEN_cmb,
       mem_OEN_cmb => mem_OEN_cmb,
       mem_RNW_cmb => mem_RNW_cmb,
+      mem_WEN_cmb => mem_WEN_cmb,
       mem_ben(1 downto 0) => mem_ben(1 downto 0),
       \mem_ben_reg_reg[0]_0\(1) => mem_ben_int(0),
       \mem_ben_reg_reg[0]_0\(0) => mem_ben_int(1),
@@ -17817,7 +17908,6 @@ IO_REGISTERS_I: entity work.meowrouter_axi_emc_0_2_io_registers
       mem_rnw => mem_rnw,
       mem_rpn => mem_rpn,
       mem_wen => mem_wen,
-      mem_wen_reg_reg_0 => MEM_STATE_MACHINE_I_n_4,
       rdclk => rdclk,
       s_axi_aclk => s_axi_aclk
     );
@@ -17856,15 +17946,14 @@ IPIC_IF_I: entity work.meowrouter_axi_emc_0_2_ipic_if
       D(2) => mem2Bus_Data(29),
       D(1) => mem2Bus_Data(30),
       D(0) => mem2Bus_Data(31),
-      \FSM_sequential_crnt_state[1]_i_10\ => COUNTERS_I_n_34,
       \IP2Bus_Data_reg[0]_0\(31 downto 0) => \IP2Bus_Data_reg[0]\(31 downto 0),
       IP2Bus_RdAck0 => IP2Bus_RdAck0,
       \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].FF_RST0_GEN.FDRE_i1\ => IPIC_IF_I_n_13,
       \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[5].FF_RST0_GEN.FDRE_i1\ => IPIC_IF_I_n_12,
       \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\,
       S => \BURST_CNT/S\,
@@ -17875,89 +17964,84 @@ IPIC_IF_I: entity work.meowrouter_axi_emc_0_2_ipic_if
       ip2bus_addrack => ip2bus_addrack,
       ip2bus_rdack => ip2bus_rdack,
       pend_rdreq_reg_0 => \^pend_rdreq\,
-      pend_rdreq_reg_1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      pend_rdreq_reg_2 => \^fsm_sequential_crnt_state_reg[0]_0\,
+      pend_rdreq_reg_1 => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
+      pend_rdreq_reg_2 => \^fsm_sequential_crnt_state_reg[0]\,
       pend_wrreq_reg_0 => \^pend_wrreq\,
-      pend_wrreq_reg_1 => IPIC_IF_I_n_11,
-      pend_wrreq_reg_2 => \^pend_wrreq_reg_0\,
-      pend_wrreq_reg_3 => MEM_STATE_MACHINE_I_n_83,
+      pend_wrreq_reg_1 => \^pend_wrreq_reg\,
+      pend_wrreq_reg_2 => pend_wrreq_reg_0,
       reset_fifo => reset_fifo,
       s_axi_aclk => s_axi_aclk,
       temp_bus2ip_cs => temp_bus2ip_cs,
-      transaction_done_i => transaction_done_i
+      transaction_done_i => \^transaction_done_i\
     );
 MEM_STATE_MACHINE_I: entity work.meowrouter_axi_emc_0_2_mem_state_machine
      port map (
       Bus2IP_RdReq_emc => Bus2IP_RdReq_emc,
       CE => \TWRCNT_I/CE\,
       CE_0 => \TWPHCNT_I/CE\,
-      CE_1 => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/CE\,
-      CE_10 => \TPACCCNT_I/CE\,
-      CE_12 => \TLZCNT_I/CE\,
+      CE_1 => \T_WRREC_CNT_I/CE\,
+      CE_14 => \TLZCNT_I/CE\,
       CE_2 => \THZCNT_I/CE\,
-      CE_3 => \T_WRREC_CNT_I/CE\,
-      CE_4 => \BURST_CNT/CE\,
-      CE_5 => \TRDCNT_I/CE\,
+      CE_3 => \TRDCNT_I/CE\,
+      CE_7 => \BURST_CNT/CE\,
+      CE_8 => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/CE\,
+      CE_9 => \TPACCCNT_I/CE\,
+      Cycle_cnt_en_int => Cycle_cnt_en_int,
       D(0) => \^datawidth_match_gen.addr_cnt_i_reg[1]\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ => MEM_STATE_MACHINE_I_n_86,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ => ADDR_COUNTER_MUX_I_n_42,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_2\ => COUNTERS_I_n_43,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_3\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_4\ => ADDR_COUNTER_MUX_I_n_39,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ => MEM_STATE_MACHINE_I_n_83,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ => ADDR_COUNTER_MUX_I_n_46,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\ => COUNTERS_I_n_40,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_2\ => \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_3\ => ADDR_COUNTER_MUX_I_n_49,
       \DATA_STORE_GEN[0].WRDATA_REG\ => ADDR_COUNTER_MUX_I_n_34,
-      \FSM_sequential_crnt_state[1]_i_8_0\ => IPIC_IF_I_n_11,
       \FSM_sequential_crnt_state_reg[0]_0\ => \^fsm_sequential_crnt_state_reg[0]\,
-      \FSM_sequential_crnt_state_reg[0]_1\ => \^fsm_sequential_crnt_state_reg[0]_0\,
-      \FSM_sequential_crnt_state_reg[0]_2\ => \FSM_sequential_crnt_state_reg[0]_1\,
-      \FSM_sequential_crnt_state_reg[0]_3\ => MEM_STATE_MACHINE_I_n_51,
-      \FSM_sequential_crnt_state_reg[0]_4\ => COUNTERS_I_n_36,
-      \FSM_sequential_crnt_state_reg[0]_5\ => \FSM_sequential_crnt_state_reg[0]_2\,
-      \FSM_sequential_crnt_state_reg[1]_0\ => MEM_STATE_MACHINE_I_n_8,
-      \FSM_sequential_crnt_state_reg[1]_1\ => \^fsm_sequential_crnt_state_reg[1]\,
-      \FSM_sequential_crnt_state_reg[1]_2\ => \FSM_sequential_crnt_state_reg[1]_0\,
+      \FSM_sequential_crnt_state_reg[0]_1\ => \FSM_sequential_crnt_state_reg[0]_0\,
+      \FSM_sequential_crnt_state_reg[0]_2\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1\,
+      \FSM_sequential_crnt_state_reg[0]_3\ => \FSM_sequential_crnt_state_reg[0]_1\,
+      \FSM_sequential_crnt_state_reg[0]_4\ => ADDR_COUNTER_MUX_I_n_48,
+      \FSM_sequential_crnt_state_reg[1]_0\ => \^fsm_sequential_crnt_state_reg[1]\,
+      \FSM_sequential_crnt_state_reg[1]_1\ => \^fsm_sequential_crnt_state_reg[1]_0\,
+      \FSM_sequential_crnt_state_reg[1]_2\ => MEM_STATE_MACHINE_I_n_49,
       \FSM_sequential_crnt_state_reg[1]_3\ => \FSM_sequential_crnt_state_reg[1]_1\,
-      \FSM_sequential_crnt_state_reg[1]_4\ => ADDR_COUNTER_MUX_I_n_43,
       \FSM_sequential_crnt_state_reg[2]_0\ => \FSM_sequential_crnt_state_reg[2]\,
-      \FSM_sequential_crnt_state_reg[2]_1\ => \FSM_sequential_crnt_state_reg[2]_0\,
-      \FSM_sequential_crnt_state_reg[3]_0\ => COUNTERS_I_n_35,
-      \FSM_sequential_crnt_state_reg[3]_1\ => COUNTERS_I_n_42,
-      \FSM_sequential_crnt_state_reg[3]_2\ => \FSM_sequential_crnt_state_reg[3]\,
-      \FSM_sequential_crnt_state_reg[4]_0\ => MEM_STATE_MACHINE_I_n_4,
-      \FSM_sequential_crnt_state_reg[4]_1\ => MEM_STATE_MACHINE_I_n_27,
+      \FSM_sequential_crnt_state_reg[2]_1\ => MEM_STATE_MACHINE_I_n_48,
+      \FSM_sequential_crnt_state_reg[2]_2\ => ADDR_COUNTER_MUX_I_n_42,
+      \FSM_sequential_crnt_state_reg[3]_0\ => MEM_STATE_MACHINE_I_n_8,
+      \FSM_sequential_crnt_state_reg[3]_1\ => \^fsm_sequential_crnt_state_reg[3]\,
+      \FSM_sequential_crnt_state_reg[3]_2\ => \FSM_sequential_crnt_state_reg[3]_0\,
+      \FSM_sequential_crnt_state_reg[3]_3\ => ADDR_COUNTER_MUX_I_n_39,
+      \FSM_sequential_crnt_state_reg[4]_0\ => \^fsm_sequential_crnt_state_reg[4]\,
+      \FSM_sequential_crnt_state_reg[4]_1\ => \FSM_sequential_crnt_state_reg[4]_0\,
       \FSM_sequential_crnt_state_reg[4]_2\ => COUNTERS_I_n_32,
-      \FSM_sequential_emc_addr_ps_reg[2]\ => \FSM_sequential_emc_addr_ps_reg[2]\,
-      \FSM_sequential_emc_addr_ps_reg[2]_0\ => \FSM_sequential_emc_addr_ps_reg[2]_0\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ => MEM_STATE_MACHINE_I_n_17,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => COUNTERS_I_n_47,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\ => \^pend_wrreq_reg\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\ => COUNTERS_I_n_34,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\(7 downto 0) => Q(7 downto 0),
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_6\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_7\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1_1\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(0) => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\(0),
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\(3) => twph_cnt(0),
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\(2) => twph_cnt(1),
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\(1) => twph_cnt(2),
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_9\(0) => twph_cnt(3),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => COUNTERS_I_n_33,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ => ADDR_COUNTER_MUX_I_n_45,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ => ADDR_COUNTER_MUX_I_n_38,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\(3) => trd_cnt(0),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\(2) => trd_cnt(1),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\(1) => trd_cnt(2),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\(0) => trd_cnt(3),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(3) => tpacc_cnt(0),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(2) => tpacc_cnt(1),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(1) => tpacc_cnt(2),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(0) => tpacc_cnt(3),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(3) => p_0_in(0),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(2) => p_0_in(1),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(1) => p_0_in(2),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(0) => p_0_in(3),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ => MEM_STATE_MACHINE_I_n_50,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => COUNTERS_I_n_44,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ => \^perbit_gen[0].ff_rst0_gen.fdre_i1_0\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\ => \^bus2ip_wr_req_reg_reg\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_3\ => COUNTERS_I_n_34,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_4\(7 downto 0) => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(7 downto 0),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_5\ => \^burst_addr_cnt_reg[7]_1\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_6\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_7\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1\,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(3) => twph_cnt(0),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(2) => twph_cnt(1),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(1) => twph_cnt(2),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_8\(0) => twph_cnt(3),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => ADDR_COUNTER_MUX_I_n_36,
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_0\ => ADDR_COUNTER_MUX_I_n_40,
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_1\ => \^pend_wrreq_reg\,
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(3) => trd_cnt(0),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(2) => trd_cnt(1),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(1) => trd_cnt(2),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_2\(0) => trd_cnt(3),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_3\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(3) => p_0_in(0),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(2) => p_0_in(1),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(1) => p_0_in(2),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_4\(0) => p_0_in(3),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(3) => tpacc_cnt(0),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(2) => tpacc_cnt(1),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(1) => tpacc_cnt(2),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_5\(0) => tpacc_cnt(3),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(14) => twr_rec_cnt(0),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(13) => twr_rec_cnt(1),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(12) => twr_rec_cnt(2),
@@ -17973,86 +18057,82 @@ MEM_STATE_MACHINE_I: entity work.meowrouter_axi_emc_0_2_mem_state_machine
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(2) => twr_rec_cnt(12),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(1) => twr_rec_cnt(13),
       \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\(0) => twr_rec_cnt(14),
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_11\ => \DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_16\ => \TWPHCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \TRDCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_13\ => \TWPHCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_18\ => \TWRCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_19\ => \TPACCCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_23\ => \TWRCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_30\ => \T_WRREC_CNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_9\ => \TRDCNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_28\ => \T_WRREC_CNT_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg_4\ => \BURST_CNT/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[10].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[10].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[11].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[11].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[12].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[12].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[13].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[14].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_85,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_15\ => \TWPHCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_18\ => \TPACCCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_22\ => \TWRCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_29\ => \T_WRREC_CNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_8\ => \TRDCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[14].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_82,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ => \^perbit_gen[1].ff_rst0_gen.fdre_i1_0\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\ => \TRDCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_12\ => \TWPHCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_17\ => \TWRCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_20\ => \TPACCCNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_27\ => \T_WRREC_CNT_I/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg_5\ => \BURST_CNT/PERBIT_GEN[1].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[2].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_80,
       \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_14\ => \TWPHCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_17\ => \TPACCCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_21\ => \TWRCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_28\ => \T_WRREC_CNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_7\ => \TRDCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[3].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_84,
-      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_13\ => \TWPHCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_20\ => \TWRCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_27\ => \T_WRREC_CNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\ => \TRDCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_11\ => \TWPHCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_16\ => \TWRCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_21\ => \TPACCCNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg_26\ => \T_WRREC_CNT_I/PERBIT_GEN[2].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[3].FF_RST1_GEN.FDSE_i1\ => MEM_STATE_MACHINE_I_n_81,
+      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\ => \TRDCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_10\ => \TWPHCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_15\ => \TWRCNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_25\ => \T_WRREC_CNT_I/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg_6\ => \BURST_CNT/PERBIT_GEN[3].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg_26\ => \T_WRREC_CNT_I/PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg_24\ => \T_WRREC_CNT_I/PERBIT_GEN[4].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg_25\ => \T_WRREC_CNT_I/PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg_23\ => \T_WRREC_CNT_I/PERBIT_GEN[5].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\ => \BURST_CNT/PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\,
-      \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg_24\ => \T_WRREC_CNT_I/PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg_22\ => \T_WRREC_CNT_I/PERBIT_GEN[6].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[7].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[7].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[8].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[8].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[9].Q_I_GEN_SUB.q_i_ns_reg\ => \T_WRREC_CNT_I/PERBIT_GEN[9].Q_I_GEN_SUB.q_i_ns_reg\,
-      Q(2) => crnt_state(3),
-      Q(1 downto 0) => crnt_state(1 downto 0),
-      \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ => COUNTERS_I_n_37,
-      \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\ => COUNTERS_I_n_48,
-      \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\ => COUNTERS_I_n_40,
-      \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\ => COUNTERS_I_n_39,
+      Q(3) => \^q\(0),
+      Q(2 downto 0) => crnt_state(2 downto 0),
+      \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]\ => COUNTERS_I_n_35,
+      \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[1]_0\ => COUNTERS_I_n_45,
+      \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0\ => COUNTERS_I_n_37,
+      \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1\ => COUNTERS_I_n_38,
       S => \BURST_CNT/S\,
       SR(0) => MEM_STATE_MACHINE_I_n_16,
-      addr_sm_ps_IDLE_reg_i_5 => IPIC_IF_I_n_13,
-      \axi_trans_size_reg_reg[1]\ => \^cycle_cnt_en_int\,
+      addr_sm_ps_IDLE_reg_i_5 => IPIC_IF_I_n_12,
       \burst_addr_cnt[7]_i_3_0\ => \burst_addr_cnt[7]_i_3\,
       \burst_addr_cnt[7]_i_3_1\ => \burst_addr_cnt[7]_i_3_0\,
-      \burst_addr_cnt[7]_i_3_2\ => COUNTERS_I_n_44,
       burst_cnt_i(0 to 7) => burst_cnt_i(0 to 7),
       bus2Mem_RdReq => bus2Mem_RdReq,
-      bus2ip_burst => bus2ip_burst,
-      bus2ip_burst_reg_reg => MEM_STATE_MACHINE_I_n_83,
       bus2ip_reset => bus2ip_reset,
-      bus2ip_wr_req_reg_reg => bus2ip_wr_req_reg_reg,
+      bus2ip_wr_req_reg_reg => bus2ip_wr_req_reg_reg_0,
       bus2ip_wrreq_i => bus2ip_wrreq_i,
-      cycle_cnt(0) => cycle_cnt(0),
+      cycle_cnt(0 to 1) => \^cycle_cnt\(0 to 1),
       data_strobe_c => data_strobe_c,
       ip2bus_addrack => ip2bus_addrack,
       mem_CEN_cmb => mem_CEN_cmb,
       mem_OEN_cmb => mem_OEN_cmb,
       mem_RNW_cmb => mem_RNW_cmb,
+      mem_WEN_cmb => mem_WEN_cmb,
+      \mem_a_int_reg[1]\ => COUNTERS_I_n_33,
       mem_ce_int => mem_ce_int,
       mem_dqt_t_d => mem_dqt_t_d,
       mem_dqt_t_d_reg(0) => mem_dq_t_int(15),
+      new_page_d1_reg_0 => COUNTERS_I_n_42,
       pend_rdreq_reg => COUNTERS_I_n_31,
-      pend_wrreq_reg => \^pend_wrreq\,
-      pend_wrreq_reg_0 => pend_wrreq_reg_2,
-      pend_wrreq_reg_1 => pend_wrreq_reg_1,
+      pend_rdreq_reg_0 => pend_rdreq_reg,
+      pend_wrreq_reg => MEM_STATE_MACHINE_I_n_20,
       rdce_out_i => rdce_out_i,
       read_ack => read_ack,
-      read_ack_reg_reg_0 => ADDR_COUNTER_MUX_I_n_37,
+      read_ack_reg_reg_0 => ADDR_COUNTER_MUX_I_n_41,
       read_break_reg_d1_reg_0 => read_break_reg_d1_reg,
       read_data_en => read_data_en,
       read_data_en_cmb => read_data_en_cmb,
-      read_data_en_reg_reg_0 => COUNTERS_I_n_45,
-      read_data_en_reg_reg_1 => ADDR_COUNTER_MUX_I_n_44,
       rw_flag_reg => rw_flag_reg,
       s_axi_aclk => s_axi_aclk,
       s_axi_mem_arvalid => s_axi_mem_arvalid,
@@ -18061,14 +18141,13 @@ MEM_STATE_MACHINE_I: entity work.meowrouter_axi_emc_0_2_mem_state_machine
       s_axi_mem_wlast => s_axi_mem_wlast,
       s_axi_mem_wvalid => s_axi_mem_wvalid,
       temp_bus2ip_cs => temp_bus2ip_cs,
-      tpacc_cnt_en => tpacc_cnt_en,
-      transaction_complete_reg_reg_0 => MEM_STATE_MACHINE_I_n_28,
-      transaction_done_i => transaction_done_i,
-      transaction_done_reg_reg_0 => COUNTERS_I_n_41,
+      transaction_done_i => \^transaction_done_i\,
+      transaction_done_reg_reg_0 => COUNTERS_I_n_39,
       trd_cnt_en => trd_cnt_en,
       twph_cnt_en => twph_cnt_en,
       twr_cnt_en => twr_cnt_en,
-      twr_rec_cnt_en_int => twr_rec_cnt_en_int
+      twr_rec_cnt_en_int => twr_rec_cnt_en_int,
+      wlast_reg_reg_0 => \^pend_wrreq\
     );
 MEM_STEER_I: entity work.meowrouter_axi_emc_0_2_mem_steer
      port map (
@@ -18143,8 +18222,8 @@ MEM_STEER_I: entity work.meowrouter_axi_emc_0_2_mem_steer
       SR(0) => MEM_STATE_MACHINE_I_n_16,
       bus2ip_reset => bus2ip_reset,
       data_strobe_c => data_strobe_c,
+      mem_WEN_cmb => mem_WEN_cmb,
       mem_dqt_t_d => mem_dqt_t_d,
-      mem_dqt_t_d_reg_0 => MEM_STATE_MACHINE_I_n_4,
       read_ack => read_ack,
       read_data_en => read_data_en,
       readreq_th_reset => readreq_th_reset,
@@ -18167,34 +18246,35 @@ entity meowrouter_axi_emc_0_2_axi_emc_native_interface is
     s_axi_mem_bresp : out STD_LOGIC_VECTOR ( 0 to 0 );
     bus2ip_burst : out STD_LOGIC;
     bus2ip_wrreq_i : out STD_LOGIC;
-    \burst_addr_cnt_reg[5]_0\ : out STD_LOGIC;
-    IP2Bus_RdAck0 : out STD_LOGIC;
-    \burstlength_reg_reg[5]_0\ : out STD_LOGIC;
+    bus2ip_wr_req_reg_reg_0 : out STD_LOGIC;
     bus2Mem_RdReq : out STD_LOGIC;
-    readreq_th_reset : out STD_LOGIC;
-    s_axi_mem_rresp : out STD_LOGIC_VECTOR ( 0 to 0 );
-    FIFO_Full_reg : out STD_LOGIC;
-    \burst_addr_cnt_reg[7]_0\ : out STD_LOGIC;
     \MEM_DECODE_GEN[0].rdce_out_i_reg[0]\ : out STD_LOGIC;
-    s_axi_mem_wready : out STD_LOGIC;
-    s_axi_mem_awready : out STD_LOGIC;
-    s_axi_mem_arready : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ : out STD_LOGIC;
+    FIFO_Full_reg : out STD_LOGIC;
+    \burstlength_reg_reg[0]_0\ : out STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ : out STD_LOGIC;
+    s_axi_mem_rresp : out STD_LOGIC_VECTOR ( 0 to 0 );
+    \burst_addr_cnt_reg[7]_0\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ : out STD_LOGIC;
+    s_axi_mem_awready : out STD_LOGIC;
+    s_axi_mem_wready : out STD_LOGIC;
+    s_axi_mem_arready : out STD_LOGIC;
+    pend_rdreq_reg : out STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ : out STD_LOGIC;
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ : out STD_LOGIC;
-    s_axi_mem_wvalid_0 : out STD_LOGIC;
-    pend_rdreq_reg : out STD_LOGIC;
-    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\ : out STD_LOGIC;
+    readreq_th_reset : out STD_LOGIC;
+    IP2Bus_RdAck0 : out STD_LOGIC;
     S : out STD_LOGIC;
-    \axi_trans_size_reg_reg[1]_0\ : out STD_LOGIC_VECTOR ( 0 to 0 );
-    Q : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    Cycle_cnt_en_int : out STD_LOGIC;
+    \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : out STD_LOGIC;
+    \burstlength_reg_reg[7]_0\ : out STD_LOGIC_VECTOR ( 7 downto 0 );
     s_axi_mem_rlast : out STD_LOGIC;
     s_axi_mem_rvalid : out STD_LOGIC;
     reset_fifo : out STD_LOGIC;
     \bus2ip_BE_reg_reg[0]_0\ : out STD_LOGIC;
     bus2ip_ben_fixed : out STD_LOGIC_VECTOR ( 0 to 3 );
-    \burstlength_reg_reg[0]_0\ : out STD_LOGIC;
+    \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\ : out STD_LOGIC;
     s_axi_mem_rdata : out STD_LOGIC_VECTOR ( 31 downto 0 );
     \bus2ip_data_reg_reg[31]_0\ : out STD_LOGIC_VECTOR ( 31 downto 0 );
     s_axi_aclk : in STD_LOGIC;
@@ -18202,14 +18282,15 @@ entity meowrouter_axi_emc_0_2_axi_emc_native_interface is
     s_axi_mem_arsize : in STD_LOGIC_VECTOR ( 1 downto 0 );
     s_axi_mem_araddr : in STD_LOGIC_VECTOR ( 31 downto 0 );
     s_axi_aresetn : in STD_LOGIC;
-    \bus2ip_data_reg_reg[0]_0\ : in STD_LOGIC;
-    \burst_addr_cnt_reg[7]_1\ : in STD_LOGIC;
+    \s_axi_mem_bresp_reg_reg[1]_0\ : in STD_LOGIC;
+    \bus2ip_BE_reg_reg[3]_0\ : in STD_LOGIC;
     s_axi_mem_wvalid : in STD_LOGIC;
-    \FSM_sequential_emc_addr_ps[2]_i_4\ : in STD_LOGIC;
-    \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\ : in STD_LOGIC;
+    \burst_addr_cnt_reg[7]_1\ : in STD_LOGIC;
+    pend_wrreq : in STD_LOGIC;
+    pend_rdreq : in STD_LOGIC;
     ip2bus_rdack : in STD_LOGIC;
-    \FSM_sequential_emc_addr_ps_reg[2]_0\ : in STD_LOGIC;
     s_axi_mem_awburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    rw_flag_reg_reg_0 : in STD_LOGIC;
     s_axi_mem_awaddr : in STD_LOGIC_VECTOR ( 31 downto 0 );
     s_axi_mem_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\ : in STD_LOGIC;
@@ -18219,28 +18300,35 @@ entity meowrouter_axi_emc_0_2_axi_emc_native_interface is
     \burst_addr_cnt_reg[7]_2\ : in STD_LOGIC;
     s_axi_mem_arvalid : in STD_LOGIC;
     s_axi_mem_awvalid : in STD_LOGIC;
-    rw_flag_reg_reg_0 : in STD_LOGIC;
     s_axi_mem_arburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    pend_rdreq : in STD_LOGIC;
-    \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]_0\ : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps_reg[2]_1\ : in STD_LOGIC;
+    addr_sm_ps_IDLE_reg_i_3 : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps[1]_i_13\ : in STD_LOGIC;
     \FSM_sequential_crnt_state[0]_i_4\ : in STD_LOGIC;
     \FSM_sequential_crnt_state[0]_i_4_0\ : in STD_LOGIC;
-    pend_wrreq : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_i_3 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_i_3_0 : in STD_LOGIC;
-    addr_sm_ps_IDLE_reg_i_5 : in STD_LOGIC;
-    cycle_cnt : in STD_LOGIC_VECTOR ( 0 to 0 );
-    Cycle_cnt_en_int : in STD_LOGIC;
+    \burst_addr_cnt[7]_i_3\ : in STD_LOGIC;
+    Q : in STD_LOGIC_VECTOR ( 0 to 0 );
+    \burst_addr_cnt[7]_i_3_0\ : in STD_LOGIC;
+    \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2\ : in STD_LOGIC;
+    \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\ : in STD_LOGIC;
+    cycle_cnt : in STD_LOGIC_VECTOR ( 0 to 1 );
+    \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ : in STD_LOGIC;
     s_axi_mem_bready : in STD_LOGIC;
+    \FSM_sequential_emc_addr_ps[2]_i_9\ : in STD_LOGIC;
+    transaction_done_i : in STD_LOGIC;
+    s_axi_mem_bvalid_reg_reg_1 : in STD_LOGIC;
     \INFERRED_GEN.data_reg[255][8]_srl32__0\ : in STD_LOGIC_VECTOR ( 31 downto 0 );
     s_axi_mem_wdata : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_axi_emc_native_interface : entity is "axi_emc_native_interface";
 end meowrouter_axi_emc_0_2_axi_emc_native_interface;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_native_interface is
-  signal AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_16 : STD_LOGIC;
-  signal AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_21 : STD_LOGIC;
-  signal AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_6 : STD_LOGIC;
+  signal AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_11 : STD_LOGIC;
+  signal AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_22 : STD_LOGIC;
+  signal AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_27 : STD_LOGIC;
   signal AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_7 : STD_LOGIC;
   signal AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_8 : STD_LOGIC;
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_1 : STD_LOGIC;
@@ -18249,32 +18337,33 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_native_interface is
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_18 : STD_LOGIC;
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_19 : STD_LOGIC;
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_20 : STD_LOGIC;
-  signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_22 : STD_LOGIC;
+  signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_21 : STD_LOGIC;
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_23 : STD_LOGIC;
+  signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_24 : STD_LOGIC;
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_5 : STD_LOGIC;
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_6 : STD_LOGIC;
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_7 : STD_LOGIC;
   signal AXI_EMC_ADDR_GEN_INSTANCE_I_n_8 : STD_LOGIC;
   signal \^bus2ip_rdreq_emc\ : STD_LOGIC;
   signal \^fifo_full_reg\ : STD_LOGIC;
-  signal \FSM_sequential_crnt_state[2]_i_11_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_emc_addr_ps[0]_i_10_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_emc_addr_ps[0]_i_11_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_crnt_state[2]_i_13_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[0]_i_2_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[0]_i_5_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[0]_i_6_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[0]_i_7_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_emc_addr_ps[0]_i_8_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_emc_addr_ps[0]_i_9_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_emc_addr_ps[1]_i_2_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[1]_i_10_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[1]_i_11_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[1]_i_12_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[1]_i_14_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[1]_i_15_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[1]_i_3_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_emc_addr_ps[1]_i_5_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[1]_i_6_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[1]_i_7_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[1]_i_8_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[1]_i_9_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_emc_addr_ps[2]_i_11_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[2]_i_10_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[2]_i_12_n_0\ : STD_LOGIC;
-  signal \FSM_sequential_emc_addr_ps[2]_i_3_n_0\ : STD_LOGIC;
+  signal \FSM_sequential_emc_addr_ps[2]_i_4_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[2]_i_5_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[2]_i_6_n_0\ : STD_LOGIC;
   signal \FSM_sequential_emc_addr_ps[2]_i_7_n_0\ : STD_LOGIC;
@@ -18286,7 +18375,6 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_native_interface is
   signal \LEN_GEN_32.derived_len_reg[2]_i_1_n_0\ : STD_LOGIC;
   signal \LEN_GEN_32.derived_len_reg[3]_i_1_n_0\ : STD_LOGIC;
   signal \PERBIT_GEN[1].MUXCY_i1_i_2_n_0\ : STD_LOGIC;
-  signal \^q\ : STD_LOGIC_VECTOR ( 7 downto 0 );
   signal RDATA_FIFO_I_n_0 : STD_LOGIC;
   signal RDATA_FIFO_I_n_10 : STD_LOGIC;
   signal RDATA_FIFO_I_n_3 : STD_LOGIC;
@@ -18298,18 +18386,15 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_native_interface is
   signal Type_of_xfer_cmb : STD_LOGIC;
   signal addr_sm_ps_IDLE_reg : STD_LOGIC;
   signal addr_sm_ps_IDLE_reg_i_2_n_0 : STD_LOGIC;
-  signal addr_sm_ps_IDLE_reg_i_7_n_0 : STD_LOGIC;
+  signal addr_sm_ps_IDLE_reg_i_6_n_0 : STD_LOGIC;
   signal addr_sm_ps_idle_cmb : STD_LOGIC;
   signal \axi_trans_size_reg[0]_i_1_n_0\ : STD_LOGIC;
   signal \axi_trans_size_reg[1]_i_1_n_0\ : STD_LOGIC;
-  signal axi_trans_size_reg_int : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal \^axi_trans_size_reg_reg[1]_0\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal axi_trans_size_reg_int : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal \burst_addr_cnt[2]_i_2_n_0\ : STD_LOGIC;
   signal \burst_addr_cnt[3]_i_2_n_0\ : STD_LOGIC;
-  signal \burst_addr_cnt[4]_i_2_n_0\ : STD_LOGIC;
-  signal \burst_addr_cnt[6]_i_2_n_0\ : STD_LOGIC;
-  signal \burst_addr_cnt[7]_i_5_n_0\ : STD_LOGIC;
-  signal \^burst_addr_cnt_reg[5]_0\ : STD_LOGIC;
+  signal \burst_addr_cnt[5]_i_2_n_0\ : STD_LOGIC;
+  signal \burst_addr_cnt[7]_i_6_n_0\ : STD_LOGIC;
   signal \^burst_addr_cnt_reg[7]_0\ : STD_LOGIC;
   signal \burst_addr_cnt_reg__0\ : STD_LOGIC_VECTOR ( 7 downto 1 );
   signal \burst_addr_cnt_reg__1\ : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -18325,6 +18410,7 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_native_interface is
   signal \burstlength_reg[7]_i_3_n_0\ : STD_LOGIC;
   signal \burstlength_reg[7]_i_4_n_0\ : STD_LOGIC;
   signal \burstlength_reg[7]_i_5_n_0\ : STD_LOGIC;
+  signal \^burstlength_reg_reg[7]_0\ : STD_LOGIC_VECTOR ( 7 downto 0 );
   signal \bus2ip_BE_reg[0]_i_1_n_0\ : STD_LOGIC;
   signal \bus2ip_BE_reg[0]_i_2_n_0\ : STD_LOGIC;
   signal \bus2ip_BE_reg[1]_i_1_n_0\ : STD_LOGIC;
@@ -18349,7 +18435,6 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_native_interface is
   signal \^bus2ip_reset\ : STD_LOGIC;
   signal bus2ip_rnw : STD_LOGIC;
   signal bus2ip_wr_req_reg_i_1_n_0 : STD_LOGIC;
-  signal bus2ip_wr_req_reg_i_2_n_0 : STD_LOGIC;
   signal \^bus2ip_wrreq_i\ : STD_LOGIC;
   signal data : STD_LOGIC_VECTOR ( 7 downto 4 );
   signal derived_burst_reg : STD_LOGIC_VECTOR ( 1 downto 0 );
@@ -18382,72 +18467,64 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_native_interface is
   signal \^s_axi_mem_bresp\ : STD_LOGIC_VECTOR ( 0 to 0 );
   signal s_axi_mem_bvalid_reg_i_1_n_0 : STD_LOGIC;
   signal \^s_axi_mem_bvalid_reg_reg_0\ : STD_LOGIC;
-  signal \^s_axi_mem_wvalid_0\ : STD_LOGIC;
+  signal s_axi_mem_wready_INST_0_i_1_n_0 : STD_LOGIC;
   signal temp_bus2ip_be : STD_LOGIC_VECTOR ( 3 downto 0 );
   attribute SOFT_HLUTNM : string;
   attribute SOFT_HLUTNM of \BEN_STORE_GEN[0].BEN_REG_i_1\ : label is "soft_lutpair61";
   attribute SOFT_HLUTNM of \BEN_STORE_GEN[1].BEN_REG_i_1\ : label is "soft_lutpair61";
   attribute SOFT_HLUTNM of \BEN_STORE_GEN[2].BEN_REG_i_1\ : label is "soft_lutpair60";
   attribute SOFT_HLUTNM of \BEN_STORE_GEN[3].BEN_REG_i_1\ : label is "soft_lutpair60";
-  attribute SOFT_HLUTNM of \DATAWIDTH_MATCH_GEN.addr_cnt_i[1]_i_2\ : label is "soft_lutpair47";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[0]_i_11\ : label is "soft_lutpair41";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[0]_i_2\ : label is "soft_lutpair40";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[0]_i_8\ : label is "soft_lutpair42";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[0]_i_9\ : label is "soft_lutpair38";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_3\ : label is "soft_lutpair44";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_5\ : label is "soft_lutpair57";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_6\ : label is "soft_lutpair40";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_7\ : label is "soft_lutpair59";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_8\ : label is "soft_lutpair49";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_9\ : label is "soft_lutpair57";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[2]_i_12\ : label is "soft_lutpair54";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[2]_i_3\ : label is "soft_lutpair44";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[2]_i_5\ : label is "soft_lutpair56";
-  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[2]_i_9\ : label is "soft_lutpair45";
+  attribute SOFT_HLUTNM of \DATAWIDTH_MATCH_GEN.addr_cnt_i[1]_i_2\ : label is "soft_lutpair45";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[0]_i_2\ : label is "soft_lutpair42";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_11\ : label is "soft_lutpair47";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_12\ : label is "soft_lutpair59";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_14\ : label is "soft_lutpair48";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_15\ : label is "soft_lutpair58";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_3\ : label is "soft_lutpair39";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_6\ : label is "soft_lutpair57";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_7\ : label is "soft_lutpair42";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_8\ : label is "soft_lutpair43";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[1]_i_9\ : label is "soft_lutpair40";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[2]_i_10\ : label is "soft_lutpair53";
+  attribute SOFT_HLUTNM of \FSM_sequential_emc_addr_ps[2]_i_5\ : label is "soft_lutpair39";
   attribute FSM_ENCODED_STATES : string;
   attribute FSM_ENCODED_STATES of \FSM_sequential_emc_addr_ps_reg[0]\ : label is "rd:010,rd_last:001,wr_wait:100,wr:011,wr_last:101,resp:110,idle:000";
   attribute FSM_ENCODED_STATES of \FSM_sequential_emc_addr_ps_reg[1]\ : label is "rd:010,rd_last:001,wr_wait:100,wr:011,wr_last:101,resp:110,idle:000";
   attribute FSM_ENCODED_STATES of \FSM_sequential_emc_addr_ps_reg[2]\ : label is "rd:010,rd_last:001,wr_wait:100,wr:011,wr_last:101,resp:110,idle:000";
-  attribute SOFT_HLUTNM of \LEN_GEN_32.derived_len_reg[3]_i_1\ : label is "soft_lutpair50";
-  attribute SOFT_HLUTNM of \PERBIT_GEN[1].MUXCY_i1_i_2\ : label is "soft_lutpair47";
-  attribute SOFT_HLUTNM of addr_sm_ps_IDLE_reg_i_7 : label is "soft_lutpair59";
-  attribute SOFT_HLUTNM of \axi_trans_size_reg[0]_i_1\ : label is "soft_lutpair52";
-  attribute SOFT_HLUTNM of \burst_addr_cnt[3]_i_2\ : label is "soft_lutpair55";
-  attribute SOFT_HLUTNM of \burst_addr_cnt[4]_i_2\ : label is "soft_lutpair55";
-  attribute SOFT_HLUTNM of \burst_addr_cnt[6]_i_2\ : label is "soft_lutpair45";
-  attribute SOFT_HLUTNM of \burst_addr_cnt[7]_i_5\ : label is "soft_lutpair54";
-  attribute SOFT_HLUTNM of \burst_data_cnt[3]_i_2\ : label is "soft_lutpair51";
-  attribute SOFT_HLUTNM of \burst_data_cnt[5]_i_2\ : label is "soft_lutpair51";
-  attribute SOFT_HLUTNM of \burstlength_reg[1]_i_1\ : label is "soft_lutpair38";
-  attribute SOFT_HLUTNM of \burstlength_reg[5]_i_1\ : label is "soft_lutpair41";
-  attribute SOFT_HLUTNM of \burstlength_reg[7]_i_3\ : label is "soft_lutpair46";
-  attribute SOFT_HLUTNM of \burstlength_reg[7]_i_5\ : label is "soft_lutpair39";
-  attribute SOFT_HLUTNM of \bus2ip_BE_reg[1]_i_2\ : label is "soft_lutpair37";
-  attribute SOFT_HLUTNM of \bus2ip_BE_reg[3]_i_4\ : label is "soft_lutpair37";
-  attribute SOFT_HLUTNM of bus2ip_rd_req_reg_i_2 : label is "soft_lutpair49";
-  attribute SOFT_HLUTNM of bus2ip_rd_req_reg_i_3 : label is "soft_lutpair62";
-  attribute SOFT_HLUTNM of bus2ip_rd_req_reg_i_4 : label is "soft_lutpair62";
-  attribute SOFT_HLUTNM of \derived_burst_reg[0]_i_1\ : label is "soft_lutpair58";
-  attribute SOFT_HLUTNM of \derived_burst_reg[1]_i_1\ : label is "soft_lutpair58";
-  attribute SOFT_HLUTNM of \derived_size_reg[0]_i_1\ : label is "soft_lutpair52";
-  attribute SOFT_HLUTNM of \derived_size_reg[1]_i_2\ : label is "soft_lutpair50";
-  attribute SOFT_HLUTNM of last_data_acked_i_2 : label is "soft_lutpair43";
-  attribute SOFT_HLUTNM of \rd_data_count[0]_i_1\ : label is "soft_lutpair53";
-  attribute SOFT_HLUTNM of \rd_data_count[1]_i_1\ : label is "soft_lutpair53";
-  attribute SOFT_HLUTNM of \rd_data_count[4]_i_2\ : label is "soft_lutpair48";
-  attribute SOFT_HLUTNM of \rd_data_count[5]_i_2\ : label is "soft_lutpair48";
-  attribute SOFT_HLUTNM of \rd_data_count[7]_i_2\ : label is "soft_lutpair43";
-  attribute SOFT_HLUTNM of rnw_reg_i_1 : label is "soft_lutpair42";
+  attribute SOFT_HLUTNM of \LEN_GEN_32.derived_len_reg[3]_i_1\ : label is "soft_lutpair49";
+  attribute SOFT_HLUTNM of \PERBIT_GEN[1].MUXCY_i1_i_2\ : label is "soft_lutpair45";
+  attribute SOFT_HLUTNM of addr_sm_ps_IDLE_reg_i_6 : label is "soft_lutpair58";
+  attribute SOFT_HLUTNM of \axi_trans_size_reg[0]_i_1\ : label is "soft_lutpair51";
+  attribute SOFT_HLUTNM of \burst_addr_cnt[3]_i_2\ : label is "soft_lutpair54";
+  attribute SOFT_HLUTNM of \burst_addr_cnt[5]_i_2\ : label is "soft_lutpair54";
+  attribute SOFT_HLUTNM of \burst_addr_cnt[7]_i_6\ : label is "soft_lutpair53";
+  attribute SOFT_HLUTNM of \burst_data_cnt[3]_i_2\ : label is "soft_lutpair50";
+  attribute SOFT_HLUTNM of \burst_data_cnt[5]_i_2\ : label is "soft_lutpair50";
+  attribute SOFT_HLUTNM of \burstlength_reg[1]_i_1\ : label is "soft_lutpair40";
+  attribute SOFT_HLUTNM of \burstlength_reg[5]_i_1\ : label is "soft_lutpair47";
+  attribute SOFT_HLUTNM of \burstlength_reg[7]_i_3\ : label is "soft_lutpair57";
+  attribute SOFT_HLUTNM of \burstlength_reg[7]_i_5\ : label is "soft_lutpair56";
+  attribute SOFT_HLUTNM of \bus2ip_BE_reg[1]_i_2\ : label is "soft_lutpair44";
+  attribute SOFT_HLUTNM of \bus2ip_BE_reg[3]_i_4\ : label is "soft_lutpair44";
+  attribute SOFT_HLUTNM of bus2ip_rd_req_reg_i_2 : label is "soft_lutpair48";
+  attribute SOFT_HLUTNM of bus2ip_rd_req_reg_i_3 : label is "soft_lutpair59";
+  attribute SOFT_HLUTNM of \derived_burst_reg[0]_i_1\ : label is "soft_lutpair55";
+  attribute SOFT_HLUTNM of \derived_burst_reg[1]_i_1\ : label is "soft_lutpair55";
+  attribute SOFT_HLUTNM of \derived_size_reg[0]_i_1\ : label is "soft_lutpair51";
+  attribute SOFT_HLUTNM of \derived_size_reg[1]_i_2\ : label is "soft_lutpair49";
+  attribute SOFT_HLUTNM of last_data_acked_i_2 : label is "soft_lutpair41";
+  attribute SOFT_HLUTNM of \rd_data_count[0]_i_1\ : label is "soft_lutpair52";
+  attribute SOFT_HLUTNM of \rd_data_count[1]_i_1\ : label is "soft_lutpair52";
+  attribute SOFT_HLUTNM of \rd_data_count[4]_i_2\ : label is "soft_lutpair46";
+  attribute SOFT_HLUTNM of \rd_data_count[5]_i_2\ : label is "soft_lutpair46";
+  attribute SOFT_HLUTNM of \rd_data_count[7]_i_2\ : label is "soft_lutpair41";
+  attribute SOFT_HLUTNM of rnw_reg_i_1 : label is "soft_lutpair43";
   attribute SOFT_HLUTNM of s_axi_mem_arready_INST_0_i_1 : label is "soft_lutpair56";
-  attribute SOFT_HLUTNM of s_axi_mem_awready_INST_0 : label is "soft_lutpair46";
-  attribute SOFT_HLUTNM of s_axi_mem_wready_INST_0 : label is "soft_lutpair39";
 begin
   Bus2IP_RdReq_emc <= \^bus2ip_rdreq_emc\;
   FIFO_Full_reg <= \^fifo_full_reg\;
-  Q(7 downto 0) <= \^q\(7 downto 0);
-  \axi_trans_size_reg_reg[1]_0\(0) <= \^axi_trans_size_reg_reg[1]_0\(0);
-  \burst_addr_cnt_reg[5]_0\ <= \^burst_addr_cnt_reg[5]_0\;
   \burst_addr_cnt_reg[7]_0\ <= \^burst_addr_cnt_reg[7]_0\;
+  \burstlength_reg_reg[7]_0\(7 downto 0) <= \^burstlength_reg_reg[7]_0\(7 downto 0);
   bus2ip_burst <= \^bus2ip_burst\;
   bus2ip_reset <= \^bus2ip_reset\;
   bus2ip_wrreq_i <= \^bus2ip_wrreq_i\;
@@ -18455,17 +18532,33 @@ begin
   rw_flag_reg <= \^rw_flag_reg\;
   s_axi_mem_bresp(0) <= \^s_axi_mem_bresp\(0);
   s_axi_mem_bvalid_reg_reg_0 <= \^s_axi_mem_bvalid_reg_reg_0\;
-  s_axi_mem_wvalid_0 <= \^s_axi_mem_wvalid_0\;
 AXI_EMC_ADDRESS_DECODE_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_address_decode
      port map (
       \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\ => \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\,
       Bus2IP_RdReq_d1_reg => \^fifo_full_reg\,
       Cycle_cnt_en_int => Cycle_cnt_en_int,
-      D(0) => \emc_addr_ns__0\(2),
-      \FSM_sequential_crnt_state[0]_i_4\ => \FSM_sequential_crnt_state[2]_i_11_n_0\,
+      D(1 downto 0) => \emc_addr_ns__0\(2 downto 1),
+      \FSM_sequential_crnt_state[0]_i_4\ => \FSM_sequential_crnt_state[2]_i_13_n_0\,
       \FSM_sequential_crnt_state[0]_i_4_0\ => \FSM_sequential_crnt_state[0]_i_4\,
       \FSM_sequential_crnt_state[0]_i_4_1\ => \FSM_sequential_crnt_state[0]_i_4_0\,
-      \FSM_sequential_crnt_state[3]_i_5\ => \^bus2ip_wrreq_i\,
+      \FSM_sequential_emc_addr_ps[1]_i_13_0\ => \FSM_sequential_emc_addr_ps[2]_i_12_n_0\,
+      \FSM_sequential_emc_addr_ps[1]_i_13_1\ => \FSM_sequential_emc_addr_ps[1]_i_13\,
+      \FSM_sequential_emc_addr_ps[2]_i_13_0\(7 downto 0) => \^burstlength_reg_reg[7]_0\(7 downto 0),
+      \FSM_sequential_emc_addr_ps_reg[1]\ => \FSM_sequential_emc_addr_ps[1]_i_3_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[1]_0\ => \^burst_addr_cnt_reg[7]_0\,
+      \FSM_sequential_emc_addr_ps_reg[1]_1\ => \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\,
+      \FSM_sequential_emc_addr_ps_reg[1]_2\ => \FSM_sequential_emc_addr_ps[1]_i_6_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[1]_3\ => \FSM_sequential_emc_addr_ps[1]_i_8_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[1]_4\ => \FSM_sequential_emc_addr_ps[1]_i_9_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[1]_5\ => \FSM_sequential_emc_addr_ps[1]_i_10_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[1]_6\ => \FSM_sequential_emc_addr_ps[1]_i_11_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[2]\ => \FSM_sequential_emc_addr_ps[2]_i_4_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[2]_0\ => \FSM_sequential_emc_addr_ps[2]_i_5_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[2]_1\ => \FSM_sequential_emc_addr_ps[2]_i_6_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[2]_2\ => \FSM_sequential_emc_addr_ps[2]_i_7_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[2]_3\ => \FSM_sequential_emc_addr_ps[2]_i_8_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[2]_4\ => \FSM_sequential_emc_addr_ps_reg[2]_0\,
+      \FSM_sequential_emc_addr_ps_reg[2]_5\ => \FSM_sequential_emc_addr_ps_reg[2]_1\,
       IP2Bus_RdAck0 => IP2Bus_RdAck0,
       \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ => temp_bus2ip_cs,
       \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]\,
@@ -18474,43 +18567,41 @@ AXI_EMC_ADDRESS_DECODE_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_ad
       \MEM_DECODE_GEN[0].cs_out_i_reg[0]_4\ => \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\,
       \MEM_DECODE_GEN[0].cs_out_i_reg[0]_5\(2 downto 0) => emc_addr_ps(2 downto 0),
       \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ => \^rdce_out_i\,
-      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\ => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\,
-      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\ => RDATA_FIFO_I_n_10,
-      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_3\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\ => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]\,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\ => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_3\ => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_4\ => RDATA_FIFO_I_n_10,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_5\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ => \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
       \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ => S,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\(0) => \^axi_trans_size_reg_reg[1]_0\(0),
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ => \PERBIT_GEN[1].MUXCY_i1_i_2_n_0\,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => \PERBIT_GEN[1].MUXCY_i1_i_2_n_0\,
+      \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2\ => \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2\,
       Q(0) => RDATA_FIFO_I_n_0,
-      S(0) => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_6,
+      S(0) => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_7,
       SS(0) => \^bus2ip_reset\,
       Type_of_xfer => Type_of_xfer,
-      addr_sm_ps_IDLE_reg_i_3_0 => addr_sm_ps_IDLE_reg_i_7_n_0,
+      addr_sm_ps_IDLE_reg_i_3_0 => \FSM_sequential_emc_addr_ps[1]_i_14_n_0\,
       addr_sm_ps_IDLE_reg_i_3_1 => addr_sm_ps_IDLE_reg_i_3,
-      addr_sm_ps_IDLE_reg_i_3_2 => addr_sm_ps_IDLE_reg_i_3_0,
-      addr_sm_ps_IDLE_reg_i_4_0 => \FSM_sequential_emc_addr_ps[1]_i_8_n_0\,
-      addr_sm_ps_IDLE_reg_i_4_1 => \FSM_sequential_emc_addr_ps[1]_i_9_n_0\,
-      addr_sm_ps_IDLE_reg_i_4_2 => \^s_axi_mem_wvalid_0\,
-      addr_sm_ps_IDLE_reg_i_5_0 => addr_sm_ps_IDLE_reg_i_5,
-      addr_sm_ps_IDLE_reg_i_5_1 => \^burst_addr_cnt_reg[5]_0\,
+      addr_sm_ps_IDLE_reg_i_3_2 => addr_sm_ps_IDLE_reg_i_6_n_0,
+      addr_sm_ps_IDLE_reg_i_4_0 => \FSM_sequential_emc_addr_ps[1]_i_15_n_0\,
       addr_sm_ps_IDLE_reg_reg => addr_sm_ps_IDLE_reg_i_2_n_0,
-      addr_sm_ps_IDLE_reg_reg_0 => \FSM_sequential_emc_addr_ps[1]_i_6_n_0\,
+      addr_sm_ps_IDLE_reg_reg_0 => \FSM_sequential_emc_addr_ps[1]_i_7_n_0\,
       addr_sm_ps_IDLE_reg_reg_1 => RDATA_FIFO_I_n_3,
-      addr_sm_ps_IDLE_reg_reg_2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_17,
-      addr_sm_ps_IDLE_reg_reg_3 => \FSM_sequential_emc_addr_ps[2]_i_8_n_0\,
-      addr_sm_ps_IDLE_reg_reg_4 => \FSM_sequential_emc_addr_ps[2]_i_7_n_0\,
-      addr_sm_ps_IDLE_reg_reg_5 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_5,
-      addr_sm_ps_IDLE_reg_reg_6 => \FSM_sequential_emc_addr_ps[1]_i_3_n_0\,
-      addr_sm_ps_IDLE_reg_reg_7 => \FSM_sequential_emc_addr_ps[1]_i_7_n_0\,
-      addr_sm_ps_IDLE_reg_reg_8 => \FSM_sequential_emc_addr_ps[1]_i_5_n_0\,
+      addr_sm_ps_IDLE_reg_reg_2 => \FSM_sequential_emc_addr_ps[0]_i_6_n_0\,
+      addr_sm_ps_IDLE_reg_reg_3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_5,
+      addr_sm_ps_IDLE_reg_reg_4 => \FSM_sequential_emc_addr_ps[1]_i_12_n_0\,
       addr_sm_ps_idle_cmb => addr_sm_ps_idle_cmb,
-      axi_trans_size_reg_int(0) => axi_trans_size_reg_int(0),
-      \burst_addr_cnt[7]_i_12_0\(7 downto 0) => \^q\(7 downto 0),
-      \burst_data_cnt_reg[1]\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_16,
-      \burst_data_cnt_reg[7]\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_8,
+      axi_trans_size_reg_int(1 downto 0) => axi_trans_size_reg_int(1 downto 0),
+      \burst_addr_cnt[7]_i_3\ => \burst_addr_cnt[7]_i_3\,
+      \burst_addr_cnt[7]_i_3_0\(0) => Q(0),
+      \burst_addr_cnt[7]_i_3_1\ => \burst_addr_cnt[7]_i_3_0\,
+      \burst_data_cnt_reg[1]\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_22,
+      \burst_data_cnt_reg[7]\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_11,
       \burstlength_reg_reg[0]\ => \burstlength_reg_reg[0]_0\,
-      \burstlength_reg_reg[5]\ => \burstlength_reg_reg[5]_0\,
-      cycle_cnt(0) => cycle_cnt(0),
+      bus2ip_burst => \^bus2ip_burst\,
+      bus2ip_wr_req_reg_reg => bus2ip_wr_req_reg_reg_0,
+      cycle_cnt(0 to 1) => cycle_cnt(0 to 1),
       enable_cs_cmb => enable_cs_cmb,
       \in\(0) => rd_fifo_data_in(0),
       ip2bus_rdack => ip2bus_rdack,
@@ -18519,16 +18610,19 @@ AXI_EMC_ADDRESS_DECODE_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_ad
       pend_rdreq_reg => bus2Mem_RdReq,
       pend_rdreq_reg_0 => pend_rdreq_reg,
       pend_wrreq => pend_wrreq,
+      pend_wrreq_reg => \^bus2ip_wrreq_i\,
+      pend_wrreq_reg_0 => \burst_addr_cnt_reg[7]_1\,
       rd_fifo_wr_en => rd_fifo_wr_en,
       readreq_th_reset => readreq_th_reset,
       reset_fifo => reset_fifo,
       s_axi_aclk => s_axi_aclk,
       s_axi_aresetn => s_axi_aresetn,
-      s_axi_mem_bready => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_7,
+      s_axi_mem_bready => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_8,
       s_axi_mem_bresp(0) => \^s_axi_mem_bresp\(0),
-      \s_axi_mem_bresp_reg_reg[1]\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_21,
-      \s_axi_mem_bresp_reg_reg[1]_0\ => \burst_addr_cnt_reg[7]_1\,
-      s_axi_mem_wvalid => s_axi_mem_wvalid
+      \s_axi_mem_bresp_reg_reg[1]\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_27,
+      \s_axi_mem_bresp_reg_reg[1]_0\ => \s_axi_mem_bresp_reg_reg[1]_0\,
+      s_axi_mem_wvalid => s_axi_mem_wvalid,
+      transaction_done_i => transaction_done_i
     );
 AXI_EMC_ADDR_GEN_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_addr_gen
      port map (
@@ -18547,39 +18641,40 @@ AXI_EMC_ADDR_GEN_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_addr_gen
       Bus2IP_RdReq_d1_i_2(3 downto 0) => burst_data_cnt(7 downto 4),
       E(0) => RDATA_FIFO_I_n_5,
       \FSM_sequential_emc_addr_ps[0]_i_7\(7 downto 0) => \rd_data_count_reg__0\(7 downto 0),
-      \FSM_sequential_emc_addr_ps_reg[0]\ => \^rw_flag_reg\,
-      \FSM_sequential_emc_addr_ps_reg[0]_0\ => rw_flag_reg_reg_0,
-      \FSM_sequential_emc_addr_ps_reg[1]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_20,
+      \FSM_sequential_emc_addr_ps_reg[1]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_21,
       \FSM_sequential_emc_addr_ps_reg[2]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_5,
       \FSM_sequential_emc_addr_ps_reg[2]_0\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_7,
       \FSM_sequential_emc_addr_ps_reg[2]_1\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_15,
       Q(2 downto 0) => emc_addr_ps(2 downto 0),
-      \burst_addr_cnt_reg[4]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_22,
+      \burst_addr_cnt_reg[2]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
       \burst_addr_cnt_reg[7]\ => \^burst_addr_cnt_reg[7]_0\,
       \burst_addr_cnt_reg[7]_0\(7 downto 1) => \burst_addr_cnt_reg__0\(7 downto 1),
       \burst_addr_cnt_reg[7]_0\(0) => \burst_addr_cnt_reg__1\(0),
-      \burst_data_cnt_reg[5]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_19,
-      \bus2ip_addr_i_reg[31]_0\ => \bus2ip_data_reg_reg[0]_0\,
+      \burst_data_cnt_reg[5]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_20,
+      \bus2ip_addr_i_reg[31]_0\ => rw_flag_reg_reg_0,
       bus2ip_addr_temp(19 downto 0) => bus2ip_addr_temp(29 downto 10),
       bus2ip_rnw => bus2ip_rnw,
       enable_cs_cmb => enable_cs_cmb,
       ip2bus_rdack => ip2bus_rdack,
       last_data_acked => last_data_acked,
-      \rd_data_count_reg[5]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
+      \rd_data_count_reg[5]\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_24,
       rnw_reg_reg => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
+      rw_flag_reg_reg => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18,
       s_axi_aclk => s_axi_aclk,
       s_axi_aresetn => s_axi_aresetn,
       s_axi_aresetn_0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1,
       s_axi_mem_araddr(31 downto 0) => s_axi_mem_araddr(31 downto 0),
       s_axi_mem_arburst(1 downto 0) => s_axi_mem_arburst(1 downto 0),
+      s_axi_mem_arburst_1_sp_1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_17,
       s_axi_mem_arvalid => s_axi_mem_arvalid,
       s_axi_mem_awaddr(31 downto 0) => s_axi_mem_awaddr(31 downto 0),
       s_axi_mem_awburst(1 downto 0) => s_axi_mem_awburst(1 downto 0),
       s_axi_mem_awburst_0_sp_1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_6,
+      s_axi_mem_awready => \^rw_flag_reg\,
       s_axi_mem_awvalid => s_axi_mem_awvalid,
-      s_axi_mem_awvalid_0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_17,
       s_axi_mem_rready => s_axi_mem_rready,
-      s_axi_mem_rready_0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18
+      s_axi_mem_rready_0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_19,
+      s_axi_mem_wvalid => s_axi_mem_wvalid
     );
 \BEN_STORE_GEN[0].BEN_REG_i_1\: unisim.vcomponents.LUT2
     generic map(
@@ -18629,9 +18724,9 @@ AXI_EMC_ADDR_GEN_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_addr_gen
       I4 => temp_bus2ip_be(3),
       O => \bus2ip_BE_reg_reg[0]_0\
     );
-\FSM_sequential_crnt_state[2]_i_11\: unisim.vcomponents.LUT5
+\FSM_sequential_crnt_state[2]_i_13\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"40000000"
+      INIT => X"80000000"
     )
         port map (
       I0 => \^burst_addr_cnt_reg[7]_0\,
@@ -18639,31 +18734,7 @@ AXI_EMC_ADDR_GEN_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_addr_gen
       I2 => temp_bus2ip_be(2),
       I3 => temp_bus2ip_be(1),
       I4 => temp_bus2ip_be(3),
-      O => \FSM_sequential_crnt_state[2]_i_11_n_0\
-    );
-\FSM_sequential_emc_addr_ps[0]_i_10\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"FFFACCFA"
-    )
-        port map (
-      I0 => s_axi_mem_arlen(7),
-      I1 => s_axi_mem_awlen(7),
-      I2 => s_axi_mem_arlen(6),
-      I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
-      I4 => s_axi_mem_awlen(6),
-      O => \FSM_sequential_emc_addr_ps[0]_i_10_n_0\
-    );
-\FSM_sequential_emc_addr_ps[0]_i_11\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"FFFACCFA"
-    )
-        port map (
-      I0 => s_axi_mem_arlen(5),
-      I1 => s_axi_mem_awlen(5),
-      I2 => s_axi_mem_arlen(4),
-      I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
-      I4 => s_axi_mem_awlen(4),
-      O => \FSM_sequential_emc_addr_ps[0]_i_11_n_0\
+      O => \FSM_sequential_crnt_state[2]_i_13_n_0\
     );
 \FSM_sequential_emc_addr_ps[0]_i_2\: unisim.vcomponents.LUT4
     generic map(
@@ -18681,74 +18752,90 @@ AXI_EMC_ADDR_GEN_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_addr_gen
       INIT => X"0004"
     )
         port map (
-      I0 => \FSM_sequential_emc_addr_ps[0]_i_8_n_0\,
-      I1 => \FSM_sequential_emc_addr_ps[0]_i_9_n_0\,
-      I2 => \FSM_sequential_emc_addr_ps[0]_i_10_n_0\,
-      I3 => \FSM_sequential_emc_addr_ps[0]_i_11_n_0\,
+      I0 => \FSM_sequential_emc_addr_ps[1]_i_8_n_0\,
+      I1 => \FSM_sequential_emc_addr_ps[1]_i_9_n_0\,
+      I2 => \FSM_sequential_emc_addr_ps[1]_i_10_n_0\,
+      I3 => \FSM_sequential_emc_addr_ps[1]_i_11_n_0\,
       O => \FSM_sequential_emc_addr_ps[0]_i_5_n_0\
+    );
+\FSM_sequential_emc_addr_ps[0]_i_6\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"7070700000000000"
+    )
+        port map (
+      I0 => s_axi_mem_awvalid,
+      I1 => \^rw_flag_reg\,
+      I2 => s_axi_mem_arvalid,
+      I3 => s_axi_mem_arburst(0),
+      I4 => s_axi_mem_arburst(1),
+      I5 => rw_flag_reg_reg_0,
+      O => \FSM_sequential_emc_addr_ps[0]_i_6_n_0\
     );
 \FSM_sequential_emc_addr_ps[0]_i_7\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"4040400044444404"
+      INIT => X"4050405040500010"
     )
         port map (
       I0 => emc_addr_ps(2),
-      I1 => emc_addr_ps(0),
-      I2 => emc_addr_ps(1),
-      I3 => \burst_addr_cnt_reg[7]_1\,
-      I4 => s_axi_mem_wvalid,
-      I5 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18,
+      I1 => emc_addr_ps(1),
+      I2 => emc_addr_ps(0),
+      I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_19,
+      I4 => \burst_addr_cnt_reg[7]_1\,
+      I5 => s_axi_mem_wvalid,
       O => \FSM_sequential_emc_addr_ps[0]_i_7_n_0\
     );
-\FSM_sequential_emc_addr_ps[0]_i_8\: unisim.vcomponents.LUT5
+\FSM_sequential_emc_addr_ps[1]_i_10\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"FFFACCFA"
     )
         port map (
-      I0 => s_axi_mem_arlen(3),
-      I1 => s_axi_mem_awlen(3),
-      I2 => s_axi_mem_arlen(2),
+      I0 => s_axi_mem_arlen(7),
+      I1 => s_axi_mem_awlen(7),
+      I2 => s_axi_mem_arlen(6),
       I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
-      I4 => s_axi_mem_awlen(2),
-      O => \FSM_sequential_emc_addr_ps[0]_i_8_n_0\
+      I4 => s_axi_mem_awlen(6),
+      O => \FSM_sequential_emc_addr_ps[1]_i_10_n_0\
     );
-\FSM_sequential_emc_addr_ps[0]_i_9\: unisim.vcomponents.LUT5
+\FSM_sequential_emc_addr_ps[1]_i_11\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"00053305"
+      INIT => X"FFFACCFA"
     )
         port map (
-      I0 => s_axi_mem_arlen(1),
-      I1 => s_axi_mem_awlen(1),
-      I2 => s_axi_mem_arlen(0),
+      I0 => s_axi_mem_arlen(5),
+      I1 => s_axi_mem_awlen(5),
+      I2 => s_axi_mem_arlen(4),
       I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
-      I4 => s_axi_mem_awlen(0),
-      O => \FSM_sequential_emc_addr_ps[0]_i_9_n_0\
+      I4 => s_axi_mem_awlen(4),
+      O => \FSM_sequential_emc_addr_ps[1]_i_11_n_0\
     );
-\FSM_sequential_emc_addr_ps[1]_i_1\: unisim.vcomponents.LUT6
+\FSM_sequential_emc_addr_ps[1]_i_12\: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"0000000DCCCCDDDD"
+      INIT => X"FE"
     )
         port map (
-      I0 => \FSM_sequential_emc_addr_ps[1]_i_2_n_0\,
-      I1 => \FSM_sequential_emc_addr_ps[1]_i_3_n_0\,
-      I2 => \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\,
-      I3 => \^burst_addr_cnt_reg[7]_0\,
-      I4 => \FSM_sequential_emc_addr_ps[1]_i_5_n_0\,
-      I5 => \FSM_sequential_emc_addr_ps[1]_i_6_n_0\,
-      O => \emc_addr_ns__0\(1)
+      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_6,
+      I1 => emc_addr_ps(0),
+      I2 => emc_addr_ps(1),
+      O => \FSM_sequential_emc_addr_ps[1]_i_12_n_0\
     );
-\FSM_sequential_emc_addr_ps[1]_i_2\: unisim.vcomponents.LUT6
+\FSM_sequential_emc_addr_ps[1]_i_14\: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"00000000F2F200F2"
+      INIT => X"8"
     )
         port map (
-      I0 => \FSM_sequential_emc_addr_ps[2]_i_7_n_0\,
-      I1 => \FSM_sequential_emc_addr_ps[2]_i_8_n_0\,
-      I2 => \FSM_sequential_emc_addr_ps[1]_i_7_n_0\,
-      I3 => \FSM_sequential_emc_addr_ps[1]_i_8_n_0\,
-      I4 => \FSM_sequential_emc_addr_ps_reg[2]_0\,
-      I5 => \FSM_sequential_emc_addr_ps[1]_i_9_n_0\,
-      O => \FSM_sequential_emc_addr_ps[1]_i_2_n_0\
+      I0 => emc_addr_ps(1),
+      I1 => emc_addr_ps(0),
+      O => \FSM_sequential_emc_addr_ps[1]_i_14_n_0\
+    );
+\FSM_sequential_emc_addr_ps[1]_i_15\: unisim.vcomponents.LUT3
+    generic map(
+      INIT => X"02"
+    )
+        port map (
+      I0 => emc_addr_ps(1),
+      I1 => emc_addr_ps(0),
+      I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_19,
+      O => \FSM_sequential_emc_addr_ps[1]_i_15_n_0\
     );
 \FSM_sequential_emc_addr_ps[1]_i_3\: unisim.vcomponents.LUT4
     generic map(
@@ -18761,7 +18848,7 @@ AXI_EMC_ADDR_GEN_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_addr_gen
       I3 => emc_addr_ps(2),
       O => \FSM_sequential_emc_addr_ps[1]_i_3_n_0\
     );
-\FSM_sequential_emc_addr_ps[1]_i_5\: unisim.vcomponents.LUT3
+\FSM_sequential_emc_addr_ps[1]_i_6\: unisim.vcomponents.LUT3
     generic map(
       INIT => X"8A"
     )
@@ -18769,130 +18856,104 @@ AXI_EMC_ADDR_GEN_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_addr_gen
       I0 => emc_addr_ps(2),
       I1 => emc_addr_ps(1),
       I2 => emc_addr_ps(0),
-      O => \FSM_sequential_emc_addr_ps[1]_i_5_n_0\
+      O => \FSM_sequential_emc_addr_ps[1]_i_6_n_0\
     );
-\FSM_sequential_emc_addr_ps[1]_i_6\: unisim.vcomponents.LUT5
+\FSM_sequential_emc_addr_ps[1]_i_7\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0D000F00"
+      INIT => X"0E000F00"
     )
         port map (
-      I0 => s_axi_mem_wvalid,
+      I0 => \^burst_addr_cnt_reg[7]_0\,
       I1 => emc_addr_ps(0),
       I2 => emc_addr_ps(1),
       I3 => emc_addr_ps(2),
-      I4 => \^burst_addr_cnt_reg[7]_0\,
-      O => \FSM_sequential_emc_addr_ps[1]_i_6_n_0\
-    );
-\FSM_sequential_emc_addr_ps[1]_i_7\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"FE"
-    )
-        port map (
-      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_6,
-      I1 => emc_addr_ps(0),
-      I2 => emc_addr_ps(1),
+      I4 => s_axi_mem_wvalid,
       O => \FSM_sequential_emc_addr_ps[1]_i_7_n_0\
     );
-\FSM_sequential_emc_addr_ps[1]_i_8\: unisim.vcomponents.LUT2
+\FSM_sequential_emc_addr_ps[1]_i_8\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"8"
+      INIT => X"FFFACCFA"
     )
         port map (
-      I0 => emc_addr_ps(1),
-      I1 => emc_addr_ps(0),
+      I0 => s_axi_mem_arlen(3),
+      I1 => s_axi_mem_awlen(3),
+      I2 => s_axi_mem_arlen(2),
+      I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
+      I4 => s_axi_mem_awlen(2),
       O => \FSM_sequential_emc_addr_ps[1]_i_8_n_0\
     );
-\FSM_sequential_emc_addr_ps[1]_i_9\: unisim.vcomponents.LUT3
+\FSM_sequential_emc_addr_ps[1]_i_9\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"02"
+      INIT => X"00053305"
     )
         port map (
-      I0 => emc_addr_ps(1),
-      I1 => emc_addr_ps(0),
-      I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18,
+      I0 => s_axi_mem_arlen(1),
+      I1 => s_axi_mem_awlen(1),
+      I2 => s_axi_mem_arlen(0),
+      I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
+      I4 => s_axi_mem_awlen(0),
       O => \FSM_sequential_emc_addr_ps[1]_i_9_n_0\
     );
-\FSM_sequential_emc_addr_ps[2]_i_10\: unisim.vcomponents.LUT6
+\FSM_sequential_emc_addr_ps[2]_i_10\: unisim.vcomponents.LUT4
+    generic map(
+      INIT => X"FFEF"
+    )
+        port map (
+      I0 => \burst_addr_cnt_reg__0\(7),
+      I1 => \burst_addr_cnt_reg__0\(6),
+      I2 => \burst_addr_cnt_reg__1\(0),
+      I3 => \burst_addr_cnt_reg__0\(2),
+      O => \FSM_sequential_emc_addr_ps[2]_i_10_n_0\
+    );
+\FSM_sequential_emc_addr_ps[2]_i_12\: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"FFFEFEFEFFFFFFFF"
+    )
+        port map (
+      I0 => \burst_addr_cnt_reg__0\(6),
+      I1 => \burst_addr_cnt_reg__0\(7),
+      I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
+      I3 => pend_wrreq,
+      I4 => \^bus2ip_wrreq_i\,
+      I5 => \FSM_sequential_emc_addr_ps[2]_i_9\,
+      O => \FSM_sequential_emc_addr_ps[2]_i_12_n_0\
+    );
+\FSM_sequential_emc_addr_ps[2]_i_4\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"AAAAAAAAAAAAAAA8"
     )
         port map (
       I0 => s_axi_mem_wvalid,
-      I1 => \FSM_sequential_emc_addr_ps[2]_i_12_n_0\,
-      I2 => \burst_addr_cnt_reg__0\(7),
+      I1 => \FSM_sequential_emc_addr_ps[2]_i_10_n_0\,
+      I2 => \burst_addr_cnt_reg__0\(5),
       I3 => \burst_addr_cnt_reg__0\(4),
-      I4 => \burst_addr_cnt_reg__0\(2),
+      I4 => \burst_addr_cnt_reg__0\(3),
       I5 => \burst_addr_cnt_reg__0\(1),
-      O => \^s_axi_mem_wvalid_0\
+      O => \FSM_sequential_emc_addr_ps[2]_i_4_n_0\
     );
-\FSM_sequential_emc_addr_ps[2]_i_11\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"00E0E0E0"
-    )
-        port map (
-      I0 => s_axi_mem_arburst(1),
-      I1 => s_axi_mem_arburst(0),
-      I2 => s_axi_mem_arvalid,
-      I3 => \^rw_flag_reg\,
-      I4 => s_axi_mem_awvalid,
-      O => \FSM_sequential_emc_addr_ps[2]_i_11_n_0\
-    );
-\FSM_sequential_emc_addr_ps[2]_i_12\: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"FFEF"
-    )
-        port map (
-      I0 => \burst_addr_cnt_reg__0\(5),
-      I1 => \burst_addr_cnt_reg__0\(6),
-      I2 => \burst_addr_cnt_reg__1\(0),
-      I3 => \burst_addr_cnt_reg__0\(3),
-      O => \FSM_sequential_emc_addr_ps[2]_i_12_n_0\
-    );
-\FSM_sequential_emc_addr_ps[2]_i_2\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"AEAEAEAEAEFFAEAE"
-    )
-        port map (
-      I0 => \FSM_sequential_emc_addr_ps[2]_i_3_n_0\,
-      I1 => \FSM_sequential_emc_addr_ps_reg[2]_0\,
-      I2 => \FSM_sequential_emc_addr_ps[2]_i_5_n_0\,
-      I3 => \FSM_sequential_emc_addr_ps[2]_i_6_n_0\,
-      I4 => \FSM_sequential_emc_addr_ps[2]_i_7_n_0\,
-      I5 => \FSM_sequential_emc_addr_ps[2]_i_8_n_0\,
-      O => \emc_addr_ns__0\(2)
-    );
-\FSM_sequential_emc_addr_ps[2]_i_3\: unisim.vcomponents.LUT5
+\FSM_sequential_emc_addr_ps[2]_i_5\: unisim.vcomponents.LUT5
     generic map(
       INIT => X"BFAAAAAA"
     )
         port map (
-      I0 => \FSM_sequential_emc_addr_ps[1]_i_6_n_0\,
+      I0 => \FSM_sequential_emc_addr_ps[1]_i_7_n_0\,
       I1 => s_axi_mem_bready,
       I2 => \^s_axi_mem_bvalid_reg_reg_0\,
       I3 => emc_addr_ps(1),
       I4 => emc_addr_ps(2),
-      O => \FSM_sequential_emc_addr_ps[2]_i_3_n_0\
-    );
-\FSM_sequential_emc_addr_ps[2]_i_5\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"BF"
-    )
-        port map (
-      I0 => emc_addr_ps(2),
-      I1 => emc_addr_ps(0),
-      I2 => emc_addr_ps(1),
       O => \FSM_sequential_emc_addr_ps[2]_i_5_n_0\
     );
-\FSM_sequential_emc_addr_ps[2]_i_6\: unisim.vcomponents.LUT5
+\FSM_sequential_emc_addr_ps[2]_i_6\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FF1FFFFF"
+      INIT => X"FFFFFF1FFFFFFFFF"
     )
         port map (
       I0 => s_axi_mem_awburst(0),
       I1 => s_axi_mem_awburst(1),
-      I2 => \bus2ip_data_reg_reg[0]_0\,
-      I3 => \FSM_sequential_emc_addr_ps[2]_i_11_n_0\,
-      I4 => addr_sm_ps_idle_cmb,
+      I2 => rw_flag_reg_reg_0,
+      I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18,
+      I4 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_17,
+      I5 => addr_sm_ps_idle_cmb,
       O => \FSM_sequential_emc_addr_ps[2]_i_6_n_0\
     );
 \FSM_sequential_emc_addr_ps[2]_i_7\: unisim.vcomponents.LUT6
@@ -18920,18 +18981,6 @@ AXI_EMC_ADDR_GEN_INSTANCE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_addr_gen
       I4 => data(6),
       I5 => data(7),
       O => \FSM_sequential_emc_addr_ps[2]_i_8_n_0\
-    );
-\FSM_sequential_emc_addr_ps[2]_i_9\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"FFFEFFFF"
-    )
-        port map (
-      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_22,
-      I1 => \burst_addr_cnt_reg__0\(5),
-      I2 => \burst_addr_cnt_reg__0\(6),
-      I3 => \burst_addr_cnt_reg__0\(7),
-      I4 => \FSM_sequential_emc_addr_ps[2]_i_4\,
-      O => \^burst_addr_cnt_reg[5]_0\
     );
 \FSM_sequential_emc_addr_ps_reg[0]\: unisim.vcomponents.FDRE
      port map (
@@ -19082,9 +19131,9 @@ RDATA_FIFO_I: entity work.meowrouter_axi_emc_0_2_srl_fifo_rbu_f
      port map (
       \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\ => \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\,
       \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_0\(0) => derived_burst_reg(0),
-      \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_1\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_20,
-      \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_2\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_16,
-      \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_3\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_19,
+      \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_1\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_21,
+      \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_2\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_22,
+      \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_3\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_20,
       \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]_4\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_7,
       D(0) => \emc_addr_ns__0\(0),
       E(0) => RDATA_FIFO_I_n_4,
@@ -19092,15 +19141,15 @@ RDATA_FIFO_I: entity work.meowrouter_axi_emc_0_2_srl_fifo_rbu_f
       \FSM_sequential_emc_addr_ps_reg[0]\ => \FSM_sequential_emc_addr_ps[0]_i_2_n_0\,
       \FSM_sequential_emc_addr_ps_reg[0]_0\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_5,
       \FSM_sequential_emc_addr_ps_reg[0]_1\ => \FSM_sequential_emc_addr_ps[0]_i_5_n_0\,
-      \FSM_sequential_emc_addr_ps_reg[0]_2\ => AXI_EMC_ADDR_GEN_INSTANCE_I_n_17,
+      \FSM_sequential_emc_addr_ps_reg[0]_2\ => \FSM_sequential_emc_addr_ps[0]_i_6_n_0\,
       \FSM_sequential_emc_addr_ps_reg[0]_3\ => \FSM_sequential_emc_addr_ps[0]_i_7_n_0\,
-      \FSM_sequential_emc_addr_ps_reg[0]_4\ => \FSM_sequential_emc_addr_ps[1]_i_5_n_0\,
+      \FSM_sequential_emc_addr_ps_reg[0]_4\ => \FSM_sequential_emc_addr_ps[1]_i_6_n_0\,
       \FSM_sequential_emc_addr_ps_reg[2]\ => RDATA_FIFO_I_n_10,
-      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]\ => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]\,
-      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_8,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]\ => \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_11,
       \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\(2 downto 0) => emc_addr_ps(2 downto 0),
       Q(0) => RDATA_FIFO_I_n_0,
-      S(0) => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_6,
+      S(0) => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_7,
       SS(0) => \^bus2ip_reset\,
       \burst_addr_cnt_reg[7]\ => RDATA_FIFO_I_n_7,
       \burst_addr_cnt_reg[7]_0\ => \^burst_addr_cnt_reg[7]_0\,
@@ -19175,21 +19224,21 @@ addr_sm_ps_IDLE_reg_i_2: unisim.vcomponents.LUT6
       I5 => emc_addr_ps(1),
       O => addr_sm_ps_IDLE_reg_i_2_n_0
     );
-addr_sm_ps_IDLE_reg_i_7: unisim.vcomponents.LUT3
+addr_sm_ps_IDLE_reg_i_6: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"EF"
+      INIT => X"04"
     )
         port map (
-      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18,
-      I1 => emc_addr_ps(1),
-      I2 => emc_addr_ps(0),
-      O => addr_sm_ps_IDLE_reg_i_7_n_0
+      I0 => emc_addr_ps(1),
+      I1 => emc_addr_ps(0),
+      I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_19,
+      O => addr_sm_ps_IDLE_reg_i_6_n_0
     );
 addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_7,
+      D => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_8,
       Q => addr_sm_ps_IDLE_reg,
       S => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
@@ -19212,7 +19261,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       I0 => s_axi_mem_arsize(1),
       I1 => enable_cs_cmb,
       I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
-      I3 => \^axi_trans_size_reg_reg[1]_0\(0),
+      I3 => axi_trans_size_reg_int(1),
       O => \axi_trans_size_reg[1]_i_1_n_0\
     );
 \axi_trans_size_reg_reg[0]\: unisim.vcomponents.FDRE
@@ -19228,7 +19277,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => '1',
       D => \axi_trans_size_reg[1]_i_1_n_0\,
-      Q => \^axi_trans_size_reg_reg[1]_0\(0),
+      Q => axi_trans_size_reg_int(1),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \burst_addr_cnt[0]_i_1\: unisim.vcomponents.LUT5
@@ -19310,11 +19359,23 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
       I2 => s_axi_mem_arlen(4),
       I3 => enable_cs_cmb,
-      I4 => \burst_addr_cnt[4]_i_2_n_0\,
+      I4 => \burst_addr_cnt[5]_i_2_n_0\,
       I5 => \burst_addr_cnt_reg__0\(4),
       O => \p_0_in__0\(4)
     );
-\burst_addr_cnt[4]_i_2\: unisim.vcomponents.LUT4
+\burst_addr_cnt[5]_i_1\: unisim.vcomponents.LUT5
+    generic map(
+      INIT => X"BBB8888B"
+    )
+        port map (
+      I0 => data(5),
+      I1 => enable_cs_cmb,
+      I2 => \burst_addr_cnt_reg__0\(4),
+      I3 => \burst_addr_cnt[5]_i_2_n_0\,
+      I4 => \burst_addr_cnt_reg__0\(5),
+      O => \p_0_in__0\(5)
+    );
+\burst_addr_cnt[5]_i_2\: unisim.vcomponents.LUT4
     generic map(
       INIT => X"FFFE"
     )
@@ -19323,65 +19384,42 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       I1 => \burst_addr_cnt_reg__0\(1),
       I2 => \burst_addr_cnt_reg__1\(0),
       I3 => \burst_addr_cnt_reg__0\(2),
-      O => \burst_addr_cnt[4]_i_2_n_0\
+      O => \burst_addr_cnt[5]_i_2_n_0\
     );
-\burst_addr_cnt[5]_i_1\: unisim.vcomponents.LUT6
+\burst_addr_cnt[6]_i_1\: unisim.vcomponents.LUT6
     generic map(
       INIT => X"B8FFB800B800B8FF"
-    )
-        port map (
-      I0 => s_axi_mem_awlen(5),
-      I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
-      I2 => s_axi_mem_arlen(5),
-      I3 => enable_cs_cmb,
-      I4 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_22,
-      I5 => \burst_addr_cnt_reg__0\(5),
-      O => \p_0_in__0\(5)
-    );
-\burst_addr_cnt[6]_i_1\: unisim.vcomponents.LUT5
-    generic map(
-      INIT => X"B8FFB800"
     )
         port map (
       I0 => s_axi_mem_awlen(6),
       I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
       I2 => s_axi_mem_arlen(6),
       I3 => enable_cs_cmb,
-      I4 => \burst_addr_cnt[6]_i_2_n_0\,
+      I4 => \burst_addr_cnt_reg__0\(6),
+      I5 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
       O => \p_0_in__0\(6)
     );
-\burst_addr_cnt[6]_i_2\: unisim.vcomponents.LUT3
+\burst_addr_cnt[7]_i_2\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"E1"
-    )
-        port map (
-      I0 => \burst_addr_cnt_reg__0\(5),
-      I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_22,
-      I2 => \burst_addr_cnt_reg__0\(6),
-      O => \burst_addr_cnt[6]_i_2_n_0\
-    );
-\burst_addr_cnt[7]_i_2\: unisim.vcomponents.LUT6
-    generic map(
-      INIT => X"B8FFB800B800B8FF"
+      INIT => X"B8FFB800"
     )
         port map (
       I0 => s_axi_mem_awlen(7),
       I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
       I2 => s_axi_mem_arlen(7),
       I3 => enable_cs_cmb,
-      I4 => \burst_addr_cnt[7]_i_5_n_0\,
-      I5 => \burst_addr_cnt_reg__0\(7),
+      I4 => \burst_addr_cnt[7]_i_6_n_0\,
       O => \p_0_in__0\(7)
     );
-\burst_addr_cnt[7]_i_5\: unisim.vcomponents.LUT3
+\burst_addr_cnt[7]_i_6\: unisim.vcomponents.LUT3
     generic map(
-      INIT => X"FE"
+      INIT => X"A9"
     )
         port map (
-      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_22,
-      I1 => \burst_addr_cnt_reg__0\(5),
+      I0 => \burst_addr_cnt_reg__0\(7),
+      I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
       I2 => \burst_addr_cnt_reg__0\(6),
-      O => \burst_addr_cnt[7]_i_5_n_0\
+      O => \burst_addr_cnt[7]_i_6_n_0\
     );
 \burst_addr_cnt_reg[0]\: unisim.vcomponents.FDRE
      port map (
@@ -19527,7 +19565,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       I2 => s_axi_mem_arlen(4),
       I3 => enable_cs_cmb,
       I4 => burst_data_cnt(4),
-      I5 => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_16,
+      I5 => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_22,
       O => p_2_in(4)
     );
 \burst_data_cnt[5]_i_1\: unisim.vcomponents.LUT6
@@ -19587,7 +19625,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
     )
         port map (
       I0 => enable_cs_cmb,
-      I1 => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_8,
+      I1 => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_11,
       I2 => ip2bus_rdack,
       O => \burst_data_cnt[7]_i_1_n_0\
     );
@@ -19783,7 +19821,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
         port map (
       I0 => \rd_data_count_reg__0\(7),
       I1 => \rd_data_count_reg__0\(6),
-      I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
+      I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_24,
       I3 => last_data_acked,
       I4 => s_axi_mem_rready,
       I5 => \burstlength_reg[7]_i_5_n_0\,
@@ -19827,7 +19865,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => enable_cs_cmb,
       D => burst_length_cmb(0),
-      Q => \^q\(0),
+      Q => \^burstlength_reg_reg[7]_0\(0),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \burstlength_reg_reg[1]\: unisim.vcomponents.FDRE
@@ -19835,7 +19873,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => enable_cs_cmb,
       D => burst_length_cmb(1),
-      Q => \^q\(1),
+      Q => \^burstlength_reg_reg[7]_0\(1),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \burstlength_reg_reg[2]\: unisim.vcomponents.FDRE
@@ -19843,7 +19881,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => enable_cs_cmb,
       D => burst_length_cmb(2),
-      Q => \^q\(2),
+      Q => \^burstlength_reg_reg[7]_0\(2),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \burstlength_reg_reg[3]\: unisim.vcomponents.FDRE
@@ -19851,7 +19889,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => enable_cs_cmb,
       D => burst_length_cmb(3),
-      Q => \^q\(3),
+      Q => \^burstlength_reg_reg[7]_0\(3),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \burstlength_reg_reg[4]\: unisim.vcomponents.FDRE
@@ -19859,7 +19897,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => enable_cs_cmb,
       D => data(4),
-      Q => \^q\(4),
+      Q => \^burstlength_reg_reg[7]_0\(4),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \burstlength_reg_reg[5]\: unisim.vcomponents.FDRE
@@ -19867,7 +19905,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => enable_cs_cmb,
       D => data(5),
-      Q => \^q\(5),
+      Q => \^burstlength_reg_reg[7]_0\(5),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \burstlength_reg_reg[6]\: unisim.vcomponents.FDRE
@@ -19875,7 +19913,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => enable_cs_cmb,
       D => data(6),
-      Q => \^q\(6),
+      Q => \^burstlength_reg_reg[7]_0\(6),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \burstlength_reg_reg[7]\: unisim.vcomponents.FDRE
@@ -19883,7 +19921,7 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       C => s_axi_aclk,
       CE => enable_cs_cmb,
       D => data(7),
-      Q => \^q\(7),
+      Q => \^burstlength_reg_reg[7]_0\(7),
       R => AXI_EMC_ADDR_GEN_INSTANCE_I_n_1
     );
 \bus2ip_BE_reg[0]_i_1\: unisim.vcomponents.LUT6
@@ -19986,15 +20024,16 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
       I4 => \derived_size_reg_reg_n_0_[1]\,
       O => \bus2ip_BE_reg[2]_i_3_n_0\
     );
-\bus2ip_BE_reg[3]_i_1\: unisim.vcomponents.LUT4
+\bus2ip_BE_reg[3]_i_1\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"FF1D"
+      INIT => X"FFFF11D1"
     )
         port map (
       I0 => \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\,
       I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_8,
-      I2 => \bus2ip_BE_reg[3]_i_3_n_0\,
-      I3 => enable_cs_cmb,
+      I2 => s_axi_mem_wvalid,
+      I3 => s_axi_mem_wready_INST_0_i_1_n_0,
+      I4 => enable_cs_cmb,
       O => \bus2ip_BE_reg[3]_i_1_n_0\
     );
 \bus2ip_BE_reg[3]_i_2\: unisim.vcomponents.LUT6
@@ -20012,14 +20051,14 @@ addr_sm_ps_IDLE_reg_reg: unisim.vcomponents.FDSE
     );
 \bus2ip_BE_reg[3]_i_3\: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"EEEFEE67FFFFFFFF"
+      INIT => X"FC7CFC7FFFFFFFFF"
     )
         port map (
-      I0 => emc_addr_ps(0),
+      I0 => \s_axi_mem_bresp_reg_reg[1]_0\,
       I1 => emc_addr_ps(1),
-      I2 => \bus2ip_data_reg_reg[0]_0\,
+      I2 => emc_addr_ps(0),
       I3 => emc_addr_ps(2),
-      I4 => \burst_addr_cnt_reg[7]_1\,
+      I4 => \bus2ip_BE_reg_reg[3]_0\,
       I5 => s_axi_mem_wvalid,
       O => \bus2ip_BE_reg[3]_i_3_n_0\
     );
@@ -20097,7 +20136,7 @@ bus2ip_burst_reg_i_1: unisim.vcomponents.LUT5
       INIT => X"3A300000"
     )
         port map (
-      I0 => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_8,
+      I0 => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_11,
       I1 => \FSM_sequential_emc_addr_ps[0]_i_5_n_0\,
       I2 => enable_cs_cmb,
       I3 => \^bus2ip_burst\,
@@ -20112,17 +20151,13 @@ bus2ip_burst_reg_reg: unisim.vcomponents.FDRE
       Q => \^bus2ip_burst\,
       R => '0'
     );
-\bus2ip_data_reg[31]_i_1\: unisim.vcomponents.LUT6
+\bus2ip_data_reg[31]_i_1\: unisim.vcomponents.LUT2
     generic map(
-      INIT => X"020200000000AAA0"
+      INIT => X"2"
     )
         port map (
       I0 => s_axi_mem_wvalid,
-      I1 => \burst_addr_cnt_reg[7]_1\,
-      I2 => emc_addr_ps(2),
-      I3 => \bus2ip_data_reg_reg[0]_0\,
-      I4 => emc_addr_ps(1),
-      I5 => emc_addr_ps(0),
+      I1 => s_axi_mem_wready_INST_0_i_1_n_0,
       O => bus2ip_data_reg0
     );
 \bus2ip_data_reg_reg[0]\: unisim.vcomponents.FDRE
@@ -20383,27 +20418,27 @@ bus2ip_burst_reg_reg: unisim.vcomponents.FDRE
     );
 bus2ip_rd_req_reg_i_1: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"BBBAFFFFAAAA0000"
+      INIT => X"BABBFFFFAAAA0000"
     )
         port map (
       I0 => bus2ip_rd_req_reg_i_2_n_0,
       I1 => bus2ip_rd_req_reg_i_3_n_0,
-      I2 => \^burst_addr_cnt_reg[7]_0\,
-      I3 => \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\,
+      I2 => \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\,
+      I3 => \^burst_addr_cnt_reg[7]_0\,
       I4 => bus2ip_rd_req_cmb,
       I5 => \^bus2ip_rdreq_emc\,
       O => bus2ip_rd_req_reg_i_1_n_0
     );
 bus2ip_rd_req_reg_i_2: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"00101010"
+      INIT => X"0000002A"
     )
         port map (
-      I0 => emc_addr_ps(0),
-      I1 => emc_addr_ps(1),
-      I2 => s_axi_mem_arvalid,
-      I3 => \^rw_flag_reg\,
-      I4 => s_axi_mem_awvalid,
+      I0 => s_axi_mem_arvalid,
+      I1 => \^rw_flag_reg\,
+      I2 => s_axi_mem_awvalid,
+      I3 => emc_addr_ps(0),
+      I4 => emc_addr_ps(1),
       O => bus2ip_rd_req_reg_i_2_n_0
     );
 bus2ip_rd_req_reg_i_3: unisim.vcomponents.LUT2
@@ -20434,27 +20469,16 @@ bus2ip_rd_req_reg_reg: unisim.vcomponents.FDRE
     );
 bus2ip_wr_req_reg_i_1: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"FFFFCFF500F0CF05"
+      INIT => X"FFFF3FF500F03F05"
     )
         port map (
-      I0 => bus2ip_wr_req_reg_i_2_n_0,
-      I1 => \burst_addr_cnt_reg[7]_1\,
+      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18,
+      I1 => \s_axi_mem_bresp_reg_reg[1]_0\,
       I2 => emc_addr_ps(0),
       I3 => emc_addr_ps(2),
       I4 => emc_addr_ps(1),
       I5 => \^bus2ip_wrreq_i\,
       O => bus2ip_wr_req_reg_i_1_n_0
-    );
-bus2ip_wr_req_reg_i_2: unisim.vcomponents.LUT4
-    generic map(
-      INIT => X"4FFF"
-    )
-        port map (
-      I0 => \^rw_flag_reg\,
-      I1 => s_axi_mem_arvalid,
-      I2 => s_axi_mem_wvalid,
-      I3 => s_axi_mem_awvalid,
-      O => bus2ip_wr_req_reg_i_2_n_0
     );
 bus2ip_wr_req_reg_reg: unisim.vcomponents.FDRE
      port map (
@@ -20551,7 +20575,7 @@ last_data_acked_i_1: unisim.vcomponents.LUT5
     )
         port map (
       I0 => last_data_acked,
-      I1 => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_8,
+      I1 => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_11,
       I2 => last_data_acked_i_2_n_0,
       I3 => ip2bus_rdack,
       I4 => addr_sm_ps_idle_cmb,
@@ -20562,7 +20586,7 @@ last_data_acked_i_2: unisim.vcomponents.LUT3
       INIT => X"FE"
     )
         port map (
-      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
+      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_24,
       I1 => \rd_data_count_reg__0\(6),
       I2 => \rd_data_count_reg__0\(7),
       O => last_data_acked_i_2_n_0
@@ -20673,7 +20697,7 @@ last_data_acked_reg: unisim.vcomponents.FDRE
         port map (
       I0 => s_axi_mem_arlen(6),
       I1 => enable_cs_cmb,
-      I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
+      I2 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_24,
       I3 => \rd_data_count_reg__0\(6),
       O => p_0_in(6)
     );
@@ -20685,7 +20709,7 @@ last_data_acked_reg: unisim.vcomponents.FDRE
       I0 => s_axi_mem_arlen(7),
       I1 => enable_cs_cmb,
       I2 => \rd_data_count_reg__0\(7),
-      I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
+      I3 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_24,
       I4 => \rd_data_count_reg__0\(6),
       O => p_0_in(7)
     );
@@ -20798,8 +20822,8 @@ s_axi_mem_arready_INST_0: unisim.vcomponents.LUT6
       I1 => \^rw_flag_reg\,
       I2 => s_axi_mem_arvalid,
       I3 => addr_sm_ps_idle_cmb,
-      I4 => rw_flag_reg_reg_0,
-      I5 => s_axi_aresetn,
+      I4 => s_axi_aresetn,
+      I5 => rw_flag_reg_reg_0,
       O => s_axi_mem_arready
     );
 s_axi_mem_arready_INST_0_i_1: unisim.vcomponents.LUT3
@@ -20812,36 +20836,38 @@ s_axi_mem_arready_INST_0_i_1: unisim.vcomponents.LUT3
       I2 => emc_addr_ps(1),
       O => addr_sm_ps_idle_cmb
     );
-s_axi_mem_awready_INST_0: unisim.vcomponents.LUT5
+s_axi_mem_awready_INST_0: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"00020000"
+      INIT => X"0000000000000008"
     )
         port map (
-      I0 => \bus2ip_data_reg_reg[0]_0\,
-      I1 => emc_addr_ps(0),
-      I2 => emc_addr_ps(2),
-      I3 => emc_addr_ps(1),
-      I4 => s_axi_aresetn,
+      I0 => s_axi_aresetn,
+      I1 => rw_flag_reg_reg_0,
+      I2 => emc_addr_ps(0),
+      I3 => emc_addr_ps(2),
+      I4 => emc_addr_ps(1),
+      I5 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18,
       O => s_axi_mem_awready
     );
 \s_axi_mem_bresp_reg_reg[1]\: unisim.vcomponents.FDRE
      port map (
       C => s_axi_aclk,
       CE => '1',
-      D => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_21,
+      D => AXI_EMC_ADDRESS_DECODE_INSTANCE_I_n_27,
       Q => \^s_axi_mem_bresp\(0),
       R => '0'
     );
-s_axi_mem_bvalid_reg_i_1: unisim.vcomponents.LUT5
+s_axi_mem_bvalid_reg_i_1: unisim.vcomponents.LUT6
     generic map(
-      INIT => X"000003AB"
+      INIT => X"CECECECECECECE00"
     )
         port map (
       I0 => \^s_axi_mem_bvalid_reg_reg_0\,
-      I1 => \^burst_addr_cnt_reg[7]_0\,
-      I2 => \burst_addr_cnt_reg[7]_1\,
-      I3 => s_axi_mem_bready,
-      I4 => addr_sm_ps_idle_cmb,
+      I1 => s_axi_mem_bvalid_reg_reg_1,
+      I2 => s_axi_mem_bready,
+      I3 => emc_addr_ps(1),
+      I4 => emc_addr_ps(2),
+      I5 => emc_addr_ps(0),
       O => s_axi_mem_bvalid_reg_i_1_n_0
     );
 s_axi_mem_bvalid_reg_reg: unisim.vcomponents.FDRE
@@ -20858,22 +20884,31 @@ s_axi_mem_rlast_INST_0: unisim.vcomponents.LUT4
     )
         port map (
       I0 => last_data_acked,
-      I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_23,
+      I1 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_24,
       I2 => \rd_data_count_reg__0\(6),
       I3 => \rd_data_count_reg__0\(7),
       O => s_axi_mem_rlast
     );
-s_axi_mem_wready_INST_0: unisim.vcomponents.LUT5
+s_axi_mem_wready_INST_0: unisim.vcomponents.LUT1
     generic map(
-      INIT => X"11101198"
+      INIT => X"1"
     )
         port map (
-      I0 => emc_addr_ps(0),
-      I1 => emc_addr_ps(1),
-      I2 => \bus2ip_data_reg_reg[0]_0\,
-      I3 => emc_addr_ps(2),
-      I4 => \burst_addr_cnt_reg[7]_1\,
+      I0 => s_axi_mem_wready_INST_0_i_1_n_0,
       O => s_axi_mem_wready
+    );
+s_axi_mem_wready_INST_0_i_1: unisim.vcomponents.LUT6
+    generic map(
+      INIT => X"F0FFFF0BFFFFFF0B"
+    )
+        port map (
+      I0 => AXI_EMC_ADDR_GEN_INSTANCE_I_n_18,
+      I1 => rw_flag_reg_reg_0,
+      I2 => emc_addr_ps(2),
+      I3 => emc_addr_ps(0),
+      I4 => emc_addr_ps(1),
+      I5 => \s_axi_mem_bresp_reg_reg[1]_0\,
+      O => s_axi_mem_wready_INST_0_i_1_n_0
     );
 type_of_xfer_reg_i_1: unisim.vcomponents.LUT5
     generic map(
@@ -20915,8 +20950,8 @@ entity meowrouter_axi_emc_0_2_axi_emc is
     mem_rnw : out STD_LOGIC;
     mem_a : out STD_LOGIC_VECTOR ( 30 downto 0 );
     s_axi_mem_rresp : out STD_LOGIC_VECTOR ( 0 to 0 );
-    s_axi_mem_wready : out STD_LOGIC;
     s_axi_mem_awready : out STD_LOGIC;
+    s_axi_mem_wready : out STD_LOGIC;
     s_axi_mem_arready : out STD_LOGIC;
     s_axi_mem_bvalid_reg_reg : out STD_LOGIC;
     s_axi_mem_rlast : out STD_LOGIC;
@@ -20940,9 +20975,11 @@ entity meowrouter_axi_emc_0_2_axi_emc is
     s_axi_mem_awvalid : in STD_LOGIC;
     s_axi_mem_arvalid : in STD_LOGIC;
     s_axi_mem_arburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
-    s_axi_mem_bready : in STD_LOGIC;
-    s_axi_mem_wlast : in STD_LOGIC
+    s_axi_mem_wlast : in STD_LOGIC;
+    s_axi_mem_bready : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_axi_emc : entity is "axi_emc";
 end meowrouter_axi_emc_0_2_axi_emc;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc is
@@ -20977,12 +21014,15 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc is
   signal \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[8].ADDRESS_REG__0\ : STD_LOGIC;
   signal \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[9].ADDRESS_REG__0\ : STD_LOGIC;
   signal \ADDR_COUNTER_MUX_I/Cycle_cnt_en_int\ : STD_LOGIC;
+  signal \ADDR_COUNTER_MUX_I/DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ : STD_LOGIC;
   signal \ADDR_COUNTER_MUX_I/DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/S\ : STD_LOGIC;
-  signal \ADDR_COUNTER_MUX_I/cycle_cnt\ : STD_LOGIC_VECTOR ( 1 to 1 );
+  signal \ADDR_COUNTER_MUX_I/cycle_cnt\ : STD_LOGIC_VECTOR ( 0 to 1 );
   signal \AXI_EMC_ADDRESS_DECODE_INSTANCE_I/rdce_out_i\ : STD_LOGIC;
   signal AXI_EMC_NATIVE_INTERFACE_I_n_39 : STD_LOGIC;
   signal AXI_EMC_NATIVE_INTERFACE_I_n_41 : STD_LOGIC;
-  signal AXI_EMC_NATIVE_INTERFACE_I_n_45 : STD_LOGIC;
+  signal AXI_EMC_NATIVE_INTERFACE_I_n_42 : STD_LOGIC;
+  signal AXI_EMC_NATIVE_INTERFACE_I_n_43 : STD_LOGIC;
+  signal AXI_EMC_NATIVE_INTERFACE_I_n_44 : STD_LOGIC;
   signal AXI_EMC_NATIVE_INTERFACE_I_n_46 : STD_LOGIC;
   signal AXI_EMC_NATIVE_INTERFACE_I_n_47 : STD_LOGIC;
   signal AXI_EMC_NATIVE_INTERFACE_I_n_51 : STD_LOGIC;
@@ -20990,13 +21030,9 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc is
   signal AXI_EMC_NATIVE_INTERFACE_I_n_53 : STD_LOGIC;
   signal AXI_EMC_NATIVE_INTERFACE_I_n_54 : STD_LOGIC;
   signal AXI_EMC_NATIVE_INTERFACE_I_n_55 : STD_LOGIC;
-  signal AXI_EMC_NATIVE_INTERFACE_I_n_56 : STD_LOGIC;
-  signal AXI_EMC_NATIVE_INTERFACE_I_n_57 : STD_LOGIC;
-  signal AXI_EMC_NATIVE_INTERFACE_I_n_71 : STD_LOGIC;
-  signal AXI_EMC_NATIVE_INTERFACE_I_n_76 : STD_LOGIC;
+  signal AXI_EMC_NATIVE_INTERFACE_I_n_72 : STD_LOGIC;
+  signal AXI_EMC_NATIVE_INTERFACE_I_n_77 : STD_LOGIC;
   signal Bus2IP_RdReq_emc : STD_LOGIC;
-  signal EMC_CTRL_I_n_42 : STD_LOGIC;
-  signal EMC_CTRL_I_n_43 : STD_LOGIC;
   signal EMC_CTRL_I_n_44 : STD_LOGIC;
   signal EMC_CTRL_I_n_45 : STD_LOGIC;
   signal EMC_CTRL_I_n_46 : STD_LOGIC;
@@ -21010,13 +21046,20 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc is
   signal EMC_CTRL_I_n_54 : STD_LOGIC;
   signal EMC_CTRL_I_n_55 : STD_LOGIC;
   signal EMC_CTRL_I_n_56 : STD_LOGIC;
+  signal EMC_CTRL_I_n_57 : STD_LOGIC;
+  signal EMC_CTRL_I_n_58 : STD_LOGIC;
+  signal EMC_CTRL_I_n_59 : STD_LOGIC;
+  signal EMC_CTRL_I_n_60 : STD_LOGIC;
+  signal EMC_CTRL_I_n_61 : STD_LOGIC;
+  signal EMC_CTRL_I_n_62 : STD_LOGIC;
+  signal EMC_CTRL_I_n_63 : STD_LOGIC;
   signal \IPIC_IF_I/IP2Bus_RdAck0\ : STD_LOGIC;
   signal \IPIC_IF_I/pend_rdreq\ : STD_LOGIC;
   signal \IPIC_IF_I/pend_wrreq\ : STD_LOGIC;
   signal \IPIC_IF_I/reset_fifo\ : STD_LOGIC;
+  signal \MEM_STATE_MACHINE_I/crnt_state\ : STD_LOGIC_VECTOR ( 3 to 3 );
   signal \MEM_STEER_I/ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\ : STD_LOGIC;
   signal \MEM_STEER_I/readreq_th_reset\ : STD_LOGIC;
-  signal axi_trans_size_reg_int : STD_LOGIC_VECTOR ( 1 to 1 );
   signal bus2Mem_RdReq : STD_LOGIC;
   signal bus2ip_addr_temp : STD_LOGIC_VECTOR ( 31 downto 2 );
   signal bus2ip_ben_fixed : STD_LOGIC_VECTOR ( 0 to 3 );
@@ -21029,6 +21072,7 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc is
   signal rw_flag_reg : STD_LOGIC;
   signal temp_bus2ip_cs : STD_LOGIC;
   signal temp_bus2ip_data : STD_LOGIC_VECTOR ( 31 downto 0 );
+  signal transaction_done_i : STD_LOGIC;
   attribute IOB : string;
   attribute IOB of \mem_a_int_reg[10]\ : label is "TRUE";
   attribute IOB of \mem_a_int_reg[11]\ : label is "TRUE";
@@ -21065,14 +21109,16 @@ begin
 AXI_EMC_NATIVE_INTERFACE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_native_interface
      port map (
       \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\ => \MEM_STEER_I/ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\,
-      \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\ => EMC_CTRL_I_n_51,
+      \BUS2IP_ADDR_GEN_DATA_WDTH_32.bus2ip_addr_i_reg[6]\ => EMC_CTRL_I_n_58,
       Bus2IP_RdReq_emc => Bus2IP_RdReq_emc,
       Cycle_cnt_en_int => \ADDR_COUNTER_MUX_I/Cycle_cnt_en_int\,
-      FIFO_Full_reg => AXI_EMC_NATIVE_INTERFACE_I_n_45,
-      \FSM_sequential_crnt_state[0]_i_4\ => EMC_CTRL_I_n_44,
-      \FSM_sequential_crnt_state[0]_i_4_0\ => EMC_CTRL_I_n_49,
-      \FSM_sequential_emc_addr_ps[2]_i_4\ => EMC_CTRL_I_n_42,
-      \FSM_sequential_emc_addr_ps_reg[2]_0\ => EMC_CTRL_I_n_54,
+      FIFO_Full_reg => AXI_EMC_NATIVE_INTERFACE_I_n_42,
+      \FSM_sequential_crnt_state[0]_i_4\ => EMC_CTRL_I_n_48,
+      \FSM_sequential_crnt_state[0]_i_4_0\ => EMC_CTRL_I_n_53,
+      \FSM_sequential_emc_addr_ps[1]_i_13\ => EMC_CTRL_I_n_44,
+      \FSM_sequential_emc_addr_ps[2]_i_9\ => EMC_CTRL_I_n_47,
+      \FSM_sequential_emc_addr_ps_reg[2]_0\ => EMC_CTRL_I_n_57,
+      \FSM_sequential_emc_addr_ps_reg[2]_1\ => EMC_CTRL_I_n_50,
       \INFERRED_GEN.data_reg[255][8]_srl32__0\(31) => ip2bus_data(0),
       \INFERRED_GEN.data_reg[255][8]_srl32__0\(30) => ip2bus_data(1),
       \INFERRED_GEN.data_reg[255][8]_srl32__0\(29) => ip2bus_data(2),
@@ -21106,51 +21152,54 @@ AXI_EMC_NATIVE_INTERFACE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_native_in
       \INFERRED_GEN.data_reg[255][8]_srl32__0\(1) => ip2bus_data(30),
       \INFERRED_GEN.data_reg[255][8]_srl32__0\(0) => ip2bus_data(31),
       IP2Bus_RdAck0 => \IPIC_IF_I/IP2Bus_RdAck0\,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ => AXI_EMC_NATIVE_INTERFACE_I_n_52,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_53,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ => AXI_EMC_NATIVE_INTERFACE_I_n_54,
-      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\ => AXI_EMC_NATIVE_INTERFACE_I_n_57,
-      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]\ => AXI_EMC_NATIVE_INTERFACE_I_n_47,
-      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_51,
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => EMC_CTRL_I_n_50,
-      Q(7) => bus2ip_burstlength(0),
-      Q(6) => bus2ip_burstlength(1),
-      Q(5) => bus2ip_burstlength(2),
-      Q(4) => bus2ip_burstlength(3),
-      Q(3) => bus2ip_burstlength(4),
-      Q(2) => bus2ip_burstlength(5),
-      Q(1) => bus2ip_burstlength(6),
-      Q(0) => bus2ip_burstlength(7),
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ => AXI_EMC_NATIVE_INTERFACE_I_n_44,
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_52,
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_1\ => AXI_EMC_NATIVE_INTERFACE_I_n_53,
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]_2\ => AXI_EMC_NATIVE_INTERFACE_I_n_77,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]\ => AXI_EMC_NATIVE_INTERFACE_I_n_41,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_47,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_1\ => AXI_EMC_NATIVE_INTERFACE_I_n_54,
+      \MEM_DECODE_GEN[0].rdce_out_i_reg[0]_2\ => AXI_EMC_NATIVE_INTERFACE_I_n_55,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ => EMC_CTRL_I_n_61,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \ADDR_COUNTER_MUX_I/DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2\ => EMC_CTRL_I_n_54,
+      Q(0) => \MEM_STATE_MACHINE_I/crnt_state\(3),
       S => \ADDR_COUNTER_MUX_I/DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/S\,
-      addr_sm_ps_IDLE_reg_i_3 => EMC_CTRL_I_n_55,
-      addr_sm_ps_IDLE_reg_i_3_0 => EMC_CTRL_I_n_45,
-      addr_sm_ps_IDLE_reg_i_5 => EMC_CTRL_I_n_43,
-      \axi_trans_size_reg_reg[1]_0\(0) => axi_trans_size_reg_int(1),
-      \burst_addr_cnt_reg[5]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_39,
+      addr_sm_ps_IDLE_reg_i_3 => EMC_CTRL_I_n_49,
+      \burst_addr_cnt[7]_i_3\ => EMC_CTRL_I_n_63,
+      \burst_addr_cnt[7]_i_3_0\ => EMC_CTRL_I_n_62,
       \burst_addr_cnt_reg[7]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_46,
-      \burst_addr_cnt_reg[7]_1\ => EMC_CTRL_I_n_53,
-      \burst_addr_cnt_reg[7]_2\ => EMC_CTRL_I_n_52,
-      \burstlength_reg_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_76,
-      \burstlength_reg_reg[5]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_41,
+      \burst_addr_cnt_reg[7]_1\ => EMC_CTRL_I_n_60,
+      \burst_addr_cnt_reg[7]_2\ => EMC_CTRL_I_n_59,
+      \burstlength_reg_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_43,
+      \burstlength_reg_reg[7]_0\(7) => bus2ip_burstlength(0),
+      \burstlength_reg_reg[7]_0\(6) => bus2ip_burstlength(1),
+      \burstlength_reg_reg[7]_0\(5) => bus2ip_burstlength(2),
+      \burstlength_reg_reg[7]_0\(4) => bus2ip_burstlength(3),
+      \burstlength_reg_reg[7]_0\(3) => bus2ip_burstlength(4),
+      \burstlength_reg_reg[7]_0\(2) => bus2ip_burstlength(5),
+      \burstlength_reg_reg[7]_0\(1) => bus2ip_burstlength(6),
+      \burstlength_reg_reg[7]_0\(0) => bus2ip_burstlength(7),
       bus2Mem_RdReq => bus2Mem_RdReq,
-      \bus2ip_BE_reg_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_71,
+      \bus2ip_BE_reg_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_72,
+      \bus2ip_BE_reg_reg[3]_0\ => EMC_CTRL_I_n_51,
       bus2ip_addr_temp(29 downto 0) => bus2ip_addr_temp(31 downto 2),
       bus2ip_ben_fixed(0 to 3) => bus2ip_ben_fixed(0 to 3),
       bus2ip_burst => bus2ip_burst,
-      \bus2ip_data_reg_reg[0]_0\ => EMC_CTRL_I_n_46,
       \bus2ip_data_reg_reg[31]_0\(31 downto 0) => temp_bus2ip_data(31 downto 0),
       bus2ip_reset => bus2ip_reset,
+      bus2ip_wr_req_reg_reg_0 => AXI_EMC_NATIVE_INTERFACE_I_n_39,
       bus2ip_wrreq_i => bus2ip_wrreq_i,
-      cycle_cnt(0) => \ADDR_COUNTER_MUX_I/cycle_cnt\(1),
+      cycle_cnt(0 to 1) => \ADDR_COUNTER_MUX_I/cycle_cnt\(0 to 1),
       ip2bus_rdack => ip2bus_rdack,
       pend_rdreq => \IPIC_IF_I/pend_rdreq\,
-      pend_rdreq_reg => AXI_EMC_NATIVE_INTERFACE_I_n_56,
+      pend_rdreq_reg => AXI_EMC_NATIVE_INTERFACE_I_n_51,
       pend_wrreq => \IPIC_IF_I/pend_wrreq\,
       rdce_out_i => \AXI_EMC_ADDRESS_DECODE_INSTANCE_I/rdce_out_i\,
       readreq_th_reset => \MEM_STEER_I/readreq_th_reset\,
       reset_fifo => \IPIC_IF_I/reset_fifo\,
       rw_flag_reg => rw_flag_reg,
-      rw_flag_reg_reg_0 => EMC_CTRL_I_n_47,
+      rw_flag_reg_reg_0 => EMC_CTRL_I_n_52,
       s_axi_aclk => s_axi_aclk,
       s_axi_aresetn => s_axi_aresetn,
       s_axi_mem_araddr(31 downto 0) => s_axi_mem_araddr(31 downto 0),
@@ -21167,7 +21216,9 @@ AXI_EMC_NATIVE_INTERFACE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_native_in
       s_axi_mem_awvalid => s_axi_mem_awvalid,
       s_axi_mem_bready => s_axi_mem_bready,
       s_axi_mem_bresp(0) => s_axi_mem_bresp(0),
+      \s_axi_mem_bresp_reg_reg[1]_0\ => EMC_CTRL_I_n_46,
       s_axi_mem_bvalid_reg_reg_0 => s_axi_mem_bvalid_reg_reg,
+      s_axi_mem_bvalid_reg_reg_1 => EMC_CTRL_I_n_45,
       s_axi_mem_rdata(31 downto 0) => s_axi_mem_rdata(31 downto 0),
       s_axi_mem_rlast => s_axi_mem_rlast,
       s_axi_mem_rready => s_axi_mem_rready,
@@ -21177,8 +21228,8 @@ AXI_EMC_NATIVE_INTERFACE_I: entity work.meowrouter_axi_emc_0_2_axi_emc_native_in
       s_axi_mem_wready => s_axi_mem_wready,
       s_axi_mem_wstrb(3 downto 0) => s_axi_mem_wstrb(3 downto 0),
       s_axi_mem_wvalid => s_axi_mem_wvalid,
-      s_axi_mem_wvalid_0 => AXI_EMC_NATIVE_INTERFACE_I_n_55,
-      temp_bus2ip_cs => temp_bus2ip_cs
+      temp_bus2ip_cs => temp_bus2ip_cs,
+      transaction_done_i => transaction_done_i
     );
 EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
      port map (
@@ -21215,22 +21266,21 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       \ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\ => \MEM_STEER_I/ASYNC_MEM_RDACK_GEN.RDACK_PIPE_GEN_ASYNC[1].RDACK_PIPE_ASYNC__0\,
       Bus2IP_RdReq_emc => Bus2IP_RdReq_emc,
       Cycle_cnt_en_int => \ADDR_COUNTER_MUX_I/Cycle_cnt_en_int\,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ => EMC_CTRL_I_n_48,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_76,
-      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_1\ => AXI_EMC_NATIVE_INTERFACE_I_n_71,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]\ => EMC_CTRL_I_n_56,
+      \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_72,
+      \DATA_STORE_GEN[0].WRDATA_REG\ => AXI_EMC_NATIVE_INTERFACE_I_n_46,
       \DATA_STORE_GEN[24].WRDATA_REG\(31 downto 0) => temp_bus2ip_data(31 downto 0),
-      \FSM_sequential_crnt_state_reg[0]\ => EMC_CTRL_I_n_45,
-      \FSM_sequential_crnt_state_reg[0]_0\ => EMC_CTRL_I_n_52,
-      \FSM_sequential_crnt_state_reg[0]_1\ => EMC_CTRL_I_n_53,
-      \FSM_sequential_crnt_state_reg[0]_2\ => AXI_EMC_NATIVE_INTERFACE_I_n_53,
-      \FSM_sequential_crnt_state_reg[1]\ => EMC_CTRL_I_n_47,
-      \FSM_sequential_crnt_state_reg[1]_0\ => EMC_CTRL_I_n_54,
-      \FSM_sequential_crnt_state_reg[1]_1\ => EMC_CTRL_I_n_55,
-      \FSM_sequential_crnt_state_reg[2]\ => EMC_CTRL_I_n_56,
-      \FSM_sequential_crnt_state_reg[2]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_52,
-      \FSM_sequential_crnt_state_reg[3]\ => AXI_EMC_NATIVE_INTERFACE_I_n_54,
-      \FSM_sequential_emc_addr_ps_reg[2]\ => AXI_EMC_NATIVE_INTERFACE_I_n_39,
-      \FSM_sequential_emc_addr_ps_reg[2]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_55,
+      \FSM_sequential_crnt_state_reg[0]\ => EMC_CTRL_I_n_59,
+      \FSM_sequential_crnt_state_reg[0]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_44,
+      \FSM_sequential_crnt_state_reg[0]_1\ => AXI_EMC_NATIVE_INTERFACE_I_n_53,
+      \FSM_sequential_crnt_state_reg[1]\ => EMC_CTRL_I_n_49,
+      \FSM_sequential_crnt_state_reg[1]_0\ => EMC_CTRL_I_n_52,
+      \FSM_sequential_crnt_state_reg[1]_1\ => AXI_EMC_NATIVE_INTERFACE_I_n_52,
+      \FSM_sequential_crnt_state_reg[2]\ => EMC_CTRL_I_n_55,
+      \FSM_sequential_crnt_state_reg[3]\ => EMC_CTRL_I_n_50,
+      \FSM_sequential_crnt_state_reg[3]_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_39,
+      \FSM_sequential_crnt_state_reg[4]\ => EMC_CTRL_I_n_57,
+      \FSM_sequential_crnt_state_reg[4]_0\ => EMC_CTRL_I_n_62,
       \IP2Bus_Data_reg[0]\(31) => ip2bus_data(0),
       \IP2Bus_Data_reg[0]\(30) => ip2bus_data(1),
       \IP2Bus_Data_reg[0]\(29) => ip2bus_data(2),
@@ -21264,31 +21314,38 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       \IP2Bus_Data_reg[0]\(1) => ip2bus_data(30),
       \IP2Bus_Data_reg[0]\(0) => ip2bus_data(31),
       IP2Bus_RdAck0 => \IPIC_IF_I/IP2Bus_RdAck0\,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ => EMC_CTRL_I_n_44,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_47,
-      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\(0) => axi_trans_size_reg_int(1),
-      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => AXI_EMC_NATIVE_INTERFACE_I_n_51,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\(0) => \ADDR_COUNTER_MUX_I/cycle_cnt\(1),
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => EMC_CTRL_I_n_42,
-      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_1\ => EMC_CTRL_I_n_50,
-      Q(7) => bus2ip_burstlength(0),
-      Q(6) => bus2ip_burstlength(1),
-      Q(5) => bus2ip_burstlength(2),
-      Q(4) => bus2ip_burstlength(3),
-      Q(3) => bus2ip_burstlength(4),
-      Q(2) => bus2ip_burstlength(5),
-      Q(1) => bus2ip_burstlength(6),
-      Q(0) => bus2ip_burstlength(7),
+      \MEM_DECODE_GEN[0].cs_out_i_reg[0]\ => EMC_CTRL_I_n_63,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1\ => EMC_CTRL_I_n_47,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0\ => EMC_CTRL_I_n_48,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_1\ => AXI_EMC_NATIVE_INTERFACE_I_n_47,
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(7) => bus2ip_burstlength(0),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(6) => bus2ip_burstlength(1),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(5) => bus2ip_burstlength(2),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(4) => bus2ip_burstlength(3),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(3) => bus2ip_burstlength(4),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(2) => bus2ip_burstlength(5),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(1) => bus2ip_burstlength(6),
+      \PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_2\(0) => bus2ip_burstlength(7),
+      \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1\ => AXI_EMC_NATIVE_INTERFACE_I_n_55,
+      \PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\ => \ADDR_COUNTER_MUX_I/DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/PERBIT_GEN[0].Q_I_GEN_SUB.q_i_ns_reg\,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1\ => EMC_CTRL_I_n_54,
+      \PERBIT_GEN[1].FF_RST0_GEN.FDRE_i1_0\ => EMC_CTRL_I_n_61,
+      Q(0) => \MEM_STATE_MACHINE_I/crnt_state\(3),
       S => \ADDR_COUNTER_MUX_I/DATAWIDTH_MATCH_GEN.CYCLE_END_CNTR_I/S\,
-      \burst_addr_cnt[7]_i_3\ => AXI_EMC_NATIVE_INTERFACE_I_n_45,
-      \burst_addr_cnt[7]_i_3_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_56,
+      \burst_addr_cnt[7]_i_3\ => AXI_EMC_NATIVE_INTERFACE_I_n_42,
+      \burst_addr_cnt[7]_i_3_0\ => AXI_EMC_NATIVE_INTERFACE_I_n_51,
+      \burst_addr_cnt_reg[7]\ => EMC_CTRL_I_n_45,
+      \burst_addr_cnt_reg[7]_0\ => EMC_CTRL_I_n_46,
+      \burst_addr_cnt_reg[7]_1\ => EMC_CTRL_I_n_60,
       bus2Mem_RdReq => bus2Mem_RdReq,
       bus2ip_addr_temp(29 downto 0) => bus2ip_addr_temp(31 downto 2),
       bus2ip_ben_fixed(0 to 3) => bus2ip_ben_fixed(0 to 3),
       bus2ip_burst => bus2ip_burst,
       bus2ip_reset => bus2ip_reset,
-      bus2ip_wr_req_reg_reg => EMC_CTRL_I_n_51,
+      bus2ip_wr_req_reg_reg => EMC_CTRL_I_n_44,
+      bus2ip_wr_req_reg_reg_0 => EMC_CTRL_I_n_58,
       bus2ip_wrreq_i => bus2ip_wrreq_i,
+      cycle_cnt(0 to 1) => \ADDR_COUNTER_MUX_I/cycle_cnt\(0 to 1),
       ip2bus_rdack => ip2bus_rdack,
       mem_ben(1 downto 0) => mem_ben(1 downto 0),
       mem_ce(0) => mem_ce(0),
@@ -21302,24 +21359,25 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       mem_rpn => mem_rpn,
       mem_wen => mem_wen,
       pend_rdreq => \IPIC_IF_I/pend_rdreq\,
+      pend_rdreq_reg => AXI_EMC_NATIVE_INTERFACE_I_n_54,
       pend_wrreq => \IPIC_IF_I/pend_wrreq\,
-      pend_wrreq_reg => EMC_CTRL_I_n_43,
-      pend_wrreq_reg_0 => EMC_CTRL_I_n_49,
-      pend_wrreq_reg_1 => AXI_EMC_NATIVE_INTERFACE_I_n_46,
-      pend_wrreq_reg_2 => AXI_EMC_NATIVE_INTERFACE_I_n_57,
+      pend_wrreq_reg => EMC_CTRL_I_n_53,
+      pend_wrreq_reg_0 => AXI_EMC_NATIVE_INTERFACE_I_n_77,
       rdce_out_i => \AXI_EMC_ADDRESS_DECODE_INSTANCE_I/rdce_out_i\,
       rdclk => rdclk,
-      read_break_reg_d1_reg => AXI_EMC_NATIVE_INTERFACE_I_n_41,
+      read_break_reg_d1_reg => AXI_EMC_NATIVE_INTERFACE_I_n_43,
       readreq_th_reset => \MEM_STEER_I/readreq_th_reset\,
       reset_fifo => \IPIC_IF_I/reset_fifo\,
       rw_flag_reg => rw_flag_reg,
       s_axi_aclk => s_axi_aclk,
       s_axi_mem_arvalid => s_axi_mem_arvalid,
       s_axi_mem_awvalid => s_axi_mem_awvalid,
-      s_axi_mem_awvalid_0 => EMC_CTRL_I_n_46,
+      s_axi_mem_awvalid_0 => EMC_CTRL_I_n_51,
+      \s_axi_mem_bresp_reg_reg[1]\ => AXI_EMC_NATIVE_INTERFACE_I_n_41,
       s_axi_mem_wlast => s_axi_mem_wlast,
       s_axi_mem_wvalid => s_axi_mem_wvalid,
-      temp_bus2ip_cs => temp_bus2ip_cs
+      temp_bus2ip_cs => temp_bus2ip_cs,
+      transaction_done_i => transaction_done_i
     );
 \mem_a_int_reg[10]\: unisim.vcomponents.FDRE
      port map (
@@ -21327,7 +21385,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[21].ADDRESS_REG__0\,
       Q => mem_a(9),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[11]\: unisim.vcomponents.FDRE
      port map (
@@ -21335,7 +21393,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[20].ADDRESS_REG__0\,
       Q => mem_a(10),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[12]\: unisim.vcomponents.FDRE
      port map (
@@ -21343,7 +21401,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[19].ADDRESS_REG__0\,
       Q => mem_a(11),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[13]\: unisim.vcomponents.FDRE
      port map (
@@ -21351,7 +21409,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[18].ADDRESS_REG__0\,
       Q => mem_a(12),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[14]\: unisim.vcomponents.FDRE
      port map (
@@ -21359,7 +21417,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[17].ADDRESS_REG__0\,
       Q => mem_a(13),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[15]\: unisim.vcomponents.FDRE
      port map (
@@ -21367,7 +21425,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[16].ADDRESS_REG__0\,
       Q => mem_a(14),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[16]\: unisim.vcomponents.FDRE
      port map (
@@ -21375,7 +21433,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[15].ADDRESS_REG__0\,
       Q => mem_a(15),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[17]\: unisim.vcomponents.FDRE
      port map (
@@ -21383,7 +21441,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[14].ADDRESS_REG__0\,
       Q => mem_a(16),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[18]\: unisim.vcomponents.FDRE
      port map (
@@ -21391,7 +21449,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[13].ADDRESS_REG__0\,
       Q => mem_a(17),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[19]\: unisim.vcomponents.FDRE
      port map (
@@ -21399,15 +21457,15 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[12].ADDRESS_REG__0\,
       Q => mem_a(18),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[1]\: unisim.vcomponents.FDRE
      port map (
       C => rdclk,
       CE => '1',
-      D => EMC_CTRL_I_n_48,
+      D => EMC_CTRL_I_n_56,
       Q => mem_a(0),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[20]\: unisim.vcomponents.FDRE
      port map (
@@ -21415,7 +21473,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[11].ADDRESS_REG__0\,
       Q => mem_a(19),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[21]\: unisim.vcomponents.FDRE
      port map (
@@ -21423,7 +21481,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[10].ADDRESS_REG__0\,
       Q => mem_a(20),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[22]\: unisim.vcomponents.FDRE
      port map (
@@ -21431,7 +21489,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[9].ADDRESS_REG__0\,
       Q => mem_a(21),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[23]\: unisim.vcomponents.FDRE
      port map (
@@ -21439,7 +21497,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[8].ADDRESS_REG__0\,
       Q => mem_a(22),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[24]\: unisim.vcomponents.FDRE
      port map (
@@ -21447,7 +21505,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[7].ADDRESS_REG__0\,
       Q => mem_a(23),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[25]\: unisim.vcomponents.FDRE
      port map (
@@ -21455,7 +21513,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[6].ADDRESS_REG__0\,
       Q => mem_a(24),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[26]\: unisim.vcomponents.FDRE
      port map (
@@ -21463,7 +21521,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[5].ADDRESS_REG__0\,
       Q => mem_a(25),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[27]\: unisim.vcomponents.FDRE
      port map (
@@ -21471,7 +21529,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[4].ADDRESS_REG__0\,
       Q => mem_a(26),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[28]\: unisim.vcomponents.FDRE
      port map (
@@ -21479,7 +21537,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[3].ADDRESS_REG__0\,
       Q => mem_a(27),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[29]\: unisim.vcomponents.FDRE
      port map (
@@ -21487,7 +21545,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[2].ADDRESS_REG__0\,
       Q => mem_a(28),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[2]\: unisim.vcomponents.FDRE
      port map (
@@ -21495,7 +21553,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[29].ADDRESS_REG__0\,
       Q => mem_a(1),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[30]\: unisim.vcomponents.FDRE
      port map (
@@ -21503,7 +21561,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[1].ADDRESS_REG__0\,
       Q => mem_a(29),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[31]\: unisim.vcomponents.FDRE
      port map (
@@ -21511,7 +21569,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[0].ADDRESS_REG__0\,
       Q => mem_a(30),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[3]\: unisim.vcomponents.FDRE
      port map (
@@ -21519,7 +21577,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[28].ADDRESS_REG__0\,
       Q => mem_a(2),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[4]\: unisim.vcomponents.FDRE
      port map (
@@ -21527,7 +21585,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[27].ADDRESS_REG__0\,
       Q => mem_a(3),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[5]\: unisim.vcomponents.FDRE
      port map (
@@ -21535,7 +21593,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[26].ADDRESS_REG__0\,
       Q => mem_a(4),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[6]\: unisim.vcomponents.FDRE
      port map (
@@ -21543,7 +21601,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[25].ADDRESS_REG__0\,
       Q => mem_a(5),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[7]\: unisim.vcomponents.FDRE
      port map (
@@ -21551,7 +21609,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[24].ADDRESS_REG__0\,
       Q => mem_a(6),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[8]\: unisim.vcomponents.FDRE
      port map (
@@ -21559,7 +21617,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[23].ADDRESS_REG__0\,
       Q => mem_a(7),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 \mem_a_int_reg[9]\: unisim.vcomponents.FDRE
      port map (
@@ -21567,7 +21625,7 @@ EMC_CTRL_I: entity work.meowrouter_axi_emc_0_2_EMC
       CE => '1',
       D => \ADDR_COUNTER_MUX_I/ADDRESS_STORE_GEN[22].ADDRESS_REG__0\,
       Q => mem_a(8),
-      R => EMC_CTRL_I_n_56
+      R => EMC_CTRL_I_n_55
     );
 end STRUCTURE;
 library IEEE;
@@ -21694,7 +21752,7 @@ architecture STRUCTURE of meowrouter_axi_emc_0_2 is
   attribute x_interface_info of s_axi_mem_arprot : signal is "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARPROT";
   attribute x_interface_info of s_axi_mem_arsize : signal is "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARSIZE";
   attribute x_interface_info of s_axi_mem_awaddr : signal is "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWADDR";
-  attribute x_interface_parameter of s_axi_mem_awaddr : signal is "XIL_INTERFACENAME S_AXI_MEM, DATA_WIDTH 32, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  attribute x_interface_parameter of s_axi_mem_awaddr : signal is "XIL_INTERFACENAME S_AXI_MEM, DATA_WIDTH 32, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   attribute x_interface_info of s_axi_mem_awburst : signal is "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWBURST";
   attribute x_interface_info of s_axi_mem_awcache : signal is "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWCACHE";
   attribute x_interface_info of s_axi_mem_awlen : signal is "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWLEN";
