@@ -86,12 +86,15 @@ module thinpad_top(
 wire rst;
 wire vio_rst;
 
-assign rst = reset_btn || vio_rst;
+assign rst = reset_btn;
 
 /* =========== Demo code begin =========== */
 
 // PLL分频示例
 wire locked, clk_10M, clk_CPU, clk_125M, clk_200M;
+wire subsystem_rst;
+assign subsystem_rst  = (!locked) || vio_rst;
+
 pll_example clock_gen 
  (
   // Clock out ports
@@ -100,7 +103,7 @@ pll_example clock_gen
   .clk_out3(clk_125M), // 时钟输出3，频率在IP配置界面中设�?
   .clk_out4(clk_200M), // 时钟输出4，频率在IP配置界面中设�?
   // Status and control signals
-  .reset(rst), // PLL复位输入
+  .reset(reset_btn), // PLL复位输入
   .locked(locked), // 锁定输出�?"1"表示时钟稳定，可作为后级电路复位
  // Clock in ports
   .clk_in1(clk_50M) // 外部时钟输入
@@ -110,7 +113,7 @@ assign eth_rst_n = ~rst;
 // 以太网交换机寄存器配�?
 eth_conf conf(
     .clk(clk_50M),
-    .rst_in_n(locked),
+    .rst_in_n(!subsystem_rst),
 
     .eth_spi_miso(eth_spi_miso),
     .eth_spi_mosi(eth_spi_mosi),
@@ -122,8 +125,8 @@ eth_conf conf(
 
 reg reset_of_clk10M;
 // 异步复位，同步释�?
-always@(posedge clk_10M or negedge locked) begin
-    if(~locked) reset_of_clk10M <= 1'b1;
+always@(posedge clk_10M or posedge subsystem_rst) begin
+    if(subsystem_rst) reset_of_clk10M <= 1'b1;
     else        reset_of_clk10M <= 1'b0;
 end
 
@@ -279,7 +282,7 @@ endgenerate
 
 meowrouter mr(
   .cpu_clk(clk_CPU),
-  .rst(rst),
+  .rst(subsystem_rst),
   
   .UART_rxd(rxd),
   .UART_txd(txd),

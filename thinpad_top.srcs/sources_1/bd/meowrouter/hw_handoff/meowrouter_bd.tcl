@@ -188,7 +188,7 @@ proc create_root_design { parentCell } {
   # Create ports
   set cpu_clk [ create_bd_port -dir I -type clk cpu_clk ]
   set_property -dict [ list \
-   CONFIG.FREQ_HZ {50000000} \
+   CONFIG.FREQ_HZ {70000000} \
  ] $cpu_clk
   set data_clk [ create_bd_port -dir I -type clk data_clk ]
   set_property -dict [ list \
@@ -302,8 +302,8 @@ proc create_root_design { parentCell } {
    CONFIG.C_IRQ_CONNECTION {1} \
    CONFIG.C_IRQ_IS_LEVEL {1} \
    CONFIG.C_NUM_SW_INTR {0} \
-   CONFIG.C_PROCESSOR_CLK_FREQ_MHZ {60} \
-   CONFIG.C_S_AXI_ACLK_FREQ_MHZ {60} \
+   CONFIG.C_PROCESSOR_CLK_FREQ_MHZ {70} \
+   CONFIG.C_S_AXI_ACLK_FREQ_MHZ {70} \
    CONFIG.Sense_of_IRQ_Level_Type {Active_High} \
  ] $IntCont
 
@@ -355,6 +355,11 @@ proc create_root_design { parentCell } {
   
   # Create instance: UART, and set properties
   set UART [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uartlite:2.0 UART ]
+  set_property -dict [ list \
+   CONFIG.C_BAUDRATE {57600} \
+   CONFIG.C_S_AXI_ACLK_FREQ_HZ {70000000} \
+   CONFIG.C_S_AXI_ACLK_FREQ_HZ_d {70} \
+ ] $UART
 
   # Create instance: VIO, and set properties
   set VIO [ create_bd_cell -type ip -vlnv xilinx.com:ip:vio:3.0 VIO ]

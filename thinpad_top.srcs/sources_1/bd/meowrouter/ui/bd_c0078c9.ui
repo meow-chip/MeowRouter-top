@@ -2,7 +2,7 @@
    "ExpandedHierarchyInLayout":"",
    "PinnedBlocks":"",
    "commentid":"",
-   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS-threadsafe
 #  -string -flagsOSRD
 preplace port RAMEMC -pg 1 -y 830 -defaultsOSRD
 preplace port UART -pg 1 -y 990 -defaultsOSRD
@@ -37,22 +37,22 @@ preplace netloc CPU_io_axi 1 2 1 N
 preplace netloc EthBufCtrl_bram_wrdata_a 1 5 1 N
 preplace netloc EthBufCtrl_bram_en_a 1 5 1 N
 preplace netloc Router_io_buf_din 1 5 1 1680
-preplace netloc Primary_M00_AXI 1 4 1 1290
 preplace netloc Board_GPIO 1 5 2 NJ 1150 NJ
+preplace netloc Primary_M00_AXI 1 4 1 1290
 preplace netloc axi_uartlite_0_interrupt 1 4 2 NJ 1080 1660
 preplace netloc EthBufCtrl_bram_clk_a 1 5 1 N
 preplace netloc rst_1 1 0 5 30 100 NJ 100 NJ 100 NJ 100 N
 preplace netloc axi_interconnect_0_M02_AXI 1 4 1 1260
-preplace netloc Primary_M05_AXI 1 4 1 1260
 preplace netloc Primary_M03_AXI 1 4 1 N
+preplace netloc Primary_M05_AXI 1 4 1 1260
 preplace netloc EthBufCtrl_bram_rst_a 1 5 1 N
 preplace netloc proc_sys_reset_0_mb_reset 1 1 1 370
 preplace netloc util_vector_logic_0_Res 1 2 2 700 710 N
 preplace netloc rtclk_1 1 0 5 NJ 80 NJ 80 NJ 80 NJ 80 NJ
 preplace netloc EthBufCtrl_BRAM_PORTA 1 5 1 N
 preplace netloc Router_io_tx 1 5 2 NJ 70 NJ
-preplace netloc axi_vip_0_M_AXI 1 3 1 N
 preplace netloc Primary_M04_AXI 1 4 1 1270
+preplace netloc axi_vip_0_M_AXI 1 3 1 N
 preplace netloc tx_clk_1 1 0 5 NJ 140 NJ 140 NJ 140 NJ 140 NJ
 preplace netloc vio_0_probe_out0 1 6 1 NJ
 preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 3 NJ 520 NJ 520 910

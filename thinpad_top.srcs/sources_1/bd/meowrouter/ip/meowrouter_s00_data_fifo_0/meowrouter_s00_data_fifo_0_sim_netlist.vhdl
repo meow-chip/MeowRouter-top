@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Thu Dec 12 14:29:00 2019
+-- Date        : Sat Dec 14 03:34:08 2019
 -- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_s00_data_fifo_0 -prefix
---               meowrouter_s00_data_fifo_0_ meowrouter_s00_data_fifo_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim
+--               c:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_s00_data_fifo_0/meowrouter_s00_data_fifo_0_sim_netlist.vhdl
 -- Design      : meowrouter_s00_data_fifo_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -28,6 +28,8 @@ entity meowrouter_s00_data_fifo_0_xpm_cdc_async_rst is
   attribute INIT_SYNC_FF of meowrouter_s00_data_fifo_0_xpm_cdc_async_rst : entity is 0;
   attribute INV_DEF_VAL : string;
   attribute INV_DEF_VAL of meowrouter_s00_data_fifo_0_xpm_cdc_async_rst : entity is "1'b1";
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_xpm_cdc_async_rst : entity is "xpm_cdc_async_rst";
   attribute RST_ACTIVE_HIGH : integer;
   attribute RST_ACTIVE_HIGH of meowrouter_s00_data_fifo_0_xpm_cdc_async_rst : entity is 1;
   attribute VERSION : integer;
@@ -373,6 +375,8 @@ entity meowrouter_s00_data_fifo_0_xpm_cdc_single is
   attribute DEST_SYNC_FF of meowrouter_s00_data_fifo_0_xpm_cdc_single : entity is 4;
   attribute INIT_SYNC_FF : integer;
   attribute INIT_SYNC_FF of meowrouter_s00_data_fifo_0_xpm_cdc_single : entity is 0;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_xpm_cdc_single : entity is "xpm_cdc_single";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of meowrouter_s00_data_fifo_0_xpm_cdc_single : entity is 0;
   attribute SRC_INPUT_REG : integer;
@@ -656,6 +660,8 @@ entity meowrouter_s00_data_fifo_0_xpm_cdc_sync_rst is
   attribute INIT of meowrouter_s00_data_fifo_0_xpm_cdc_sync_rst : entity is "1";
   attribute INIT_SYNC_FF : integer;
   attribute INIT_SYNC_FF of meowrouter_s00_data_fifo_0_xpm_cdc_sync_rst : entity is 0;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_xpm_cdc_sync_rst : entity is "xpm_cdc_sync_rst";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of meowrouter_s00_data_fifo_0_xpm_cdc_sync_rst : entity is 0;
   attribute VERSION : integer;
@@ -878,6 +884,8 @@ entity meowrouter_s00_data_fifo_0_blk_mem_gen_prim_wrapper is
     s_axi_wstrb : in STD_LOGIC_VECTOR ( 0 to 0 );
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.WIDE_PRIM18.ram_1\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_blk_mem_gen_prim_wrapper : entity is "blk_mem_gen_prim_wrapper";
 end meowrouter_s00_data_fifo_0_blk_mem_gen_prim_wrapper;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_blk_mem_gen_prim_wrapper is
@@ -2263,6 +2271,8 @@ entity meowrouter_s00_data_fifo_0_dmem is
     count_d10_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     \gpr1.dout_i_reg[0]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_dmem : entity is "dmem";
 end meowrouter_s00_data_fifo_0_dmem;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_dmem is
@@ -4889,6 +4899,8 @@ entity meowrouter_s00_data_fifo_0_rd_bin_cntr is
     s_aclk : in STD_LOGIC;
     AR : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_rd_bin_cntr : entity is "rd_bin_cntr";
 end meowrouter_s00_data_fifo_0_rd_bin_cntr;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_rd_bin_cntr is
@@ -6081,6 +6093,8 @@ entity meowrouter_s00_data_fifo_0_rd_fwft is
     \gaxi_full_lite.gwrite_ch.gaxi_pkt_fifo_wr.gaxi_mm_cc_pkt_wr.wr_pkt_count_reg[8]\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \gaxi_full_lite.gwrite_ch.gaxi_pkt_fifo_wr.gaxi_mm_cc_pkt_wr.wr_pkt_count_reg[9]\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_rd_fwft : entity is "rd_fwft";
 end meowrouter_s00_data_fifo_0_rd_fwft;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_rd_fwft is
@@ -7302,6 +7316,8 @@ entity meowrouter_s00_data_fifo_0_rd_status_flags_ss is
     s_aclk : in STD_LOGIC;
     AR : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_rd_status_flags_ss : entity is "rd_status_flags_ss";
 end meowrouter_s00_data_fifo_0_rd_status_flags_ss;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_rd_status_flags_ss is
@@ -7410,6 +7426,8 @@ entity meowrouter_s00_data_fifo_0_wr_bin_cntr is
     s_aclk : in STD_LOGIC;
     AR : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_wr_bin_cntr : entity is "wr_bin_cntr";
 end meowrouter_s00_data_fifo_0_wr_bin_cntr;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_wr_bin_cntr is
@@ -8949,6 +8967,8 @@ entity meowrouter_s00_data_fifo_0_wr_status_flags_ss is
     ram_full_i_reg_0 : in STD_LOGIC;
     s_axi_awvalid : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_wr_status_flags_ss : entity is "wr_status_flags_ss";
 end meowrouter_s00_data_fifo_0_wr_status_flags_ss;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_wr_status_flags_ss is
@@ -9173,6 +9193,8 @@ entity meowrouter_s00_data_fifo_0_blk_mem_gen_prim_width is
     s_axi_wstrb : in STD_LOGIC_VECTOR ( 0 to 0 );
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.WIDE_PRIM18.ram_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_blk_mem_gen_prim_width : entity is "blk_mem_gen_prim_width";
 end meowrouter_s00_data_fifo_0_blk_mem_gen_prim_width;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_blk_mem_gen_prim_width is
@@ -9382,6 +9404,8 @@ entity meowrouter_s00_data_fifo_0_memory is
     count_d10_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     \gpr1.dout_i_reg[0]\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_memory : entity is "memory";
 end meowrouter_s00_data_fifo_0_memory;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_memory is
@@ -11940,6 +11964,8 @@ entity meowrouter_s00_data_fifo_0_rd_logic is
     \gaxi_full_lite.gwrite_ch.gaxi_pkt_fifo_wr.gaxi_mm_cc_pkt_wr.wr_pkt_count_reg[8]\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \gaxi_full_lite.gwrite_ch.gaxi_pkt_fifo_wr.gaxi_mm_cc_pkt_wr.wr_pkt_count_reg[9]\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_rd_logic : entity is "rd_logic";
 end meowrouter_s00_data_fifo_0_rd_logic;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_rd_logic is
@@ -12241,6 +12267,8 @@ entity meowrouter_s00_data_fifo_0_reset_blk_ramfifo is
     src_arst : in STD_LOGIC;
     s_aclk : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_reset_blk_ramfifo : entity is "reset_blk_ramfifo";
 end meowrouter_s00_data_fifo_0_reset_blk_ramfifo;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_reset_blk_ramfifo is
@@ -13587,6 +13615,8 @@ entity meowrouter_s00_data_fifo_0_wr_logic is
     PNTR : in STD_LOGIC_VECTOR ( 4 downto 0 );
     AR : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_wr_logic : entity is "wr_logic";
 end meowrouter_s00_data_fifo_0_wr_logic;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_wr_logic is
@@ -13925,6 +13955,8 @@ entity meowrouter_s00_data_fifo_0_axi_reg_slice is
     s_aresetn : in STD_LOGIC;
     D : in STD_LOGIC_VECTOR ( 81 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_axi_reg_slice : entity is "axi_reg_slice";
 end meowrouter_s00_data_fifo_0_axi_reg_slice;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_axi_reg_slice is
@@ -15901,6 +15933,8 @@ entity meowrouter_s00_data_fifo_0_blk_mem_gen_generic_cstr is
     s_axi_wstrb : in STD_LOGIC_VECTOR ( 0 to 0 );
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.WIDE_PRIM36_NO_ECC.ram_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_blk_mem_gen_generic_cstr : entity is "blk_mem_gen_generic_cstr";
 end meowrouter_s00_data_fifo_0_blk_mem_gen_generic_cstr;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_blk_mem_gen_generic_cstr is
@@ -16014,6 +16048,8 @@ entity meowrouter_s00_data_fifo_0_fifo_generator_ramfifo is
     \gaxi_full_lite.gread_ch.gaxi_pkt_fifo_rd.gaxi_mm_cc_pkt_rd.rd_fifo_free_space_reg[9]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     I564 : in STD_LOGIC_VECTOR ( 81 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_fifo_generator_ramfifo : entity is "fifo_generator_ramfifo";
 end meowrouter_s00_data_fifo_0_fifo_generator_ramfifo;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_fifo_generator_ramfifo is
@@ -16520,6 +16556,8 @@ entity meowrouter_s00_data_fifo_0_blk_mem_gen_top is
     s_axi_wstrb : in STD_LOGIC_VECTOR ( 0 to 0 );
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.WIDE_PRIM36_NO_ECC.ram_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_blk_mem_gen_top : entity is "blk_mem_gen_top";
 end meowrouter_s00_data_fifo_0_blk_mem_gen_top;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_blk_mem_gen_top is
@@ -16621,6 +16659,8 @@ entity meowrouter_s00_data_fifo_0_fifo_generator_top is
     \gaxi_full_lite.gread_ch.gaxi_pkt_fifo_rd.gaxi_mm_cc_pkt_rd.rd_fifo_free_space_reg[9]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     I564 : in STD_LOGIC_VECTOR ( 81 downto 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_fifo_generator_top : entity is "fifo_generator_top";
 end meowrouter_s00_data_fifo_0_fifo_generator_top;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_fifo_generator_top is
@@ -16726,6 +16766,8 @@ entity meowrouter_s00_data_fifo_0_blk_mem_gen_v8_4_2_synth is
     s_axi_wstrb : in STD_LOGIC_VECTOR ( 0 to 0 );
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.WIDE_PRIM36_NO_ECC.ram_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_blk_mem_gen_v8_4_2_synth : entity is "blk_mem_gen_v8_4_2_synth";
 end meowrouter_s00_data_fifo_0_blk_mem_gen_v8_4_2_synth;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_blk_mem_gen_v8_4_2_synth is
@@ -16812,6 +16854,8 @@ entity meowrouter_s00_data_fifo_0_blk_mem_gen_v8_4_2 is
     s_axi_wstrb : in STD_LOGIC_VECTOR ( 0 to 0 );
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.WIDE_PRIM36_NO_ECC.ram_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_blk_mem_gen_v8_4_2 : entity is "blk_mem_gen_v8_4_2";
 end meowrouter_s00_data_fifo_0_blk_mem_gen_v8_4_2;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_blk_mem_gen_v8_4_2 is
@@ -18980,6 +19024,8 @@ entity meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3_synth is
     m_axi_rvalid : in STD_LOGIC;
     s_aresetn : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3_synth : entity is "fifo_generator_v13_2_3_synth";
 end meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3_synth;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3_synth is
@@ -20807,6 +20853,8 @@ entity meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3 is
   attribute C_WR_PNTR_WIDTH_WRCH of meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3 : entity is 4;
   attribute C_WR_RESPONSE_LATENCY : integer;
   attribute C_WR_RESPONSE_LATENCY of meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3 : entity is 1;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3 : entity is "fifo_generator_v13_2_3";
 end meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3;
 
 architecture STRUCTURE of meowrouter_s00_data_fifo_0_fifo_generator_v13_2_3 is
@@ -21385,6 +21433,8 @@ entity meowrouter_s00_data_fifo_0_axi_data_fifo_v2_1_17_axi_data_fifo is
   attribute C_FAMILY of meowrouter_s00_data_fifo_0_axi_data_fifo_v2_1_17_axi_data_fifo : entity is "artix7";
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of meowrouter_s00_data_fifo_0_axi_data_fifo_v2_1_17_axi_data_fifo : entity is "yes";
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of meowrouter_s00_data_fifo_0_axi_data_fifo_v2_1_17_axi_data_fifo : entity is "axi_data_fifo_v2_1_17_axi_data_fifo";
   attribute P_AXI3 : integer;
   attribute P_AXI3 of meowrouter_s00_data_fifo_0_axi_data_fifo_v2_1_17_axi_data_fifo : entity is 1;
   attribute P_AXI4 : integer;
@@ -22316,7 +22366,7 @@ architecture STRUCTURE of meowrouter_s00_data_fifo_0 is
   attribute X_INTERFACE_INFO : string;
   attribute X_INTERFACE_INFO of aclk : signal is "xilinx.com:signal:clock:1.0 CLK CLK";
   attribute X_INTERFACE_PARAMETER : string;
-  attribute X_INTERFACE_PARAMETER of aclk : signal is "XIL_INTERFACENAME CLK, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, ASSOCIATED_BUSIF S_AXI:M_AXI, ASSOCIATED_RESET ARESETN, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of aclk : signal is "XIL_INTERFACENAME CLK, FREQ_HZ 70000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, ASSOCIATED_BUSIF S_AXI:M_AXI, ASSOCIATED_RESET ARESETN, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of aresetn : signal is "xilinx.com:signal:reset:1.0 RST RST";
   attribute X_INTERFACE_PARAMETER of aresetn : signal is "XIL_INTERFACENAME RST, POLARITY ACTIVE_LOW, INSERT_VIP 0, TYPE INTERCONNECT";
   attribute X_INTERFACE_INFO of m_axi_arready : signal is "xilinx.com:interface:aximm:1.0 M_AXI ARREADY";
@@ -22327,7 +22377,7 @@ architecture STRUCTURE of meowrouter_s00_data_fifo_0 is
   attribute X_INTERFACE_INFO of m_axi_bvalid : signal is "xilinx.com:interface:aximm:1.0 M_AXI BVALID";
   attribute X_INTERFACE_INFO of m_axi_rlast : signal is "xilinx.com:interface:aximm:1.0 M_AXI RLAST";
   attribute X_INTERFACE_INFO of m_axi_rready : signal is "xilinx.com:interface:aximm:1.0 M_AXI RREADY";
-  attribute X_INTERFACE_PARAMETER of m_axi_rready : signal is "XIL_INTERFACENAME M_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of m_axi_rready : signal is "XIL_INTERFACENAME M_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of m_axi_rvalid : signal is "xilinx.com:interface:aximm:1.0 M_AXI RVALID";
   attribute X_INTERFACE_INFO of m_axi_wlast : signal is "xilinx.com:interface:aximm:1.0 M_AXI WLAST";
   attribute X_INTERFACE_INFO of m_axi_wready : signal is "xilinx.com:interface:aximm:1.0 M_AXI WREADY";
@@ -22340,7 +22390,7 @@ architecture STRUCTURE of meowrouter_s00_data_fifo_0 is
   attribute X_INTERFACE_INFO of s_axi_bvalid : signal is "xilinx.com:interface:aximm:1.0 S_AXI BVALID";
   attribute X_INTERFACE_INFO of s_axi_rlast : signal is "xilinx.com:interface:aximm:1.0 S_AXI RLAST";
   attribute X_INTERFACE_INFO of s_axi_rready : signal is "xilinx.com:interface:aximm:1.0 S_AXI RREADY";
-  attribute X_INTERFACE_PARAMETER of s_axi_rready : signal is "XIL_INTERFACENAME S_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of s_axi_rready : signal is "XIL_INTERFACENAME S_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of s_axi_rvalid : signal is "xilinx.com:interface:aximm:1.0 S_AXI RVALID";
   attribute X_INTERFACE_INFO of s_axi_wlast : signal is "xilinx.com:interface:aximm:1.0 S_AXI WLAST";
   attribute X_INTERFACE_INFO of s_axi_wready : signal is "xilinx.com:interface:aximm:1.0 S_AXI WREADY";

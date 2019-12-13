@@ -32,7 +32,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.ACLK.FREQ_HZ">50000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.ACLK.FREQ_HZ">70000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -844,7 +844,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI_MEM.FREQ_HZ">50000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI_MEM.FREQ_HZ">70000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1310,7 +1310,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.RDCLK.FREQ_HZ">50000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.RDCLK.FREQ_HZ">70000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -2013,11 +2013,11 @@ Note: Valid only if connected memory is Micron Flash
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Dec 07 13:33:34 UTC 2019</spirit:value>
+            <spirit:value>Fri Dec 13 19:31:34 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:16188474</spirit:value>
+            <spirit:value>9:d71e7552</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2033,11 +2033,11 @@ Note: Valid only if connected memory is Micron Flash
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Dec 07 13:33:34 UTC 2019</spirit:value>
+            <spirit:value>Fri Dec 13 19:31:34 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:16188474</spirit:value>
+            <spirit:value>9:d71e7552</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2066,7 +2066,7 @@ Note: Valid only if connected memory is Micron Flash
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:bfacf10f</spirit:value>
+            <spirit:value>9:4faa151b</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2082,11 +2082,11 @@ Note: Valid only if connected memory is Micron Flash
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Dec 07 13:33:34 UTC 2019</spirit:value>
+            <spirit:value>Fri Dec 13 19:31:34 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:bfacf10f</spirit:value>
+            <spirit:value>9:4faa151b</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2100,11 +2100,11 @@ Note: Valid only if connected memory is Micron Flash
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Dec 07 13:33:35 UTC 2019</spirit:value>
+            <spirit:value>Fri Dec 13 19:31:34 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:16188474</spirit:value>
+            <spirit:value>9:d71e7552</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -2118,11 +2118,11 @@ Note: Valid only if connected memory is Micron Flash
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Dec 07 13:33:41 UTC 2019</spirit:value>
+            <spirit:value>Fri Dec 13 19:32:58 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:16188474</spirit:value>
+            <spirit:value>9:d71e7552</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -3693,12 +3693,12 @@ Note: Valid only if connected memory is Micron Flash
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_AXI_CLK_PERIOD_PS</spirit:name>
         <spirit:displayName>C Axi Clk Period Ps</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_AXI_CLK_PERIOD_PS">20000</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_AXI_CLK_PERIOD_PS">14285</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_LFLASH_PERIOD_PS</spirit:name>
         <spirit:displayName>C Lflash Period Ps</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_LFLASH_PERIOD_PS">20000</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_LFLASH_PERIOD_PS">14285</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_LINEAR_FLASH_SYNC_BURST</spirit:name>
@@ -4337,6 +4337,18 @@ Note: Valid only if connected memory is Micron Flash
         <spirit:logicalName>xil_defaultlib</spirit:logicalName>
       </spirit:file>
       <spirit:file>
+        <spirit:name>meowrouter_axi_emc_0_1_stub.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
+        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>meowrouter_axi_emc_0_1_stub.vhdl</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
+        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>meowrouter_axi_emc_0_1_sim_netlist.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
@@ -4348,18 +4360,6 @@ Note: Valid only if connected memory is Micron Flash
         <spirit:fileType>vhdlSource</spirit:fileType>
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
         <spirit:userFileType>USED_IN_single_language</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>meowrouter_axi_emc_0_1_stub.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>meowrouter_axi_emc_0_1_stub.vhdl</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
         <spirit:logicalName>xil_defaultlib</spirit:logicalName>
       </spirit:file>
     </spirit:fileSet>
@@ -5358,7 +5358,7 @@ Note: Valid only if connected memory is Micron Flash
       <spirit:name>C_LFLASH_PERIOD_PS</spirit:name>
       <spirit:displayName>Numonyx Sync Burst Flash Clock Period</spirit:displayName>
       <spirit:description>This parameter should be set by the user when the targeted memory is Numonyx Flash and only when the flash is configured in Sync read mode.</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_LFLASH_PERIOD_PS" spirit:order="1200" spirit:configGroups="1 UnGrouped">20000</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_LFLASH_PERIOD_PS" spirit:order="1200" spirit:configGroups="1 UnGrouped">14285</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -5371,7 +5371,7 @@ Note: Valid only if connected memory is Micron Flash
       <spirit:name>C_AXI_CLK_PERIOD_PS</spirit:name>
       <spirit:displayName>AXI Clock Period</spirit:displayName>
       <spirit:description>User should provide the value here which is equivalent to AXI clock used. This value is used for internal callibration of counters when Asynchronous memories are used.</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_AXI_CLK_PERIOD_PS" spirit:order="1100" spirit:configGroups="1 UnGrouped">20000</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_AXI_CLK_PERIOD_PS" spirit:order="1100" spirit:configGroups="1 UnGrouped">14285</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
