@@ -107,12 +107,6 @@
   "../../../bd/meowrouter/ip/meowrouter_CPU_0/sim/meowrouter_CPU_0.v" \
   "../../../bd/meowrouter/ip/meowrouter_Router_0/sim/meowrouter_Router_0.v" \
 -endlib
--makelib xcelium_lib/axi_uart16550_v2_0_20 \
-  "../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/07cf/hdl/axi_uart16550_v2_0_vh_rfs.vhd" \
--endlib
--makelib xcelium_lib/xil_defaultlib \
-  "../../../bd/meowrouter/ip/meowrouter_axi_uart16550_0_0/sim/meowrouter_axi_uart16550_0_0.vhd" \
--endlib
 -makelib xcelium_lib/xil_defaultlib -sv \
   "../../../bd/meowrouter/ip/meowrouter_axi_vip_0_0/sim/meowrouter_axi_vip_0_0_pkg.sv" \
 -endlib
@@ -136,6 +130,14 @@
 -endlib
 -makelib xcelium_lib/xil_defaultlib \
   "../../../bd/meowrouter/ip/meowrouter_xlslice_0_1/sim/meowrouter_xlslice_0_1.v" \
+-endlib
+-makelib xcelium_lib/axi_uartlite_v2_0_22 \
+  "../../../../thinpad_top.srcs/sources_1/bd/meowrouter/ipshared/7371/hdl/axi_uartlite_v2_0_vh_rfs.vhd" \
+-endlib
+-makelib xcelium_lib/xil_defaultlib \
+  "../../../bd/meowrouter/ip/meowrouter_axi_uartlite_0_0/sim/meowrouter_axi_uartlite_0_0.vhd" \
+-endlib
+-makelib xcelium_lib/xil_defaultlib \
   "../../../bd/meowrouter/ip/meowrouter_s00_data_fifo_0/sim/meowrouter_s00_data_fifo_0.v" \
 -endlib
 -makelib xcelium_lib/axi_protocol_converter_v2_1_18 \

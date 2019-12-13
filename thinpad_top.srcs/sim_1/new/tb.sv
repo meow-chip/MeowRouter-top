@@ -246,4 +246,25 @@ rgmii_model rgmii(
     .rgmii_rxc(eth_rgmii_rxc),
     .rgmii_rx_ctl(eth_rgmii_rx_ctl)
 );
+
+// UART
+wire [7:0] uart_data;
+wire uart_snt, uart_ack;
+
+async_receiver uart_recv(
+  .clk(clk_50M),
+  .RxD(txd),
+  .RxD_clear(uart_ack),
+  .RxD_data(uart_data),
+  .RxD_data_ready(uart_snt)
+);
+
+printer uart_printer(
+  .clk(clk_50M),
+  .valid(uart_snt),
+  .ready(uart_ack),
+  .rst(rst),
+  .data(uart_data)
+);
+  
 endmodule

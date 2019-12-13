@@ -4,7 +4,7 @@ vhdl xil_defaultlib  \
 "../../../bd/meowrouter/ip/meowrouter_axi_gpio_0_0/sim/meowrouter_axi_gpio_0_0.vhd" \
 "../../../bd/meowrouter/ip/meowrouter_axi_emc_0_1/sim/meowrouter_axi_emc_0_1.vhd" \
 "../../../bd/meowrouter/ip/meowrouter_axi_emc_0_2/sim/meowrouter_axi_emc_0_2.vhd" \
-"../../../bd/meowrouter/ip/meowrouter_axi_uart16550_0_0/sim/meowrouter_axi_uart16550_0_0.vhd" \
 "../../../bd/meowrouter/ip/meowrouter_axi_intc_0_0/sim/meowrouter_axi_intc_0_0.vhd" \
+"../../../bd/meowrouter/ip/meowrouter_axi_uartlite_0_0/sim/meowrouter_axi_uartlite_0_0.vhd" \
 
 nosort

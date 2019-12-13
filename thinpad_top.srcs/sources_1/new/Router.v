@@ -1823,6 +1823,7 @@ module LLFT(
   output [15:0] io_output_packet_icmp_checksum,
   output [7:0]  io_output_packet_icmp_code,
   output [7:0]  io_output_packet_icmp_imcpType,
+  output [2:0]  io_output_lookup_status,
   output [1:0]  io_outputStatus
 );
   reg [2:0] cnt; // @[linear.scala 54:16]
@@ -1871,12 +1872,14 @@ module LLFT(
   reg [31:0] _RAND_21;
   reg [7:0] working_icmp_imcpType; // @[linear.scala 57:20]
   reg [31:0] _RAND_22;
-  reg [31:0] addr; // @[linear.scala 59:17]
+  reg [2:0] lookup_status; // @[linear.scala 58:19]
   reg [31:0] _RAND_23;
-  reg [1:0] status; // @[linear.scala 60:23]
+  reg [31:0] addr; // @[linear.scala 59:17]
   reg [31:0] _RAND_24;
-  reg  state; // @[linear.scala 67:22]
+  reg [1:0] status; // @[linear.scala 60:23]
   reg [31:0] _RAND_25;
+  reg  state; // @[linear.scala 67:22]
+  reg [31:0] _RAND_26;
   wire  _T_33; // @[Conditional.scala 37:30]
   wire  _T_34; // @[linear.scala 73:12]
   wire  _T_35; // @[linear.scala 76:24]
@@ -1939,6 +1942,7 @@ module LLFT(
   assign io_output_packet_icmp_checksum = working_icmp_checksum; // @[linear.scala 62:20]
   assign io_output_packet_icmp_code = working_icmp_code; // @[linear.scala 62:20]
   assign io_output_packet_icmp_imcpType = working_icmp_imcpType; // @[linear.scala 62:20]
+  assign io_output_lookup_status = lookup_status; // @[linear.scala 63:20]
   assign io_outputStatus = status; // @[linear.scala 64:19]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
@@ -2065,15 +2069,19 @@ initial begin
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_23 = {1{`RANDOM}};
-  addr = _RAND_23[31:0];
+  lookup_status = _RAND_23[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_24 = {1{`RANDOM}};
-  status = _RAND_24[1:0];
+  addr = _RAND_24[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_25 = {1{`RANDOM}};
-  state = _RAND_25[0:0];
+  status = _RAND_25[1:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_26 = {1{`RANDOM}};
+  state = _RAND_26[0:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -2224,6 +2232,27 @@ end // initial
       if (_T_34) begin
         if (_T_35) begin
           if (_T_36) begin
+            if (_T_40) begin
+              lookup_status <= 3'h0;
+            end
+          end else begin
+            lookup_status <= 3'h0;
+          end
+        end
+      end
+    end else if (state) begin
+      if (_T_42) begin
+        lookup_status <= 3'h1;
+      end else if (!(_T_44)) begin
+        if (_T_49) begin
+          lookup_status <= 3'h2;
+        end
+      end
+    end
+    if (_T_33) begin
+      if (_T_34) begin
+        if (_T_35) begin
+          if (_T_36) begin
             if (!(_T_40)) begin
               addr <= io_input_ip_dest;
             end
@@ -2303,8 +2332,10 @@ module ARPTable(
   input  [15:0] io_input_packet_icmp_checksum,
   input  [7:0]  io_input_packet_icmp_code,
   input  [7:0]  io_input_packet_icmp_imcpType,
+  input  [2:0]  io_input_lookup_status,
   input  [1:0]  io_status,
   input         io_pause,
+  output [2:0]  io_output_forward_status,
   output [47:0] io_output_packet_eth_dest,
   output [47:0] io_output_packet_eth_sender,
   output [1:0]  io_output_packet_eth_pactype,
@@ -2328,54 +2359,57 @@ module ARPTable(
   output [7:0]  io_output_packet_icmp_imcpType,
   output [1:0]  io_outputStatus
 );
+  reg [2:0] pipe_forward_status; // @[arp.scala 51:17]
+  reg [31:0] _RAND_0;
   reg [47:0] pipe_packet_eth_dest; // @[arp.scala 51:17]
-  reg [63:0] _RAND_0;
-  reg [47:0] pipe_packet_eth_sender; // @[arp.scala 51:17]
   reg [63:0] _RAND_1;
+  reg [47:0] pipe_packet_eth_sender; // @[arp.scala 51:17]
+  reg [63:0] _RAND_2;
   reg [1:0] pipe_packet_eth_pactype; // @[arp.scala 51:17]
-  reg [31:0] _RAND_2;
-  reg [2:0] pipe_packet_eth_vlan; // @[arp.scala 51:17]
   reg [31:0] _RAND_3;
-  reg [3:0] pipe_packet_ip_version; // @[arp.scala 51:17]
+  reg [2:0] pipe_packet_eth_vlan; // @[arp.scala 51:17]
   reg [31:0] _RAND_4;
-  reg [3:0] pipe_packet_ip_ihl; // @[arp.scala 51:17]
+  reg [3:0] pipe_packet_ip_version; // @[arp.scala 51:17]
   reg [31:0] _RAND_5;
-  reg [5:0] pipe_packet_ip_dscp; // @[arp.scala 51:17]
+  reg [3:0] pipe_packet_ip_ihl; // @[arp.scala 51:17]
   reg [31:0] _RAND_6;
-  reg [1:0] pipe_packet_ip_ecn; // @[arp.scala 51:17]
+  reg [5:0] pipe_packet_ip_dscp; // @[arp.scala 51:17]
   reg [31:0] _RAND_7;
-  reg [15:0] pipe_packet_ip_len; // @[arp.scala 51:17]
+  reg [1:0] pipe_packet_ip_ecn; // @[arp.scala 51:17]
   reg [31:0] _RAND_8;
-  reg [15:0] pipe_packet_ip_id; // @[arp.scala 51:17]
+  reg [15:0] pipe_packet_ip_len; // @[arp.scala 51:17]
   reg [31:0] _RAND_9;
-  reg [2:0] pipe_packet_ip_flags; // @[arp.scala 51:17]
+  reg [15:0] pipe_packet_ip_id; // @[arp.scala 51:17]
   reg [31:0] _RAND_10;
-  reg [12:0] pipe_packet_ip_foff; // @[arp.scala 51:17]
+  reg [2:0] pipe_packet_ip_flags; // @[arp.scala 51:17]
   reg [31:0] _RAND_11;
-  reg [7:0] pipe_packet_ip_ttl; // @[arp.scala 51:17]
+  reg [12:0] pipe_packet_ip_foff; // @[arp.scala 51:17]
   reg [31:0] _RAND_12;
-  reg [7:0] pipe_packet_ip_proto; // @[arp.scala 51:17]
+  reg [7:0] pipe_packet_ip_ttl; // @[arp.scala 51:17]
   reg [31:0] _RAND_13;
-  reg [15:0] pipe_packet_ip_chksum; // @[arp.scala 51:17]
+  reg [7:0] pipe_packet_ip_proto; // @[arp.scala 51:17]
   reg [31:0] _RAND_14;
-  reg [31:0] pipe_packet_ip_src; // @[arp.scala 51:17]
+  reg [15:0] pipe_packet_ip_chksum; // @[arp.scala 51:17]
   reg [31:0] _RAND_15;
-  reg [31:0] pipe_packet_ip_dest; // @[arp.scala 51:17]
+  reg [31:0] pipe_packet_ip_src; // @[arp.scala 51:17]
   reg [31:0] _RAND_16;
-  reg [15:0] pipe_packet_icmp_id; // @[arp.scala 51:17]
+  reg [31:0] pipe_packet_ip_dest; // @[arp.scala 51:17]
   reg [31:0] _RAND_17;
-  reg [15:0] pipe_packet_icmp_checksum; // @[arp.scala 51:17]
+  reg [15:0] pipe_packet_icmp_id; // @[arp.scala 51:17]
   reg [31:0] _RAND_18;
-  reg [7:0] pipe_packet_icmp_code; // @[arp.scala 51:17]
+  reg [15:0] pipe_packet_icmp_checksum; // @[arp.scala 51:17]
   reg [31:0] _RAND_19;
-  reg [7:0] pipe_packet_icmp_imcpType; // @[arp.scala 51:17]
+  reg [7:0] pipe_packet_icmp_code; // @[arp.scala 51:17]
   reg [31:0] _RAND_20;
-  reg [1:0] pipeStatus; // @[arp.scala 52:27]
+  reg [7:0] pipe_packet_icmp_imcpType; // @[arp.scala 51:17]
   reg [31:0] _RAND_21;
+  reg [1:0] pipeStatus; // @[arp.scala 52:27]
+  reg [31:0] _RAND_22;
   wire  _T_144; // @[arp.scala 54:8]
   wire  _T_145; // @[arp.scala 60:20]
   assign _T_144 = io_pause == 1'h0; // @[arp.scala 54:8]
   assign _T_145 = io_status == 2'h1; // @[arp.scala 60:20]
+  assign io_output_forward_status = pipe_forward_status; // @[arp.scala 71:13]
   assign io_output_packet_eth_dest = pipe_packet_eth_dest; // @[arp.scala 71:13]
   assign io_output_packet_eth_sender = pipe_packet_eth_sender; // @[arp.scala 71:13]
   assign io_output_packet_eth_pactype = pipe_packet_eth_pactype; // @[arp.scala 71:13]
@@ -2430,97 +2464,104 @@ initial begin
       `endif
     `endif
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_0 = {2{`RANDOM}};
-  pipe_packet_eth_dest = _RAND_0[47:0];
+  _RAND_0 = {1{`RANDOM}};
+  pipe_forward_status = _RAND_0[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_1 = {2{`RANDOM}};
-  pipe_packet_eth_sender = _RAND_1[47:0];
+  pipe_packet_eth_dest = _RAND_1[47:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_2 = {1{`RANDOM}};
-  pipe_packet_eth_pactype = _RAND_2[1:0];
+  _RAND_2 = {2{`RANDOM}};
+  pipe_packet_eth_sender = _RAND_2[47:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_3 = {1{`RANDOM}};
-  pipe_packet_eth_vlan = _RAND_3[2:0];
+  pipe_packet_eth_pactype = _RAND_3[1:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_4 = {1{`RANDOM}};
-  pipe_packet_ip_version = _RAND_4[3:0];
+  pipe_packet_eth_vlan = _RAND_4[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_5 = {1{`RANDOM}};
-  pipe_packet_ip_ihl = _RAND_5[3:0];
+  pipe_packet_ip_version = _RAND_5[3:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_6 = {1{`RANDOM}};
-  pipe_packet_ip_dscp = _RAND_6[5:0];
+  pipe_packet_ip_ihl = _RAND_6[3:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_7 = {1{`RANDOM}};
-  pipe_packet_ip_ecn = _RAND_7[1:0];
+  pipe_packet_ip_dscp = _RAND_7[5:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_8 = {1{`RANDOM}};
-  pipe_packet_ip_len = _RAND_8[15:0];
+  pipe_packet_ip_ecn = _RAND_8[1:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_9 = {1{`RANDOM}};
-  pipe_packet_ip_id = _RAND_9[15:0];
+  pipe_packet_ip_len = _RAND_9[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_10 = {1{`RANDOM}};
-  pipe_packet_ip_flags = _RAND_10[2:0];
+  pipe_packet_ip_id = _RAND_10[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_11 = {1{`RANDOM}};
-  pipe_packet_ip_foff = _RAND_11[12:0];
+  pipe_packet_ip_flags = _RAND_11[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_12 = {1{`RANDOM}};
-  pipe_packet_ip_ttl = _RAND_12[7:0];
+  pipe_packet_ip_foff = _RAND_12[12:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_13 = {1{`RANDOM}};
-  pipe_packet_ip_proto = _RAND_13[7:0];
+  pipe_packet_ip_ttl = _RAND_13[7:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_14 = {1{`RANDOM}};
-  pipe_packet_ip_chksum = _RAND_14[15:0];
+  pipe_packet_ip_proto = _RAND_14[7:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_15 = {1{`RANDOM}};
-  pipe_packet_ip_src = _RAND_15[31:0];
+  pipe_packet_ip_chksum = _RAND_15[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_16 = {1{`RANDOM}};
-  pipe_packet_ip_dest = _RAND_16[31:0];
+  pipe_packet_ip_src = _RAND_16[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_17 = {1{`RANDOM}};
-  pipe_packet_icmp_id = _RAND_17[15:0];
+  pipe_packet_ip_dest = _RAND_17[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_18 = {1{`RANDOM}};
-  pipe_packet_icmp_checksum = _RAND_18[15:0];
+  pipe_packet_icmp_id = _RAND_18[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_19 = {1{`RANDOM}};
-  pipe_packet_icmp_code = _RAND_19[7:0];
+  pipe_packet_icmp_checksum = _RAND_19[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_20 = {1{`RANDOM}};
-  pipe_packet_icmp_imcpType = _RAND_20[7:0];
+  pipe_packet_icmp_code = _RAND_20[7:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_21 = {1{`RANDOM}};
-  pipeStatus = _RAND_21[1:0];
+  pipe_packet_icmp_imcpType = _RAND_21[7:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_22 = {1{`RANDOM}};
+  pipeStatus = _RAND_22[1:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
+    if (_T_144) begin
+      pipe_forward_status <= io_input_lookup_status;
+    end
     if (_T_144) begin
       if (_T_145) begin
         pipe_packet_eth_dest <= 48'h0;
@@ -2606,6 +2647,7 @@ endmodule
 module Encoder(
   input         clock,
   input         reset,
+  input  [2:0]  io_input_forward_status,
   input  [47:0] io_input_packet_eth_dest,
   input  [47:0] io_input_packet_eth_sender,
   input  [1:0]  io_input_packet_eth_pactype,
@@ -2643,83 +2685,87 @@ module Encoder(
   output [7:0]  toAdapter_input,
   output        toAdapter_valid,
   output        toAdapter_last,
-  input         toAdapter_stall
+  output [1:0]  toAdapter_req,
+  input         toAdapter_stall,
+  input         fromAdapter_writer_en,
+  input  [7:0]  fromAdapter_writer_data_data,
+  input         fromAdapter_writer_data_last
 );
-  reg [4:0] cnt; // @[encoder.scala 43:20]
+  reg [4:0] cnt; // @[encoder.scala 49:20]
   reg [31:0] _RAND_0;
-  reg [2:0] state; // @[encoder.scala 49:22]
+  reg [3:0] state; // @[encoder.scala 55:22]
   reg [31:0] _RAND_1;
-  reg [47:0] sending_packet_eth_dest; // @[encoder.scala 51:20]
+  reg [47:0] sending_packet_eth_dest; // @[encoder.scala 57:20]
   reg [63:0] _RAND_2;
-  reg [47:0] sending_packet_eth_sender; // @[encoder.scala 51:20]
+  reg [47:0] sending_packet_eth_sender; // @[encoder.scala 57:20]
   reg [63:0] _RAND_3;
-  reg [1:0] sending_packet_eth_pactype; // @[encoder.scala 51:20]
+  reg [1:0] sending_packet_eth_pactype; // @[encoder.scala 57:20]
   reg [31:0] _RAND_4;
-  reg [2:0] sending_packet_eth_vlan; // @[encoder.scala 51:20]
+  reg [2:0] sending_packet_eth_vlan; // @[encoder.scala 57:20]
   reg [31:0] _RAND_5;
-  reg [3:0] sending_packet_ip_version; // @[encoder.scala 51:20]
+  reg [3:0] sending_packet_ip_version; // @[encoder.scala 57:20]
   reg [31:0] _RAND_6;
-  reg [3:0] sending_packet_ip_ihl; // @[encoder.scala 51:20]
+  reg [3:0] sending_packet_ip_ihl; // @[encoder.scala 57:20]
   reg [31:0] _RAND_7;
-  reg [5:0] sending_packet_ip_dscp; // @[encoder.scala 51:20]
+  reg [5:0] sending_packet_ip_dscp; // @[encoder.scala 57:20]
   reg [31:0] _RAND_8;
-  reg [1:0] sending_packet_ip_ecn; // @[encoder.scala 51:20]
+  reg [1:0] sending_packet_ip_ecn; // @[encoder.scala 57:20]
   reg [31:0] _RAND_9;
-  reg [15:0] sending_packet_ip_len; // @[encoder.scala 51:20]
+  reg [15:0] sending_packet_ip_len; // @[encoder.scala 57:20]
   reg [31:0] _RAND_10;
-  reg [15:0] sending_packet_ip_id; // @[encoder.scala 51:20]
+  reg [15:0] sending_packet_ip_id; // @[encoder.scala 57:20]
   reg [31:0] _RAND_11;
-  reg [2:0] sending_packet_ip_flags; // @[encoder.scala 51:20]
+  reg [2:0] sending_packet_ip_flags; // @[encoder.scala 57:20]
   reg [31:0] _RAND_12;
-  reg [12:0] sending_packet_ip_foff; // @[encoder.scala 51:20]
+  reg [12:0] sending_packet_ip_foff; // @[encoder.scala 57:20]
   reg [31:0] _RAND_13;
-  reg [7:0] sending_packet_ip_ttl; // @[encoder.scala 51:20]
+  reg [7:0] sending_packet_ip_ttl; // @[encoder.scala 57:20]
   reg [31:0] _RAND_14;
-  reg [7:0] sending_packet_ip_proto; // @[encoder.scala 51:20]
+  reg [7:0] sending_packet_ip_proto; // @[encoder.scala 57:20]
   reg [31:0] _RAND_15;
-  reg [15:0] sending_packet_ip_chksum; // @[encoder.scala 51:20]
+  reg [15:0] sending_packet_ip_chksum; // @[encoder.scala 57:20]
   reg [31:0] _RAND_16;
-  reg [31:0] sending_packet_ip_src; // @[encoder.scala 51:20]
+  reg [31:0] sending_packet_ip_src; // @[encoder.scala 57:20]
   reg [31:0] _RAND_17;
-  reg [31:0] sending_packet_ip_dest; // @[encoder.scala 51:20]
+  reg [31:0] sending_packet_ip_dest; // @[encoder.scala 57:20]
   reg [31:0] _RAND_18;
-  reg [15:0] sending_packet_icmp_id; // @[encoder.scala 51:20]
+  reg [15:0] sending_packet_icmp_id; // @[encoder.scala 57:20]
   reg [31:0] _RAND_19;
-  reg [15:0] sending_packet_icmp_checksum; // @[encoder.scala 51:20]
+  reg [15:0] sending_packet_icmp_checksum; // @[encoder.scala 57:20]
   reg [31:0] _RAND_20;
-  reg [7:0] sending_packet_icmp_code; // @[encoder.scala 51:20]
+  reg [7:0] sending_packet_icmp_code; // @[encoder.scala 57:20]
   reg [31:0] _RAND_21;
-  reg [7:0] sending_packet_icmp_imcpType; // @[encoder.scala 51:20]
+  reg [7:0] sending_packet_icmp_imcpType; // @[encoder.scala 57:20]
   reg [31:0] _RAND_22;
-  wire [108:0] _T_4; // @[encoder.scala 52:34]
-  wire [159:0] _T_11; // @[encoder.scala 52:34]
-  wire [7:0] ipView_0; // @[encoder.scala 52:49]
-  wire [7:0] ipView_1; // @[encoder.scala 52:49]
-  wire [7:0] ipView_2; // @[encoder.scala 52:49]
-  wire [7:0] ipView_3; // @[encoder.scala 52:49]
-  wire [7:0] ipView_4; // @[encoder.scala 52:49]
-  wire [7:0] ipView_5; // @[encoder.scala 52:49]
-  wire [7:0] ipView_6; // @[encoder.scala 52:49]
-  wire [7:0] ipView_7; // @[encoder.scala 52:49]
-  wire [7:0] ipView_8; // @[encoder.scala 52:49]
-  wire [7:0] ipView_9; // @[encoder.scala 52:49]
-  wire [7:0] ipView_10; // @[encoder.scala 52:49]
-  wire [7:0] ipView_11; // @[encoder.scala 52:49]
-  wire [7:0] ipView_12; // @[encoder.scala 52:49]
-  wire [7:0] ipView_13; // @[encoder.scala 52:49]
-  wire [7:0] ipView_14; // @[encoder.scala 52:49]
-  wire [7:0] ipView_15; // @[encoder.scala 52:49]
-  wire [7:0] ipView_16; // @[encoder.scala 52:49]
-  wire [7:0] ipView_17; // @[encoder.scala 52:49]
-  wire [7:0] ipView_18; // @[encoder.scala 52:49]
-  wire [7:0] ipView_19; // @[encoder.scala 52:49]
-  wire [47:0] _T_35; // @[encoder.scala 53:38]
-  wire [7:0] icmpView_0; // @[encoder.scala 53:53]
-  wire [7:0] icmpView_1; // @[encoder.scala 53:53]
-  wire [7:0] icmpView_2; // @[encoder.scala 53:53]
-  wire [7:0] icmpView_3; // @[encoder.scala 53:53]
-  wire [7:0] icmpView_4; // @[encoder.scala 53:53]
-  wire [7:0] icmpView_5; // @[encoder.scala 53:53]
+  wire [108:0] _T_4; // @[encoder.scala 58:34]
+  wire [159:0] _T_11; // @[encoder.scala 58:34]
+  wire [7:0] ipView_0; // @[encoder.scala 58:49]
+  wire [7:0] ipView_1; // @[encoder.scala 58:49]
+  wire [7:0] ipView_2; // @[encoder.scala 58:49]
+  wire [7:0] ipView_3; // @[encoder.scala 58:49]
+  wire [7:0] ipView_4; // @[encoder.scala 58:49]
+  wire [7:0] ipView_5; // @[encoder.scala 58:49]
+  wire [7:0] ipView_6; // @[encoder.scala 58:49]
+  wire [7:0] ipView_7; // @[encoder.scala 58:49]
+  wire [7:0] ipView_8; // @[encoder.scala 58:49]
+  wire [7:0] ipView_9; // @[encoder.scala 58:49]
+  wire [7:0] ipView_10; // @[encoder.scala 58:49]
+  wire [7:0] ipView_11; // @[encoder.scala 58:49]
+  wire [7:0] ipView_12; // @[encoder.scala 58:49]
+  wire [7:0] ipView_13; // @[encoder.scala 58:49]
+  wire [7:0] ipView_14; // @[encoder.scala 58:49]
+  wire [7:0] ipView_15; // @[encoder.scala 58:49]
+  wire [7:0] ipView_16; // @[encoder.scala 58:49]
+  wire [7:0] ipView_17; // @[encoder.scala 58:49]
+  wire [7:0] ipView_18; // @[encoder.scala 58:49]
+  wire [7:0] ipView_19; // @[encoder.scala 58:49]
+  wire [47:0] _T_35; // @[encoder.scala 59:38]
+  wire [7:0] icmpView_0; // @[encoder.scala 59:53]
+  wire [7:0] icmpView_1; // @[encoder.scala 59:53]
+  wire [7:0] icmpView_2; // @[encoder.scala 59:53]
+  wire [7:0] icmpView_3; // @[encoder.scala 59:53]
+  wire [7:0] icmpView_4; // @[encoder.scala 59:53]
+  wire [7:0] icmpView_5; // @[encoder.scala 59:53]
   wire  _T_45; // @[pactype.scala 26:12]
   wire  _T_46; // @[pactype.scala 28:19]
   wire [15:0] _GEN_0; // @[pactype.scala 28:36]
@@ -2744,136 +2790,153 @@ module Encoder(
   wire [7:0] headerView_15; // @[eth.scala 21:44]
   wire [7:0] headerView_16; // @[eth.scala 21:44]
   wire [7:0] headerView_17; // @[eth.scala 21:44]
-  wire [2:0] _T_72; // @[Conditional.scala 37:39]
+  reg [1:0] localReq; // @[encoder.scala 74:21]
+  reg [31:0] _RAND_23;
+  wire [3:0] _T_72; // @[Conditional.scala 37:39]
   wire  _T_73; // @[Conditional.scala 37:30]
-  wire  _T_74; // @[encoder.scala 70:12]
-  wire  _T_75; // @[encoder.scala 70:35]
-  wire  _T_76; // @[encoder.scala 70:22]
-  wire  _T_78; // @[encoder.scala 74:41]
-  wire  _T_79; // @[encoder.scala 74:28]
-  wire  _T_82; // @[Conditional.scala 37:30]
-  wire [7:0] _GEN_59; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_60; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_61; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_62; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_63; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_64; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_65; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_66; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_67; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_68; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_69; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_70; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_71; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_72; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_73; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_74; // @[encoder.scala 83:27]
-  wire [7:0] _GEN_75; // @[encoder.scala 83:27]
-  wire  _T_85; // @[encoder.scala 86:12]
-  wire  _T_86; // @[encoder.scala 87:18]
-  wire [4:0] _T_88; // @[encoder.scala 88:22]
-  wire  _T_90; // @[encoder.scala 91:17]
-  wire  _T_91; // @[encoder.scala 91:17]
-  wire  _T_92; // @[encoder.scala 91:17]
-  wire  _T_95; // @[Conditional.scala 37:30]
-  wire  _T_104; // @[Conditional.scala 37:30]
-  wire [7:0] _GEN_103; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_104; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_105; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_106; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_107; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_108; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_109; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_110; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_111; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_112; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_113; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_114; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_115; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_116; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_117; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_118; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_119; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_120; // @[encoder.scala 113:27]
-  wire [7:0] _GEN_121; // @[encoder.scala 113:27]
-  wire  _T_111; // @[encoder.scala 121:41]
-  wire  _T_114; // @[Conditional.scala 37:30]
-  wire [2:0] _T_116;
-  wire [7:0] _GEN_129; // @[encoder.scala 132:27]
-  wire [7:0] _GEN_130; // @[encoder.scala 132:27]
-  wire [7:0] _GEN_131; // @[encoder.scala 132:27]
-  wire [7:0] _GEN_132; // @[encoder.scala 132:27]
-  wire [7:0] _GEN_133; // @[encoder.scala 132:27]
-  wire  _T_123; // @[Conditional.scala 37:30]
-  wire  _T_124; // @[encoder.scala 147:23]
-  wire  _T_126; // @[encoder.scala 147:48]
-  wire  _T_127; // @[encoder.scala 151:39]
-  wire  _T_130; // @[Conditional.scala 37:30]
-  wire  _T_133; // @[encoder.scala 160:57]
-  wire  _T_134; // @[encoder.scala 160:54]
-  wire  _T_135; // @[encoder.scala 162:39]
+  wire  _T_74; // @[encoder.scala 85:9]
+  wire  _T_81; // @[encoder.scala 93:42]
+  wire  _T_82; // @[encoder.scala 93:74]
+  wire  _T_83; // @[encoder.scala 93:61]
+  wire  _T_84; // @[encoder.scala 93:28]
+  wire  _T_85; // @[encoder.scala 98:24]
+  wire  _T_86; // @[encoder.scala 100:44]
+  wire  _T_90; // @[Conditional.scala 37:30]
+  wire [7:0] _GEN_93; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_94; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_95; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_96; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_97; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_98; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_99; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_100; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_101; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_102; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_103; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_104; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_105; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_106; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_107; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_108; // @[encoder.scala 112:27]
+  wire [7:0] _GEN_109; // @[encoder.scala 112:27]
+  wire  _T_93; // @[encoder.scala 115:12]
+  wire  _T_94; // @[encoder.scala 116:18]
+  wire [4:0] _T_96; // @[encoder.scala 117:22]
+  wire  _T_98; // @[encoder.scala 120:17]
+  wire  _T_99; // @[encoder.scala 120:17]
+  wire  _T_100; // @[encoder.scala 120:17]
+  wire  _T_103; // @[Conditional.scala 37:30]
+  wire  _T_112; // @[Conditional.scala 37:30]
+  wire [7:0] _GEN_137; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_138; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_139; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_140; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_141; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_142; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_143; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_144; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_145; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_146; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_147; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_148; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_149; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_150; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_151; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_152; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_153; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_154; // @[encoder.scala 142:27]
+  wire [7:0] _GEN_155; // @[encoder.scala 142:27]
+  wire  _T_119; // @[encoder.scala 150:41]
+  wire [2:0] _GEN_157; // @[encoder.scala 150:62]
+  wire  _T_122; // @[Conditional.scala 37:30]
+  wire [2:0] _T_124;
+  wire [7:0] _GEN_163; // @[encoder.scala 161:27]
+  wire [7:0] _GEN_164; // @[encoder.scala 161:27]
+  wire [7:0] _GEN_165; // @[encoder.scala 161:27]
+  wire [7:0] _GEN_166; // @[encoder.scala 161:27]
+  wire [7:0] _GEN_167; // @[encoder.scala 161:27]
+  wire  _T_131; // @[Conditional.scala 37:30]
+  wire  _T_132; // @[encoder.scala 176:23]
+  wire  _T_134; // @[encoder.scala 176:48]
+  wire  _T_135; // @[encoder.scala 180:39]
   wire  _T_138; // @[Conditional.scala 37:30]
-  wire  _GEN_144; // @[Conditional.scala 39:67]
-  wire  _GEN_146; // @[Conditional.scala 39:67]
-  wire  _GEN_148; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_149; // @[Conditional.scala 39:67]
-  wire  _GEN_150; // @[Conditional.scala 39:67]
-  wire  _GEN_151; // @[Conditional.scala 39:67]
-  wire  _GEN_154; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_156; // @[Conditional.scala 39:67]
-  wire  _GEN_157; // @[Conditional.scala 39:67]
-  wire  _GEN_158; // @[Conditional.scala 39:67]
-  wire  _GEN_161; // @[Conditional.scala 39:67]
-  wire  _GEN_163; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_165; // @[Conditional.scala 39:67]
-  wire  _GEN_166; // @[Conditional.scala 39:67]
-  wire  _GEN_167; // @[Conditional.scala 39:67]
-  wire  _GEN_170; // @[Conditional.scala 39:67]
-  wire  _GEN_172; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_174; // @[Conditional.scala 39:67]
-  wire  _GEN_175; // @[Conditional.scala 39:67]
+  wire  _T_141; // @[encoder.scala 189:57]
+  wire  _T_142; // @[encoder.scala 189:54]
+  wire  _T_143; // @[encoder.scala 191:39]
+  wire  _T_146; // @[Conditional.scala 37:30]
+  wire  _T_149; // @[Conditional.scala 37:30]
+  wire  _T_150; // @[encoder.scala 204:25]
+  wire  _T_152; // @[encoder.scala 204:48]
   wire  _GEN_178; // @[Conditional.scala 39:67]
-  wire  _GEN_179; // @[Conditional.scala 39:67]
-  wire  _GEN_181; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_183; // @[Conditional.scala 39:67]
-  wire  _GEN_184; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_179; // @[Conditional.scala 39:67]
+  wire  _GEN_180; // @[Conditional.scala 39:67]
   wire  _GEN_187; // @[Conditional.scala 39:67]
-  wire  _GEN_188; // @[Conditional.scala 39:67]
-  wire  _GEN_190; // @[Conditional.scala 39:67]
-  wire  _GEN_227; // @[encoder.scala 91:17]
-  wire  _GEN_228; // @[encoder.scala 91:17]
-  wire  _GEN_229; // @[encoder.scala 91:17]
-  wire  _GEN_230; // @[encoder.scala 91:17]
-  wire  _GEN_231; // @[encoder.scala 91:17]
-  assign _T_4 = {sending_packet_ip_foff,sending_packet_ip_ttl,sending_packet_ip_proto,sending_packet_ip_chksum,sending_packet_ip_src,sending_packet_ip_dest}; // @[encoder.scala 52:34]
-  assign _T_11 = {sending_packet_ip_version,sending_packet_ip_ihl,sending_packet_ip_dscp,sending_packet_ip_ecn,sending_packet_ip_len,sending_packet_ip_id,sending_packet_ip_flags,_T_4}; // @[encoder.scala 52:34]
-  assign ipView_0 = _T_11[7:0]; // @[encoder.scala 52:49]
-  assign ipView_1 = _T_11[15:8]; // @[encoder.scala 52:49]
-  assign ipView_2 = _T_11[23:16]; // @[encoder.scala 52:49]
-  assign ipView_3 = _T_11[31:24]; // @[encoder.scala 52:49]
-  assign ipView_4 = _T_11[39:32]; // @[encoder.scala 52:49]
-  assign ipView_5 = _T_11[47:40]; // @[encoder.scala 52:49]
-  assign ipView_6 = _T_11[55:48]; // @[encoder.scala 52:49]
-  assign ipView_7 = _T_11[63:56]; // @[encoder.scala 52:49]
-  assign ipView_8 = _T_11[71:64]; // @[encoder.scala 52:49]
-  assign ipView_9 = _T_11[79:72]; // @[encoder.scala 52:49]
-  assign ipView_10 = _T_11[87:80]; // @[encoder.scala 52:49]
-  assign ipView_11 = _T_11[95:88]; // @[encoder.scala 52:49]
-  assign ipView_12 = _T_11[103:96]; // @[encoder.scala 52:49]
-  assign ipView_13 = _T_11[111:104]; // @[encoder.scala 52:49]
-  assign ipView_14 = _T_11[119:112]; // @[encoder.scala 52:49]
-  assign ipView_15 = _T_11[127:120]; // @[encoder.scala 52:49]
-  assign ipView_16 = _T_11[135:128]; // @[encoder.scala 52:49]
-  assign ipView_17 = _T_11[143:136]; // @[encoder.scala 52:49]
-  assign ipView_18 = _T_11[151:144]; // @[encoder.scala 52:49]
-  assign ipView_19 = _T_11[159:152]; // @[encoder.scala 52:49]
-  assign _T_35 = {sending_packet_icmp_id,sending_packet_icmp_checksum,sending_packet_icmp_code,sending_packet_icmp_imcpType}; // @[encoder.scala 53:38]
-  assign icmpView_0 = _T_35[7:0]; // @[encoder.scala 53:53]
-  assign icmpView_1 = _T_35[15:8]; // @[encoder.scala 53:53]
-  assign icmpView_2 = _T_35[23:16]; // @[encoder.scala 53:53]
-  assign icmpView_3 = _T_35[31:24]; // @[encoder.scala 53:53]
-  assign icmpView_4 = _T_35[39:32]; // @[encoder.scala 53:53]
-  assign icmpView_5 = _T_35[47:40]; // @[encoder.scala 53:53]
+  wire [7:0] _GEN_188; // @[Conditional.scala 39:67]
+  wire  _GEN_189; // @[Conditional.scala 39:67]
+  wire  _GEN_192; // @[Conditional.scala 39:67]
+  wire  _GEN_194; // @[Conditional.scala 39:67]
+  wire  _GEN_198; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_199; // @[Conditional.scala 39:67]
+  wire  _GEN_200; // @[Conditional.scala 39:67]
+  wire  _GEN_202; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_203; // @[Conditional.scala 39:67]
+  wire  _GEN_204; // @[Conditional.scala 39:67]
+  wire  _GEN_205; // @[Conditional.scala 39:67]
+  wire  _GEN_208; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_213; // @[Conditional.scala 39:67]
+  wire  _GEN_214; // @[Conditional.scala 39:67]
+  wire  _GEN_215; // @[Conditional.scala 39:67]
+  wire  _GEN_218; // @[Conditional.scala 39:67]
+  wire  _GEN_220; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_225; // @[Conditional.scala 39:67]
+  wire  _GEN_226; // @[Conditional.scala 39:67]
+  wire  _GEN_227; // @[Conditional.scala 39:67]
+  wire  _GEN_230; // @[Conditional.scala 39:67]
+  wire  _GEN_232; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_237; // @[Conditional.scala 39:67]
+  wire  _GEN_238; // @[Conditional.scala 39:67]
+  wire  _GEN_241; // @[Conditional.scala 39:67]
+  wire  _GEN_242; // @[Conditional.scala 39:67]
+  wire  _GEN_244; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_249; // @[Conditional.scala 39:67]
+  wire  _GEN_250; // @[Conditional.scala 39:67]
+  wire  _GEN_253; // @[Conditional.scala 39:67]
+  wire  _GEN_254; // @[Conditional.scala 39:67]
+  wire  _GEN_256; // @[Conditional.scala 39:67]
+  wire  _GEN_300; // @[encoder.scala 120:17]
+  wire  _GEN_301; // @[encoder.scala 120:17]
+  wire  _GEN_302; // @[encoder.scala 120:17]
+  wire  _GEN_303; // @[encoder.scala 120:17]
+  wire  _GEN_304; // @[encoder.scala 120:17]
+  assign _T_4 = {sending_packet_ip_foff,sending_packet_ip_ttl,sending_packet_ip_proto,sending_packet_ip_chksum,sending_packet_ip_src,sending_packet_ip_dest}; // @[encoder.scala 58:34]
+  assign _T_11 = {sending_packet_ip_version,sending_packet_ip_ihl,sending_packet_ip_dscp,sending_packet_ip_ecn,sending_packet_ip_len,sending_packet_ip_id,sending_packet_ip_flags,_T_4}; // @[encoder.scala 58:34]
+  assign ipView_0 = _T_11[7:0]; // @[encoder.scala 58:49]
+  assign ipView_1 = _T_11[15:8]; // @[encoder.scala 58:49]
+  assign ipView_2 = _T_11[23:16]; // @[encoder.scala 58:49]
+  assign ipView_3 = _T_11[31:24]; // @[encoder.scala 58:49]
+  assign ipView_4 = _T_11[39:32]; // @[encoder.scala 58:49]
+  assign ipView_5 = _T_11[47:40]; // @[encoder.scala 58:49]
+  assign ipView_6 = _T_11[55:48]; // @[encoder.scala 58:49]
+  assign ipView_7 = _T_11[63:56]; // @[encoder.scala 58:49]
+  assign ipView_8 = _T_11[71:64]; // @[encoder.scala 58:49]
+  assign ipView_9 = _T_11[79:72]; // @[encoder.scala 58:49]
+  assign ipView_10 = _T_11[87:80]; // @[encoder.scala 58:49]
+  assign ipView_11 = _T_11[95:88]; // @[encoder.scala 58:49]
+  assign ipView_12 = _T_11[103:96]; // @[encoder.scala 58:49]
+  assign ipView_13 = _T_11[111:104]; // @[encoder.scala 58:49]
+  assign ipView_14 = _T_11[119:112]; // @[encoder.scala 58:49]
+  assign ipView_15 = _T_11[127:120]; // @[encoder.scala 58:49]
+  assign ipView_16 = _T_11[135:128]; // @[encoder.scala 58:49]
+  assign ipView_17 = _T_11[143:136]; // @[encoder.scala 58:49]
+  assign ipView_18 = _T_11[151:144]; // @[encoder.scala 58:49]
+  assign ipView_19 = _T_11[159:152]; // @[encoder.scala 58:49]
+  assign _T_35 = {sending_packet_icmp_id,sending_packet_icmp_checksum,sending_packet_icmp_code,sending_packet_icmp_imcpType}; // @[encoder.scala 59:38]
+  assign icmpView_0 = _T_35[7:0]; // @[encoder.scala 59:53]
+  assign icmpView_1 = _T_35[15:8]; // @[encoder.scala 59:53]
+  assign icmpView_2 = _T_35[23:16]; // @[encoder.scala 59:53]
+  assign icmpView_3 = _T_35[31:24]; // @[encoder.scala 59:53]
+  assign icmpView_4 = _T_35[39:32]; // @[encoder.scala 59:53]
+  assign icmpView_5 = _T_35[47:40]; // @[encoder.scala 59:53]
   assign _T_45 = sending_packet_eth_pactype == 2'h1; // @[pactype.scala 26:12]
   assign _T_46 = sending_packet_eth_pactype == 2'h2; // @[pactype.scala 28:19]
   assign _GEN_0 = _T_46 ? 16'h806 : 16'h0; // @[pactype.scala 28:36]
@@ -2899,116 +2962,132 @@ module Encoder(
   assign headerView_16 = _T_50[135:128]; // @[eth.scala 21:44]
   assign headerView_17 = _T_50[143:136]; // @[eth.scala 21:44]
   assign _T_72 = $unsigned(state); // @[Conditional.scala 37:39]
-  assign _T_73 = 3'h0 == _T_72; // @[Conditional.scala 37:30]
-  assign _T_74 = io_pause == 1'h0; // @[encoder.scala 70:12]
-  assign _T_75 = io_status == 2'h1; // @[encoder.scala 70:35]
-  assign _T_76 = _T_74 & _T_75; // @[encoder.scala 70:22]
-  assign _T_78 = io_status == 2'h2; // @[encoder.scala 74:41]
-  assign _T_79 = _T_74 & _T_78; // @[encoder.scala 74:28]
-  assign _T_82 = 3'h1 == _T_72; // @[Conditional.scala 37:30]
-  assign _GEN_59 = 5'h1 == cnt ? headerView_1 : headerView_0; // @[encoder.scala 83:27]
-  assign _GEN_60 = 5'h2 == cnt ? headerView_2 : _GEN_59; // @[encoder.scala 83:27]
-  assign _GEN_61 = 5'h3 == cnt ? headerView_3 : _GEN_60; // @[encoder.scala 83:27]
-  assign _GEN_62 = 5'h4 == cnt ? headerView_4 : _GEN_61; // @[encoder.scala 83:27]
-  assign _GEN_63 = 5'h5 == cnt ? headerView_5 : _GEN_62; // @[encoder.scala 83:27]
-  assign _GEN_64 = 5'h6 == cnt ? headerView_6 : _GEN_63; // @[encoder.scala 83:27]
-  assign _GEN_65 = 5'h7 == cnt ? headerView_7 : _GEN_64; // @[encoder.scala 83:27]
-  assign _GEN_66 = 5'h8 == cnt ? headerView_8 : _GEN_65; // @[encoder.scala 83:27]
-  assign _GEN_67 = 5'h9 == cnt ? headerView_9 : _GEN_66; // @[encoder.scala 83:27]
-  assign _GEN_68 = 5'ha == cnt ? headerView_10 : _GEN_67; // @[encoder.scala 83:27]
-  assign _GEN_69 = 5'hb == cnt ? headerView_11 : _GEN_68; // @[encoder.scala 83:27]
-  assign _GEN_70 = 5'hc == cnt ? headerView_12 : _GEN_69; // @[encoder.scala 83:27]
-  assign _GEN_71 = 5'hd == cnt ? headerView_13 : _GEN_70; // @[encoder.scala 83:27]
-  assign _GEN_72 = 5'he == cnt ? headerView_14 : _GEN_71; // @[encoder.scala 83:27]
-  assign _GEN_73 = 5'hf == cnt ? headerView_15 : _GEN_72; // @[encoder.scala 83:27]
-  assign _GEN_74 = 5'h10 == cnt ? headerView_16 : _GEN_73; // @[encoder.scala 83:27]
-  assign _GEN_75 = 5'h11 == cnt ? headerView_17 : _GEN_74; // @[encoder.scala 83:27]
-  assign _T_85 = io_writer_full == 1'h0; // @[encoder.scala 86:12]
-  assign _T_86 = cnt > 5'h0; // @[encoder.scala 87:18]
-  assign _T_88 = cnt - 5'h1; // @[encoder.scala 88:22]
-  assign _T_90 = $unsigned(reset); // @[encoder.scala 91:17]
-  assign _T_91 = _T_45 | _T_90; // @[encoder.scala 91:17]
-  assign _T_92 = _T_91 == 1'h0; // @[encoder.scala 91:17]
-  assign _T_95 = 3'h6 == _T_72; // @[Conditional.scala 37:30]
-  assign _T_104 = 3'h2 == _T_72; // @[Conditional.scala 37:30]
-  assign _GEN_103 = 5'h1 == cnt ? ipView_1 : ipView_0; // @[encoder.scala 113:27]
-  assign _GEN_104 = 5'h2 == cnt ? ipView_2 : _GEN_103; // @[encoder.scala 113:27]
-  assign _GEN_105 = 5'h3 == cnt ? ipView_3 : _GEN_104; // @[encoder.scala 113:27]
-  assign _GEN_106 = 5'h4 == cnt ? ipView_4 : _GEN_105; // @[encoder.scala 113:27]
-  assign _GEN_107 = 5'h5 == cnt ? ipView_5 : _GEN_106; // @[encoder.scala 113:27]
-  assign _GEN_108 = 5'h6 == cnt ? ipView_6 : _GEN_107; // @[encoder.scala 113:27]
-  assign _GEN_109 = 5'h7 == cnt ? ipView_7 : _GEN_108; // @[encoder.scala 113:27]
-  assign _GEN_110 = 5'h8 == cnt ? ipView_8 : _GEN_109; // @[encoder.scala 113:27]
-  assign _GEN_111 = 5'h9 == cnt ? ipView_9 : _GEN_110; // @[encoder.scala 113:27]
-  assign _GEN_112 = 5'ha == cnt ? ipView_10 : _GEN_111; // @[encoder.scala 113:27]
-  assign _GEN_113 = 5'hb == cnt ? ipView_11 : _GEN_112; // @[encoder.scala 113:27]
-  assign _GEN_114 = 5'hc == cnt ? ipView_12 : _GEN_113; // @[encoder.scala 113:27]
-  assign _GEN_115 = 5'hd == cnt ? ipView_13 : _GEN_114; // @[encoder.scala 113:27]
-  assign _GEN_116 = 5'he == cnt ? ipView_14 : _GEN_115; // @[encoder.scala 113:27]
-  assign _GEN_117 = 5'hf == cnt ? ipView_15 : _GEN_116; // @[encoder.scala 113:27]
-  assign _GEN_118 = 5'h10 == cnt ? ipView_16 : _GEN_117; // @[encoder.scala 113:27]
-  assign _GEN_119 = 5'h11 == cnt ? ipView_17 : _GEN_118; // @[encoder.scala 113:27]
-  assign _GEN_120 = 5'h12 == cnt ? ipView_18 : _GEN_119; // @[encoder.scala 113:27]
-  assign _GEN_121 = 5'h13 == cnt ? ipView_19 : _GEN_120; // @[encoder.scala 113:27]
-  assign _T_111 = sending_packet_ip_proto == 8'h1; // @[encoder.scala 121:41]
-  assign _T_114 = 3'h3 == _T_72; // @[Conditional.scala 37:30]
-  assign _T_116 = cnt[2:0];
-  assign _GEN_129 = 3'h1 == _T_116 ? icmpView_1 : icmpView_0; // @[encoder.scala 132:27]
-  assign _GEN_130 = 3'h2 == _T_116 ? icmpView_2 : _GEN_129; // @[encoder.scala 132:27]
-  assign _GEN_131 = 3'h3 == _T_116 ? icmpView_3 : _GEN_130; // @[encoder.scala 132:27]
-  assign _GEN_132 = 3'h4 == _T_116 ? icmpView_4 : _GEN_131; // @[encoder.scala 132:27]
-  assign _GEN_133 = 3'h5 == _T_116 ? icmpView_5 : _GEN_132; // @[encoder.scala 132:27]
-  assign _T_123 = 3'h4 == _T_72; // @[Conditional.scala 37:30]
-  assign _T_124 = io_payloadReader_empty == 1'h0; // @[encoder.scala 147:23]
-  assign _T_126 = _T_124 & _T_85; // @[encoder.scala 147:48]
-  assign _T_127 = io_payloadReader_data_last & _T_126; // @[encoder.scala 151:39]
-  assign _T_130 = 3'h7 == _T_72; // @[Conditional.scala 37:30]
-  assign _T_133 = toAdapter_stall == 1'h0; // @[encoder.scala 160:57]
-  assign _T_134 = _T_124 & _T_133; // @[encoder.scala 160:54]
-  assign _T_135 = io_payloadReader_data_last & io_payloadReader_en; // @[encoder.scala 162:39]
-  assign _T_138 = 3'h5 == _T_72; // @[Conditional.scala 37:30]
-  assign _GEN_144 = _T_130 & _T_124; // @[Conditional.scala 39:67]
-  assign _GEN_146 = _T_130 ? _T_134 : _T_138; // @[Conditional.scala 39:67]
-  assign _GEN_148 = _T_123 & io_payloadReader_data_last; // @[Conditional.scala 39:67]
-  assign _GEN_149 = _T_123 ? io_payloadReader_data_data : 8'h0; // @[Conditional.scala 39:67]
-  assign _GEN_150 = _T_123 & _T_126; // @[Conditional.scala 39:67]
-  assign _GEN_151 = _T_123 ? _T_126 : _GEN_146; // @[Conditional.scala 39:67]
-  assign _GEN_154 = _T_123 ? 1'h0 : _GEN_144; // @[Conditional.scala 39:67]
-  assign _GEN_156 = _T_114 ? _GEN_133 : _GEN_149; // @[Conditional.scala 39:67]
-  assign _GEN_157 = _T_114 ? 1'h0 : _GEN_148; // @[Conditional.scala 39:67]
-  assign _GEN_158 = _T_114 | _GEN_150; // @[Conditional.scala 39:67]
-  assign _GEN_161 = _T_114 ? 1'h0 : _GEN_151; // @[Conditional.scala 39:67]
-  assign _GEN_163 = _T_114 ? 1'h0 : _GEN_154; // @[Conditional.scala 39:67]
-  assign _GEN_165 = _T_104 ? _GEN_121 : _GEN_156; // @[Conditional.scala 39:67]
-  assign _GEN_166 = _T_104 ? 1'h0 : _GEN_157; // @[Conditional.scala 39:67]
-  assign _GEN_167 = _T_104 | _GEN_158; // @[Conditional.scala 39:67]
-  assign _GEN_170 = _T_104 ? 1'h0 : _GEN_161; // @[Conditional.scala 39:67]
-  assign _GEN_172 = _T_104 ? 1'h0 : _GEN_163; // @[Conditional.scala 39:67]
-  assign _GEN_174 = _T_95 ? _GEN_75 : _GEN_165; // @[Conditional.scala 39:67]
-  assign _GEN_175 = _T_95 | _GEN_167; // @[Conditional.scala 39:67]
-  assign _GEN_178 = _T_95 ? 1'h0 : _GEN_166; // @[Conditional.scala 39:67]
-  assign _GEN_179 = _T_95 ? 1'h0 : _GEN_170; // @[Conditional.scala 39:67]
-  assign _GEN_181 = _T_95 ? 1'h0 : _GEN_172; // @[Conditional.scala 39:67]
-  assign _GEN_183 = _T_82 ? _GEN_75 : _GEN_174; // @[Conditional.scala 39:67]
-  assign _GEN_184 = _T_82 | _GEN_175; // @[Conditional.scala 39:67]
-  assign _GEN_187 = _T_82 ? 1'h0 : _GEN_178; // @[Conditional.scala 39:67]
-  assign _GEN_188 = _T_82 ? 1'h0 : _GEN_179; // @[Conditional.scala 39:67]
-  assign _GEN_190 = _T_82 ? 1'h0 : _GEN_181; // @[Conditional.scala 39:67]
-  assign io_stall = state != 3'h0; // @[encoder.scala 173:12]
-  assign io_writer_clk = clock; // @[encoder.scala 62:17]
-  assign io_writer_en = _T_73 ? 1'h0 : _GEN_184; // @[encoder.scala 61:16 encoder.scala 84:20 encoder.scala 101:20 encoder.scala 115:20 encoder.scala 134:20 encoder.scala 148:20]
-  assign io_writer_data_data = _T_73 ? 8'h0 : _GEN_183; // @[encoder.scala 60:23 encoder.scala 83:27 encoder.scala 100:27 encoder.scala 113:27 encoder.scala 132:27 encoder.scala 146:22]
-  assign io_writer_data_last = _T_73 ? 1'h0 : _GEN_187; // @[encoder.scala 59:23 encoder.scala 114:27 encoder.scala 133:27 encoder.scala 146:22]
-  assign io_payloadReader_clk = clock; // @[encoder.scala 56:24]
-  assign io_payloadReader_en = _T_73 ? 1'h0 : _GEN_188; // @[encoder.scala 57:23 encoder.scala 149:27 encoder.scala 160:27 encoder.scala 168:27]
-  assign toAdapter_input = io_payloadReader_data_data; // @[encoder.scala 157:23]
-  assign toAdapter_valid = _T_73 ? 1'h0 : _GEN_190; // @[encoder.scala 66:19 encoder.scala 158:23]
-  assign toAdapter_last = io_payloadReader_data_last; // @[encoder.scala 159:22]
-  assign _GEN_227 = _T_73 == 1'h0; // @[encoder.scala 91:17]
-  assign _GEN_228 = _GEN_227 & _T_82; // @[encoder.scala 91:17]
-  assign _GEN_229 = _GEN_228 & _T_85; // @[encoder.scala 91:17]
-  assign _GEN_230 = _T_86 == 1'h0; // @[encoder.scala 91:17]
-  assign _GEN_231 = _GEN_229 & _GEN_230; // @[encoder.scala 91:17]
+  assign _T_73 = 4'h0 == _T_72; // @[Conditional.scala 37:30]
+  assign _T_74 = io_pause == 1'h0; // @[encoder.scala 85:9]
+  assign _T_81 = io_status != 2'h3; // @[encoder.scala 93:42]
+  assign _T_82 = io_status != 2'h0; // @[encoder.scala 93:74]
+  assign _T_83 = _T_81 & _T_82; // @[encoder.scala 93:61]
+  assign _T_84 = _T_74 & _T_83; // @[encoder.scala 93:28]
+  assign _T_85 = io_status == 2'h2; // @[encoder.scala 98:24]
+  assign _T_86 = io_input_forward_status == 3'h1; // @[encoder.scala 100:44]
+  assign _T_90 = 4'h1 == _T_72; // @[Conditional.scala 37:30]
+  assign _GEN_93 = 5'h1 == cnt ? headerView_1 : headerView_0; // @[encoder.scala 112:27]
+  assign _GEN_94 = 5'h2 == cnt ? headerView_2 : _GEN_93; // @[encoder.scala 112:27]
+  assign _GEN_95 = 5'h3 == cnt ? headerView_3 : _GEN_94; // @[encoder.scala 112:27]
+  assign _GEN_96 = 5'h4 == cnt ? headerView_4 : _GEN_95; // @[encoder.scala 112:27]
+  assign _GEN_97 = 5'h5 == cnt ? headerView_5 : _GEN_96; // @[encoder.scala 112:27]
+  assign _GEN_98 = 5'h6 == cnt ? headerView_6 : _GEN_97; // @[encoder.scala 112:27]
+  assign _GEN_99 = 5'h7 == cnt ? headerView_7 : _GEN_98; // @[encoder.scala 112:27]
+  assign _GEN_100 = 5'h8 == cnt ? headerView_8 : _GEN_99; // @[encoder.scala 112:27]
+  assign _GEN_101 = 5'h9 == cnt ? headerView_9 : _GEN_100; // @[encoder.scala 112:27]
+  assign _GEN_102 = 5'ha == cnt ? headerView_10 : _GEN_101; // @[encoder.scala 112:27]
+  assign _GEN_103 = 5'hb == cnt ? headerView_11 : _GEN_102; // @[encoder.scala 112:27]
+  assign _GEN_104 = 5'hc == cnt ? headerView_12 : _GEN_103; // @[encoder.scala 112:27]
+  assign _GEN_105 = 5'hd == cnt ? headerView_13 : _GEN_104; // @[encoder.scala 112:27]
+  assign _GEN_106 = 5'he == cnt ? headerView_14 : _GEN_105; // @[encoder.scala 112:27]
+  assign _GEN_107 = 5'hf == cnt ? headerView_15 : _GEN_106; // @[encoder.scala 112:27]
+  assign _GEN_108 = 5'h10 == cnt ? headerView_16 : _GEN_107; // @[encoder.scala 112:27]
+  assign _GEN_109 = 5'h11 == cnt ? headerView_17 : _GEN_108; // @[encoder.scala 112:27]
+  assign _T_93 = io_writer_full == 1'h0; // @[encoder.scala 115:12]
+  assign _T_94 = cnt > 5'h0; // @[encoder.scala 116:18]
+  assign _T_96 = cnt - 5'h1; // @[encoder.scala 117:22]
+  assign _T_98 = $unsigned(reset); // @[encoder.scala 120:17]
+  assign _T_99 = _T_45 | _T_98; // @[encoder.scala 120:17]
+  assign _T_100 = _T_99 == 1'h0; // @[encoder.scala 120:17]
+  assign _T_103 = 4'h6 == _T_72; // @[Conditional.scala 37:30]
+  assign _T_112 = 4'h2 == _T_72; // @[Conditional.scala 37:30]
+  assign _GEN_137 = 5'h1 == cnt ? ipView_1 : ipView_0; // @[encoder.scala 142:27]
+  assign _GEN_138 = 5'h2 == cnt ? ipView_2 : _GEN_137; // @[encoder.scala 142:27]
+  assign _GEN_139 = 5'h3 == cnt ? ipView_3 : _GEN_138; // @[encoder.scala 142:27]
+  assign _GEN_140 = 5'h4 == cnt ? ipView_4 : _GEN_139; // @[encoder.scala 142:27]
+  assign _GEN_141 = 5'h5 == cnt ? ipView_5 : _GEN_140; // @[encoder.scala 142:27]
+  assign _GEN_142 = 5'h6 == cnt ? ipView_6 : _GEN_141; // @[encoder.scala 142:27]
+  assign _GEN_143 = 5'h7 == cnt ? ipView_7 : _GEN_142; // @[encoder.scala 142:27]
+  assign _GEN_144 = 5'h8 == cnt ? ipView_8 : _GEN_143; // @[encoder.scala 142:27]
+  assign _GEN_145 = 5'h9 == cnt ? ipView_9 : _GEN_144; // @[encoder.scala 142:27]
+  assign _GEN_146 = 5'ha == cnt ? ipView_10 : _GEN_145; // @[encoder.scala 142:27]
+  assign _GEN_147 = 5'hb == cnt ? ipView_11 : _GEN_146; // @[encoder.scala 142:27]
+  assign _GEN_148 = 5'hc == cnt ? ipView_12 : _GEN_147; // @[encoder.scala 142:27]
+  assign _GEN_149 = 5'hd == cnt ? ipView_13 : _GEN_148; // @[encoder.scala 142:27]
+  assign _GEN_150 = 5'he == cnt ? ipView_14 : _GEN_149; // @[encoder.scala 142:27]
+  assign _GEN_151 = 5'hf == cnt ? ipView_15 : _GEN_150; // @[encoder.scala 142:27]
+  assign _GEN_152 = 5'h10 == cnt ? ipView_16 : _GEN_151; // @[encoder.scala 142:27]
+  assign _GEN_153 = 5'h11 == cnt ? ipView_17 : _GEN_152; // @[encoder.scala 142:27]
+  assign _GEN_154 = 5'h12 == cnt ? ipView_18 : _GEN_153; // @[encoder.scala 142:27]
+  assign _GEN_155 = 5'h13 == cnt ? ipView_19 : _GEN_154; // @[encoder.scala 142:27]
+  assign _T_119 = sending_packet_ip_proto == 8'h1; // @[encoder.scala 150:41]
+  assign _GEN_157 = _T_119 ? 3'h3 : 3'h4; // @[encoder.scala 150:62]
+  assign _T_122 = 4'h3 == _T_72; // @[Conditional.scala 37:30]
+  assign _T_124 = cnt[2:0];
+  assign _GEN_163 = 3'h1 == _T_124 ? icmpView_1 : icmpView_0; // @[encoder.scala 161:27]
+  assign _GEN_164 = 3'h2 == _T_124 ? icmpView_2 : _GEN_163; // @[encoder.scala 161:27]
+  assign _GEN_165 = 3'h3 == _T_124 ? icmpView_3 : _GEN_164; // @[encoder.scala 161:27]
+  assign _GEN_166 = 3'h4 == _T_124 ? icmpView_4 : _GEN_165; // @[encoder.scala 161:27]
+  assign _GEN_167 = 3'h5 == _T_124 ? icmpView_5 : _GEN_166; // @[encoder.scala 161:27]
+  assign _T_131 = 4'h4 == _T_72; // @[Conditional.scala 37:30]
+  assign _T_132 = io_payloadReader_empty == 1'h0; // @[encoder.scala 176:23]
+  assign _T_134 = _T_132 & _T_93; // @[encoder.scala 176:48]
+  assign _T_135 = io_payloadReader_data_last & _T_134; // @[encoder.scala 180:39]
+  assign _T_138 = 4'h7 == _T_72; // @[Conditional.scala 37:30]
+  assign _T_141 = toAdapter_stall == 1'h0; // @[encoder.scala 189:57]
+  assign _T_142 = _T_132 & _T_141; // @[encoder.scala 189:54]
+  assign _T_143 = io_payloadReader_data_last & io_payloadReader_en; // @[encoder.scala 191:39]
+  assign _T_146 = 4'h5 == _T_72; // @[Conditional.scala 37:30]
+  assign _T_149 = 4'h8 == _T_72; // @[Conditional.scala 37:30]
+  assign _T_150 = io_writer_en & io_writer_data_last; // @[encoder.scala 204:25]
+  assign _T_152 = _T_150 & _T_93; // @[encoder.scala 204:48]
+  assign _GEN_178 = _T_149 & fromAdapter_writer_data_last; // @[Conditional.scala 39:67]
+  assign _GEN_179 = _T_149 ? fromAdapter_writer_data_data : 8'h0; // @[Conditional.scala 39:67]
+  assign _GEN_180 = _T_149 & fromAdapter_writer_en; // @[Conditional.scala 39:67]
+  assign _GEN_187 = _T_146 ? 1'h0 : _GEN_178; // @[Conditional.scala 39:67]
+  assign _GEN_188 = _T_146 ? 8'h0 : _GEN_179; // @[Conditional.scala 39:67]
+  assign _GEN_189 = _T_146 ? 1'h0 : _GEN_180; // @[Conditional.scala 39:67]
+  assign _GEN_192 = _T_138 & _T_132; // @[Conditional.scala 39:67]
+  assign _GEN_194 = _T_138 ? _T_142 : _T_146; // @[Conditional.scala 39:67]
+  assign _GEN_198 = _T_138 ? 1'h0 : _GEN_187; // @[Conditional.scala 39:67]
+  assign _GEN_199 = _T_138 ? 8'h0 : _GEN_188; // @[Conditional.scala 39:67]
+  assign _GEN_200 = _T_138 ? 1'h0 : _GEN_189; // @[Conditional.scala 39:67]
+  assign _GEN_202 = _T_131 ? io_payloadReader_data_last : _GEN_198; // @[Conditional.scala 39:67]
+  assign _GEN_203 = _T_131 ? io_payloadReader_data_data : _GEN_199; // @[Conditional.scala 39:67]
+  assign _GEN_204 = _T_131 ? _T_134 : _GEN_200; // @[Conditional.scala 39:67]
+  assign _GEN_205 = _T_131 ? _T_134 : _GEN_194; // @[Conditional.scala 39:67]
+  assign _GEN_208 = _T_131 ? 1'h0 : _GEN_192; // @[Conditional.scala 39:67]
+  assign _GEN_213 = _T_122 ? _GEN_167 : _GEN_203; // @[Conditional.scala 39:67]
+  assign _GEN_214 = _T_122 ? 1'h0 : _GEN_202; // @[Conditional.scala 39:67]
+  assign _GEN_215 = _T_122 | _GEN_204; // @[Conditional.scala 39:67]
+  assign _GEN_218 = _T_122 ? 1'h0 : _GEN_205; // @[Conditional.scala 39:67]
+  assign _GEN_220 = _T_122 ? 1'h0 : _GEN_208; // @[Conditional.scala 39:67]
+  assign _GEN_225 = _T_112 ? _GEN_155 : _GEN_213; // @[Conditional.scala 39:67]
+  assign _GEN_226 = _T_112 ? 1'h0 : _GEN_214; // @[Conditional.scala 39:67]
+  assign _GEN_227 = _T_112 | _GEN_215; // @[Conditional.scala 39:67]
+  assign _GEN_230 = _T_112 ? 1'h0 : _GEN_218; // @[Conditional.scala 39:67]
+  assign _GEN_232 = _T_112 ? 1'h0 : _GEN_220; // @[Conditional.scala 39:67]
+  assign _GEN_237 = _T_103 ? _GEN_109 : _GEN_225; // @[Conditional.scala 39:67]
+  assign _GEN_238 = _T_103 | _GEN_227; // @[Conditional.scala 39:67]
+  assign _GEN_241 = _T_103 ? 1'h0 : _GEN_226; // @[Conditional.scala 39:67]
+  assign _GEN_242 = _T_103 ? 1'h0 : _GEN_230; // @[Conditional.scala 39:67]
+  assign _GEN_244 = _T_103 ? 1'h0 : _GEN_232; // @[Conditional.scala 39:67]
+  assign _GEN_249 = _T_90 ? _GEN_109 : _GEN_237; // @[Conditional.scala 39:67]
+  assign _GEN_250 = _T_90 | _GEN_238; // @[Conditional.scala 39:67]
+  assign _GEN_253 = _T_90 ? 1'h0 : _GEN_241; // @[Conditional.scala 39:67]
+  assign _GEN_254 = _T_90 ? 1'h0 : _GEN_242; // @[Conditional.scala 39:67]
+  assign _GEN_256 = _T_90 ? 1'h0 : _GEN_244; // @[Conditional.scala 39:67]
+  assign io_stall = state != 4'h0; // @[encoder.scala 210:12]
+  assign io_writer_clk = clock; // @[encoder.scala 68:17 encoder.scala 202:17 encoder.scala 203:21]
+  assign io_writer_en = _T_73 ? 1'h0 : _GEN_250; // @[encoder.scala 67:16 encoder.scala 113:20 encoder.scala 130:20 encoder.scala 144:20 encoder.scala 163:20 encoder.scala 177:20 encoder.scala 202:17]
+  assign io_writer_data_data = _T_73 ? 8'h0 : _GEN_249; // @[encoder.scala 66:23 encoder.scala 112:27 encoder.scala 129:27 encoder.scala 142:27 encoder.scala 161:27 encoder.scala 175:22 encoder.scala 202:17]
+  assign io_writer_data_last = _T_73 ? 1'h0 : _GEN_253; // @[encoder.scala 65:23 encoder.scala 143:27 encoder.scala 162:27 encoder.scala 175:22 encoder.scala 202:17]
+  assign io_payloadReader_clk = clock; // @[encoder.scala 62:24]
+  assign io_payloadReader_en = _T_73 ? 1'h0 : _GEN_254; // @[encoder.scala 63:23 encoder.scala 178:27 encoder.scala 189:27 encoder.scala 197:27]
+  assign toAdapter_input = io_payloadReader_data_data; // @[encoder.scala 186:23]
+  assign toAdapter_valid = _T_73 ? 1'h0 : _GEN_256; // @[encoder.scala 72:19 encoder.scala 187:23]
+  assign toAdapter_last = io_payloadReader_data_last; // @[encoder.scala 188:22]
+  assign toAdapter_req = localReq; // @[encoder.scala 75:17]
+  assign _GEN_300 = _T_73 == 1'h0; // @[encoder.scala 120:17]
+  assign _GEN_301 = _GEN_300 & _T_90; // @[encoder.scala 120:17]
+  assign _GEN_302 = _GEN_301 & _T_93; // @[encoder.scala 120:17]
+  assign _GEN_303 = _T_94 == 1'h0; // @[encoder.scala 120:17]
+  assign _GEN_304 = _GEN_302 & _GEN_303; // @[encoder.scala 120:17]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -3046,7 +3125,7 @@ initial begin
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_1 = {1{`RANDOM}};
-  state = _RAND_1[2:0];
+  state = _RAND_1[3:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_2 = {2{`RANDOM}};
@@ -3132,6 +3211,10 @@ initial begin
   _RAND_22 = {1{`RANDOM}};
   sending_packet_icmp_imcpType = _RAND_22[7:0];
   `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_23 = {1{`RANDOM}};
+  localReq = _RAND_23[1:0];
+  `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
@@ -3139,242 +3222,255 @@ end // initial
     if (reset) begin
       cnt <= 5'h0;
     end else if (_T_73) begin
-      if (_T_76) begin
-        cnt <= 5'h11;
-      end else if (_T_79) begin
-        cnt <= 5'h11;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          cnt <= 5'h11;
+        end
       end
-    end else if (_T_82) begin
-      if (_T_85) begin
-        if (_T_86) begin
-          cnt <= _T_88;
+    end else if (_T_90) begin
+      if (_T_93) begin
+        if (_T_94) begin
+          cnt <= _T_96;
         end else begin
           cnt <= 5'h13;
         end
       end
-    end else if (_T_95) begin
-      if (_T_85) begin
-        if (_T_86) begin
-          cnt <= _T_88;
+    end else if (_T_103) begin
+      if (_T_93) begin
+        if (_T_94) begin
+          cnt <= _T_96;
         end
       end
-    end else if (_T_104) begin
-      if (_T_85) begin
-        if (_T_86) begin
-          cnt <= _T_88;
-        end else if (_T_111) begin
+    end else if (_T_112) begin
+      if (_T_93) begin
+        if (_T_94) begin
+          cnt <= _T_96;
+        end else if (_T_119) begin
           cnt <= 5'h5;
         end
       end
-    end else if (_T_114) begin
-      if (_T_85) begin
-        if (_T_86) begin
-          cnt <= _T_88;
+    end else if (_T_122) begin
+      if (_T_93) begin
+        if (_T_94) begin
+          cnt <= _T_96;
         end
       end
     end
     if (reset) begin
-      state <= 3'h0;
+      state <= 4'h0;
     end else if (_T_73) begin
-      if (_T_76) begin
-        state <= 3'h0;
-      end else if (_T_79) begin
-        state <= 3'h6;
+      if (fromAdapter_writer_en) begin
+        state <= 4'h8;
+      end else if (_T_84) begin
+        state <= 4'h6;
       end
-    end else if (_T_82) begin
-      if (_T_85) begin
-        if (!(_T_86)) begin
-          state <= 3'h2;
+    end else if (_T_90) begin
+      if (_T_93) begin
+        if (!(_T_94)) begin
+          state <= 4'h2;
         end
       end
-    end else if (_T_95) begin
-      if (_T_85) begin
-        if (!(_T_86)) begin
-          state <= 3'h7;
+    end else if (_T_103) begin
+      if (_T_93) begin
+        if (!(_T_94)) begin
+          state <= 4'h7;
         end
       end
-    end else if (_T_104) begin
-      if (_T_85) begin
-        if (!(_T_86)) begin
-          if (_T_111) begin
-            state <= 3'h3;
-          end else begin
-            state <= 3'h4;
-          end
+    end else if (_T_112) begin
+      if (_T_93) begin
+        if (!(_T_94)) begin
+          state <= {{1'd0}, _GEN_157};
         end
       end
-    end else if (_T_114) begin
-      if (_T_85) begin
-        if (!(_T_86)) begin
-          state <= 3'h4;
+    end else if (_T_122) begin
+      if (_T_93) begin
+        if (!(_T_94)) begin
+          state <= 4'h4;
         end
       end
-    end else if (_T_123) begin
-      if (_T_127) begin
-        state <= 3'h0;
-      end
-    end else if (_T_130) begin
+    end else if (_T_131) begin
       if (_T_135) begin
-        state <= 3'h0;
+        state <= 4'h0;
       end
     end else if (_T_138) begin
+      if (_T_143) begin
+        state <= 4'h0;
+      end
+    end else if (_T_146) begin
       if (io_payloadReader_data_last) begin
-        state <= 3'h0;
+        state <= 4'h0;
+      end
+    end else if (_T_149) begin
+      if (_T_152) begin
+        state <= 4'h0;
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_eth_dest <= io_input_packet_eth_dest;
-      end else if (_T_79) begin
-        sending_packet_eth_dest <= io_input_packet_eth_dest;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_eth_dest <= io_input_packet_eth_dest;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_eth_sender <= io_input_packet_eth_sender;
-      end else if (_T_79) begin
-        sending_packet_eth_sender <= io_input_packet_eth_sender;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_eth_sender <= io_input_packet_eth_sender;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_eth_pactype <= io_input_packet_eth_pactype;
-      end else if (_T_79) begin
-        sending_packet_eth_pactype <= io_input_packet_eth_pactype;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_eth_pactype <= io_input_packet_eth_pactype;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_eth_vlan <= io_input_packet_eth_vlan;
-      end else if (_T_79) begin
-        sending_packet_eth_vlan <= io_input_packet_eth_vlan;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_eth_vlan <= io_input_packet_eth_vlan;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_version <= io_input_packet_ip_version;
-      end else if (_T_79) begin
-        sending_packet_ip_version <= io_input_packet_ip_version;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_version <= io_input_packet_ip_version;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_ihl <= io_input_packet_ip_ihl;
-      end else if (_T_79) begin
-        sending_packet_ip_ihl <= io_input_packet_ip_ihl;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_ihl <= io_input_packet_ip_ihl;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_dscp <= io_input_packet_ip_dscp;
-      end else if (_T_79) begin
-        sending_packet_ip_dscp <= io_input_packet_ip_dscp;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_dscp <= io_input_packet_ip_dscp;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_ecn <= io_input_packet_ip_ecn;
-      end else if (_T_79) begin
-        sending_packet_ip_ecn <= io_input_packet_ip_ecn;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_ecn <= io_input_packet_ip_ecn;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_len <= io_input_packet_ip_len;
-      end else if (_T_79) begin
-        sending_packet_ip_len <= io_input_packet_ip_len;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_len <= io_input_packet_ip_len;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_id <= io_input_packet_ip_id;
-      end else if (_T_79) begin
-        sending_packet_ip_id <= io_input_packet_ip_id;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_id <= io_input_packet_ip_id;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_flags <= io_input_packet_ip_flags;
-      end else if (_T_79) begin
-        sending_packet_ip_flags <= io_input_packet_ip_flags;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_flags <= io_input_packet_ip_flags;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_foff <= io_input_packet_ip_foff;
-      end else if (_T_79) begin
-        sending_packet_ip_foff <= io_input_packet_ip_foff;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_foff <= io_input_packet_ip_foff;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_ttl <= io_input_packet_ip_ttl;
-      end else if (_T_79) begin
-        sending_packet_ip_ttl <= io_input_packet_ip_ttl;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_ttl <= io_input_packet_ip_ttl;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_proto <= io_input_packet_ip_proto;
-      end else if (_T_79) begin
-        sending_packet_ip_proto <= io_input_packet_ip_proto;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_proto <= io_input_packet_ip_proto;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_chksum <= io_input_packet_ip_chksum;
-      end else if (_T_79) begin
-        sending_packet_ip_chksum <= io_input_packet_ip_chksum;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_chksum <= io_input_packet_ip_chksum;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_src <= io_input_packet_ip_src;
-      end else if (_T_79) begin
-        sending_packet_ip_src <= io_input_packet_ip_src;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_src <= io_input_packet_ip_src;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_ip_dest <= io_input_packet_ip_dest;
-      end else if (_T_79) begin
-        sending_packet_ip_dest <= io_input_packet_ip_dest;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_ip_dest <= io_input_packet_ip_dest;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_icmp_id <= io_input_packet_icmp_id;
-      end else if (_T_79) begin
-        sending_packet_icmp_id <= io_input_packet_icmp_id;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_icmp_id <= io_input_packet_icmp_id;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_icmp_checksum <= io_input_packet_icmp_checksum;
-      end else if (_T_79) begin
-        sending_packet_icmp_checksum <= io_input_packet_icmp_checksum;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_icmp_checksum <= io_input_packet_icmp_checksum;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_icmp_code <= io_input_packet_icmp_code;
-      end else if (_T_79) begin
-        sending_packet_icmp_code <= io_input_packet_icmp_code;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_icmp_code <= io_input_packet_icmp_code;
+        end
       end
     end
     if (_T_73) begin
-      if (_T_76) begin
-        sending_packet_icmp_imcpType <= io_input_packet_icmp_imcpType;
-      end else if (_T_79) begin
-        sending_packet_icmp_imcpType <= io_input_packet_icmp_imcpType;
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          sending_packet_icmp_imcpType <= io_input_packet_icmp_imcpType;
+        end
+      end
+    end
+    if (_T_73) begin
+      if (!(fromAdapter_writer_en)) begin
+        if (_T_84) begin
+          if (_T_85) begin
+            localReq <= 2'h0;
+          end else if (_T_86) begin
+            localReq <= 2'h2;
+          end else begin
+            localReq <= 2'h1;
+          end
+        end
       end
     end
     `ifndef SYNTHESIS
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_231 & _T_92) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at encoder.scala:91 assert(sending.packet.eth.pactype === PacType.ipv4)\n"); // @[encoder.scala 91:17]
+        if (_GEN_304 & _T_100) begin
+          $fwrite(32'h80000002,"Assertion failed\n    at encoder.scala:120 assert(sending.packet.eth.pactype === PacType.ipv4)\n"); // @[encoder.scala 120:17]
         end
     `ifdef PRINTF_COND
       end
@@ -3384,8 +3480,8 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_231 & _T_92) begin
-          $fatal; // @[encoder.scala 91:17]
+        if (_GEN_304 & _T_100) begin
+          $fatal; // @[encoder.scala 120:17]
         end
     `ifdef STOP_COND
       end
@@ -3401,140 +3497,225 @@ module Adapter(
   output [7:0]  toBuf_din,
   input  [7:0]  toBuf_dout,
   output        toBuf_we,
-  input  [7:0]  fromExec_input,
-  input         fromExec_valid,
-  input         fromExec_last,
-  output        fromExec_stall
+  input  [7:0]  fromEnc_input,
+  input         fromEnc_valid,
+  input         fromEnc_last,
+  input  [1:0]  fromEnc_req,
+  output        fromEnc_stall,
+  output        toEnc_writer_en,
+  output [7:0]  toEnc_writer_data_data,
+  output        toEnc_writer_data_last
 );
-  reg [2:0] state; // @[adapter.scala 51:22]
+  reg [2:0] state; // @[adapter.scala 63:22]
   reg [31:0] _RAND_0;
-  reg [2:0] head; // @[adapter.scala 56:21]
+  reg [2:0] head; // @[adapter.scala 68:21]
   reg [31:0] _RAND_1;
-  reg [2:0] tail; // @[adapter.scala 57:21]
+  reg [2:0] tail; // @[adapter.scala 69:21]
   reg [31:0] _RAND_2;
-  reg  dropping; // @[adapter.scala 68:25]
+  reg [2:0] sendingSlot; // @[adapter.scala 79:24]
   reg [31:0] _RAND_3;
-  reg [10:0] cnt; // @[adapter.scala 70:20]
+  reg  dropping; // @[adapter.scala 80:25]
   reg [31:0] _RAND_4;
-  reg [2:0] transferState; // @[adapter.scala 77:30]
+  reg [10:0] cnt; // @[adapter.scala 82:20]
   reg [31:0] _RAND_5;
+  reg [10:0] totCnt; // @[adapter.scala 83:23]
+  reg [31:0] _RAND_6;
+  reg [2:0] transferState; // @[adapter.scala 89:30]
+  reg [31:0] _RAND_7;
   wire [2:0] _T_1; // @[Conditional.scala 37:39]
   wire  _T_2; // @[Conditional.scala 37:30]
   wire  _T_5; // @[Conditional.scala 37:30]
-  wire  _T_7; // @[adapter.scala 90:23]
-  wire [13:0] _T_8; // @[adapter.scala 97:23]
-  wire [13:0] _GEN_1; // @[adapter.scala 90:53]
+  wire  _T_7; // @[adapter.scala 102:23]
+  wire [13:0] _T_8; // @[adapter.scala 110:23]
+  wire [13:0] _GEN_2; // @[adapter.scala 102:53]
   wire  _T_11; // @[Conditional.scala 37:30]
-  wire [13:0] _T_14; // @[adapter.scala 105:23]
-  wire  _T_15; // @[adapter.scala 107:36]
-  wire  _T_16; // @[adapter.scala 107:33]
-  wire  _T_17; // @[adapter.scala 60:13]
-  wire [2:0] _T_19; // @[adapter.scala 60:53]
-  wire [2:0] _T_20; // @[adapter.scala 60:8]
-  wire  _T_21; // @[adapter.scala 108:25]
-  wire [1:0] _GEN_4; // @[adapter.scala 108:35]
-  wire [1:0] _GEN_9; // @[adapter.scala 107:47]
-  wire [13:0] _GEN_16; // @[adapter.scala 102:53]
-  wire  _T_23; // @[adapter.scala 123:23]
-  wire  _T_24; // @[adapter.scala 124:19]
-  wire  _T_25; // @[adapter.scala 60:13]
-  wire [2:0] _T_27; // @[adapter.scala 60:53]
+  wire [13:0] _T_14; // @[adapter.scala 119:23]
+  wire  _T_15; // @[adapter.scala 121:35]
+  wire  _T_16; // @[adapter.scala 121:32]
+  wire  _T_17; // @[adapter.scala 72:13]
+  wire [2:0] _T_19; // @[adapter.scala 72:53]
+  wire [2:0] _T_20; // @[adapter.scala 72:8]
+  wire  _T_21; // @[adapter.scala 122:25]
+  wire [1:0] _GEN_5; // @[adapter.scala 122:35]
+  wire [1:0] _GEN_10; // @[adapter.scala 121:46]
+  wire [13:0] _GEN_18; // @[adapter.scala 115:53]
+  wire  _T_23; // @[adapter.scala 137:23]
+  wire  _T_24; // @[adapter.scala 138:19]
+  wire  _T_25; // @[adapter.scala 72:13]
+  wire [2:0] _T_27; // @[adapter.scala 72:53]
   wire  _T_31; // @[Conditional.scala 37:30]
   wire [2:0] _T_33; // @[Conditional.scala 37:39]
   wire  _T_34; // @[Conditional.scala 37:30]
-  wire [13:0] _T_35; // @[adapter.scala 133:25]
-  wire [10:0] _T_37; // @[adapter.scala 139:24]
+  wire [13:0] _T_35; // @[adapter.scala 147:25]
+  wire [10:0] _T_37; // @[adapter.scala 153:24]
   wire  _T_40; // @[Conditional.scala 37:30]
-  wire [13:0] _T_41; // @[adapter.scala 148:25]
-  wire [7:0] _T_42; // @[adapter.scala 150:27]
+  wire [13:0] _T_41; // @[adapter.scala 162:25]
+  wire [7:0] _T_42; // @[adapter.scala 164:27]
   wire  _T_45; // @[Conditional.scala 37:30]
-  wire [13:0] _T_48; // @[adapter.scala 155:38]
-  wire [2:0] _T_49; // @[adapter.scala 157:28]
+  wire [13:0] _T_48; // @[adapter.scala 169:38]
+  wire [2:0] _T_49; // @[adapter.scala 171:28]
   wire  _T_52; // @[Conditional.scala 37:30]
-  wire [13:0] _T_53; // @[adapter.scala 162:25]
-  wire  _T_57; // @[Conditional.scala 37:30]
-  wire [13:0] _GEN_29; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_35; // @[Conditional.scala 39:67]
-  wire  _GEN_36; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_37; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_41; // @[Conditional.scala 39:67]
-  wire  _GEN_42; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_43; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_47; // @[Conditional.scala 40:58]
-  wire  _GEN_49; // @[Conditional.scala 40:58]
-  wire  _GEN_50; // @[Conditional.scala 40:58]
-  wire  _GEN_57; // @[Conditional.scala 39:67]
-  wire  _GEN_58; // @[Conditional.scala 39:67]
+  wire [13:0] _T_53; // @[adapter.scala 176:25]
+  wire  _T_55; // @[adapter.scala 180:28]
+  wire  _T_57; // @[adapter.scala 182:34]
+  wire [1:0] _GEN_27; // @[adapter.scala 182:62]
+  wire [2:0] _GEN_28; // @[adapter.scala 180:52]
+  wire  _T_61; // @[Conditional.scala 37:30]
+  wire [13:0] _GEN_32; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_38; // @[Conditional.scala 39:67]
+  wire  _GEN_39; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_40; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_44; // @[Conditional.scala 39:67]
+  wire  _GEN_45; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_46; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_50; // @[Conditional.scala 40:58]
+  wire [7:0] _GEN_51; // @[Conditional.scala 40:58]
+  wire  _GEN_52; // @[Conditional.scala 40:58]
+  wire  _GEN_53; // @[Conditional.scala 40:58]
+  wire  _T_68; // @[Conditional.scala 37:30]
+  wire [13:0] _T_72; // @[adapter.scala 200:32]
+  wire [13:0] _T_74; // @[adapter.scala 200:45]
+  wire [13:0] _T_78; // @[adapter.scala 206:32]
+  wire [7:0] _T_79; // @[adapter.scala 208:41]
+  wire [15:0] _T_80; // @[adapter.scala 208:32]
+  wire  _T_86; // @[adapter.scala 212:37]
+  wire [13:0] _T_92; // @[adapter.scala 221:34]
+  wire [13:0] _GEN_60; // @[adapter.scala 219:33]
+  wire [13:0] _T_96; // @[adapter.scala 230:32]
   wire [13:0] _GEN_65; // @[Conditional.scala 39:67]
-  wire  _GEN_71; // @[Conditional.scala 39:67]
-  wire  _GEN_72; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_75; // @[Conditional.scala 39:67]
-  wire  _GEN_82; // @[Conditional.scala 39:67]
-  wire  _GEN_83; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_86; // @[Conditional.scala 40:58]
-  wire  _GEN_93; // @[Conditional.scala 40:58]
-  wire  _T_62; // @[adapter.scala 182:25]
+  wire [13:0] _GEN_74; // @[Conditional.scala 39:67]
+  wire  _GEN_77; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_81; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_83; // @[Conditional.scala 39:67]
+  wire  _GEN_86; // @[Conditional.scala 39:67]
+  wire  _GEN_88; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_92; // @[Conditional.scala 40:58]
+  wire [15:0] _GEN_94; // @[Conditional.scala 40:58]
+  wire  _GEN_97; // @[Conditional.scala 40:58]
+  wire  _GEN_99; // @[Conditional.scala 40:58]
+  wire [15:0] _GEN_105; // @[Conditional.scala 39:67]
+  wire  _GEN_108; // @[Conditional.scala 39:67]
+  wire  _GEN_110; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_114; // @[Conditional.scala 39:67]
+  wire  _GEN_116; // @[Conditional.scala 39:67]
+  wire  _GEN_117; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_122; // @[Conditional.scala 39:67]
+  wire  _GEN_125; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_129; // @[Conditional.scala 39:67]
+  wire  _GEN_134; // @[Conditional.scala 39:67]
+  wire  _GEN_135; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_137; // @[Conditional.scala 39:67]
+  wire  _GEN_140; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_143; // @[Conditional.scala 39:67]
+  wire  _GEN_149; // @[Conditional.scala 39:67]
+  wire  _GEN_150; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_152; // @[Conditional.scala 39:67]
+  wire  _GEN_155; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_157; // @[Conditional.scala 40:58]
+  wire  _GEN_164; // @[Conditional.scala 40:58]
+  wire [15:0] _GEN_167; // @[Conditional.scala 40:58]
+  wire  _T_105; // @[adapter.scala 248:24]
   assign _T_1 = $unsigned(state); // @[Conditional.scala 37:39]
   assign _T_2 = 3'h0 == _T_1; // @[Conditional.scala 37:30]
   assign _T_5 = 3'h2 == _T_1; // @[Conditional.scala 37:30]
-  assign _T_7 = toBuf_dout == 8'h2; // @[adapter.scala 90:23]
-  assign _T_8 = {head,11'h7ff}; // @[adapter.scala 97:23]
-  assign _GEN_1 = _T_7 ? 14'h0 : _T_8; // @[adapter.scala 90:53]
+  assign _T_7 = toBuf_dout == 8'h2; // @[adapter.scala 102:23]
+  assign _T_8 = {head,11'h7ff}; // @[adapter.scala 110:23]
+  assign _GEN_2 = _T_7 ? 14'h7fc : _T_8; // @[adapter.scala 102:53]
   assign _T_11 = 3'h1 == _T_1; // @[Conditional.scala 37:30]
-  assign _T_14 = {head, 11'h0}; // @[adapter.scala 105:23]
-  assign _T_15 = dropping == 1'h0; // @[adapter.scala 107:36]
-  assign _T_16 = fromExec_valid & _T_15; // @[adapter.scala 107:33]
-  assign _T_17 = tail == 3'h7; // @[adapter.scala 60:13]
-  assign _T_19 = tail + 3'h1; // @[adapter.scala 60:53]
-  assign _T_20 = _T_17 ? 3'h1 : _T_19; // @[adapter.scala 60:8]
-  assign _T_21 = _T_20 != head; // @[adapter.scala 108:25]
-  assign _GEN_4 = _T_21 ? 2'h3 : 2'h2; // @[adapter.scala 108:35]
-  assign _GEN_9 = _T_16 ? _GEN_4 : 2'h2; // @[adapter.scala 107:47]
-  assign _GEN_16 = _T_7 ? _T_14 : 14'h7ff; // @[adapter.scala 102:53]
-  assign _T_23 = toBuf_dout == 8'h0; // @[adapter.scala 123:23]
-  assign _T_24 = head != tail; // @[adapter.scala 124:19]
-  assign _T_25 = head == 3'h7; // @[adapter.scala 60:13]
-  assign _T_27 = head + 3'h1; // @[adapter.scala 60:53]
+  assign _T_14 = {head,11'h7fc}; // @[adapter.scala 119:23]
+  assign _T_15 = dropping == 1'h0; // @[adapter.scala 121:35]
+  assign _T_16 = fromEnc_valid & _T_15; // @[adapter.scala 121:32]
+  assign _T_17 = tail == 3'h7; // @[adapter.scala 72:13]
+  assign _T_19 = tail + 3'h1; // @[adapter.scala 72:53]
+  assign _T_20 = _T_17 ? 3'h1 : _T_19; // @[adapter.scala 72:8]
+  assign _T_21 = _T_20 != head; // @[adapter.scala 122:25]
+  assign _GEN_5 = _T_21 ? 2'h3 : 2'h2; // @[adapter.scala 122:35]
+  assign _GEN_10 = _T_16 ? _GEN_5 : 2'h2; // @[adapter.scala 121:46]
+  assign _GEN_18 = _T_7 ? _T_14 : 14'h7ff; // @[adapter.scala 115:53]
+  assign _T_23 = toBuf_dout == 8'h0; // @[adapter.scala 137:23]
+  assign _T_24 = head != tail; // @[adapter.scala 138:19]
+  assign _T_25 = head == 3'h7; // @[adapter.scala 72:13]
+  assign _T_27 = head + 3'h1; // @[adapter.scala 72:53]
   assign _T_31 = 3'h3 == _T_1; // @[Conditional.scala 37:30]
   assign _T_33 = $unsigned(transferState); // @[Conditional.scala 37:39]
   assign _T_34 = 3'h0 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_35 = {tail,cnt}; // @[adapter.scala 133:25]
-  assign _T_37 = cnt + 11'h1; // @[adapter.scala 139:24]
+  assign _T_35 = {tail,cnt}; // @[adapter.scala 147:25]
+  assign _T_37 = cnt + 11'h1; // @[adapter.scala 153:24]
   assign _T_40 = 3'h2 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_41 = {tail,11'h7fc}; // @[adapter.scala 148:25]
-  assign _T_42 = cnt[7:0]; // @[adapter.scala 150:27]
+  assign _T_41 = {tail,11'h7fc}; // @[adapter.scala 162:25]
+  assign _T_42 = cnt[7:0]; // @[adapter.scala 164:27]
   assign _T_45 = 3'h3 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_48 = _T_41 + 14'h1; // @[adapter.scala 155:38]
-  assign _T_49 = cnt[10:8]; // @[adapter.scala 157:28]
+  assign _T_48 = _T_41 + 14'h1; // @[adapter.scala 169:38]
+  assign _T_49 = cnt[10:8]; // @[adapter.scala 171:28]
   assign _T_52 = 3'h1 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_53 = {tail,11'h7ff}; // @[adapter.scala 162:25]
-  assign _T_57 = 3'h4 == _T_33; // @[Conditional.scala 37:30]
-  assign _GEN_29 = _T_52 ? _T_53 : 14'h7ff; // @[Conditional.scala 39:67]
-  assign _GEN_35 = _T_45 ? _T_48 : _GEN_29; // @[Conditional.scala 39:67]
-  assign _GEN_36 = _T_45 | _T_52; // @[Conditional.scala 39:67]
-  assign _GEN_37 = _T_45 ? _T_49 : 3'h1; // @[Conditional.scala 39:67]
-  assign _GEN_41 = _T_40 ? _T_41 : _GEN_35; // @[Conditional.scala 39:67]
-  assign _GEN_42 = _T_40 | _GEN_36; // @[Conditional.scala 39:67]
-  assign _GEN_43 = _T_40 ? _T_42 : {{5'd0}, _GEN_37}; // @[Conditional.scala 39:67]
-  assign _GEN_47 = _T_34 ? _T_35 : _GEN_41; // @[Conditional.scala 40:58]
-  assign _GEN_49 = _T_34 ? 1'h0 : 1'h1; // @[Conditional.scala 40:58]
-  assign _GEN_50 = _T_34 ? fromExec_valid : _GEN_42; // @[Conditional.scala 40:58]
-  assign _GEN_57 = _T_31 ? _GEN_49 : 1'h1; // @[Conditional.scala 39:67]
-  assign _GEN_58 = _T_31 & _GEN_50; // @[Conditional.scala 39:67]
-  assign _GEN_65 = _T_11 ? _GEN_16 : _GEN_47; // @[Conditional.scala 39:67]
-  assign _GEN_71 = _T_11 | _GEN_57; // @[Conditional.scala 39:67]
-  assign _GEN_72 = _T_11 ? 1'h0 : _GEN_58; // @[Conditional.scala 39:67]
-  assign _GEN_75 = _T_5 ? _GEN_1 : _GEN_65; // @[Conditional.scala 39:67]
-  assign _GEN_82 = _T_5 | _GEN_71; // @[Conditional.scala 39:67]
-  assign _GEN_83 = _T_5 ? 1'h0 : _GEN_72; // @[Conditional.scala 39:67]
-  assign _GEN_86 = _T_2 ? 14'h7ff : _GEN_75; // @[Conditional.scala 40:58]
-  assign _GEN_93 = _T_2 | _GEN_82; // @[Conditional.scala 40:58]
-  assign _T_62 = fromExec_valid & fromExec_last; // @[adapter.scala 182:25]
-  assign toBuf_clk = clock; // @[adapter.scala 43:13]
-  assign toBuf_addr = {{18'd0}, _GEN_86}; // @[adapter.scala 81:14]
-  assign toBuf_din = _T_34 ? fromExec_input : _GEN_43; // @[adapter.scala 134:21 adapter.scala 150:21 adapter.scala 157:21 adapter.scala 164:21]
-  assign toBuf_we = _T_2 ? 1'h0 : _GEN_83; // @[adapter.scala 45:12 adapter.scala 138:22 adapter.scala 149:20 adapter.scala 156:20 adapter.scala 163:20]
-  assign fromExec_stall = dropping ? 1'h0 : _GEN_93; // @[adapter.scala 48:18 adapter.scala 135:26 adapter.scala 181:20]
+  assign _T_53 = {tail,11'h7ff}; // @[adapter.scala 176:25]
+  assign _T_55 = fromEnc_req == 2'h1; // @[adapter.scala 180:28]
+  assign _T_57 = fromEnc_req == 2'h2; // @[adapter.scala 182:34]
+  assign _GEN_27 = _T_57 ? 2'h3 : 2'h1; // @[adapter.scala 182:62]
+  assign _GEN_28 = _T_55 ? 3'h4 : {{1'd0}, _GEN_27}; // @[adapter.scala 180:52]
+  assign _T_61 = 3'h4 == _T_33; // @[Conditional.scala 37:30]
+  assign _GEN_32 = _T_52 ? _T_53 : 14'h7ff; // @[Conditional.scala 39:67]
+  assign _GEN_38 = _T_45 ? _T_48 : _GEN_32; // @[Conditional.scala 39:67]
+  assign _GEN_39 = _T_45 | _T_52; // @[Conditional.scala 39:67]
+  assign _GEN_40 = _T_45 ? _T_49 : _GEN_28; // @[Conditional.scala 39:67]
+  assign _GEN_44 = _T_40 ? _T_41 : _GEN_38; // @[Conditional.scala 39:67]
+  assign _GEN_45 = _T_40 | _GEN_39; // @[Conditional.scala 39:67]
+  assign _GEN_46 = _T_40 ? _T_42 : {{5'd0}, _GEN_40}; // @[Conditional.scala 39:67]
+  assign _GEN_50 = _T_34 ? _T_35 : _GEN_44; // @[Conditional.scala 40:58]
+  assign _GEN_51 = _T_34 ? fromEnc_input : _GEN_46; // @[Conditional.scala 40:58]
+  assign _GEN_52 = _T_34 ? 1'h0 : 1'h1; // @[Conditional.scala 40:58]
+  assign _GEN_53 = _T_34 ? fromEnc_valid : _GEN_45; // @[Conditional.scala 40:58]
+  assign _T_68 = 3'h4 == _T_1; // @[Conditional.scala 37:30]
+  assign _T_72 = {sendingSlot,11'h7fc}; // @[adapter.scala 200:32]
+  assign _T_74 = _T_72 + 14'h1; // @[adapter.scala 200:45]
+  assign _T_78 = {sendingSlot,cnt}; // @[adapter.scala 206:32]
+  assign _T_79 = totCnt[7:0]; // @[adapter.scala 208:41]
+  assign _T_80 = {toBuf_dout,_T_79}; // @[adapter.scala 208:32]
+  assign _T_86 = _T_37 == totCnt; // @[adapter.scala 212:37]
+  assign _T_92 = {sendingSlot,_T_37}; // @[adapter.scala 221:34]
+  assign _GEN_60 = toEnc_writer_en ? _T_92 : _T_78; // @[adapter.scala 219:33]
+  assign _T_96 = {sendingSlot,11'h7ff}; // @[adapter.scala 230:32]
+  assign _GEN_65 = _T_52 ? _T_96 : 14'h7ff; // @[Conditional.scala 39:67]
+  assign _GEN_74 = _T_34 ? _GEN_60 : _GEN_65; // @[Conditional.scala 39:67]
+  assign _GEN_77 = _T_34 ? 1'h0 : _T_52; // @[Conditional.scala 39:67]
+  assign _GEN_81 = _T_45 ? _T_78 : _GEN_74; // @[Conditional.scala 39:67]
+  assign _GEN_83 = _T_45 ? _T_80 : {{5'd0}, totCnt}; // @[Conditional.scala 39:67]
+  assign _GEN_86 = _T_45 ? 1'h0 : _T_34; // @[Conditional.scala 39:67]
+  assign _GEN_88 = _T_45 ? 1'h0 : _GEN_77; // @[Conditional.scala 39:67]
+  assign _GEN_92 = _T_40 ? _T_74 : _GEN_81; // @[Conditional.scala 40:58]
+  assign _GEN_94 = _T_40 ? {{8'd0}, toBuf_dout} : _GEN_83; // @[Conditional.scala 40:58]
+  assign _GEN_97 = _T_40 ? 1'h0 : _GEN_86; // @[Conditional.scala 40:58]
+  assign _GEN_99 = _T_40 ? 1'h0 : _GEN_88; // @[Conditional.scala 40:58]
+  assign _GEN_105 = _T_68 ? _GEN_94 : {{5'd0}, totCnt}; // @[Conditional.scala 39:67]
+  assign _GEN_108 = _T_68 & _GEN_97; // @[Conditional.scala 39:67]
+  assign _GEN_110 = _T_68 & _GEN_99; // @[Conditional.scala 39:67]
+  assign _GEN_114 = _T_31 ? _GEN_50 : _GEN_92; // @[Conditional.scala 39:67]
+  assign _GEN_116 = _T_31 ? _GEN_52 : 1'h1; // @[Conditional.scala 39:67]
+  assign _GEN_117 = _T_31 ? _GEN_53 : _GEN_110; // @[Conditional.scala 39:67]
+  assign _GEN_122 = _T_31 ? {{5'd0}, totCnt} : _GEN_105; // @[Conditional.scala 39:67]
+  assign _GEN_125 = _T_31 ? 1'h0 : _GEN_108; // @[Conditional.scala 39:67]
+  assign _GEN_129 = _T_11 ? _GEN_18 : _GEN_114; // @[Conditional.scala 39:67]
+  assign _GEN_134 = _T_11 | _GEN_116; // @[Conditional.scala 39:67]
+  assign _GEN_135 = _T_11 ? 1'h0 : _GEN_117; // @[Conditional.scala 39:67]
+  assign _GEN_137 = _T_11 ? {{5'd0}, totCnt} : _GEN_122; // @[Conditional.scala 39:67]
+  assign _GEN_140 = _T_11 ? 1'h0 : _GEN_125; // @[Conditional.scala 39:67]
+  assign _GEN_143 = _T_5 ? _GEN_2 : _GEN_129; // @[Conditional.scala 39:67]
+  assign _GEN_149 = _T_5 | _GEN_134; // @[Conditional.scala 39:67]
+  assign _GEN_150 = _T_5 ? 1'h0 : _GEN_135; // @[Conditional.scala 39:67]
+  assign _GEN_152 = _T_5 ? {{5'd0}, totCnt} : _GEN_137; // @[Conditional.scala 39:67]
+  assign _GEN_155 = _T_5 ? 1'h0 : _GEN_140; // @[Conditional.scala 39:67]
+  assign _GEN_157 = _T_2 ? 14'h7ff : _GEN_143; // @[Conditional.scala 40:58]
+  assign _GEN_164 = _T_2 | _GEN_149; // @[Conditional.scala 40:58]
+  assign _GEN_167 = _T_2 ? {{5'd0}, totCnt} : _GEN_152; // @[Conditional.scala 40:58]
+  assign _T_105 = fromEnc_valid & fromEnc_last; // @[adapter.scala 248:24]
+  assign toBuf_clk = clock; // @[adapter.scala 53:13]
+  assign toBuf_addr = {{18'd0}, _GEN_157}; // @[adapter.scala 93:14]
+  assign toBuf_din = _T_31 ? _GEN_51 : 8'h0; // @[adapter.scala 148:21 adapter.scala 164:21 adapter.scala 171:21 adapter.scala 178:21 adapter.scala 181:23 adapter.scala 183:23 adapter.scala 232:21]
+  assign toBuf_we = _T_2 ? 1'h0 : _GEN_150; // @[adapter.scala 55:12 adapter.scala 152:22 adapter.scala 163:20 adapter.scala 170:20 adapter.scala 177:20 adapter.scala 231:20]
+  assign fromEnc_stall = dropping ? 1'h0 : _GEN_164; // @[adapter.scala 58:17 adapter.scala 149:25 adapter.scala 247:19]
+  assign toEnc_writer_en = _T_2 ? 1'h0 : _GEN_155; // @[adapter.scala 60:19 adapter.scala 215:27]
+  assign toEnc_writer_data_data = toBuf_dout; // @[adapter.scala 213:34]
+  assign toEnc_writer_data_last = _T_37 == totCnt; // @[adapter.scala 214:34]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -3580,15 +3761,23 @@ initial begin
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_3 = {1{`RANDOM}};
-  dropping = _RAND_3[0:0];
+  sendingSlot = _RAND_3[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_4 = {1{`RANDOM}};
-  cnt = _RAND_4[10:0];
+  dropping = _RAND_4[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_5 = {1{`RANDOM}};
-  transferState = _RAND_5[2:0];
+  cnt = _RAND_5[10:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_6 = {1{`RANDOM}};
+  totCnt = _RAND_6[10:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_7 = {1{`RANDOM}};
+  transferState = _RAND_7[2:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -3608,14 +3797,26 @@ end // initial
       if (_T_7) begin
         state <= 3'h4;
       end else begin
-        state <= {{1'd0}, _GEN_9};
+        state <= {{1'd0}, _GEN_10};
       end
     end else if (_T_31) begin
       if (!(_T_34)) begin
         if (!(_T_40)) begin
           if (!(_T_45)) begin
             if (!(_T_52)) begin
-              if (_T_57) begin
+              if (_T_61) begin
+                state <= 3'h2;
+              end
+            end
+          end
+        end
+      end
+    end else if (_T_68) begin
+      if (!(_T_40)) begin
+        if (!(_T_45)) begin
+          if (!(_T_34)) begin
+            if (!(_T_52)) begin
+              if (_T_61) begin
                 state <= 3'h2;
               end
             end
@@ -3650,7 +3851,23 @@ end // initial
               if (!(_T_40)) begin
                 if (!(_T_45)) begin
                   if (!(_T_52)) begin
-                    if (_T_57) begin
+                    if (_T_61) begin
+                      if (_T_17) begin
+                        tail <= 3'h1;
+                      end else begin
+                        tail <= _T_19;
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end else if (_T_68) begin
+            if (!(_T_40)) begin
+              if (!(_T_45)) begin
+                if (!(_T_34)) begin
+                  if (!(_T_52)) begin
+                    if (_T_61) begin
                       if (_T_17) begin
                         tail <= 3'h1;
                       end else begin
@@ -3665,10 +3882,21 @@ end // initial
         end
       end
     end
+    if (!(_T_2)) begin
+      if (_T_5) begin
+        if (_T_7) begin
+          sendingSlot <= 3'h0;
+        end
+      end else if (_T_11) begin
+        if (_T_7) begin
+          sendingSlot <= head;
+        end
+      end
+    end
     if (reset) begin
       dropping <= 1'h0;
     end else if (dropping) begin
-      if (_T_62) begin
+      if (_T_105) begin
         dropping <= 1'h0;
       end else if (!(_T_2)) begin
         if (!(_T_5)) begin
@@ -3713,38 +3941,69 @@ end // initial
         end
       end else if (_T_31) begin
         if (_T_34) begin
-          if (fromExec_valid) begin
+          if (fromEnc_valid) begin
             cnt <= _T_37;
+          end
+        end
+      end else if (_T_68) begin
+        if (!(_T_40)) begin
+          if (!(_T_45)) begin
+            if (_T_34) begin
+              if (toEnc_writer_en) begin
+                cnt <= _T_37;
+              end
+            end
           end
         end
       end
     end
     if (reset) begin
+      totCnt <= 11'h0;
+    end else begin
+      totCnt <= _GEN_167[10:0];
+    end
+    if (reset) begin
       transferState <= 3'h0;
     end else if (!(_T_2)) begin
-      if (!(_T_5)) begin
-        if (_T_11) begin
-          if (!(_T_7)) begin
-            if (_T_16) begin
-              if (_T_21) begin
-                transferState <= 3'h0;
-              end
+      if (_T_5) begin
+        if (_T_7) begin
+          transferState <= 3'h2;
+        end
+      end else if (_T_11) begin
+        if (_T_7) begin
+          transferState <= 3'h2;
+        end else if (_T_16) begin
+          if (_T_21) begin
+            transferState <= 3'h0;
+          end
+        end
+      end else if (_T_31) begin
+        if (_T_34) begin
+          if (fromEnc_valid) begin
+            if (fromEnc_last) begin
+              transferState <= 3'h2;
             end
           end
-        end else if (_T_31) begin
-          if (_T_34) begin
-            if (fromExec_valid) begin
-              if (fromExec_last) begin
-                transferState <= 3'h2;
-              end
+        end else if (_T_40) begin
+          transferState <= 3'h3;
+        end else if (_T_45) begin
+          transferState <= 3'h1;
+        end else if (_T_52) begin
+          transferState <= 3'h4;
+        end
+      end else if (_T_68) begin
+        if (_T_40) begin
+          transferState <= 3'h3;
+        end else if (_T_45) begin
+          transferState <= 3'h0;
+        end else if (_T_34) begin
+          if (toEnc_writer_en) begin
+            if (_T_86) begin
+              transferState <= 3'h1;
             end
-          end else if (_T_40) begin
-            transferState <= 3'h3;
-          end else if (_T_45) begin
-            transferState <= 3'h1;
-          end else if (_T_52) begin
-            transferState <= 3'h4;
           end
+        end else if (_T_52) begin
+          transferState <= 3'h4;
         end
       end
     end
@@ -3786,323 +4045,335 @@ module Router(
   input  [7:0]  io_buf_dout,
   output        io_buf_we
 );
-  wire  acceptorBridge_reset; // @[router.scala 39:30]
-  wire  acceptorBridge_io_write_clk; // @[router.scala 39:30]
-  wire  acceptorBridge_io_write_en; // @[router.scala 39:30]
-  wire [47:0] acceptorBridge_io_write_data_eth_dest; // @[router.scala 39:30]
-  wire [47:0] acceptorBridge_io_write_data_eth_sender; // @[router.scala 39:30]
-  wire [1:0] acceptorBridge_io_write_data_eth_pactype; // @[router.scala 39:30]
-  wire [2:0] acceptorBridge_io_write_data_eth_vlan; // @[router.scala 39:30]
-  wire [3:0] acceptorBridge_io_write_data_ip_version; // @[router.scala 39:30]
-  wire [3:0] acceptorBridge_io_write_data_ip_ihl; // @[router.scala 39:30]
-  wire [5:0] acceptorBridge_io_write_data_ip_dscp; // @[router.scala 39:30]
-  wire [1:0] acceptorBridge_io_write_data_ip_ecn; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_write_data_ip_len; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_write_data_ip_id; // @[router.scala 39:30]
-  wire [2:0] acceptorBridge_io_write_data_ip_flags; // @[router.scala 39:30]
-  wire [12:0] acceptorBridge_io_write_data_ip_foff; // @[router.scala 39:30]
-  wire [7:0] acceptorBridge_io_write_data_ip_ttl; // @[router.scala 39:30]
-  wire [7:0] acceptorBridge_io_write_data_ip_proto; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_write_data_ip_chksum; // @[router.scala 39:30]
-  wire [31:0] acceptorBridge_io_write_data_ip_src; // @[router.scala 39:30]
-  wire [31:0] acceptorBridge_io_write_data_ip_dest; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_write_data_icmp_id; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_write_data_icmp_checksum; // @[router.scala 39:30]
-  wire [7:0] acceptorBridge_io_write_data_icmp_code; // @[router.scala 39:30]
-  wire [7:0] acceptorBridge_io_write_data_icmp_imcpType; // @[router.scala 39:30]
-  wire  acceptorBridge_io_read_clk; // @[router.scala 39:30]
-  wire  acceptorBridge_io_read_en; // @[router.scala 39:30]
-  wire [47:0] acceptorBridge_io_read_data_eth_dest; // @[router.scala 39:30]
-  wire [47:0] acceptorBridge_io_read_data_eth_sender; // @[router.scala 39:30]
-  wire [1:0] acceptorBridge_io_read_data_eth_pactype; // @[router.scala 39:30]
-  wire [2:0] acceptorBridge_io_read_data_eth_vlan; // @[router.scala 39:30]
-  wire [3:0] acceptorBridge_io_read_data_ip_version; // @[router.scala 39:30]
-  wire [3:0] acceptorBridge_io_read_data_ip_ihl; // @[router.scala 39:30]
-  wire [5:0] acceptorBridge_io_read_data_ip_dscp; // @[router.scala 39:30]
-  wire [1:0] acceptorBridge_io_read_data_ip_ecn; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_read_data_ip_len; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_read_data_ip_id; // @[router.scala 39:30]
-  wire [2:0] acceptorBridge_io_read_data_ip_flags; // @[router.scala 39:30]
-  wire [12:0] acceptorBridge_io_read_data_ip_foff; // @[router.scala 39:30]
-  wire [7:0] acceptorBridge_io_read_data_ip_ttl; // @[router.scala 39:30]
-  wire [7:0] acceptorBridge_io_read_data_ip_proto; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_read_data_ip_chksum; // @[router.scala 39:30]
-  wire [31:0] acceptorBridge_io_read_data_ip_src; // @[router.scala 39:30]
-  wire [31:0] acceptorBridge_io_read_data_ip_dest; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_read_data_icmp_id; // @[router.scala 39:30]
-  wire [15:0] acceptorBridge_io_read_data_icmp_checksum; // @[router.scala 39:30]
-  wire [7:0] acceptorBridge_io_read_data_icmp_code; // @[router.scala 39:30]
-  wire [7:0] acceptorBridge_io_read_data_icmp_imcpType; // @[router.scala 39:30]
-  wire  acceptorBridge_io_read_empty; // @[router.scala 39:30]
-  wire  transmitterBridge_reset; // @[router.scala 42:33]
-  wire  transmitterBridge_io_write_clk; // @[router.scala 42:33]
-  wire  transmitterBridge_io_write_en; // @[router.scala 42:33]
-  wire [7:0] transmitterBridge_io_write_data_data; // @[router.scala 42:33]
-  wire  transmitterBridge_io_write_data_last; // @[router.scala 42:33]
-  wire  transmitterBridge_io_write_full; // @[router.scala 42:33]
-  wire  transmitterBridge_io_read_clk; // @[router.scala 42:33]
-  wire  transmitterBridge_io_read_en; // @[router.scala 42:33]
-  wire [7:0] transmitterBridge_io_read_data_data; // @[router.scala 42:33]
-  wire  transmitterBridge_io_read_data_last; // @[router.scala 42:33]
-  wire  transmitterBridge_io_read_empty; // @[router.scala 42:33]
-  wire  payloadBridge_reset; // @[router.scala 46:29]
-  wire  payloadBridge_io_write_clk; // @[router.scala 46:29]
-  wire  payloadBridge_io_write_en; // @[router.scala 46:29]
-  wire [7:0] payloadBridge_io_write_data_data; // @[router.scala 46:29]
-  wire  payloadBridge_io_write_data_last; // @[router.scala 46:29]
-  wire  payloadBridge_io_write_progfull; // @[router.scala 46:29]
-  wire  payloadBridge_io_read_clk; // @[router.scala 46:29]
-  wire  payloadBridge_io_read_en; // @[router.scala 46:29]
-  wire [7:0] payloadBridge_io_read_data_data; // @[router.scala 46:29]
-  wire  payloadBridge_io_read_data_last; // @[router.scala 46:29]
-  wire  payloadBridge_io_read_empty; // @[router.scala 46:29]
-  wire  Acceptor_clock; // @[router.scala 49:26]
-  wire  Acceptor_reset; // @[router.scala 49:26]
-  wire [7:0] Acceptor_io_rx_tdata; // @[router.scala 49:26]
-  wire  Acceptor_io_rx_tvalid; // @[router.scala 49:26]
-  wire  Acceptor_io_rx_tlast; // @[router.scala 49:26]
-  wire  Acceptor_io_writer_clk; // @[router.scala 49:26]
-  wire  Acceptor_io_writer_en; // @[router.scala 49:26]
-  wire [47:0] Acceptor_io_writer_data_eth_dest; // @[router.scala 49:26]
-  wire [47:0] Acceptor_io_writer_data_eth_sender; // @[router.scala 49:26]
-  wire [1:0] Acceptor_io_writer_data_eth_pactype; // @[router.scala 49:26]
-  wire [2:0] Acceptor_io_writer_data_eth_vlan; // @[router.scala 49:26]
-  wire [3:0] Acceptor_io_writer_data_ip_version; // @[router.scala 49:26]
-  wire [3:0] Acceptor_io_writer_data_ip_ihl; // @[router.scala 49:26]
-  wire [5:0] Acceptor_io_writer_data_ip_dscp; // @[router.scala 49:26]
-  wire [1:0] Acceptor_io_writer_data_ip_ecn; // @[router.scala 49:26]
-  wire [15:0] Acceptor_io_writer_data_ip_len; // @[router.scala 49:26]
-  wire [15:0] Acceptor_io_writer_data_ip_id; // @[router.scala 49:26]
-  wire [2:0] Acceptor_io_writer_data_ip_flags; // @[router.scala 49:26]
-  wire [12:0] Acceptor_io_writer_data_ip_foff; // @[router.scala 49:26]
-  wire [7:0] Acceptor_io_writer_data_ip_ttl; // @[router.scala 49:26]
-  wire [7:0] Acceptor_io_writer_data_ip_proto; // @[router.scala 49:26]
-  wire [15:0] Acceptor_io_writer_data_ip_chksum; // @[router.scala 49:26]
-  wire [31:0] Acceptor_io_writer_data_ip_src; // @[router.scala 49:26]
-  wire [31:0] Acceptor_io_writer_data_ip_dest; // @[router.scala 49:26]
-  wire [15:0] Acceptor_io_writer_data_icmp_id; // @[router.scala 49:26]
-  wire [15:0] Acceptor_io_writer_data_icmp_checksum; // @[router.scala 49:26]
-  wire [7:0] Acceptor_io_writer_data_icmp_code; // @[router.scala 49:26]
-  wire [7:0] Acceptor_io_writer_data_icmp_imcpType; // @[router.scala 49:26]
-  wire  Acceptor_io_payloadWriter_clk; // @[router.scala 49:26]
-  wire  Acceptor_io_payloadWriter_en; // @[router.scala 49:26]
-  wire [7:0] Acceptor_io_payloadWriter_data_data; // @[router.scala 49:26]
-  wire  Acceptor_io_payloadWriter_data_last; // @[router.scala 49:26]
-  wire  Acceptor_io_payloadWriter_progfull; // @[router.scala 49:26]
-  wire  ctrl_io_inputWait; // @[router.scala 56:20]
-  wire  ctrl_io_nat_stall; // @[router.scala 56:20]
-  wire  ctrl_io_nat_pause; // @[router.scala 56:20]
-  wire  ctrl_io_forward_stall; // @[router.scala 56:20]
-  wire  ctrl_io_forward_pause; // @[router.scala 56:20]
-  wire  ctrl_io_arp_pause; // @[router.scala 56:20]
-  wire  ctrl_io_encoder_stall; // @[router.scala 56:20]
-  wire  ctrl_io_encoder_pause; // @[router.scala 56:20]
-  wire  nat_clock; // @[router.scala 59:19]
-  wire  nat_reset; // @[router.scala 59:19]
-  wire [47:0] nat_io_input_eth_dest; // @[router.scala 59:19]
-  wire [47:0] nat_io_input_eth_sender; // @[router.scala 59:19]
-  wire [1:0] nat_io_input_eth_pactype; // @[router.scala 59:19]
-  wire [2:0] nat_io_input_eth_vlan; // @[router.scala 59:19]
-  wire [3:0] nat_io_input_ip_version; // @[router.scala 59:19]
-  wire [3:0] nat_io_input_ip_ihl; // @[router.scala 59:19]
-  wire [5:0] nat_io_input_ip_dscp; // @[router.scala 59:19]
-  wire [1:0] nat_io_input_ip_ecn; // @[router.scala 59:19]
-  wire [15:0] nat_io_input_ip_len; // @[router.scala 59:19]
-  wire [15:0] nat_io_input_ip_id; // @[router.scala 59:19]
-  wire [2:0] nat_io_input_ip_flags; // @[router.scala 59:19]
-  wire [12:0] nat_io_input_ip_foff; // @[router.scala 59:19]
-  wire [7:0] nat_io_input_ip_ttl; // @[router.scala 59:19]
-  wire [7:0] nat_io_input_ip_proto; // @[router.scala 59:19]
-  wire [15:0] nat_io_input_ip_chksum; // @[router.scala 59:19]
-  wire [31:0] nat_io_input_ip_src; // @[router.scala 59:19]
-  wire [31:0] nat_io_input_ip_dest; // @[router.scala 59:19]
-  wire [15:0] nat_io_input_icmp_id; // @[router.scala 59:19]
-  wire [15:0] nat_io_input_icmp_checksum; // @[router.scala 59:19]
-  wire [7:0] nat_io_input_icmp_code; // @[router.scala 59:19]
-  wire [7:0] nat_io_input_icmp_imcpType; // @[router.scala 59:19]
-  wire [1:0] nat_io_status; // @[router.scala 59:19]
-  wire [47:0] nat_io_output_eth_dest; // @[router.scala 59:19]
-  wire [47:0] nat_io_output_eth_sender; // @[router.scala 59:19]
-  wire [1:0] nat_io_output_eth_pactype; // @[router.scala 59:19]
-  wire [2:0] nat_io_output_eth_vlan; // @[router.scala 59:19]
-  wire [3:0] nat_io_output_ip_version; // @[router.scala 59:19]
-  wire [3:0] nat_io_output_ip_ihl; // @[router.scala 59:19]
-  wire [5:0] nat_io_output_ip_dscp; // @[router.scala 59:19]
-  wire [1:0] nat_io_output_ip_ecn; // @[router.scala 59:19]
-  wire [15:0] nat_io_output_ip_len; // @[router.scala 59:19]
-  wire [15:0] nat_io_output_ip_id; // @[router.scala 59:19]
-  wire [2:0] nat_io_output_ip_flags; // @[router.scala 59:19]
-  wire [12:0] nat_io_output_ip_foff; // @[router.scala 59:19]
-  wire [7:0] nat_io_output_ip_ttl; // @[router.scala 59:19]
-  wire [7:0] nat_io_output_ip_proto; // @[router.scala 59:19]
-  wire [15:0] nat_io_output_ip_chksum; // @[router.scala 59:19]
-  wire [31:0] nat_io_output_ip_src; // @[router.scala 59:19]
-  wire [31:0] nat_io_output_ip_dest; // @[router.scala 59:19]
-  wire [15:0] nat_io_output_icmp_id; // @[router.scala 59:19]
-  wire [15:0] nat_io_output_icmp_checksum; // @[router.scala 59:19]
-  wire [7:0] nat_io_output_icmp_code; // @[router.scala 59:19]
-  wire [7:0] nat_io_output_icmp_imcpType; // @[router.scala 59:19]
-  wire [1:0] nat_io_outputStatus; // @[router.scala 59:19]
-  wire  nat_io_pause; // @[router.scala 59:19]
-  wire  nat_io_stall; // @[router.scala 59:19]
-  wire  forward_clock; // @[router.scala 65:23]
-  wire  forward_reset; // @[router.scala 65:23]
-  wire [47:0] forward_io_input_eth_dest; // @[router.scala 65:23]
-  wire [47:0] forward_io_input_eth_sender; // @[router.scala 65:23]
-  wire [1:0] forward_io_input_eth_pactype; // @[router.scala 65:23]
-  wire [2:0] forward_io_input_eth_vlan; // @[router.scala 65:23]
-  wire [3:0] forward_io_input_ip_version; // @[router.scala 65:23]
-  wire [3:0] forward_io_input_ip_ihl; // @[router.scala 65:23]
-  wire [5:0] forward_io_input_ip_dscp; // @[router.scala 65:23]
-  wire [1:0] forward_io_input_ip_ecn; // @[router.scala 65:23]
-  wire [15:0] forward_io_input_ip_len; // @[router.scala 65:23]
-  wire [15:0] forward_io_input_ip_id; // @[router.scala 65:23]
-  wire [2:0] forward_io_input_ip_flags; // @[router.scala 65:23]
-  wire [12:0] forward_io_input_ip_foff; // @[router.scala 65:23]
-  wire [7:0] forward_io_input_ip_ttl; // @[router.scala 65:23]
-  wire [7:0] forward_io_input_ip_proto; // @[router.scala 65:23]
-  wire [15:0] forward_io_input_ip_chksum; // @[router.scala 65:23]
-  wire [31:0] forward_io_input_ip_src; // @[router.scala 65:23]
-  wire [31:0] forward_io_input_ip_dest; // @[router.scala 65:23]
-  wire [15:0] forward_io_input_icmp_id; // @[router.scala 65:23]
-  wire [15:0] forward_io_input_icmp_checksum; // @[router.scala 65:23]
-  wire [7:0] forward_io_input_icmp_code; // @[router.scala 65:23]
-  wire [7:0] forward_io_input_icmp_imcpType; // @[router.scala 65:23]
-  wire [1:0] forward_io_status; // @[router.scala 65:23]
-  wire  forward_io_stall; // @[router.scala 65:23]
-  wire  forward_io_pause; // @[router.scala 65:23]
-  wire [47:0] forward_io_output_packet_eth_dest; // @[router.scala 65:23]
-  wire [47:0] forward_io_output_packet_eth_sender; // @[router.scala 65:23]
-  wire [1:0] forward_io_output_packet_eth_pactype; // @[router.scala 65:23]
-  wire [2:0] forward_io_output_packet_eth_vlan; // @[router.scala 65:23]
-  wire [3:0] forward_io_output_packet_ip_version; // @[router.scala 65:23]
-  wire [3:0] forward_io_output_packet_ip_ihl; // @[router.scala 65:23]
-  wire [5:0] forward_io_output_packet_ip_dscp; // @[router.scala 65:23]
-  wire [1:0] forward_io_output_packet_ip_ecn; // @[router.scala 65:23]
-  wire [15:0] forward_io_output_packet_ip_len; // @[router.scala 65:23]
-  wire [15:0] forward_io_output_packet_ip_id; // @[router.scala 65:23]
-  wire [2:0] forward_io_output_packet_ip_flags; // @[router.scala 65:23]
-  wire [12:0] forward_io_output_packet_ip_foff; // @[router.scala 65:23]
-  wire [7:0] forward_io_output_packet_ip_ttl; // @[router.scala 65:23]
-  wire [7:0] forward_io_output_packet_ip_proto; // @[router.scala 65:23]
-  wire [15:0] forward_io_output_packet_ip_chksum; // @[router.scala 65:23]
-  wire [31:0] forward_io_output_packet_ip_src; // @[router.scala 65:23]
-  wire [31:0] forward_io_output_packet_ip_dest; // @[router.scala 65:23]
-  wire [15:0] forward_io_output_packet_icmp_id; // @[router.scala 65:23]
-  wire [15:0] forward_io_output_packet_icmp_checksum; // @[router.scala 65:23]
-  wire [7:0] forward_io_output_packet_icmp_code; // @[router.scala 65:23]
-  wire [7:0] forward_io_output_packet_icmp_imcpType; // @[router.scala 65:23]
-  wire [1:0] forward_io_outputStatus; // @[router.scala 65:23]
-  wire  arp_clock; // @[router.scala 71:19]
-  wire  arp_reset; // @[router.scala 71:19]
-  wire [47:0] arp_io_input_packet_eth_dest; // @[router.scala 71:19]
-  wire [47:0] arp_io_input_packet_eth_sender; // @[router.scala 71:19]
-  wire [1:0] arp_io_input_packet_eth_pactype; // @[router.scala 71:19]
-  wire [2:0] arp_io_input_packet_eth_vlan; // @[router.scala 71:19]
-  wire [3:0] arp_io_input_packet_ip_version; // @[router.scala 71:19]
-  wire [3:0] arp_io_input_packet_ip_ihl; // @[router.scala 71:19]
-  wire [5:0] arp_io_input_packet_ip_dscp; // @[router.scala 71:19]
-  wire [1:0] arp_io_input_packet_ip_ecn; // @[router.scala 71:19]
-  wire [15:0] arp_io_input_packet_ip_len; // @[router.scala 71:19]
-  wire [15:0] arp_io_input_packet_ip_id; // @[router.scala 71:19]
-  wire [2:0] arp_io_input_packet_ip_flags; // @[router.scala 71:19]
-  wire [12:0] arp_io_input_packet_ip_foff; // @[router.scala 71:19]
-  wire [7:0] arp_io_input_packet_ip_ttl; // @[router.scala 71:19]
-  wire [7:0] arp_io_input_packet_ip_proto; // @[router.scala 71:19]
-  wire [15:0] arp_io_input_packet_ip_chksum; // @[router.scala 71:19]
-  wire [31:0] arp_io_input_packet_ip_src; // @[router.scala 71:19]
-  wire [31:0] arp_io_input_packet_ip_dest; // @[router.scala 71:19]
-  wire [15:0] arp_io_input_packet_icmp_id; // @[router.scala 71:19]
-  wire [15:0] arp_io_input_packet_icmp_checksum; // @[router.scala 71:19]
-  wire [7:0] arp_io_input_packet_icmp_code; // @[router.scala 71:19]
-  wire [7:0] arp_io_input_packet_icmp_imcpType; // @[router.scala 71:19]
-  wire [1:0] arp_io_status; // @[router.scala 71:19]
-  wire  arp_io_pause; // @[router.scala 71:19]
-  wire [47:0] arp_io_output_packet_eth_dest; // @[router.scala 71:19]
-  wire [47:0] arp_io_output_packet_eth_sender; // @[router.scala 71:19]
-  wire [1:0] arp_io_output_packet_eth_pactype; // @[router.scala 71:19]
-  wire [2:0] arp_io_output_packet_eth_vlan; // @[router.scala 71:19]
-  wire [3:0] arp_io_output_packet_ip_version; // @[router.scala 71:19]
-  wire [3:0] arp_io_output_packet_ip_ihl; // @[router.scala 71:19]
-  wire [5:0] arp_io_output_packet_ip_dscp; // @[router.scala 71:19]
-  wire [1:0] arp_io_output_packet_ip_ecn; // @[router.scala 71:19]
-  wire [15:0] arp_io_output_packet_ip_len; // @[router.scala 71:19]
-  wire [15:0] arp_io_output_packet_ip_id; // @[router.scala 71:19]
-  wire [2:0] arp_io_output_packet_ip_flags; // @[router.scala 71:19]
-  wire [12:0] arp_io_output_packet_ip_foff; // @[router.scala 71:19]
-  wire [7:0] arp_io_output_packet_ip_ttl; // @[router.scala 71:19]
-  wire [7:0] arp_io_output_packet_ip_proto; // @[router.scala 71:19]
-  wire [15:0] arp_io_output_packet_ip_chksum; // @[router.scala 71:19]
-  wire [31:0] arp_io_output_packet_ip_src; // @[router.scala 71:19]
-  wire [31:0] arp_io_output_packet_ip_dest; // @[router.scala 71:19]
-  wire [15:0] arp_io_output_packet_icmp_id; // @[router.scala 71:19]
-  wire [15:0] arp_io_output_packet_icmp_checksum; // @[router.scala 71:19]
-  wire [7:0] arp_io_output_packet_icmp_code; // @[router.scala 71:19]
-  wire [7:0] arp_io_output_packet_icmp_imcpType; // @[router.scala 71:19]
-  wire [1:0] arp_io_outputStatus; // @[router.scala 71:19]
-  wire  encoder_clock; // @[router.scala 77:23]
-  wire  encoder_reset; // @[router.scala 77:23]
-  wire [47:0] encoder_io_input_packet_eth_dest; // @[router.scala 77:23]
-  wire [47:0] encoder_io_input_packet_eth_sender; // @[router.scala 77:23]
-  wire [1:0] encoder_io_input_packet_eth_pactype; // @[router.scala 77:23]
-  wire [2:0] encoder_io_input_packet_eth_vlan; // @[router.scala 77:23]
-  wire [3:0] encoder_io_input_packet_ip_version; // @[router.scala 77:23]
-  wire [3:0] encoder_io_input_packet_ip_ihl; // @[router.scala 77:23]
-  wire [5:0] encoder_io_input_packet_ip_dscp; // @[router.scala 77:23]
-  wire [1:0] encoder_io_input_packet_ip_ecn; // @[router.scala 77:23]
-  wire [15:0] encoder_io_input_packet_ip_len; // @[router.scala 77:23]
-  wire [15:0] encoder_io_input_packet_ip_id; // @[router.scala 77:23]
-  wire [2:0] encoder_io_input_packet_ip_flags; // @[router.scala 77:23]
-  wire [12:0] encoder_io_input_packet_ip_foff; // @[router.scala 77:23]
-  wire [7:0] encoder_io_input_packet_ip_ttl; // @[router.scala 77:23]
-  wire [7:0] encoder_io_input_packet_ip_proto; // @[router.scala 77:23]
-  wire [15:0] encoder_io_input_packet_ip_chksum; // @[router.scala 77:23]
-  wire [31:0] encoder_io_input_packet_ip_src; // @[router.scala 77:23]
-  wire [31:0] encoder_io_input_packet_ip_dest; // @[router.scala 77:23]
-  wire [15:0] encoder_io_input_packet_icmp_id; // @[router.scala 77:23]
-  wire [15:0] encoder_io_input_packet_icmp_checksum; // @[router.scala 77:23]
-  wire [7:0] encoder_io_input_packet_icmp_code; // @[router.scala 77:23]
-  wire [7:0] encoder_io_input_packet_icmp_imcpType; // @[router.scala 77:23]
-  wire [1:0] encoder_io_status; // @[router.scala 77:23]
-  wire  encoder_io_stall; // @[router.scala 77:23]
-  wire  encoder_io_pause; // @[router.scala 77:23]
-  wire  encoder_io_writer_clk; // @[router.scala 77:23]
-  wire  encoder_io_writer_en; // @[router.scala 77:23]
-  wire [7:0] encoder_io_writer_data_data; // @[router.scala 77:23]
-  wire  encoder_io_writer_data_last; // @[router.scala 77:23]
-  wire  encoder_io_writer_full; // @[router.scala 77:23]
-  wire  encoder_io_payloadReader_clk; // @[router.scala 77:23]
-  wire  encoder_io_payloadReader_en; // @[router.scala 77:23]
-  wire [7:0] encoder_io_payloadReader_data_data; // @[router.scala 77:23]
-  wire  encoder_io_payloadReader_data_last; // @[router.scala 77:23]
-  wire  encoder_io_payloadReader_empty; // @[router.scala 77:23]
-  wire [7:0] encoder_toAdapter_input; // @[router.scala 77:23]
-  wire  encoder_toAdapter_valid; // @[router.scala 77:23]
-  wire  encoder_toAdapter_last; // @[router.scala 77:23]
-  wire  encoder_toAdapter_stall; // @[router.scala 77:23]
-  wire  adapter_clock; // @[router.scala 88:23]
-  wire  adapter_reset; // @[router.scala 88:23]
-  wire  adapter_toBuf_clk; // @[router.scala 88:23]
-  wire [31:0] adapter_toBuf_addr; // @[router.scala 88:23]
-  wire [7:0] adapter_toBuf_din; // @[router.scala 88:23]
-  wire [7:0] adapter_toBuf_dout; // @[router.scala 88:23]
-  wire  adapter_toBuf_we; // @[router.scala 88:23]
-  wire [7:0] adapter_fromExec_input; // @[router.scala 88:23]
-  wire  adapter_fromExec_valid; // @[router.scala 88:23]
-  wire  adapter_fromExec_last; // @[router.scala 88:23]
-  wire  adapter_fromExec_stall; // @[router.scala 88:23]
-  wire  Transmitter_clock; // @[router.scala 94:29]
-  wire  Transmitter_io_reader_clk; // @[router.scala 94:29]
-  wire  Transmitter_io_reader_en; // @[router.scala 94:29]
-  wire [7:0] Transmitter_io_reader_data_data; // @[router.scala 94:29]
-  wire  Transmitter_io_reader_data_last; // @[router.scala 94:29]
-  wire  Transmitter_io_reader_empty; // @[router.scala 94:29]
-  wire [7:0] Transmitter_io_tx_tdata; // @[router.scala 94:29]
-  wire  Transmitter_io_tx_tvalid; // @[router.scala 94:29]
-  wire  Transmitter_io_tx_tlast; // @[router.scala 94:29]
-  wire  Transmitter_io_tx_tready; // @[router.scala 94:29]
-  wire  _T_1; // @[router.scala 63:23]
-  AsyncBridge acceptorBridge ( // @[router.scala 39:30]
+  wire  acceptorBridge_reset; // @[router.scala 40:30]
+  wire  acceptorBridge_io_write_clk; // @[router.scala 40:30]
+  wire  acceptorBridge_io_write_en; // @[router.scala 40:30]
+  wire [47:0] acceptorBridge_io_write_data_eth_dest; // @[router.scala 40:30]
+  wire [47:0] acceptorBridge_io_write_data_eth_sender; // @[router.scala 40:30]
+  wire [1:0] acceptorBridge_io_write_data_eth_pactype; // @[router.scala 40:30]
+  wire [2:0] acceptorBridge_io_write_data_eth_vlan; // @[router.scala 40:30]
+  wire [3:0] acceptorBridge_io_write_data_ip_version; // @[router.scala 40:30]
+  wire [3:0] acceptorBridge_io_write_data_ip_ihl; // @[router.scala 40:30]
+  wire [5:0] acceptorBridge_io_write_data_ip_dscp; // @[router.scala 40:30]
+  wire [1:0] acceptorBridge_io_write_data_ip_ecn; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_write_data_ip_len; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_write_data_ip_id; // @[router.scala 40:30]
+  wire [2:0] acceptorBridge_io_write_data_ip_flags; // @[router.scala 40:30]
+  wire [12:0] acceptorBridge_io_write_data_ip_foff; // @[router.scala 40:30]
+  wire [7:0] acceptorBridge_io_write_data_ip_ttl; // @[router.scala 40:30]
+  wire [7:0] acceptorBridge_io_write_data_ip_proto; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_write_data_ip_chksum; // @[router.scala 40:30]
+  wire [31:0] acceptorBridge_io_write_data_ip_src; // @[router.scala 40:30]
+  wire [31:0] acceptorBridge_io_write_data_ip_dest; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_write_data_icmp_id; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_write_data_icmp_checksum; // @[router.scala 40:30]
+  wire [7:0] acceptorBridge_io_write_data_icmp_code; // @[router.scala 40:30]
+  wire [7:0] acceptorBridge_io_write_data_icmp_imcpType; // @[router.scala 40:30]
+  wire  acceptorBridge_io_read_clk; // @[router.scala 40:30]
+  wire  acceptorBridge_io_read_en; // @[router.scala 40:30]
+  wire [47:0] acceptorBridge_io_read_data_eth_dest; // @[router.scala 40:30]
+  wire [47:0] acceptorBridge_io_read_data_eth_sender; // @[router.scala 40:30]
+  wire [1:0] acceptorBridge_io_read_data_eth_pactype; // @[router.scala 40:30]
+  wire [2:0] acceptorBridge_io_read_data_eth_vlan; // @[router.scala 40:30]
+  wire [3:0] acceptorBridge_io_read_data_ip_version; // @[router.scala 40:30]
+  wire [3:0] acceptorBridge_io_read_data_ip_ihl; // @[router.scala 40:30]
+  wire [5:0] acceptorBridge_io_read_data_ip_dscp; // @[router.scala 40:30]
+  wire [1:0] acceptorBridge_io_read_data_ip_ecn; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_read_data_ip_len; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_read_data_ip_id; // @[router.scala 40:30]
+  wire [2:0] acceptorBridge_io_read_data_ip_flags; // @[router.scala 40:30]
+  wire [12:0] acceptorBridge_io_read_data_ip_foff; // @[router.scala 40:30]
+  wire [7:0] acceptorBridge_io_read_data_ip_ttl; // @[router.scala 40:30]
+  wire [7:0] acceptorBridge_io_read_data_ip_proto; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_read_data_ip_chksum; // @[router.scala 40:30]
+  wire [31:0] acceptorBridge_io_read_data_ip_src; // @[router.scala 40:30]
+  wire [31:0] acceptorBridge_io_read_data_ip_dest; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_read_data_icmp_id; // @[router.scala 40:30]
+  wire [15:0] acceptorBridge_io_read_data_icmp_checksum; // @[router.scala 40:30]
+  wire [7:0] acceptorBridge_io_read_data_icmp_code; // @[router.scala 40:30]
+  wire [7:0] acceptorBridge_io_read_data_icmp_imcpType; // @[router.scala 40:30]
+  wire  acceptorBridge_io_read_empty; // @[router.scala 40:30]
+  wire  transmitterBridge_reset; // @[router.scala 43:33]
+  wire  transmitterBridge_io_write_clk; // @[router.scala 43:33]
+  wire  transmitterBridge_io_write_en; // @[router.scala 43:33]
+  wire [7:0] transmitterBridge_io_write_data_data; // @[router.scala 43:33]
+  wire  transmitterBridge_io_write_data_last; // @[router.scala 43:33]
+  wire  transmitterBridge_io_write_full; // @[router.scala 43:33]
+  wire  transmitterBridge_io_read_clk; // @[router.scala 43:33]
+  wire  transmitterBridge_io_read_en; // @[router.scala 43:33]
+  wire [7:0] transmitterBridge_io_read_data_data; // @[router.scala 43:33]
+  wire  transmitterBridge_io_read_data_last; // @[router.scala 43:33]
+  wire  transmitterBridge_io_read_empty; // @[router.scala 43:33]
+  wire  payloadBridge_reset; // @[router.scala 47:29]
+  wire  payloadBridge_io_write_clk; // @[router.scala 47:29]
+  wire  payloadBridge_io_write_en; // @[router.scala 47:29]
+  wire [7:0] payloadBridge_io_write_data_data; // @[router.scala 47:29]
+  wire  payloadBridge_io_write_data_last; // @[router.scala 47:29]
+  wire  payloadBridge_io_write_progfull; // @[router.scala 47:29]
+  wire  payloadBridge_io_read_clk; // @[router.scala 47:29]
+  wire  payloadBridge_io_read_en; // @[router.scala 47:29]
+  wire [7:0] payloadBridge_io_read_data_data; // @[router.scala 47:29]
+  wire  payloadBridge_io_read_data_last; // @[router.scala 47:29]
+  wire  payloadBridge_io_read_empty; // @[router.scala 47:29]
+  wire  Acceptor_clock; // @[router.scala 50:26]
+  wire  Acceptor_reset; // @[router.scala 50:26]
+  wire [7:0] Acceptor_io_rx_tdata; // @[router.scala 50:26]
+  wire  Acceptor_io_rx_tvalid; // @[router.scala 50:26]
+  wire  Acceptor_io_rx_tlast; // @[router.scala 50:26]
+  wire  Acceptor_io_writer_clk; // @[router.scala 50:26]
+  wire  Acceptor_io_writer_en; // @[router.scala 50:26]
+  wire [47:0] Acceptor_io_writer_data_eth_dest; // @[router.scala 50:26]
+  wire [47:0] Acceptor_io_writer_data_eth_sender; // @[router.scala 50:26]
+  wire [1:0] Acceptor_io_writer_data_eth_pactype; // @[router.scala 50:26]
+  wire [2:0] Acceptor_io_writer_data_eth_vlan; // @[router.scala 50:26]
+  wire [3:0] Acceptor_io_writer_data_ip_version; // @[router.scala 50:26]
+  wire [3:0] Acceptor_io_writer_data_ip_ihl; // @[router.scala 50:26]
+  wire [5:0] Acceptor_io_writer_data_ip_dscp; // @[router.scala 50:26]
+  wire [1:0] Acceptor_io_writer_data_ip_ecn; // @[router.scala 50:26]
+  wire [15:0] Acceptor_io_writer_data_ip_len; // @[router.scala 50:26]
+  wire [15:0] Acceptor_io_writer_data_ip_id; // @[router.scala 50:26]
+  wire [2:0] Acceptor_io_writer_data_ip_flags; // @[router.scala 50:26]
+  wire [12:0] Acceptor_io_writer_data_ip_foff; // @[router.scala 50:26]
+  wire [7:0] Acceptor_io_writer_data_ip_ttl; // @[router.scala 50:26]
+  wire [7:0] Acceptor_io_writer_data_ip_proto; // @[router.scala 50:26]
+  wire [15:0] Acceptor_io_writer_data_ip_chksum; // @[router.scala 50:26]
+  wire [31:0] Acceptor_io_writer_data_ip_src; // @[router.scala 50:26]
+  wire [31:0] Acceptor_io_writer_data_ip_dest; // @[router.scala 50:26]
+  wire [15:0] Acceptor_io_writer_data_icmp_id; // @[router.scala 50:26]
+  wire [15:0] Acceptor_io_writer_data_icmp_checksum; // @[router.scala 50:26]
+  wire [7:0] Acceptor_io_writer_data_icmp_code; // @[router.scala 50:26]
+  wire [7:0] Acceptor_io_writer_data_icmp_imcpType; // @[router.scala 50:26]
+  wire  Acceptor_io_payloadWriter_clk; // @[router.scala 50:26]
+  wire  Acceptor_io_payloadWriter_en; // @[router.scala 50:26]
+  wire [7:0] Acceptor_io_payloadWriter_data_data; // @[router.scala 50:26]
+  wire  Acceptor_io_payloadWriter_data_last; // @[router.scala 50:26]
+  wire  Acceptor_io_payloadWriter_progfull; // @[router.scala 50:26]
+  wire  ctrl_io_inputWait; // @[router.scala 57:20]
+  wire  ctrl_io_nat_stall; // @[router.scala 57:20]
+  wire  ctrl_io_nat_pause; // @[router.scala 57:20]
+  wire  ctrl_io_forward_stall; // @[router.scala 57:20]
+  wire  ctrl_io_forward_pause; // @[router.scala 57:20]
+  wire  ctrl_io_arp_pause; // @[router.scala 57:20]
+  wire  ctrl_io_encoder_stall; // @[router.scala 57:20]
+  wire  ctrl_io_encoder_pause; // @[router.scala 57:20]
+  wire  nat_clock; // @[router.scala 60:19]
+  wire  nat_reset; // @[router.scala 60:19]
+  wire [47:0] nat_io_input_eth_dest; // @[router.scala 60:19]
+  wire [47:0] nat_io_input_eth_sender; // @[router.scala 60:19]
+  wire [1:0] nat_io_input_eth_pactype; // @[router.scala 60:19]
+  wire [2:0] nat_io_input_eth_vlan; // @[router.scala 60:19]
+  wire [3:0] nat_io_input_ip_version; // @[router.scala 60:19]
+  wire [3:0] nat_io_input_ip_ihl; // @[router.scala 60:19]
+  wire [5:0] nat_io_input_ip_dscp; // @[router.scala 60:19]
+  wire [1:0] nat_io_input_ip_ecn; // @[router.scala 60:19]
+  wire [15:0] nat_io_input_ip_len; // @[router.scala 60:19]
+  wire [15:0] nat_io_input_ip_id; // @[router.scala 60:19]
+  wire [2:0] nat_io_input_ip_flags; // @[router.scala 60:19]
+  wire [12:0] nat_io_input_ip_foff; // @[router.scala 60:19]
+  wire [7:0] nat_io_input_ip_ttl; // @[router.scala 60:19]
+  wire [7:0] nat_io_input_ip_proto; // @[router.scala 60:19]
+  wire [15:0] nat_io_input_ip_chksum; // @[router.scala 60:19]
+  wire [31:0] nat_io_input_ip_src; // @[router.scala 60:19]
+  wire [31:0] nat_io_input_ip_dest; // @[router.scala 60:19]
+  wire [15:0] nat_io_input_icmp_id; // @[router.scala 60:19]
+  wire [15:0] nat_io_input_icmp_checksum; // @[router.scala 60:19]
+  wire [7:0] nat_io_input_icmp_code; // @[router.scala 60:19]
+  wire [7:0] nat_io_input_icmp_imcpType; // @[router.scala 60:19]
+  wire [1:0] nat_io_status; // @[router.scala 60:19]
+  wire [47:0] nat_io_output_eth_dest; // @[router.scala 60:19]
+  wire [47:0] nat_io_output_eth_sender; // @[router.scala 60:19]
+  wire [1:0] nat_io_output_eth_pactype; // @[router.scala 60:19]
+  wire [2:0] nat_io_output_eth_vlan; // @[router.scala 60:19]
+  wire [3:0] nat_io_output_ip_version; // @[router.scala 60:19]
+  wire [3:0] nat_io_output_ip_ihl; // @[router.scala 60:19]
+  wire [5:0] nat_io_output_ip_dscp; // @[router.scala 60:19]
+  wire [1:0] nat_io_output_ip_ecn; // @[router.scala 60:19]
+  wire [15:0] nat_io_output_ip_len; // @[router.scala 60:19]
+  wire [15:0] nat_io_output_ip_id; // @[router.scala 60:19]
+  wire [2:0] nat_io_output_ip_flags; // @[router.scala 60:19]
+  wire [12:0] nat_io_output_ip_foff; // @[router.scala 60:19]
+  wire [7:0] nat_io_output_ip_ttl; // @[router.scala 60:19]
+  wire [7:0] nat_io_output_ip_proto; // @[router.scala 60:19]
+  wire [15:0] nat_io_output_ip_chksum; // @[router.scala 60:19]
+  wire [31:0] nat_io_output_ip_src; // @[router.scala 60:19]
+  wire [31:0] nat_io_output_ip_dest; // @[router.scala 60:19]
+  wire [15:0] nat_io_output_icmp_id; // @[router.scala 60:19]
+  wire [15:0] nat_io_output_icmp_checksum; // @[router.scala 60:19]
+  wire [7:0] nat_io_output_icmp_code; // @[router.scala 60:19]
+  wire [7:0] nat_io_output_icmp_imcpType; // @[router.scala 60:19]
+  wire [1:0] nat_io_outputStatus; // @[router.scala 60:19]
+  wire  nat_io_pause; // @[router.scala 60:19]
+  wire  nat_io_stall; // @[router.scala 60:19]
+  wire  forward_clock; // @[router.scala 66:23]
+  wire  forward_reset; // @[router.scala 66:23]
+  wire [47:0] forward_io_input_eth_dest; // @[router.scala 66:23]
+  wire [47:0] forward_io_input_eth_sender; // @[router.scala 66:23]
+  wire [1:0] forward_io_input_eth_pactype; // @[router.scala 66:23]
+  wire [2:0] forward_io_input_eth_vlan; // @[router.scala 66:23]
+  wire [3:0] forward_io_input_ip_version; // @[router.scala 66:23]
+  wire [3:0] forward_io_input_ip_ihl; // @[router.scala 66:23]
+  wire [5:0] forward_io_input_ip_dscp; // @[router.scala 66:23]
+  wire [1:0] forward_io_input_ip_ecn; // @[router.scala 66:23]
+  wire [15:0] forward_io_input_ip_len; // @[router.scala 66:23]
+  wire [15:0] forward_io_input_ip_id; // @[router.scala 66:23]
+  wire [2:0] forward_io_input_ip_flags; // @[router.scala 66:23]
+  wire [12:0] forward_io_input_ip_foff; // @[router.scala 66:23]
+  wire [7:0] forward_io_input_ip_ttl; // @[router.scala 66:23]
+  wire [7:0] forward_io_input_ip_proto; // @[router.scala 66:23]
+  wire [15:0] forward_io_input_ip_chksum; // @[router.scala 66:23]
+  wire [31:0] forward_io_input_ip_src; // @[router.scala 66:23]
+  wire [31:0] forward_io_input_ip_dest; // @[router.scala 66:23]
+  wire [15:0] forward_io_input_icmp_id; // @[router.scala 66:23]
+  wire [15:0] forward_io_input_icmp_checksum; // @[router.scala 66:23]
+  wire [7:0] forward_io_input_icmp_code; // @[router.scala 66:23]
+  wire [7:0] forward_io_input_icmp_imcpType; // @[router.scala 66:23]
+  wire [1:0] forward_io_status; // @[router.scala 66:23]
+  wire  forward_io_stall; // @[router.scala 66:23]
+  wire  forward_io_pause; // @[router.scala 66:23]
+  wire [47:0] forward_io_output_packet_eth_dest; // @[router.scala 66:23]
+  wire [47:0] forward_io_output_packet_eth_sender; // @[router.scala 66:23]
+  wire [1:0] forward_io_output_packet_eth_pactype; // @[router.scala 66:23]
+  wire [2:0] forward_io_output_packet_eth_vlan; // @[router.scala 66:23]
+  wire [3:0] forward_io_output_packet_ip_version; // @[router.scala 66:23]
+  wire [3:0] forward_io_output_packet_ip_ihl; // @[router.scala 66:23]
+  wire [5:0] forward_io_output_packet_ip_dscp; // @[router.scala 66:23]
+  wire [1:0] forward_io_output_packet_ip_ecn; // @[router.scala 66:23]
+  wire [15:0] forward_io_output_packet_ip_len; // @[router.scala 66:23]
+  wire [15:0] forward_io_output_packet_ip_id; // @[router.scala 66:23]
+  wire [2:0] forward_io_output_packet_ip_flags; // @[router.scala 66:23]
+  wire [12:0] forward_io_output_packet_ip_foff; // @[router.scala 66:23]
+  wire [7:0] forward_io_output_packet_ip_ttl; // @[router.scala 66:23]
+  wire [7:0] forward_io_output_packet_ip_proto; // @[router.scala 66:23]
+  wire [15:0] forward_io_output_packet_ip_chksum; // @[router.scala 66:23]
+  wire [31:0] forward_io_output_packet_ip_src; // @[router.scala 66:23]
+  wire [31:0] forward_io_output_packet_ip_dest; // @[router.scala 66:23]
+  wire [15:0] forward_io_output_packet_icmp_id; // @[router.scala 66:23]
+  wire [15:0] forward_io_output_packet_icmp_checksum; // @[router.scala 66:23]
+  wire [7:0] forward_io_output_packet_icmp_code; // @[router.scala 66:23]
+  wire [7:0] forward_io_output_packet_icmp_imcpType; // @[router.scala 66:23]
+  wire [2:0] forward_io_output_lookup_status; // @[router.scala 66:23]
+  wire [1:0] forward_io_outputStatus; // @[router.scala 66:23]
+  wire  arp_clock; // @[router.scala 72:19]
+  wire  arp_reset; // @[router.scala 72:19]
+  wire [47:0] arp_io_input_packet_eth_dest; // @[router.scala 72:19]
+  wire [47:0] arp_io_input_packet_eth_sender; // @[router.scala 72:19]
+  wire [1:0] arp_io_input_packet_eth_pactype; // @[router.scala 72:19]
+  wire [2:0] arp_io_input_packet_eth_vlan; // @[router.scala 72:19]
+  wire [3:0] arp_io_input_packet_ip_version; // @[router.scala 72:19]
+  wire [3:0] arp_io_input_packet_ip_ihl; // @[router.scala 72:19]
+  wire [5:0] arp_io_input_packet_ip_dscp; // @[router.scala 72:19]
+  wire [1:0] arp_io_input_packet_ip_ecn; // @[router.scala 72:19]
+  wire [15:0] arp_io_input_packet_ip_len; // @[router.scala 72:19]
+  wire [15:0] arp_io_input_packet_ip_id; // @[router.scala 72:19]
+  wire [2:0] arp_io_input_packet_ip_flags; // @[router.scala 72:19]
+  wire [12:0] arp_io_input_packet_ip_foff; // @[router.scala 72:19]
+  wire [7:0] arp_io_input_packet_ip_ttl; // @[router.scala 72:19]
+  wire [7:0] arp_io_input_packet_ip_proto; // @[router.scala 72:19]
+  wire [15:0] arp_io_input_packet_ip_chksum; // @[router.scala 72:19]
+  wire [31:0] arp_io_input_packet_ip_src; // @[router.scala 72:19]
+  wire [31:0] arp_io_input_packet_ip_dest; // @[router.scala 72:19]
+  wire [15:0] arp_io_input_packet_icmp_id; // @[router.scala 72:19]
+  wire [15:0] arp_io_input_packet_icmp_checksum; // @[router.scala 72:19]
+  wire [7:0] arp_io_input_packet_icmp_code; // @[router.scala 72:19]
+  wire [7:0] arp_io_input_packet_icmp_imcpType; // @[router.scala 72:19]
+  wire [2:0] arp_io_input_lookup_status; // @[router.scala 72:19]
+  wire [1:0] arp_io_status; // @[router.scala 72:19]
+  wire  arp_io_pause; // @[router.scala 72:19]
+  wire [2:0] arp_io_output_forward_status; // @[router.scala 72:19]
+  wire [47:0] arp_io_output_packet_eth_dest; // @[router.scala 72:19]
+  wire [47:0] arp_io_output_packet_eth_sender; // @[router.scala 72:19]
+  wire [1:0] arp_io_output_packet_eth_pactype; // @[router.scala 72:19]
+  wire [2:0] arp_io_output_packet_eth_vlan; // @[router.scala 72:19]
+  wire [3:0] arp_io_output_packet_ip_version; // @[router.scala 72:19]
+  wire [3:0] arp_io_output_packet_ip_ihl; // @[router.scala 72:19]
+  wire [5:0] arp_io_output_packet_ip_dscp; // @[router.scala 72:19]
+  wire [1:0] arp_io_output_packet_ip_ecn; // @[router.scala 72:19]
+  wire [15:0] arp_io_output_packet_ip_len; // @[router.scala 72:19]
+  wire [15:0] arp_io_output_packet_ip_id; // @[router.scala 72:19]
+  wire [2:0] arp_io_output_packet_ip_flags; // @[router.scala 72:19]
+  wire [12:0] arp_io_output_packet_ip_foff; // @[router.scala 72:19]
+  wire [7:0] arp_io_output_packet_ip_ttl; // @[router.scala 72:19]
+  wire [7:0] arp_io_output_packet_ip_proto; // @[router.scala 72:19]
+  wire [15:0] arp_io_output_packet_ip_chksum; // @[router.scala 72:19]
+  wire [31:0] arp_io_output_packet_ip_src; // @[router.scala 72:19]
+  wire [31:0] arp_io_output_packet_ip_dest; // @[router.scala 72:19]
+  wire [15:0] arp_io_output_packet_icmp_id; // @[router.scala 72:19]
+  wire [15:0] arp_io_output_packet_icmp_checksum; // @[router.scala 72:19]
+  wire [7:0] arp_io_output_packet_icmp_code; // @[router.scala 72:19]
+  wire [7:0] arp_io_output_packet_icmp_imcpType; // @[router.scala 72:19]
+  wire [1:0] arp_io_outputStatus; // @[router.scala 72:19]
+  wire  encoder_clock; // @[router.scala 78:23]
+  wire  encoder_reset; // @[router.scala 78:23]
+  wire [2:0] encoder_io_input_forward_status; // @[router.scala 78:23]
+  wire [47:0] encoder_io_input_packet_eth_dest; // @[router.scala 78:23]
+  wire [47:0] encoder_io_input_packet_eth_sender; // @[router.scala 78:23]
+  wire [1:0] encoder_io_input_packet_eth_pactype; // @[router.scala 78:23]
+  wire [2:0] encoder_io_input_packet_eth_vlan; // @[router.scala 78:23]
+  wire [3:0] encoder_io_input_packet_ip_version; // @[router.scala 78:23]
+  wire [3:0] encoder_io_input_packet_ip_ihl; // @[router.scala 78:23]
+  wire [5:0] encoder_io_input_packet_ip_dscp; // @[router.scala 78:23]
+  wire [1:0] encoder_io_input_packet_ip_ecn; // @[router.scala 78:23]
+  wire [15:0] encoder_io_input_packet_ip_len; // @[router.scala 78:23]
+  wire [15:0] encoder_io_input_packet_ip_id; // @[router.scala 78:23]
+  wire [2:0] encoder_io_input_packet_ip_flags; // @[router.scala 78:23]
+  wire [12:0] encoder_io_input_packet_ip_foff; // @[router.scala 78:23]
+  wire [7:0] encoder_io_input_packet_ip_ttl; // @[router.scala 78:23]
+  wire [7:0] encoder_io_input_packet_ip_proto; // @[router.scala 78:23]
+  wire [15:0] encoder_io_input_packet_ip_chksum; // @[router.scala 78:23]
+  wire [31:0] encoder_io_input_packet_ip_src; // @[router.scala 78:23]
+  wire [31:0] encoder_io_input_packet_ip_dest; // @[router.scala 78:23]
+  wire [15:0] encoder_io_input_packet_icmp_id; // @[router.scala 78:23]
+  wire [15:0] encoder_io_input_packet_icmp_checksum; // @[router.scala 78:23]
+  wire [7:0] encoder_io_input_packet_icmp_code; // @[router.scala 78:23]
+  wire [7:0] encoder_io_input_packet_icmp_imcpType; // @[router.scala 78:23]
+  wire [1:0] encoder_io_status; // @[router.scala 78:23]
+  wire  encoder_io_stall; // @[router.scala 78:23]
+  wire  encoder_io_pause; // @[router.scala 78:23]
+  wire  encoder_io_writer_clk; // @[router.scala 78:23]
+  wire  encoder_io_writer_en; // @[router.scala 78:23]
+  wire [7:0] encoder_io_writer_data_data; // @[router.scala 78:23]
+  wire  encoder_io_writer_data_last; // @[router.scala 78:23]
+  wire  encoder_io_writer_full; // @[router.scala 78:23]
+  wire  encoder_io_payloadReader_clk; // @[router.scala 78:23]
+  wire  encoder_io_payloadReader_en; // @[router.scala 78:23]
+  wire [7:0] encoder_io_payloadReader_data_data; // @[router.scala 78:23]
+  wire  encoder_io_payloadReader_data_last; // @[router.scala 78:23]
+  wire  encoder_io_payloadReader_empty; // @[router.scala 78:23]
+  wire [7:0] encoder_toAdapter_input; // @[router.scala 78:23]
+  wire  encoder_toAdapter_valid; // @[router.scala 78:23]
+  wire  encoder_toAdapter_last; // @[router.scala 78:23]
+  wire [1:0] encoder_toAdapter_req; // @[router.scala 78:23]
+  wire  encoder_toAdapter_stall; // @[router.scala 78:23]
+  wire  encoder_fromAdapter_writer_en; // @[router.scala 78:23]
+  wire [7:0] encoder_fromAdapter_writer_data_data; // @[router.scala 78:23]
+  wire  encoder_fromAdapter_writer_data_last; // @[router.scala 78:23]
+  wire  adapter_clock; // @[router.scala 89:23]
+  wire  adapter_reset; // @[router.scala 89:23]
+  wire  adapter_toBuf_clk; // @[router.scala 89:23]
+  wire [31:0] adapter_toBuf_addr; // @[router.scala 89:23]
+  wire [7:0] adapter_toBuf_din; // @[router.scala 89:23]
+  wire [7:0] adapter_toBuf_dout; // @[router.scala 89:23]
+  wire  adapter_toBuf_we; // @[router.scala 89:23]
+  wire [7:0] adapter_fromEnc_input; // @[router.scala 89:23]
+  wire  adapter_fromEnc_valid; // @[router.scala 89:23]
+  wire  adapter_fromEnc_last; // @[router.scala 89:23]
+  wire [1:0] adapter_fromEnc_req; // @[router.scala 89:23]
+  wire  adapter_fromEnc_stall; // @[router.scala 89:23]
+  wire  adapter_toEnc_writer_en; // @[router.scala 89:23]
+  wire [7:0] adapter_toEnc_writer_data_data; // @[router.scala 89:23]
+  wire  adapter_toEnc_writer_data_last; // @[router.scala 89:23]
+  wire  Transmitter_clock; // @[router.scala 95:29]
+  wire  Transmitter_io_reader_clk; // @[router.scala 95:29]
+  wire  Transmitter_io_reader_en; // @[router.scala 95:29]
+  wire [7:0] Transmitter_io_reader_data_data; // @[router.scala 95:29]
+  wire  Transmitter_io_reader_data_last; // @[router.scala 95:29]
+  wire  Transmitter_io_reader_empty; // @[router.scala 95:29]
+  wire [7:0] Transmitter_io_tx_tdata; // @[router.scala 95:29]
+  wire  Transmitter_io_tx_tvalid; // @[router.scala 95:29]
+  wire  Transmitter_io_tx_tlast; // @[router.scala 95:29]
+  wire  Transmitter_io_tx_tready; // @[router.scala 95:29]
+  wire  _T_1; // @[router.scala 64:23]
+  AsyncBridge acceptorBridge ( // @[router.scala 40:30]
     .reset(acceptorBridge_reset),
     .io_write_clk(acceptorBridge_io_write_clk),
     .io_write_en(acceptorBridge_io_write_en),
@@ -4152,7 +4423,7 @@ module Router(
     .io_read_data_icmp_imcpType(acceptorBridge_io_read_data_icmp_imcpType),
     .io_read_empty(acceptorBridge_io_read_empty)
   );
-  AsyncBridge_1 transmitterBridge ( // @[router.scala 42:33]
+  AsyncBridge_1 transmitterBridge ( // @[router.scala 43:33]
     .reset(transmitterBridge_reset),
     .io_write_clk(transmitterBridge_io_write_clk),
     .io_write_en(transmitterBridge_io_write_en),
@@ -4165,7 +4436,7 @@ module Router(
     .io_read_data_last(transmitterBridge_io_read_data_last),
     .io_read_empty(transmitterBridge_io_read_empty)
   );
-  AsyncBridge_2 payloadBridge ( // @[router.scala 46:29]
+  AsyncBridge_2 payloadBridge ( // @[router.scala 47:29]
     .reset(payloadBridge_reset),
     .io_write_clk(payloadBridge_io_write_clk),
     .io_write_en(payloadBridge_io_write_en),
@@ -4178,7 +4449,7 @@ module Router(
     .io_read_data_last(payloadBridge_io_read_data_last),
     .io_read_empty(payloadBridge_io_read_empty)
   );
-  Acceptor Acceptor ( // @[router.scala 49:26]
+  Acceptor Acceptor ( // @[router.scala 50:26]
     .clock(Acceptor_clock),
     .reset(Acceptor_reset),
     .io_rx_tdata(Acceptor_io_rx_tdata),
@@ -4213,7 +4484,7 @@ module Router(
     .io_payloadWriter_data_last(Acceptor_io_payloadWriter_data_last),
     .io_payloadWriter_progfull(Acceptor_io_payloadWriter_progfull)
   );
-  Ctrl ctrl ( // @[router.scala 56:20]
+  Ctrl ctrl ( // @[router.scala 57:20]
     .io_inputWait(ctrl_io_inputWait),
     .io_nat_stall(ctrl_io_nat_stall),
     .io_nat_pause(ctrl_io_nat_pause),
@@ -4223,7 +4494,7 @@ module Router(
     .io_encoder_stall(ctrl_io_encoder_stall),
     .io_encoder_pause(ctrl_io_encoder_pause)
   );
-  Nat nat ( // @[router.scala 59:19]
+  Nat nat ( // @[router.scala 60:19]
     .clock(nat_clock),
     .reset(nat_reset),
     .io_input_eth_dest(nat_io_input_eth_dest),
@@ -4273,7 +4544,7 @@ module Router(
     .io_pause(nat_io_pause),
     .io_stall(nat_io_stall)
   );
-  LLFT forward ( // @[router.scala 65:23]
+  LLFT forward ( // @[router.scala 66:23]
     .clock(forward_clock),
     .reset(forward_reset),
     .io_input_eth_dest(forward_io_input_eth_dest),
@@ -4321,9 +4592,10 @@ module Router(
     .io_output_packet_icmp_checksum(forward_io_output_packet_icmp_checksum),
     .io_output_packet_icmp_code(forward_io_output_packet_icmp_code),
     .io_output_packet_icmp_imcpType(forward_io_output_packet_icmp_imcpType),
+    .io_output_lookup_status(forward_io_output_lookup_status),
     .io_outputStatus(forward_io_outputStatus)
   );
-  ARPTable arp ( // @[router.scala 71:19]
+  ARPTable arp ( // @[router.scala 72:19]
     .clock(arp_clock),
     .reset(arp_reset),
     .io_input_packet_eth_dest(arp_io_input_packet_eth_dest),
@@ -4347,8 +4619,10 @@ module Router(
     .io_input_packet_icmp_checksum(arp_io_input_packet_icmp_checksum),
     .io_input_packet_icmp_code(arp_io_input_packet_icmp_code),
     .io_input_packet_icmp_imcpType(arp_io_input_packet_icmp_imcpType),
+    .io_input_lookup_status(arp_io_input_lookup_status),
     .io_status(arp_io_status),
     .io_pause(arp_io_pause),
+    .io_output_forward_status(arp_io_output_forward_status),
     .io_output_packet_eth_dest(arp_io_output_packet_eth_dest),
     .io_output_packet_eth_sender(arp_io_output_packet_eth_sender),
     .io_output_packet_eth_pactype(arp_io_output_packet_eth_pactype),
@@ -4372,9 +4646,10 @@ module Router(
     .io_output_packet_icmp_imcpType(arp_io_output_packet_icmp_imcpType),
     .io_outputStatus(arp_io_outputStatus)
   );
-  Encoder encoder ( // @[router.scala 77:23]
+  Encoder encoder ( // @[router.scala 78:23]
     .clock(encoder_clock),
     .reset(encoder_reset),
+    .io_input_forward_status(encoder_io_input_forward_status),
     .io_input_packet_eth_dest(encoder_io_input_packet_eth_dest),
     .io_input_packet_eth_sender(encoder_io_input_packet_eth_sender),
     .io_input_packet_eth_pactype(encoder_io_input_packet_eth_pactype),
@@ -4412,9 +4687,13 @@ module Router(
     .toAdapter_input(encoder_toAdapter_input),
     .toAdapter_valid(encoder_toAdapter_valid),
     .toAdapter_last(encoder_toAdapter_last),
-    .toAdapter_stall(encoder_toAdapter_stall)
+    .toAdapter_req(encoder_toAdapter_req),
+    .toAdapter_stall(encoder_toAdapter_stall),
+    .fromAdapter_writer_en(encoder_fromAdapter_writer_en),
+    .fromAdapter_writer_data_data(encoder_fromAdapter_writer_data_data),
+    .fromAdapter_writer_data_last(encoder_fromAdapter_writer_data_last)
   );
-  Adapter adapter ( // @[router.scala 88:23]
+  Adapter adapter ( // @[router.scala 89:23]
     .clock(adapter_clock),
     .reset(adapter_reset),
     .toBuf_clk(adapter_toBuf_clk),
@@ -4422,12 +4701,16 @@ module Router(
     .toBuf_din(adapter_toBuf_din),
     .toBuf_dout(adapter_toBuf_dout),
     .toBuf_we(adapter_toBuf_we),
-    .fromExec_input(adapter_fromExec_input),
-    .fromExec_valid(adapter_fromExec_valid),
-    .fromExec_last(adapter_fromExec_last),
-    .fromExec_stall(adapter_fromExec_stall)
+    .fromEnc_input(adapter_fromEnc_input),
+    .fromEnc_valid(adapter_fromEnc_valid),
+    .fromEnc_last(adapter_fromEnc_last),
+    .fromEnc_req(adapter_fromEnc_req),
+    .fromEnc_stall(adapter_fromEnc_stall),
+    .toEnc_writer_en(adapter_toEnc_writer_en),
+    .toEnc_writer_data_data(adapter_toEnc_writer_data_data),
+    .toEnc_writer_data_last(adapter_toEnc_writer_data_last)
   );
-  Transmitter Transmitter ( // @[router.scala 94:29]
+  Transmitter Transmitter ( // @[router.scala 95:29]
     .clock(Transmitter_clock),
     .io_reader_clk(Transmitter_io_reader_clk),
     .io_reader_en(Transmitter_io_reader_en),
@@ -4439,179 +4722,185 @@ module Router(
     .io_tx_tlast(Transmitter_io_tx_tlast),
     .io_tx_tready(Transmitter_io_tx_tready)
   );
-  assign _T_1 = acceptorBridge_io_read_empty ? 1'h0 : 1'h1; // @[router.scala 63:23]
-  assign io_tx_tdata = Transmitter_io_tx_tdata; // @[router.scala 96:23]
-  assign io_tx_tvalid = Transmitter_io_tx_tvalid; // @[router.scala 96:23]
-  assign io_tx_tlast = Transmitter_io_tx_tlast; // @[router.scala 96:23]
-  assign io_buf_clk = adapter_toBuf_clk; // @[router.scala 89:17]
-  assign io_buf_addr = adapter_toBuf_addr; // @[router.scala 89:17]
-  assign io_buf_din = adapter_toBuf_din; // @[router.scala 89:17]
-  assign io_buf_we = adapter_toBuf_we; // @[router.scala 89:17]
+  assign _T_1 = acceptorBridge_io_read_empty ? 1'h0 : 1'h1; // @[router.scala 64:23]
+  assign io_tx_tdata = Transmitter_io_tx_tdata; // @[router.scala 97:23]
+  assign io_tx_tvalid = Transmitter_io_tx_tvalid; // @[router.scala 97:23]
+  assign io_tx_tlast = Transmitter_io_tx_tlast; // @[router.scala 97:23]
+  assign io_buf_clk = adapter_toBuf_clk; // @[router.scala 90:17]
+  assign io_buf_addr = adapter_toBuf_addr; // @[router.scala 90:17]
+  assign io_buf_din = adapter_toBuf_din; // @[router.scala 90:17]
+  assign io_buf_we = adapter_toBuf_we; // @[router.scala 90:17]
   assign acceptorBridge_reset = reset;
-  assign acceptorBridge_io_write_clk = Acceptor_io_writer_clk; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_en = Acceptor_io_writer_en; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_eth_dest = Acceptor_io_writer_data_eth_dest; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_eth_sender = Acceptor_io_writer_data_eth_sender; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_eth_pactype = Acceptor_io_writer_data_eth_pactype; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_eth_vlan = Acceptor_io_writer_data_eth_vlan; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_version = Acceptor_io_writer_data_ip_version; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_ihl = Acceptor_io_writer_data_ip_ihl; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_dscp = Acceptor_io_writer_data_ip_dscp; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_ecn = Acceptor_io_writer_data_ip_ecn; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_len = Acceptor_io_writer_data_ip_len; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_id = Acceptor_io_writer_data_ip_id; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_flags = Acceptor_io_writer_data_ip_flags; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_foff = Acceptor_io_writer_data_ip_foff; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_ttl = Acceptor_io_writer_data_ip_ttl; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_proto = Acceptor_io_writer_data_ip_proto; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_chksum = Acceptor_io_writer_data_ip_chksum; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_src = Acceptor_io_writer_data_ip_src; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_ip_dest = Acceptor_io_writer_data_ip_dest; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_icmp_id = Acceptor_io_writer_data_icmp_id; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_icmp_checksum = Acceptor_io_writer_data_icmp_checksum; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_icmp_code = Acceptor_io_writer_data_icmp_code; // @[router.scala 52:29]
-  assign acceptorBridge_io_write_data_icmp_imcpType = Acceptor_io_writer_data_icmp_imcpType; // @[router.scala 52:29]
-  assign acceptorBridge_io_read_clk = clock; // @[router.scala 40:30]
-  assign acceptorBridge_io_read_en = ctrl_io_inputWait == 1'h0; // @[router.scala 57:29]
+  assign acceptorBridge_io_write_clk = Acceptor_io_writer_clk; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_en = Acceptor_io_writer_en; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_eth_dest = Acceptor_io_writer_data_eth_dest; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_eth_sender = Acceptor_io_writer_data_eth_sender; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_eth_pactype = Acceptor_io_writer_data_eth_pactype; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_eth_vlan = Acceptor_io_writer_data_eth_vlan; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_version = Acceptor_io_writer_data_ip_version; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_ihl = Acceptor_io_writer_data_ip_ihl; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_dscp = Acceptor_io_writer_data_ip_dscp; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_ecn = Acceptor_io_writer_data_ip_ecn; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_len = Acceptor_io_writer_data_ip_len; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_id = Acceptor_io_writer_data_ip_id; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_flags = Acceptor_io_writer_data_ip_flags; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_foff = Acceptor_io_writer_data_ip_foff; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_ttl = Acceptor_io_writer_data_ip_ttl; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_proto = Acceptor_io_writer_data_ip_proto; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_chksum = Acceptor_io_writer_data_ip_chksum; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_src = Acceptor_io_writer_data_ip_src; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_ip_dest = Acceptor_io_writer_data_ip_dest; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_icmp_id = Acceptor_io_writer_data_icmp_id; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_icmp_checksum = Acceptor_io_writer_data_icmp_checksum; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_icmp_code = Acceptor_io_writer_data_icmp_code; // @[router.scala 53:29]
+  assign acceptorBridge_io_write_data_icmp_imcpType = Acceptor_io_writer_data_icmp_imcpType; // @[router.scala 53:29]
+  assign acceptorBridge_io_read_clk = clock; // @[router.scala 41:30]
+  assign acceptorBridge_io_read_en = ctrl_io_inputWait == 1'h0; // @[router.scala 58:29]
   assign transmitterBridge_reset = reset;
-  assign transmitterBridge_io_write_clk = encoder_io_writer_clk; // @[router.scala 43:34 router.scala 85:21]
-  assign transmitterBridge_io_write_en = encoder_io_writer_en; // @[router.scala 85:21]
-  assign transmitterBridge_io_write_data_data = encoder_io_writer_data_data; // @[router.scala 85:21]
-  assign transmitterBridge_io_write_data_last = encoder_io_writer_data_last; // @[router.scala 85:21]
-  assign transmitterBridge_io_read_clk = Transmitter_io_reader_clk; // @[router.scala 95:27]
-  assign transmitterBridge_io_read_en = Transmitter_io_reader_en; // @[router.scala 95:27]
+  assign transmitterBridge_io_write_clk = encoder_io_writer_clk; // @[router.scala 44:34 router.scala 86:21]
+  assign transmitterBridge_io_write_en = encoder_io_writer_en; // @[router.scala 86:21]
+  assign transmitterBridge_io_write_data_data = encoder_io_writer_data_data; // @[router.scala 86:21]
+  assign transmitterBridge_io_write_data_last = encoder_io_writer_data_last; // @[router.scala 86:21]
+  assign transmitterBridge_io_read_clk = Transmitter_io_reader_clk; // @[router.scala 96:27]
+  assign transmitterBridge_io_read_en = Transmitter_io_reader_en; // @[router.scala 96:27]
   assign payloadBridge_reset = reset;
-  assign payloadBridge_io_write_clk = Acceptor_io_payloadWriter_clk; // @[router.scala 53:28]
-  assign payloadBridge_io_write_en = Acceptor_io_payloadWriter_en; // @[router.scala 53:28]
-  assign payloadBridge_io_write_data_data = Acceptor_io_payloadWriter_data_data; // @[router.scala 53:28]
-  assign payloadBridge_io_write_data_last = Acceptor_io_payloadWriter_data_last; // @[router.scala 53:28]
-  assign payloadBridge_io_read_clk = encoder_io_payloadReader_clk; // @[router.scala 86:28]
-  assign payloadBridge_io_read_en = encoder_io_payloadReader_en; // @[router.scala 86:28]
+  assign payloadBridge_io_write_clk = Acceptor_io_payloadWriter_clk; // @[router.scala 54:28]
+  assign payloadBridge_io_write_en = Acceptor_io_payloadWriter_en; // @[router.scala 54:28]
+  assign payloadBridge_io_write_data_data = Acceptor_io_payloadWriter_data_data; // @[router.scala 54:28]
+  assign payloadBridge_io_write_data_last = Acceptor_io_payloadWriter_data_last; // @[router.scala 54:28]
+  assign payloadBridge_io_read_clk = encoder_io_payloadReader_clk; // @[router.scala 87:28]
+  assign payloadBridge_io_read_en = encoder_io_payloadReader_en; // @[router.scala 87:28]
   assign Acceptor_clock = io_rx_clk;
   assign Acceptor_reset = reset;
-  assign Acceptor_io_rx_tdata = io_rx_tdata; // @[router.scala 51:20]
-  assign Acceptor_io_rx_tvalid = io_rx_tvalid; // @[router.scala 51:20]
-  assign Acceptor_io_rx_tlast = io_rx_tlast; // @[router.scala 51:20]
-  assign Acceptor_io_payloadWriter_progfull = payloadBridge_io_write_progfull; // @[router.scala 53:28]
-  assign ctrl_io_nat_stall = nat_io_stall; // @[router.scala 60:21]
-  assign ctrl_io_forward_stall = forward_io_stall; // @[router.scala 66:25]
-  assign ctrl_io_encoder_stall = encoder_io_stall; // @[router.scala 78:25]
+  assign Acceptor_io_rx_tdata = io_rx_tdata; // @[router.scala 52:20]
+  assign Acceptor_io_rx_tvalid = io_rx_tvalid; // @[router.scala 52:20]
+  assign Acceptor_io_rx_tlast = io_rx_tlast; // @[router.scala 52:20]
+  assign Acceptor_io_payloadWriter_progfull = payloadBridge_io_write_progfull; // @[router.scala 54:28]
+  assign ctrl_io_nat_stall = nat_io_stall; // @[router.scala 61:21]
+  assign ctrl_io_forward_stall = forward_io_stall; // @[router.scala 67:25]
+  assign ctrl_io_encoder_stall = encoder_io_stall; // @[router.scala 79:25]
   assign nat_clock = clock;
   assign nat_reset = reset;
-  assign nat_io_input_eth_dest = acceptorBridge_io_read_data_eth_dest; // @[router.scala 62:16]
-  assign nat_io_input_eth_sender = acceptorBridge_io_read_data_eth_sender; // @[router.scala 62:16]
-  assign nat_io_input_eth_pactype = acceptorBridge_io_read_data_eth_pactype; // @[router.scala 62:16]
-  assign nat_io_input_eth_vlan = acceptorBridge_io_read_data_eth_vlan; // @[router.scala 62:16]
-  assign nat_io_input_ip_version = acceptorBridge_io_read_data_ip_version; // @[router.scala 62:16]
-  assign nat_io_input_ip_ihl = acceptorBridge_io_read_data_ip_ihl; // @[router.scala 62:16]
-  assign nat_io_input_ip_dscp = acceptorBridge_io_read_data_ip_dscp; // @[router.scala 62:16]
-  assign nat_io_input_ip_ecn = acceptorBridge_io_read_data_ip_ecn; // @[router.scala 62:16]
-  assign nat_io_input_ip_len = acceptorBridge_io_read_data_ip_len; // @[router.scala 62:16]
-  assign nat_io_input_ip_id = acceptorBridge_io_read_data_ip_id; // @[router.scala 62:16]
-  assign nat_io_input_ip_flags = acceptorBridge_io_read_data_ip_flags; // @[router.scala 62:16]
-  assign nat_io_input_ip_foff = acceptorBridge_io_read_data_ip_foff; // @[router.scala 62:16]
-  assign nat_io_input_ip_ttl = acceptorBridge_io_read_data_ip_ttl; // @[router.scala 62:16]
-  assign nat_io_input_ip_proto = acceptorBridge_io_read_data_ip_proto; // @[router.scala 62:16]
-  assign nat_io_input_ip_chksum = acceptorBridge_io_read_data_ip_chksum; // @[router.scala 62:16]
-  assign nat_io_input_ip_src = acceptorBridge_io_read_data_ip_src; // @[router.scala 62:16]
-  assign nat_io_input_ip_dest = acceptorBridge_io_read_data_ip_dest; // @[router.scala 62:16]
-  assign nat_io_input_icmp_id = acceptorBridge_io_read_data_icmp_id; // @[router.scala 62:16]
-  assign nat_io_input_icmp_checksum = acceptorBridge_io_read_data_icmp_checksum; // @[router.scala 62:16]
-  assign nat_io_input_icmp_code = acceptorBridge_io_read_data_icmp_code; // @[router.scala 62:16]
-  assign nat_io_input_icmp_imcpType = acceptorBridge_io_read_data_icmp_imcpType; // @[router.scala 62:16]
-  assign nat_io_status = {{1'd0}, _T_1}; // @[router.scala 63:17]
-  assign nat_io_pause = ctrl_io_nat_pause; // @[router.scala 61:16]
+  assign nat_io_input_eth_dest = acceptorBridge_io_read_data_eth_dest; // @[router.scala 63:16]
+  assign nat_io_input_eth_sender = acceptorBridge_io_read_data_eth_sender; // @[router.scala 63:16]
+  assign nat_io_input_eth_pactype = acceptorBridge_io_read_data_eth_pactype; // @[router.scala 63:16]
+  assign nat_io_input_eth_vlan = acceptorBridge_io_read_data_eth_vlan; // @[router.scala 63:16]
+  assign nat_io_input_ip_version = acceptorBridge_io_read_data_ip_version; // @[router.scala 63:16]
+  assign nat_io_input_ip_ihl = acceptorBridge_io_read_data_ip_ihl; // @[router.scala 63:16]
+  assign nat_io_input_ip_dscp = acceptorBridge_io_read_data_ip_dscp; // @[router.scala 63:16]
+  assign nat_io_input_ip_ecn = acceptorBridge_io_read_data_ip_ecn; // @[router.scala 63:16]
+  assign nat_io_input_ip_len = acceptorBridge_io_read_data_ip_len; // @[router.scala 63:16]
+  assign nat_io_input_ip_id = acceptorBridge_io_read_data_ip_id; // @[router.scala 63:16]
+  assign nat_io_input_ip_flags = acceptorBridge_io_read_data_ip_flags; // @[router.scala 63:16]
+  assign nat_io_input_ip_foff = acceptorBridge_io_read_data_ip_foff; // @[router.scala 63:16]
+  assign nat_io_input_ip_ttl = acceptorBridge_io_read_data_ip_ttl; // @[router.scala 63:16]
+  assign nat_io_input_ip_proto = acceptorBridge_io_read_data_ip_proto; // @[router.scala 63:16]
+  assign nat_io_input_ip_chksum = acceptorBridge_io_read_data_ip_chksum; // @[router.scala 63:16]
+  assign nat_io_input_ip_src = acceptorBridge_io_read_data_ip_src; // @[router.scala 63:16]
+  assign nat_io_input_ip_dest = acceptorBridge_io_read_data_ip_dest; // @[router.scala 63:16]
+  assign nat_io_input_icmp_id = acceptorBridge_io_read_data_icmp_id; // @[router.scala 63:16]
+  assign nat_io_input_icmp_checksum = acceptorBridge_io_read_data_icmp_checksum; // @[router.scala 63:16]
+  assign nat_io_input_icmp_code = acceptorBridge_io_read_data_icmp_code; // @[router.scala 63:16]
+  assign nat_io_input_icmp_imcpType = acceptorBridge_io_read_data_icmp_imcpType; // @[router.scala 63:16]
+  assign nat_io_status = {{1'd0}, _T_1}; // @[router.scala 64:17]
+  assign nat_io_pause = ctrl_io_nat_pause; // @[router.scala 62:16]
   assign forward_clock = clock;
   assign forward_reset = reset;
-  assign forward_io_input_eth_dest = nat_io_output_eth_dest; // @[router.scala 68:20]
-  assign forward_io_input_eth_sender = nat_io_output_eth_sender; // @[router.scala 68:20]
-  assign forward_io_input_eth_pactype = nat_io_output_eth_pactype; // @[router.scala 68:20]
-  assign forward_io_input_eth_vlan = nat_io_output_eth_vlan; // @[router.scala 68:20]
-  assign forward_io_input_ip_version = nat_io_output_ip_version; // @[router.scala 68:20]
-  assign forward_io_input_ip_ihl = nat_io_output_ip_ihl; // @[router.scala 68:20]
-  assign forward_io_input_ip_dscp = nat_io_output_ip_dscp; // @[router.scala 68:20]
-  assign forward_io_input_ip_ecn = nat_io_output_ip_ecn; // @[router.scala 68:20]
-  assign forward_io_input_ip_len = nat_io_output_ip_len; // @[router.scala 68:20]
-  assign forward_io_input_ip_id = nat_io_output_ip_id; // @[router.scala 68:20]
-  assign forward_io_input_ip_flags = nat_io_output_ip_flags; // @[router.scala 68:20]
-  assign forward_io_input_ip_foff = nat_io_output_ip_foff; // @[router.scala 68:20]
-  assign forward_io_input_ip_ttl = nat_io_output_ip_ttl; // @[router.scala 68:20]
-  assign forward_io_input_ip_proto = nat_io_output_ip_proto; // @[router.scala 68:20]
-  assign forward_io_input_ip_chksum = nat_io_output_ip_chksum; // @[router.scala 68:20]
-  assign forward_io_input_ip_src = nat_io_output_ip_src; // @[router.scala 68:20]
-  assign forward_io_input_ip_dest = nat_io_output_ip_dest; // @[router.scala 68:20]
-  assign forward_io_input_icmp_id = nat_io_output_icmp_id; // @[router.scala 68:20]
-  assign forward_io_input_icmp_checksum = nat_io_output_icmp_checksum; // @[router.scala 68:20]
-  assign forward_io_input_icmp_code = nat_io_output_icmp_code; // @[router.scala 68:20]
-  assign forward_io_input_icmp_imcpType = nat_io_output_icmp_imcpType; // @[router.scala 68:20]
-  assign forward_io_status = nat_io_outputStatus; // @[router.scala 69:21]
-  assign forward_io_pause = ctrl_io_forward_pause; // @[router.scala 67:25]
+  assign forward_io_input_eth_dest = nat_io_output_eth_dest; // @[router.scala 69:20]
+  assign forward_io_input_eth_sender = nat_io_output_eth_sender; // @[router.scala 69:20]
+  assign forward_io_input_eth_pactype = nat_io_output_eth_pactype; // @[router.scala 69:20]
+  assign forward_io_input_eth_vlan = nat_io_output_eth_vlan; // @[router.scala 69:20]
+  assign forward_io_input_ip_version = nat_io_output_ip_version; // @[router.scala 69:20]
+  assign forward_io_input_ip_ihl = nat_io_output_ip_ihl; // @[router.scala 69:20]
+  assign forward_io_input_ip_dscp = nat_io_output_ip_dscp; // @[router.scala 69:20]
+  assign forward_io_input_ip_ecn = nat_io_output_ip_ecn; // @[router.scala 69:20]
+  assign forward_io_input_ip_len = nat_io_output_ip_len; // @[router.scala 69:20]
+  assign forward_io_input_ip_id = nat_io_output_ip_id; // @[router.scala 69:20]
+  assign forward_io_input_ip_flags = nat_io_output_ip_flags; // @[router.scala 69:20]
+  assign forward_io_input_ip_foff = nat_io_output_ip_foff; // @[router.scala 69:20]
+  assign forward_io_input_ip_ttl = nat_io_output_ip_ttl; // @[router.scala 69:20]
+  assign forward_io_input_ip_proto = nat_io_output_ip_proto; // @[router.scala 69:20]
+  assign forward_io_input_ip_chksum = nat_io_output_ip_chksum; // @[router.scala 69:20]
+  assign forward_io_input_ip_src = nat_io_output_ip_src; // @[router.scala 69:20]
+  assign forward_io_input_ip_dest = nat_io_output_ip_dest; // @[router.scala 69:20]
+  assign forward_io_input_icmp_id = nat_io_output_icmp_id; // @[router.scala 69:20]
+  assign forward_io_input_icmp_checksum = nat_io_output_icmp_checksum; // @[router.scala 69:20]
+  assign forward_io_input_icmp_code = nat_io_output_icmp_code; // @[router.scala 69:20]
+  assign forward_io_input_icmp_imcpType = nat_io_output_icmp_imcpType; // @[router.scala 69:20]
+  assign forward_io_status = nat_io_outputStatus; // @[router.scala 70:21]
+  assign forward_io_pause = ctrl_io_forward_pause; // @[router.scala 68:25]
   assign arp_clock = clock;
   assign arp_reset = reset;
-  assign arp_io_input_packet_eth_dest = forward_io_output_packet_eth_dest; // @[router.scala 74:21]
-  assign arp_io_input_packet_eth_sender = forward_io_output_packet_eth_sender; // @[router.scala 74:21]
-  assign arp_io_input_packet_eth_pactype = forward_io_output_packet_eth_pactype; // @[router.scala 74:21]
-  assign arp_io_input_packet_eth_vlan = forward_io_output_packet_eth_vlan; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_version = forward_io_output_packet_ip_version; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_ihl = forward_io_output_packet_ip_ihl; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_dscp = forward_io_output_packet_ip_dscp; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_ecn = forward_io_output_packet_ip_ecn; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_len = forward_io_output_packet_ip_len; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_id = forward_io_output_packet_ip_id; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_flags = forward_io_output_packet_ip_flags; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_foff = forward_io_output_packet_ip_foff; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_ttl = forward_io_output_packet_ip_ttl; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_proto = forward_io_output_packet_ip_proto; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_chksum = forward_io_output_packet_ip_chksum; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_src = forward_io_output_packet_ip_src; // @[router.scala 74:21]
-  assign arp_io_input_packet_ip_dest = forward_io_output_packet_ip_dest; // @[router.scala 74:21]
-  assign arp_io_input_packet_icmp_id = forward_io_output_packet_icmp_id; // @[router.scala 74:21]
-  assign arp_io_input_packet_icmp_checksum = forward_io_output_packet_icmp_checksum; // @[router.scala 74:21]
-  assign arp_io_input_packet_icmp_code = forward_io_output_packet_icmp_code; // @[router.scala 74:21]
-  assign arp_io_input_packet_icmp_imcpType = forward_io_output_packet_icmp_imcpType; // @[router.scala 74:21]
-  assign arp_io_status = forward_io_outputStatus; // @[router.scala 75:27]
-  assign arp_io_pause = ctrl_io_arp_pause; // @[router.scala 73:21]
+  assign arp_io_input_packet_eth_dest = forward_io_output_packet_eth_dest; // @[router.scala 75:21]
+  assign arp_io_input_packet_eth_sender = forward_io_output_packet_eth_sender; // @[router.scala 75:21]
+  assign arp_io_input_packet_eth_pactype = forward_io_output_packet_eth_pactype; // @[router.scala 75:21]
+  assign arp_io_input_packet_eth_vlan = forward_io_output_packet_eth_vlan; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_version = forward_io_output_packet_ip_version; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_ihl = forward_io_output_packet_ip_ihl; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_dscp = forward_io_output_packet_ip_dscp; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_ecn = forward_io_output_packet_ip_ecn; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_len = forward_io_output_packet_ip_len; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_id = forward_io_output_packet_ip_id; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_flags = forward_io_output_packet_ip_flags; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_foff = forward_io_output_packet_ip_foff; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_ttl = forward_io_output_packet_ip_ttl; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_proto = forward_io_output_packet_ip_proto; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_chksum = forward_io_output_packet_ip_chksum; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_src = forward_io_output_packet_ip_src; // @[router.scala 75:21]
+  assign arp_io_input_packet_ip_dest = forward_io_output_packet_ip_dest; // @[router.scala 75:21]
+  assign arp_io_input_packet_icmp_id = forward_io_output_packet_icmp_id; // @[router.scala 75:21]
+  assign arp_io_input_packet_icmp_checksum = forward_io_output_packet_icmp_checksum; // @[router.scala 75:21]
+  assign arp_io_input_packet_icmp_code = forward_io_output_packet_icmp_code; // @[router.scala 75:21]
+  assign arp_io_input_packet_icmp_imcpType = forward_io_output_packet_icmp_imcpType; // @[router.scala 75:21]
+  assign arp_io_input_lookup_status = forward_io_output_lookup_status; // @[router.scala 75:21]
+  assign arp_io_status = forward_io_outputStatus; // @[router.scala 76:27]
+  assign arp_io_pause = ctrl_io_arp_pause; // @[router.scala 74:21]
   assign encoder_clock = clock;
   assign encoder_reset = reset;
-  assign encoder_io_input_packet_eth_dest = arp_io_output_packet_eth_dest; // @[router.scala 83:20]
-  assign encoder_io_input_packet_eth_sender = arp_io_output_packet_eth_sender; // @[router.scala 83:20]
-  assign encoder_io_input_packet_eth_pactype = arp_io_output_packet_eth_pactype; // @[router.scala 83:20]
-  assign encoder_io_input_packet_eth_vlan = arp_io_output_packet_eth_vlan; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_version = arp_io_output_packet_ip_version; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_ihl = arp_io_output_packet_ip_ihl; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_dscp = arp_io_output_packet_ip_dscp; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_ecn = arp_io_output_packet_ip_ecn; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_len = arp_io_output_packet_ip_len; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_id = arp_io_output_packet_ip_id; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_flags = arp_io_output_packet_ip_flags; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_foff = arp_io_output_packet_ip_foff; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_ttl = arp_io_output_packet_ip_ttl; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_proto = arp_io_output_packet_ip_proto; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_chksum = arp_io_output_packet_ip_chksum; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_src = arp_io_output_packet_ip_src; // @[router.scala 83:20]
-  assign encoder_io_input_packet_ip_dest = arp_io_output_packet_ip_dest; // @[router.scala 83:20]
-  assign encoder_io_input_packet_icmp_id = arp_io_output_packet_icmp_id; // @[router.scala 83:20]
-  assign encoder_io_input_packet_icmp_checksum = arp_io_output_packet_icmp_checksum; // @[router.scala 83:20]
-  assign encoder_io_input_packet_icmp_code = arp_io_output_packet_icmp_code; // @[router.scala 83:20]
-  assign encoder_io_input_packet_icmp_imcpType = arp_io_output_packet_icmp_imcpType; // @[router.scala 83:20]
-  assign encoder_io_status = arp_io_outputStatus; // @[router.scala 84:21]
-  assign encoder_io_pause = ctrl_io_encoder_pause; // @[router.scala 79:25]
-  assign encoder_io_writer_full = transmitterBridge_io_write_full; // @[router.scala 85:21]
-  assign encoder_io_payloadReader_data_data = payloadBridge_io_read_data_data; // @[router.scala 86:28]
-  assign encoder_io_payloadReader_data_last = payloadBridge_io_read_data_last; // @[router.scala 86:28]
-  assign encoder_io_payloadReader_empty = payloadBridge_io_read_empty; // @[router.scala 86:28]
-  assign encoder_toAdapter_stall = adapter_fromExec_stall; // @[router.scala 90:21]
+  assign encoder_io_input_forward_status = arp_io_output_forward_status; // @[router.scala 84:20]
+  assign encoder_io_input_packet_eth_dest = arp_io_output_packet_eth_dest; // @[router.scala 84:20]
+  assign encoder_io_input_packet_eth_sender = arp_io_output_packet_eth_sender; // @[router.scala 84:20]
+  assign encoder_io_input_packet_eth_pactype = arp_io_output_packet_eth_pactype; // @[router.scala 84:20]
+  assign encoder_io_input_packet_eth_vlan = arp_io_output_packet_eth_vlan; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_version = arp_io_output_packet_ip_version; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_ihl = arp_io_output_packet_ip_ihl; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_dscp = arp_io_output_packet_ip_dscp; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_ecn = arp_io_output_packet_ip_ecn; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_len = arp_io_output_packet_ip_len; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_id = arp_io_output_packet_ip_id; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_flags = arp_io_output_packet_ip_flags; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_foff = arp_io_output_packet_ip_foff; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_ttl = arp_io_output_packet_ip_ttl; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_proto = arp_io_output_packet_ip_proto; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_chksum = arp_io_output_packet_ip_chksum; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_src = arp_io_output_packet_ip_src; // @[router.scala 84:20]
+  assign encoder_io_input_packet_ip_dest = arp_io_output_packet_ip_dest; // @[router.scala 84:20]
+  assign encoder_io_input_packet_icmp_id = arp_io_output_packet_icmp_id; // @[router.scala 84:20]
+  assign encoder_io_input_packet_icmp_checksum = arp_io_output_packet_icmp_checksum; // @[router.scala 84:20]
+  assign encoder_io_input_packet_icmp_code = arp_io_output_packet_icmp_code; // @[router.scala 84:20]
+  assign encoder_io_input_packet_icmp_imcpType = arp_io_output_packet_icmp_imcpType; // @[router.scala 84:20]
+  assign encoder_io_status = arp_io_outputStatus; // @[router.scala 85:21]
+  assign encoder_io_pause = ctrl_io_encoder_pause; // @[router.scala 80:25]
+  assign encoder_io_writer_full = transmitterBridge_io_write_full; // @[router.scala 86:21]
+  assign encoder_io_payloadReader_data_data = payloadBridge_io_read_data_data; // @[router.scala 87:28]
+  assign encoder_io_payloadReader_data_last = payloadBridge_io_read_data_last; // @[router.scala 87:28]
+  assign encoder_io_payloadReader_empty = payloadBridge_io_read_empty; // @[router.scala 87:28]
+  assign encoder_toAdapter_stall = adapter_fromEnc_stall; // @[router.scala 91:21]
+  assign encoder_fromAdapter_writer_en = adapter_toEnc_writer_en; // @[router.scala 92:17]
+  assign encoder_fromAdapter_writer_data_data = adapter_toEnc_writer_data_data; // @[router.scala 92:17]
+  assign encoder_fromAdapter_writer_data_last = adapter_toEnc_writer_data_last; // @[router.scala 92:17]
   assign adapter_clock = clock;
   assign adapter_reset = reset;
-  assign adapter_toBuf_dout = io_buf_dout; // @[router.scala 89:17]
-  assign adapter_fromExec_input = encoder_toAdapter_input; // @[router.scala 90:21]
-  assign adapter_fromExec_valid = encoder_toAdapter_valid; // @[router.scala 90:21]
-  assign adapter_fromExec_last = encoder_toAdapter_last; // @[router.scala 90:21]
+  assign adapter_toBuf_dout = io_buf_dout; // @[router.scala 90:17]
+  assign adapter_fromEnc_input = encoder_toAdapter_input; // @[router.scala 91:21]
+  assign adapter_fromEnc_valid = encoder_toAdapter_valid; // @[router.scala 91:21]
+  assign adapter_fromEnc_last = encoder_toAdapter_last; // @[router.scala 91:21]
+  assign adapter_fromEnc_req = encoder_toAdapter_req; // @[router.scala 91:21]
   assign Transmitter_clock = io_tx_clk;
-  assign Transmitter_io_reader_data_data = transmitterBridge_io_read_data_data; // @[router.scala 95:27]
-  assign Transmitter_io_reader_data_last = transmitterBridge_io_read_data_last; // @[router.scala 95:27]
-  assign Transmitter_io_reader_empty = transmitterBridge_io_read_empty; // @[router.scala 95:27]
-  assign Transmitter_io_tx_tready = io_tx_tready; // @[router.scala 96:23]
+  assign Transmitter_io_reader_data_data = transmitterBridge_io_read_data_data; // @[router.scala 96:27]
+  assign Transmitter_io_reader_data_last = transmitterBridge_io_read_data_last; // @[router.scala 96:27]
+  assign Transmitter_io_reader_empty = transmitterBridge_io_read_empty; // @[router.scala 96:27]
+  assign Transmitter_io_tx_tready = io_tx_tready; // @[router.scala 97:23]
 endmodule
 module Top(
   input         clock,

@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Tue Dec 10 19:00:59 2019
+// Date        : Fri Dec 13 03:37:17 2019
 // Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
 //               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_xbar_0/meowrouter_xbar_0_sim_netlist.v
@@ -260,7 +260,7 @@ module meowrouter_xbar_0
   (* C_CONNECTIVITY_MODE = "0" *) 
   (* C_DEBUG = "1" *) 
   (* C_FAMILY = "artix7" *) 
-  (* C_M_AXI_ADDR_WIDTH = "192'b000000000000000000000000000100000000000000000000000000000001011100000000000000000000000000010111000000000000000000000000000011010000000000000000000000000001000000000000000000000000000000010000" *) 
+  (* C_M_AXI_ADDR_WIDTH = "192'b000000000000000000000000000100000000000000000000000000000001011100000000000000000000000000010111000000000000000000000000000011100000000000000000000000000001000000000000000000000000000000010000" *) 
   (* C_M_AXI_BASE_ADDR = "384'b000000000000000011100000000000000000000000000000000000000000000000000000000000001111111111111111001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111110011000000000000000000000000000000000000000000001111111111111111000000000000000000000000000000000000000000000000111111111111111100010000000000000000000000000000" *) 
   (* C_M_AXI_READ_CONNECTIVITY = "192'b000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001" *) 
   (* C_M_AXI_READ_ISSUING = "192'b000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001" *) 
@@ -707,7 +707,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
   assign m_axi_rlast_2_sp_1 = m_axi_rlast_2_sn_1;
   assign m_axi_rvalid_2_sp_1 = m_axi_rvalid_2_sn_1;
   assign s_axi_wlast_0_sp_1 = s_axi_wlast_0_sn_1;
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
+  (* SOFT_HLUTNM = "soft_lutpair2" *) 
   LUT4 #(
     .INIT(16'h0400)) 
     \FSM_onehot_gen_axi.write_cs[2]_i_3 
@@ -780,7 +780,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
         .I4(\m_atarget_hot_reg[6] ),
         .I5(mi_bvalid),
         .O(\m_atarget_hot_reg[6]_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
   LUT4 #(
     .INIT(16'h0400)) 
     \gen_axi.s_axi_bvalid_i_i_2 
@@ -2035,7 +2035,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
         .I4(\gen_addr_decoder.addr_decoder_inst/ADDRESS_HIT_2 ),
         .I5(\gen_addr_decoder.addr_decoder_inst/ADDRESS_HIT_0 ),
         .O(aresetn_d_reg));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \m_atarget_hot[0]_i_1 
@@ -2158,7 +2158,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
        (.I0(\gen_no_arbiter.m_amesg_i_reg[77]_0 [38]),
         .I1(\gen_no_arbiter.m_amesg_i_reg[77]_0 [39]),
         .O(\m_atarget_hot[5]_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
   LUT5 #(
     .INIT(32'h00000002)) 
     \m_atarget_hot[6]_i_1 
@@ -2325,15 +2325,14 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
         .I2(\m_atarget_hot[6]_i_17_n_0 ),
         .I3(\m_atarget_hot[6]_i_18_n_0 ),
         .O(\m_atarget_hot[6]_i_8_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000800000000)) 
+  LUT5 #(
+    .INIT(32'h00080000)) 
     \m_atarget_hot[6]_i_9 
        (.I0(\gen_no_arbiter.m_amesg_i_reg[77]_0 [32]),
         .I1(\gen_no_arbiter.m_amesg_i_reg[77]_0 [33]),
-        .I2(\gen_no_arbiter.m_amesg_i_reg[77]_0 [19]),
-        .I3(\gen_no_arbiter.m_amesg_i_reg[77]_0 [18]),
-        .I4(\gen_no_arbiter.m_amesg_i_reg[77]_0 [17]),
-        .I5(\m_atarget_hot[6]_i_7_n_0 ),
+        .I2(\gen_no_arbiter.m_amesg_i_reg[77]_0 [18]),
+        .I3(\gen_no_arbiter.m_amesg_i_reg[77]_0 [19]),
+        .I4(\m_atarget_hot[6]_i_7_n_0 ),
         .O(\m_atarget_hot[6]_i_9_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair13" *) 
   LUT4 #(
@@ -2479,7 +2478,6 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
         .I3(s_axi_bready),
         .I4(m_ready_d_1[0]),
         .O(m_axi_bready[3]));
-  (* SOFT_HLUTNM = "soft_lutpair2" *) 
   LUT5 #(
     .INIT(32'h00000800)) 
     \m_axi_bready[4]_INST_0 
@@ -2489,7 +2487,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
         .I3(s_axi_bready),
         .I4(m_ready_d_1[0]),
         .O(m_axi_bready[4]));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
+  (* SOFT_HLUTNM = "soft_lutpair2" *) 
   LUT5 #(
     .INIT(32'h00000800)) 
     \m_axi_bready[5]_INST_0 
@@ -2554,7 +2552,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
         .I3(s_axi_rready),
         .I4(m_ready_d[0]),
         .O(m_axi_rready[5]));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
   LUT5 #(
     .INIT(32'h00000800)) 
     \m_axi_wvalid[0]_INST_0 
@@ -2573,6 +2571,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
         .I3(s_axi_wvalid),
         .I4(m_ready_d_1[1]),
         .O(m_axi_wvalid[1]));
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
   LUT5 #(
     .INIT(32'h00000800)) 
     \m_axi_wvalid[2]_INST_0 
@@ -2619,7 +2618,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sasd
         .I4(\m_ready_d[1]_i_6_n_0 ),
         .I5(m_ready_d[1]),
         .O(\gen_no_arbiter.grant_rnw_reg_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair2" *) 
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \m_ready_d[1]_i_2__0 
@@ -2782,7 +2781,7 @@ endmodule
 (* C_AXI_BUSER_WIDTH = "1" *) (* C_AXI_DATA_WIDTH = "64" *) (* C_AXI_ID_WIDTH = "4" *) 
 (* C_AXI_PROTOCOL = "0" *) (* C_AXI_RUSER_WIDTH = "1" *) (* C_AXI_SUPPORTS_USER_SIGNALS = "0" *) 
 (* C_AXI_WUSER_WIDTH = "1" *) (* C_CONNECTIVITY_MODE = "0" *) (* C_DEBUG = "1" *) 
-(* C_FAMILY = "artix7" *) (* C_M_AXI_ADDR_WIDTH = "192'b000000000000000000000000000100000000000000000000000000000001011100000000000000000000000000010111000000000000000000000000000011010000000000000000000000000001000000000000000000000000000000010000" *) (* C_M_AXI_BASE_ADDR = "384'b000000000000000011100000000000000000000000000000000000000000000000000000000000001111111111111111001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111110011000000000000000000000000000000000000000000001111111111111111000000000000000000000000000000000000000000000000111111111111111100010000000000000000000000000000" *) 
+(* C_FAMILY = "artix7" *) (* C_M_AXI_ADDR_WIDTH = "192'b000000000000000000000000000100000000000000000000000000000001011100000000000000000000000000010111000000000000000000000000000011100000000000000000000000000001000000000000000000000000000000010000" *) (* C_M_AXI_BASE_ADDR = "384'b000000000000000011100000000000000000000000000000000000000000000000000000000000001111111111111111001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111110011000000000000000000000000000000000000000000001111111111111111000000000000000000000000000000000000000000000000111111111111111100010000000000000000000000000000" *) 
 (* C_M_AXI_READ_CONNECTIVITY = "192'b000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001" *) (* C_M_AXI_READ_ISSUING = "192'b000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001" *) (* C_M_AXI_SECURE = "192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" *) 
 (* C_M_AXI_WRITE_CONNECTIVITY = "192'b000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001" *) (* C_M_AXI_WRITE_ISSUING = "192'b000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001" *) (* C_NUM_ADDR_RANGES = "1" *) 
 (* C_NUM_MASTER_SLOTS = "6" *) (* C_NUM_SLAVE_SLOTS = "1" *) (* C_R_REGISTER = "0" *) 
@@ -2980,7 +2979,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar
   wire \<const0> ;
   wire aclk;
   wire aresetn;
-  wire [12:0]\^m_axi_araddr ;
+  wire [13:0]\^m_axi_araddr ;
   wire [1:0]\^m_axi_arburst ;
   wire [3:0]\^m_axi_arcache ;
   wire [3:0]\^m_axi_arid ;
@@ -2990,7 +2989,7 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar
   wire [5:0]m_axi_arready;
   wire [2:0]\^m_axi_arsize ;
   wire [5:0]m_axi_arvalid;
-  wire [287:253]\^m_axi_awaddr ;
+  wire [287:254]\^m_axi_awaddr ;
   wire [47:40]\^m_axi_awlen ;
   wire [5:0]m_axi_awready;
   wire [5:0]m_axi_awvalid;
@@ -3040,18 +3039,18 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar
   wire [7:0]s_axi_wstrb;
   wire [0:0]s_axi_wvalid;
 
-  assign m_axi_araddr[287:253] = \^m_axi_awaddr [287:253];
-  assign m_axi_araddr[252:240] = \^m_axi_araddr [12:0];
-  assign m_axi_araddr[239:205] = \^m_axi_awaddr [287:253];
-  assign m_axi_araddr[204:192] = \^m_axi_araddr [12:0];
-  assign m_axi_araddr[191:157] = \^m_axi_awaddr [287:253];
-  assign m_axi_araddr[156:144] = \^m_axi_araddr [12:0];
-  assign m_axi_araddr[143:109] = \^m_axi_awaddr [287:253];
-  assign m_axi_araddr[108:96] = \^m_axi_araddr [12:0];
-  assign m_axi_araddr[95:61] = \^m_axi_awaddr [287:253];
-  assign m_axi_araddr[60:48] = \^m_axi_araddr [12:0];
-  assign m_axi_araddr[47:13] = \^m_axi_awaddr [287:253];
-  assign m_axi_araddr[12:0] = \^m_axi_araddr [12:0];
+  assign m_axi_araddr[287:254] = \^m_axi_awaddr [287:254];
+  assign m_axi_araddr[253:240] = \^m_axi_araddr [13:0];
+  assign m_axi_araddr[239:206] = \^m_axi_awaddr [287:254];
+  assign m_axi_araddr[205:192] = \^m_axi_araddr [13:0];
+  assign m_axi_araddr[191:158] = \^m_axi_awaddr [287:254];
+  assign m_axi_araddr[157:144] = \^m_axi_araddr [13:0];
+  assign m_axi_araddr[143:110] = \^m_axi_awaddr [287:254];
+  assign m_axi_araddr[109:96] = \^m_axi_araddr [13:0];
+  assign m_axi_araddr[95:62] = \^m_axi_awaddr [287:254];
+  assign m_axi_araddr[61:48] = \^m_axi_araddr [13:0];
+  assign m_axi_araddr[47:14] = \^m_axi_awaddr [287:254];
+  assign m_axi_araddr[13:0] = \^m_axi_araddr [13:0];
   assign m_axi_arburst[11:10] = \^m_axi_arburst [1:0];
   assign m_axi_arburst[9:8] = \^m_axi_arburst [1:0];
   assign m_axi_arburst[7:6] = \^m_axi_arburst [1:0];
@@ -3130,18 +3129,18 @@ module meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar
   assign m_axi_aruser[2] = \<const0> ;
   assign m_axi_aruser[1] = \<const0> ;
   assign m_axi_aruser[0] = \<const0> ;
-  assign m_axi_awaddr[287:253] = \^m_axi_awaddr [287:253];
-  assign m_axi_awaddr[252:240] = \^m_axi_araddr [12:0];
-  assign m_axi_awaddr[239:205] = \^m_axi_awaddr [287:253];
-  assign m_axi_awaddr[204:192] = \^m_axi_araddr [12:0];
-  assign m_axi_awaddr[191:157] = \^m_axi_awaddr [287:253];
-  assign m_axi_awaddr[156:144] = \^m_axi_araddr [12:0];
-  assign m_axi_awaddr[143:109] = \^m_axi_awaddr [287:253];
-  assign m_axi_awaddr[108:96] = \^m_axi_araddr [12:0];
-  assign m_axi_awaddr[95:61] = \^m_axi_awaddr [287:253];
-  assign m_axi_awaddr[60:48] = \^m_axi_araddr [12:0];
-  assign m_axi_awaddr[47:13] = \^m_axi_awaddr [287:253];
-  assign m_axi_awaddr[12:0] = \^m_axi_araddr [12:0];
+  assign m_axi_awaddr[287:254] = \^m_axi_awaddr [287:254];
+  assign m_axi_awaddr[253:240] = \^m_axi_araddr [13:0];
+  assign m_axi_awaddr[239:206] = \^m_axi_awaddr [287:254];
+  assign m_axi_awaddr[205:192] = \^m_axi_araddr [13:0];
+  assign m_axi_awaddr[191:158] = \^m_axi_awaddr [287:254];
+  assign m_axi_awaddr[157:144] = \^m_axi_araddr [13:0];
+  assign m_axi_awaddr[143:110] = \^m_axi_awaddr [287:254];
+  assign m_axi_awaddr[109:96] = \^m_axi_araddr [13:0];
+  assign m_axi_awaddr[95:62] = \^m_axi_awaddr [287:254];
+  assign m_axi_awaddr[61:48] = \^m_axi_araddr [13:0];
+  assign m_axi_awaddr[47:14] = \^m_axi_awaddr [287:254];
+  assign m_axi_awaddr[13:0] = \^m_axi_araddr [13:0];
   assign m_axi_awburst[11:10] = \^m_axi_arburst [1:0];
   assign m_axi_awburst[9:8] = \^m_axi_arburst [1:0];
   assign m_axi_awburst[7:6] = \^m_axi_arburst [1:0];

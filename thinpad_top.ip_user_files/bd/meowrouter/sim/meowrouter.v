@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Fri Dec 13 01:31:16 2019
+//Date        : Fri Dec 13 02:43:19 2019
 //Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 //Command     : generate_target meowrouter.bd
 //Design      : meowrouter
@@ -456,10 +456,10 @@ module m01_couplers_imp_1P0V77T
     S_AXI_wvalid);
   input M_ACLK;
   input M_ARESETN;
-  output [12:0]M_AXI_araddr;
+  output [47:0]M_AXI_araddr;
   input M_AXI_arready;
   output M_AXI_arvalid;
-  output [12:0]M_AXI_awaddr;
+  output [47:0]M_AXI_awaddr;
   input M_AXI_awready;
   output M_AXI_awvalid;
   output M_AXI_bready;
@@ -513,7 +513,7 @@ module m01_couplers_imp_1P0V77T
 
   wire S_ACLK_1;
   wire S_ARESETN_1;
-  wire [12:0]auto_ds_to_auto_pc_ARADDR;
+  wire [47:0]auto_ds_to_auto_pc_ARADDR;
   wire [1:0]auto_ds_to_auto_pc_ARBURST;
   wire [3:0]auto_ds_to_auto_pc_ARCACHE;
   wire [7:0]auto_ds_to_auto_pc_ARLEN;
@@ -524,7 +524,7 @@ module m01_couplers_imp_1P0V77T
   wire [3:0]auto_ds_to_auto_pc_ARREGION;
   wire [2:0]auto_ds_to_auto_pc_ARSIZE;
   wire auto_ds_to_auto_pc_ARVALID;
-  wire [12:0]auto_ds_to_auto_pc_AWADDR;
+  wire [47:0]auto_ds_to_auto_pc_AWADDR;
   wire [1:0]auto_ds_to_auto_pc_AWBURST;
   wire [3:0]auto_ds_to_auto_pc_AWCACHE;
   wire [7:0]auto_ds_to_auto_pc_AWLEN;
@@ -548,10 +548,10 @@ module m01_couplers_imp_1P0V77T
   wire auto_ds_to_auto_pc_WREADY;
   wire [3:0]auto_ds_to_auto_pc_WSTRB;
   wire auto_ds_to_auto_pc_WVALID;
-  wire [12:0]auto_pc_to_m01_couplers_ARADDR;
+  wire [47:0]auto_pc_to_m01_couplers_ARADDR;
   wire auto_pc_to_m01_couplers_ARREADY;
   wire auto_pc_to_m01_couplers_ARVALID;
-  wire [12:0]auto_pc_to_m01_couplers_AWADDR;
+  wire [47:0]auto_pc_to_m01_couplers_AWADDR;
   wire auto_pc_to_m01_couplers_AWREADY;
   wire auto_pc_to_m01_couplers_AWVALID;
   wire auto_pc_to_m01_couplers_BREADY;
@@ -601,9 +601,9 @@ module m01_couplers_imp_1P0V77T
   wire [7:0]m01_couplers_to_auto_ds_WSTRB;
   wire m01_couplers_to_auto_ds_WVALID;
 
-  assign M_AXI_araddr[12:0] = auto_pc_to_m01_couplers_ARADDR;
+  assign M_AXI_araddr[47:0] = auto_pc_to_m01_couplers_ARADDR;
   assign M_AXI_arvalid = auto_pc_to_m01_couplers_ARVALID;
-  assign M_AXI_awaddr[12:0] = auto_pc_to_m01_couplers_AWADDR;
+  assign M_AXI_awaddr[47:0] = auto_pc_to_m01_couplers_AWADDR;
   assign M_AXI_awvalid = auto_pc_to_m01_couplers_AWVALID;
   assign M_AXI_bready = auto_pc_to_m01_couplers_BREADY;
   assign M_AXI_rready = auto_pc_to_m01_couplers_RREADY;
@@ -692,7 +692,7 @@ module m01_couplers_imp_1P0V77T
         .m_axi_wstrb(auto_ds_to_auto_pc_WSTRB),
         .m_axi_wvalid(auto_ds_to_auto_pc_WVALID),
         .s_axi_aclk(S_ACLK_1),
-        .s_axi_araddr(m01_couplers_to_auto_ds_ARADDR[12:0]),
+        .s_axi_araddr(m01_couplers_to_auto_ds_ARADDR),
         .s_axi_arburst(m01_couplers_to_auto_ds_ARBURST),
         .s_axi_arcache(m01_couplers_to_auto_ds_ARCACHE),
         .s_axi_aresetn(S_ARESETN_1),
@@ -704,7 +704,7 @@ module m01_couplers_imp_1P0V77T
         .s_axi_arregion(m01_couplers_to_auto_ds_ARREGION),
         .s_axi_arsize(m01_couplers_to_auto_ds_ARSIZE),
         .s_axi_arvalid(m01_couplers_to_auto_ds_ARVALID),
-        .s_axi_awaddr(m01_couplers_to_auto_ds_AWADDR[12:0]),
+        .s_axi_awaddr(m01_couplers_to_auto_ds_AWADDR),
         .s_axi_awburst(m01_couplers_to_auto_ds_AWBURST),
         .s_axi_awcache(m01_couplers_to_auto_ds_AWCACHE),
         .s_axi_awlen(m01_couplers_to_auto_ds_AWLEN),
@@ -2141,20 +2141,8 @@ module meowrouter
     RAMEMC_wait,
     RAMEMC_wen,
     SWITCH_tri_i,
-    UART_baudoutn,
-    UART_ctsn,
-    UART_dcdn,
-    UART_ddis,
-    UART_dsrn,
-    UART_dtrn,
-    UART_out1n,
-    UART_out2n,
-    UART_ri,
-    UART_rtsn,
     UART_rxd,
-    UART_rxrdyn,
     UART_txd,
-    UART_txrdyn,
     cpu_clk,
     data_clk,
     data_rx_clk,
@@ -2205,20 +2193,8 @@ module meowrouter
   (* X_INTERFACE_INFO = "xilinx.com:interface:emc:1.0 RAMEMC WAIT" *) input [0:0]RAMEMC_wait;
   (* X_INTERFACE_INFO = "xilinx.com:interface:emc:1.0 RAMEMC WEN" *) output RAMEMC_wen;
   (* X_INTERFACE_INFO = "xilinx.com:interface:gpio:1.0 SWITCH TRI_I" *) input [15:0]SWITCH_tri_i;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART BAUDOUTn" *) output UART_baudoutn;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART CTSn" *) input UART_ctsn;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART DCDn" *) input UART_dcdn;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART DDIS" *) output UART_ddis;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART DSRn" *) input UART_dsrn;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART DTRn" *) output UART_dtrn;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART OUT1n" *) output UART_out1n;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART OUT2n" *) output UART_out2n;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART RI" *) input UART_ri;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART RTSn" *) output UART_rtsn;
   (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART RxD" *) input UART_rxd;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART RXRDYn" *) output UART_rxrdyn;
   (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART TxD" *) output UART_txd;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART TXRDYn" *) output UART_txrdyn;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CPU_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CPU_CLK, CLK_DOMAIN meowrouter_cpu_clk, FREQ_HZ 50000000, INSERT_VIP 0, PHASE 0.000" *) input cpu_clk;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.DATA_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.DATA_CLK, ASSOCIATED_BUSIF data_rx:data_tx, CLK_DOMAIN meowrouter_data_clk, FREQ_HZ 125000000, INSERT_VIP 0, PHASE 0.000" *) input data_clk;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.DATA_RX_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.DATA_RX_CLK, CLK_DOMAIN meowrouter_data_rx_clk, FREQ_HZ 125000000, INSERT_VIP 0, PHASE 0.000" *) input data_rx_clk;
@@ -2314,10 +2290,10 @@ module meowrouter
   wire Primary_M00_AXI_WREADY;
   wire [3:0]Primary_M00_AXI_WSTRB;
   wire Primary_M00_AXI_WVALID;
-  wire [12:0]Primary_M01_AXI_ARADDR;
+  wire [47:0]Primary_M01_AXI_ARADDR;
   wire Primary_M01_AXI_ARREADY;
   wire Primary_M01_AXI_ARVALID;
-  wire [12:0]Primary_M01_AXI_AWADDR;
+  wire [47:0]Primary_M01_AXI_AWADDR;
   wire Primary_M01_AXI_AWREADY;
   wire Primary_M01_AXI_AWVALID;
   wire Primary_M01_AXI_BREADY;
@@ -2436,7 +2412,6 @@ module meowrouter
   wire Router_io_tx_TREADY;
   wire Router_io_tx_TUSER;
   wire Router_io_tx_TVALID;
-  wire UART_ip2intc_irpt;
   wire [31:0]axi_gpio_0_GPIO2_TRI_O;
   wire axi_intc_0_irq;
   wire [13:0]axi_interconnect_0_M02_AXI_ARADDR;
@@ -2470,20 +2445,9 @@ module meowrouter
   wire axi_interconnect_0_M02_AXI_WREADY;
   wire [3:0]axi_interconnect_0_M02_AXI_WSTRB;
   wire axi_interconnect_0_M02_AXI_WVALID;
-  wire axi_uart16550_0_UART_BAUDOUTn;
-  wire axi_uart16550_0_UART_CTSn;
-  wire axi_uart16550_0_UART_DCDn;
-  wire axi_uart16550_0_UART_DDIS;
-  wire axi_uart16550_0_UART_DSRn;
-  wire axi_uart16550_0_UART_DTRn;
-  wire axi_uart16550_0_UART_OUT1n;
-  wire axi_uart16550_0_UART_OUT2n;
-  wire axi_uart16550_0_UART_RI;
-  wire axi_uart16550_0_UART_RTSn;
-  wire axi_uart16550_0_UART_RXRDYn;
-  wire axi_uart16550_0_UART_RxD;
-  wire axi_uart16550_0_UART_TXRDYn;
-  wire axi_uart16550_0_UART_TxD;
+  wire axi_uartlite_0_UART_RxD;
+  wire axi_uartlite_0_UART_TxD;
+  wire axi_uartlite_0_interrupt;
   wire [47:0]axi_vip_0_M_AXI_ARADDR;
   wire [1:0]axi_vip_0_M_AXI_ARBURST;
   wire [3:0]axi_vip_0_M_AXI_ARCACHE;
@@ -2573,20 +2537,8 @@ module meowrouter
   assign RAMEMC_rpn = RAMEMC_EMC_INTF_RPN;
   assign RAMEMC_wen = RAMEMC_EMC_INTF_WEN;
   assign Router_io_tx_TREADY = data_tx_tready;
-  assign UART_baudoutn = axi_uart16550_0_UART_BAUDOUTn;
-  assign UART_ddis = axi_uart16550_0_UART_DDIS;
-  assign UART_dtrn = axi_uart16550_0_UART_DTRn;
-  assign UART_out1n = axi_uart16550_0_UART_OUT1n;
-  assign UART_out2n = axi_uart16550_0_UART_OUT2n;
-  assign UART_rtsn = axi_uart16550_0_UART_RTSn;
-  assign UART_rxrdyn = axi_uart16550_0_UART_RXRDYn;
-  assign UART_txd = axi_uart16550_0_UART_TxD;
-  assign UART_txrdyn = axi_uart16550_0_UART_TXRDYn;
-  assign axi_uart16550_0_UART_CTSn = UART_ctsn;
-  assign axi_uart16550_0_UART_DCDn = UART_dcdn;
-  assign axi_uart16550_0_UART_DSRn = UART_dsrn;
-  assign axi_uart16550_0_UART_RI = UART_ri;
-  assign axi_uart16550_0_UART_RxD = UART_rxd;
+  assign UART_txd = axi_uartlite_0_UART_TxD;
+  assign axi_uartlite_0_UART_RxD = UART_rxd;
   assign clk_1 = cpu_clk;
   assign data_tx_tdata[7:0] = Router_io_tx_TDATA;
   assign data_tx_tlast = Router_io_tx_TLAST;
@@ -2851,7 +2803,7 @@ module meowrouter
         .s_axi_mem_wstrb(Primary_M04_AXI_WSTRB),
         .s_axi_mem_wvalid(Primary_M04_AXI_WVALID));
   meowrouter_axi_intc_0_0 IntCont
-       (.intr(UART_ip2intc_irpt),
+       (.intr(axi_uartlite_0_interrupt),
         .irq(axi_intc_0_irq),
         .s_axi_aclk(clk_1),
         .s_axi_araddr(Primary_M05_AXI_ARADDR[8:0]),
@@ -3152,26 +3104,15 @@ module meowrouter
         .io_tx_tuser(Router_io_tx_TUSER),
         .io_tx_tvalid(Router_io_tx_TVALID),
         .reset(rst_1));
-  meowrouter_axi_uart16550_0_0 UART
-       (.baudoutn(axi_uart16550_0_UART_BAUDOUTn),
-        .ctsn(axi_uart16550_0_UART_CTSn),
-        .dcdn(axi_uart16550_0_UART_DCDn),
-        .ddis(axi_uart16550_0_UART_DDIS),
-        .dsrn(axi_uart16550_0_UART_DSRn),
-        .dtrn(axi_uart16550_0_UART_DTRn),
-        .freeze(1'b0),
-        .ip2intc_irpt(UART_ip2intc_irpt),
-        .out1n(axi_uart16550_0_UART_OUT1n),
-        .out2n(axi_uart16550_0_UART_OUT2n),
-        .rin(axi_uart16550_0_UART_RI),
-        .rtsn(axi_uart16550_0_UART_RTSn),
-        .rxrdyn(axi_uart16550_0_UART_RXRDYn),
+  meowrouter_axi_uartlite_0_0 UART
+       (.interrupt(axi_uartlite_0_interrupt),
+        .rx(axi_uartlite_0_UART_RxD),
         .s_axi_aclk(clk_1),
-        .s_axi_araddr(Primary_M01_AXI_ARADDR),
+        .s_axi_araddr(Primary_M01_AXI_ARADDR[3:0]),
         .s_axi_aresetn(proc_sys_reset_0_peripheral_aresetn),
         .s_axi_arready(Primary_M01_AXI_ARREADY),
         .s_axi_arvalid(Primary_M01_AXI_ARVALID),
-        .s_axi_awaddr(Primary_M01_AXI_AWADDR),
+        .s_axi_awaddr(Primary_M01_AXI_AWADDR[3:0]),
         .s_axi_awready(Primary_M01_AXI_AWREADY),
         .s_axi_awvalid(Primary_M01_AXI_AWVALID),
         .s_axi_bready(Primary_M01_AXI_BREADY),
@@ -3185,9 +3126,7 @@ module meowrouter
         .s_axi_wready(Primary_M01_AXI_WREADY),
         .s_axi_wstrb(Primary_M01_AXI_WSTRB),
         .s_axi_wvalid(Primary_M01_AXI_WVALID),
-        .sin(axi_uart16550_0_UART_RxD),
-        .sout(axi_uart16550_0_UART_TxD),
-        .txrdyn(axi_uart16550_0_UART_TXRDYn));
+        .tx(axi_uartlite_0_UART_TxD));
   meowrouter_vio_0_0 VIO
        (.clk(clk_1),
         .probe_out0(vio_0_probe_out0));
@@ -3414,10 +3353,10 @@ module meowrouter_axi_interconnect_0_0
   output M00_AXI_wvalid;
   input M01_ACLK;
   input M01_ARESETN;
-  output [12:0]M01_AXI_araddr;
+  output [47:0]M01_AXI_araddr;
   input M01_AXI_arready;
   output M01_AXI_arvalid;
-  output [12:0]M01_AXI_awaddr;
+  output [47:0]M01_AXI_awaddr;
   input M01_AXI_awready;
   output M01_AXI_awvalid;
   output M01_AXI_bready;
@@ -3659,10 +3598,10 @@ module meowrouter_axi_interconnect_0_0
   wire m00_couplers_to_Primary_WREADY;
   wire [3:0]m00_couplers_to_Primary_WSTRB;
   wire m00_couplers_to_Primary_WVALID;
-  wire [12:0]m01_couplers_to_Primary_ARADDR;
+  wire [47:0]m01_couplers_to_Primary_ARADDR;
   wire m01_couplers_to_Primary_ARREADY;
   wire m01_couplers_to_Primary_ARVALID;
-  wire [12:0]m01_couplers_to_Primary_AWADDR;
+  wire [47:0]m01_couplers_to_Primary_AWADDR;
   wire m01_couplers_to_Primary_AWREADY;
   wire m01_couplers_to_Primary_AWVALID;
   wire m01_couplers_to_Primary_BREADY;
@@ -4047,9 +3986,9 @@ module meowrouter_axi_interconnect_0_0
   assign M00_AXI_wvalid = m00_couplers_to_Primary_WVALID;
   assign M01_ACLK_1 = M01_ACLK;
   assign M01_ARESETN_1 = M01_ARESETN;
-  assign M01_AXI_araddr[12:0] = m01_couplers_to_Primary_ARADDR;
+  assign M01_AXI_araddr[47:0] = m01_couplers_to_Primary_ARADDR;
   assign M01_AXI_arvalid = m01_couplers_to_Primary_ARVALID;
-  assign M01_AXI_awaddr[12:0] = m01_couplers_to_Primary_AWADDR;
+  assign M01_AXI_awaddr[47:0] = m01_couplers_to_Primary_AWADDR;
   assign M01_AXI_awvalid = m01_couplers_to_Primary_AWVALID;
   assign M01_AXI_bready = m01_couplers_to_Primary_BREADY;
   assign M01_AXI_rready = m01_couplers_to_Primary_RREADY;

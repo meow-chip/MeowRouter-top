@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Fri Dec 13 01:31:16 2019
+//Date        : Fri Dec 13 20:17:53 2019
 //Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 //Command     : generate_target meowrouter_wrapper.bd
 //Design      : meowrouter_wrapper
@@ -42,20 +42,8 @@ module meowrouter_wrapper
     RAMEMC_wait,
     RAMEMC_wen,
     SWITCH_tri_i,
-    UART_baudoutn,
-    UART_ctsn,
-    UART_dcdn,
-    UART_ddis,
-    UART_dsrn,
-    UART_dtrn,
-    UART_out1n,
-    UART_out2n,
-    UART_ri,
-    UART_rtsn,
     UART_rxd,
-    UART_rxrdyn,
     UART_txd,
-    UART_txrdyn,
     cpu_clk,
     data_clk,
     data_rx_clk,
@@ -102,20 +90,8 @@ module meowrouter_wrapper
   input [0:0]RAMEMC_wait;
   output RAMEMC_wen;
   input [15:0]SWITCH_tri_i;
-  output UART_baudoutn;
-  input UART_ctsn;
-  input UART_dcdn;
-  output UART_ddis;
-  input UART_dsrn;
-  output UART_dtrn;
-  output UART_out1n;
-  output UART_out2n;
-  input UART_ri;
-  output UART_rtsn;
   input UART_rxd;
-  output UART_rxrdyn;
   output UART_txd;
-  output UART_txrdyn;
   input cpu_clk;
   input data_clk;
   input data_rx_clk;
@@ -481,20 +457,8 @@ module meowrouter_wrapper
   wire [0:0]RAMEMC_wait;
   wire RAMEMC_wen;
   wire [15:0]SWITCH_tri_i;
-  wire UART_baudoutn;
-  wire UART_ctsn;
-  wire UART_dcdn;
-  wire UART_ddis;
-  wire UART_dsrn;
-  wire UART_dtrn;
-  wire UART_out1n;
-  wire UART_out2n;
-  wire UART_ri;
-  wire UART_rtsn;
   wire UART_rxd;
-  wire UART_rxrdyn;
   wire UART_txd;
-  wire UART_txrdyn;
   wire cpu_clk;
   wire data_clk;
   wire data_rx_clk;
@@ -947,20 +911,8 @@ module meowrouter_wrapper
         .RAMEMC_wait(RAMEMC_wait),
         .RAMEMC_wen(RAMEMC_wen),
         .SWITCH_tri_i(SWITCH_tri_i),
-        .UART_baudoutn(UART_baudoutn),
-        .UART_ctsn(UART_ctsn),
-        .UART_dcdn(UART_dcdn),
-        .UART_ddis(UART_ddis),
-        .UART_dsrn(UART_dsrn),
-        .UART_dtrn(UART_dtrn),
-        .UART_out1n(UART_out1n),
-        .UART_out2n(UART_out2n),
-        .UART_ri(UART_ri),
-        .UART_rtsn(UART_rtsn),
         .UART_rxd(UART_rxd),
-        .UART_rxrdyn(UART_rxrdyn),
         .UART_txd(UART_txd),
-        .UART_txrdyn(UART_txrdyn),
         .cpu_clk(cpu_clk),
         .data_clk(data_clk),
         .data_rx_clk(data_rx_clk),
