@@ -19,15 +19,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="30741667000fs"></ZoomStartTime>
-      <ZoomEndTime time="52391667001fs"></ZoomEndTime>
-      <Cursor1Time time="42141667000fs"></Cursor1Time>
+      <ZoomStartTime time="126184191000fs"></ZoomStartTime>
+      <ZoomEndTime time="126262791001fs"></ZoomEndTime>
+      <Cursor1Time time="126199691000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="188"></NameColumnWidth>
-      <ValueColumnWidth column_width="114"></ValueColumnWidth>
+      <ValueColumnWidth column_width="74"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="52" />
+   <WVObjectSize size="55" />
    <wvobject fp_name="/tb/clk_50M" type="logic">
       <obj_property name="ElementShortName">clk_50M</obj_property>
       <obj_property name="ObjectShortName">clk_50M</obj_property>
@@ -92,18 +92,6 @@
       <obj_property name="ElementShortName">eth_rgmii_rxc</obj_property>
       <obj_property name="ObjectShortName">eth_rgmii_rxc</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/BASE_RAM_INIT_FILE" type="array">
-      <obj_property name="ElementShortName">BASE_RAM_INIT_FILE[103:0]</obj_property>
-      <obj_property name="ObjectShortName">BASE_RAM_INIT_FILE[103:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/EXT_RAM_INIT_FILE" type="array">
-      <obj_property name="ElementShortName">EXT_RAM_INIT_FILE[103:0]</obj_property>
-      <obj_property name="ObjectShortName">EXT_RAM_INIT_FILE[103:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/FLASH_INIT_FILE" type="array">
-      <obj_property name="ElementShortName">FLASH_INIT_FILE[335:0]</obj_property>
-      <obj_property name="ObjectShortName">FLASH_INIT_FILE[335:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="group628" type="group">
       <obj_property name="label">IF</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -123,26 +111,6 @@
    <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/io_pc" type="array">
       <obj_property name="ElementShortName">io_pc[63:0]</obj_property>
       <obj_property name="ObjectShortName">io_pc[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_ARADDR" type="array">
-      <obj_property name="ElementShortName">io_axi_ARADDR[47:0]</obj_property>
-      <obj_property name="ObjectShortName">io_axi_ARADDR[47:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_ARVALID" type="logic">
-      <obj_property name="ElementShortName">io_axi_ARVALID</obj_property>
-      <obj_property name="ObjectShortName">io_axi_ARVALID</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_RDATA" type="array">
-      <obj_property name="ElementShortName">io_axi_RDATA[63:0]</obj_property>
-      <obj_property name="ObjectShortName">io_axi_RDATA[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_RVALID" type="logic">
-      <obj_property name="ElementShortName">io_axi_RVALID</obj_property>
-      <obj_property name="ObjectShortName">io_axi_RVALID</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_RLAST" type="logic">
-      <obj_property name="ElementShortName">io_axi_RLAST</obj_property>
-      <obj_property name="ObjectShortName">io_axi_RLAST</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/dut/mr/FlashEMC/s_axi_mem_arvalid" type="logic">
       <obj_property name="ElementShortName">s_axi_mem_arvalid</obj_property>
@@ -172,18 +140,6 @@
       <obj_property name="ElementShortName">br_req_extype[3:0]</obj_property>
       <obj_property name="ObjectShortName">br_req_extype[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/EthBuf/doutb" type="array">
-      <obj_property name="ElementShortName">doutb[7:0]</obj_property>
-      <obj_property name="ObjectShortName">doutb[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/EthBuf/dinb" type="array">
-      <obj_property name="ElementShortName">dinb[7:0]</obj_property>
-      <obj_property name="ObjectShortName">dinb[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/mr/EthBuf/addrb" type="array">
-      <obj_property name="ElementShortName">addrb[13:0]</obj_property>
-      <obj_property name="ObjectShortName">addrb[13:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/tb/dut/mr/Router/inst/router/adapter/state" type="array">
       <obj_property name="ElementShortName">state[2:0]</obj_property>
       <obj_property name="ObjectShortName">state[2:0]</obj_property>
@@ -191,6 +147,10 @@
    <wvobject fp_name="/tb/dut/mr/Router/inst/router/adapter/transferState" type="array">
       <obj_property name="ElementShortName">transferState[2:0]</obj_property>
       <obj_property name="ObjectShortName">transferState[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/adapter/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/dut/mr/Router/inst/router/adapter/head" type="array">
       <obj_property name="ElementShortName">head[2:0]</obj_property>
@@ -216,36 +176,88 @@
       <obj_property name="ElementShortName">douta[31:0]</obj_property>
       <obj_property name="ObjectShortName">douta[31:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/tb/dut/mr/EthBuf/inst/dina" type="array">
+      <obj_property name="ElementShortName">dina[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dina[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/EthBuf/inst/ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
    <wvobject fp_name="/tb/dut/mr/EthBuf/inst/wea" type="array">
       <obj_property name="ElementShortName">wea[3:0]</obj_property>
       <obj_property name="ObjectShortName">wea[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_awvalid" type="logic">
-      <obj_property name="ElementShortName">s_axi_awvalid</obj_property>
-      <obj_property name="ObjectShortName">s_axi_awvalid</obj_property>
+   <wvobject fp_name="/tb/dut/mr/EthBufCtrl/s_axi_rvalid" type="logic">
+      <obj_property name="ElementShortName">s_axi_rvalid</obj_property>
+      <obj_property name="ObjectShortName">s_axi_rvalid</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_awaddr" type="array">
-      <obj_property name="ElementShortName">s_axi_awaddr[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axi_awaddr[3:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/EthBufCtrl/s_axi_rdata" type="array">
+      <obj_property name="ElementShortName">s_axi_rdata[31:0]</obj_property>
+      <obj_property name="ObjectShortName">s_axi_rdata[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/CPU/inst/l2/axi_WDATA" type="array">
-      <obj_property name="ElementShortName">axi_WDATA[63:0]</obj_property>
-      <obj_property name="ObjectShortName">axi_WDATA[63:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/EthBuf/addrb" type="array">
+      <obj_property name="ElementShortName">addrb[13:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[13:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_awaddr" type="array">
-      <obj_property name="ElementShortName">s_axi_awaddr[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axi_awaddr[3:0]</obj_property>
+   <wvobject fp_name="/tb/dut/mr/EthBuf/doutb" type="array">
+      <obj_property name="ElementShortName">doutb[7:0]</obj_property>
+      <obj_property name="ObjectShortName">doutb[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/s_axi_awvalid" type="logic">
-      <obj_property name="ElementShortName">s_axi_awvalid</obj_property>
-      <obj_property name="ObjectShortName">s_axi_awvalid</obj_property>
+   <wvobject fp_name="/tb/dut/mr/EthBuf/dinb" type="array">
+      <obj_property name="ElementShortName">dinb[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dinb[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/rx" type="logic">
-      <obj_property name="ElementShortName">rx</obj_property>
-      <obj_property name="ObjectShortName">rx</obj_property>
+   <wvobject fp_name="/tb/dut/mr/EthBuf/web" type="array">
+      <obj_property name="ElementShortName">web[0:0]</obj_property>
+      <obj_property name="ObjectShortName">web[0:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/mr/UART/tx" type="logic">
-      <obj_property name="ElementShortName">tx</obj_property>
-      <obj_property name="ObjectShortName">tx</obj_property>
+   <wvobject fp_name="/tb/dut/mr/EthBuf/addrb" type="array">
+      <obj_property name="ElementShortName">addrb[13:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/adapter/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/adapter/totCnt" type="array">
+      <obj_property name="ElementShortName">totCnt[10:0]</obj_property>
+      <obj_property name="ObjectShortName">totCnt[10:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/adapter/cnt" type="array">
+      <obj_property name="ElementShortName">cnt[10:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt[10:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/encoder/io_writer_en" type="logic">
+      <obj_property name="ElementShortName">io_writer_en</obj_property>
+      <obj_property name="ObjectShortName">io_writer_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/encoder/io_writer_full" type="logic">
+      <obj_property name="ElementShortName">io_writer_full</obj_property>
+      <obj_property name="ObjectShortName">io_writer_full</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/io_tx_tready" type="logic">
+      <obj_property name="ElementShortName">io_tx_tready</obj_property>
+      <obj_property name="ObjectShortName">io_tx_tready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/io_tx_tdata" type="array">
+      <obj_property name="ElementShortName">io_tx_tdata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">io_tx_tdata[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/io_tx_tlast" type="logic">
+      <obj_property name="ElementShortName">io_tx_tlast</obj_property>
+      <obj_property name="ObjectShortName">io_tx_tlast</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/encoder/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/io_pc" type="array">
+      <obj_property name="ElementShortName">io_pc[63:0]</obj_property>
+      <obj_property name="ObjectShortName">io_pc[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/mcycle" type="array">
+      <obj_property name="ElementShortName">mcycle[63:0]</obj_property>
+      <obj_property name="ObjectShortName">mcycle[63:0]</obj_property>
    </wvobject>
 </wave_config>

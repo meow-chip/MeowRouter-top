@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Tue Dec 10 19:00:46 2019
+// Date        : Sat Dec 14 03:32:36 2019
 // Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
-//               c:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_axi_intc_0_0/meowrouter_axi_intc_0_0_sim_netlist.v
+//               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_axi_intc_0_0/meowrouter_axi_intc_0_0_sim_netlist.v
 // Design      : meowrouter_axi_intc_0_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -36,9 +36,9 @@ module meowrouter_axi_intc_0_0
     s_axi_rready,
     intr,
     irq);
-  (* x_interface_info = "xilinx.com:signal:clock:1.0 s_axi_aclk CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME s_axi_aclk, ASSOCIATED_BUSIF s_axi, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, INSERT_VIP 0" *) input s_axi_aclk;
+  (* x_interface_info = "xilinx.com:signal:clock:1.0 s_axi_aclk CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME s_axi_aclk, ASSOCIATED_BUSIF s_axi, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 70000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, INSERT_VIP 0" *) input s_axi_aclk;
   (* x_interface_info = "xilinx.com:signal:reset:1.0 s_resetn RST" *) (* x_interface_parameter = "XIL_INTERFACENAME s_resetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *) input s_axi_aresetn;
-  (* x_interface_info = "xilinx.com:interface:aximm:1.0 s_axi AWADDR" *) (* x_interface_parameter = "XIL_INTERFACENAME s_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 9, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input [8:0]s_axi_awaddr;
+  (* x_interface_info = "xilinx.com:interface:aximm:1.0 s_axi AWADDR" *) (* x_interface_parameter = "XIL_INTERFACENAME s_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 9, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 0, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input [8:0]s_axi_awaddr;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 s_axi AWVALID" *) input s_axi_awvalid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 s_axi AWREADY" *) output s_axi_awready;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 s_axi WDATA" *) input [31:0]s_axi_wdata;
@@ -55,7 +55,7 @@ module meowrouter_axi_intc_0_0
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 s_axi RRESP" *) output [1:0]s_axi_rresp;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 s_axi RVALID" *) output s_axi_rvalid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 s_axi RREADY" *) input s_axi_rready;
-  (* x_interface_info = "xilinx.com:signal:interrupt:1.0 interrupt_input INTERRUPT" *) (* x_interface_parameter = "XIL_INTERFACENAME interrupt_input, SENSITIVITY LEVEL_HIGH, PortWidth 1" *) input [0:0]intr;
+  (* x_interface_info = "xilinx.com:signal:interrupt:1.0 interrupt_input INTERRUPT" *) (* x_interface_parameter = "XIL_INTERFACENAME interrupt_input, SENSITIVITY EDGE_RISING, PortWidth 1" *) input [0:0]intr;
   (* x_interface_info = "xilinx.com:signal:interrupt:1.0 interrupt.irq INTERRUPT" *) (* x_interface_parameter = "XIL_INTERFACENAME interrupt.irq, SENSITIVITY LEVEL_HIGH, PortWidth 1" *) output irq;
 
   wire [0:0]intr;
@@ -100,7 +100,7 @@ module meowrouter_axi_intc_0_0
   (* C_IRQ_IS_LEVEL = "1" *) 
   (* C_IVAR_RESET_VALUE = "64'b0000000000000000000000000000000000000000000000000000000000010000" *) 
   (* C_KIND_OF_EDGE = "-1" *) 
-  (* C_KIND_OF_INTR = "-2" *) 
+  (* C_KIND_OF_INTR = "-1" *) 
   (* C_KIND_OF_LVL = "-1" *) 
   (* C_MB_CLK_NOT_CONNECTED = "1" *) 
   (* C_NUM_INTR_INPUTS = "1" *) 
@@ -840,7 +840,7 @@ endmodule
 (* C_HAS_ILR = "0" *) (* C_HAS_IPR = "1" *) (* C_HAS_IVR = "1" *) 
 (* C_HAS_SIE = "1" *) (* C_INSTANCE = "meowrouter_axi_intc_0_0" *) (* C_IRQ_ACTIVE = "1'b1" *) 
 (* C_IRQ_IS_LEVEL = "1" *) (* C_IVAR_RESET_VALUE = "64'b0000000000000000000000000000000000000000000000000000000000010000" *) (* C_KIND_OF_EDGE = "-1" *) 
-(* C_KIND_OF_INTR = "-2" *) (* C_KIND_OF_LVL = "-1" *) (* C_MB_CLK_NOT_CONNECTED = "1" *) 
+(* C_KIND_OF_INTR = "-1" *) (* C_KIND_OF_LVL = "-1" *) (* C_MB_CLK_NOT_CONNECTED = "1" *) 
 (* C_NUM_INTR_INPUTS = "1" *) (* C_NUM_SW_INTR = "0" *) (* C_NUM_SYNC_FF = "2" *) 
 (* C_S_AXI_ADDR_WIDTH = "9" *) (* C_S_AXI_DATA_WIDTH = "32" *) (* ORIG_REF_NAME = "axi_intc" *) 
 (* hdl = "VHDL" *) (* imp_netlist = "TRUE" *) (* ip_group = "LOGICORE" *) 
@@ -1305,8 +1305,8 @@ endmodule
 
 (* ORIG_REF_NAME = "intc_core" *) 
 module meowrouter_axi_intc_0_0_intc_core
-   (ipr,
-    p_0_in,
+   (p_0_in,
+    ipr,
     ivr,
     \REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]_0 ,
     p_0_in_0,
@@ -1316,6 +1316,7 @@ module meowrouter_axi_intc_0_0_intc_core
     mer,
     irq,
     ier,
+    intr,
     s_axi_aclk,
     \REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]_1 ,
     \mer_int_reg[1]_0 ,
@@ -1326,10 +1327,9 @@ module meowrouter_axi_intc_0_0_intc_core
     s_axi_wdata,
     Bus_RNW_reg,
     p_19_in,
-    intr,
     p_17_in);
-  output [0:0]ipr;
   output p_0_in;
+  output [0:0]ipr;
   output ivr;
   output \REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]_0 ;
   output p_0_in_0;
@@ -1339,6 +1339,7 @@ module meowrouter_axi_intc_0_0_intc_core
   output mer;
   output irq;
   output ier;
+  input [0:0]intr;
   input s_axi_aclk;
   input \REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]_1 ;
   input \mer_int_reg[1]_0 ;
@@ -1349,12 +1350,11 @@ module meowrouter_axi_intc_0_0_intc_core
   input [0:0]s_axi_wdata;
   input Bus_RNW_reg;
   input p_19_in;
-  input [0:0]intr;
   input p_17_in;
 
   wire Bus_RNW_reg;
   wire \CIE_GEN.CIE_BIT_GEN[0].cie_reg[0]_0 ;
-  wire \INTR_DETECT_GEN[0].LVL_DETECT_GEN.hw_intr[0]_i_1_n_0 ;
+  wire \INTR_DETECT_GEN[0].EDGE_DETECT_GEN.hw_intr[0]_i_1_n_0 ;
   wire \IPR_GEN.ipr[0]_i_1_n_0 ;
   wire \IRQ_LEVEL_GEN.IRQ_LEVEL_NORMAL_ON_AXI_CLK_GEN.Irq_i_1_n_0 ;
   wire \IVR_GEN.ivr[0]_i_1_n_0 ;
@@ -1369,6 +1369,7 @@ module meowrouter_axi_intc_0_0_intc_core
   wire hw_intr;
   wire ier;
   wire [0:0]intr;
+  wire intr_d1;
   wire [0:0]ipr;
   wire irq;
   wire isr;
@@ -1391,21 +1392,27 @@ module meowrouter_axi_intc_0_0_intc_core
         .D(\CIE_GEN.CIE_BIT_GEN[0].cie_reg[0]_0 ),
         .Q(cie),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair18" *) 
-  LUT4 #(
-    .INIT(16'h00E0)) 
-    \INTR_DETECT_GEN[0].LVL_DETECT_GEN.hw_intr[0]_i_1 
+  LUT5 #(
+    .INIT(32'h0000AE00)) 
+    \INTR_DETECT_GEN[0].EDGE_DETECT_GEN.hw_intr[0]_i_1 
        (.I0(hw_intr),
         .I1(intr),
-        .I2(s_axi_aresetn),
-        .I3(\REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]_0 ),
-        .O(\INTR_DETECT_GEN[0].LVL_DETECT_GEN.hw_intr[0]_i_1_n_0 ));
-  FDRE \INTR_DETECT_GEN[0].LVL_DETECT_GEN.hw_intr_reg[0] 
+        .I2(intr_d1),
+        .I3(s_axi_aresetn),
+        .I4(\REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]_0 ),
+        .O(\INTR_DETECT_GEN[0].EDGE_DETECT_GEN.hw_intr[0]_i_1_n_0 ));
+  FDRE \INTR_DETECT_GEN[0].EDGE_DETECT_GEN.hw_intr_reg[0] 
        (.C(s_axi_aclk),
         .CE(1'b1),
-        .D(\INTR_DETECT_GEN[0].LVL_DETECT_GEN.hw_intr[0]_i_1_n_0 ),
+        .D(\INTR_DETECT_GEN[0].EDGE_DETECT_GEN.hw_intr[0]_i_1_n_0 ),
         .Q(hw_intr),
         .R(1'b0));
+  FDRE \INTR_DETECT_GEN[0].EDGE_DETECT_GEN.intr_d1_reg 
+       (.C(s_axi_aclk),
+        .CE(1'b1),
+        .D(intr),
+        .Q(intr_d1),
+        .R(p_0_in));
   LUT2 #(
     .INIT(4'h8)) 
     \IPR_GEN.ipr[0]_i_1 
@@ -1418,7 +1425,7 @@ module meowrouter_axi_intc_0_0_intc_core
         .D(\IPR_GEN.ipr[0]_i_1_n_0 ),
         .Q(ipr),
         .R(p_0_in));
-  (* SOFT_HLUTNM = "soft_lutpair19" *) 
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT4 #(
     .INIT(16'hE000)) 
     \IRQ_LEVEL_GEN.IRQ_LEVEL_NORMAL_ON_AXI_CLK_GEN.Irq_i_1 
@@ -1461,7 +1468,7 @@ module meowrouter_axi_intc_0_0_intc_core
         .I4(s_axi_wdata),
         .I5(\REG_GEN[0].ier[0]_i_2_n_0 ),
         .O(\REG_GEN[0].ier[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair19" *) 
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT2 #(
     .INIT(4'hB)) 
     \REG_GEN[0].ier[0]_i_2 
@@ -1474,7 +1481,6 @@ module meowrouter_axi_intc_0_0_intc_core
         .D(\REG_GEN[0].ier[0]_i_1_n_0 ),
         .Q(ier),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT3 #(
     .INIT(8'h08)) 
     \REG_GEN[0].isr[0]_i_1 

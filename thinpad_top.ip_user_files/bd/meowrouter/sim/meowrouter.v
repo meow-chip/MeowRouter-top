@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Fri Dec 13 02:43:19 2019
+//Date        : Sun Dec 15 21:10:20 2019
 //Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 //Command     : generate_target meowrouter.bd
 //Design      : meowrouter
@@ -2195,7 +2195,7 @@ module meowrouter
   (* X_INTERFACE_INFO = "xilinx.com:interface:gpio:1.0 SWITCH TRI_I" *) input [15:0]SWITCH_tri_i;
   (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART RxD" *) input UART_rxd;
   (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 UART TxD" *) output UART_txd;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CPU_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CPU_CLK, CLK_DOMAIN meowrouter_cpu_clk, FREQ_HZ 50000000, INSERT_VIP 0, PHASE 0.000" *) input cpu_clk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.CPU_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.CPU_CLK, CLK_DOMAIN meowrouter_cpu_clk, FREQ_HZ 70000000, INSERT_VIP 0, PHASE 0.000" *) input cpu_clk;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.DATA_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.DATA_CLK, ASSOCIATED_BUSIF data_rx:data_tx, CLK_DOMAIN meowrouter_data_clk, FREQ_HZ 125000000, INSERT_VIP 0, PHASE 0.000" *) input data_clk;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.DATA_RX_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.DATA_RX_CLK, CLK_DOMAIN meowrouter_data_rx_clk, FREQ_HZ 125000000, INSERT_VIP 0, PHASE 0.000" *) input data_rx_clk;
   (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 data_rx TDATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME data_rx, CLK_DOMAIN meowrouter_data_clk, FREQ_HZ 125000000, HAS_TKEEP 0, HAS_TLAST 1, HAS_TREADY 0, HAS_TSTRB 0, INSERT_VIP 0, LAYERED_METADATA undef, PHASE 0.000, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0" *) input [7:0]data_rx_tdata;
@@ -2705,7 +2705,6 @@ module meowrouter
         .douta(EthBuf_douta),
         .doutb(EthBuf_doutb),
         .ena(EthBufCtrl_bram_en_a),
-        .enb(1'b0),
         .rsta(EthBufCtrl_bram_rst_a),
         .wea(EthBufCtrl_bram_we_a),
         .web(Router_io_buf_we));

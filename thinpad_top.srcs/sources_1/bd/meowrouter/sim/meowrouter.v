@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-//Date        : Sat Dec 14 03:31:33 2019
+//Date        : Tue Dec 17 18:03:22 2019
 //Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 //Command     : generate_target meowrouter.bd
 //Design      : meowrouter
@@ -2705,7 +2705,6 @@ module meowrouter
         .douta(EthBuf_douta),
         .doutb(EthBuf_doutb),
         .ena(EthBufCtrl_bram_en_a),
-        .enb(1'b0),
         .rsta(EthBufCtrl_bram_rst_a),
         .wea(EthBufCtrl_bram_we_a),
         .web(Router_io_buf_we));

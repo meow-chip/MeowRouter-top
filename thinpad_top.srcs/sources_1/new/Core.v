@@ -1015,7 +1015,7 @@ module L2Cache(
   wire [35:0] _GEN_603; // @[L2.scala 572:43]
   wire [35:0] _GEN_708; // @[L2.scala 546:36]
   wire [35:0] _GEN_786; // @[L2.scala 44:7]
-  wire [1:0] _GEN_1517; // @[L2.scala 44:7]
+  wire [1:0] _GEN_1518; // @[L2.scala 44:7]
   wire [35:0] _GEN_790; // @[L2.scala 44:7]
   wire [35:0] _GEN_794; // @[L2.scala 44:7]
   wire [35:0] _GEN_922; // @[L2.scala 700:55]
@@ -1194,11 +1194,11 @@ module L2Cache(
   wire  hit; // @[L2.scala 272:55]
   wire [3:0] _T_72; // @[L2.scala 274:79]
   wire [2:0] _T_73; // @[L2.scala 274:79]
-  wire [2:0] _GEN_1521; // @[L2.scala 274:79]
-  wire [2:0] _T_79; // @[L2.scala 274:79]
   wire [2:0] _GEN_1522; // @[L2.scala 274:79]
-  wire [2:0] _T_85; // @[L2.scala 274:79]
+  wire [2:0] _T_79; // @[L2.scala 274:79]
   wire [2:0] _GEN_1523; // @[L2.scala 274:79]
+  wire [2:0] _T_85; // @[L2.scala 274:79]
+  wire [2:0] _GEN_1524; // @[L2.scala 274:79]
   wire [2:0] hitCount; // @[L2.scala 274:79]
   wire  _T_91; // @[L2.scala 275:19]
   wire  _T_93; // @[L2.scala 275:9]
@@ -1254,7 +1254,7 @@ module L2Cache(
   wire  _T_187; // @[L2.scala 367:19]
   wire [63:0] _T_190; // @[L2.scala 374:51]
   wire [63:0] _T_191; // @[L2.scala 374:51]
-  wire  _GEN_1524; // @[L2.scala 375:30]
+  wire  _GEN_1525; // @[L2.scala 375:30]
   wire  _GEN_70; // @[L2.scala 375:30]
   wire  _GEN_71; // @[L2.scala 375:30]
   wire  _GEN_74; // @[L2.scala 377:32]
@@ -1353,13 +1353,13 @@ module L2Cache(
   wire [127:0] _GEN_499; // @[L2.scala 579:37]
   wire [127:0] _GEN_500; // @[L2.scala 579:37]
   wire [127:0] _GEN_501; // @[L2.scala 579:37]
-  wire  _GEN_1528; // @[L2.scala 580:38]
-  wire  _GEN_502; // @[L2.scala 580:38]
   wire  _GEN_1529; // @[L2.scala 580:38]
-  wire  _GEN_503; // @[L2.scala 580:38]
+  wire  _GEN_502; // @[L2.scala 580:38]
   wire  _GEN_1530; // @[L2.scala 580:38]
-  wire  _GEN_504; // @[L2.scala 580:38]
+  wire  _GEN_503; // @[L2.scala 580:38]
   wire  _GEN_1531; // @[L2.scala 580:38]
+  wire  _GEN_504; // @[L2.scala 580:38]
+  wire  _GEN_1532; // @[L2.scala 580:38]
   wire  _GEN_505; // @[L2.scala 580:38]
   wire  _GEN_532; // @[L2.scala 576:29]
   wire  _GEN_533; // @[L2.scala 576:29]
@@ -1524,7 +1524,7 @@ module L2Cache(
   wire  _T_459; // @[L2.scala 742:27]
   wire  _T_461; // @[L2.scala 742:15]
   wire  _T_462; // @[L2.scala 742:15]
-  wire  _GEN_1540; // @[L2.scala 761:27]
+  wire  _GEN_1541; // @[L2.scala 761:27]
   wire  _GEN_1292; // @[L2.scala 761:27]
   wire  _GEN_1293; // @[L2.scala 761:27]
   wire  _T_464; // @[L2.scala 310:14]
@@ -1543,139 +1543,139 @@ module L2Cache(
   wire  _GEN_1316; // @[L2.scala 740:49]
   wire  _T_475; // @[L2.scala 774:30]
   wire  _T_476; // @[L2.scala 774:27]
-  wire  _GEN_1321; // @[L2.scala 783:25]
+  wire  _GEN_1321; // @[L2.scala 784:25]
   wire [47:0] _GEN_1324; // @[L2.scala 774:50]
   wire [1:0] _GEN_1325; // @[L2.scala 774:50]
   wire [3:0] _GEN_1326; // @[L2.scala 774:50]
-  wire  _GEN_1329; // @[L2.scala 774:50]
-  wire  _GEN_1340; // @[L2.scala 739:45]
-  reg  bufptrs_0; // @[L2.scala 793:24]
+  wire [2:0] _GEN_1328; // @[L2.scala 774:50]
+  wire  _GEN_1330; // @[L2.scala 774:50]
+  wire  _GEN_1341; // @[L2.scala 739:45]
+  reg  bufptrs_0; // @[L2.scala 794:24]
   reg [31:0] _RAND_80;
-  reg  bufptrs_1; // @[L2.scala 793:24]
+  reg  bufptrs_1; // @[L2.scala 794:24]
   reg [31:0] _RAND_81;
-  wire  _T_484; // @[L2.scala 801:18]
+  wire  _T_484; // @[L2.scala 802:18]
   wire  _T_485;
-  wire  _GEN_1342; // @[L2.scala 803:27]
-  wire  _GEN_1344; // @[L2.scala 805:13]
-  wire  ptr; // @[L2.scala 803:27]
-  wire  _GEN_1541; // @[L2.scala 811:26]
-  wire  _GEN_1542; // @[L2.scala 811:26]
-  wire  _T_492; // @[L2.scala 812:31]
-  wire  _GEN_1352; // @[L2.scala 815:27]
-  wire  _GEN_1353; // @[L2.scala 815:27]
-  wire  _T_495; // @[L2.scala 818:13]
-  wire  _T_496; // @[L2.scala 818:13]
-  wire  _GEN_1365; // @[L2.scala 801:45]
-  wire  _GEN_1366; // @[L2.scala 801:45]
-  wire  _GEN_1377; // @[L2.scala 797:20]
-  reg  wbPtr; // @[L2.scala 827:22]
+  wire  _GEN_1343; // @[L2.scala 804:27]
+  wire  _GEN_1345; // @[L2.scala 806:13]
+  wire  ptr; // @[L2.scala 804:27]
+  wire  _GEN_1542; // @[L2.scala 812:26]
+  wire  _GEN_1543; // @[L2.scala 812:26]
+  wire  _T_492; // @[L2.scala 813:31]
+  wire  _GEN_1353; // @[L2.scala 816:27]
+  wire  _GEN_1354; // @[L2.scala 816:27]
+  wire  _T_495; // @[L2.scala 819:13]
+  wire  _T_496; // @[L2.scala 819:13]
+  wire  _GEN_1366; // @[L2.scala 802:45]
+  wire  _GEN_1367; // @[L2.scala 802:45]
+  wire  _GEN_1378; // @[L2.scala 798:20]
+  reg  wbPtr; // @[L2.scala 828:22]
   reg [31:0] _RAND_82;
-  wire [43:0] _GEN_1382;
-  wire [127:0] _GEN_1383;
-  wire [43:0] _GEN_1385;
-  wire [127:0] _GEN_1386;
-  wire [43:0] _GEN_1388;
-  wire [127:0] _GEN_1389;
-  wire [63:0] wbDataView_0; // @[L2.scala 828:52]
-  wire [63:0] wbDataView_1; // @[L2.scala 828:52]
-  reg  ucWalkPtr; // @[L2.scala 830:26]
+  wire [43:0] _GEN_1383;
+  wire [127:0] _GEN_1384;
+  wire [43:0] _GEN_1386;
+  wire [127:0] _GEN_1387;
+  wire [43:0] _GEN_1389;
+  wire [127:0] _GEN_1390;
+  wire [63:0] wbDataView_0; // @[L2.scala 829:52]
+  wire [63:0] wbDataView_1; // @[L2.scala 829:52]
+  reg  ucWalkPtr; // @[L2.scala 831:26]
   reg [31:0] _RAND_83;
-  reg [1:0] ucSendStage; // @[L2.scala 831:28]
+  reg [1:0] ucSendStage; // @[L2.scala 832:28]
   reg [31:0] _RAND_84;
   wire [1:0] _T_502; // @[Conditional.scala 37:39]
   wire  _T_503; // @[Conditional.scala 37:30]
-  wire  _T_504; // @[L2.scala 834:12]
-  wire [47:0] _T_505; // @[L2.scala 836:51]
-  wire [47:0] _GEN_1396; // @[L2.scala 834:26]
-  wire [1:0] _GEN_1397; // @[L2.scala 834:26]
-  wire [7:0] _GEN_1398; // @[L2.scala 834:26]
-  wire [2:0] _GEN_1399; // @[L2.scala 834:26]
+  wire  _T_504; // @[L2.scala 835:12]
+  wire [47:0] _T_505; // @[L2.scala 837:51]
+  wire [47:0] _GEN_1397; // @[L2.scala 835:26]
+  wire [1:0] _GEN_1398; // @[L2.scala 835:26]
+  wire [7:0] _GEN_1399; // @[L2.scala 835:26]
+  wire [2:0] _GEN_1400; // @[L2.scala 835:26]
   wire  _T_510; // @[Conditional.scala 37:30]
-  wire [63:0] _GEN_1406; // @[L2.scala 858:17]
-  wire  _T_512; // @[L2.scala 866:24]
+  wire [63:0] _GEN_1407; // @[L2.scala 859:17]
+  wire  _T_512; // @[L2.scala 867:24]
   wire  _T_515; // @[Conditional.scala 37:30]
-  wire [1:0] _T_517; // @[L2.scala 879:34]
+  wire [1:0] _T_517; // @[L2.scala 880:34]
   wire  _T_520; // @[Conditional.scala 37:30]
-  wire [2:0] _T_521; // @[L2.scala 888:26]
-  wire  _T_522; // @[L2.scala 888:57]
-  wire  _T_524; // @[L2.scala 888:15]
-  wire  _T_525; // @[L2.scala 888:15]
-  wire  _T_526; // @[L2.scala 892:36]
-  wire  _T_527; // @[L2.scala 893:26]
-  wire  _T_528; // @[L2.scala 900:35]
-  wire  _T_529; // @[L2.scala 901:25]
-  wire  _T_530; // @[L2.scala 905:35]
-  wire  _T_531; // @[L2.scala 908:26]
-  wire  _T_533; // @[L2.scala 911:36]
-  wire  _GEN_1427; // @[L2.scala 906:26]
-  wire [47:0] _GEN_1430; // @[L2.scala 886:38]
-  wire [1:0] _GEN_1431; // @[L2.scala 886:38]
-  wire [2:0] _GEN_1433; // @[L2.scala 886:38]
-  wire  _GEN_1434; // @[L2.scala 886:38]
-  wire [63:0] _GEN_1436; // @[L2.scala 886:38]
-  wire [7:0] _GEN_1437; // @[L2.scala 886:38]
-  wire  _GEN_1439; // @[L2.scala 886:38]
-  wire  _GEN_1440; // @[L2.scala 886:38]
-  wire  _GEN_1443; // @[L2.scala 886:38]
-  wire [47:0] _GEN_1444; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1445; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_1447; // @[Conditional.scala 39:67]
-  wire  _GEN_1448; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_1450; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1451; // @[Conditional.scala 39:67]
-  wire  _GEN_1452; // @[Conditional.scala 39:67]
+  wire [2:0] _T_521; // @[L2.scala 889:26]
+  wire  _T_522; // @[L2.scala 889:57]
+  wire  _T_524; // @[L2.scala 889:15]
+  wire  _T_525; // @[L2.scala 889:15]
+  wire  _T_526; // @[L2.scala 893:36]
+  wire  _T_527; // @[L2.scala 894:26]
+  wire  _T_528; // @[L2.scala 901:35]
+  wire  _T_529; // @[L2.scala 902:25]
+  wire  _T_530; // @[L2.scala 906:35]
+  wire  _T_531; // @[L2.scala 909:26]
+  wire  _T_533; // @[L2.scala 912:36]
+  wire  _GEN_1428; // @[L2.scala 907:26]
+  wire [47:0] _GEN_1431; // @[L2.scala 887:38]
+  wire [1:0] _GEN_1432; // @[L2.scala 887:38]
+  wire [2:0] _GEN_1434; // @[L2.scala 887:38]
+  wire  _GEN_1435; // @[L2.scala 887:38]
+  wire [63:0] _GEN_1437; // @[L2.scala 887:38]
+  wire [7:0] _GEN_1438; // @[L2.scala 887:38]
+  wire  _GEN_1440; // @[L2.scala 887:38]
+  wire  _GEN_1441; // @[L2.scala 887:38]
+  wire  _GEN_1444; // @[L2.scala 887:38]
+  wire [47:0] _GEN_1445; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_1446; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_1448; // @[Conditional.scala 39:67]
+  wire  _GEN_1449; // @[Conditional.scala 39:67]
+  wire [63:0] _GEN_1451; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_1452; // @[Conditional.scala 39:67]
   wire  _GEN_1453; // @[Conditional.scala 39:67]
   wire  _GEN_1454; // @[Conditional.scala 39:67]
-  wire  _GEN_1457; // @[Conditional.scala 39:67]
+  wire  _GEN_1455; // @[Conditional.scala 39:67]
   wire  _GEN_1458; // @[Conditional.scala 39:67]
-  wire [47:0] _GEN_1465; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1466; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_1468; // @[Conditional.scala 39:67]
-  wire  _GEN_1469; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_1471; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1472; // @[Conditional.scala 39:67]
-  wire  _GEN_1473; // @[Conditional.scala 39:67]
+  wire  _GEN_1459; // @[Conditional.scala 39:67]
+  wire [47:0] _GEN_1466; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_1467; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_1469; // @[Conditional.scala 39:67]
+  wire  _GEN_1470; // @[Conditional.scala 39:67]
+  wire [63:0] _GEN_1472; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_1473; // @[Conditional.scala 39:67]
   wire  _GEN_1474; // @[Conditional.scala 39:67]
-  wire  _GEN_1476; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_1477; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1478; // @[Conditional.scala 39:67]
-  wire  _GEN_1479; // @[Conditional.scala 39:67]
+  wire  _GEN_1475; // @[Conditional.scala 39:67]
+  wire  _GEN_1477; // @[Conditional.scala 39:67]
+  wire [63:0] _GEN_1478; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_1479; // @[Conditional.scala 39:67]
   wire  _GEN_1480; // @[Conditional.scala 39:67]
-  wire  _GEN_1483; // @[Conditional.scala 39:67]
-  wire [47:0] _GEN_1489; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1490; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_1492; // @[Conditional.scala 39:67]
-  wire  _GEN_1493; // @[Conditional.scala 39:67]
-  wire  _GEN_1496; // @[Conditional.scala 39:67]
-  wire  _GEN_1546; // @[L2.scala 367:19]
+  wire  _GEN_1481; // @[Conditional.scala 39:67]
+  wire  _GEN_1484; // @[Conditional.scala 39:67]
+  wire [47:0] _GEN_1490; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_1491; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_1493; // @[Conditional.scala 39:67]
+  wire  _GEN_1494; // @[Conditional.scala 39:67]
+  wire  _GEN_1497; // @[Conditional.scala 39:67]
   wire  _GEN_1547; // @[L2.scala 367:19]
   wire  _GEN_1548; // @[L2.scala 367:19]
   wire  _GEN_1549; // @[L2.scala 367:19]
   wire  _GEN_1550; // @[L2.scala 367:19]
-  wire  _GEN_1552; // @[L2.scala 367:19]
+  wire  _GEN_1551; // @[L2.scala 367:19]
   wire  _GEN_1553; // @[L2.scala 367:19]
   wire  _GEN_1554; // @[L2.scala 367:19]
   wire  _GEN_1555; // @[L2.scala 367:19]
   wire  _GEN_1556; // @[L2.scala 367:19]
-  wire  _GEN_1572; // @[L2.scala 394:17]
+  wire  _GEN_1557; // @[L2.scala 367:19]
   wire  _GEN_1573; // @[L2.scala 394:17]
   wire  _GEN_1574; // @[L2.scala 394:17]
-  wire  _GEN_1589; // @[L2.scala 397:21]
-  wire  _GEN_1605; // @[L2.scala 399:21]
+  wire  _GEN_1575; // @[L2.scala 394:17]
+  wire  _GEN_1590; // @[L2.scala 397:21]
   wire  _GEN_1606; // @[L2.scala 399:21]
-  wire  _GEN_1617; // @[L2.scala 443:15]
+  wire  _GEN_1607; // @[L2.scala 399:21]
   wire  _GEN_1618; // @[L2.scala 443:15]
   wire  _GEN_1619; // @[L2.scala 443:15]
   wire  _GEN_1620; // @[L2.scala 443:15]
-  wire  _GEN_1630; // @[L2.scala 470:17]
+  wire  _GEN_1621; // @[L2.scala 443:15]
   wire  _GEN_1631; // @[L2.scala 470:17]
   wire  _GEN_1632; // @[L2.scala 470:17]
   wire  _GEN_1633; // @[L2.scala 470:17]
-  wire  _GEN_1645; // @[L2.scala 513:15]
+  wire  _GEN_1634; // @[L2.scala 470:17]
   wire  _GEN_1646; // @[L2.scala 513:15]
   wire  _GEN_1647; // @[L2.scala 513:15]
   wire  _GEN_1648; // @[L2.scala 513:15]
-  wire  _GEN_1676; // @[L2.scala 513:15]
+  wire  _GEN_1649; // @[L2.scala 513:15]
   wire  _GEN_1677; // @[L2.scala 513:15]
   wire  _GEN_1678; // @[L2.scala 513:15]
   wire  _GEN_1679; // @[L2.scala 513:15]
@@ -1683,28 +1683,29 @@ module L2Cache(
   wire  _GEN_1681; // @[L2.scala 513:15]
   wire  _GEN_1682; // @[L2.scala 513:15]
   wire  _GEN_1683; // @[L2.scala 513:15]
-  wire  _GEN_1738; // @[L2.scala 513:15]
+  wire  _GEN_1684; // @[L2.scala 513:15]
   wire  _GEN_1739; // @[L2.scala 513:15]
-  wire  _GEN_1787; // @[L2.scala 627:15]
+  wire  _GEN_1740; // @[L2.scala 513:15]
   wire  _GEN_1788; // @[L2.scala 627:15]
   wire  _GEN_1789; // @[L2.scala 627:15]
   wire  _GEN_1790; // @[L2.scala 627:15]
-  wire  _GEN_1807; // @[L2.scala 713:17]
+  wire  _GEN_1791; // @[L2.scala 627:15]
   wire  _GEN_1808; // @[L2.scala 713:17]
   wire  _GEN_1809; // @[L2.scala 713:17]
   wire  _GEN_1810; // @[L2.scala 713:17]
-  wire  _GEN_1812; // @[L2.scala 713:17]
-  wire  _GEN_1826; // @[L2.scala 742:15]
+  wire  _GEN_1811; // @[L2.scala 713:17]
+  wire  _GEN_1813; // @[L2.scala 713:17]
   wire  _GEN_1827; // @[L2.scala 742:15]
-  wire  _GEN_1830; // @[L2.scala 818:13]
-  wire  _GEN_1831; // @[L2.scala 818:13]
-  wire  _GEN_1834; // @[L2.scala 888:15]
-  wire  _GEN_1835; // @[L2.scala 888:15]
-  wire  _GEN_1836; // @[L2.scala 888:15]
-  wire  _GEN_1837; // @[L2.scala 888:15]
-  wire  _GEN_1838; // @[L2.scala 888:15]
-  wire  _GEN_1839; // @[L2.scala 888:15]
-  wire  _GEN_1840; // @[L2.scala 888:15]
+  wire  _GEN_1828; // @[L2.scala 742:15]
+  wire  _GEN_1831; // @[L2.scala 819:13]
+  wire  _GEN_1832; // @[L2.scala 819:13]
+  wire  _GEN_1835; // @[L2.scala 889:15]
+  wire  _GEN_1836; // @[L2.scala 889:15]
+  wire  _GEN_1837; // @[L2.scala 889:15]
+  wire  _GEN_1838; // @[L2.scala 889:15]
+  wire  _GEN_1839; // @[L2.scala 889:15]
+  wire  _GEN_1840; // @[L2.scala 889:15]
+  wire  _GEN_1841; // @[L2.scala 889:15]
   MaxPeriodFibonacciLFSR MaxPeriodFibonacciLFSR ( // @[PRNG.scala 82:22]
     .clock(MaxPeriodFibonacciLFSR_clock),
     .reset(MaxPeriodFibonacciLFSR_reset),
@@ -2038,9 +2039,9 @@ module L2Cache(
   assign _GEN_603 = _GEN_463 ? writtenDir_tag : writtenDir_tag; // @[L2.scala 572:43]
   assign _GEN_708 = _T_280 ? writtenDir_tag : _GEN_603; // @[L2.scala 546:36]
   assign _GEN_786 = target ? directories_1_tag_lookups_data : _GEN_307; // @[L2.scala 44:7]
-  assign _GEN_1517 = {{1'd0}, target}; // @[L2.scala 44:7]
-  assign _GEN_790 = 2'h2 == _GEN_1517 ? directories_2_tag_lookups_data : _GEN_786; // @[L2.scala 44:7]
-  assign _GEN_794 = 2'h3 == _GEN_1517 ? directories_3_tag_lookups_data : _GEN_790; // @[L2.scala 44:7]
+  assign _GEN_1518 = {{1'd0}, target}; // @[L2.scala 44:7]
+  assign _GEN_790 = 2'h2 == _GEN_1518 ? directories_2_tag_lookups_data : _GEN_786; // @[L2.scala 44:7]
+  assign _GEN_794 = 2'h3 == _GEN_1518 ? directories_3_tag_lookups_data : _GEN_790; // @[L2.scala 44:7]
   assign _GEN_922 = _T_396 ? writtenDir_tag : writtenDir_tag; // @[L2.scala 700:55]
   assign _GEN_959 = pendingVictim ? _GEN_922 : writtenDir_tag; // @[L2.scala 661:29]
   assign _GEN_1075 = _T_358 ? _GEN_794 : _GEN_959; // @[Conditional.scala 39:67]
@@ -2059,8 +2060,8 @@ module L2Cache(
   assign _GEN_317 = 2'h3 == pipeHitIdx ? directories_3_valid_lookups_data : _GEN_313; // @[L2.scala 44:7]
   assign _GEN_441 = _T_239 ? _GEN_317 : _GEN_317; // @[L2.scala 442:24]
   assign _GEN_784 = target ? directories_1_valid_lookups_data : _GEN_450; // @[L2.scala 44:7]
-  assign _GEN_788 = 2'h2 == _GEN_1517 ? directories_2_valid_lookups_data : _GEN_784; // @[L2.scala 44:7]
-  assign _GEN_792 = 2'h3 == _GEN_1517 ? directories_3_valid_lookups_data : _GEN_788; // @[L2.scala 44:7]
+  assign _GEN_788 = 2'h2 == _GEN_1518 ? directories_2_valid_lookups_data : _GEN_784; // @[L2.scala 44:7]
+  assign _GEN_792 = 2'h3 == _GEN_1518 ? directories_3_valid_lookups_data : _GEN_788; // @[L2.scala 44:7]
   assign _GEN_1077 = _T_358 ? _GEN_792 : 1'h1; // @[Conditional.scala 39:67]
   assign _GEN_1109 = _T_279 | _GEN_1077; // @[Conditional.scala 39:67]
   assign _GEN_1147 = _T_226 ? _GEN_441 : _GEN_1109; // @[Conditional.scala 39:67]
@@ -2157,12 +2158,12 @@ module L2Cache(
   assign hit = _T_64 | _T_109; // @[L2.scala 272:55]
   assign _T_72 = {{3'd0}, _T_97}; // @[L2.scala 274:79]
   assign _T_73 = _T_72[2:0]; // @[L2.scala 274:79]
-  assign _GEN_1521 = {{2'd0}, _T_101}; // @[L2.scala 274:79]
-  assign _T_79 = _T_73 + _GEN_1521; // @[L2.scala 274:79]
-  assign _GEN_1522 = {{2'd0}, _T_105}; // @[L2.scala 274:79]
-  assign _T_85 = _T_79 + _GEN_1522; // @[L2.scala 274:79]
-  assign _GEN_1523 = {{2'd0}, _T_109}; // @[L2.scala 274:79]
-  assign hitCount = _T_85 + _GEN_1523; // @[L2.scala 274:79]
+  assign _GEN_1522 = {{2'd0}, _T_101}; // @[L2.scala 274:79]
+  assign _T_79 = _T_73 + _GEN_1522; // @[L2.scala 274:79]
+  assign _GEN_1523 = {{2'd0}, _T_105}; // @[L2.scala 274:79]
+  assign _T_85 = _T_79 + _GEN_1523; // @[L2.scala 274:79]
+  assign _GEN_1524 = {{2'd0}, _T_109}; // @[L2.scala 274:79]
+  assign hitCount = _T_85 + _GEN_1524; // @[L2.scala 274:79]
   assign _T_91 = hitCount <= 3'h1; // @[L2.scala 275:19]
   assign _T_93 = _T_91 | _T_23; // @[L2.scala 275:9]
   assign _T_94 = _T_93 == 1'h0; // @[L2.scala 275:9]
@@ -2217,12 +2218,12 @@ module L2Cache(
   assign _T_187 = _T_186 == 1'h0; // @[L2.scala 367:19]
   assign _T_190 = fifoHitData[63:0]; // @[L2.scala 374:51]
   assign _T_191 = fifoHitData[127:64]; // @[L2.scala 374:51]
-  assign _GEN_1524 = 1'h0 == target; // @[L2.scala 375:30]
-  assign _GEN_70 = _GEN_1524 | misses_0; // @[L2.scala 375:30]
+  assign _GEN_1525 = 1'h0 == target; // @[L2.scala 375:30]
+  assign _GEN_70 = _GEN_1525 | misses_0; // @[L2.scala 375:30]
   assign _GEN_71 = target | misses_1; // @[L2.scala 375:30]
-  assign _GEN_74 = _GEN_1524 | refilled_0; // @[L2.scala 377:32]
+  assign _GEN_74 = _GEN_1525 | refilled_0; // @[L2.scala 377:32]
   assign _GEN_75 = target | refilled_1; // @[L2.scala 377:32]
-  assign _GEN_76 = _GEN_1524 | collided_0; // @[L2.scala 380:32]
+  assign _GEN_76 = _GEN_1525 | collided_0; // @[L2.scala 380:32]
   assign _GEN_77 = target | collided_1; // @[L2.scala 380:32]
   assign _GEN_82 = 1'h0 == target ? 1'h0 : sent_0; // @[L2.scala 384:28]
   assign _GEN_83 = target ? 1'h0 : sent_1; // @[L2.scala 384:28]
@@ -2316,14 +2317,14 @@ module L2Cache(
   assign _GEN_499 = 2'h1 == victim ? stores_1_datas_data : _GEN_296; // @[L2.scala 579:37]
   assign _GEN_500 = 2'h2 == victim ? stores_2_datas_data : _GEN_499; // @[L2.scala 579:37]
   assign _GEN_501 = 2'h3 == victim ? stores_3_datas_data : _GEN_500; // @[L2.scala 579:37]
-  assign _GEN_1528 = 2'h0 == wbFifoTail; // @[L2.scala 580:38]
-  assign _GEN_502 = _GEN_1528 | wbFifo_0_valid; // @[L2.scala 580:38]
-  assign _GEN_1529 = 2'h1 == wbFifoTail; // @[L2.scala 580:38]
-  assign _GEN_503 = _GEN_1529 | wbFifo_1_valid; // @[L2.scala 580:38]
-  assign _GEN_1530 = 2'h2 == wbFifoTail; // @[L2.scala 580:38]
-  assign _GEN_504 = _GEN_1530 | wbFifo_2_valid; // @[L2.scala 580:38]
-  assign _GEN_1531 = 2'h3 == wbFifoTail; // @[L2.scala 580:38]
-  assign _GEN_505 = _GEN_1531 | wbFifo_3_valid; // @[L2.scala 580:38]
+  assign _GEN_1529 = 2'h0 == wbFifoTail; // @[L2.scala 580:38]
+  assign _GEN_502 = _GEN_1529 | wbFifo_0_valid; // @[L2.scala 580:38]
+  assign _GEN_1530 = 2'h1 == wbFifoTail; // @[L2.scala 580:38]
+  assign _GEN_503 = _GEN_1530 | wbFifo_1_valid; // @[L2.scala 580:38]
+  assign _GEN_1531 = 2'h2 == wbFifoTail; // @[L2.scala 580:38]
+  assign _GEN_504 = _GEN_1531 | wbFifo_2_valid; // @[L2.scala 580:38]
+  assign _GEN_1532 = 2'h3 == wbFifoTail; // @[L2.scala 580:38]
+  assign _GEN_505 = _GEN_1532 | wbFifo_3_valid; // @[L2.scala 580:38]
   assign _GEN_532 = _T_307 ? _GEN_502 : wbFifo_0_valid; // @[L2.scala 576:29]
   assign _GEN_533 = _T_307 ? _GEN_503 : wbFifo_1_valid; // @[L2.scala 576:29]
   assign _GEN_534 = _T_307 ? _GEN_504 : wbFifo_2_valid; // @[L2.scala 576:29]
@@ -2483,8 +2484,8 @@ module L2Cache(
   assign _T_459 = _GEN_1283 == _GEN_1291; // @[L2.scala 742:27]
   assign _T_461 = _T_459 | _T_23; // @[L2.scala 742:15]
   assign _T_462 = _T_461 == 1'h0; // @[L2.scala 742:15]
-  assign _GEN_1540 = 1'h0 == _T_451; // @[L2.scala 761:27]
-  assign _GEN_1292 = _GEN_1540 | _GEN_1255; // @[L2.scala 761:27]
+  assign _GEN_1541 = 1'h0 == _T_451; // @[L2.scala 761:27]
+  assign _GEN_1292 = _GEN_1541 | _GEN_1255; // @[L2.scala 761:27]
   assign _GEN_1293 = _T_451 | _GEN_1256; // @[L2.scala 761:27]
   assign _T_464 = reqTarget == 2'h2; // @[L2.scala 310:14]
   assign _T_466 = reqTarget + 2'h1; // @[L2.scala 313:18]
@@ -2502,185 +2503,186 @@ module L2Cache(
   assign _GEN_1316 = _T_456 & _GEN_1287; // @[L2.scala 740:49]
   assign _T_475 = ucSent_0 == 1'h0; // @[L2.scala 774:30]
   assign _T_476 = directs_0_read & _T_475; // @[L2.scala 774:27]
-  assign _GEN_1321 = axi_ARREADY | ucSent_0; // @[L2.scala 783:25]
+  assign _GEN_1321 = axi_ARREADY | ucSent_0; // @[L2.scala 784:25]
   assign _GEN_1324 = _T_476 ? directs_0_addr : 48'h0; // @[L2.scala 774:50]
   assign _GEN_1325 = _T_476 ? 2'h1 : 2'h0; // @[L2.scala 774:50]
   assign _GEN_1326 = _T_476 ? {{2'd0}, reqTarget} : 4'h0; // @[L2.scala 774:50]
-  assign _GEN_1329 = _T_476 ? _GEN_1321 : ucSent_0; // @[L2.scala 774:50]
-  assign _GEN_1340 = _T_453 ? ucSent_0 : _GEN_1329; // @[L2.scala 739:45]
-  assign _T_484 = axi_RID < 4'h2; // @[L2.scala 801:18]
+  assign _GEN_1328 = _T_476 ? 3'h3 : 3'h0; // @[L2.scala 774:50]
+  assign _GEN_1330 = _T_476 ? _GEN_1321 : ucSent_0; // @[L2.scala 774:50]
+  assign _GEN_1341 = _T_453 ? ucSent_0 : _GEN_1330; // @[L2.scala 739:45]
+  assign _T_484 = axi_RID < 4'h2; // @[L2.scala 802:18]
   assign _T_485 = axi_RID[0];
-  assign _GEN_1342 = _T_485 ? sent_1 : sent_0; // @[L2.scala 803:27]
-  assign _GEN_1344 = _T_485 ? bufptrs_1 : bufptrs_0; // @[L2.scala 805:13]
-  assign ptr = _GEN_1342 & _GEN_1344; // @[L2.scala 803:27]
-  assign _GEN_1541 = 1'h0 == _T_485; // @[L2.scala 811:26]
-  assign _GEN_1542 = 1'h0 == ptr; // @[L2.scala 811:26]
-  assign _T_492 = ptr + 1'h1; // @[L2.scala 812:31]
-  assign _GEN_1352 = _GEN_1541 | _GEN_1251; // @[L2.scala 815:27]
-  assign _GEN_1353 = _T_485 | _GEN_1252; // @[L2.scala 815:27]
-  assign _T_495 = axi_RLAST | _T_23; // @[L2.scala 818:13]
-  assign _T_496 = _T_495 == 1'h0; // @[L2.scala 818:13]
-  assign _GEN_1365 = _T_484 & _T_11; // @[L2.scala 801:45]
-  assign _GEN_1366 = _T_484 & _GEN_1340; // @[L2.scala 801:45]
-  assign _GEN_1377 = axi_RVALID ? _GEN_1365 : _T_11; // @[L2.scala 797:20]
-  assign _GEN_1382 = 2'h1 == wbFifoHead ? wbFifo_1_lineaddr : wbFifo_0_lineaddr;
-  assign _GEN_1383 = 2'h1 == wbFifoHead ? wbFifo_1_data : wbFifo_0_data;
-  assign _GEN_1385 = 2'h2 == wbFifoHead ? wbFifo_2_lineaddr : _GEN_1382;
-  assign _GEN_1386 = 2'h2 == wbFifoHead ? wbFifo_2_data : _GEN_1383;
-  assign _GEN_1388 = 2'h3 == wbFifoHead ? wbFifo_3_lineaddr : _GEN_1385;
-  assign _GEN_1389 = 2'h3 == wbFifoHead ? wbFifo_3_data : _GEN_1386;
-  assign wbDataView_0 = _GEN_1389[63:0]; // @[L2.scala 828:52]
-  assign wbDataView_1 = _GEN_1389[127:64]; // @[L2.scala 828:52]
+  assign _GEN_1343 = _T_485 ? sent_1 : sent_0; // @[L2.scala 804:27]
+  assign _GEN_1345 = _T_485 ? bufptrs_1 : bufptrs_0; // @[L2.scala 806:13]
+  assign ptr = _GEN_1343 & _GEN_1345; // @[L2.scala 804:27]
+  assign _GEN_1542 = 1'h0 == _T_485; // @[L2.scala 812:26]
+  assign _GEN_1543 = 1'h0 == ptr; // @[L2.scala 812:26]
+  assign _T_492 = ptr + 1'h1; // @[L2.scala 813:31]
+  assign _GEN_1353 = _GEN_1542 | _GEN_1251; // @[L2.scala 816:27]
+  assign _GEN_1354 = _T_485 | _GEN_1252; // @[L2.scala 816:27]
+  assign _T_495 = axi_RLAST | _T_23; // @[L2.scala 819:13]
+  assign _T_496 = _T_495 == 1'h0; // @[L2.scala 819:13]
+  assign _GEN_1366 = _T_484 & _T_11; // @[L2.scala 802:45]
+  assign _GEN_1367 = _T_484 & _GEN_1341; // @[L2.scala 802:45]
+  assign _GEN_1378 = axi_RVALID ? _GEN_1366 : _T_11; // @[L2.scala 798:20]
+  assign _GEN_1383 = 2'h1 == wbFifoHead ? wbFifo_1_lineaddr : wbFifo_0_lineaddr;
+  assign _GEN_1384 = 2'h1 == wbFifoHead ? wbFifo_1_data : wbFifo_0_data;
+  assign _GEN_1386 = 2'h2 == wbFifoHead ? wbFifo_2_lineaddr : _GEN_1383;
+  assign _GEN_1387 = 2'h2 == wbFifoHead ? wbFifo_2_data : _GEN_1384;
+  assign _GEN_1389 = 2'h3 == wbFifoHead ? wbFifo_3_lineaddr : _GEN_1386;
+  assign _GEN_1390 = 2'h3 == wbFifoHead ? wbFifo_3_data : _GEN_1387;
+  assign wbDataView_0 = _GEN_1390[63:0]; // @[L2.scala 829:52]
+  assign wbDataView_1 = _GEN_1390[127:64]; // @[L2.scala 829:52]
   assign _T_502 = $unsigned(wbState); // @[Conditional.scala 37:39]
   assign _T_503 = 2'h0 == _T_502; // @[Conditional.scala 37:30]
-  assign _T_504 = wbFifoEmpty == 1'h0; // @[L2.scala 834:12]
-  assign _T_505 = {_GEN_1388,4'h0}; // @[L2.scala 836:51]
-  assign _GEN_1396 = _T_504 ? _T_505 : 48'h0; // @[L2.scala 834:26]
-  assign _GEN_1397 = _T_504 ? 2'h1 : 2'h0; // @[L2.scala 834:26]
-  assign _GEN_1398 = _T_504 ? 8'h1 : 8'h0; // @[L2.scala 834:26]
-  assign _GEN_1399 = _T_504 ? 3'h3 : 3'h0; // @[L2.scala 834:26]
+  assign _T_504 = wbFifoEmpty == 1'h0; // @[L2.scala 835:12]
+  assign _T_505 = {_GEN_1389,4'h0}; // @[L2.scala 837:51]
+  assign _GEN_1397 = _T_504 ? _T_505 : 48'h0; // @[L2.scala 835:26]
+  assign _GEN_1398 = _T_504 ? 2'h1 : 2'h0; // @[L2.scala 835:26]
+  assign _GEN_1399 = _T_504 ? 8'h1 : 8'h0; // @[L2.scala 835:26]
+  assign _GEN_1400 = _T_504 ? 3'h3 : 3'h0; // @[L2.scala 835:26]
   assign _T_510 = 2'h1 == _T_502; // @[Conditional.scala 37:30]
-  assign _GEN_1406 = wbPtr ? wbDataView_1 : wbDataView_0; // @[L2.scala 858:17]
-  assign _T_512 = wbPtr + 1'h1; // @[L2.scala 866:24]
+  assign _GEN_1407 = wbPtr ? wbDataView_1 : wbDataView_0; // @[L2.scala 859:17]
+  assign _T_512 = wbPtr + 1'h1; // @[L2.scala 867:24]
   assign _T_515 = 2'h2 == _T_502; // @[Conditional.scala 37:30]
-  assign _T_517 = wbFifoHead + 2'h1; // @[L2.scala 879:34]
+  assign _T_517 = wbFifoHead + 2'h1; // @[L2.scala 880:34]
   assign _T_520 = 2'h3 == _T_502; // @[Conditional.scala 37:30]
-  assign _T_521 = axi_AWADDR[2:0]; // @[L2.scala 888:26]
-  assign _T_522 = _T_521 == 3'h0; // @[L2.scala 888:57]
-  assign _T_524 = _T_522 | _T_23; // @[L2.scala 888:15]
-  assign _T_525 = _T_524 == 1'h0; // @[L2.scala 888:15]
-  assign _T_526 = ucSendStage == 2'h0; // @[L2.scala 892:36]
-  assign _T_527 = axi_AWVALID & axi_AWREADY; // @[L2.scala 893:26]
-  assign _T_528 = ucSendStage == 2'h1; // @[L2.scala 900:35]
-  assign _T_529 = axi_WVALID & axi_WREADY; // @[L2.scala 901:25]
-  assign _T_530 = ucSendStage == 2'h2; // @[L2.scala 905:35]
-  assign _T_531 = ucWalkPtr == 1'h0; // @[L2.scala 908:26]
-  assign _T_533 = ucWalkPtr + 1'h1; // @[L2.scala 911:36]
-  assign _GEN_1427 = axi_BVALID ? 1'h0 : _GEN_1377; // @[L2.scala 906:26]
-  assign _GEN_1430 = directs_0_write ? directs_0_addr : 48'h0; // @[L2.scala 886:38]
-  assign _GEN_1431 = directs_0_write ? 2'h1 : 2'h0; // @[L2.scala 886:38]
-  assign _GEN_1433 = directs_0_write ? 3'h3 : 3'h0; // @[L2.scala 886:38]
-  assign _GEN_1434 = directs_0_write & _T_526; // @[L2.scala 886:38]
-  assign _GEN_1436 = directs_0_write ? directs_0_wdata : 64'h0; // @[L2.scala 886:38]
-  assign _GEN_1437 = directs_0_write ? directs_0_wstrb : 8'h0; // @[L2.scala 886:38]
-  assign _GEN_1439 = directs_0_write & _T_528; // @[L2.scala 886:38]
-  assign _GEN_1440 = directs_0_write & _T_530; // @[L2.scala 886:38]
-  assign _GEN_1443 = directs_0_write ? _GEN_1427 : _GEN_1377; // @[L2.scala 886:38]
-  assign _GEN_1444 = _T_520 ? _GEN_1430 : 48'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1445 = _T_520 ? _GEN_1431 : 2'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1447 = _T_520 ? _GEN_1433 : 3'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1448 = _T_520 & _GEN_1434; // @[Conditional.scala 39:67]
-  assign _GEN_1450 = _T_520 ? _GEN_1436 : 64'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1451 = _T_520 ? _GEN_1437 : 8'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1452 = _T_520 & directs_0_write; // @[Conditional.scala 39:67]
-  assign _GEN_1453 = _T_520 & _GEN_1439; // @[Conditional.scala 39:67]
+  assign _T_521 = axi_AWADDR[2:0]; // @[L2.scala 889:26]
+  assign _T_522 = _T_521 == 3'h0; // @[L2.scala 889:57]
+  assign _T_524 = _T_522 | _T_23; // @[L2.scala 889:15]
+  assign _T_525 = _T_524 == 1'h0; // @[L2.scala 889:15]
+  assign _T_526 = ucSendStage == 2'h0; // @[L2.scala 893:36]
+  assign _T_527 = axi_AWVALID & axi_AWREADY; // @[L2.scala 894:26]
+  assign _T_528 = ucSendStage == 2'h1; // @[L2.scala 901:35]
+  assign _T_529 = axi_WVALID & axi_WREADY; // @[L2.scala 902:25]
+  assign _T_530 = ucSendStage == 2'h2; // @[L2.scala 906:35]
+  assign _T_531 = ucWalkPtr == 1'h0; // @[L2.scala 909:26]
+  assign _T_533 = ucWalkPtr + 1'h1; // @[L2.scala 912:36]
+  assign _GEN_1428 = axi_BVALID ? 1'h0 : _GEN_1378; // @[L2.scala 907:26]
+  assign _GEN_1431 = directs_0_write ? directs_0_addr : 48'h0; // @[L2.scala 887:38]
+  assign _GEN_1432 = directs_0_write ? 2'h1 : 2'h0; // @[L2.scala 887:38]
+  assign _GEN_1434 = directs_0_write ? 3'h3 : 3'h0; // @[L2.scala 887:38]
+  assign _GEN_1435 = directs_0_write & _T_526; // @[L2.scala 887:38]
+  assign _GEN_1437 = directs_0_write ? directs_0_wdata : 64'h0; // @[L2.scala 887:38]
+  assign _GEN_1438 = directs_0_write ? directs_0_wstrb : 8'h0; // @[L2.scala 887:38]
+  assign _GEN_1440 = directs_0_write & _T_528; // @[L2.scala 887:38]
+  assign _GEN_1441 = directs_0_write & _T_530; // @[L2.scala 887:38]
+  assign _GEN_1444 = directs_0_write ? _GEN_1428 : _GEN_1378; // @[L2.scala 887:38]
+  assign _GEN_1445 = _T_520 ? _GEN_1431 : 48'h0; // @[Conditional.scala 39:67]
+  assign _GEN_1446 = _T_520 ? _GEN_1432 : 2'h0; // @[Conditional.scala 39:67]
+  assign _GEN_1448 = _T_520 ? _GEN_1434 : 3'h0; // @[Conditional.scala 39:67]
+  assign _GEN_1449 = _T_520 & _GEN_1435; // @[Conditional.scala 39:67]
+  assign _GEN_1451 = _T_520 ? _GEN_1437 : 64'h0; // @[Conditional.scala 39:67]
+  assign _GEN_1452 = _T_520 ? _GEN_1438 : 8'h0; // @[Conditional.scala 39:67]
+  assign _GEN_1453 = _T_520 & directs_0_write; // @[Conditional.scala 39:67]
   assign _GEN_1454 = _T_520 & _GEN_1440; // @[Conditional.scala 39:67]
-  assign _GEN_1457 = _T_520 ? _GEN_1443 : _GEN_1377; // @[Conditional.scala 39:67]
-  assign _GEN_1458 = _T_515 | _GEN_1454; // @[Conditional.scala 39:67]
-  assign _GEN_1465 = _T_515 ? 48'h0 : _GEN_1444; // @[Conditional.scala 39:67]
-  assign _GEN_1466 = _T_515 ? 2'h0 : _GEN_1445; // @[Conditional.scala 39:67]
-  assign _GEN_1468 = _T_515 ? 3'h0 : _GEN_1447; // @[Conditional.scala 39:67]
-  assign _GEN_1469 = _T_515 ? 1'h0 : _GEN_1448; // @[Conditional.scala 39:67]
-  assign _GEN_1471 = _T_515 ? 64'h0 : _GEN_1450; // @[Conditional.scala 39:67]
-  assign _GEN_1472 = _T_515 ? 8'h0 : _GEN_1451; // @[Conditional.scala 39:67]
-  assign _GEN_1473 = _T_515 ? 1'h0 : _GEN_1452; // @[Conditional.scala 39:67]
+  assign _GEN_1455 = _T_520 & _GEN_1441; // @[Conditional.scala 39:67]
+  assign _GEN_1458 = _T_520 ? _GEN_1444 : _GEN_1378; // @[Conditional.scala 39:67]
+  assign _GEN_1459 = _T_515 | _GEN_1455; // @[Conditional.scala 39:67]
+  assign _GEN_1466 = _T_515 ? 48'h0 : _GEN_1445; // @[Conditional.scala 39:67]
+  assign _GEN_1467 = _T_515 ? 2'h0 : _GEN_1446; // @[Conditional.scala 39:67]
+  assign _GEN_1469 = _T_515 ? 3'h0 : _GEN_1448; // @[Conditional.scala 39:67]
+  assign _GEN_1470 = _T_515 ? 1'h0 : _GEN_1449; // @[Conditional.scala 39:67]
+  assign _GEN_1472 = _T_515 ? 64'h0 : _GEN_1451; // @[Conditional.scala 39:67]
+  assign _GEN_1473 = _T_515 ? 8'h0 : _GEN_1452; // @[Conditional.scala 39:67]
   assign _GEN_1474 = _T_515 ? 1'h0 : _GEN_1453; // @[Conditional.scala 39:67]
-  assign _GEN_1476 = _T_515 ? _GEN_1377 : _GEN_1457; // @[Conditional.scala 39:67]
-  assign _GEN_1477 = _T_510 ? _GEN_1406 : _GEN_1471; // @[Conditional.scala 39:67]
-  assign _GEN_1478 = _T_510 ? 8'hff : _GEN_1472; // @[Conditional.scala 39:67]
-  assign _GEN_1479 = _T_510 | _GEN_1474; // @[Conditional.scala 39:67]
-  assign _GEN_1480 = _T_510 ? wbPtr : _GEN_1473; // @[Conditional.scala 39:67]
-  assign _GEN_1483 = _T_510 ? 1'h0 : _GEN_1458; // @[Conditional.scala 39:67]
-  assign _GEN_1489 = _T_510 ? 48'h0 : _GEN_1465; // @[Conditional.scala 39:67]
-  assign _GEN_1490 = _T_510 ? 2'h0 : _GEN_1466; // @[Conditional.scala 39:67]
-  assign _GEN_1492 = _T_510 ? 3'h0 : _GEN_1468; // @[Conditional.scala 39:67]
-  assign _GEN_1493 = _T_510 ? 1'h0 : _GEN_1469; // @[Conditional.scala 39:67]
-  assign _GEN_1496 = _T_510 ? _GEN_1377 : _GEN_1476; // @[Conditional.scala 39:67]
+  assign _GEN_1475 = _T_515 ? 1'h0 : _GEN_1454; // @[Conditional.scala 39:67]
+  assign _GEN_1477 = _T_515 ? _GEN_1378 : _GEN_1458; // @[Conditional.scala 39:67]
+  assign _GEN_1478 = _T_510 ? _GEN_1407 : _GEN_1472; // @[Conditional.scala 39:67]
+  assign _GEN_1479 = _T_510 ? 8'hff : _GEN_1473; // @[Conditional.scala 39:67]
+  assign _GEN_1480 = _T_510 | _GEN_1475; // @[Conditional.scala 39:67]
+  assign _GEN_1481 = _T_510 ? wbPtr : _GEN_1474; // @[Conditional.scala 39:67]
+  assign _GEN_1484 = _T_510 ? 1'h0 : _GEN_1459; // @[Conditional.scala 39:67]
+  assign _GEN_1490 = _T_510 ? 48'h0 : _GEN_1466; // @[Conditional.scala 39:67]
+  assign _GEN_1491 = _T_510 ? 2'h0 : _GEN_1467; // @[Conditional.scala 39:67]
+  assign _GEN_1493 = _T_510 ? 3'h0 : _GEN_1469; // @[Conditional.scala 39:67]
+  assign _GEN_1494 = _T_510 ? 1'h0 : _GEN_1470; // @[Conditional.scala 39:67]
+  assign _GEN_1497 = _T_510 ? _GEN_1378 : _GEN_1477; // @[Conditional.scala 39:67]
   assign ic_0_stall = _T_162 ? _T_9 : _GEN_1212; // @[L2.scala 213:16]
   assign ic_0_data = _T_226 ? _GEN_299 : _GEN_1097; // @[L2.scala 209:16]
   assign dc_0_l1stall = _T_162 ? _T_8 : _GEN_1211; // @[L2.scala 213:16]
   assign dc_0_l2req = pendings_0; // @[L2.scala 300:13]
   assign dc_0_l2addr = pendingVictim ? _T_149 : pipeTargetAddr; // @[L2.scala 303:16 L2.scala 305:16]
   assign dc_0_rdata = _T_226 ? _GEN_299 : _GEN_1097; // @[L2.scala 209:16]
-  assign directs_0_stall = _T_503 ? _GEN_1377 : _GEN_1496; // @[L2.scala 219:14 L2.scala 821:25 L2.scala 914:36]
-  assign directs_0_rdata = axi_RDATA; // @[L2.scala 820:25]
-  assign axi_AWADDR = _T_503 ? _GEN_1396 : _GEN_1489; // @[L2.scala 134:7 L2.scala 836:20 L2.scala 887:20]
-  assign axi_AWLEN = _T_503 ? _GEN_1398 : 8'h0; // @[L2.scala 134:7 L2.scala 839:19 L2.scala 890:19]
-  assign axi_AWSIZE = _T_503 ? _GEN_1399 : _GEN_1492; // @[L2.scala 134:7 L2.scala 843:20 L2.scala 891:20]
-  assign axi_AWBURST = _T_503 ? _GEN_1397 : _GEN_1490; // @[L2.scala 134:7 L2.scala 837:21 L2.scala 889:21]
-  assign axi_AWVALID = _T_503 ? _T_504 : _GEN_1493; // @[L2.scala 134:7 L2.scala 844:21 L2.scala 892:21]
-  assign axi_WDATA = _T_503 ? 64'h0 : _GEN_1477; // @[L2.scala 134:7 L2.scala 858:17 L2.scala 897:19]
-  assign axi_WSTRB = _T_503 ? 8'h0 : _GEN_1478; // @[L2.scala 134:7 L2.scala 859:17 L2.scala 898:19]
-  assign axi_WLAST = _T_503 ? 1'h0 : _GEN_1480; // @[L2.scala 134:7 L2.scala 863:17 L2.scala 899:19]
-  assign axi_WVALID = _T_503 ? 1'h0 : _GEN_1479; // @[L2.scala 134:7 L2.scala 860:18 L2.scala 900:20]
-  assign axi_BREADY = _T_503 ? 1'h0 : _GEN_1483; // @[L2.scala 134:7 L2.scala 877:18 L2.scala 905:20]
+  assign directs_0_stall = _T_503 ? _GEN_1378 : _GEN_1497; // @[L2.scala 219:14 L2.scala 822:25 L2.scala 915:36]
+  assign directs_0_rdata = axi_RDATA; // @[L2.scala 821:25]
+  assign axi_AWADDR = _T_503 ? _GEN_1397 : _GEN_1490; // @[L2.scala 134:7 L2.scala 837:20 L2.scala 888:20]
+  assign axi_AWLEN = _T_503 ? _GEN_1399 : 8'h0; // @[L2.scala 134:7 L2.scala 840:19 L2.scala 891:19]
+  assign axi_AWSIZE = _T_503 ? _GEN_1400 : _GEN_1493; // @[L2.scala 134:7 L2.scala 844:20 L2.scala 892:20]
+  assign axi_AWBURST = _T_503 ? _GEN_1398 : _GEN_1491; // @[L2.scala 134:7 L2.scala 838:21 L2.scala 890:21]
+  assign axi_AWVALID = _T_503 ? _T_504 : _GEN_1494; // @[L2.scala 134:7 L2.scala 845:21 L2.scala 893:21]
+  assign axi_WDATA = _T_503 ? 64'h0 : _GEN_1478; // @[L2.scala 134:7 L2.scala 859:17 L2.scala 898:19]
+  assign axi_WSTRB = _T_503 ? 8'h0 : _GEN_1479; // @[L2.scala 134:7 L2.scala 860:17 L2.scala 899:19]
+  assign axi_WLAST = _T_503 ? 1'h0 : _GEN_1481; // @[L2.scala 134:7 L2.scala 864:17 L2.scala 900:19]
+  assign axi_WVALID = _T_503 ? 1'h0 : _GEN_1480; // @[L2.scala 134:7 L2.scala 861:18 L2.scala 901:20]
+  assign axi_BREADY = _T_503 ? 1'h0 : _GEN_1484; // @[L2.scala 134:7 L2.scala 878:18 L2.scala 906:20]
   assign axi_ARID = _T_453 ? _GEN_1313 : _GEN_1326; // @[L2.scala 134:7 L2.scala 748:18 L2.scala 777:16]
   assign axi_ARADDR = _T_453 ? _GEN_1311 : _GEN_1324; // @[L2.scala 134:7 L2.scala 744:20 L2.scala 775:18]
   assign axi_ARLEN = _T_453 ? _GEN_1314 : 8'h0; // @[L2.scala 134:7 L2.scala 753:19 L2.scala 778:17]
-  assign axi_ARSIZE = _T_453 ? _GEN_1315 : 3'h0; // @[L2.scala 134:7 L2.scala 757:20]
+  assign axi_ARSIZE = _T_453 ? _GEN_1315 : _GEN_1328; // @[L2.scala 134:7 L2.scala 757:20 L2.scala 779:18]
   assign axi_ARBURST = _T_453 ? _GEN_1312 : _GEN_1325; // @[L2.scala 134:7 L2.scala 745:21 L2.scala 776:19]
-  assign axi_ARVALID = _T_453 ? _GEN_1316 : _T_476; // @[L2.scala 134:7 L2.scala 759:21 L2.scala 782:19]
-  assign axi_RREADY = axi_RVALID; // @[L2.scala 134:7 L2.scala 799:16]
+  assign axi_ARVALID = _T_453 ? _GEN_1316 : _T_476; // @[L2.scala 134:7 L2.scala 759:21 L2.scala 783:19]
+  assign axi_RREADY = axi_RVALID; // @[L2.scala 134:7 L2.scala 800:16]
   assign MaxPeriodFibonacciLFSR_clock = clock;
   assign MaxPeriodFibonacciLFSR_reset = reset;
-  assign _GEN_1546 = _T_162 == 1'h0; // @[L2.scala 367:19]
-  assign _GEN_1547 = _GEN_1546 & _T_171; // @[L2.scala 367:19]
-  assign _GEN_1548 = _T_174 == 1'h0; // @[L2.scala 367:19]
-  assign _GEN_1549 = _GEN_1547 & _GEN_1548; // @[L2.scala 367:19]
-  assign _GEN_1550 = _GEN_1549 & _T_181; // @[L2.scala 367:19]
-  assign _GEN_1552 = _GEN_1550 & _T_240; // @[L2.scala 367:19]
-  assign _GEN_1553 = hit == 1'h0; // @[L2.scala 367:19]
-  assign _GEN_1554 = _GEN_1552 & _GEN_1553; // @[L2.scala 367:19]
-  assign _GEN_1555 = _GEN_65 == 1'h0; // @[L2.scala 367:19]
-  assign _GEN_1556 = _GEN_1554 & _GEN_1555; // @[L2.scala 367:19]
-  assign _GEN_1572 = _T_181 == 1'h0; // @[L2.scala 394:17]
-  assign _GEN_1573 = _GEN_1549 & _GEN_1572; // @[L2.scala 394:17]
-  assign _GEN_1574 = _GEN_1573 & _T_194; // @[L2.scala 394:17]
-  assign _GEN_1589 = _GEN_1574 & _GEN_1524; // @[L2.scala 397:21]
-  assign _GEN_1605 = _GEN_1524 == 1'h0; // @[L2.scala 399:21]
-  assign _GEN_1606 = _GEN_1574 & _GEN_1605; // @[L2.scala 399:21]
-  assign _GEN_1617 = _T_171 == 1'h0; // @[L2.scala 443:15]
-  assign _GEN_1618 = _GEN_1546 & _GEN_1617; // @[L2.scala 443:15]
-  assign _GEN_1619 = _GEN_1618 & _T_226; // @[L2.scala 443:15]
-  assign _GEN_1620 = _GEN_1619 & _T_239; // @[L2.scala 443:15]
-  assign _GEN_1630 = _T_239 == 1'h0; // @[L2.scala 470:17]
-  assign _GEN_1631 = _GEN_1619 & _GEN_1630; // @[L2.scala 470:17]
-  assign _GEN_1632 = _GEN_1631 & _T_253; // @[L2.scala 470:17]
-  assign _GEN_1633 = _GEN_1632 & _T_254; // @[L2.scala 470:17]
-  assign _GEN_1645 = _T_226 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1646 = _GEN_1618 & _GEN_1645; // @[L2.scala 513:15]
-  assign _GEN_1647 = _GEN_1646 & _T_279; // @[L2.scala 513:15]
-  assign _GEN_1648 = _GEN_1647 & _T_280; // @[L2.scala 513:15]
-  assign _GEN_1676 = _T_280 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1677 = _GEN_1647 & _GEN_1676; // @[L2.scala 513:15]
-  assign _GEN_1678 = hasDirty_1 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1679 = _GEN_1677 & _GEN_1678; // @[L2.scala 513:15]
-  assign _GEN_1680 = hasShared_1 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1681 = _GEN_1679 & _GEN_1680; // @[L2.scala 513:15]
-  assign _GEN_1682 = _GEN_1681 & _GEN_463; // @[L2.scala 513:15]
-  assign _GEN_1683 = _GEN_1682 & _T_307; // @[L2.scala 513:15]
-  assign _GEN_1738 = _GEN_463 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1739 = _GEN_1681 & _GEN_1738; // @[L2.scala 513:15]
-  assign _GEN_1787 = _T_279 == 1'h0; // @[L2.scala 627:15]
-  assign _GEN_1788 = _GEN_1646 & _GEN_1787; // @[L2.scala 627:15]
-  assign _GEN_1789 = _GEN_1788 & _T_358; // @[L2.scala 627:15]
-  assign _GEN_1790 = _GEN_1789 & _T_394; // @[L2.scala 627:15]
-  assign _GEN_1807 = _T_358 == 1'h0; // @[L2.scala 713:17]
-  assign _GEN_1808 = _GEN_1788 & _GEN_1807; // @[L2.scala 713:17]
-  assign _GEN_1809 = _GEN_1808 & _T_390; // @[L2.scala 713:17]
-  assign _GEN_1810 = _GEN_1809 & _T_394; // @[L2.scala 713:17]
-  assign _GEN_1812 = _GEN_1810 & _T_375; // @[L2.scala 713:17]
-  assign _GEN_1826 = _T_453 & _T_456; // @[L2.scala 742:15]
-  assign _GEN_1827 = _GEN_1826 & _GEN_1287; // @[L2.scala 742:15]
-  assign _GEN_1830 = _T_484 == 1'h0; // @[L2.scala 818:13]
-  assign _GEN_1831 = axi_RVALID & _GEN_1830; // @[L2.scala 818:13]
-  assign _GEN_1834 = _T_503 == 1'h0; // @[L2.scala 888:15]
-  assign _GEN_1835 = _T_510 == 1'h0; // @[L2.scala 888:15]
-  assign _GEN_1836 = _GEN_1834 & _GEN_1835; // @[L2.scala 888:15]
-  assign _GEN_1837 = _T_515 == 1'h0; // @[L2.scala 888:15]
-  assign _GEN_1838 = _GEN_1836 & _GEN_1837; // @[L2.scala 888:15]
-  assign _GEN_1839 = _GEN_1838 & _T_520; // @[L2.scala 888:15]
-  assign _GEN_1840 = _GEN_1839 & directs_0_write; // @[L2.scala 888:15]
+  assign _GEN_1547 = _T_162 == 1'h0; // @[L2.scala 367:19]
+  assign _GEN_1548 = _GEN_1547 & _T_171; // @[L2.scala 367:19]
+  assign _GEN_1549 = _T_174 == 1'h0; // @[L2.scala 367:19]
+  assign _GEN_1550 = _GEN_1548 & _GEN_1549; // @[L2.scala 367:19]
+  assign _GEN_1551 = _GEN_1550 & _T_181; // @[L2.scala 367:19]
+  assign _GEN_1553 = _GEN_1551 & _T_240; // @[L2.scala 367:19]
+  assign _GEN_1554 = hit == 1'h0; // @[L2.scala 367:19]
+  assign _GEN_1555 = _GEN_1553 & _GEN_1554; // @[L2.scala 367:19]
+  assign _GEN_1556 = _GEN_65 == 1'h0; // @[L2.scala 367:19]
+  assign _GEN_1557 = _GEN_1555 & _GEN_1556; // @[L2.scala 367:19]
+  assign _GEN_1573 = _T_181 == 1'h0; // @[L2.scala 394:17]
+  assign _GEN_1574 = _GEN_1550 & _GEN_1573; // @[L2.scala 394:17]
+  assign _GEN_1575 = _GEN_1574 & _T_194; // @[L2.scala 394:17]
+  assign _GEN_1590 = _GEN_1575 & _GEN_1525; // @[L2.scala 397:21]
+  assign _GEN_1606 = _GEN_1525 == 1'h0; // @[L2.scala 399:21]
+  assign _GEN_1607 = _GEN_1575 & _GEN_1606; // @[L2.scala 399:21]
+  assign _GEN_1618 = _T_171 == 1'h0; // @[L2.scala 443:15]
+  assign _GEN_1619 = _GEN_1547 & _GEN_1618; // @[L2.scala 443:15]
+  assign _GEN_1620 = _GEN_1619 & _T_226; // @[L2.scala 443:15]
+  assign _GEN_1621 = _GEN_1620 & _T_239; // @[L2.scala 443:15]
+  assign _GEN_1631 = _T_239 == 1'h0; // @[L2.scala 470:17]
+  assign _GEN_1632 = _GEN_1620 & _GEN_1631; // @[L2.scala 470:17]
+  assign _GEN_1633 = _GEN_1632 & _T_253; // @[L2.scala 470:17]
+  assign _GEN_1634 = _GEN_1633 & _T_254; // @[L2.scala 470:17]
+  assign _GEN_1646 = _T_226 == 1'h0; // @[L2.scala 513:15]
+  assign _GEN_1647 = _GEN_1619 & _GEN_1646; // @[L2.scala 513:15]
+  assign _GEN_1648 = _GEN_1647 & _T_279; // @[L2.scala 513:15]
+  assign _GEN_1649 = _GEN_1648 & _T_280; // @[L2.scala 513:15]
+  assign _GEN_1677 = _T_280 == 1'h0; // @[L2.scala 513:15]
+  assign _GEN_1678 = _GEN_1648 & _GEN_1677; // @[L2.scala 513:15]
+  assign _GEN_1679 = hasDirty_1 == 1'h0; // @[L2.scala 513:15]
+  assign _GEN_1680 = _GEN_1678 & _GEN_1679; // @[L2.scala 513:15]
+  assign _GEN_1681 = hasShared_1 == 1'h0; // @[L2.scala 513:15]
+  assign _GEN_1682 = _GEN_1680 & _GEN_1681; // @[L2.scala 513:15]
+  assign _GEN_1683 = _GEN_1682 & _GEN_463; // @[L2.scala 513:15]
+  assign _GEN_1684 = _GEN_1683 & _T_307; // @[L2.scala 513:15]
+  assign _GEN_1739 = _GEN_463 == 1'h0; // @[L2.scala 513:15]
+  assign _GEN_1740 = _GEN_1682 & _GEN_1739; // @[L2.scala 513:15]
+  assign _GEN_1788 = _T_279 == 1'h0; // @[L2.scala 627:15]
+  assign _GEN_1789 = _GEN_1647 & _GEN_1788; // @[L2.scala 627:15]
+  assign _GEN_1790 = _GEN_1789 & _T_358; // @[L2.scala 627:15]
+  assign _GEN_1791 = _GEN_1790 & _T_394; // @[L2.scala 627:15]
+  assign _GEN_1808 = _T_358 == 1'h0; // @[L2.scala 713:17]
+  assign _GEN_1809 = _GEN_1789 & _GEN_1808; // @[L2.scala 713:17]
+  assign _GEN_1810 = _GEN_1809 & _T_390; // @[L2.scala 713:17]
+  assign _GEN_1811 = _GEN_1810 & _T_394; // @[L2.scala 713:17]
+  assign _GEN_1813 = _GEN_1811 & _T_375; // @[L2.scala 713:17]
+  assign _GEN_1827 = _T_453 & _T_456; // @[L2.scala 742:15]
+  assign _GEN_1828 = _GEN_1827 & _GEN_1287; // @[L2.scala 742:15]
+  assign _GEN_1831 = _T_484 == 1'h0; // @[L2.scala 819:13]
+  assign _GEN_1832 = axi_RVALID & _GEN_1831; // @[L2.scala 819:13]
+  assign _GEN_1835 = _T_503 == 1'h0; // @[L2.scala 889:15]
+  assign _GEN_1836 = _T_510 == 1'h0; // @[L2.scala 889:15]
+  assign _GEN_1837 = _GEN_1835 & _GEN_1836; // @[L2.scala 889:15]
+  assign _GEN_1838 = _T_515 == 1'h0; // @[L2.scala 889:15]
+  assign _GEN_1839 = _GEN_1837 & _GEN_1838; // @[L2.scala 889:15]
+  assign _GEN_1840 = _GEN_1839 & _T_520; // @[L2.scala 889:15]
+  assign _GEN_1841 = _GEN_1840 & directs_0_write; // @[L2.scala 889:15]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -3473,7 +3475,7 @@ end // initial
       bufs_0_1 <= 64'h0;
     end else if (axi_RVALID) begin
       if (_T_484) begin
-        if (_GEN_1541 & ptr) begin
+        if (_GEN_1542 & ptr) begin
           bufs_0_1 <= axi_RDATA;
         end else if (!(_T_162)) begin
           if (_T_171) begin
@@ -3536,7 +3538,7 @@ end // initial
       bufs_1_0 <= 64'h0;
     end else if (axi_RVALID) begin
       if (_T_484) begin
-        if (_T_485 & _GEN_1542) begin
+        if (_T_485 & _GEN_1543) begin
           bufs_1_0 <= axi_RDATA;
         end else if (!(_T_162)) begin
           if (_T_171) begin
@@ -3599,7 +3601,7 @@ end // initial
       bufs_0_0 <= 64'h0;
     end else if (axi_RVALID) begin
       if (_T_484) begin
-        if (_GEN_1541 & _GEN_1542) begin
+        if (_GEN_1542 & _GEN_1543) begin
           bufs_0_0 <= axi_RDATA;
         end else if (!(_T_162)) begin
           if (_T_171) begin
@@ -3917,7 +3919,7 @@ end // initial
     end else if (axi_RVALID) begin
       if (_T_484) begin
         if (axi_RLAST) begin
-          refilled_0 <= _GEN_1352;
+          refilled_0 <= _GEN_1353;
         end else if (!(_T_162)) begin
           if (_T_171) begin
             if (!(_T_174)) begin
@@ -4084,7 +4086,7 @@ end // initial
     end else if (axi_RVALID) begin
       if (_T_484) begin
         if (axi_RLAST) begin
-          refilled_1 <= _GEN_1353;
+          refilled_1 <= _GEN_1354;
         end else if (!(_T_162)) begin
           if (_T_171) begin
             if (!(_T_174)) begin
@@ -4435,7 +4437,7 @@ end // initial
     if (reset) begin
       ucSent_0 <= 1'h0;
     end else if (axi_RVALID) begin
-      ucSent_0 <= _GEN_1366;
+      ucSent_0 <= _GEN_1367;
     end else if (!(_T_453)) begin
       if (_T_476) begin
         ucSent_0 <= _GEN_1321;
@@ -5533,7 +5535,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1556 & _T_187) begin
+        if (_GEN_1557 & _T_187) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:367 assert(!(fifoHit && sameAddrRefilling)) // FIFO inhabitance and AXI refilling are mutually exclusive\n"); // @[L2.scala 367:19]
         end
     `ifdef PRINTF_COND
@@ -5544,7 +5546,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1556 & _T_187) begin
+        if (_GEN_1557 & _T_187) begin
           $fatal; // @[L2.scala 367:19]
         end
     `ifdef STOP_COND
@@ -5555,7 +5557,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1574 & _T_200) begin
+        if (_GEN_1575 & _T_200) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:394 assert(lookups(hitIdx).hit(targetAddr))\n"); // @[L2.scala 394:17]
         end
     `ifdef PRINTF_COND
@@ -5566,7 +5568,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1574 & _T_200) begin
+        if (_GEN_1575 & _T_200) begin
           $fatal; // @[L2.scala 394:17]
         end
     `ifdef STOP_COND
@@ -5577,7 +5579,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1589 & _T_205) begin
+        if (_GEN_1590 & _T_205) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:397 assert(lookups(hitIdx).states(core) === L2DirState.modified)\n"); // @[L2.scala 397:21]
         end
     `ifdef PRINTF_COND
@@ -5588,7 +5590,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1589 & _T_205) begin
+        if (_GEN_1590 & _T_205) begin
           $fatal; // @[L2.scala 397:21]
         end
     `ifdef STOP_COND
@@ -5599,7 +5601,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1606 & _T_209) begin
+        if (_GEN_1607 & _T_209) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:399 assert(lookups(hitIdx).states(core) === L2DirState.vacant)\n"); // @[L2.scala 399:21]
         end
     `ifdef PRINTF_COND
@@ -5610,7 +5612,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1606 & _T_209) begin
+        if (_GEN_1607 & _T_209) begin
           $fatal; // @[L2.scala 399:21]
         end
     `ifdef STOP_COND
@@ -5621,7 +5623,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1620 & _T_243) begin
+        if (_GEN_1621 & _T_243) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:443 assert(!misses(target))\n"); // @[L2.scala 443:15]
         end
     `ifdef PRINTF_COND
@@ -5632,7 +5634,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1620 & _T_243) begin
+        if (_GEN_1621 & _T_243) begin
           $fatal; // @[L2.scala 443:15]
         end
     `ifdef STOP_COND
@@ -5643,7 +5645,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1633 & _T_243) begin
+        if (_GEN_1634 & _T_243) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:470 assert(!misses(target))\n"); // @[L2.scala 470:17]
         end
     `ifdef PRINTF_COND
@@ -5654,7 +5656,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1633 & _T_243) begin
+        if (_GEN_1634 & _T_243) begin
           $fatal; // @[L2.scala 470:17]
         end
     `ifdef STOP_COND
@@ -5665,7 +5667,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1648 & _T_284) begin
+        if (_GEN_1649 & _T_284) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:513 assert(misses(target))\n"); // @[L2.scala 513:15]
         end
     `ifdef PRINTF_COND
@@ -5676,7 +5678,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1648 & _T_284) begin
+        if (_GEN_1649 & _T_284) begin
           $fatal; // @[L2.scala 513:15]
         end
     `ifdef STOP_COND
@@ -5687,7 +5689,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1648 & _T_287) begin
+        if (_GEN_1649 & _T_287) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:514 assert(refilled(target))\n"); // @[L2.scala 514:15]
         end
     `ifdef PRINTF_COND
@@ -5698,7 +5700,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1648 & _T_287) begin
+        if (_GEN_1649 & _T_287) begin
           $fatal; // @[L2.scala 514:15]
         end
     `ifdef STOP_COND
@@ -5709,7 +5711,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1683 & _T_284) begin
+        if (_GEN_1684 & _T_284) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:513 assert(misses(target))\n"); // @[L2.scala 513:15]
         end
     `ifdef PRINTF_COND
@@ -5720,7 +5722,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1683 & _T_284) begin
+        if (_GEN_1684 & _T_284) begin
           $fatal; // @[L2.scala 513:15]
         end
     `ifdef STOP_COND
@@ -5731,7 +5733,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1683 & _T_287) begin
+        if (_GEN_1684 & _T_287) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:514 assert(refilled(target))\n"); // @[L2.scala 514:15]
         end
     `ifdef PRINTF_COND
@@ -5742,7 +5744,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1683 & _T_287) begin
+        if (_GEN_1684 & _T_287) begin
           $fatal; // @[L2.scala 514:15]
         end
     `ifdef STOP_COND
@@ -5753,7 +5755,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1739 & _T_284) begin
+        if (_GEN_1740 & _T_284) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:513 assert(misses(target))\n"); // @[L2.scala 513:15]
         end
     `ifdef PRINTF_COND
@@ -5764,7 +5766,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1739 & _T_284) begin
+        if (_GEN_1740 & _T_284) begin
           $fatal; // @[L2.scala 513:15]
         end
     `ifdef STOP_COND
@@ -5775,7 +5777,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1739 & _T_287) begin
+        if (_GEN_1740 & _T_287) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:514 assert(refilled(target))\n"); // @[L2.scala 514:15]
         end
     `ifdef PRINTF_COND
@@ -5786,7 +5788,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1739 & _T_287) begin
+        if (_GEN_1740 & _T_287) begin
           $fatal; // @[L2.scala 514:15]
         end
     `ifdef STOP_COND
@@ -5797,7 +5799,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1790 & _T_374) begin
+        if (_GEN_1791 & _T_374) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:627 assert(RegNext(commit))\n"); // @[L2.scala 627:15]
         end
     `ifdef PRINTF_COND
@@ -5808,7 +5810,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1790 & _T_374) begin
+        if (_GEN_1791 & _T_374) begin
           $fatal; // @[L2.scala 627:15]
         end
     `ifdef STOP_COND
@@ -5819,7 +5821,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1812 & _T_441) begin
+        if (_GEN_1813 & _T_441) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:713 assert(targetOps === L1DCPort.L1Req.modify)\n"); // @[L2.scala 713:17]
         end
     `ifdef PRINTF_COND
@@ -5830,7 +5832,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1812 & _T_441) begin
+        if (_GEN_1813 & _T_441) begin
           $fatal; // @[L2.scala 713:17]
         end
     `ifdef STOP_COND
@@ -5841,7 +5843,7 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1827 & _T_462) begin
+        if (_GEN_1828 & _T_462) begin
           $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:742 assert(rawReqAddr === addrs(reqTarget))\n"); // @[L2.scala 742:15]
         end
     `ifdef PRINTF_COND
@@ -5852,7 +5854,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1827 & _T_462) begin
+        if (_GEN_1828 & _T_462) begin
           $fatal; // @[L2.scala 742:15]
         end
     `ifdef STOP_COND
@@ -5863,8 +5865,8 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1831 & _T_496) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:818 assert(axi.RLAST)\n"); // @[L2.scala 818:13]
+        if (_GEN_1832 & _T_496) begin
+          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:819 assert(axi.RLAST)\n"); // @[L2.scala 819:13]
         end
     `ifdef PRINTF_COND
       end
@@ -5874,8 +5876,8 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1831 & _T_496) begin
-          $fatal; // @[L2.scala 818:13]
+        if (_GEN_1832 & _T_496) begin
+          $fatal; // @[L2.scala 819:13]
         end
     `ifdef STOP_COND
       end
@@ -5885,8 +5887,8 @@ end // initial
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_1840 & _T_525) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:888 assert(axi.AWADDR(log2Ceil(opts.XLEN / 8)-1, 0) === 0.U)\n"); // @[L2.scala 888:15]
+        if (_GEN_1841 & _T_525) begin
+          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:889 assert(axi.AWADDR(log2Ceil(opts.XLEN / 8)-1, 0) === 0.U)\n"); // @[L2.scala 889:15]
         end
     `ifdef PRINTF_COND
       end
@@ -5896,8 +5898,8 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_1840 & _T_525) begin
-          $fatal; // @[L2.scala 888:15]
+        if (_GEN_1841 & _T_525) begin
+          $fatal; // @[L2.scala 889:15]
         end
     `ifdef STOP_COND
       end

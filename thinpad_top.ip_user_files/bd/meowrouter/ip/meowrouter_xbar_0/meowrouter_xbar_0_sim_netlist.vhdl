@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Tue Dec 10 19:00:59 2019
+-- Date        : Sat Dec 14 03:32:52 2019
 -- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_xbar_0/meowrouter_xbar_0_sim_netlist.vhdl
@@ -168,21 +168,21 @@ architecture STRUCTURE of meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sa
   signal s_axi_wlast_0_sn_1 : STD_LOGIC;
   signal s_ready_i : STD_LOGIC;
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \FSM_onehot_gen_axi.write_cs[2]_i_3\ : label is "soft_lutpair1";
+  attribute SOFT_HLUTNM of \FSM_onehot_gen_axi.write_cs[2]_i_3\ : label is "soft_lutpair2";
   attribute SOFT_HLUTNM of \gen_axi.read_cnt[7]_i_4\ : label is "soft_lutpair5";
   attribute SOFT_HLUTNM of \gen_axi.read_cnt[7]_i_5\ : label is "soft_lutpair13";
   attribute SOFT_HLUTNM of \gen_axi.s_axi_awready_i_i_2\ : label is "soft_lutpair12";
-  attribute SOFT_HLUTNM of \gen_axi.s_axi_bvalid_i_i_2\ : label is "soft_lutpair3";
+  attribute SOFT_HLUTNM of \gen_axi.s_axi_bvalid_i_i_2\ : label is "soft_lutpair0";
   attribute SOFT_HLUTNM of \gen_no_arbiter.m_grant_hot_i[0]_i_2\ : label is "soft_lutpair7";
   attribute SOFT_HLUTNM of \gen_no_arbiter.s_ready_i[0]_i_1\ : label is "soft_lutpair7";
   attribute SOFT_HLUTNM of \m_atarget_enc[0]_i_1\ : label is "soft_lutpair11";
-  attribute SOFT_HLUTNM of \m_atarget_hot[0]_i_1\ : label is "soft_lutpair0";
+  attribute SOFT_HLUTNM of \m_atarget_hot[0]_i_1\ : label is "soft_lutpair3";
   attribute SOFT_HLUTNM of \m_atarget_hot[1]_i_2\ : label is "soft_lutpair4";
   attribute SOFT_HLUTNM of \m_atarget_hot[2]_i_1\ : label is "soft_lutpair19";
   attribute SOFT_HLUTNM of \m_atarget_hot[3]_i_6\ : label is "soft_lutpair10";
   attribute SOFT_HLUTNM of \m_atarget_hot[4]_i_1\ : label is "soft_lutpair19";
   attribute SOFT_HLUTNM of \m_atarget_hot[5]_i_3\ : label is "soft_lutpair10";
-  attribute SOFT_HLUTNM of \m_atarget_hot[6]_i_1\ : label is "soft_lutpair0";
+  attribute SOFT_HLUTNM of \m_atarget_hot[6]_i_1\ : label is "soft_lutpair3";
   attribute SOFT_HLUTNM of \m_atarget_hot[6]_i_11\ : label is "soft_lutpair9";
   attribute SOFT_HLUTNM of \m_atarget_hot[6]_i_15\ : label is "soft_lutpair9";
   attribute SOFT_HLUTNM of \m_atarget_hot[6]_i_17\ : label is "soft_lutpair8";
@@ -200,11 +200,11 @@ architecture STRUCTURE of meowrouter_xbar_0_axi_crossbar_v2_1_19_addr_arbiter_sa
   attribute SOFT_HLUTNM of \m_axi_awvalid[3]_INST_0\ : label is "soft_lutpair17";
   attribute SOFT_HLUTNM of \m_axi_awvalid[4]_INST_0\ : label is "soft_lutpair12";
   attribute SOFT_HLUTNM of \m_axi_awvalid[5]_INST_0\ : label is "soft_lutpair16";
-  attribute SOFT_HLUTNM of \m_axi_bready[4]_INST_0\ : label is "soft_lutpair2";
-  attribute SOFT_HLUTNM of \m_axi_bready[5]_INST_0\ : label is "soft_lutpair1";
+  attribute SOFT_HLUTNM of \m_axi_bready[5]_INST_0\ : label is "soft_lutpair2";
   attribute SOFT_HLUTNM of \m_axi_rready[3]_INST_0\ : label is "soft_lutpair5";
-  attribute SOFT_HLUTNM of \m_axi_wvalid[0]_INST_0\ : label is "soft_lutpair3";
-  attribute SOFT_HLUTNM of \m_ready_d[1]_i_2__0\ : label is "soft_lutpair2";
+  attribute SOFT_HLUTNM of \m_axi_wvalid[0]_INST_0\ : label is "soft_lutpair1";
+  attribute SOFT_HLUTNM of \m_axi_wvalid[2]_INST_0\ : label is "soft_lutpair0";
+  attribute SOFT_HLUTNM of \m_ready_d[1]_i_2__0\ : label is "soft_lutpair1";
   attribute SOFT_HLUTNM of \m_ready_d[1]_i_4\ : label is "soft_lutpair6";
   attribute SOFT_HLUTNM of \s_arvalid_reg[0]_i_1\ : label is "soft_lutpair11";
   attribute SOFT_HLUTNM of \s_axi_arready[0]_INST_0\ : label is "soft_lutpair20";
@@ -2390,17 +2390,16 @@ begin
       I3 => \m_atarget_hot[6]_i_18_n_0\,
       O => \m_atarget_hot[6]_i_8_n_0\
     );
-\m_atarget_hot[6]_i_9\: unisim.vcomponents.LUT6
+\m_atarget_hot[6]_i_9\: unisim.vcomponents.LUT5
     generic map(
-      INIT => X"0000000800000000"
+      INIT => X"00080000"
     )
         port map (
       I0 => \^gen_no_arbiter.m_amesg_i_reg[77]_0\(32),
       I1 => \^gen_no_arbiter.m_amesg_i_reg[77]_0\(33),
-      I2 => \^gen_no_arbiter.m_amesg_i_reg[77]_0\(19),
-      I3 => \^gen_no_arbiter.m_amesg_i_reg[77]_0\(18),
-      I4 => \^gen_no_arbiter.m_amesg_i_reg[77]_0\(17),
-      I5 => \m_atarget_hot[6]_i_7_n_0\,
+      I2 => \^gen_no_arbiter.m_amesg_i_reg[77]_0\(18),
+      I3 => \^gen_no_arbiter.m_amesg_i_reg[77]_0\(19),
+      I4 => \m_atarget_hot[6]_i_7_n_0\,
       O => \m_atarget_hot[6]_i_9_n_0\
     );
 \m_axi_arvalid[0]_INST_0\: unisim.vcomponents.LUT4
@@ -7301,7 +7300,7 @@ entity meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar is
   attribute C_FAMILY : string;
   attribute C_FAMILY of meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar : entity is "artix7";
   attribute C_M_AXI_ADDR_WIDTH : string;
-  attribute C_M_AXI_ADDR_WIDTH of meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar : entity is "192'b000000000000000000000000000100000000000000000000000000000001011100000000000000000000000000010111000000000000000000000000000011010000000000000000000000000001000000000000000000000000000000010000";
+  attribute C_M_AXI_ADDR_WIDTH of meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar : entity is "192'b000000000000000000000000000100000000000000000000000000000001011100000000000000000000000000010111000000000000000000000000000011100000000000000000000000000001000000000000000000000000000000010000";
   attribute C_M_AXI_BASE_ADDR : string;
   attribute C_M_AXI_BASE_ADDR of meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar : entity is "384'b000000000000000011100000000000000000000000000000000000000000000000000000000000001111111111111111001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111110011000000000000000000000000000000000000000000001111111111111111000000000000000000000000000000000000000000000000111111111111111100010000000000000000000000000000";
   attribute C_M_AXI_READ_CONNECTIVITY : string;
@@ -7378,7 +7377,7 @@ end meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar;
 
 architecture STRUCTURE of meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar is
   signal \<const0>\ : STD_LOGIC;
-  signal \^m_axi_araddr\ : STD_LOGIC_VECTOR ( 12 downto 0 );
+  signal \^m_axi_araddr\ : STD_LOGIC_VECTOR ( 13 downto 0 );
   signal \^m_axi_arburst\ : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal \^m_axi_arcache\ : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal \^m_axi_arid\ : STD_LOGIC_VECTOR ( 3 downto 0 );
@@ -7386,7 +7385,7 @@ architecture STRUCTURE of meowrouter_xbar_0_axi_crossbar_v2_1_19_axi_crossbar is
   signal \^m_axi_arprot\ : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal \^m_axi_arqos\ : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal \^m_axi_arsize\ : STD_LOGIC_VECTOR ( 2 downto 0 );
-  signal \^m_axi_awaddr\ : STD_LOGIC_VECTOR ( 287 downto 253 );
+  signal \^m_axi_awaddr\ : STD_LOGIC_VECTOR ( 287 downto 254 );
   signal \^m_axi_awlen\ : STD_LOGIC_VECTOR ( 47 downto 40 );
   signal \^s_axi_wdata\ : STD_LOGIC_VECTOR ( 63 downto 0 );
   signal \^s_axi_wlast\ : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -7395,18 +7394,18 @@ begin
   \^s_axi_wdata\(63 downto 0) <= s_axi_wdata(63 downto 0);
   \^s_axi_wlast\(0) <= s_axi_wlast(0);
   \^s_axi_wstrb\(7 downto 0) <= s_axi_wstrb(7 downto 0);
-  m_axi_araddr(287 downto 253) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_araddr(252 downto 240) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_araddr(239 downto 205) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_araddr(204 downto 192) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_araddr(191 downto 157) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_araddr(156 downto 144) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_araddr(143 downto 109) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_araddr(108 downto 96) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_araddr(95 downto 61) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_araddr(60 downto 48) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_araddr(47 downto 13) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_araddr(12 downto 0) <= \^m_axi_araddr\(12 downto 0);
+  m_axi_araddr(287 downto 254) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_araddr(253 downto 240) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_araddr(239 downto 206) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_araddr(205 downto 192) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_araddr(191 downto 158) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_araddr(157 downto 144) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_araddr(143 downto 110) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_araddr(109 downto 96) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_araddr(95 downto 62) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_araddr(61 downto 48) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_araddr(47 downto 14) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_araddr(13 downto 0) <= \^m_axi_araddr\(13 downto 0);
   m_axi_arburst(11 downto 10) <= \^m_axi_arburst\(1 downto 0);
   m_axi_arburst(9 downto 8) <= \^m_axi_arburst\(1 downto 0);
   m_axi_arburst(7 downto 6) <= \^m_axi_arburst\(1 downto 0);
@@ -7485,18 +7484,18 @@ begin
   m_axi_aruser(2) <= \<const0>\;
   m_axi_aruser(1) <= \<const0>\;
   m_axi_aruser(0) <= \<const0>\;
-  m_axi_awaddr(287 downto 253) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_awaddr(252 downto 240) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_awaddr(239 downto 205) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_awaddr(204 downto 192) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_awaddr(191 downto 157) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_awaddr(156 downto 144) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_awaddr(143 downto 109) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_awaddr(108 downto 96) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_awaddr(95 downto 61) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_awaddr(60 downto 48) <= \^m_axi_araddr\(12 downto 0);
-  m_axi_awaddr(47 downto 13) <= \^m_axi_awaddr\(287 downto 253);
-  m_axi_awaddr(12 downto 0) <= \^m_axi_araddr\(12 downto 0);
+  m_axi_awaddr(287 downto 254) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_awaddr(253 downto 240) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_awaddr(239 downto 206) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_awaddr(205 downto 192) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_awaddr(191 downto 158) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_awaddr(157 downto 144) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_awaddr(143 downto 110) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_awaddr(109 downto 96) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_awaddr(95 downto 62) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_awaddr(61 downto 48) <= \^m_axi_araddr\(13 downto 0);
+  m_axi_awaddr(47 downto 14) <= \^m_axi_awaddr\(287 downto 254);
+  m_axi_awaddr(13 downto 0) <= \^m_axi_araddr\(13 downto 0);
   m_axi_awburst(11 downto 10) <= \^m_axi_arburst\(1 downto 0);
   m_axi_awburst(9 downto 8) <= \^m_axi_arburst\(1 downto 0);
   m_axi_awburst(7 downto 6) <= \^m_axi_arburst\(1 downto 0);
@@ -7640,8 +7639,8 @@ GND: unisim.vcomponents.GND
       Q(63) => \^m_axi_arlock\(0),
       Q(62 downto 60) => \^m_axi_arsize\(2 downto 0),
       Q(59 downto 52) => \^m_axi_awlen\(47 downto 40),
-      Q(51 downto 17) => \^m_axi_awaddr\(287 downto 253),
-      Q(16 downto 4) => \^m_axi_araddr\(12 downto 0),
+      Q(51 downto 18) => \^m_axi_awaddr\(287 downto 254),
+      Q(17 downto 4) => \^m_axi_araddr\(13 downto 0),
       Q(3 downto 0) => \^m_axi_arid\(3 downto 0),
       aclk => aclk,
       aresetn => aresetn,
@@ -7821,7 +7820,7 @@ architecture STRUCTURE of meowrouter_xbar_0 is
   attribute C_FAMILY : string;
   attribute C_FAMILY of inst : label is "artix7";
   attribute C_M_AXI_ADDR_WIDTH : string;
-  attribute C_M_AXI_ADDR_WIDTH of inst : label is "192'b000000000000000000000000000100000000000000000000000000000001011100000000000000000000000000010111000000000000000000000000000011010000000000000000000000000001000000000000000000000000000000010000";
+  attribute C_M_AXI_ADDR_WIDTH of inst : label is "192'b000000000000000000000000000100000000000000000000000000000001011100000000000000000000000000010111000000000000000000000000000011100000000000000000000000000001000000000000000000000000000000010000";
   attribute C_M_AXI_BASE_ADDR : string;
   attribute C_M_AXI_BASE_ADDR of inst : label is "384'b000000000000000011100000000000000000000000000000000000000000000000000000000000001111111111111111001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111110011000000000000000000000000000000000000000000001111111111111111000000000000000000000000000000000000000000000000111111111111111100010000000000000000000000000000";
   attribute C_M_AXI_READ_CONNECTIVITY : string;
@@ -7894,7 +7893,7 @@ architecture STRUCTURE of meowrouter_xbar_0 is
   attribute X_INTERFACE_INFO : string;
   attribute X_INTERFACE_INFO of aclk : signal is "xilinx.com:signal:clock:1.0 CLKIF CLK";
   attribute X_INTERFACE_PARAMETER : string;
-  attribute X_INTERFACE_PARAMETER of aclk : signal is "XIL_INTERFACENAME CLKIF, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, ASSOCIATED_BUSIF M00_AXI:M01_AXI:M02_AXI:M03_AXI:M04_AXI:M05_AXI:M06_AXI:M07_AXI:M08_AXI:M09_AXI:M10_AXI:M11_AXI:M12_AXI:M13_AXI:M14_AXI:M15_AXI:S00_AXI:S01_AXI:S02_AXI:S03_AXI:S04_AXI:S05_AXI:S06_AXI:S07_AXI:S08_AXI:S09_AXI:S10_AXI:S11_AXI:S12_AXI:S13_AXI:S14_AXI:S15_AXI, ASSOCIATED_RESET ARESETN, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of aclk : signal is "XIL_INTERFACENAME CLKIF, FREQ_HZ 70000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, ASSOCIATED_BUSIF M00_AXI:M01_AXI:M02_AXI:M03_AXI:M04_AXI:M05_AXI:M06_AXI:M07_AXI:M08_AXI:M09_AXI:M10_AXI:M11_AXI:M12_AXI:M13_AXI:M14_AXI:M15_AXI:S00_AXI:S01_AXI:S02_AXI:S03_AXI:S04_AXI:S05_AXI:S06_AXI:S07_AXI:S08_AXI:S09_AXI:S10_AXI:S11_AXI:S12_AXI:S13_AXI:S14_AXI:S15_AXI, ASSOCIATED_RESET ARESETN, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of aresetn : signal is "xilinx.com:signal:reset:1.0 RSTIF RST";
   attribute X_INTERFACE_PARAMETER of aresetn : signal is "XIL_INTERFACENAME RSTIF, POLARITY ACTIVE_LOW, INSERT_VIP 0, TYPE INTERCONNECT";
   attribute X_INTERFACE_INFO of m_axi_araddr : signal is "xilinx.com:interface:aximm:1.0 M00_AXI ARADDR [47:0] [47:0], xilinx.com:interface:aximm:1.0 M01_AXI ARADDR [47:0] [95:48], xilinx.com:interface:aximm:1.0 M02_AXI ARADDR [47:0] [143:96], xilinx.com:interface:aximm:1.0 M03_AXI ARADDR [47:0] [191:144], xilinx.com:interface:aximm:1.0 M04_AXI ARADDR [47:0] [239:192], xilinx.com:interface:aximm:1.0 M05_AXI ARADDR [47:0] [287:240]";
@@ -7925,7 +7924,7 @@ architecture STRUCTURE of meowrouter_xbar_0 is
   attribute X_INTERFACE_INFO of m_axi_rdata : signal is "xilinx.com:interface:aximm:1.0 M00_AXI RDATA [63:0] [63:0], xilinx.com:interface:aximm:1.0 M01_AXI RDATA [63:0] [127:64], xilinx.com:interface:aximm:1.0 M02_AXI RDATA [63:0] [191:128], xilinx.com:interface:aximm:1.0 M03_AXI RDATA [63:0] [255:192], xilinx.com:interface:aximm:1.0 M04_AXI RDATA [63:0] [319:256], xilinx.com:interface:aximm:1.0 M05_AXI RDATA [63:0] [383:320]";
   attribute X_INTERFACE_INFO of m_axi_rlast : signal is "xilinx.com:interface:aximm:1.0 M00_AXI RLAST [0:0] [0:0], xilinx.com:interface:aximm:1.0 M01_AXI RLAST [0:0] [1:1], xilinx.com:interface:aximm:1.0 M02_AXI RLAST [0:0] [2:2], xilinx.com:interface:aximm:1.0 M03_AXI RLAST [0:0] [3:3], xilinx.com:interface:aximm:1.0 M04_AXI RLAST [0:0] [4:4], xilinx.com:interface:aximm:1.0 M05_AXI RLAST [0:0] [5:5]";
   attribute X_INTERFACE_INFO of m_axi_rready : signal is "xilinx.com:interface:aximm:1.0 M00_AXI RREADY [0:0] [0:0], xilinx.com:interface:aximm:1.0 M01_AXI RREADY [0:0] [1:1], xilinx.com:interface:aximm:1.0 M02_AXI RREADY [0:0] [2:2], xilinx.com:interface:aximm:1.0 M03_AXI RREADY [0:0] [3:3], xilinx.com:interface:aximm:1.0 M04_AXI RREADY [0:0] [4:4], xilinx.com:interface:aximm:1.0 M05_AXI RREADY [0:0] [5:5]";
-  attribute X_INTERFACE_PARAMETER of m_axi_rready : signal is "XIL_INTERFACENAME M00_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M01_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M02_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M03_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M04_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M05_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of m_axi_rready : signal is "XIL_INTERFACENAME M00_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M01_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M02_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M03_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M04_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0, XIL_INTERFACENAME M05_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of m_axi_rresp : signal is "xilinx.com:interface:aximm:1.0 M00_AXI RRESP [1:0] [1:0], xilinx.com:interface:aximm:1.0 M01_AXI RRESP [1:0] [3:2], xilinx.com:interface:aximm:1.0 M02_AXI RRESP [1:0] [5:4], xilinx.com:interface:aximm:1.0 M03_AXI RRESP [1:0] [7:6], xilinx.com:interface:aximm:1.0 M04_AXI RRESP [1:0] [9:8], xilinx.com:interface:aximm:1.0 M05_AXI RRESP [1:0] [11:10]";
   attribute X_INTERFACE_INFO of m_axi_rvalid : signal is "xilinx.com:interface:aximm:1.0 M00_AXI RVALID [0:0] [0:0], xilinx.com:interface:aximm:1.0 M01_AXI RVALID [0:0] [1:1], xilinx.com:interface:aximm:1.0 M02_AXI RVALID [0:0] [2:2], xilinx.com:interface:aximm:1.0 M03_AXI RVALID [0:0] [3:3], xilinx.com:interface:aximm:1.0 M04_AXI RVALID [0:0] [4:4], xilinx.com:interface:aximm:1.0 M05_AXI RVALID [0:0] [5:5]";
   attribute X_INTERFACE_INFO of m_axi_wdata : signal is "xilinx.com:interface:aximm:1.0 M00_AXI WDATA [63:0] [63:0], xilinx.com:interface:aximm:1.0 M01_AXI WDATA [63:0] [127:64], xilinx.com:interface:aximm:1.0 M02_AXI WDATA [63:0] [191:128], xilinx.com:interface:aximm:1.0 M03_AXI WDATA [63:0] [255:192], xilinx.com:interface:aximm:1.0 M04_AXI WDATA [63:0] [319:256], xilinx.com:interface:aximm:1.0 M05_AXI WDATA [63:0] [383:320]";
@@ -7963,7 +7962,7 @@ architecture STRUCTURE of meowrouter_xbar_0 is
   attribute X_INTERFACE_INFO of s_axi_rid : signal is "xilinx.com:interface:aximm:1.0 S00_AXI RID";
   attribute X_INTERFACE_INFO of s_axi_rlast : signal is "xilinx.com:interface:aximm:1.0 S00_AXI RLAST";
   attribute X_INTERFACE_INFO of s_axi_rready : signal is "xilinx.com:interface:aximm:1.0 S00_AXI RREADY";
-  attribute X_INTERFACE_PARAMETER of s_axi_rready : signal is "XIL_INTERFACENAME S00_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 50000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  attribute X_INTERFACE_PARAMETER of s_axi_rready : signal is "XIL_INTERFACENAME S00_AXI, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   attribute X_INTERFACE_INFO of s_axi_rresp : signal is "xilinx.com:interface:aximm:1.0 S00_AXI RRESP";
   attribute X_INTERFACE_INFO of s_axi_rvalid : signal is "xilinx.com:interface:aximm:1.0 S00_AXI RVALID";
   attribute X_INTERFACE_INFO of s_axi_wdata : signal is "xilinx.com:interface:aximm:1.0 S00_AXI WDATA";

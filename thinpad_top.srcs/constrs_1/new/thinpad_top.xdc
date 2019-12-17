@@ -763,6 +763,7 @@ set_property MARK_DEBUG false [get_nets {mr/RAMEMC/s_axi_mem_wdata[45]}]
 set_property MARK_DEBUG false [get_nets {mr/RAMEMC/s_axi_mem_wdata[54]}]
 set_false_path -from [get_pins {mr/VIO/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C}]
 
+
 create_debug_core u_ila_0 ila
 set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
 set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
@@ -775,20 +776,12 @@ set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
 set_property port_width 1 [get_debug_ports u_ila_0/clk]
 connect_debug_port u_ila_0/clk [get_nets [list clock_gen/inst/clk_CPU]]
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
-set_property port_width 4 [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {mr/CPU/inst/exec/ctrl_br_req_extype[0]} {mr/CPU/inst/exec/ctrl_br_req_extype[1]} {mr/CPU/inst/exec/ctrl_br_req_extype[2]} {mr/CPU/inst/exec/ctrl_br_req_extype[3]}]]
+set_property port_width 32 [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {mr/EthBuf_douta[0]} {mr/EthBuf_douta[1]} {mr/EthBuf_douta[2]} {mr/EthBuf_douta[3]} {mr/EthBuf_douta[4]} {mr/EthBuf_douta[5]} {mr/EthBuf_douta[6]} {mr/EthBuf_douta[7]} {mr/EthBuf_douta[8]} {mr/EthBuf_douta[9]} {mr/EthBuf_douta[10]} {mr/EthBuf_douta[11]} {mr/EthBuf_douta[12]} {mr/EthBuf_douta[13]} {mr/EthBuf_douta[14]} {mr/EthBuf_douta[15]} {mr/EthBuf_douta[16]} {mr/EthBuf_douta[17]} {mr/EthBuf_douta[18]} {mr/EthBuf_douta[19]} {mr/EthBuf_douta[20]} {mr/EthBuf_douta[21]} {mr/EthBuf_douta[22]} {mr/EthBuf_douta[23]} {mr/EthBuf_douta[24]} {mr/EthBuf_douta[25]} {mr/EthBuf_douta[26]} {mr/EthBuf_douta[27]} {mr/EthBuf_douta[28]} {mr/EthBuf_douta[29]} {mr/EthBuf_douta[30]} {mr/EthBuf_douta[31]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
-set_property port_width 2 [get_debug_ports u_ila_0/probe1]
-connect_debug_port u_ila_0/probe1 [get_nets [list {mr/CPU/inst/exec/ctrl_br_req_ex[0]} {mr/CPU/inst/exec/ctrl_br_req_ex[1]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
-set_property port_width 47 [get_debug_ports u_ila_0/probe2]
-connect_debug_port u_ila_0/probe2 [get_nets [list {mr/CPU/inst/io_pc[0]} {mr/CPU/inst/io_pc[1]} {mr/CPU/inst/io_pc[2]} {mr/CPU/inst/io_pc[3]} {mr/CPU/inst/io_pc[4]} {mr/CPU/inst/io_pc[5]} {mr/CPU/inst/io_pc[6]} {mr/CPU/inst/io_pc[7]} {mr/CPU/inst/io_pc[8]} {mr/CPU/inst/io_pc[9]} {mr/CPU/inst/io_pc[10]} {mr/CPU/inst/io_pc[11]} {mr/CPU/inst/io_pc[12]} {mr/CPU/inst/io_pc[13]} {mr/CPU/inst/io_pc[14]} {mr/CPU/inst/io_pc[15]} {mr/CPU/inst/io_pc[16]} {mr/CPU/inst/io_pc[17]} {mr/CPU/inst/io_pc[18]} {mr/CPU/inst/io_pc[19]} {mr/CPU/inst/io_pc[20]} {mr/CPU/inst/io_pc[21]} {mr/CPU/inst/io_pc[22]} {mr/CPU/inst/io_pc[23]} {mr/CPU/inst/io_pc[24]} {mr/CPU/inst/io_pc[25]} {mr/CPU/inst/io_pc[26]} {mr/CPU/inst/io_pc[27]} {mr/CPU/inst/io_pc[28]} {mr/CPU/inst/io_pc[29]} {mr/CPU/inst/io_pc[30]} {mr/CPU/inst/io_pc[31]} {mr/CPU/inst/io_pc[32]} {mr/CPU/inst/io_pc[33]} {mr/CPU/inst/io_pc[34]} {mr/CPU/inst/io_pc[35]} {mr/CPU/inst/io_pc[36]} {mr/CPU/inst/io_pc[37]} {mr/CPU/inst/io_pc[38]} {mr/CPU/inst/io_pc[39]} {mr/CPU/inst/io_pc[40]} {mr/CPU/inst/io_pc[41]} {mr/CPU/inst/io_pc[42]} {mr/CPU/inst/io_pc[43]} {mr/CPU/inst/io_pc[44]} {mr/CPU/inst/io_pc[45]} {mr/CPU/inst/io_pc[46]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
-set_property port_width 1 [get_debug_ports u_ila_0/probe3]
-connect_debug_port u_ila_0/probe3 [get_nets [list mr/CPU/inst/exec/units_1/Div/ctrl_br_req_branch]]
+set_property port_width 12 [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list {mr/EthBuf/addra[0]} {mr/EthBuf/addra[1]} {mr/EthBuf/addra[2]} {mr/EthBuf/addra[3]} {mr/EthBuf/addra[4]} {mr/EthBuf/addra[5]} {mr/EthBuf/addra[6]} {mr/EthBuf/addra[7]} {mr/EthBuf/addra[8]} {mr/EthBuf/addra[9]} {mr/EthBuf/addra[10]} {mr/EthBuf/addra[11]}]]
 set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
 set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
 set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]

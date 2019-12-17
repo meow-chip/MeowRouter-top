@@ -247,7 +247,7 @@ proc create_root_design { parentCell } {
    CONFIG.Byte_Size {8} \
    CONFIG.EN_SAFETY_CKT {true} \
    CONFIG.Enable_32bit_Address {false} \
-   CONFIG.Enable_B {Use_ENB_Pin} \
+   CONFIG.Enable_B {Always_Enabled} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
    CONFIG.Port_B_Clock {100} \
    CONFIG.Port_B_Enable_Rate {100} \
@@ -255,7 +255,7 @@ proc create_root_design { parentCell } {
    CONFIG.Read_Width_A {32} \
    CONFIG.Read_Width_B {8} \
    CONFIG.Register_PortA_Output_of_Memory_Core {false} \
-   CONFIG.Register_PortA_Output_of_Memory_Primitives {true} \
+   CONFIG.Register_PortA_Output_of_Memory_Primitives {false} \
    CONFIG.Register_PortB_Output_of_Memory_Core {false} \
    CONFIG.Register_PortB_Output_of_Memory_Primitives {false} \
    CONFIG.Reset_Memory_Latch_A {false} \
@@ -275,7 +275,7 @@ proc create_root_design { parentCell } {
    CONFIG.DATA_WIDTH {32} \
    CONFIG.ECC_TYPE {0} \
    CONFIG.PROTOCOL {AXI4} \
-   CONFIG.READ_LATENCY {2} \
+   CONFIG.READ_LATENCY {1} \
    CONFIG.SINGLE_PORT_BRAM {1} \
  ] $EthBufCtrl
 
