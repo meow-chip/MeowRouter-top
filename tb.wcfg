@@ -19,15 +19,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="400394761666fs"></ZoomStartTime>
-      <ZoomEndTime time="407394761667fs"></ZoomEndTime>
-      <Cursor1Time time="406228095000fs"></Cursor1Time>
+      <ZoomStartTime time="201084528000fs"></ZoomStartTime>
+      <ZoomEndTime time="201792528001fs"></ZoomEndTime>
+      <Cursor1Time time="201202528000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="188"></NameColumnWidth>
-      <ValueColumnWidth column_width="117"></ValueColumnWidth>
+      <ValueColumnWidth column_width="113"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="76" />
+   <WVObjectSize size="81" />
    <wvobject fp_name="/tb/clk_50M" type="logic">
       <obj_property name="ElementShortName">clk_50M</obj_property>
       <obj_property name="ObjectShortName">clk_50M</obj_property>
@@ -343,5 +343,25 @@
    <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/io_pc" type="array">
       <obj_property name="ElementShortName">io_pc[63:0]</obj_property>
       <obj_property name="ObjectShortName">io_pc[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/Acceptor/state" type="array">
+      <obj_property name="ElementShortName">state[1:0]</obj_property>
+      <obj_property name="ObjectShortName">state[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/Acceptor/cnt" type="array">
+      <obj_property name="ElementShortName">cnt[11:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/payloadBridge/io_write_en" type="logic">
+      <obj_property name="ElementShortName">io_write_en</obj_property>
+      <obj_property name="ObjectShortName">io_write_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/Acceptor/io_rx_tvalid" type="logic">
+      <obj_property name="ElementShortName">io_rx_tvalid</obj_property>
+      <obj_property name="ObjectShortName">io_rx_tvalid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/Acceptor/io_rx_tlast" type="logic">
+      <obj_property name="ElementShortName">io_rx_tlast</obj_property>
+      <obj_property name="ObjectShortName">io_rx_tlast</obj_property>
    </wvobject>
 </wave_config>
