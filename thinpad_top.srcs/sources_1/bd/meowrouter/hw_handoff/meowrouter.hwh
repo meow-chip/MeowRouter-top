@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Dec 20 11:11:43 2019" VIVADOVERSION="2018.3_AR71898">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Dec 20 15:12:41 2019" VIVADOVERSION="2018.3">
 
   <SYSTEMINFO ARCH="artix7" DEVICE="7a100t" NAME="meowrouter" PACKAGE="fgg676" SPEEDGRADE="-2L"/>
 
@@ -55,106 +55,6 @@
     <PORT DIR="O" LEFT="0" NAME="vio_rst" RIGHT="0" SIGIS="undef" SIGNAME="VIO_probe_out0">
       <CONNECTIONS>
         <CONNECTION INSTANCE="VIO" PORT="probe_out0"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="7" NAME="data_rx_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Router_io_rx_tdata">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Router" PORT="io_rx_tdata"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="data_rx_tlast" SIGIS="undef" SIGNAME="Router_io_rx_tlast">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Router" PORT="io_rx_tlast"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="data_rx_tvalid" SIGIS="undef" SIGNAME="Router_io_rx_tvalid">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Router" PORT="io_rx_tvalid"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="31" NAME="RAMEMC_addr" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_a">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_a"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="RAMEMC_adv_ldn" SIGIS="undef" SIGNAME="RAMEMC_mem_adv_ldn">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_adv_ldn"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="7" NAME="RAMEMC_ben" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_ben">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_ben"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="0" NAME="RAMEMC_ce" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_ce">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_ce"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="0" NAME="RAMEMC_ce_n" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_cen">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_cen"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="RAMEMC_clken" SIGIS="undef" SIGNAME="RAMEMC_mem_cken">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_cken"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="RAMEMC_cre" SIGIS="undef" SIGNAME="RAMEMC_mem_cre">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_cre"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="63" NAME="RAMEMC_dq_i" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_dq_i">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_dq_i"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="63" NAME="RAMEMC_dq_o" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_dq_o">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_dq_o"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="63" NAME="RAMEMC_dq_t" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_dq_t">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_dq_t"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="RAMEMC_lbon" SIGIS="undef" SIGNAME="RAMEMC_mem_lbon">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_lbon"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="0" NAME="RAMEMC_oen" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_oen">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_oen"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="7" NAME="RAMEMC_qwen" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_qwen">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_qwen"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="RAMEMC_rnw" SIGIS="undef" SIGNAME="RAMEMC_mem_rnw">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_rnw"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="RAMEMC_rpn" SIGIS="undef" SIGNAME="RAMEMC_mem_rpn">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_rpn"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="0" NAME="RAMEMC_wait" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_wait">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_wait"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" NAME="RAMEMC_wen" SIGIS="undef" SIGNAME="RAMEMC_mem_wen">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="RAMEMC" PORT="mem_wen"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="O" LEFT="7" NAME="data_tx_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Router_io_tx_tdata">
@@ -267,9 +167,109 @@
         <CONNECTION INSTANCE="FlashEMC" PORT="mem_wen"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" LEFT="15" NAME="SWITCH_tri_i" RIGHT="0" SIGIS="undef" SIGNAME="Board_gpio_io_i">
+    <PORT DIR="O" LEFT="31" NAME="RAMEMC_addr" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_a">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="Board" PORT="gpio_io_i"/>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_a"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="RAMEMC_adv_ldn" SIGIS="undef" SIGNAME="RAMEMC_mem_adv_ldn">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_adv_ldn"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="7" NAME="RAMEMC_ben" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_ben">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_ben"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="0" NAME="RAMEMC_ce" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_ce">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_ce"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="0" NAME="RAMEMC_ce_n" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_cen">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_cen"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="RAMEMC_clken" SIGIS="undef" SIGNAME="RAMEMC_mem_cken">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_cken"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="RAMEMC_cre" SIGIS="undef" SIGNAME="RAMEMC_mem_cre">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_cre"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="63" NAME="RAMEMC_dq_i" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_dq_i">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_dq_i"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="63" NAME="RAMEMC_dq_o" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_dq_o">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_dq_o"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="63" NAME="RAMEMC_dq_t" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_dq_t">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_dq_t"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="RAMEMC_lbon" SIGIS="undef" SIGNAME="RAMEMC_mem_lbon">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_lbon"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="0" NAME="RAMEMC_oen" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_oen">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_oen"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="7" NAME="RAMEMC_qwen" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_qwen">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_qwen"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="RAMEMC_rnw" SIGIS="undef" SIGNAME="RAMEMC_mem_rnw">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_rnw"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="RAMEMC_rpn" SIGIS="undef" SIGNAME="RAMEMC_mem_rpn">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_rpn"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="0" NAME="RAMEMC_wait" RIGHT="0" SIGIS="undef" SIGNAME="RAMEMC_mem_wait">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_wait"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="RAMEMC_wen" SIGIS="undef" SIGNAME="RAMEMC_mem_wen">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="RAMEMC" PORT="mem_wen"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="7" NAME="data_rx_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Router_io_rx_tdata">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Router" PORT="io_rx_tdata"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="data_rx_tlast" SIGIS="undef" SIGNAME="Router_io_rx_tlast">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Router" PORT="io_rx_tlast"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="data_rx_tvalid" SIGIS="undef" SIGNAME="Router_io_rx_tvalid">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Router" PORT="io_rx_tvalid"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="31" NAME="DISP_tri_o" RIGHT="0" SIGIS="undef" SIGNAME="Board_gpio2_io_o">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Board" PORT="gpio2_io_o"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="UART_rxd" SIGIS="undef" SIGNAME="UART_rx">
@@ -282,9 +282,9 @@
         <CONNECTION INSTANCE="UART" PORT="tx"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" LEFT="31" NAME="DISP_tri_o" RIGHT="0" SIGIS="undef" SIGNAME="Board_gpio2_io_o">
+    <PORT DIR="I" LEFT="15" NAME="SWITCH_tri_i" RIGHT="0" SIGIS="undef" SIGNAME="Board_gpio_io_i">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="Board" PORT="gpio2_io_o"/>
+        <CONNECTION INSTANCE="Board" PORT="gpio_io_i"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -5454,180 +5454,6 @@
             <CONNECTION INSTANCE="RouterCmdNRST" PORT="Res"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="47" NAME="M06_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_awaddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_awaddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M06_AXI_awprot" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M06_AXI_awvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_awvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_awvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M06_AXI_awready" SIGIS="undef" SIGNAME="Primary_M06_AXI_awready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_awready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M06_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_wdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_wdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="3" NAME="M06_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_wstrb">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_wstrb"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M06_AXI_wvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_wvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_wvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M06_AXI_wready" SIGIS="undef" SIGNAME="Primary_M06_AXI_wready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_wready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M06_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_bresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_bresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M06_AXI_bvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_bvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_bvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M06_AXI_bready" SIGIS="undef" SIGNAME="Primary_M06_AXI_bready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_bready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="47" NAME="M06_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_araddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_araddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M06_AXI_arprot" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M06_AXI_arvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_arvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_arvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M06_AXI_arready" SIGIS="undef" SIGNAME="Primary_M06_AXI_arready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_arready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="31" NAME="M06_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_rdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_rdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M06_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_rresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_rresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M06_AXI_rvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_rvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_rvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M06_AXI_rready" SIGIS="undef" SIGNAME="Primary_M06_AXI_rready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_rready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="47" NAME="M05_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_awaddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_awaddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M05_AXI_awprot" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M05_AXI_awvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_awvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_awvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M05_AXI_awready" SIGIS="undef" SIGNAME="IntCont_s_axi_awready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_awready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M05_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_wdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_wdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="3" NAME="M05_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_wstrb">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_wstrb"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M05_AXI_wvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_wvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_wvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M05_AXI_wready" SIGIS="undef" SIGNAME="IntCont_s_axi_wready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_wready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M05_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_bresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_bresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M05_AXI_bvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_bvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_bvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M05_AXI_bready" SIGIS="undef" SIGNAME="IntCont_s_axi_bready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_bready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="47" NAME="M05_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_araddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_araddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M05_AXI_arprot" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M05_AXI_arvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_arvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_arvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M05_AXI_arready" SIGIS="undef" SIGNAME="IntCont_s_axi_arready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_arready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="31" NAME="M05_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_rdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_rdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M05_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_rresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_rresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M05_AXI_rvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_rvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_rvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M05_AXI_rready" SIGIS="undef" SIGNAME="IntCont_s_axi_rready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="IntCont" PORT="s_axi_rready"/>
-          </CONNECTIONS>
-        </PORT>
         <PORT DIR="O" LEFT="13" NAME="M02_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="EthBufCtrl_s_axi_awaddr">
           <CONNECTIONS>
             <CONNECTION INSTANCE="EthBufCtrl" PORT="s_axi_awaddr"/>
@@ -5787,91 +5613,496 @@
             <CONNECTION INSTANCE="EthBufCtrl" PORT="s_axi_rready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="47" NAME="M00_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_awaddr">
+        <PORT DIR="O" LEFT="31" NAME="M04_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awaddr">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_awaddr"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awaddr"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="M00_AXI_awprot" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M00_AXI_awvalid" SIGIS="undef" SIGNAME="Board_s_axi_awvalid">
+        <PORT DIR="O" LEFT="7" NAME="M04_AXI_awlen" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awlen">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_awvalid"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awlen"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="M00_AXI_awready" SIGIS="undef" SIGNAME="Board_s_axi_awready">
+        <PORT DIR="O" LEFT="2" NAME="M04_AXI_awsize" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awsize">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_awready"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awsize"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M00_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_wdata">
+        <PORT DIR="O" LEFT="1" NAME="M04_AXI_awburst" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awburst">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_wdata"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awburst"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="3" NAME="M00_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_wstrb">
+        <PORT DIR="O" NAME="M04_AXI_awlock" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awlock">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_wstrb"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awlock"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="M00_AXI_wvalid" SIGIS="undef" SIGNAME="Board_s_axi_wvalid">
+        <PORT DIR="O" LEFT="3" NAME="M04_AXI_awcache" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awcache">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_wvalid"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awcache"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="M00_AXI_wready" SIGIS="undef" SIGNAME="Board_s_axi_wready">
+        <PORT DIR="O" LEFT="2" NAME="M04_AXI_awprot" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awprot">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_wready"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awprot"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M00_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_bresp">
+        <PORT DIR="O" NAME="M04_AXI_awregion" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M04_AXI_awqos" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M04_AXI_awvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_bresp"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="M00_AXI_bvalid" SIGIS="undef" SIGNAME="Board_s_axi_bvalid">
+        <PORT DIR="I" NAME="M04_AXI_awready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_bvalid"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="M00_AXI_bready" SIGIS="undef" SIGNAME="Board_s_axi_bready">
+        <PORT DIR="O" LEFT="31" NAME="M04_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_bready"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="47" NAME="M00_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_araddr">
+        <PORT DIR="O" LEFT="3" NAME="M04_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wstrb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_araddr"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wstrb"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="M00_AXI_arprot" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M00_AXI_arvalid" SIGIS="undef" SIGNAME="Board_s_axi_arvalid">
+        <PORT DIR="O" NAME="M04_AXI_wlast" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wlast">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_arvalid"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wlast"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="M00_AXI_arready" SIGIS="undef" SIGNAME="Board_s_axi_arready">
+        <PORT DIR="O" NAME="M04_AXI_wvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_arready"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="M00_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_rdata">
+        <PORT DIR="I" NAME="M04_AXI_wready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_rdata"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M00_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_rresp">
+        <PORT DIR="I" LEFT="1" NAME="M04_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_bresp">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_rresp"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_bresp"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="M00_AXI_rvalid" SIGIS="undef" SIGNAME="Board_s_axi_rvalid">
+        <PORT DIR="I" NAME="M04_AXI_bvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_bvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_rvalid"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_bvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="M00_AXI_rready" SIGIS="undef" SIGNAME="Board_s_axi_rready">
+        <PORT DIR="O" NAME="M04_AXI_bready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_bready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Board" PORT="s_axi_rready"/>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M04_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="M04_AXI_arlen" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arlen">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arlen"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="M04_AXI_arsize" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arsize">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arsize"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="M04_AXI_arburst" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arburst">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arburst"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M04_AXI_arlock" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arlock">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arlock"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="M04_AXI_arcache" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arcache">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arcache"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="M04_AXI_arprot" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M04_AXI_arregion" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M04_AXI_arqos" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M04_AXI_arvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M04_AXI_arready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="M04_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M04_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M04_AXI_rlast" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rlast"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M04_AXI_rvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M04_AXI_rready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="47" NAME="M03_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="M03_AXI_awlen" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awlen">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awlen"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="M03_AXI_awsize" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awsize">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awsize"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="M03_AXI_awburst" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awburst">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awburst"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M03_AXI_awlock" SIGIS="undef" SIGNAME="Primary_M03_AXI_awlock">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awlock"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="M03_AXI_awcache" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awcache">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awcache"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="M03_AXI_awprot" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M03_AXI_awregion" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M03_AXI_awqos" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M03_AXI_awvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M03_AXI_awready" SIGIS="undef" SIGNAME="Primary_M03_AXI_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="63" NAME="M03_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="M03_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M03_AXI_wlast" SIGIS="undef" SIGNAME="Primary_M03_AXI_wlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wlast"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M03_AXI_wvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M03_AXI_wready" SIGIS="undef" SIGNAME="Primary_M03_AXI_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M03_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M03_AXI_bvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M03_AXI_bready" SIGIS="undef" SIGNAME="Primary_M03_AXI_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="47" NAME="M03_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="M03_AXI_arlen" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arlen">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arlen"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="M03_AXI_arsize" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arsize">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arsize"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="M03_AXI_arburst" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arburst">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arburst"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M03_AXI_arlock" SIGIS="undef" SIGNAME="Primary_M03_AXI_arlock">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arlock"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="M03_AXI_arcache" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arcache">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arcache"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="M03_AXI_arprot" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M03_AXI_arregion" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M03_AXI_arqos" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M03_AXI_arvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M03_AXI_arready" SIGIS="undef" SIGNAME="Primary_M03_AXI_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="63" NAME="M03_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M03_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M03_AXI_rlast" SIGIS="undef" SIGNAME="Primary_M03_AXI_rlast">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rlast"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M03_AXI_rvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M03_AXI_rready" SIGIS="undef" SIGNAME="Primary_M03_AXI_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="47" NAME="M05_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M05_AXI_awprot" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M05_AXI_awvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M05_AXI_awready" SIGIS="undef" SIGNAME="IntCont_s_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M05_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="M05_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M05_AXI_wvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M05_AXI_wready" SIGIS="undef" SIGNAME="IntCont_s_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M05_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M05_AXI_bvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M05_AXI_bready" SIGIS="undef" SIGNAME="IntCont_s_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="47" NAME="M05_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M05_AXI_arprot" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M05_AXI_arvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M05_AXI_arready" SIGIS="undef" SIGNAME="IntCont_s_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="M05_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M05_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="IntCont_s_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M05_AXI_rvalid" SIGIS="undef" SIGNAME="IntCont_s_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M05_AXI_rready" SIGIS="undef" SIGNAME="IntCont_s_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="IntCont" PORT="s_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="47" NAME="M06_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M06_AXI_awprot" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M06_AXI_awvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M06_AXI_awready" SIGIS="undef" SIGNAME="Primary_M06_AXI_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M06_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="M06_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M06_AXI_wvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M06_AXI_wready" SIGIS="undef" SIGNAME="Primary_M06_AXI_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M06_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M06_AXI_bvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M06_AXI_bready" SIGIS="undef" SIGNAME="Primary_M06_AXI_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="47" NAME="M06_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M06_AXI_arprot" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M06_AXI_arvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M06_AXI_arready" SIGIS="undef" SIGNAME="Primary_M06_AXI_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="M06_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M06_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M06_AXI_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M06_AXI_rvalid" SIGIS="undef" SIGNAME="Primary_M06_AXI_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M06_AXI_rready" SIGIS="undef" SIGNAME="Primary_M06_AXI_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="RouterCmd" PORT="s_axi_rready"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="3" NAME="S00_AXI_awid" RIGHT="0" SIGIS="undef" SIGNAME="AXIVerif_m_axi_awid">
@@ -6061,6 +6292,93 @@
             <CONNECTION INSTANCE="AXIVerif" PORT="m_axi_rready"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="O" LEFT="47" NAME="M00_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_awprot" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M00_AXI_awvalid" SIGIS="undef" SIGNAME="Board_s_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_awready" SIGIS="undef" SIGNAME="Board_s_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M00_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="M00_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_wvalid" SIGIS="undef" SIGNAME="Board_s_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_wready" SIGIS="undef" SIGNAME="Board_s_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M00_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_bvalid" SIGIS="undef" SIGNAME="Board_s_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_bready" SIGIS="undef" SIGNAME="Board_s_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="47" NAME="M00_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_arprot" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M00_AXI_arvalid" SIGIS="undef" SIGNAME="Board_s_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_arready" SIGIS="undef" SIGNAME="Board_s_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="M00_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M00_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="Board_s_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_rvalid" SIGIS="undef" SIGNAME="Board_s_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_rready" SIGIS="undef" SIGNAME="Board_s_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Board" PORT="s_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="O" LEFT="47" NAME="M01_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M01_AXI_awaddr">
           <CONNECTIONS>
             <CONNECTION INSTANCE="UART" PORT="s_axi_awaddr"/>
@@ -6146,324 +6464,6 @@
         <PORT DIR="O" NAME="M01_AXI_rready" SIGIS="undef" SIGNAME="Primary_M01_AXI_rready">
           <CONNECTIONS>
             <CONNECTION INSTANCE="UART" PORT="s_axi_rready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="47" NAME="M03_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awaddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awaddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="7" NAME="M03_AXI_awlen" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awlen">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awlen"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="2" NAME="M03_AXI_awsize" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awsize">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awsize"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="1" NAME="M03_AXI_awburst" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awburst">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awburst"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M03_AXI_awlock" SIGIS="undef" SIGNAME="Primary_M03_AXI_awlock">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awlock"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="3" NAME="M03_AXI_awcache" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awcache">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awcache"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="2" NAME="M03_AXI_awprot" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_awprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M03_AXI_awregion" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M03_AXI_awqos" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M03_AXI_awvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_awvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M03_AXI_awready" SIGIS="undef" SIGNAME="Primary_M03_AXI_awready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_awready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="63" NAME="M03_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_wdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="7" NAME="M03_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_wstrb">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wstrb"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M03_AXI_wlast" SIGIS="undef" SIGNAME="Primary_M03_AXI_wlast">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wlast"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M03_AXI_wvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_wvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M03_AXI_wready" SIGIS="undef" SIGNAME="Primary_M03_AXI_wready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_wready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M03_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_bresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_bresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M03_AXI_bvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_bvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_bvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M03_AXI_bready" SIGIS="undef" SIGNAME="Primary_M03_AXI_bready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_bready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="47" NAME="M03_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_araddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_araddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="7" NAME="M03_AXI_arlen" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arlen">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arlen"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="2" NAME="M03_AXI_arsize" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arsize">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arsize"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="1" NAME="M03_AXI_arburst" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arburst">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arburst"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M03_AXI_arlock" SIGIS="undef" SIGNAME="Primary_M03_AXI_arlock">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arlock"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="3" NAME="M03_AXI_arcache" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arcache">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arcache"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="2" NAME="M03_AXI_arprot" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_arprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M03_AXI_arregion" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M03_AXI_arqos" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M03_AXI_arvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_arvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M03_AXI_arready" SIGIS="undef" SIGNAME="Primary_M03_AXI_arready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_arready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="63" NAME="M03_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_rdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M03_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="Primary_M03_AXI_rresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M03_AXI_rlast" SIGIS="undef" SIGNAME="Primary_M03_AXI_rlast">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rlast"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M03_AXI_rvalid" SIGIS="undef" SIGNAME="Primary_M03_AXI_rvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M03_AXI_rready" SIGIS="undef" SIGNAME="Primary_M03_AXI_rready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="RAMEMC" PORT="s_axi_mem_rready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M04_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awaddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awaddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="7" NAME="M04_AXI_awlen" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awlen">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awlen"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="2" NAME="M04_AXI_awsize" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awsize">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awsize"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="1" NAME="M04_AXI_awburst" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awburst">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awburst"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M04_AXI_awlock" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awlock">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awlock"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="3" NAME="M04_AXI_awcache" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awcache">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awcache"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="2" NAME="M04_AXI_awprot" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M04_AXI_awregion" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M04_AXI_awqos" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M04_AXI_awvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M04_AXI_awready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_awready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_awready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M04_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="3" NAME="M04_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wstrb">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wstrb"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M04_AXI_wlast" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wlast">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wlast"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M04_AXI_wvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M04_AXI_wready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_wready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_wready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M04_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_bresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_bresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M04_AXI_bvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_bvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_bvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M04_AXI_bready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_bready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_bready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M04_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_araddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_araddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="7" NAME="M04_AXI_arlen" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arlen">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arlen"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="2" NAME="M04_AXI_arsize" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arsize">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arsize"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="1" NAME="M04_AXI_arburst" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arburst">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arburst"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M04_AXI_arlock" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arlock">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arlock"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="3" NAME="M04_AXI_arcache" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arcache">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arcache"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="2" NAME="M04_AXI_arprot" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M04_AXI_arregion" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M04_AXI_arqos" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M04_AXI_arvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M04_AXI_arready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_arready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_arready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="31" NAME="M04_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M04_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M04_AXI_rlast" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rlast">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rlast"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M04_AXI_rvalid" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M04_AXI_rready" SIGIS="undef" SIGNAME="FlashEMC_s_axi_mem_rready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="FlashEMC" PORT="s_axi_mem_rready"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

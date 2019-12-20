@@ -5,3 +5,5 @@ thinpad_top.sim
 thinpad_top.ip_user_files/
 *.jou
 *.log
+.Xil
+vivado_*.str

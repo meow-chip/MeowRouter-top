@@ -50,10 +50,10 @@
 // IP VLNV: xilinx.com:ip:axi_dwidth_converter:2.1
 // IP Revision: 18
 
-(* X_CORE_INFO = "axi_dwidth_converter_v2_1_18_top,Vivado 2018.3_AR71898" *)
+(* X_CORE_INFO = "axi_dwidth_converter_v2_1_18_top,Vivado 2018.3" *)
 (* CHECK_LICENSE_TYPE = "meowrouter_auto_ds_5,axi_dwidth_converter_v2_1_18_top,{}" *)
-(* CORE_GENERATION_INFO = "meowrouter_auto_ds_5,axi_dwidth_converter_v2_1_18_top,{x_ipProduct=Vivado 2018.3_AR71898,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_dwidth_converter,x_ipVersion=2.1,x_ipCoreRevision=18,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=artix7,C_AXI_PROTOCOL=0,C_S_AXI_ID_WIDTH=1,C_SUPPORTS_ID=0,C_AXI_ADDR_WIDTH=48,C_S_AXI_DATA_WIDTH=64,C_M_AXI_DATA_WIDTH=32,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_FIFO_MODE=0,C_S_AXI_ACLK_RATIO=1,C_M_AXI_ACLK_RATIO=2,C_AXI_IS_ACLK_ASYNC=0,C_MAX_SPLI\
-T_BEATS=256,C_PACKING_LEVEL=1,C_SYNCHRONIZER_STAGE=3}" *)
+(* CORE_GENERATION_INFO = "meowrouter_auto_ds_5,axi_dwidth_converter_v2_1_18_top,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_dwidth_converter,x_ipVersion=2.1,x_ipCoreRevision=18,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=artix7,C_AXI_PROTOCOL=0,C_S_AXI_ID_WIDTH=1,C_SUPPORTS_ID=0,C_AXI_ADDR_WIDTH=48,C_S_AXI_DATA_WIDTH=64,C_M_AXI_DATA_WIDTH=32,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_FIFO_MODE=0,C_S_AXI_ACLK_RATIO=1,C_M_AXI_ACLK_RATIO=2,C_AXI_IS_ACLK_ASYNC=0,C_MAX_SPLIT_BEATS=\
+256,C_PACKING_LEVEL=1,C_SYNCHRONIZER_STAGE=3}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module meowrouter_auto_ds_5 (
   s_axi_aclk,
