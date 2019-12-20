@@ -267,14 +267,14 @@ end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
     if (reset) begin
-      pc <= 64'hffffffff8000;
+      pc <= 64'hffff20000000;
     end else if (branch) begin
       pc <= _T_14;
     end else if (_T_3) begin
       pc <= _T_19;
     end
     if (reset) begin
-      snepc <= 64'hffffffff8000;
+      snepc <= 64'hffff20000000;
     end else if (branch) begin
       if (ex) begin
         snepc <= _T_56;
