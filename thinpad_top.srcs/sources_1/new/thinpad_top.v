@@ -2,7 +2,7 @@
 
 module thinpad_top(
     input wire clk_50M,           //50MHz 时钟输入
-    input wire clk_11M0592,       //11.0592MHz 时钟输入
+    input wire clk_11M0592,       //11.0592MHz 时钟输入（备用，可不用）
 
     input wire clock_btn,         //BTN5手动时钟按钮�?关，带消抖电路，按下时为1
     input wire reset_btn,         //BTN6手动复位按钮�?关，带消抖电路，按下时为1
@@ -93,10 +93,12 @@ assign rst = reset_btn;
 // PLL分频示例
 wire locked, clk_10M, clk_CPU, clk_125M, clk_200M;
 wire subsystem_rst;
-assign subsystem_rst  = (!locked) || vio_rst;
+assign subsystem_rst  = (~locked) | vio_rst;
 
 pll_example clock_gen 
  (
+  // Clock in ports
+  .clk_in1(clk_50M),  // 外部时钟输入
   // Clock out ports
   .clk_out1(clk_10M), // 时钟输出1，频率在IP配置界面中设�?
   .clk_CPU(clk_CPU), // 时钟输出2，频率在IP配置界面中设�?
@@ -104,16 +106,14 @@ pll_example clock_gen
   .clk_out4(clk_200M), // 时钟输出4，频率在IP配置界面中设�?
   // Status and control signals
   .reset(reset_btn), // PLL复位输入
-  .locked(locked), // 锁定输出�?"1"表示时钟稳定，可作为后级电路复位
- // Clock in ports
-  .clk_in1(clk_50M) // 外部时钟输入
+  .locked(locked)    // PLL锁定指示输出，"1"表示时钟稳定，
  );
 
 assign eth_rst_n = ~rst;
 // 以太网交换机寄存器配�?
 eth_conf conf(
     .clk(clk_50M),
-    .rst_in_n(!subsystem_rst),
+    .rst_in_n(~subsystem_rst),
 
     .eth_spi_miso(eth_spi_miso),
     .eth_spi_mosi(eth_spi_mosi),

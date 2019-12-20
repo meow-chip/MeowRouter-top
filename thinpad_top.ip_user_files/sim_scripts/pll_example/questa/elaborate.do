@@ -1,1 +1,0 @@
-vopt -64 +acc -l elaborate.log -L xilinx_vip -L xil_defaultlib -L xpm -L axi_vip_v1_1_4 -L xilinx_vip -L unisims_ver -L unimacro_ver -L secureip -work xil_defaultlib xil_defaultlib.pll_example xil_defaultlib.glbl -o pll_example_opt

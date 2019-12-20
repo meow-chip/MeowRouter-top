@@ -61,7 +61,7 @@ initial begin
     dip_sw = 32'h2;
     touch_btn = 0;
     reset_btn = 1;
-    #100
+    #100;
     reset_btn = 0;
     for (integer i = 0; i < 20; i = i+1) begin
         #100; //等待100ns

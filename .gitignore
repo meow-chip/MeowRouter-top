@@ -2,3 +2,6 @@ thinpad_top.runs
 thinpad_top.cache
 thinpad_top.hw
 thinpad_top.sim
+thinpad_top.ip_user_files/
+*.jou
+*.log
