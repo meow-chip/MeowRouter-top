@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sun Dec 15 01:31:31 2019
+-- Date        : Sun Dec 15 21:15:41 2019
 -- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_blk_mem_gen_0_0/meowrouter_blk_mem_gen_0_0_sim_netlist.vhdl
@@ -30,16 +30,11 @@ entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux is
 end meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux;
 
 architecture STRUCTURE of meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux is
-  signal \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1_n_0\ : STD_LOGIC;
-  signal \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1_n_0\ : STD_LOGIC;
   signal \no_softecc_sel_reg.ce_pri.sel_pipe[0]_i_1_n_0\ : STD_LOGIC;
   signal \no_softecc_sel_reg.ce_pri.sel_pipe[1]_i_1_n_0\ : STD_LOGIC;
   signal sel_pipe : STD_LOGIC_VECTOR ( 1 downto 0 );
-  signal sel_pipe_d1 : STD_LOGIC_VECTOR ( 1 downto 0 );
   attribute SOFT_HLUTNM : string;
-  attribute SOFT_HLUTNM of \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1\ : label is "soft_lutpair1";
-  attribute SOFT_HLUTNM of \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1\ : label is "soft_lutpair0";
-  attribute SOFT_HLUTNM of \no_softecc_sel_reg.ce_pri.sel_pipe[0]_i_1\ : label is "soft_lutpair1";
+  attribute SOFT_HLUTNM of \no_softecc_sel_reg.ce_pri.sel_pipe[0]_i_1\ : label is "soft_lutpair0";
   attribute SOFT_HLUTNM of \no_softecc_sel_reg.ce_pri.sel_pipe[1]_i_1\ : label is "soft_lutpair0";
 begin
 \douta[0]_INST_0\: unisim.vcomponents.LUT6
@@ -50,8 +45,8 @@ begin
       I0 => DOADO(0),
       I1 => \douta[31]\(0),
       I2 => \douta[31]_0\(0),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(0),
       O => douta(0)
     );
@@ -63,8 +58,8 @@ begin
       I0 => DOADO(10),
       I1 => \douta[31]\(10),
       I2 => \douta[31]_0\(10),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(10),
       O => douta(10)
     );
@@ -76,8 +71,8 @@ begin
       I0 => DOADO(11),
       I1 => \douta[31]\(11),
       I2 => \douta[31]_0\(11),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(11),
       O => douta(11)
     );
@@ -89,8 +84,8 @@ begin
       I0 => DOADO(12),
       I1 => \douta[31]\(12),
       I2 => \douta[31]_0\(12),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(12),
       O => douta(12)
     );
@@ -102,8 +97,8 @@ begin
       I0 => DOADO(13),
       I1 => \douta[31]\(13),
       I2 => \douta[31]_0\(13),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(13),
       O => douta(13)
     );
@@ -115,8 +110,8 @@ begin
       I0 => DOADO(14),
       I1 => \douta[31]\(14),
       I2 => \douta[31]_0\(14),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(14),
       O => douta(14)
     );
@@ -128,8 +123,8 @@ begin
       I0 => DOADO(15),
       I1 => \douta[31]\(15),
       I2 => \douta[31]_0\(15),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(15),
       O => douta(15)
     );
@@ -141,8 +136,8 @@ begin
       I0 => DOADO(16),
       I1 => \douta[31]\(16),
       I2 => \douta[31]_0\(16),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(16),
       O => douta(16)
     );
@@ -154,8 +149,8 @@ begin
       I0 => DOADO(17),
       I1 => \douta[31]\(17),
       I2 => \douta[31]_0\(17),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(17),
       O => douta(17)
     );
@@ -167,8 +162,8 @@ begin
       I0 => DOADO(18),
       I1 => \douta[31]\(18),
       I2 => \douta[31]_0\(18),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(18),
       O => douta(18)
     );
@@ -180,8 +175,8 @@ begin
       I0 => DOADO(19),
       I1 => \douta[31]\(19),
       I2 => \douta[31]_0\(19),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(19),
       O => douta(19)
     );
@@ -193,8 +188,8 @@ begin
       I0 => DOADO(1),
       I1 => \douta[31]\(1),
       I2 => \douta[31]_0\(1),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(1),
       O => douta(1)
     );
@@ -206,8 +201,8 @@ begin
       I0 => DOADO(20),
       I1 => \douta[31]\(20),
       I2 => \douta[31]_0\(20),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(20),
       O => douta(20)
     );
@@ -219,8 +214,8 @@ begin
       I0 => DOADO(21),
       I1 => \douta[31]\(21),
       I2 => \douta[31]_0\(21),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(21),
       O => douta(21)
     );
@@ -232,8 +227,8 @@ begin
       I0 => DOADO(22),
       I1 => \douta[31]\(22),
       I2 => \douta[31]_0\(22),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(22),
       O => douta(22)
     );
@@ -245,8 +240,8 @@ begin
       I0 => DOADO(23),
       I1 => \douta[31]\(23),
       I2 => \douta[31]_0\(23),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(23),
       O => douta(23)
     );
@@ -258,8 +253,8 @@ begin
       I0 => DOADO(24),
       I1 => \douta[31]\(24),
       I2 => \douta[31]_0\(24),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(24),
       O => douta(24)
     );
@@ -271,8 +266,8 @@ begin
       I0 => DOADO(25),
       I1 => \douta[31]\(25),
       I2 => \douta[31]_0\(25),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(25),
       O => douta(25)
     );
@@ -284,8 +279,8 @@ begin
       I0 => DOADO(26),
       I1 => \douta[31]\(26),
       I2 => \douta[31]_0\(26),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(26),
       O => douta(26)
     );
@@ -297,8 +292,8 @@ begin
       I0 => DOADO(27),
       I1 => \douta[31]\(27),
       I2 => \douta[31]_0\(27),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(27),
       O => douta(27)
     );
@@ -310,8 +305,8 @@ begin
       I0 => DOADO(28),
       I1 => \douta[31]\(28),
       I2 => \douta[31]_0\(28),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(28),
       O => douta(28)
     );
@@ -323,8 +318,8 @@ begin
       I0 => DOADO(29),
       I1 => \douta[31]\(29),
       I2 => \douta[31]_0\(29),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(29),
       O => douta(29)
     );
@@ -336,8 +331,8 @@ begin
       I0 => DOADO(2),
       I1 => \douta[31]\(2),
       I2 => \douta[31]_0\(2),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(2),
       O => douta(2)
     );
@@ -349,8 +344,8 @@ begin
       I0 => DOADO(30),
       I1 => \douta[31]\(30),
       I2 => \douta[31]_0\(30),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(30),
       O => douta(30)
     );
@@ -362,8 +357,8 @@ begin
       I0 => DOADO(31),
       I1 => \douta[31]\(31),
       I2 => \douta[31]_0\(31),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(31),
       O => douta(31)
     );
@@ -375,8 +370,8 @@ begin
       I0 => DOADO(3),
       I1 => \douta[31]\(3),
       I2 => \douta[31]_0\(3),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(3),
       O => douta(3)
     );
@@ -388,8 +383,8 @@ begin
       I0 => DOADO(4),
       I1 => \douta[31]\(4),
       I2 => \douta[31]_0\(4),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(4),
       O => douta(4)
     );
@@ -401,8 +396,8 @@ begin
       I0 => DOADO(5),
       I1 => \douta[31]\(5),
       I2 => \douta[31]_0\(5),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(5),
       O => douta(5)
     );
@@ -414,8 +409,8 @@ begin
       I0 => DOADO(6),
       I1 => \douta[31]\(6),
       I2 => \douta[31]_0\(6),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(6),
       O => douta(6)
     );
@@ -427,8 +422,8 @@ begin
       I0 => DOADO(7),
       I1 => \douta[31]\(7),
       I2 => \douta[31]_0\(7),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(7),
       O => douta(7)
     );
@@ -440,8 +435,8 @@ begin
       I0 => DOADO(8),
       I1 => \douta[31]\(8),
       I2 => \douta[31]_0\(8),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(8),
       O => douta(8)
     );
@@ -453,52 +448,10 @@ begin
       I0 => DOADO(9),
       I1 => \douta[31]\(9),
       I2 => \douta[31]_0\(9),
-      I3 => sel_pipe_d1(1),
-      I4 => sel_pipe_d1(0),
+      I3 => sel_pipe(1),
+      I4 => sel_pipe(0),
       I5 => \douta[31]_1\(9),
       O => douta(9)
-    );
-\no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"B8"
-    )
-        port map (
-      I0 => sel_pipe(0),
-      I1 => ena,
-      I2 => sel_pipe_d1(0),
-      O => \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1_n_0\
-    );
-\no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1\: unisim.vcomponents.LUT3
-    generic map(
-      INIT => X"B8"
-    )
-        port map (
-      I0 => sel_pipe(1),
-      I1 => ena,
-      I2 => sel_pipe_d1(1),
-      O => \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1_n_0\
-    );
-\no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1_reg[0]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => clka,
-      CE => '1',
-      D => \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1_n_0\,
-      Q => sel_pipe_d1(0),
-      R => '0'
-    );
-\no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1_reg[1]\: unisim.vcomponents.FDRE
-    generic map(
-      INIT => '0'
-    )
-        port map (
-      C => clka,
-      CE => '1',
-      D => \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1_n_0\,
-      Q => sel_pipe_d1(1),
-      R => '0'
     );
 \no_softecc_sel_reg.ce_pri.sel_pipe[0]_i_1\: unisim.vcomponents.LUT3
     generic map(
@@ -697,7 +650,7 @@ entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper is
   port (
     \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0\ : out STD_LOGIC_VECTOR ( 31 downto 0 );
     doutb_array : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    ram_rstreg_a : out STD_LOGIC;
+    ram_rstram_a : out STD_LOGIC;
     ENA_I : out STD_LOGIC;
     ENA_I_0 : out STD_LOGIC;
     ENA_I_1 : out STD_LOGIC;
@@ -706,8 +659,6 @@ entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper is
     ENB_I_3 : out STD_LOGIC;
     clka : in STD_LOGIC;
     clkb : in STD_LOGIC;
-    ena : in STD_LOGIC;
-    \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1\ : in STD_LOGIC;
     POR_B : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
@@ -716,7 +667,9 @@ entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper is
     wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 );
     rsta : in STD_LOGIC;
-    ENA_dly_reg_D : in STD_LOGIC;
+    POR_A : in STD_LOGIC;
+    ENA_dly_D : in STD_LOGIC;
+    ena : in STD_LOGIC;
     ENB_dly_D : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -731,7 +684,7 @@ architecture STRUCTURE of meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper is
   signal \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_n_75\ : STD_LOGIC;
   signal ENA_I_2 : STD_LOGIC;
   signal ENB_I_4 : STD_LOGIC;
-  signal \^ram_rstreg_a\ : STD_LOGIC;
+  signal \^ram_rstram_a\ : STD_LOGIC;
   signal \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED\ : STD_LOGIC;
   signal \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_CASCADEOUTB_UNCONNECTED\ : STD_LOGIC;
   signal \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_DBITERR_UNCONNECTED\ : STD_LOGIC;
@@ -743,10 +696,10 @@ architecture STRUCTURE of meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper is
   attribute box_type : string;
   attribute box_type of \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\ : label is "PRIMITIVE";
 begin
-  ram_rstreg_a <= \^ram_rstreg_a\;
+  ram_rstram_a <= \^ram_rstram_a\;
 \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\: unisim.vcomponents.RAMB36E1
     generic map(
-      DOA_REG => 1,
+      DOA_REG => 0,
       DOB_REG => 0,
       EN_ECC_READ => false,
       EN_ECC_WRITE => false,
@@ -956,11 +909,11 @@ begin
       INJECTDBITERR => '0',
       INJECTSBITERR => '0',
       RDADDRECC(8 downto 0) => \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_RDADDRECC_UNCONNECTED\(8 downto 0),
-      REGCEAREGCE => ena,
+      REGCEAREGCE => '0',
       REGCEB => '0',
-      RSTRAMARSTRAM => \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1\,
+      RSTRAMARSTRAM => \^ram_rstram_a\,
       RSTRAMB => POR_B,
-      RSTREGARSTREG => \^ram_rstreg_a\,
+      RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
       WEA(3 downto 0) => wea(3 downto 0),
@@ -975,7 +928,7 @@ begin
       INIT => X"ABAA"
     )
         port map (
-      I0 => ENA_dly_reg_D,
+      I0 => ENA_dly_D,
       I1 => addra(11),
       I2 => addra(10),
       I3 => ena,
@@ -986,7 +939,7 @@ begin
       INIT => X"AAEA"
     )
         port map (
-      I0 => ENA_dly_reg_D,
+      I0 => ENA_dly_D,
       I1 => ena,
       I2 => addra(10),
       I3 => addra(11),
@@ -997,7 +950,7 @@ begin
       INIT => X"AAEA"
     )
         port map (
-      I0 => ENA_dly_reg_D,
+      I0 => ENA_dly_D,
       I1 => addra(11),
       I2 => ena,
       I3 => addra(10),
@@ -1008,7 +961,7 @@ begin
       INIT => X"EAAA"
     )
         port map (
-      I0 => ENA_dly_reg_D,
+      I0 => ENA_dly_D,
       I1 => ena,
       I2 => addra(10),
       I3 => addra(11),
@@ -1060,8 +1013,8 @@ begin
     )
         port map (
       I0 => rsta,
-      I1 => \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1\,
-      O => \^ram_rstreg_a\
+      I1 => POR_A,
+      O => \^ram_rstram_a\
     );
 end STRUCTURE;
 library IEEE;
@@ -1076,10 +1029,8 @@ entity \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized0\ is
     clkb : in STD_LOGIC;
     ENA_I : in STD_LOGIC;
     ENB_I : in STD_LOGIC;
-    ena : in STD_LOGIC;
-    POR_A : in STD_LOGIC;
+    ram_rstram_a : in STD_LOGIC;
     POR_B : in STD_LOGIC;
-    ram_rstreg_a : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 9 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -1110,7 +1061,7 @@ architecture STRUCTURE of \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__
 begin
 \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\: unisim.vcomponents.RAMB36E1
     generic map(
-      DOA_REG => 1,
+      DOA_REG => 0,
       DOB_REG => 0,
       EN_ECC_READ => false,
       EN_ECC_WRITE => false,
@@ -1320,11 +1271,11 @@ begin
       INJECTDBITERR => '0',
       INJECTSBITERR => '0',
       RDADDRECC(8 downto 0) => \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_RDADDRECC_UNCONNECTED\(8 downto 0),
-      REGCEAREGCE => ena,
+      REGCEAREGCE => '0',
       REGCEB => '0',
-      RSTRAMARSTRAM => POR_A,
+      RSTRAMARSTRAM => ram_rstram_a,
       RSTRAMB => POR_B,
-      RSTREGARSTREG => ram_rstreg_a,
+      RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
       WEA(3 downto 0) => wea(3 downto 0),
@@ -1347,10 +1298,8 @@ entity \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized1\ is
     clkb : in STD_LOGIC;
     ENA_I : in STD_LOGIC;
     ENB_I : in STD_LOGIC;
-    ena : in STD_LOGIC;
-    POR_A : in STD_LOGIC;
+    ram_rstram_a : in STD_LOGIC;
     POR_B : in STD_LOGIC;
-    ram_rstreg_a : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 9 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -1381,7 +1330,7 @@ architecture STRUCTURE of \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__
 begin
 \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\: unisim.vcomponents.RAMB36E1
     generic map(
-      DOA_REG => 1,
+      DOA_REG => 0,
       DOB_REG => 0,
       EN_ECC_READ => false,
       EN_ECC_WRITE => false,
@@ -1591,11 +1540,11 @@ begin
       INJECTDBITERR => '0',
       INJECTSBITERR => '0',
       RDADDRECC(8 downto 0) => \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_RDADDRECC_UNCONNECTED\(8 downto 0),
-      REGCEAREGCE => ena,
+      REGCEAREGCE => '0',
       REGCEB => '0',
-      RSTRAMARSTRAM => POR_A,
+      RSTRAMARSTRAM => ram_rstram_a,
       RSTRAMB => POR_B,
-      RSTREGARSTREG => ram_rstreg_a,
+      RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
       WEA(3 downto 0) => wea(3 downto 0),
@@ -1618,10 +1567,8 @@ entity \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized2\ is
     clkb : in STD_LOGIC;
     ENA_I : in STD_LOGIC;
     ENB_I : in STD_LOGIC;
-    ena : in STD_LOGIC;
-    POR_A : in STD_LOGIC;
+    ram_rstram_a : in STD_LOGIC;
     POR_B : in STD_LOGIC;
-    ram_rstreg_a : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 9 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -1652,7 +1599,7 @@ architecture STRUCTURE of \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__
 begin
 \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\: unisim.vcomponents.RAMB36E1
     generic map(
-      DOA_REG => 1,
+      DOA_REG => 0,
       DOB_REG => 0,
       EN_ECC_READ => false,
       EN_ECC_WRITE => false,
@@ -1862,11 +1809,11 @@ begin
       INJECTDBITERR => '0',
       INJECTSBITERR => '0',
       RDADDRECC(8 downto 0) => \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_RDADDRECC_UNCONNECTED\(8 downto 0),
-      REGCEAREGCE => ena,
+      REGCEAREGCE => '0',
       REGCEB => '0',
-      RSTRAMARSTRAM => POR_A,
+      RSTRAMARSTRAM => ram_rstram_a,
       RSTRAMB => POR_B,
-      RSTREGARSTREG => ram_rstreg_a,
+      RSTREGARSTREG => '0',
       RSTREGB => '0',
       SBITERR => \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED\,
       WEA(3 downto 0) => wea(3 downto 0),
@@ -1885,9 +1832,8 @@ entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width is
   port (
     \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\ : out STD_LOGIC_VECTOR ( 31 downto 0 );
     doutb_array : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    POR_A : out STD_LOGIC;
+    ram_rstram_a : out STD_LOGIC;
     POR_B : out STD_LOGIC;
-    ram_rstreg_a : out STD_LOGIC;
     \SAFETY_CKT_GEN.POR_A_reg_0\ : out STD_LOGIC;
     ENA_I : out STD_LOGIC;
     ENA_I_0 : out STD_LOGIC;
@@ -1898,25 +1844,25 @@ entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width is
     \SAFETY_CKT_GEN.POR_B_reg_0\ : out STD_LOGIC;
     clkb : in STD_LOGIC;
     clka : in STD_LOGIC;
-    ena : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
     dinb : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 );
-    \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0\ : in STD_LOGIC;
+    \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0\ : in STD_LOGIC;
     \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg_0\ : in STD_LOGIC;
-    rsta : in STD_LOGIC
+    rsta : in STD_LOGIC;
+    ena : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width : entity is "blk_mem_gen_prim_width";
 end meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width;
 
 architecture STRUCTURE of meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width is
-  signal ENA_dly_reg_D : STD_LOGIC;
+  signal ENA_dly_D : STD_LOGIC;
   signal ENB_dly_D : STD_LOGIC;
-  signal \^por_a\ : STD_LOGIC;
+  signal POR_A : STD_LOGIC;
   signal \^por_b\ : STD_LOGIC;
   signal RSTA_SHFT_REG : STD_LOGIC_VECTOR ( 4 downto 0 );
   signal RSTB_SHFT_REG : STD_LOGIC_VECTOR ( 4 downto 0 );
@@ -1931,17 +1877,16 @@ architecture STRUCTURE of meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width is
   attribute srl_bus_name of \SAFETY_CKT_GEN.RSTB_SHFT_REG_reg[3]_srl3\ : label is "U0/\inst_blk_mem_gen/gnbram.gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTB_SHFT_REG_reg ";
   attribute srl_name of \SAFETY_CKT_GEN.RSTB_SHFT_REG_reg[3]_srl3\ : label is "U0/\inst_blk_mem_gen/gnbram.gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/SAFETY_CKT_GEN.RSTB_SHFT_REG_reg[3]_srl3 ";
 begin
-  POR_A <= \^por_a\;
   POR_B <= \^por_b\;
-\SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg\: unisim.vcomponents.FDRE
+\SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0'
     )
         port map (
       C => clka,
       CE => '1',
-      D => \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0\,
-      Q => ENA_dly_reg_D,
+      D => \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0\,
+      Q => ENA_dly_D,
       R => '0'
     );
 \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg\: unisim.vcomponents.FDRE
@@ -1972,7 +1917,7 @@ begin
       C => clka,
       CE => '1',
       D => p_3_out,
-      Q => \^por_a\,
+      Q => POR_A,
       R => '0'
     );
 \SAFETY_CKT_GEN.POR_B_i_1\: unisim.vcomponents.LUT2
@@ -1995,15 +1940,15 @@ begin
       Q => \^por_b\,
       R => '0'
     );
-\SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_i_1\: unisim.vcomponents.LUT4
+\SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_i_1\: unisim.vcomponents.LUT4
     generic map(
       INIT => X"FFFE"
     )
         port map (
-      I0 => \^por_a\,
+      I0 => POR_A,
       I1 => rsta,
-      I2 => \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0\,
-      I3 => ENA_dly_reg_D,
+      I2 => \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0\,
+      I3 => ENA_dly_D,
       O => \SAFETY_CKT_GEN.POR_A_reg_0\
     );
 \SAFETY_CKT_GEN.RSTA_SHFT_REG_reg[0]\: unisim.vcomponents.FDRE
@@ -2091,15 +2036,15 @@ begin
 \prim_noinit.ram\: entity work.meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
      port map (
       \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0\(31 downto 0) => \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\(31 downto 0),
-      \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1\ => \^por_a\,
       ENA_I => ENA_I,
       ENA_I_0 => ENA_I_0,
       ENA_I_1 => ENA_I_1,
-      ENA_dly_reg_D => ENA_dly_reg_D,
+      ENA_dly_D => ENA_dly_D,
       ENB_I => ENB_I,
       ENB_I_2 => ENB_I_2,
       ENB_I_3 => ENB_I_3,
       ENB_dly_D => ENB_dly_D,
+      POR_A => POR_A,
       POR_B => \^por_b\,
       addra(11 downto 0) => addra(11 downto 0),
       addrb(13 downto 0) => addrb(13 downto 0),
@@ -2109,7 +2054,7 @@ begin
       dinb(7 downto 0) => dinb(7 downto 0),
       doutb_array(7 downto 0) => doutb_array(7 downto 0),
       ena => ena,
-      ram_rstreg_a => ram_rstreg_a,
+      ram_rstram_a => ram_rstram_a,
       rsta => rsta,
       wea(3 downto 0) => wea(3 downto 0),
       web(0) => web(0)
@@ -2127,10 +2072,8 @@ entity \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized0\ is
     clkb : in STD_LOGIC;
     ENA_I : in STD_LOGIC;
     ENB_I : in STD_LOGIC;
-    ena : in STD_LOGIC;
-    POR_A : in STD_LOGIC;
+    ram_rstram_a : in STD_LOGIC;
     POR_B : in STD_LOGIC;
-    ram_rstreg_a : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 9 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -2149,7 +2092,6 @@ begin
       \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0\(31 downto 0) => \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\(31 downto 0),
       ENA_I => ENA_I,
       ENB_I => ENB_I,
-      POR_A => POR_A,
       POR_B => POR_B,
       addra(9 downto 0) => addra(9 downto 0),
       addrb(11 downto 0) => addrb(11 downto 0),
@@ -2158,8 +2100,7 @@ begin
       dina(31 downto 0) => dina(31 downto 0),
       dinb(7 downto 0) => dinb(7 downto 0),
       doutb_array(7 downto 0) => doutb_array(7 downto 0),
-      ena => ena,
-      ram_rstreg_a => ram_rstreg_a,
+      ram_rstram_a => ram_rstram_a,
       wea(3 downto 0) => wea(3 downto 0),
       web(0) => web(0)
     );
@@ -2176,10 +2117,8 @@ entity \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized1\ is
     clkb : in STD_LOGIC;
     ENA_I : in STD_LOGIC;
     ENB_I : in STD_LOGIC;
-    ena : in STD_LOGIC;
-    POR_A : in STD_LOGIC;
+    ram_rstram_a : in STD_LOGIC;
     POR_B : in STD_LOGIC;
-    ram_rstreg_a : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 9 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -2198,7 +2137,6 @@ begin
       DOADO(31 downto 0) => DOADO(31 downto 0),
       ENA_I => ENA_I,
       ENB_I => ENB_I,
-      POR_A => POR_A,
       POR_B => POR_B,
       addra(9 downto 0) => addra(9 downto 0),
       addrb(11 downto 0) => addrb(11 downto 0),
@@ -2207,8 +2145,7 @@ begin
       dina(31 downto 0) => dina(31 downto 0),
       dinb(7 downto 0) => dinb(7 downto 0),
       doutb_array(7 downto 0) => doutb_array(7 downto 0),
-      ena => ena,
-      ram_rstreg_a => ram_rstreg_a,
+      ram_rstram_a => ram_rstram_a,
       wea(3 downto 0) => wea(3 downto 0),
       web(0) => web(0)
     );
@@ -2221,7 +2158,7 @@ entity \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2\ is
   port (
     \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\ : out STD_LOGIC_VECTOR ( 31 downto 0 );
     doutb_array : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg_0\ : out STD_LOGIC;
+    \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg_0\ : out STD_LOGIC;
     \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg_0\ : out STD_LOGIC;
     rsta_busy : out STD_LOGIC;
     rstb_busy : out STD_LOGIC;
@@ -2229,17 +2166,15 @@ entity \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2\ is
     clkb : in STD_LOGIC;
     ENA_I : in STD_LOGIC;
     ENB_I : in STD_LOGIC;
-    ena : in STD_LOGIC;
-    POR_A : in STD_LOGIC;
+    ram_rstram_a : in STD_LOGIC;
     POR_B : in STD_LOGIC;
-    ram_rstreg_a : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 9 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 11 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
     dinb : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 );
-    \SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg_0\ : in STD_LOGIC;
+    \SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg_0\ : in STD_LOGIC;
     \SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg_0\ : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -2248,15 +2183,15 @@ end \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2\;
 
 architecture STRUCTURE of \meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2\ is
 begin
-\SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg\: unisim.vcomponents.FDRE
+\SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg\: unisim.vcomponents.FDRE
     generic map(
       INIT => '0'
     )
         port map (
       C => clka,
       CE => '1',
-      D => ram_rstreg_a,
-      Q => \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg_0\,
+      D => ram_rstram_a,
+      Q => \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg_0\,
       R => '0'
     );
 \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg\: unisim.vcomponents.FDRE
@@ -2270,11 +2205,11 @@ begin
       Q => \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg_0\,
       R => '0'
     );
-\SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg\: unisim.vcomponents.FDRE
+\SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg\: unisim.vcomponents.FDRE
      port map (
       C => clka,
       CE => '1',
-      D => \SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg_0\,
+      D => \SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg_0\,
       Q => rsta_busy,
       R => '0'
     );
@@ -2291,7 +2226,6 @@ begin
       \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0\(31 downto 0) => \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\(31 downto 0),
       ENA_I => ENA_I,
       ENB_I => ENB_I,
-      POR_A => POR_A,
       POR_B => POR_B,
       addra(9 downto 0) => addra(9 downto 0),
       addrb(11 downto 0) => addrb(11 downto 0),
@@ -2300,8 +2234,7 @@ begin
       dina(31 downto 0) => dina(31 downto 0),
       dinb(7 downto 0) => dinb(7 downto 0),
       doutb_array(7 downto 0) => doutb_array(7 downto 0),
-      ena => ena,
-      ram_rstreg_a => ram_rstreg_a,
+      ram_rstram_a => ram_rstram_a,
       wea(3 downto 0) => wea(3 downto 0),
       web(0) => web(0)
     );
@@ -2312,19 +2245,19 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr is
   port (
-    douta : out STD_LOGIC_VECTOR ( 31 downto 0 );
     rsta_busy : out STD_LOGIC;
     rstb_busy : out STD_LOGIC;
+    douta : out STD_LOGIC_VECTOR ( 31 downto 0 );
     doutb : out STD_LOGIC_VECTOR ( 7 downto 0 );
     clkb : in STD_LOGIC;
     clka : in STD_LOGIC;
-    ena : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
     dinb : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC;
     rsta : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -2338,15 +2271,14 @@ architecture STRUCTURE of meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr is
   signal ENB_I : STD_LOGIC;
   signal ENB_I_0 : STD_LOGIC;
   signal ENB_I_1 : STD_LOGIC;
-  signal POR_A : STD_LOGIC;
   signal POR_B : STD_LOGIC;
   signal doutb_array : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal ram_douta10_out : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal ram_douta14_out : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal ram_douta6_out : STD_LOGIC_VECTOR ( 31 downto 0 );
-  signal ram_rstreg_a : STD_LOGIC;
-  signal \ramloop[0].ram.r_n_43\ : STD_LOGIC;
-  signal \ramloop[0].ram.r_n_50\ : STD_LOGIC;
+  signal ram_rstram_a : STD_LOGIC;
+  signal \ramloop[0].ram.r_n_42\ : STD_LOGIC;
+  signal \ramloop[0].ram.r_n_49\ : STD_LOGIC;
   signal \ramloop[3].ram.r_n_0\ : STD_LOGIC;
   signal \ramloop[3].ram.r_n_1\ : STD_LOGIC;
   signal \ramloop[3].ram.r_n_10\ : STD_LOGIC;
@@ -2440,12 +2372,11 @@ begin
       ENB_I => ENB_I_1,
       ENB_I_2 => ENB_I_0,
       ENB_I_3 => ENB_I,
-      POR_A => POR_A,
       POR_B => POR_B,
-      \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0\ => \ramloop[3].ram.r_n_40\,
+      \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0\ => \ramloop[3].ram.r_n_40\,
       \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg_0\ => \ramloop[3].ram.r_n_41\,
-      \SAFETY_CKT_GEN.POR_A_reg_0\ => \ramloop[0].ram.r_n_43\,
-      \SAFETY_CKT_GEN.POR_B_reg_0\ => \ramloop[0].ram.r_n_50\,
+      \SAFETY_CKT_GEN.POR_A_reg_0\ => \ramloop[0].ram.r_n_42\,
+      \SAFETY_CKT_GEN.POR_B_reg_0\ => \ramloop[0].ram.r_n_49\,
       addra(11 downto 0) => addra(11 downto 0),
       addrb(13 downto 0) => addrb(13 downto 0),
       clka => clka,
@@ -2454,7 +2385,7 @@ begin
       dinb(7 downto 0) => dinb(7 downto 0),
       doutb_array(7 downto 0) => doutb_array(7 downto 0),
       ena => ena,
-      ram_rstreg_a => ram_rstreg_a,
+      ram_rstram_a => ram_rstram_a,
       rsta => rsta,
       wea(3 downto 0) => wea(3 downto 0),
       web(0) => web(0)
@@ -2464,7 +2395,6 @@ begin
       \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\(31 downto 0) => ram_douta10_out(31 downto 0),
       ENA_I => ENA_I_3,
       ENB_I => ENB_I_1,
-      POR_A => POR_A,
       POR_B => POR_B,
       addra(9 downto 0) => addra(9 downto 0),
       addrb(11 downto 0) => addrb(11 downto 0),
@@ -2473,8 +2403,7 @@ begin
       dina(31 downto 0) => dina(31 downto 0),
       dinb(7 downto 0) => dinb(7 downto 0),
       doutb_array(7 downto 0) => doutb_array(15 downto 8),
-      ena => ena,
-      ram_rstreg_a => ram_rstreg_a,
+      ram_rstram_a => ram_rstram_a,
       wea(3 downto 0) => wea(3 downto 0),
       web(0) => web(0)
     );
@@ -2483,7 +2412,6 @@ begin
       DOADO(31 downto 0) => ram_douta6_out(31 downto 0),
       ENA_I => ENA_I_2,
       ENB_I => ENB_I_0,
-      POR_A => POR_A,
       POR_B => POR_B,
       addra(9 downto 0) => addra(9 downto 0),
       addrb(11 downto 0) => addrb(11 downto 0),
@@ -2492,8 +2420,7 @@ begin
       dina(31 downto 0) => dina(31 downto 0),
       dinb(7 downto 0) => dinb(7 downto 0),
       doutb_array(7 downto 0) => doutb_array(23 downto 16),
-      ena => ena,
-      ram_rstreg_a => ram_rstreg_a,
+      ram_rstram_a => ram_rstram_a,
       wea(3 downto 0) => wea(3 downto 0),
       web(0) => web(0)
     );
@@ -2533,12 +2460,11 @@ begin
       \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram\(0) => \ramloop[3].ram.r_n_31\,
       ENA_I => ENA_I,
       ENB_I => ENB_I,
-      POR_A => POR_A,
       POR_B => POR_B,
-      \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg_0\ => \ramloop[3].ram.r_n_40\,
+      \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg_0\ => \ramloop[3].ram.r_n_40\,
       \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg_0\ => \ramloop[3].ram.r_n_41\,
-      \SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg_0\ => \ramloop[0].ram.r_n_43\,
-      \SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg_0\ => \ramloop[0].ram.r_n_50\,
+      \SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg_0\ => \ramloop[0].ram.r_n_42\,
+      \SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg_0\ => \ramloop[0].ram.r_n_49\,
       addra(9 downto 0) => addra(9 downto 0),
       addrb(11 downto 0) => addrb(11 downto 0),
       clka => clka,
@@ -2546,8 +2472,7 @@ begin
       dina(31 downto 0) => dina(31 downto 0),
       dinb(7 downto 0) => dinb(7 downto 0),
       doutb_array(7 downto 0) => doutb_array(31 downto 24),
-      ena => ena,
-      ram_rstreg_a => ram_rstreg_a,
+      ram_rstram_a => ram_rstram_a,
       rsta_busy => rsta_busy,
       rstb_busy => rstb_busy,
       wea(3 downto 0) => wea(3 downto 0),
@@ -2560,19 +2485,19 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_top is
   port (
-    douta : out STD_LOGIC_VECTOR ( 31 downto 0 );
     rsta_busy : out STD_LOGIC;
     rstb_busy : out STD_LOGIC;
+    douta : out STD_LOGIC_VECTOR ( 31 downto 0 );
     doutb : out STD_LOGIC_VECTOR ( 7 downto 0 );
     clkb : in STD_LOGIC;
     clka : in STD_LOGIC;
-    ena : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
     dinb : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC;
     rsta : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -2605,19 +2530,19 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_v8_4_2_synth is
   port (
-    douta : out STD_LOGIC_VECTOR ( 31 downto 0 );
     rsta_busy : out STD_LOGIC;
     rstb_busy : out STD_LOGIC;
+    douta : out STD_LOGIC_VECTOR ( 31 downto 0 );
     doutb : out STD_LOGIC_VECTOR ( 7 downto 0 );
     clkb : in STD_LOGIC;
     clka : in STD_LOGIC;
-    ena : in STD_LOGIC;
     addra : in STD_LOGIC_VECTOR ( 11 downto 0 );
     addrb : in STD_LOGIC_VECTOR ( 13 downto 0 );
     dina : in STD_LOGIC_VECTOR ( 31 downto 0 );
     dinb : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 3 downto 0 );
     web : in STD_LOGIC_VECTOR ( 0 to 0 );
+    ena : in STD_LOGIC;
     rsta : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -2773,7 +2698,7 @@ entity meowrouter_blk_mem_gen_0_0_blk_mem_gen_v8_4_2 is
   attribute C_HAS_INJECTERR : integer;
   attribute C_HAS_INJECTERR of meowrouter_blk_mem_gen_0_0_blk_mem_gen_v8_4_2 : entity is 0;
   attribute C_HAS_MEM_OUTPUT_REGS_A : integer;
-  attribute C_HAS_MEM_OUTPUT_REGS_A of meowrouter_blk_mem_gen_0_0_blk_mem_gen_v8_4_2 : entity is 1;
+  attribute C_HAS_MEM_OUTPUT_REGS_A of meowrouter_blk_mem_gen_0_0_blk_mem_gen_v8_4_2 : entity is 0;
   attribute C_HAS_MEM_OUTPUT_REGS_B : integer;
   attribute C_HAS_MEM_OUTPUT_REGS_B of meowrouter_blk_mem_gen_0_0_blk_mem_gen_v8_4_2 : entity is 0;
   attribute C_HAS_MUX_OUTPUT_REGS_A : integer;
@@ -3061,7 +2986,7 @@ architecture STRUCTURE of meowrouter_blk_mem_gen_0_0 is
   attribute C_HAS_INJECTERR : integer;
   attribute C_HAS_INJECTERR of U0 : label is 0;
   attribute C_HAS_MEM_OUTPUT_REGS_A : integer;
-  attribute C_HAS_MEM_OUTPUT_REGS_A of U0 : label is 1;
+  attribute C_HAS_MEM_OUTPUT_REGS_A of U0 : label is 0;
   attribute C_HAS_MEM_OUTPUT_REGS_B : integer;
   attribute C_HAS_MEM_OUTPUT_REGS_B of U0 : label is 0;
   attribute C_HAS_MUX_OUTPUT_REGS_A : integer;
@@ -3156,7 +3081,7 @@ architecture STRUCTURE of meowrouter_blk_mem_gen_0_0 is
   attribute x_interface_info : string;
   attribute x_interface_info of clka : signal is "xilinx.com:interface:bram:1.0 BRAM_PORTA CLK";
   attribute x_interface_parameter : string;
-  attribute x_interface_parameter of clka : signal is "XIL_INTERFACENAME BRAM_PORTA, MEM_SIZE 16384, MEM_WIDTH 32, MEM_ECC NONE, MASTER_TYPE OTHER, READ_WRITE_MODE READ_WRITE, READ_LATENCY 2";
+  attribute x_interface_parameter of clka : signal is "XIL_INTERFACENAME BRAM_PORTA, MEM_SIZE 16384, MEM_WIDTH 32, MEM_ECC NONE, MASTER_TYPE OTHER, READ_WRITE_MODE READ_WRITE, READ_LATENCY 1";
   attribute x_interface_info of clkb : signal is "xilinx.com:interface:bram:1.0 BRAM_PORTB CLK";
   attribute x_interface_parameter of clkb : signal is "XIL_INTERFACENAME BRAM_PORTB, MEM_SIZE 8192, MEM_WIDTH 32, MEM_ECC NONE, MASTER_TYPE OTHER, READ_WRITE_MODE READ_WRITE, READ_LATENCY 1";
   attribute x_interface_info of ena : signal is "xilinx.com:interface:bram:1.0 BRAM_PORTA EN";

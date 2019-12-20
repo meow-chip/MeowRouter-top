@@ -19,15 +19,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="126184191000fs"></ZoomStartTime>
-      <ZoomEndTime time="126262791001fs"></ZoomEndTime>
-      <Cursor1Time time="126199691000fs"></Cursor1Time>
+      <ZoomStartTime time="400394761666fs"></ZoomStartTime>
+      <ZoomEndTime time="407394761667fs"></ZoomEndTime>
+      <Cursor1Time time="406228095000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="188"></NameColumnWidth>
-      <ValueColumnWidth column_width="74"></ValueColumnWidth>
+      <ValueColumnWidth column_width="117"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="55" />
+   <WVObjectSize size="76" />
    <wvobject fp_name="/tb/clk_50M" type="logic">
       <obj_property name="ElementShortName">clk_50M</obj_property>
       <obj_property name="ObjectShortName">clk_50M</obj_property>
@@ -259,5 +259,89 @@
    <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/mcycle" type="array">
       <obj_property name="ElementShortName">mcycle[63:0]</obj_property>
       <obj_property name="ObjectShortName">mcycle[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/io_cmd_op" type="array">
+      <obj_property name="ElementShortName">io_cmd_op[7:0]</obj_property>
+      <obj_property name="ObjectShortName">io_cmd_op[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/io_cmd_idx" type="array">
+      <obj_property name="ElementShortName">io_cmd_idx[7:0]</obj_property>
+      <obj_property name="ObjectShortName">io_cmd_idx[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/io_cmd_data" type="array">
+      <obj_property name="ElementShortName">io_cmd_data[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_cmd_data[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_AWADDR" type="array">
+      <obj_property name="ElementShortName">io_axi_AWADDR[47:0]</obj_property>
+      <obj_property name="ObjectShortName">io_axi_AWADDR[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/CPU/io_axi_WDATA" type="array">
+      <obj_property name="ElementShortName">io_axi_WDATA[63:0]</obj_property>
+      <obj_property name="ObjectShortName">io_axi_WDATA[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/ipStore_0" type="array">
+      <obj_property name="ElementShortName">ipStore_0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ipStore_0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/ipStore_1" type="array">
+      <obj_property name="ElementShortName">ipStore_1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ipStore_1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/ipStore_2" type="array">
+      <obj_property name="ElementShortName">ipStore_2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ipStore_2[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/ipStore_3" type="array">
+      <obj_property name="ElementShortName">ipStore_3[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ipStore_3[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/ipStore_4" type="array">
+      <obj_property name="ElementShortName">ipStore_4[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ipStore_4[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/macStore_0" type="array">
+      <obj_property name="ElementShortName">macStore_0[47:0]</obj_property>
+      <obj_property name="ObjectShortName">macStore_0[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/macStore_1" type="array">
+      <obj_property name="ElementShortName">macStore_1[47:0]</obj_property>
+      <obj_property name="ObjectShortName">macStore_1[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/macStore_2" type="array">
+      <obj_property name="ElementShortName">macStore_2[47:0]</obj_property>
+      <obj_property name="ObjectShortName">macStore_2[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/macStore_3" type="array">
+      <obj_property name="ElementShortName">macStore_3[47:0]</obj_property>
+      <obj_property name="ObjectShortName">macStore_3[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/macStore_4" type="array">
+      <obj_property name="ElementShortName">macStore_4[47:0]</obj_property>
+      <obj_property name="ObjectShortName">macStore_4[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/inst/router/ctrl/cmd_op" type="array">
+      <obj_property name="ElementShortName">cmd_op[7:0]</obj_property>
+      <obj_property name="ObjectShortName">cmd_op[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/Router/io_cmd" type="array">
+      <obj_property name="ElementShortName">io_cmd[63:0]</obj_property>
+      <obj_property name="ObjectShortName">io_cmd[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/RouterCmd/gpio_io_o" type="array">
+      <obj_property name="ElementShortName">gpio_io_o[31:0]</obj_property>
+      <obj_property name="ObjectShortName">gpio_io_o[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/RouterCmd/gpio2_io_o" type="array">
+      <obj_property name="ElementShortName">gpio2_io_o[31:0]</obj_property>
+      <obj_property name="ObjectShortName">gpio2_io_o[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/br_req_ex" type="array">
+      <obj_property name="ElementShortName">br_req_ex[1:0]</obj_property>
+      <obj_property name="ObjectShortName">br_req_ex[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/mr/CPU/inst/ctrl/io_pc" type="array">
+      <obj_property name="ElementShortName">io_pc[63:0]</obj_property>
+      <obj_property name="ObjectShortName">io_pc[63:0]</obj_property>
    </wvobject>
 </wave_config>

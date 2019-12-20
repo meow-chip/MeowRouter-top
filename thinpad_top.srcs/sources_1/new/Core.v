@@ -267,14 +267,14 @@ end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
     if (reset) begin
-      pc <= 64'hffff20000000;
+      pc <= 64'hffffffff8000;
     end else if (branch) begin
       pc <= _T_14;
     end else if (_T_3) begin
       pc <= _T_19;
     end
     if (reset) begin
-      snepc <= 64'hffff20000000;
+      snepc <= 64'hffffffff8000;
     end else if (branch) begin
       if (ex) begin
         snepc <= _T_56;
@@ -6059,111 +6059,125 @@ module L1IC(
   wire  MaxPeriodFibonacciLFSR_io_out_5; // @[PRNG.scala 82:22]
   wire  MaxPeriodFibonacciLFSR_io_out_6; // @[PRNG.scala 82:22]
   wire  MaxPeriodFibonacciLFSR_io_out_7; // @[PRNG.scala 82:22]
-  reg [1:0] state; // @[L1IC.scala 107:22]
+  reg [1:0] state; // @[L1IC.scala 106:22]
   reg [31:0] _RAND_28;
-  wire  _T_26; // @[L1IC.scala 143:14]
-  wire [1:0] _T_33; // @[Conditional.scala 37:39]
-  wire  _T_34; // @[Conditional.scala 37:30]
-  wire  _T_55; // @[Conditional.scala 37:30]
-  wire  _T_60; // @[L1IC.scala 187:14]
+  wire  _T_20; // @[L1IC.scala 139:14]
+  wire [1:0] _T_27; // @[Conditional.scala 37:39]
+  wire  _T_28; // @[Conditional.scala 37:30]
+  wire  _T_51; // @[Conditional.scala 37:30]
+  wire  _T_56; // @[L1IC.scala 182:14]
   wire [7:0] rand_; // @[PRNG.scala 86:17]
-  wire  victim_1; // @[L1IC.scala 192:28]
-  wire  mask_0; // @[L1IC.scala 193:51]
-  wire  _GEN_45; // @[L1IC.scala 187:27]
-  wire  _GEN_63; // @[Conditional.scala 39:67]
-  wire  _GEN_84; // @[Conditional.scala 40:58]
-  wire  _GEN_105; // @[L1IC.scala 155:25]
+  wire  victim_1; // @[L1IC.scala 187:28]
+  wire  mask_0; // @[L1IC.scala 188:51]
+  wire  _GEN_49; // @[L1IC.scala 182:27]
+  wire  _GEN_69; // @[Conditional.scala 39:67]
+  wire  _GEN_92; // @[Conditional.scala 40:58]
+  wire  _GEN_114; // @[L1IC.scala 151:25]
   reg [47:0] pipeAddr; // @[L1IC.scala 91:25]
   reg [63:0] _RAND_29;
-  wire [37:0] _T_61; // @[L1IC.scala 86:32]
-  wire [36:0] written_tag; // @[L1IC.scala 188:29 L1IC.scala 189:23]
-  wire  _GEN_46; // @[L1IC.scala 187:27]
-  wire  _GEN_64; // @[Conditional.scala 39:67]
-  wire  _GEN_85; // @[Conditional.scala 40:58]
-  wire  _GEN_106; // @[L1IC.scala 155:25]
-  wire [31:0] dataView_0; // @[L1IC.scala 195:44]
-  wire [31:0] dataView_1; // @[L1IC.scala 195:44]
-  wire [31:0] dataView_2; // @[L1IC.scala 195:44]
-  wire [31:0] dataView_3; // @[L1IC.scala 195:44]
+  wire [37:0] _T_57; // @[L1IC.scala 86:32]
+  wire [36:0] written_tag; // @[L1IC.scala 183:29 L1IC.scala 184:23]
+  wire  _GEN_50; // @[L1IC.scala 182:27]
+  wire  _GEN_70; // @[Conditional.scala 39:67]
+  wire  _GEN_93; // @[Conditional.scala 40:58]
+  wire  _GEN_115; // @[L1IC.scala 151:25]
+  wire [31:0] dataView_0; // @[L1IC.scala 190:44]
+  wire [31:0] dataView_1; // @[L1IC.scala 190:44]
+  wire [31:0] dataView_2; // @[L1IC.scala 190:44]
+  wire [31:0] dataView_3; // @[L1IC.scala 190:44]
   reg  pipeRead; // @[L1IC.scala 90:25]
   reg [31:0] _RAND_30;
-  reg  exitedRead; // @[L1IC.scala 92:27]
-  reg [31:0] _RAND_31;
-  reg [47:0] exitedAddr; // @[L1IC.scala 93:27]
-  reg [63:0] _RAND_32;
-  wire [47:0] readingAddr; // @[L1IC.scala 96:21]
+  wire [47:0] readingAddr; // @[L1IC.scala 94:21]
   wire [37:0] _T_7; // @[L1IC.scala 86:32]
-  wire [37:0] _GEN_136; // @[L1IC.scala 103:59]
-  wire  _T_8; // @[L1IC.scala 103:59]
-  wire [37:0] _GEN_137; // @[L1IC.scala 103:59]
-  wire  _T_11; // @[L1IC.scala 103:59]
-  reg  pipeHitMap_0; // @[L1IC.scala 104:27]
-  reg [31:0] _RAND_33;
-  reg  pipeHitMap_1; // @[L1IC.scala 104:27]
+  wire [37:0] _GEN_148; // @[L1IC.scala 101:59]
+  wire  _T_8; // @[L1IC.scala 101:59]
+  wire [37:0] _GEN_149; // @[L1IC.scala 101:59]
+  wire  _T_11; // @[L1IC.scala 101:59]
+  reg [36:0] pipeReadouts_0_tag; // @[L1IC.scala 102:29]
+  reg [63:0] _RAND_31;
+  reg  pipeReadouts_0_valid; // @[L1IC.scala 102:29]
+  reg [31:0] _RAND_32;
+  reg [36:0] pipeReadouts_1_tag; // @[L1IC.scala 102:29]
+  reg [63:0] _RAND_33;
+  reg  pipeReadouts_1_valid; // @[L1IC.scala 102:29]
   reg [31:0] _RAND_34;
-  wire [43:0] _T_13; // @[L1IC.scala 113:15]
-  wire [43:0] _T_14; // @[L1IC.scala 113:61]
-  wire  _T_15; // @[L1IC.scala 113:49]
-  wire  _T_16; // @[L1IC.scala 112:16]
-  reg [1:0] _T_17; // @[L1IC.scala 114:12]
+  reg  pipeHitMap_0; // @[L1IC.scala 103:27]
   reg [31:0] _RAND_35;
-  wire  _T_18; // @[L1IC.scala 114:20]
-  wire  sameLineRAW; // @[L1IC.scala 113:95]
-  reg [31:0] savedLine_0; // @[L1IC.scala 116:22]
+  reg  pipeHitMap_1; // @[L1IC.scala 103:27]
   reg [31:0] _RAND_36;
-  reg [31:0] savedLine_1; // @[L1IC.scala 116:22]
+  reg  sameLineRAW; // @[L1IC.scala 110:28]
   reg [31:0] _RAND_37;
-  reg [31:0] savedLine_2; // @[L1IC.scala 116:22]
+  reg  justVictimized; // @[L1IC.scala 111:31]
   reg [31:0] _RAND_38;
-  reg [31:0] savedLine_3; // @[L1IC.scala 116:22]
+  reg [31:0] savedLine_0; // @[L1IC.scala 112:22]
   reg [31:0] _RAND_39;
-  reg [5:0] rstCnt; // @[L1IC.scala 121:23]
+  reg [31:0] savedLine_1; // @[L1IC.scala 112:22]
   reg [31:0] _RAND_40;
-  wire  _T_31; // @[L1IC.scala 150:21]
-  wire [1:0] _GEN_20; // @[L1IC.scala 150:25]
-  wire [1:0] _T_50; // @[L1IC.scala 171:39]
-  wire  _T_51; // @[L1IC.scala 171:42]
-  wire [1:0] _GEN_31; // @[L1IC.scala 171:47]
-  wire [1:0] _GEN_34; // @[L1IC.scala 168:29]
-  wire [1:0] _GEN_37; // @[L1IC.scala 167:24]
-  wire [1:0] _GEN_57; // @[L1IC.scala 187:27]
-  wire [1:0] _GEN_75; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_78; // @[Conditional.scala 40:58]
-  wire [1:0] _GEN_94; // @[L1IC.scala 155:25]
-  wire [1:0] nstate; // @[L1IC.scala 143:31]
-  wire  _T_25; // @[L1IC.scala 133:8]
-  wire [5:0] _T_28; // @[L1IC.scala 144:22]
+  reg [31:0] savedLine_2; // @[L1IC.scala 112:22]
+  reg [31:0] _RAND_41;
+  reg [31:0] savedLine_3; // @[L1IC.scala 112:22]
+  reg [31:0] _RAND_42;
+  reg [5:0] rstCnt; // @[L1IC.scala 117:23]
+  reg [31:0] _RAND_43;
+  wire  _T_25; // @[L1IC.scala 146:21]
+  wire [1:0] _GEN_20; // @[L1IC.scala 146:25]
+  wire  _T_44; // @[L1IC.scala 166:22]
+  wire [1:0] _T_45; // @[L1IC.scala 166:58]
+  wire  _T_46; // @[L1IC.scala 166:61]
+  wire  _T_47; // @[L1IC.scala 166:38]
+  wire [1:0] _GEN_31; // @[L1IC.scala 166:66]
+  wire [1:0] _GEN_34; // @[L1IC.scala 163:29]
+  wire [1:0] _GEN_37; // @[L1IC.scala 162:24]
+  wire [1:0] _GEN_63; // @[L1IC.scala 182:27]
+  wire [1:0] _GEN_83; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_86; // @[Conditional.scala 40:58]
+  wire [1:0] _GEN_104; // @[L1IC.scala 151:25]
+  wire [1:0] nstate; // @[L1IC.scala 139:31]
+  wire  _T_19; // @[L1IC.scala 129:8]
+  wire  _GEN_17; // @[L1IC.scala 129:22]
+  wire  _GEN_18; // @[L1IC.scala 129:22]
+  wire [5:0] _T_22; // @[L1IC.scala 140:22]
+  wire [127:0] _T_31; // @[Mux.scala 27:72]
+  wire [127:0] _T_32; // @[Mux.scala 27:72]
+  wire [127:0] _T_35; // @[Mux.scala 27:72]
+  wire [127:0] _T_36; // @[Mux.scala 27:72]
   wire [127:0] _T_37; // @[Mux.scala 27:72]
-  wire [127:0] _T_38; // @[Mux.scala 27:72]
-  wire [127:0] _T_41; // @[Mux.scala 27:72]
-  wire [127:0] _T_42; // @[Mux.scala 27:72]
-  wire [127:0] _T_43; // @[Mux.scala 27:72]
   wire [31:0] rdata_0; // @[Mux.scala 27:72]
   wire [31:0] rdata_1; // @[Mux.scala 27:72]
   wire [31:0] rdata_2; // @[Mux.scala 27:72]
   wire [31:0] rdata_3; // @[Mux.scala 27:72]
-  wire [1:0] _T_49; // @[L1IC.scala 84:43]
-  wire [31:0] _GEN_22; // @[L1IC.scala 170:24]
-  wire [31:0] _GEN_23; // @[L1IC.scala 170:24]
-  wire [31:0] _GEN_24; // @[L1IC.scala 170:24]
-  wire [31:0] _GEN_26; // @[L1IC.scala 173:24]
-  wire [31:0] _GEN_27; // @[L1IC.scala 173:24]
-  wire [31:0] _GEN_28; // @[L1IC.scala 173:24]
-  wire  _GEN_29; // @[L1IC.scala 171:47]
-  wire  _GEN_32; // @[L1IC.scala 168:29]
-  wire [31:0] _GEN_33; // @[L1IC.scala 168:29]
-  wire  _GEN_35; // @[L1IC.scala 167:24]
-  wire [5:0] _T_57; // @[L1IC.scala 85:34]
-  wire [43:0] _T_58; // @[L1IC.scala 87:44]
-  wire [31:0] _GEN_39; // @[L1IC.scala 204:22]
-  wire [31:0] _GEN_40; // @[L1IC.scala 204:22]
-  wire [31:0] _GEN_41; // @[L1IC.scala 204:22]
-  wire  _GEN_56; // @[L1IC.scala 187:27]
-  wire  _GEN_74; // @[Conditional.scala 39:67]
-  wire  _GEN_76; // @[Conditional.scala 40:58]
-  wire  _GEN_80; // @[Conditional.scala 40:58]
-  wire  _GEN_98; // @[L1IC.scala 155:25]
-  wire  _GEN_101; // @[L1IC.scala 155:25]
+  wire [1:0] _T_43; // @[L1IC.scala 84:43]
+  wire [31:0] _GEN_22; // @[L1IC.scala 165:24]
+  wire [31:0] _GEN_23; // @[L1IC.scala 165:24]
+  wire [31:0] _GEN_24; // @[L1IC.scala 165:24]
+  wire [31:0] _GEN_26; // @[L1IC.scala 168:24]
+  wire [31:0] _GEN_27; // @[L1IC.scala 168:24]
+  wire [31:0] _GEN_28; // @[L1IC.scala 168:24]
+  wire  _GEN_29; // @[L1IC.scala 166:66]
+  wire  _GEN_32; // @[L1IC.scala 163:29]
+  wire [31:0] _GEN_33; // @[L1IC.scala 163:29]
+  wire  _GEN_35; // @[L1IC.scala 162:24]
+  wire [5:0] _T_53; // @[L1IC.scala 85:34]
+  wire [43:0] _T_54; // @[L1IC.scala 87:44]
+  wire [37:0] _T_64; // @[L1IC.scala 86:32]
+  wire [5:0] _T_65; // @[L1IC.scala 85:34]
+  wire [43:0] _T_66; // @[L1IC.scala 198:46]
+  wire  _T_70; // @[L1IC.scala 198:71]
+  wire [36:0] _GEN_40; // @[L1IC.scala 199:134]
+  wire  _GEN_41; // @[L1IC.scala 199:134]
+  wire [42:0] _T_75; // @[L1IC.scala 199:134]
+  wire [43:0] _GEN_150; // @[L1IC.scala 199:104]
+  wire  _T_76; // @[L1IC.scala 199:104]
+  wire  _T_77; // @[L1IC.scala 199:56]
+  wire [31:0] _GEN_43; // @[L1IC.scala 201:22]
+  wire [31:0] _GEN_44; // @[L1IC.scala 201:22]
+  wire [31:0] _GEN_45; // @[L1IC.scala 201:22]
+  wire  _GEN_62; // @[L1IC.scala 182:27]
+  wire  _GEN_82; // @[Conditional.scala 39:67]
+  wire  _GEN_84; // @[Conditional.scala 40:58]
+  wire  _GEN_88; // @[Conditional.scala 40:58]
+  wire  _GEN_107; // @[L1IC.scala 151:25]
+  wire  _GEN_110; // @[L1IC.scala 151:25]
   MaxPeriodFibonacciLFSR MaxPeriodFibonacciLFSR ( // @[PRNG.scala 82:22]
     .clock(MaxPeriodFibonacciLFSR_clock),
     .reset(MaxPeriodFibonacciLFSR_reset),
@@ -6178,160 +6192,168 @@ module L1IC(
   );
   assign directories_0_tag_readouts_addr = readingAddr[9:4];
   assign directories_0_tag_readouts_data = directories_0_tag[directories_0_tag_readouts_addr]; // @[L1IC.scala 68:24]
-  assign directories_0_tag__T_1_data = _T_26 ? 37'h0 : written_tag;
-  assign directories_0_tag__T_1_addr = _T_26 ? rstCnt : _T_57;
-  assign directories_0_tag__T_1_mask = _T_26 | _GEN_105;
+  assign directories_0_tag__T_1_data = _T_20 ? 37'h0 : written_tag;
+  assign directories_0_tag__T_1_addr = _T_20 ? rstCnt : _T_53;
+  assign directories_0_tag__T_1_mask = _T_20 | _GEN_114;
   assign directories_0_tag__T_1_en = 1'h1;
   assign directories_0_valid_readouts_addr = readingAddr[9:4];
   assign directories_0_valid_readouts_data = directories_0_valid[directories_0_valid_readouts_addr]; // @[L1IC.scala 68:24]
-  assign directories_0_valid__T_1_data = _T_26 ? 1'h0 : 1'h1;
-  assign directories_0_valid__T_1_addr = _T_26 ? rstCnt : _T_57;
-  assign directories_0_valid__T_1_mask = _T_26 | _GEN_105;
+  assign directories_0_valid__T_1_data = _T_20 ? 1'h0 : 1'h1;
+  assign directories_0_valid__T_1_addr = _T_20 ? rstCnt : _T_53;
+  assign directories_0_valid__T_1_mask = _T_20 | _GEN_114;
   assign directories_0_valid__T_1_en = 1'h1;
   assign directories_1_tag_readouts_addr = readingAddr[9:4];
   assign directories_1_tag_readouts_data = directories_1_tag[directories_1_tag_readouts_addr]; // @[L1IC.scala 68:24]
-  assign directories_1_tag__T_1_data = _T_26 ? 37'h0 : written_tag;
-  assign directories_1_tag__T_1_addr = _T_26 ? rstCnt : _T_57;
-  assign directories_1_tag__T_1_mask = _T_26 | _GEN_106;
+  assign directories_1_tag__T_1_data = _T_20 ? 37'h0 : written_tag;
+  assign directories_1_tag__T_1_addr = _T_20 ? rstCnt : _T_53;
+  assign directories_1_tag__T_1_mask = _T_20 | _GEN_115;
   assign directories_1_tag__T_1_en = 1'h1;
   assign directories_1_valid_readouts_addr = readingAddr[9:4];
   assign directories_1_valid_readouts_data = directories_1_valid[directories_1_valid_readouts_addr]; // @[L1IC.scala 68:24]
-  assign directories_1_valid__T_1_data = _T_26 ? 1'h0 : 1'h1;
-  assign directories_1_valid__T_1_addr = _T_26 ? rstCnt : _T_57;
-  assign directories_1_valid__T_1_mask = _T_26 | _GEN_106;
+  assign directories_1_valid__T_1_data = _T_20 ? 1'h0 : 1'h1;
+  assign directories_1_valid__T_1_addr = _T_20 ? rstCnt : _T_53;
+  assign directories_1_valid__T_1_mask = _T_20 | _GEN_115;
   assign directories_1_valid__T_1_en = 1'h1;
   assign stores_0_0_dataReadouts_addr = stores_0_0_dataReadouts_addr_pipe_0;
   assign stores_0_0_dataReadouts_data = stores_0_0[stores_0_0_dataReadouts_addr]; // @[L1IC.scala 69:27]
   assign stores_0_0__T_3_data = toL2_data[31:0];
-  assign stores_0_0__T_3_addr = _T_26 ? rstCnt : _T_57;
-  assign stores_0_0__T_3_mask = _T_26 | _GEN_105;
+  assign stores_0_0__T_3_addr = _T_20 ? rstCnt : _T_53;
+  assign stores_0_0__T_3_mask = _T_20 | _GEN_114;
   assign stores_0_0__T_3_en = 1'h1;
   assign stores_0_1_dataReadouts_addr = stores_0_1_dataReadouts_addr_pipe_0;
   assign stores_0_1_dataReadouts_data = stores_0_1[stores_0_1_dataReadouts_addr]; // @[L1IC.scala 69:27]
   assign stores_0_1__T_3_data = toL2_data[63:32];
-  assign stores_0_1__T_3_addr = _T_26 ? rstCnt : _T_57;
-  assign stores_0_1__T_3_mask = _T_26 | _GEN_105;
+  assign stores_0_1__T_3_addr = _T_20 ? rstCnt : _T_53;
+  assign stores_0_1__T_3_mask = _T_20 | _GEN_114;
   assign stores_0_1__T_3_en = 1'h1;
   assign stores_0_2_dataReadouts_addr = stores_0_2_dataReadouts_addr_pipe_0;
   assign stores_0_2_dataReadouts_data = stores_0_2[stores_0_2_dataReadouts_addr]; // @[L1IC.scala 69:27]
   assign stores_0_2__T_3_data = toL2_data[95:64];
-  assign stores_0_2__T_3_addr = _T_26 ? rstCnt : _T_57;
-  assign stores_0_2__T_3_mask = _T_26 | _GEN_105;
+  assign stores_0_2__T_3_addr = _T_20 ? rstCnt : _T_53;
+  assign stores_0_2__T_3_mask = _T_20 | _GEN_114;
   assign stores_0_2__T_3_en = 1'h1;
   assign stores_0_3_dataReadouts_addr = stores_0_3_dataReadouts_addr_pipe_0;
   assign stores_0_3_dataReadouts_data = stores_0_3[stores_0_3_dataReadouts_addr]; // @[L1IC.scala 69:27]
   assign stores_0_3__T_3_data = toL2_data[127:96];
-  assign stores_0_3__T_3_addr = _T_26 ? rstCnt : _T_57;
-  assign stores_0_3__T_3_mask = _T_26 | _GEN_105;
+  assign stores_0_3__T_3_addr = _T_20 ? rstCnt : _T_53;
+  assign stores_0_3__T_3_mask = _T_20 | _GEN_114;
   assign stores_0_3__T_3_en = 1'h1;
   assign stores_1_0_dataReadouts_addr = stores_1_0_dataReadouts_addr_pipe_0;
   assign stores_1_0_dataReadouts_data = stores_1_0[stores_1_0_dataReadouts_addr]; // @[L1IC.scala 69:27]
   assign stores_1_0__T_3_data = toL2_data[31:0];
-  assign stores_1_0__T_3_addr = _T_26 ? rstCnt : _T_57;
-  assign stores_1_0__T_3_mask = _T_26 | _GEN_106;
+  assign stores_1_0__T_3_addr = _T_20 ? rstCnt : _T_53;
+  assign stores_1_0__T_3_mask = _T_20 | _GEN_115;
   assign stores_1_0__T_3_en = 1'h1;
   assign stores_1_1_dataReadouts_addr = stores_1_1_dataReadouts_addr_pipe_0;
   assign stores_1_1_dataReadouts_data = stores_1_1[stores_1_1_dataReadouts_addr]; // @[L1IC.scala 69:27]
   assign stores_1_1__T_3_data = toL2_data[63:32];
-  assign stores_1_1__T_3_addr = _T_26 ? rstCnt : _T_57;
-  assign stores_1_1__T_3_mask = _T_26 | _GEN_106;
+  assign stores_1_1__T_3_addr = _T_20 ? rstCnt : _T_53;
+  assign stores_1_1__T_3_mask = _T_20 | _GEN_115;
   assign stores_1_1__T_3_en = 1'h1;
   assign stores_1_2_dataReadouts_addr = stores_1_2_dataReadouts_addr_pipe_0;
   assign stores_1_2_dataReadouts_data = stores_1_2[stores_1_2_dataReadouts_addr]; // @[L1IC.scala 69:27]
   assign stores_1_2__T_3_data = toL2_data[95:64];
-  assign stores_1_2__T_3_addr = _T_26 ? rstCnt : _T_57;
-  assign stores_1_2__T_3_mask = _T_26 | _GEN_106;
+  assign stores_1_2__T_3_addr = _T_20 ? rstCnt : _T_53;
+  assign stores_1_2__T_3_mask = _T_20 | _GEN_115;
   assign stores_1_2__T_3_en = 1'h1;
   assign stores_1_3_dataReadouts_addr = stores_1_3_dataReadouts_addr_pipe_0;
   assign stores_1_3_dataReadouts_data = stores_1_3[stores_1_3_dataReadouts_addr]; // @[L1IC.scala 69:27]
   assign stores_1_3__T_3_data = toL2_data[127:96];
-  assign stores_1_3__T_3_addr = _T_26 ? rstCnt : _T_57;
-  assign stores_1_3__T_3_mask = _T_26 | _GEN_106;
+  assign stores_1_3__T_3_addr = _T_20 ? rstCnt : _T_53;
+  assign stores_1_3__T_3_mask = _T_20 | _GEN_115;
   assign stores_1_3__T_3_en = 1'h1;
-  assign _T_26 = state == 2'h0; // @[L1IC.scala 143:14]
-  assign _T_33 = $unsigned(state); // @[Conditional.scala 37:39]
-  assign _T_34 = 2'h1 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_55 = 2'h2 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_60 = toL2_stall == 1'h0; // @[L1IC.scala 187:14]
+  assign _T_20 = state == 2'h0; // @[L1IC.scala 139:14]
+  assign _T_27 = $unsigned(state); // @[Conditional.scala 37:39]
+  assign _T_28 = 2'h1 == _T_27; // @[Conditional.scala 37:30]
+  assign _T_51 = 2'h2 == _T_27; // @[Conditional.scala 37:30]
+  assign _T_56 = toL2_stall == 1'h0; // @[L1IC.scala 182:14]
   assign rand_ = {MaxPeriodFibonacciLFSR_io_out_7,MaxPeriodFibonacciLFSR_io_out_6,MaxPeriodFibonacciLFSR_io_out_5,MaxPeriodFibonacciLFSR_io_out_4,MaxPeriodFibonacciLFSR_io_out_3,MaxPeriodFibonacciLFSR_io_out_2,MaxPeriodFibonacciLFSR_io_out_1,MaxPeriodFibonacciLFSR_io_out_0}; // @[PRNG.scala 86:17]
-  assign victim_1 = rand_[0]; // @[L1IC.scala 192:28]
-  assign mask_0 = 1'h0 == victim_1; // @[L1IC.scala 193:51]
-  assign _GEN_45 = _T_60 & mask_0; // @[L1IC.scala 187:27]
-  assign _GEN_63 = _T_55 & _GEN_45; // @[Conditional.scala 39:67]
-  assign _GEN_84 = _T_34 ? 1'h0 : _GEN_63; // @[Conditional.scala 40:58]
-  assign _GEN_105 = toCPU_rst ? 1'h0 : _GEN_84; // @[L1IC.scala 155:25]
-  assign _T_61 = pipeAddr[47:10]; // @[L1IC.scala 86:32]
-  assign written_tag = _T_61[36:0]; // @[L1IC.scala 188:29 L1IC.scala 189:23]
-  assign _GEN_46 = _T_60 & victim_1; // @[L1IC.scala 187:27]
-  assign _GEN_64 = _T_55 & _GEN_46; // @[Conditional.scala 39:67]
-  assign _GEN_85 = _T_34 ? 1'h0 : _GEN_64; // @[Conditional.scala 40:58]
-  assign _GEN_106 = toCPU_rst ? 1'h0 : _GEN_85; // @[L1IC.scala 155:25]
-  assign dataView_0 = toL2_data[31:0]; // @[L1IC.scala 195:44]
-  assign dataView_1 = toL2_data[63:32]; // @[L1IC.scala 195:44]
-  assign dataView_2 = toL2_data[95:64]; // @[L1IC.scala 195:44]
-  assign dataView_3 = toL2_data[127:96]; // @[L1IC.scala 195:44]
-  assign readingAddr = toCPU_stall ? pipeAddr : toCPU_addr; // @[L1IC.scala 96:21]
+  assign victim_1 = rand_[0]; // @[L1IC.scala 187:28]
+  assign mask_0 = 1'h0 == victim_1; // @[L1IC.scala 188:51]
+  assign _GEN_49 = _T_56 & mask_0; // @[L1IC.scala 182:27]
+  assign _GEN_69 = _T_51 & _GEN_49; // @[Conditional.scala 39:67]
+  assign _GEN_92 = _T_28 ? 1'h0 : _GEN_69; // @[Conditional.scala 40:58]
+  assign _GEN_114 = toCPU_rst ? 1'h0 : _GEN_92; // @[L1IC.scala 151:25]
+  assign _T_57 = pipeAddr[47:10]; // @[L1IC.scala 86:32]
+  assign written_tag = _T_57[36:0]; // @[L1IC.scala 183:29 L1IC.scala 184:23]
+  assign _GEN_50 = _T_56 & victim_1; // @[L1IC.scala 182:27]
+  assign _GEN_70 = _T_51 & _GEN_50; // @[Conditional.scala 39:67]
+  assign _GEN_93 = _T_28 ? 1'h0 : _GEN_70; // @[Conditional.scala 40:58]
+  assign _GEN_115 = toCPU_rst ? 1'h0 : _GEN_93; // @[L1IC.scala 151:25]
+  assign dataView_0 = toL2_data[31:0]; // @[L1IC.scala 190:44]
+  assign dataView_1 = toL2_data[63:32]; // @[L1IC.scala 190:44]
+  assign dataView_2 = toL2_data[95:64]; // @[L1IC.scala 190:44]
+  assign dataView_3 = toL2_data[127:96]; // @[L1IC.scala 190:44]
+  assign readingAddr = toCPU_stall ? pipeAddr : toCPU_addr; // @[L1IC.scala 94:21]
   assign _T_7 = readingAddr[47:10]; // @[L1IC.scala 86:32]
-  assign _GEN_136 = {{1'd0}, directories_0_tag_readouts_data}; // @[L1IC.scala 103:59]
-  assign _T_8 = _GEN_136 == _T_7; // @[L1IC.scala 103:59]
-  assign _GEN_137 = {{1'd0}, directories_1_tag_readouts_data}; // @[L1IC.scala 103:59]
-  assign _T_11 = _GEN_137 == _T_7; // @[L1IC.scala 103:59]
-  assign _T_13 = exitedAddr[47:4]; // @[L1IC.scala 113:15]
-  assign _T_14 = pipeAddr[47:4]; // @[L1IC.scala 113:61]
-  assign _T_15 = _T_13 == _T_14; // @[L1IC.scala 113:49]
-  assign _T_16 = exitedRead & _T_15; // @[L1IC.scala 112:16]
-  assign _T_18 = _T_17 == 2'h2; // @[L1IC.scala 114:20]
-  assign sameLineRAW = _T_16 & _T_18; // @[L1IC.scala 113:95]
-  assign _T_31 = rstCnt == 6'h3f; // @[L1IC.scala 150:21]
-  assign _GEN_20 = _T_31 ? 2'h1 : state; // @[L1IC.scala 150:25]
-  assign _T_50 = {pipeHitMap_1,pipeHitMap_0}; // @[L1IC.scala 171:39]
-  assign _T_51 = _T_50 != 2'h0; // @[L1IC.scala 171:42]
-  assign _GEN_31 = _T_51 ? state : 2'h2; // @[L1IC.scala 171:47]
-  assign _GEN_34 = sameLineRAW ? state : _GEN_31; // @[L1IC.scala 168:29]
-  assign _GEN_37 = pipeRead ? _GEN_34 : 2'h1; // @[L1IC.scala 167:24]
-  assign _GEN_57 = _T_60 ? 2'h1 : state; // @[L1IC.scala 187:27]
-  assign _GEN_75 = _T_55 ? _GEN_57 : state; // @[Conditional.scala 39:67]
-  assign _GEN_78 = _T_34 ? _GEN_37 : _GEN_75; // @[Conditional.scala 40:58]
-  assign _GEN_94 = toCPU_rst ? 2'h0 : _GEN_78; // @[L1IC.scala 155:25]
-  assign nstate = _T_26 ? _GEN_20 : _GEN_94; // @[L1IC.scala 143:31]
-  assign _T_25 = toCPU_stall == 1'h0; // @[L1IC.scala 133:8]
-  assign _T_28 = rstCnt + 6'h1; // @[L1IC.scala 144:22]
-  assign _T_37 = {stores_0_3_dataReadouts_data,stores_0_2_dataReadouts_data,stores_0_1_dataReadouts_data,stores_0_0_dataReadouts_data}; // @[Mux.scala 27:72]
-  assign _T_38 = pipeHitMap_0 ? _T_37 : 128'h0; // @[Mux.scala 27:72]
-  assign _T_41 = {stores_1_3_dataReadouts_data,stores_1_2_dataReadouts_data,stores_1_1_dataReadouts_data,stores_1_0_dataReadouts_data}; // @[Mux.scala 27:72]
-  assign _T_42 = pipeHitMap_1 ? _T_41 : 128'h0; // @[Mux.scala 27:72]
-  assign _T_43 = _T_38 | _T_42; // @[Mux.scala 27:72]
-  assign rdata_0 = _T_43[31:0]; // @[Mux.scala 27:72]
-  assign rdata_1 = _T_43[63:32]; // @[Mux.scala 27:72]
-  assign rdata_2 = _T_43[95:64]; // @[Mux.scala 27:72]
-  assign rdata_3 = _T_43[127:96]; // @[Mux.scala 27:72]
-  assign _T_49 = pipeAddr[3:2]; // @[L1IC.scala 84:43]
-  assign _GEN_22 = 2'h1 == _T_49 ? savedLine_1 : savedLine_0; // @[L1IC.scala 170:24]
-  assign _GEN_23 = 2'h2 == _T_49 ? savedLine_2 : _GEN_22; // @[L1IC.scala 170:24]
-  assign _GEN_24 = 2'h3 == _T_49 ? savedLine_3 : _GEN_23; // @[L1IC.scala 170:24]
-  assign _GEN_26 = 2'h1 == _T_49 ? rdata_1 : rdata_0; // @[L1IC.scala 173:24]
-  assign _GEN_27 = 2'h2 == _T_49 ? rdata_2 : _GEN_26; // @[L1IC.scala 173:24]
-  assign _GEN_28 = 2'h3 == _T_49 ? rdata_3 : _GEN_27; // @[L1IC.scala 173:24]
-  assign _GEN_29 = _T_51 ? 1'h0 : 1'h1; // @[L1IC.scala 171:47]
-  assign _GEN_32 = sameLineRAW ? 1'h0 : _GEN_29; // @[L1IC.scala 168:29]
-  assign _GEN_33 = sameLineRAW ? _GEN_24 : _GEN_28; // @[L1IC.scala 168:29]
-  assign _GEN_35 = pipeRead ? _GEN_32 : 1'h1; // @[L1IC.scala 167:24]
-  assign _T_57 = pipeAddr[9:4]; // @[L1IC.scala 85:34]
-  assign _T_58 = {_T_61,_T_57}; // @[L1IC.scala 87:44]
-  assign _GEN_39 = 2'h1 == _T_49 ? dataView_1 : dataView_0; // @[L1IC.scala 204:22]
-  assign _GEN_40 = 2'h2 == _T_49 ? dataView_2 : _GEN_39; // @[L1IC.scala 204:22]
-  assign _GEN_41 = 2'h3 == _T_49 ? dataView_3 : _GEN_40; // @[L1IC.scala 204:22]
-  assign _GEN_56 = _T_60 ? 1'h0 : 1'h1; // @[L1IC.scala 187:27]
-  assign _GEN_74 = _T_55 ? _GEN_56 : 1'h1; // @[Conditional.scala 39:67]
-  assign _GEN_76 = _T_34 ? _GEN_35 : _GEN_74; // @[Conditional.scala 40:58]
-  assign _GEN_80 = _T_34 ? 1'h0 : _T_55; // @[Conditional.scala 40:58]
-  assign _GEN_98 = toCPU_rst | _GEN_76; // @[L1IC.scala 155:25]
-  assign _GEN_101 = toCPU_rst ? 1'h0 : _GEN_80; // @[L1IC.scala 155:25]
-  assign toCPU_stall = nstate != 2'h1; // @[L1IC.scala 130:15]
-  assign toCPU_data = _T_34 ? _GEN_33 : _GEN_41; // @[L1IC.scala 170:24 L1IC.scala 173:24 L1IC.scala 204:22]
-  assign toCPU_vacant = _T_26 | _GEN_98; // @[L1IC.scala 131:16 L1IC.scala 152:20 L1IC.scala 169:26 L1IC.scala 172:26 L1IC.scala 178:24 L1IC.scala 205:24]
-  assign toL2_read = _T_26 ? 1'h0 : _GEN_101; // @[L1IC.scala 52:13 L1IC.scala 185:19]
-  assign toL2_addr = {_T_58,4'h0}; // @[L1IC.scala 184:19]
+  assign _GEN_148 = {{1'd0}, directories_0_tag_readouts_data}; // @[L1IC.scala 101:59]
+  assign _T_8 = _GEN_148 == _T_7; // @[L1IC.scala 101:59]
+  assign _GEN_149 = {{1'd0}, directories_1_tag_readouts_data}; // @[L1IC.scala 101:59]
+  assign _T_11 = _GEN_149 == _T_7; // @[L1IC.scala 101:59]
+  assign _T_25 = rstCnt == 6'h3f; // @[L1IC.scala 146:21]
+  assign _GEN_20 = _T_25 ? 2'h1 : state; // @[L1IC.scala 146:25]
+  assign _T_44 = justVictimized == 1'h0; // @[L1IC.scala 166:22]
+  assign _T_45 = {pipeHitMap_1,pipeHitMap_0}; // @[L1IC.scala 166:58]
+  assign _T_46 = _T_45 != 2'h0; // @[L1IC.scala 166:61]
+  assign _T_47 = _T_44 & _T_46; // @[L1IC.scala 166:38]
+  assign _GEN_31 = _T_47 ? state : 2'h2; // @[L1IC.scala 166:66]
+  assign _GEN_34 = sameLineRAW ? state : _GEN_31; // @[L1IC.scala 163:29]
+  assign _GEN_37 = pipeRead ? _GEN_34 : 2'h1; // @[L1IC.scala 162:24]
+  assign _GEN_63 = _T_56 ? 2'h1 : state; // @[L1IC.scala 182:27]
+  assign _GEN_83 = _T_51 ? _GEN_63 : state; // @[Conditional.scala 39:67]
+  assign _GEN_86 = _T_28 ? _GEN_37 : _GEN_83; // @[Conditional.scala 40:58]
+  assign _GEN_104 = toCPU_rst ? 2'h0 : _GEN_86; // @[L1IC.scala 151:25]
+  assign nstate = _T_20 ? _GEN_20 : _GEN_104; // @[L1IC.scala 139:31]
+  assign _T_19 = toCPU_stall == 1'h0; // @[L1IC.scala 129:8]
+  assign _GEN_17 = _T_19 ? 1'h0 : sameLineRAW; // @[L1IC.scala 129:22]
+  assign _GEN_18 = _T_19 ? 1'h0 : justVictimized; // @[L1IC.scala 129:22]
+  assign _T_22 = rstCnt + 6'h1; // @[L1IC.scala 140:22]
+  assign _T_31 = {stores_0_3_dataReadouts_data,stores_0_2_dataReadouts_data,stores_0_1_dataReadouts_data,stores_0_0_dataReadouts_data}; // @[Mux.scala 27:72]
+  assign _T_32 = pipeHitMap_0 ? _T_31 : 128'h0; // @[Mux.scala 27:72]
+  assign _T_35 = {stores_1_3_dataReadouts_data,stores_1_2_dataReadouts_data,stores_1_1_dataReadouts_data,stores_1_0_dataReadouts_data}; // @[Mux.scala 27:72]
+  assign _T_36 = pipeHitMap_1 ? _T_35 : 128'h0; // @[Mux.scala 27:72]
+  assign _T_37 = _T_32 | _T_36; // @[Mux.scala 27:72]
+  assign rdata_0 = _T_37[31:0]; // @[Mux.scala 27:72]
+  assign rdata_1 = _T_37[63:32]; // @[Mux.scala 27:72]
+  assign rdata_2 = _T_37[95:64]; // @[Mux.scala 27:72]
+  assign rdata_3 = _T_37[127:96]; // @[Mux.scala 27:72]
+  assign _T_43 = pipeAddr[3:2]; // @[L1IC.scala 84:43]
+  assign _GEN_22 = 2'h1 == _T_43 ? savedLine_1 : savedLine_0; // @[L1IC.scala 165:24]
+  assign _GEN_23 = 2'h2 == _T_43 ? savedLine_2 : _GEN_22; // @[L1IC.scala 165:24]
+  assign _GEN_24 = 2'h3 == _T_43 ? savedLine_3 : _GEN_23; // @[L1IC.scala 165:24]
+  assign _GEN_26 = 2'h1 == _T_43 ? rdata_1 : rdata_0; // @[L1IC.scala 168:24]
+  assign _GEN_27 = 2'h2 == _T_43 ? rdata_2 : _GEN_26; // @[L1IC.scala 168:24]
+  assign _GEN_28 = 2'h3 == _T_43 ? rdata_3 : _GEN_27; // @[L1IC.scala 168:24]
+  assign _GEN_29 = _T_47 ? 1'h0 : 1'h1; // @[L1IC.scala 166:66]
+  assign _GEN_32 = sameLineRAW ? 1'h0 : _GEN_29; // @[L1IC.scala 163:29]
+  assign _GEN_33 = sameLineRAW ? _GEN_24 : _GEN_28; // @[L1IC.scala 163:29]
+  assign _GEN_35 = pipeRead ? _GEN_32 : 1'h1; // @[L1IC.scala 162:24]
+  assign _T_53 = pipeAddr[9:4]; // @[L1IC.scala 85:34]
+  assign _T_54 = {_T_57,_T_53}; // @[L1IC.scala 87:44]
+  assign _T_64 = toCPU_addr[47:10]; // @[L1IC.scala 86:32]
+  assign _T_65 = toCPU_addr[9:4]; // @[L1IC.scala 85:34]
+  assign _T_66 = {_T_64,_T_65}; // @[L1IC.scala 198:46]
+  assign _T_70 = _T_66 == _T_54; // @[L1IC.scala 198:71]
+  assign _GEN_40 = victim_1 ? pipeReadouts_1_tag : pipeReadouts_0_tag; // @[L1IC.scala 199:134]
+  assign _GEN_41 = victim_1 ? pipeReadouts_1_valid : pipeReadouts_0_valid; // @[L1IC.scala 199:134]
+  assign _T_75 = {_GEN_40,_T_53}; // @[L1IC.scala 199:134]
+  assign _GEN_150 = {{1'd0}, _T_75}; // @[L1IC.scala 199:104]
+  assign _T_76 = _T_66 == _GEN_150; // @[L1IC.scala 199:104]
+  assign _T_77 = _GEN_41 & _T_76; // @[L1IC.scala 199:56]
+  assign _GEN_43 = 2'h1 == _T_43 ? dataView_1 : dataView_0; // @[L1IC.scala 201:22]
+  assign _GEN_44 = 2'h2 == _T_43 ? dataView_2 : _GEN_43; // @[L1IC.scala 201:22]
+  assign _GEN_45 = 2'h3 == _T_43 ? dataView_3 : _GEN_44; // @[L1IC.scala 201:22]
+  assign _GEN_62 = _T_56 ? 1'h0 : 1'h1; // @[L1IC.scala 182:27]
+  assign _GEN_82 = _T_51 ? _GEN_62 : 1'h1; // @[Conditional.scala 39:67]
+  assign _GEN_84 = _T_28 ? _GEN_35 : _GEN_82; // @[Conditional.scala 40:58]
+  assign _GEN_88 = _T_28 ? 1'h0 : _T_51; // @[Conditional.scala 40:58]
+  assign _GEN_107 = toCPU_rst | _GEN_84; // @[L1IC.scala 151:25]
+  assign _GEN_110 = toCPU_rst ? 1'h0 : _GEN_88; // @[L1IC.scala 151:25]
+  assign toCPU_stall = nstate != 2'h1; // @[L1IC.scala 126:15]
+  assign toCPU_data = _T_28 ? _GEN_33 : _GEN_45; // @[L1IC.scala 165:24 L1IC.scala 168:24 L1IC.scala 201:22]
+  assign toCPU_vacant = _T_20 | _GEN_107; // @[L1IC.scala 127:16 L1IC.scala 148:20 L1IC.scala 164:26 L1IC.scala 167:26 L1IC.scala 173:24 L1IC.scala 202:24]
+  assign toL2_read = _T_20 ? 1'h0 : _GEN_110; // @[L1IC.scala 52:13 L1IC.scala 180:19]
+  assign toL2_addr = {_T_54,4'h0}; // @[L1IC.scala 179:19]
   assign MaxPeriodFibonacciLFSR_clock = clock;
   assign MaxPeriodFibonacciLFSR_reset = reset;
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
@@ -6502,44 +6524,56 @@ initial begin
   pipeRead = _RAND_30[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_31 = {1{`RANDOM}};
-  exitedRead = _RAND_31[0:0];
+  _RAND_31 = {2{`RANDOM}};
+  pipeReadouts_0_tag = _RAND_31[36:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_32 = {2{`RANDOM}};
-  exitedAddr = _RAND_32[47:0];
+  _RAND_32 = {1{`RANDOM}};
+  pipeReadouts_0_valid = _RAND_32[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_33 = {1{`RANDOM}};
-  pipeHitMap_0 = _RAND_33[0:0];
+  _RAND_33 = {2{`RANDOM}};
+  pipeReadouts_1_tag = _RAND_33[36:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_34 = {1{`RANDOM}};
-  pipeHitMap_1 = _RAND_34[0:0];
+  pipeReadouts_1_valid = _RAND_34[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_35 = {1{`RANDOM}};
-  _T_17 = _RAND_35[1:0];
+  pipeHitMap_0 = _RAND_35[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_36 = {1{`RANDOM}};
-  savedLine_0 = _RAND_36[31:0];
+  pipeHitMap_1 = _RAND_36[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_37 = {1{`RANDOM}};
-  savedLine_1 = _RAND_37[31:0];
+  sameLineRAW = _RAND_37[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_38 = {1{`RANDOM}};
-  savedLine_2 = _RAND_38[31:0];
+  justVictimized = _RAND_38[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_39 = {1{`RANDOM}};
-  savedLine_3 = _RAND_39[31:0];
+  savedLine_0 = _RAND_39[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_40 = {1{`RANDOM}};
-  rstCnt = _RAND_40[5:0];
+  savedLine_1 = _RAND_40[31:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_41 = {1{`RANDOM}};
+  savedLine_2 = _RAND_41[31:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_42 = {1{`RANDOM}};
+  savedLine_3 = _RAND_42[31:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_43 = {1{`RANDOM}};
+  rstCnt = _RAND_43[5:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -6599,100 +6633,133 @@ end // initial
     stores_1_3_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
     if (reset) begin
       state <= 2'h0;
-    end else if (_T_26) begin
-      if (_T_31) begin
+    end else if (_T_20) begin
+      if (_T_25) begin
         state <= 2'h1;
       end
     end else if (toCPU_rst) begin
       state <= 2'h0;
-    end else if (_T_34) begin
+    end else if (_T_28) begin
       if (pipeRead) begin
         if (!(sameLineRAW)) begin
-          if (!(_T_51)) begin
+          if (!(_T_47)) begin
             state <= 2'h2;
           end
         end
       end else begin
         state <= 2'h1;
       end
-    end else if (_T_55) begin
-      if (_T_60) begin
+    end else if (_T_51) begin
+      if (_T_56) begin
         state <= 2'h1;
       end
     end
     if (reset) begin
       pipeAddr <= 48'h0;
-    end else if (_T_25) begin
+    end else if (_T_19) begin
       pipeAddr <= toCPU_addr;
     end
     if (reset) begin
       pipeRead <= 1'h0;
-    end else if (_T_26) begin
-      if (_T_25) begin
+    end else if (_T_20) begin
+      if (_T_19) begin
         pipeRead <= toCPU_read;
       end
     end else if (toCPU_rst) begin
       pipeRead <= 1'h0;
-    end else if (_T_25) begin
+    end else if (_T_19) begin
       pipeRead <= toCPU_read;
     end
-    if (reset) begin
-      exitedRead <= 1'h0;
-    end else if (_T_26) begin
-      if (_T_25) begin
-        exitedRead <= pipeRead;
-      end
-    end else if (toCPU_rst) begin
-      exitedRead <= 1'h0;
-    end else if (_T_25) begin
-      exitedRead <= pipeRead;
-    end
-    if (reset) begin
-      exitedAddr <= 48'h0;
-    end else if (_T_25) begin
-      exitedAddr <= pipeAddr;
-    end
+    pipeReadouts_0_tag <= directories_0_tag_readouts_data;
+    pipeReadouts_0_valid <= directories_0_valid_readouts_data;
+    pipeReadouts_1_tag <= directories_1_tag_readouts_data;
+    pipeReadouts_1_valid <= directories_1_valid_readouts_data;
     pipeHitMap_0 <= directories_0_valid_readouts_data & _T_8;
     pipeHitMap_1 <= directories_1_valid_readouts_data & _T_11;
-    _T_17 <= state;
-    if (!(_T_26)) begin
+    if (reset) begin
+      sameLineRAW <= 1'h0;
+    end else if (_T_20) begin
+      if (_T_19) begin
+        sameLineRAW <= 1'h0;
+      end
+    end else if (toCPU_rst) begin
+      if (_T_19) begin
+        sameLineRAW <= 1'h0;
+      end
+    end else if (_T_28) begin
+      if (_T_19) begin
+        sameLineRAW <= 1'h0;
+      end
+    end else if (_T_51) begin
+      if (_T_56) begin
+        sameLineRAW <= _T_70;
+      end else if (_T_19) begin
+        sameLineRAW <= 1'h0;
+      end
+    end else begin
+      sameLineRAW <= _GEN_17;
+    end
+    if (reset) begin
+      justVictimized <= 1'h0;
+    end else if (_T_20) begin
+      if (_T_19) begin
+        justVictimized <= 1'h0;
+      end
+    end else if (toCPU_rst) begin
+      if (_T_19) begin
+        justVictimized <= 1'h0;
+      end
+    end else if (_T_28) begin
+      if (_T_19) begin
+        justVictimized <= 1'h0;
+      end
+    end else if (_T_51) begin
+      if (_T_56) begin
+        justVictimized <= _T_77;
+      end else if (_T_19) begin
+        justVictimized <= 1'h0;
+      end
+    end else begin
+      justVictimized <= _GEN_18;
+    end
+    if (!(_T_20)) begin
       if (!(toCPU_rst)) begin
-        if (!(_T_34)) begin
-          if (_T_55) begin
-            if (_T_60) begin
+        if (!(_T_28)) begin
+          if (_T_51) begin
+            if (_T_56) begin
               savedLine_0 <= dataView_0;
             end
           end
         end
       end
     end
-    if (!(_T_26)) begin
+    if (!(_T_20)) begin
       if (!(toCPU_rst)) begin
-        if (!(_T_34)) begin
-          if (_T_55) begin
-            if (_T_60) begin
+        if (!(_T_28)) begin
+          if (_T_51) begin
+            if (_T_56) begin
               savedLine_1 <= dataView_1;
             end
           end
         end
       end
     end
-    if (!(_T_26)) begin
+    if (!(_T_20)) begin
       if (!(toCPU_rst)) begin
-        if (!(_T_34)) begin
-          if (_T_55) begin
-            if (_T_60) begin
+        if (!(_T_28)) begin
+          if (_T_51) begin
+            if (_T_56) begin
               savedLine_2 <= dataView_2;
             end
           end
         end
       end
     end
-    if (!(_T_26)) begin
+    if (!(_T_20)) begin
       if (!(toCPU_rst)) begin
-        if (!(_T_34)) begin
-          if (_T_55) begin
-            if (_T_60) begin
+        if (!(_T_28)) begin
+          if (_T_51) begin
+            if (_T_56) begin
               savedLine_3 <= dataView_3;
             end
           end
@@ -6701,8 +6768,8 @@ end // initial
     end
     if (reset) begin
       rstCnt <= 6'h0;
-    end else if (_T_26) begin
-      rstCnt <= _T_28;
+    end else if (_T_20) begin
+      rstCnt <= _T_22;
     end else if (toCPU_rst) begin
       rstCnt <= 6'h0;
     end
@@ -25396,106 +25463,174 @@ module Mul(
   reg [63:0] _RAND_8;
   reg [63:0] current_0_ext_x2; // @[Common.scala 283:12]
   reg [63:0] _RAND_9;
+  reg  current_0_ext_neg; // @[Common.scala 283:12]
+  reg [31:0] _RAND_10;
   reg [63:0] current_1_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_10;
+  reg [63:0] _RAND_11;
   reg [4:0] current_1_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_11;
-  reg [2:0] current_1_pipe_instr_instr_base; // @[Common.scala 283:12]
   reg [31:0] _RAND_12;
-  reg [4:0] current_1_pipe_instr_instr_rd; // @[Common.scala 283:12]
+  reg [2:0] current_1_pipe_instr_instr_base; // @[Common.scala 283:12]
   reg [31:0] _RAND_13;
-  reg  current_1_pipe_instr_vacant; // @[Common.scala 283:12]
+  reg [4:0] current_1_pipe_instr_instr_rd; // @[Common.scala 283:12]
   reg [31:0] _RAND_14;
-  reg [2:0] current_1_pipe_rdname; // @[Common.scala 283:12]
+  reg [2:0] current_1_pipe_instr_instr_funct3; // @[Common.scala 283:12]
   reg [31:0] _RAND_15;
-  reg [2:0] current_1_pipe_tag; // @[Common.scala 283:12]
+  reg  current_1_pipe_instr_vacant; // @[Common.scala 283:12]
   reg [31:0] _RAND_16;
+  reg [2:0] current_1_pipe_rdname; // @[Common.scala 283:12]
+  reg [31:0] _RAND_17;
+  reg [2:0] current_1_pipe_tag; // @[Common.scala 283:12]
+  reg [31:0] _RAND_18;
   reg [63:0] current_1_ext_x1; // @[Common.scala 283:12]
-  reg [63:0] _RAND_17;
-  wire  _T_3; // @[Mul.scala 19:27]
-  wire  _T_4; // @[Mul.scala 20:30]
-  wire  _T_5; // @[Mul.scala 20:7]
-  wire [63:0] _T_9; // @[Mul.scala 30:28]
-  wire [63:0] _T_10; // @[Mul.scala 31:28]
-  wire [31:0] _T_11; // @[Mul.scala 33:27]
-  wire [31:0] _T_12; // @[Mul.scala 33:35]
-  wire [31:0] _T_13; // @[Mul.scala 34:27]
-  wire [31:0] _T_14; // @[Mul.scala 34:35]
-  wire  _T_15; // @[Common.scala 293:12]
-  wire  _GEN_10; // @[Common.scala 293:36]
-  wire  _T_20; // @[Mul.scala 19:27]
-  wire  _T_21; // @[Mul.scala 20:30]
-  wire  _T_22; // @[Mul.scala 20:7]
-  wire  _T_24; // @[Mul.scala 46:12]
-  wire [127:0] _T_25; // @[Mul.scala 48:28]
-  wire [31:0] _T_26; // @[Mul.scala 48:38]
-  wire [31:0] _T_27; // @[Mul.scala 48:52]
-  wire  _T_28; // @[Conditional.scala 37:30]
-  wire [63:0] _T_30; // @[Mul.scala 53:42]
-  wire [63:0] _T_31; // @[Mul.scala 53:50]
-  wire  _T_32; // @[Conditional.scala 37:30]
-  wire [63:0] _T_34; // @[Mul.scala 57:42]
-  wire [63:0] _T_35; // @[Mul.scala 57:52]
-  wire  _T_36; // @[Conditional.scala 37:30]
-  wire [63:0] _T_37; // @[Mul.scala 61:32]
-  wire [63:0] _T_38; // @[Mul.scala 61:49]
-  wire [127:0] _T_39; // @[Mul.scala 61:39]
-  wire [63:0] _T_40; // @[Mul.scala 61:56]
-  wire [63:0] _T_41; // @[Mul.scala 61:66]
-  wire [64:0] _T_44; // @[Mul.scala 65:32]
-  wire [64:0] _GEN_99; // @[Mul.scala 65:32]
-  wire [128:0] _T_45; // @[Mul.scala 65:32]
-  wire [127:0] _T_46; // @[Mul.scala 65:32]
-  wire [127:0] _T_47; // @[Mul.scala 65:32]
-  wire [63:0] _T_48; // @[Mul.scala 65:49]
-  wire [63:0] _T_49; // @[Mul.scala 65:59]
-  wire  _GEN_35; // @[Common.scala 300:38]
-  wire  _GEN_59; // @[Common.scala 318:22]
-  wire  _GEN_76; // @[Common.scala 318:22]
-  wire [63:0] _T_65; // @[Mul.scala 84:23]
-  assign _T_3 = io_next_instr_instr_op == 5'h4; // @[Mul.scala 19:27]
-  assign _T_4 = io_next_instr_instr_op == 5'hc; // @[Mul.scala 20:30]
-  assign _T_5 = _T_3 | _T_4; // @[Mul.scala 20:7]
-  assign _T_9 = $signed(io_next_rs1val); // @[Mul.scala 30:28]
-  assign _T_10 = $signed(io_next_rs2val); // @[Mul.scala 31:28]
-  assign _T_11 = io_next_rs1val[31:0]; // @[Mul.scala 33:27]
-  assign _T_12 = $signed(_T_11); // @[Mul.scala 33:35]
-  assign _T_13 = io_next_rs2val[31:0]; // @[Mul.scala 34:27]
-  assign _T_14 = $signed(_T_13); // @[Mul.scala 34:35]
-  assign _T_15 = io_stall == 1'h0; // @[Common.scala 293:12]
-  assign _GEN_10 = _T_15 ? io_next_instr_vacant : current_0_pipe_instr_vacant; // @[Common.scala 293:36]
-  assign _T_20 = current_0_pipe_instr_instr_op == 5'h4; // @[Mul.scala 19:27]
-  assign _T_21 = current_0_pipe_instr_instr_op == 5'hc; // @[Mul.scala 20:30]
-  assign _T_22 = _T_20 | _T_21; // @[Mul.scala 20:7]
-  assign _T_24 = _T_22 == 1'h0; // @[Mul.scala 46:12]
-  assign _T_25 = $signed(current_0_ext_x1) * $signed(current_0_ext_x2); // @[Mul.scala 48:28]
-  assign _T_26 = _T_25[31:0]; // @[Mul.scala 48:38]
-  assign _T_27 = $signed(_T_26); // @[Mul.scala 48:52]
-  assign _T_28 = 3'h0 == current_0_pipe_instr_instr_funct3; // @[Conditional.scala 37:30]
-  assign _T_30 = _T_25[63:0]; // @[Mul.scala 53:42]
-  assign _T_31 = $signed(_T_30); // @[Mul.scala 53:50]
-  assign _T_32 = 3'h1 == current_0_pipe_instr_instr_funct3; // @[Conditional.scala 37:30]
-  assign _T_34 = _T_25[127:64]; // @[Mul.scala 57:42]
-  assign _T_35 = $signed(_T_34); // @[Mul.scala 57:52]
-  assign _T_36 = 3'h3 == current_0_pipe_instr_instr_funct3; // @[Conditional.scala 37:30]
-  assign _T_37 = $unsigned(current_0_ext_x1); // @[Mul.scala 61:32]
-  assign _T_38 = $unsigned(current_0_ext_x2); // @[Mul.scala 61:49]
-  assign _T_39 = _T_37 * _T_38; // @[Mul.scala 61:39]
-  assign _T_40 = _T_39[127:64]; // @[Mul.scala 61:56]
-  assign _T_41 = $signed(_T_40); // @[Mul.scala 61:66]
-  assign _T_44 = {1'b0,$signed(_T_38)}; // @[Mul.scala 65:32]
-  assign _GEN_99 = {{1{current_0_ext_x1[63]}},current_0_ext_x1}; // @[Mul.scala 65:32]
-  assign _T_45 = $signed(_GEN_99) * $signed(_T_44); // @[Mul.scala 65:32]
-  assign _T_46 = _T_45[127:0]; // @[Mul.scala 65:32]
-  assign _T_47 = $signed(_T_46); // @[Mul.scala 65:32]
-  assign _T_48 = _T_47[127:64]; // @[Mul.scala 65:49]
-  assign _T_49 = $signed(_T_48); // @[Mul.scala 65:59]
-  assign _GEN_35 = _T_15 ? current_0_pipe_instr_vacant : current_1_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _GEN_59 = io_flush | _GEN_10; // @[Common.scala 318:22]
-  assign _GEN_76 = io_flush | _GEN_35; // @[Common.scala 318:22]
-  assign _T_65 = $unsigned(current_1_ext_x1); // @[Mul.scala 84:23]
+  reg [63:0] _RAND_19;
+  reg [63:0] current_1_ext_x2; // @[Common.scala 283:12]
+  reg [63:0] _RAND_20;
+  reg [63:0] current_1_ext_mid1; // @[Common.scala 283:12]
+  reg [63:0] _RAND_21;
+  reg [63:0] current_1_ext_mid2; // @[Common.scala 283:12]
+  reg [63:0] _RAND_22;
+  reg  current_1_ext_neg; // @[Common.scala 283:12]
+  reg [31:0] _RAND_23;
+  wire  _T_3; // @[Mul.scala 26:27]
+  wire  _T_4; // @[Mul.scala 27:30]
+  wire  isDWord; // @[Mul.scala 27:7]
+  wire [63:0] _T_5; // @[Mul.scala 37:28]
+  wire [63:0] _T_6; // @[Mul.scala 38:28]
+  wire [31:0] _T_7; // @[Mul.scala 40:27]
+  wire [31:0] _T_8; // @[Mul.scala 40:35]
+  wire [31:0] _T_9; // @[Mul.scala 41:27]
+  wire [31:0] _T_10; // @[Mul.scala 41:35]
+  wire [63:0] op1; // @[Mul.scala 36:21]
+  wire [63:0] op2; // @[Mul.scala 36:21]
+  wire  _T_11; // @[Conditional.scala 37:30]
+  wire [63:0] _T_12; // @[Mul.scala 52:27]
+  wire [63:0] _T_13; // @[Mul.scala 53:27]
+  wire  _T_14; // @[Conditional.scala 37:30]
+  wire  _T_15; // @[Mul.scala 57:27]
+  wire  _T_16; // @[Mul.scala 57:37]
+  wire  _T_17; // @[Mul.scala 57:32]
+  wire  _T_18; // @[Mul.scala 58:30]
+  wire [63:0] _T_20; // @[Mul.scala 58:30]
+  wire [63:0] _T_21; // @[Mul.scala 58:30]
+  wire [63:0] _T_22; // @[Mul.scala 58:30]
+  wire [63:0] _T_23; // @[Mul.scala 58:33]
+  wire  _T_24; // @[Mul.scala 59:30]
+  wire [63:0] _T_26; // @[Mul.scala 59:30]
+  wire [63:0] _T_27; // @[Mul.scala 59:30]
+  wire [63:0] _T_28; // @[Mul.scala 59:30]
+  wire [63:0] _T_29; // @[Mul.scala 59:33]
+  wire  _T_30; // @[Conditional.scala 37:30]
+  wire  _T_44; // @[Common.scala 293:12]
+  wire  _GEN_28; // @[Common.scala 293:36]
+  wire [31:0] _T_51; // @[Mul.scala 90:24]
+  wire [31:0] _T_52; // @[Mul.scala 90:41]
+  wire [63:0] ext_1_x1; // @[Mul.scala 90:32]
+  wire [31:0] _T_54; // @[Mul.scala 91:26]
+  wire [63:0] ext_1_mid1; // @[Mul.scala 91:35]
+  wire [31:0] _T_58; // @[Mul.scala 92:43]
+  wire [63:0] ext_1_mid2; // @[Mul.scala 92:34]
+  wire [63:0] ext_1_x2; // @[Mul.scala 93:33]
+  wire  _GEN_54; // @[Common.scala 300:38]
+  wire  _T_69; // @[Mul.scala 26:27]
+  wire  _T_70; // @[Mul.scala 27:30]
+  wire  isDWord_2; // @[Mul.scala 27:7]
+  wire  _T_71; // @[Mul.scala 101:12]
+  wire [31:0] _T_72; // @[Mul.scala 104:28]
+  wire [31:0] _T_73; // @[Mul.scala 104:36]
+  wire [63:0] extended; // @[Mul.scala 103:28 Mul.scala 104:18]
+  wire [63:0] _T_74; // @[Mul.scala 105:34]
+  wire [64:0] _T_75; // @[Mul.scala 108:41]
+  wire [96:0] _T_76; // @[Mul.scala 108:55]
+  wire [96:0] _GEN_139; // @[Mul.scala 108:26]
+  wire [97:0] _T_77; // @[Mul.scala 108:26]
+  wire [127:0] _T_78; // @[Mul.scala 108:74]
+  wire [127:0] _GEN_140; // @[Mul.scala 108:62]
+  wire [128:0] _T_79; // @[Mul.scala 108:62]
+  wire  _T_80; // @[Mul.scala 109:38]
+  wire [127:0] added; // @[Mul.scala 107:25 Mul.scala 108:15]
+  wire [63:0] _T_81; // @[Mul.scala 110:26]
+  wire [127:0] signed_; // @[Mul.scala 112:30]
+  wire [127:0] _T_83; // @[Mul.scala 115:24]
+  wire [127:0] _T_84; // @[Mul.scala 115:24]
+  wire [127:0] _T_85; // @[Mul.scala 115:39]
+  wire [63:0] _T_86; // @[Mul.scala 115:41]
+  wire [63:0] _T_87; // @[Mul.scala 117:29]
+  wire [63:0] _GEN_74; // @[Mul.scala 114:26]
+  wire [63:0] _GEN_75; // @[Mul.scala 109:70]
+  wire [63:0] ext_2_x1; // @[Mul.scala 101:22]
+  wire  _GEN_93; // @[Common.scala 318:22]
+  wire  _GEN_113; // @[Common.scala 318:22]
+  assign _T_3 = io_next_instr_instr_op == 5'h4; // @[Mul.scala 26:27]
+  assign _T_4 = io_next_instr_instr_op == 5'hc; // @[Mul.scala 27:30]
+  assign isDWord = _T_3 | _T_4; // @[Mul.scala 27:7]
+  assign _T_5 = $signed(io_next_rs1val); // @[Mul.scala 37:28]
+  assign _T_6 = $signed(io_next_rs2val); // @[Mul.scala 38:28]
+  assign _T_7 = io_next_rs1val[31:0]; // @[Mul.scala 40:27]
+  assign _T_8 = $signed(_T_7); // @[Mul.scala 40:35]
+  assign _T_9 = io_next_rs2val[31:0]; // @[Mul.scala 41:27]
+  assign _T_10 = $signed(_T_9); // @[Mul.scala 41:35]
+  assign op1 = isDWord ? $signed(_T_5) : $signed({{32{_T_8[31]}},_T_8}); // @[Mul.scala 36:21]
+  assign op2 = isDWord ? $signed(_T_6) : $signed({{32{_T_10[31]}},_T_10}); // @[Mul.scala 36:21]
+  assign _T_11 = 3'h0 == io_next_instr_instr_funct3; // @[Conditional.scala 37:30]
+  assign _T_12 = $unsigned(op1); // @[Mul.scala 52:27]
+  assign _T_13 = $unsigned(op2); // @[Mul.scala 53:27]
+  assign _T_14 = 3'h1 == io_next_instr_instr_funct3; // @[Conditional.scala 37:30]
+  assign _T_15 = op1[63]; // @[Mul.scala 57:27]
+  assign _T_16 = op2[63]; // @[Mul.scala 57:37]
+  assign _T_17 = _T_15 ^ _T_16; // @[Mul.scala 57:32]
+  assign _T_18 = $signed(op1) < $signed(64'sh0); // @[Mul.scala 58:30]
+  assign _T_20 = $signed(64'sh0) - $signed(op1); // @[Mul.scala 58:30]
+  assign _T_21 = $signed(_T_20); // @[Mul.scala 58:30]
+  assign _T_22 = _T_18 ? $signed(_T_21) : $signed(op1); // @[Mul.scala 58:30]
+  assign _T_23 = $unsigned(_T_22); // @[Mul.scala 58:33]
+  assign _T_24 = $signed(op2) < $signed(64'sh0); // @[Mul.scala 59:30]
+  assign _T_26 = $signed(64'sh0) - $signed(op2); // @[Mul.scala 59:30]
+  assign _T_27 = $signed(_T_26); // @[Mul.scala 59:30]
+  assign _T_28 = _T_24 ? $signed(_T_27) : $signed(op2); // @[Mul.scala 59:30]
+  assign _T_29 = $unsigned(_T_28); // @[Mul.scala 59:33]
+  assign _T_30 = 3'h3 == io_next_instr_instr_funct3; // @[Conditional.scala 37:30]
+  assign _T_44 = io_stall == 1'h0; // @[Common.scala 293:12]
+  assign _GEN_28 = _T_44 ? io_next_instr_vacant : current_0_pipe_instr_vacant; // @[Common.scala 293:36]
+  assign _T_51 = current_0_ext_x1[31:0]; // @[Mul.scala 90:24]
+  assign _T_52 = current_0_ext_x2[31:0]; // @[Mul.scala 90:41]
+  assign ext_1_x1 = _T_51 * _T_52; // @[Mul.scala 90:32]
+  assign _T_54 = current_0_ext_x1[63:32]; // @[Mul.scala 91:26]
+  assign ext_1_mid1 = _T_54 * _T_52; // @[Mul.scala 91:35]
+  assign _T_58 = current_0_ext_x2[63:32]; // @[Mul.scala 92:43]
+  assign ext_1_mid2 = _T_51 * _T_58; // @[Mul.scala 92:34]
+  assign ext_1_x2 = _T_54 * _T_58; // @[Mul.scala 93:33]
+  assign _GEN_54 = _T_44 ? current_0_pipe_instr_vacant : current_1_pipe_instr_vacant; // @[Common.scala 300:38]
+  assign _T_69 = current_1_pipe_instr_instr_op == 5'h4; // @[Mul.scala 26:27]
+  assign _T_70 = current_1_pipe_instr_instr_op == 5'hc; // @[Mul.scala 27:30]
+  assign isDWord_2 = _T_69 | _T_70; // @[Mul.scala 27:7]
+  assign _T_71 = isDWord_2 == 1'h0; // @[Mul.scala 101:12]
+  assign _T_72 = current_1_ext_x1[31:0]; // @[Mul.scala 104:28]
+  assign _T_73 = $signed(_T_72); // @[Mul.scala 104:36]
+  assign extended = {{32{_T_73[31]}},_T_73}; // @[Mul.scala 103:28 Mul.scala 104:18]
+  assign _T_74 = $unsigned(extended); // @[Mul.scala 105:34]
+  assign _T_75 = current_1_ext_mid1 + current_1_ext_mid2; // @[Mul.scala 108:41]
+  assign _T_76 = {_T_75, 32'h0}; // @[Mul.scala 108:55]
+  assign _GEN_139 = {{33'd0}, current_1_ext_x1}; // @[Mul.scala 108:26]
+  assign _T_77 = _GEN_139 + _T_76; // @[Mul.scala 108:26]
+  assign _T_78 = {current_1_ext_x2, 64'h0}; // @[Mul.scala 108:74]
+  assign _GEN_140 = {{30'd0}, _T_77}; // @[Mul.scala 108:62]
+  assign _T_79 = _GEN_140 + _T_78; // @[Mul.scala 108:62]
+  assign _T_80 = current_1_pipe_instr_instr_funct3 == 3'h0; // @[Mul.scala 109:38]
+  assign added = _T_79[127:0]; // @[Mul.scala 107:25 Mul.scala 108:15]
+  assign _T_81 = added[63:0]; // @[Mul.scala 110:26]
+  assign signed_ = $signed(added); // @[Mul.scala 112:30]
+  assign _T_83 = $signed(128'sh0) - $signed(signed_); // @[Mul.scala 115:24]
+  assign _T_84 = $signed(_T_83); // @[Mul.scala 115:24]
+  assign _T_85 = $unsigned(_T_84); // @[Mul.scala 115:39]
+  assign _T_86 = _T_85[127:64]; // @[Mul.scala 115:41]
+  assign _T_87 = signed_[127:64]; // @[Mul.scala 117:29]
+  assign _GEN_74 = current_1_ext_neg ? _T_86 : _T_87; // @[Mul.scala 114:26]
+  assign _GEN_75 = _T_80 ? _T_81 : _GEN_74; // @[Mul.scala 109:70]
+  assign ext_2_x1 = _T_71 ? _T_74 : _GEN_75; // @[Mul.scala 101:22]
+  assign _GEN_93 = io_flush | _GEN_28; // @[Common.scala 318:22]
+  assign _GEN_113 = io_flush | _GEN_54; // @[Common.scala 318:22]
   assign io_stall = 1'h0; // @[Common.scala 331:16]
-  assign io_retirement_wb = io_retired_instr_vacant ? 64'h0 : _T_65; // @[Common.scala 327:23 Common.scala 329:23]
+  assign io_retirement_wb = io_retired_instr_vacant ? 64'h0 : ext_2_x1; // @[Common.scala 327:23 Common.scala 329:23]
   assign io_retired_instr_addr = current_1_pipe_instr_addr; // @[Common.scala 325:18]
   assign io_retired_instr_instr_op = current_1_pipe_instr_instr_op; // @[Common.scala 325:18]
   assign io_retired_instr_instr_base = current_1_pipe_instr_instr_base; // @[Common.scala 325:18]
@@ -25575,36 +25710,60 @@ initial begin
   current_0_ext_x2 = _RAND_9[63:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_10 = {2{`RANDOM}};
-  current_1_pipe_instr_addr = _RAND_10[63:0];
+  _RAND_10 = {1{`RANDOM}};
+  current_0_ext_neg = _RAND_10[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_11 = {1{`RANDOM}};
-  current_1_pipe_instr_instr_op = _RAND_11[4:0];
+  _RAND_11 = {2{`RANDOM}};
+  current_1_pipe_instr_addr = _RAND_11[63:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_12 = {1{`RANDOM}};
-  current_1_pipe_instr_instr_base = _RAND_12[2:0];
+  current_1_pipe_instr_instr_op = _RAND_12[4:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_13 = {1{`RANDOM}};
-  current_1_pipe_instr_instr_rd = _RAND_13[4:0];
+  current_1_pipe_instr_instr_base = _RAND_13[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_14 = {1{`RANDOM}};
-  current_1_pipe_instr_vacant = _RAND_14[0:0];
+  current_1_pipe_instr_instr_rd = _RAND_14[4:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_15 = {1{`RANDOM}};
-  current_1_pipe_rdname = _RAND_15[2:0];
+  current_1_pipe_instr_instr_funct3 = _RAND_15[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_16 = {1{`RANDOM}};
-  current_1_pipe_tag = _RAND_16[2:0];
+  current_1_pipe_instr_vacant = _RAND_16[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_17 = {2{`RANDOM}};
-  current_1_ext_x1 = _RAND_17[63:0];
+  _RAND_17 = {1{`RANDOM}};
+  current_1_pipe_rdname = _RAND_17[2:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_18 = {1{`RANDOM}};
+  current_1_pipe_tag = _RAND_18[2:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_19 = {2{`RANDOM}};
+  current_1_ext_x1 = _RAND_19[63:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_20 = {2{`RANDOM}};
+  current_1_ext_x2 = _RAND_20[63:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_21 = {2{`RANDOM}};
+  current_1_ext_mid1 = _RAND_21[63:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_22 = {2{`RANDOM}};
+  current_1_ext_mid2 = _RAND_22[63:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_23 = {1{`RANDOM}};
+  current_1_ext_neg = _RAND_23[0:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -25612,97 +25771,131 @@ end // initial
   always @(posedge clock) begin
     if (io_flush) begin
       current_0_pipe_instr_addr <= 64'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_0_pipe_instr_addr <= io_next_instr_addr;
     end
     if (io_flush) begin
       current_0_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_0_pipe_instr_instr_op <= io_next_instr_instr_op;
     end
     if (io_flush) begin
       current_0_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_0_pipe_instr_instr_base <= io_next_instr_instr_base;
     end
     if (io_flush) begin
       current_0_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_0_pipe_instr_instr_rd <= io_next_instr_instr_rd;
     end
     if (io_flush) begin
       current_0_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_0_pipe_instr_instr_funct3 <= io_next_instr_instr_funct3;
     end
-    current_0_pipe_instr_vacant <= reset | _GEN_59;
+    current_0_pipe_instr_vacant <= reset | _GEN_93;
     if (io_flush) begin
       current_0_pipe_rdname <= 3'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_0_pipe_rdname <= io_next_rdname;
     end
     if (io_flush) begin
       current_0_pipe_tag <= 3'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_0_pipe_tag <= io_next_tag;
     end
-    if (_T_15) begin
-      if (_T_5) begin
-        current_0_ext_x1 <= _T_9;
+    if (_T_44) begin
+      if (isDWord) begin
+        if (_T_11) begin
+          current_0_ext_x1 <= _T_12;
+        end else if (_T_14) begin
+          current_0_ext_x1 <= _T_23;
+        end else if (_T_30) begin
+          current_0_ext_x1 <= _T_12;
+        end else begin
+          current_0_ext_x1 <= _T_23;
+        end
       end else begin
-        current_0_ext_x1 <= {{32{_T_12[31]}},_T_12};
+        current_0_ext_x1 <= _T_12;
       end
     end
-    if (_T_15) begin
-      if (_T_5) begin
-        current_0_ext_x2 <= _T_10;
+    if (_T_44) begin
+      if (isDWord) begin
+        if (_T_11) begin
+          current_0_ext_x2 <= _T_13;
+        end else if (_T_14) begin
+          current_0_ext_x2 <= _T_29;
+        end else if (_T_30) begin
+          current_0_ext_x2 <= _T_13;
+        end else begin
+          current_0_ext_x2 <= _T_13;
+        end
       end else begin
-        current_0_ext_x2 <= {{32{_T_14[31]}},_T_14};
+        current_0_ext_x2 <= _T_13;
+      end
+    end
+    if (_T_44) begin
+      if (_T_11) begin
+        current_0_ext_neg <= 1'h0;
+      end else if (_T_14) begin
+        current_0_ext_neg <= _T_17;
+      end else if (_T_30) begin
+        current_0_ext_neg <= 1'h0;
+      end else begin
+        current_0_ext_neg <= _T_15;
       end
     end
     if (io_flush) begin
       current_1_pipe_instr_addr <= 64'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_1_pipe_instr_addr <= current_0_pipe_instr_addr;
     end
     if (io_flush) begin
       current_1_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_1_pipe_instr_instr_op <= current_0_pipe_instr_instr_op;
     end
     if (io_flush) begin
       current_1_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_1_pipe_instr_instr_base <= current_0_pipe_instr_instr_base;
     end
     if (io_flush) begin
       current_1_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_1_pipe_instr_instr_rd <= current_0_pipe_instr_instr_rd;
     end
-    current_1_pipe_instr_vacant <= reset | _GEN_76;
+    if (io_flush) begin
+      current_1_pipe_instr_instr_funct3 <= 3'h0;
+    end else if (_T_44) begin
+      current_1_pipe_instr_instr_funct3 <= current_0_pipe_instr_instr_funct3;
+    end
+    current_1_pipe_instr_vacant <= reset | _GEN_113;
     if (io_flush) begin
       current_1_pipe_rdname <= 3'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_1_pipe_rdname <= current_0_pipe_rdname;
     end
     if (io_flush) begin
       current_1_pipe_tag <= 3'h0;
-    end else if (_T_15) begin
+    end else if (_T_44) begin
       current_1_pipe_tag <= current_0_pipe_tag;
     end
-    if (_T_15) begin
-      if (_T_24) begin
-        current_1_ext_x1 <= {{32{_T_27[31]}},_T_27};
-      end else if (_T_28) begin
-        current_1_ext_x1 <= _T_31;
-      end else if (_T_32) begin
-        current_1_ext_x1 <= _T_35;
-      end else if (_T_36) begin
-        current_1_ext_x1 <= _T_41;
-      end else begin
-        current_1_ext_x1 <= _T_49;
-      end
+    if (_T_44) begin
+      current_1_ext_x1 <= ext_1_x1;
+    end
+    if (_T_44) begin
+      current_1_ext_x2 <= ext_1_x2;
+    end
+    if (_T_44) begin
+      current_1_ext_mid1 <= ext_1_mid1;
+    end
+    if (_T_44) begin
+      current_1_ext_mid2 <= ext_1_mid2;
+    end
+    if (_T_44) begin
+      current_1_ext_neg <= current_0_ext_neg;
     end
   end
 endmodule
@@ -25834,1051 +26027,327 @@ module Div(
   reg [63:0] _RAND_50;
   reg [63:0] current_3_ext_q; // @[Common.scala 283:12]
   reg [63:0] _RAND_51;
-  reg [63:0] current_4_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_52;
-  reg [4:0] current_4_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_53;
-  reg [2:0] current_4_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_54;
-  reg [4:0] current_4_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_55;
-  reg [2:0] current_4_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_56;
-  reg  current_4_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_57;
-  reg [63:0] current_4_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_58;
-  reg [63:0] current_4_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_59;
-  reg [2:0] current_4_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_60;
-  reg [2:0] current_4_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_61;
-  reg [127:0] current_4_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_62;
-  reg [63:0] current_4_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_63;
-  reg [63:0] current_4_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_64;
-  reg [63:0] current_5_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_65;
-  reg [4:0] current_5_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_66;
-  reg [2:0] current_5_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_67;
-  reg [4:0] current_5_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_68;
-  reg [2:0] current_5_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_69;
-  reg  current_5_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_70;
-  reg [63:0] current_5_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_71;
-  reg [63:0] current_5_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_72;
-  reg [2:0] current_5_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_73;
-  reg [2:0] current_5_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_74;
-  reg [127:0] current_5_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_75;
-  reg [63:0] current_5_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_76;
-  reg [63:0] current_5_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_77;
-  reg [63:0] current_6_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_78;
-  reg [4:0] current_6_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_79;
-  reg [2:0] current_6_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_80;
-  reg [4:0] current_6_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_81;
-  reg [2:0] current_6_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_82;
-  reg  current_6_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_83;
-  reg [63:0] current_6_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_84;
-  reg [63:0] current_6_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_85;
-  reg [2:0] current_6_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_86;
-  reg [2:0] current_6_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_87;
-  reg [127:0] current_6_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_88;
-  reg [63:0] current_6_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_89;
-  reg [63:0] current_6_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_90;
-  reg [63:0] current_7_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_91;
-  reg [4:0] current_7_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_92;
-  reg [2:0] current_7_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_93;
-  reg [4:0] current_7_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_94;
-  reg [2:0] current_7_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_95;
-  reg  current_7_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_96;
-  reg [63:0] current_7_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_97;
-  reg [63:0] current_7_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_98;
-  reg [2:0] current_7_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_99;
-  reg [2:0] current_7_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_100;
-  reg [127:0] current_7_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_101;
-  reg [63:0] current_7_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_102;
-  reg [63:0] current_7_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_103;
-  reg [63:0] current_8_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_104;
-  reg [4:0] current_8_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_105;
-  reg [2:0] current_8_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_106;
-  reg [4:0] current_8_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_107;
-  reg [2:0] current_8_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_108;
-  reg  current_8_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_109;
-  reg [63:0] current_8_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_110;
-  reg [63:0] current_8_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_111;
-  reg [2:0] current_8_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_112;
-  reg [2:0] current_8_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_113;
-  reg [127:0] current_8_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_114;
-  reg [63:0] current_8_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_115;
-  reg [63:0] current_8_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_116;
-  reg [63:0] current_9_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_117;
-  reg [4:0] current_9_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_118;
-  reg [2:0] current_9_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_119;
-  reg [4:0] current_9_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_120;
-  reg [2:0] current_9_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_121;
-  reg  current_9_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_122;
-  reg [63:0] current_9_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_123;
-  reg [63:0] current_9_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_124;
-  reg [2:0] current_9_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_125;
-  reg [2:0] current_9_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_126;
-  reg [127:0] current_9_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_127;
-  reg [63:0] current_9_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_128;
-  reg [63:0] current_9_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_129;
-  reg [63:0] current_10_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_130;
-  reg [4:0] current_10_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_131;
-  reg [2:0] current_10_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_132;
-  reg [4:0] current_10_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_133;
-  reg [2:0] current_10_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_134;
-  reg  current_10_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_135;
-  reg [63:0] current_10_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_136;
-  reg [63:0] current_10_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_137;
-  reg [2:0] current_10_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_138;
-  reg [2:0] current_10_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_139;
-  reg [127:0] current_10_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_140;
-  reg [63:0] current_10_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_141;
-  reg [63:0] current_10_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_142;
-  reg [63:0] current_11_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_143;
-  reg [4:0] current_11_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_144;
-  reg [2:0] current_11_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_145;
-  reg [4:0] current_11_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_146;
-  reg [2:0] current_11_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_147;
-  reg  current_11_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_148;
-  reg [63:0] current_11_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_149;
-  reg [63:0] current_11_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_150;
-  reg [2:0] current_11_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_151;
-  reg [2:0] current_11_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_152;
-  reg [127:0] current_11_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_153;
-  reg [63:0] current_11_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_154;
-  reg [63:0] current_11_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_155;
-  reg [63:0] current_12_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_156;
-  reg [4:0] current_12_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_157;
-  reg [2:0] current_12_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_158;
-  reg [4:0] current_12_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_159;
-  reg [2:0] current_12_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_160;
-  reg  current_12_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_161;
-  reg [63:0] current_12_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_162;
-  reg [63:0] current_12_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_163;
-  reg [2:0] current_12_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_164;
-  reg [2:0] current_12_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_165;
-  reg [127:0] current_12_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_166;
-  reg [63:0] current_12_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_167;
-  reg [63:0] current_12_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_168;
-  reg [63:0] current_13_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_169;
-  reg [4:0] current_13_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_170;
-  reg [2:0] current_13_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_171;
-  reg [4:0] current_13_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_172;
-  reg [2:0] current_13_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_173;
-  reg  current_13_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_174;
-  reg [63:0] current_13_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_175;
-  reg [63:0] current_13_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_176;
-  reg [2:0] current_13_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_177;
-  reg [2:0] current_13_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_178;
-  reg [127:0] current_13_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_179;
-  reg [63:0] current_13_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_180;
-  reg [63:0] current_13_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_181;
-  reg [63:0] current_14_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_182;
-  reg [4:0] current_14_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_183;
-  reg [2:0] current_14_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_184;
-  reg [4:0] current_14_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_185;
-  reg [2:0] current_14_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_186;
-  reg  current_14_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_187;
-  reg [63:0] current_14_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_188;
-  reg [63:0] current_14_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_189;
-  reg [2:0] current_14_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_190;
-  reg [2:0] current_14_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_191;
-  reg [127:0] current_14_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_192;
-  reg [63:0] current_14_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_193;
-  reg [63:0] current_14_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_194;
-  reg [63:0] current_15_pipe_instr_addr; // @[Common.scala 283:12]
-  reg [63:0] _RAND_195;
-  reg [4:0] current_15_pipe_instr_instr_op; // @[Common.scala 283:12]
-  reg [31:0] _RAND_196;
-  reg [2:0] current_15_pipe_instr_instr_base; // @[Common.scala 283:12]
-  reg [31:0] _RAND_197;
-  reg [4:0] current_15_pipe_instr_instr_rd; // @[Common.scala 283:12]
-  reg [31:0] _RAND_198;
-  reg [2:0] current_15_pipe_instr_instr_funct3; // @[Common.scala 283:12]
-  reg [31:0] _RAND_199;
-  reg  current_15_pipe_instr_vacant; // @[Common.scala 283:12]
-  reg [31:0] _RAND_200;
-  reg [63:0] current_15_pipe_rs1val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_201;
-  reg [63:0] current_15_pipe_rs2val; // @[Common.scala 283:12]
-  reg [63:0] _RAND_202;
-  reg [2:0] current_15_pipe_rdname; // @[Common.scala 283:12]
-  reg [31:0] _RAND_203;
-  reg [2:0] current_15_pipe_tag; // @[Common.scala 283:12]
-  reg [31:0] _RAND_204;
-  reg [127:0] current_15_ext_r; // @[Common.scala 283:12]
-  reg [127:0] _RAND_205;
-  reg [63:0] current_15_ext_d; // @[Common.scala 283:12]
-  reg [63:0] _RAND_206;
-  reg [63:0] current_15_ext_q; // @[Common.scala 283:12]
-  reg [63:0] _RAND_207;
-  reg [1:0] round; // @[Div.scala 21:22]
-  reg [31:0] _RAND_208;
+  reg [3:0] round; // @[Div.scala 21:22]
+  reg [31:0] _RAND_52;
   wire  _T_2; // @[Div.scala 26:17]
   wire  _T_3; // @[Div.scala 26:17]
-  wire  _T_4; // @[Div.scala 26:17]
-  wire  _T_5; // @[Div.scala 26:17]
-  wire  _T_6; // @[Div.scala 26:17]
-  wire  _T_7; // @[Div.scala 26:17]
-  wire  _T_8; // @[Div.scala 26:17]
-  wire  _T_9; // @[Div.scala 26:17]
-  wire  _T_10; // @[Div.scala 26:17]
-  wire  _T_11; // @[Div.scala 26:17]
-  wire  _T_12; // @[Div.scala 26:17]
-  wire  _T_13; // @[Div.scala 26:17]
-  wire  _T_14; // @[Div.scala 26:17]
-  wire  _T_15; // @[Div.scala 26:17]
   wire  idle; // @[Div.scala 26:17]
-  wire  _T_16; // @[Div.scala 29:8]
-  wire [1:0] _T_18; // @[Div.scala 30:20]
-  wire  _T_20; // @[Div.scala 37:35]
-  wire  _T_21; // @[Div.scala 37:24]
+  wire  _T_4; // @[Div.scala 29:8]
+  wire [3:0] _T_6; // @[Div.scala 30:20]
+  wire  _T_8; // @[Div.scala 37:35]
+  wire  _T_9; // @[Div.scala 37:24]
   wire  stall; // @[Div.scala 37:21]
-  wire  _T_24; // @[Div.scala 46:29]
-  wire  _T_25; // @[Div.scala 47:32]
+  wire  _T_12; // @[Div.scala 46:29]
+  wire  _T_13; // @[Div.scala 47:32]
   wire  isDWord; // @[Div.scala 47:9]
-  wire  _T_26; // @[Div.scala 51:33]
-  wire  _T_27; // @[Div.scala 52:36]
+  wire  _T_14; // @[Div.scala 51:33]
+  wire  _T_15; // @[Div.scala 52:36]
   wire  isUnsigned; // @[Div.scala 52:9]
-  wire [63:0] _T_28; // @[Div.scala 56:29]
-  wire [63:0] _T_29; // @[Div.scala 57:29]
-  wire [31:0] _T_30; // @[Div.scala 59:42]
-  wire [63:0] _T_31; // @[Div.scala 59:28]
-  wire [63:0] _T_32; // @[Div.scala 59:51]
-  wire [31:0] _T_33; // @[Div.scala 60:42]
-  wire [63:0] _T_34; // @[Div.scala 60:28]
-  wire [63:0] _T_35; // @[Div.scala 60:51]
-  wire [31:0] _T_37; // @[Div.scala 62:36]
-  wire [31:0] _T_39; // @[Div.scala 63:36]
+  wire [63:0] _T_16; // @[Div.scala 56:29]
+  wire [63:0] _T_17; // @[Div.scala 57:29]
+  wire [31:0] _T_18; // @[Div.scala 59:42]
+  wire [63:0] _T_19; // @[Div.scala 59:28]
+  wire [63:0] _T_20; // @[Div.scala 59:51]
+  wire [31:0] _T_21; // @[Div.scala 60:42]
+  wire [63:0] _T_22; // @[Div.scala 60:28]
+  wire [63:0] _T_23; // @[Div.scala 60:51]
+  wire [31:0] _T_25; // @[Div.scala 62:36]
+  wire [31:0] _T_27; // @[Div.scala 63:36]
   wire [63:0] _GEN_2; // @[Div.scala 58:30]
   wire [63:0] _GEN_3; // @[Div.scala 58:30]
   wire [63:0] op1s; // @[Div.scala 55:21]
   wire [63:0] op2s; // @[Div.scala 55:21]
-  wire [63:0] _T_40; // @[Div.scala 69:30]
-  wire [63:0] _T_41; // @[Div.scala 70:30]
-  wire  _T_42; // @[Div.scala 74:19]
-  wire [63:0] _T_44; // @[Div.scala 75:22]
-  wire [63:0] _T_45; // @[Div.scala 75:22]
-  wire [63:0] _T_46; // @[Div.scala 75:35]
+  wire [63:0] _T_28; // @[Div.scala 69:30]
+  wire [63:0] _T_29; // @[Div.scala 70:30]
+  wire  _T_30; // @[Div.scala 74:19]
+  wire [63:0] _T_32; // @[Div.scala 75:22]
+  wire [63:0] _T_33; // @[Div.scala 75:22]
+  wire [63:0] _T_34; // @[Div.scala 75:35]
   wire [63:0] _GEN_6; // @[Div.scala 74:26]
-  wire  _T_48; // @[Div.scala 80:19]
-  wire [63:0] _T_50; // @[Div.scala 81:22]
-  wire [63:0] _T_51; // @[Div.scala 81:22]
-  wire [63:0] _T_52; // @[Div.scala 81:29]
+  wire  _T_36; // @[Div.scala 80:19]
+  wire [63:0] _T_38; // @[Div.scala 81:22]
+  wire [63:0] _T_39; // @[Div.scala 81:22]
+  wire [63:0] _T_40; // @[Div.scala 81:29]
   wire [63:0] _GEN_8; // @[Div.scala 68:9]
   wire [127:0] init_r; // @[Div.scala 41:22 Div.scala 69:16 Div.scala 75:18 Div.scala 77:18]
-  wire  _T_54; // @[Common.scala 293:12]
+  wire  _T_42; // @[Common.scala 293:12]
   wire  _GEN_20; // @[Common.scala 293:36]
-  wire [5:0] _GEN_740; // @[Div.scala 94:68]
+  wire [5:0] _GEN_212; // @[Div.scala 94:68]
   wire [5:0] shift; // @[Div.scala 94:68]
-  wire [126:0] _GEN_741; // @[Div.scala 95:25]
+  wire [126:0] _GEN_213; // @[Div.scala 95:25]
   wire [126:0] shifted; // @[Div.scala 95:25]
-  wire  _T_60; // @[Div.scala 97:15]
-  wire  _T_61; // @[Div.scala 97:62]
-  wire  _T_63; // @[Div.scala 97:34]
-  wire [127:0] _GEN_742; // @[Div.scala 98:23]
-  wire [127:0] _T_65; // @[Div.scala 98:23]
-  wire [127:0] _T_67; // @[Div.scala 100:23]
+  wire  _T_48; // @[Div.scala 97:15]
+  wire  _T_49; // @[Div.scala 97:62]
+  wire  _T_51; // @[Div.scala 97:34]
+  wire [127:0] _GEN_214; // @[Div.scala 98:23]
+  wire [127:0] _T_53; // @[Div.scala 98:23]
+  wire [127:0] _T_55; // @[Div.scala 100:23]
   wire [127:0] nExt_r; // @[Div.scala 97:72]
-  wire  _T_68; // @[Div.scala 103:32]
-  wire  _T_69; // @[Div.scala 103:25]
-  wire [64:0] _T_70; // @[Div.scala 103:21]
+  wire  _T_56; // @[Div.scala 103:32]
+  wire  _T_57; // @[Div.scala 103:25]
+  wire [64:0] _T_58; // @[Div.scala 103:21]
   wire [63:0] nExt_q; // @[Div.scala 91:20 Div.scala 103:12]
   wire  _GEN_37; // @[Common.scala 353:29]
   wire  _GEN_43; // @[Common.scala 300:38]
   wire [5:0] shift_1; // @[Div.scala 94:68]
-  wire [126:0] _GEN_745; // @[Div.scala 95:25]
+  wire [126:0] _GEN_217; // @[Div.scala 95:25]
   wire [126:0] shifted_1; // @[Div.scala 95:25]
-  wire  _T_78; // @[Div.scala 97:15]
-  wire [127:0] _GEN_746; // @[Div.scala 98:23]
-  wire [127:0] _T_83; // @[Div.scala 98:23]
-  wire [127:0] _T_85; // @[Div.scala 100:23]
+  wire  _T_66; // @[Div.scala 97:15]
+  wire [127:0] _GEN_218; // @[Div.scala 98:23]
+  wire [127:0] _T_71; // @[Div.scala 98:23]
+  wire [127:0] _T_73; // @[Div.scala 100:23]
   wire [127:0] nExt_1_r; // @[Div.scala 97:72]
-  wire  _T_86; // @[Div.scala 103:32]
-  wire  _T_87; // @[Div.scala 103:25]
-  wire [64:0] _T_88; // @[Div.scala 103:21]
+  wire  _T_74; // @[Div.scala 103:32]
+  wire  _T_75; // @[Div.scala 103:25]
+  wire [64:0] _T_76; // @[Div.scala 103:21]
   wire [63:0] nExt_1_q; // @[Div.scala 91:20 Div.scala 103:12]
   wire  _GEN_63; // @[Common.scala 353:29]
   wire  _GEN_69; // @[Common.scala 300:38]
-  wire  _T_92; // @[Common.scala 309:23]
-  wire [5:0] shift_2; // @[Div.scala 94:68]
-  wire [126:0] _GEN_749; // @[Div.scala 95:25]
-  wire [126:0] shifted_2; // @[Div.scala 95:25]
-  wire  _T_96; // @[Div.scala 97:15]
-  wire [127:0] _GEN_750; // @[Div.scala 98:23]
-  wire [127:0] _T_101; // @[Div.scala 98:23]
-  wire [127:0] _T_103; // @[Div.scala 100:23]
+  wire  _T_80; // @[Common.scala 309:23]
+  wire [4:0] _GEN_220; // @[Div.scala 94:68]
+  wire [4:0] shift_2; // @[Div.scala 94:68]
+  wire [94:0] _GEN_221; // @[Div.scala 95:25]
+  wire [94:0] shifted_2; // @[Div.scala 95:25]
+  wire  _T_84; // @[Div.scala 97:15]
+  wire [127:0] _GEN_222; // @[Div.scala 98:23]
+  wire [127:0] _T_89; // @[Div.scala 98:23]
+  wire [127:0] _T_91; // @[Div.scala 100:23]
   wire [127:0] nExt_2_r; // @[Div.scala 97:72]
-  wire  _T_104; // @[Div.scala 103:32]
-  wire  _T_105; // @[Div.scala 103:25]
-  wire [64:0] _T_106; // @[Div.scala 103:21]
+  wire  _T_92; // @[Div.scala 103:32]
+  wire  _T_93; // @[Div.scala 103:25]
+  wire [64:0] _T_94; // @[Div.scala 103:21]
   wire [63:0] nExt_2_q; // @[Div.scala 91:20 Div.scala 103:12]
   wire  _GEN_89; // @[Common.scala 353:29]
   wire  _GEN_95; // @[Common.scala 300:38]
-  wire  _T_110; // @[Common.scala 309:23]
-  wire [5:0] shift_3; // @[Div.scala 94:68]
-  wire [126:0] _GEN_753; // @[Div.scala 95:25]
-  wire [126:0] shifted_3; // @[Div.scala 95:25]
-  wire  _T_114; // @[Div.scala 97:15]
-  wire [127:0] _GEN_754; // @[Div.scala 98:23]
-  wire [127:0] _T_119; // @[Div.scala 98:23]
-  wire [127:0] _T_121; // @[Div.scala 100:23]
+  wire  _T_98; // @[Common.scala 309:23]
+  wire [3:0] shift_3; // @[Div.scala 94:68]
+  wire [78:0] _GEN_224; // @[Div.scala 95:25]
+  wire [78:0] shifted_3; // @[Div.scala 95:25]
+  wire  _T_102; // @[Div.scala 97:15]
+  wire [127:0] _GEN_225; // @[Div.scala 98:23]
+  wire [127:0] _T_107; // @[Div.scala 98:23]
+  wire [127:0] _T_109; // @[Div.scala 100:23]
   wire [127:0] nExt_3_r; // @[Div.scala 97:72]
-  wire  _T_122; // @[Div.scala 103:32]
-  wire  _T_123; // @[Div.scala 103:25]
-  wire [64:0] _T_124; // @[Div.scala 103:21]
+  wire  _T_110; // @[Div.scala 103:32]
+  wire  _T_111; // @[Div.scala 103:25]
+  wire [64:0] _T_112; // @[Div.scala 103:21]
   wire [63:0] nExt_3_q; // @[Div.scala 91:20 Div.scala 103:12]
   wire  _GEN_115; // @[Common.scala 353:29]
-  wire  _GEN_121; // @[Common.scala 300:38]
-  wire  _T_128; // @[Common.scala 309:23]
-  wire [5:0] shift_4; // @[Div.scala 94:68]
-  wire [126:0] _GEN_757; // @[Div.scala 95:25]
-  wire [126:0] shifted_4; // @[Div.scala 95:25]
-  wire  _T_132; // @[Div.scala 97:15]
-  wire [127:0] _GEN_758; // @[Div.scala 98:23]
-  wire [127:0] _T_137; // @[Div.scala 98:23]
-  wire [127:0] _T_139; // @[Div.scala 100:23]
-  wire [127:0] nExt_4_r; // @[Div.scala 97:72]
-  wire  _T_140; // @[Div.scala 103:32]
-  wire  _T_141; // @[Div.scala 103:25]
-  wire [64:0] _T_142; // @[Div.scala 103:21]
-  wire [63:0] nExt_4_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_141; // @[Common.scala 353:29]
-  wire  _GEN_147; // @[Common.scala 300:38]
-  wire  _T_146; // @[Common.scala 309:23]
-  wire [5:0] shift_5; // @[Div.scala 94:68]
-  wire [126:0] _GEN_761; // @[Div.scala 95:25]
-  wire [126:0] shifted_5; // @[Div.scala 95:25]
-  wire  _T_150; // @[Div.scala 97:15]
-  wire [127:0] _GEN_762; // @[Div.scala 98:23]
-  wire [127:0] _T_155; // @[Div.scala 98:23]
-  wire [127:0] _T_157; // @[Div.scala 100:23]
-  wire [127:0] nExt_5_r; // @[Div.scala 97:72]
-  wire  _T_158; // @[Div.scala 103:32]
-  wire  _T_159; // @[Div.scala 103:25]
-  wire [64:0] _T_160; // @[Div.scala 103:21]
-  wire [63:0] nExt_5_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_167; // @[Common.scala 353:29]
-  wire  _GEN_173; // @[Common.scala 300:38]
-  wire  _T_164; // @[Common.scala 309:23]
-  wire [5:0] shift_6; // @[Div.scala 94:68]
-  wire [126:0] _GEN_765; // @[Div.scala 95:25]
-  wire [126:0] shifted_6; // @[Div.scala 95:25]
-  wire  _T_168; // @[Div.scala 97:15]
-  wire [127:0] _GEN_766; // @[Div.scala 98:23]
-  wire [127:0] _T_173; // @[Div.scala 98:23]
-  wire [127:0] _T_175; // @[Div.scala 100:23]
-  wire [127:0] nExt_6_r; // @[Div.scala 97:72]
-  wire  _T_176; // @[Div.scala 103:32]
-  wire  _T_177; // @[Div.scala 103:25]
-  wire [64:0] _T_178; // @[Div.scala 103:21]
-  wire [63:0] nExt_6_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_193; // @[Common.scala 353:29]
-  wire  _GEN_199; // @[Common.scala 300:38]
-  wire  _T_182; // @[Common.scala 309:23]
-  wire [5:0] shift_7; // @[Div.scala 94:68]
-  wire [126:0] _GEN_769; // @[Div.scala 95:25]
-  wire [126:0] shifted_7; // @[Div.scala 95:25]
-  wire  _T_186; // @[Div.scala 97:15]
-  wire [127:0] _GEN_770; // @[Div.scala 98:23]
-  wire [127:0] _T_191; // @[Div.scala 98:23]
-  wire [127:0] _T_193; // @[Div.scala 100:23]
-  wire [127:0] nExt_7_r; // @[Div.scala 97:72]
-  wire  _T_194; // @[Div.scala 103:32]
-  wire  _T_195; // @[Div.scala 103:25]
-  wire [64:0] _T_196; // @[Div.scala 103:21]
-  wire [63:0] nExt_7_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_219; // @[Common.scala 353:29]
-  wire  _GEN_225; // @[Common.scala 300:38]
-  wire  _T_200; // @[Common.scala 309:23]
-  wire [4:0] _GEN_772; // @[Div.scala 94:68]
-  wire [4:0] shift_8; // @[Div.scala 94:68]
-  wire [94:0] _GEN_773; // @[Div.scala 95:25]
-  wire [94:0] shifted_8; // @[Div.scala 95:25]
-  wire  _T_204; // @[Div.scala 97:15]
-  wire [127:0] _GEN_774; // @[Div.scala 98:23]
-  wire [127:0] _T_209; // @[Div.scala 98:23]
-  wire [127:0] _T_211; // @[Div.scala 100:23]
-  wire [127:0] nExt_8_r; // @[Div.scala 97:72]
-  wire  _T_212; // @[Div.scala 103:32]
-  wire  _T_213; // @[Div.scala 103:25]
-  wire [64:0] _T_214; // @[Div.scala 103:21]
-  wire [63:0] nExt_8_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_245; // @[Common.scala 353:29]
-  wire  _GEN_251; // @[Common.scala 300:38]
-  wire  _T_218; // @[Common.scala 309:23]
-  wire [4:0] shift_9; // @[Div.scala 94:68]
-  wire [94:0] _GEN_777; // @[Div.scala 95:25]
-  wire [94:0] shifted_9; // @[Div.scala 95:25]
-  wire  _T_222; // @[Div.scala 97:15]
-  wire [127:0] _GEN_778; // @[Div.scala 98:23]
-  wire [127:0] _T_227; // @[Div.scala 98:23]
-  wire [127:0] _T_229; // @[Div.scala 100:23]
-  wire [127:0] nExt_9_r; // @[Div.scala 97:72]
-  wire  _T_230; // @[Div.scala 103:32]
-  wire  _T_231; // @[Div.scala 103:25]
-  wire [64:0] _T_232; // @[Div.scala 103:21]
-  wire [63:0] nExt_9_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_271; // @[Common.scala 353:29]
-  wire  _GEN_277; // @[Common.scala 300:38]
-  wire  _T_236; // @[Common.scala 309:23]
-  wire [4:0] shift_10; // @[Div.scala 94:68]
-  wire [94:0] _GEN_781; // @[Div.scala 95:25]
-  wire [94:0] shifted_10; // @[Div.scala 95:25]
-  wire  _T_240; // @[Div.scala 97:15]
-  wire [127:0] _GEN_782; // @[Div.scala 98:23]
-  wire [127:0] _T_245; // @[Div.scala 98:23]
-  wire [127:0] _T_247; // @[Div.scala 100:23]
-  wire [127:0] nExt_10_r; // @[Div.scala 97:72]
-  wire  _T_248; // @[Div.scala 103:32]
-  wire  _T_249; // @[Div.scala 103:25]
-  wire [64:0] _T_250; // @[Div.scala 103:21]
-  wire [63:0] nExt_10_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_297; // @[Common.scala 353:29]
-  wire  _GEN_303; // @[Common.scala 300:38]
-  wire  _T_254; // @[Common.scala 309:23]
-  wire [4:0] shift_11; // @[Div.scala 94:68]
-  wire [94:0] _GEN_785; // @[Div.scala 95:25]
-  wire [94:0] shifted_11; // @[Div.scala 95:25]
-  wire  _T_258; // @[Div.scala 97:15]
-  wire [127:0] _GEN_786; // @[Div.scala 98:23]
-  wire [127:0] _T_263; // @[Div.scala 98:23]
-  wire [127:0] _T_265; // @[Div.scala 100:23]
-  wire [127:0] nExt_11_r; // @[Div.scala 97:72]
-  wire  _T_266; // @[Div.scala 103:32]
-  wire  _T_267; // @[Div.scala 103:25]
-  wire [64:0] _T_268; // @[Div.scala 103:21]
-  wire [63:0] nExt_11_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_323; // @[Common.scala 353:29]
-  wire  _GEN_329; // @[Common.scala 300:38]
-  wire  _T_272; // @[Common.scala 309:23]
-  wire [3:0] _GEN_788; // @[Div.scala 94:68]
-  wire [3:0] shift_12; // @[Div.scala 94:68]
-  wire [78:0] _GEN_789; // @[Div.scala 95:25]
-  wire [78:0] shifted_12; // @[Div.scala 95:25]
-  wire  _T_276; // @[Div.scala 97:15]
-  wire [127:0] _GEN_790; // @[Div.scala 98:23]
-  wire [127:0] _T_281; // @[Div.scala 98:23]
-  wire [127:0] _T_283; // @[Div.scala 100:23]
-  wire [127:0] nExt_12_r; // @[Div.scala 97:72]
-  wire  _T_284; // @[Div.scala 103:32]
-  wire  _T_285; // @[Div.scala 103:25]
-  wire [64:0] _T_286; // @[Div.scala 103:21]
-  wire [63:0] nExt_12_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_349; // @[Common.scala 353:29]
-  wire  _GEN_355; // @[Common.scala 300:38]
-  wire  _T_290; // @[Common.scala 309:23]
-  wire [3:0] shift_13; // @[Div.scala 94:68]
-  wire [78:0] _GEN_793; // @[Div.scala 95:25]
-  wire [78:0] shifted_13; // @[Div.scala 95:25]
-  wire  _T_294; // @[Div.scala 97:15]
-  wire [127:0] _GEN_794; // @[Div.scala 98:23]
-  wire [127:0] _T_299; // @[Div.scala 98:23]
-  wire [127:0] _T_301; // @[Div.scala 100:23]
-  wire [127:0] nExt_13_r; // @[Div.scala 97:72]
-  wire  _T_302; // @[Div.scala 103:32]
-  wire  _T_303; // @[Div.scala 103:25]
-  wire [64:0] _T_304; // @[Div.scala 103:21]
-  wire [63:0] nExt_13_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_375; // @[Common.scala 353:29]
-  wire  _GEN_381; // @[Common.scala 300:38]
-  wire  _T_308; // @[Common.scala 309:23]
-  wire [2:0] _GEN_796; // @[Div.scala 94:68]
-  wire [2:0] shift_14; // @[Div.scala 94:68]
-  wire [70:0] _GEN_797; // @[Div.scala 95:25]
-  wire [70:0] shifted_14; // @[Div.scala 95:25]
-  wire  _T_312; // @[Div.scala 97:15]
-  wire [127:0] _GEN_798; // @[Div.scala 98:23]
-  wire [127:0] _T_317; // @[Div.scala 98:23]
-  wire [127:0] _T_319; // @[Div.scala 100:23]
-  wire [127:0] nExt_14_r; // @[Div.scala 97:72]
-  wire  _T_320; // @[Div.scala 103:32]
-  wire  _T_321; // @[Div.scala 103:25]
-  wire [64:0] _T_322; // @[Div.scala 103:21]
-  wire [63:0] nExt_14_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_401; // @[Common.scala 353:29]
-  wire  _GEN_407; // @[Common.scala 300:38]
-  wire  _T_326; // @[Common.scala 309:23]
-  wire [1:0] shift_15; // @[Div.scala 94:68]
-  wire [66:0] _GEN_800; // @[Div.scala 95:25]
-  wire [66:0] shifted_15; // @[Div.scala 95:25]
-  wire  _T_330; // @[Div.scala 97:15]
-  wire [127:0] _GEN_801; // @[Div.scala 98:23]
-  wire [127:0] _T_335; // @[Div.scala 98:23]
-  wire [127:0] _T_337; // @[Div.scala 100:23]
-  wire [127:0] nExt_15_r; // @[Div.scala 97:72]
-  wire  _T_338; // @[Div.scala 103:32]
-  wire  _T_339; // @[Div.scala 103:25]
-  wire [64:0] _T_340; // @[Div.scala 103:21]
-  wire [63:0] nExt_15_q; // @[Div.scala 91:20 Div.scala 103:12]
-  wire  _GEN_427; // @[Common.scala 353:29]
-  wire  _GEN_436; // @[Common.scala 318:22]
-  wire  _GEN_454; // @[Common.scala 318:22]
-  wire  _GEN_472; // @[Common.scala 318:22]
-  wire  _GEN_490; // @[Common.scala 318:22]
-  wire  _GEN_508; // @[Common.scala 318:22]
-  wire  _GEN_526; // @[Common.scala 318:22]
-  wire  _GEN_544; // @[Common.scala 318:22]
-  wire  _GEN_562; // @[Common.scala 318:22]
-  wire  _GEN_580; // @[Common.scala 318:22]
-  wire  _GEN_598; // @[Common.scala 318:22]
-  wire  _GEN_616; // @[Common.scala 318:22]
-  wire  _GEN_634; // @[Common.scala 318:22]
-  wire  _GEN_652; // @[Common.scala 318:22]
-  wire  _GEN_670; // @[Common.scala 318:22]
-  wire  _GEN_688; // @[Common.scala 318:22]
-  wire  _GEN_706; // @[Common.scala 318:22]
-  wire  _T_374; // @[Div.scala 119:27]
-  wire  _T_375; // @[Div.scala 120:30]
+  wire  _GEN_124; // @[Common.scala 318:22]
+  wire  _GEN_142; // @[Common.scala 318:22]
+  wire  _GEN_160; // @[Common.scala 318:22]
+  wire  _GEN_178; // @[Common.scala 318:22]
+  wire  _T_122; // @[Div.scala 119:27]
+  wire  _T_123; // @[Div.scala 120:30]
   wire  isDWord_1; // @[Div.scala 120:7]
-  wire [63:0] _T_376; // @[Div.scala 124:27]
-  wire [63:0] _T_377; // @[Div.scala 125:27]
-  wire [31:0] _T_378; // @[Div.scala 127:26]
-  wire [31:0] _T_379; // @[Div.scala 127:34]
-  wire [31:0] _T_380; // @[Div.scala 128:26]
-  wire [31:0] _T_381; // @[Div.scala 128:34]
+  wire [63:0] _T_124; // @[Div.scala 124:27]
+  wire [63:0] _T_125; // @[Div.scala 125:27]
+  wire [31:0] _T_126; // @[Div.scala 127:26]
+  wire [31:0] _T_127; // @[Div.scala 127:34]
+  wire [31:0] _T_128; // @[Div.scala 128:26]
+  wire [31:0] _T_129; // @[Div.scala 128:34]
   wire [63:0] op1s_1; // @[Div.scala 123:19]
   wire [63:0] op2s_1; // @[Div.scala 123:19]
-  wire  _T_382; // @[Div.scala 134:31]
-  wire  _T_383; // @[Div.scala 135:34]
-  wire  _T_384; // @[Div.scala 135:7]
-  wire  _T_385; // @[Div.scala 140:20]
-  wire  _T_386; // @[Div.scala 140:43]
-  wire  _T_387; // @[Div.scala 140:37]
-  wire [63:0] _T_388; // @[Div.scala 140:75]
-  wire  _T_389; // @[Div.scala 140:81]
-  wire  _T_390; // @[Div.scala 140:61]
+  wire  _T_130; // @[Div.scala 134:31]
+  wire  _T_131; // @[Div.scala 135:34]
+  wire  _T_132; // @[Div.scala 135:7]
+  wire  _T_133; // @[Div.scala 140:20]
+  wire  _T_134; // @[Div.scala 140:43]
+  wire  _T_135; // @[Div.scala 140:37]
+  wire [63:0] _T_136; // @[Div.scala 140:75]
+  wire  _T_137; // @[Div.scala 140:81]
+  wire  _T_138; // @[Div.scala 140:61]
   wire  qneg; // @[Div.scala 136:7]
   wire  rneg; // @[Div.scala 136:7]
-  wire  _T_392; // @[Div.scala 148:12]
-  wire  _T_393; // @[Div.scala 148:10]
-  wire [127:0] _GEN_803; // @[Div.scala 150:18]
-  wire [127:0] _T_395; // @[Div.scala 150:18]
+  wire  _T_140; // @[Div.scala 148:12]
+  wire  _T_141; // @[Div.scala 148:10]
+  wire [127:0] _GEN_227; // @[Div.scala 150:18]
+  wire [127:0] _T_143; // @[Div.scala 150:18]
   wire [127:0] r; // @[Div.scala 148:17]
-  wire [63:0] _T_396; // @[Div.scala 159:22]
-  wire [63:0] _T_398; // @[Div.scala 159:13]
-  wire [63:0] _T_399; // @[Div.scala 159:13]
+  wire [63:0] _T_144; // @[Div.scala 159:22]
+  wire [63:0] _T_146; // @[Div.scala 159:13]
+  wire [63:0] _T_147; // @[Div.scala 159:13]
   wire [63:0] sq; // @[Div.scala 158:16]
-  wire [127:0] _T_401; // @[Div.scala 165:22]
-  wire [127:0] _T_403; // @[Div.scala 165:13]
-  wire [127:0] _T_404; // @[Div.scala 165:13]
-  wire [127:0] _GEN_725; // @[Div.scala 164:16]
-  wire [31:0] _T_406; // @[Div.scala 174:15]
-  wire [31:0] _T_407; // @[Div.scala 174:23]
-  wire [63:0] _GEN_804; // @[Div.scala 154:18 Div.scala 165:10 Div.scala 167:10]
+  wire [127:0] _T_149; // @[Div.scala 165:22]
+  wire [127:0] _T_151; // @[Div.scala 165:13]
+  wire [127:0] _T_152; // @[Div.scala 165:13]
+  wire [127:0] _GEN_197; // @[Div.scala 164:16]
+  wire [31:0] _T_154; // @[Div.scala 174:15]
+  wire [31:0] _T_155; // @[Div.scala 174:23]
+  wire [63:0] _GEN_228; // @[Div.scala 154:18 Div.scala 165:10 Div.scala 167:10]
   wire [63:0] sr; // @[Div.scala 154:18 Div.scala 165:10 Div.scala 167:10]
-  wire [31:0] _T_408; // @[Div.scala 175:15]
-  wire [31:0] _T_409; // @[Div.scala 175:23]
+  wire [31:0] _T_156; // @[Div.scala 175:15]
+  wire [31:0] _T_157; // @[Div.scala 175:23]
   wire [63:0] fq; // @[Div.scala 170:19]
   wire [63:0] fr; // @[Div.scala 170:19]
-  wire  _T_411; // @[Div.scala 192:31]
-  wire  _T_413; // @[Div.scala 193:7]
+  wire  _T_159; // @[Div.scala 192:31]
+  wire  _T_161; // @[Div.scala 193:7]
   wire [63:0] extended; // @[Div.scala 194:7]
   wire [63:0] info_wb; // @[Div.scala 189:31]
   assign _T_2 = current_0_pipe_instr_vacant & current_1_pipe_instr_vacant; // @[Div.scala 26:17]
   assign _T_3 = _T_2 & current_2_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_4 = _T_3 & current_3_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_5 = _T_4 & current_4_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_6 = _T_5 & current_5_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_7 = _T_6 & current_6_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_8 = _T_7 & current_7_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_9 = _T_8 & current_8_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_10 = _T_9 & current_9_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_11 = _T_10 & current_10_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_12 = _T_11 & current_11_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_13 = _T_12 & current_12_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_14 = _T_13 & current_13_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_15 = _T_14 & current_14_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign idle = _T_15 & current_15_pipe_instr_vacant; // @[Div.scala 26:17]
-  assign _T_16 = idle == 1'h0; // @[Div.scala 29:8]
-  assign _T_18 = round + 2'h1; // @[Div.scala 30:20]
-  assign _T_20 = round == 2'h3; // @[Div.scala 37:35]
-  assign _T_21 = _T_20 == 1'h0; // @[Div.scala 37:24]
-  assign stall = _T_16 & _T_21; // @[Div.scala 37:21]
-  assign _T_24 = io_next_instr_instr_op == 5'h4; // @[Div.scala 46:29]
-  assign _T_25 = io_next_instr_instr_op == 5'hc; // @[Div.scala 47:32]
-  assign isDWord = _T_24 | _T_25; // @[Div.scala 47:9]
-  assign _T_26 = io_next_instr_instr_funct3 == 3'h5; // @[Div.scala 51:33]
-  assign _T_27 = io_next_instr_instr_funct3 == 3'h7; // @[Div.scala 52:36]
-  assign isUnsigned = _T_26 | _T_27; // @[Div.scala 52:9]
-  assign _T_28 = $signed(io_next_rs1val); // @[Div.scala 56:29]
-  assign _T_29 = $signed(io_next_rs2val); // @[Div.scala 57:29]
-  assign _T_30 = io_next_rs1val[31:0]; // @[Div.scala 59:42]
-  assign _T_31 = {32'h0,_T_30}; // @[Div.scala 59:28]
-  assign _T_32 = $signed(_T_31); // @[Div.scala 59:51]
-  assign _T_33 = io_next_rs2val[31:0]; // @[Div.scala 60:42]
-  assign _T_34 = {32'h0,_T_33}; // @[Div.scala 60:28]
-  assign _T_35 = $signed(_T_34); // @[Div.scala 60:51]
-  assign _T_37 = $signed(_T_30); // @[Div.scala 62:36]
-  assign _T_39 = $signed(_T_33); // @[Div.scala 63:36]
-  assign _GEN_2 = isUnsigned ? $signed(_T_32) : $signed({{32{_T_37[31]}},_T_37}); // @[Div.scala 58:30]
-  assign _GEN_3 = isUnsigned ? $signed(_T_35) : $signed({{32{_T_39[31]}},_T_39}); // @[Div.scala 58:30]
-  assign op1s = isDWord ? $signed(_T_28) : $signed(_GEN_2); // @[Div.scala 55:21]
-  assign op2s = isDWord ? $signed(_T_29) : $signed(_GEN_3); // @[Div.scala 55:21]
-  assign _T_40 = $unsigned(op1s); // @[Div.scala 69:30]
-  assign _T_41 = $unsigned(op2s); // @[Div.scala 70:30]
-  assign _T_42 = $signed(op1s) < $signed(64'sh0); // @[Div.scala 74:19]
-  assign _T_44 = $signed(64'sh0) - $signed(op1s); // @[Div.scala 75:22]
-  assign _T_45 = $signed(_T_44); // @[Div.scala 75:22]
-  assign _T_46 = $unsigned(_T_45); // @[Div.scala 75:35]
-  assign _GEN_6 = _T_42 ? _T_46 : _T_40; // @[Div.scala 74:26]
-  assign _T_48 = $signed(op2s) < $signed(64'sh0); // @[Div.scala 80:19]
-  assign _T_50 = $signed(64'sh0) - $signed(op2s); // @[Div.scala 81:22]
-  assign _T_51 = $signed(_T_50); // @[Div.scala 81:22]
-  assign _T_52 = $unsigned(_T_51); // @[Div.scala 81:29]
-  assign _GEN_8 = isUnsigned ? _T_40 : _GEN_6; // @[Div.scala 68:9]
+  assign idle = _T_3 & current_3_pipe_instr_vacant; // @[Div.scala 26:17]
+  assign _T_4 = idle == 1'h0; // @[Div.scala 29:8]
+  assign _T_6 = round + 4'h1; // @[Div.scala 30:20]
+  assign _T_8 = round == 4'hf; // @[Div.scala 37:35]
+  assign _T_9 = _T_8 == 1'h0; // @[Div.scala 37:24]
+  assign stall = _T_4 & _T_9; // @[Div.scala 37:21]
+  assign _T_12 = io_next_instr_instr_op == 5'h4; // @[Div.scala 46:29]
+  assign _T_13 = io_next_instr_instr_op == 5'hc; // @[Div.scala 47:32]
+  assign isDWord = _T_12 | _T_13; // @[Div.scala 47:9]
+  assign _T_14 = io_next_instr_instr_funct3 == 3'h5; // @[Div.scala 51:33]
+  assign _T_15 = io_next_instr_instr_funct3 == 3'h7; // @[Div.scala 52:36]
+  assign isUnsigned = _T_14 | _T_15; // @[Div.scala 52:9]
+  assign _T_16 = $signed(io_next_rs1val); // @[Div.scala 56:29]
+  assign _T_17 = $signed(io_next_rs2val); // @[Div.scala 57:29]
+  assign _T_18 = io_next_rs1val[31:0]; // @[Div.scala 59:42]
+  assign _T_19 = {32'h0,_T_18}; // @[Div.scala 59:28]
+  assign _T_20 = $signed(_T_19); // @[Div.scala 59:51]
+  assign _T_21 = io_next_rs2val[31:0]; // @[Div.scala 60:42]
+  assign _T_22 = {32'h0,_T_21}; // @[Div.scala 60:28]
+  assign _T_23 = $signed(_T_22); // @[Div.scala 60:51]
+  assign _T_25 = $signed(_T_18); // @[Div.scala 62:36]
+  assign _T_27 = $signed(_T_21); // @[Div.scala 63:36]
+  assign _GEN_2 = isUnsigned ? $signed(_T_20) : $signed({{32{_T_25[31]}},_T_25}); // @[Div.scala 58:30]
+  assign _GEN_3 = isUnsigned ? $signed(_T_23) : $signed({{32{_T_27[31]}},_T_27}); // @[Div.scala 58:30]
+  assign op1s = isDWord ? $signed(_T_16) : $signed(_GEN_2); // @[Div.scala 55:21]
+  assign op2s = isDWord ? $signed(_T_17) : $signed(_GEN_3); // @[Div.scala 55:21]
+  assign _T_28 = $unsigned(op1s); // @[Div.scala 69:30]
+  assign _T_29 = $unsigned(op2s); // @[Div.scala 70:30]
+  assign _T_30 = $signed(op1s) < $signed(64'sh0); // @[Div.scala 74:19]
+  assign _T_32 = $signed(64'sh0) - $signed(op1s); // @[Div.scala 75:22]
+  assign _T_33 = $signed(_T_32); // @[Div.scala 75:22]
+  assign _T_34 = $unsigned(_T_33); // @[Div.scala 75:35]
+  assign _GEN_6 = _T_30 ? _T_34 : _T_28; // @[Div.scala 74:26]
+  assign _T_36 = $signed(op2s) < $signed(64'sh0); // @[Div.scala 80:19]
+  assign _T_38 = $signed(64'sh0) - $signed(op2s); // @[Div.scala 81:22]
+  assign _T_39 = $signed(_T_38); // @[Div.scala 81:22]
+  assign _T_40 = $unsigned(_T_39); // @[Div.scala 81:29]
+  assign _GEN_8 = isUnsigned ? _T_28 : _GEN_6; // @[Div.scala 68:9]
   assign init_r = {{64'd0}, _GEN_8}; // @[Div.scala 41:22 Div.scala 69:16 Div.scala 75:18 Div.scala 77:18]
-  assign _T_54 = io_stall == 1'h0; // @[Common.scala 293:12]
-  assign _GEN_20 = _T_54 ? io_next_instr_vacant : current_0_pipe_instr_vacant; // @[Common.scala 293:36]
-  assign _GEN_740 = {{4'd0}, round}; // @[Div.scala 94:68]
-  assign shift = 6'h3f - _GEN_740; // @[Div.scala 94:68]
-  assign _GEN_741 = {{63'd0}, current_0_ext_d}; // @[Div.scala 95:25]
-  assign shifted = _GEN_741 << shift; // @[Div.scala 95:25]
-  assign _T_60 = current_0_ext_r[127]; // @[Div.scala 97:15]
-  assign _T_61 = round != 2'h0; // @[Div.scala 97:62]
-  assign _T_63 = _T_60 & _T_61; // @[Div.scala 97:34]
-  assign _GEN_742 = {{1'd0}, shifted}; // @[Div.scala 98:23]
-  assign _T_65 = current_0_ext_r + _GEN_742; // @[Div.scala 98:23]
-  assign _T_67 = current_0_ext_r - _GEN_742; // @[Div.scala 100:23]
-  assign nExt_r = _T_63 ? _T_65 : _T_67; // @[Div.scala 97:72]
-  assign _T_68 = nExt_r[127]; // @[Div.scala 103:32]
-  assign _T_69 = _T_68 == 1'h0; // @[Div.scala 103:25]
-  assign _T_70 = {current_0_ext_q,_T_69}; // @[Div.scala 103:21]
-  assign nExt_q = _T_70[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
+  assign _T_42 = io_stall == 1'h0; // @[Common.scala 293:12]
+  assign _GEN_20 = _T_42 ? io_next_instr_vacant : current_0_pipe_instr_vacant; // @[Common.scala 293:36]
+  assign _GEN_212 = {{2'd0}, round}; // @[Div.scala 94:68]
+  assign shift = 6'h3f - _GEN_212; // @[Div.scala 94:68]
+  assign _GEN_213 = {{63'd0}, current_0_ext_d}; // @[Div.scala 95:25]
+  assign shifted = _GEN_213 << shift; // @[Div.scala 95:25]
+  assign _T_48 = current_0_ext_r[127]; // @[Div.scala 97:15]
+  assign _T_49 = round != 4'h0; // @[Div.scala 97:62]
+  assign _T_51 = _T_48 & _T_49; // @[Div.scala 97:34]
+  assign _GEN_214 = {{1'd0}, shifted}; // @[Div.scala 98:23]
+  assign _T_53 = current_0_ext_r + _GEN_214; // @[Div.scala 98:23]
+  assign _T_55 = current_0_ext_r - _GEN_214; // @[Div.scala 100:23]
+  assign nExt_r = _T_51 ? _T_53 : _T_55; // @[Div.scala 97:72]
+  assign _T_56 = nExt_r[127]; // @[Div.scala 103:32]
+  assign _T_57 = _T_56 == 1'h0; // @[Div.scala 103:25]
+  assign _T_58 = {current_0_ext_q,_T_57}; // @[Div.scala 103:21]
+  assign nExt_q = _T_58[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
   assign _GEN_37 = current_0_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_43 = _T_54 ? current_0_pipe_instr_vacant : current_1_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign shift_1 = 6'h3b - _GEN_740; // @[Div.scala 94:68]
-  assign _GEN_745 = {{63'd0}, current_1_ext_d}; // @[Div.scala 95:25]
-  assign shifted_1 = _GEN_745 << shift_1; // @[Div.scala 95:25]
-  assign _T_78 = current_1_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_746 = {{1'd0}, shifted_1}; // @[Div.scala 98:23]
-  assign _T_83 = current_1_ext_r + _GEN_746; // @[Div.scala 98:23]
-  assign _T_85 = current_1_ext_r - _GEN_746; // @[Div.scala 100:23]
-  assign nExt_1_r = _T_78 ? _T_83 : _T_85; // @[Div.scala 97:72]
-  assign _T_86 = nExt_1_r[127]; // @[Div.scala 103:32]
-  assign _T_87 = _T_86 == 1'h0; // @[Div.scala 103:25]
-  assign _T_88 = {current_1_ext_q,_T_87}; // @[Div.scala 103:21]
-  assign nExt_1_q = _T_88[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
+  assign _GEN_43 = _T_42 ? current_0_pipe_instr_vacant : current_1_pipe_instr_vacant; // @[Common.scala 300:38]
+  assign shift_1 = 6'h2f - _GEN_212; // @[Div.scala 94:68]
+  assign _GEN_217 = {{63'd0}, current_1_ext_d}; // @[Div.scala 95:25]
+  assign shifted_1 = _GEN_217 << shift_1; // @[Div.scala 95:25]
+  assign _T_66 = current_1_ext_r[127]; // @[Div.scala 97:15]
+  assign _GEN_218 = {{1'd0}, shifted_1}; // @[Div.scala 98:23]
+  assign _T_71 = current_1_ext_r + _GEN_218; // @[Div.scala 98:23]
+  assign _T_73 = current_1_ext_r - _GEN_218; // @[Div.scala 100:23]
+  assign nExt_1_r = _T_66 ? _T_71 : _T_73; // @[Div.scala 97:72]
+  assign _T_74 = nExt_1_r[127]; // @[Div.scala 103:32]
+  assign _T_75 = _T_74 == 1'h0; // @[Div.scala 103:25]
+  assign _T_76 = {current_1_ext_q,_T_75}; // @[Div.scala 103:21]
+  assign nExt_1_q = _T_76[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
   assign _GEN_63 = current_1_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_69 = _T_54 ? current_1_pipe_instr_vacant : current_2_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_92 = _GEN_37 | _GEN_63; // @[Common.scala 309:23]
-  assign shift_2 = 6'h37 - _GEN_740; // @[Div.scala 94:68]
-  assign _GEN_749 = {{63'd0}, current_2_ext_d}; // @[Div.scala 95:25]
-  assign shifted_2 = _GEN_749 << shift_2; // @[Div.scala 95:25]
-  assign _T_96 = current_2_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_750 = {{1'd0}, shifted_2}; // @[Div.scala 98:23]
-  assign _T_101 = current_2_ext_r + _GEN_750; // @[Div.scala 98:23]
-  assign _T_103 = current_2_ext_r - _GEN_750; // @[Div.scala 100:23]
-  assign nExt_2_r = _T_96 ? _T_101 : _T_103; // @[Div.scala 97:72]
-  assign _T_104 = nExt_2_r[127]; // @[Div.scala 103:32]
-  assign _T_105 = _T_104 == 1'h0; // @[Div.scala 103:25]
-  assign _T_106 = {current_2_ext_q,_T_105}; // @[Div.scala 103:21]
-  assign nExt_2_q = _T_106[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
+  assign _GEN_69 = _T_42 ? current_1_pipe_instr_vacant : current_2_pipe_instr_vacant; // @[Common.scala 300:38]
+  assign _T_80 = _GEN_37 | _GEN_63; // @[Common.scala 309:23]
+  assign _GEN_220 = {{1'd0}, round}; // @[Div.scala 94:68]
+  assign shift_2 = 5'h1f - _GEN_220; // @[Div.scala 94:68]
+  assign _GEN_221 = {{31'd0}, current_2_ext_d}; // @[Div.scala 95:25]
+  assign shifted_2 = _GEN_221 << shift_2; // @[Div.scala 95:25]
+  assign _T_84 = current_2_ext_r[127]; // @[Div.scala 97:15]
+  assign _GEN_222 = {{33'd0}, shifted_2}; // @[Div.scala 98:23]
+  assign _T_89 = current_2_ext_r + _GEN_222; // @[Div.scala 98:23]
+  assign _T_91 = current_2_ext_r - _GEN_222; // @[Div.scala 100:23]
+  assign nExt_2_r = _T_84 ? _T_89 : _T_91; // @[Div.scala 97:72]
+  assign _T_92 = nExt_2_r[127]; // @[Div.scala 103:32]
+  assign _T_93 = _T_92 == 1'h0; // @[Div.scala 103:25]
+  assign _T_94 = {current_2_ext_q,_T_93}; // @[Div.scala 103:21]
+  assign nExt_2_q = _T_94[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
   assign _GEN_89 = current_2_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_95 = _T_54 ? current_2_pipe_instr_vacant : current_3_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_110 = _T_92 | _GEN_89; // @[Common.scala 309:23]
-  assign shift_3 = 6'h33 - _GEN_740; // @[Div.scala 94:68]
-  assign _GEN_753 = {{63'd0}, current_3_ext_d}; // @[Div.scala 95:25]
-  assign shifted_3 = _GEN_753 << shift_3; // @[Div.scala 95:25]
-  assign _T_114 = current_3_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_754 = {{1'd0}, shifted_3}; // @[Div.scala 98:23]
-  assign _T_119 = current_3_ext_r + _GEN_754; // @[Div.scala 98:23]
-  assign _T_121 = current_3_ext_r - _GEN_754; // @[Div.scala 100:23]
-  assign nExt_3_r = _T_114 ? _T_119 : _T_121; // @[Div.scala 97:72]
-  assign _T_122 = nExt_3_r[127]; // @[Div.scala 103:32]
-  assign _T_123 = _T_122 == 1'h0; // @[Div.scala 103:25]
-  assign _T_124 = {current_3_ext_q,_T_123}; // @[Div.scala 103:21]
-  assign nExt_3_q = _T_124[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
+  assign _GEN_95 = _T_42 ? current_2_pipe_instr_vacant : current_3_pipe_instr_vacant; // @[Common.scala 300:38]
+  assign _T_98 = _T_80 | _GEN_89; // @[Common.scala 309:23]
+  assign shift_3 = 4'hf - round; // @[Div.scala 94:68]
+  assign _GEN_224 = {{15'd0}, current_3_ext_d}; // @[Div.scala 95:25]
+  assign shifted_3 = _GEN_224 << shift_3; // @[Div.scala 95:25]
+  assign _T_102 = current_3_ext_r[127]; // @[Div.scala 97:15]
+  assign _GEN_225 = {{49'd0}, shifted_3}; // @[Div.scala 98:23]
+  assign _T_107 = current_3_ext_r + _GEN_225; // @[Div.scala 98:23]
+  assign _T_109 = current_3_ext_r - _GEN_225; // @[Div.scala 100:23]
+  assign nExt_3_r = _T_102 ? _T_107 : _T_109; // @[Div.scala 97:72]
+  assign _T_110 = nExt_3_r[127]; // @[Div.scala 103:32]
+  assign _T_111 = _T_110 == 1'h0; // @[Div.scala 103:25]
+  assign _T_112 = {current_3_ext_q,_T_111}; // @[Div.scala 103:21]
+  assign nExt_3_q = _T_112[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
   assign _GEN_115 = current_3_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_121 = _T_54 ? current_3_pipe_instr_vacant : current_4_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_128 = _T_110 | _GEN_115; // @[Common.scala 309:23]
-  assign shift_4 = 6'h2f - _GEN_740; // @[Div.scala 94:68]
-  assign _GEN_757 = {{63'd0}, current_4_ext_d}; // @[Div.scala 95:25]
-  assign shifted_4 = _GEN_757 << shift_4; // @[Div.scala 95:25]
-  assign _T_132 = current_4_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_758 = {{1'd0}, shifted_4}; // @[Div.scala 98:23]
-  assign _T_137 = current_4_ext_r + _GEN_758; // @[Div.scala 98:23]
-  assign _T_139 = current_4_ext_r - _GEN_758; // @[Div.scala 100:23]
-  assign nExt_4_r = _T_132 ? _T_137 : _T_139; // @[Div.scala 97:72]
-  assign _T_140 = nExt_4_r[127]; // @[Div.scala 103:32]
-  assign _T_141 = _T_140 == 1'h0; // @[Div.scala 103:25]
-  assign _T_142 = {current_4_ext_q,_T_141}; // @[Div.scala 103:21]
-  assign nExt_4_q = _T_142[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_141 = current_4_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_147 = _T_54 ? current_4_pipe_instr_vacant : current_5_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_146 = _T_128 | _GEN_141; // @[Common.scala 309:23]
-  assign shift_5 = 6'h2b - _GEN_740; // @[Div.scala 94:68]
-  assign _GEN_761 = {{63'd0}, current_5_ext_d}; // @[Div.scala 95:25]
-  assign shifted_5 = _GEN_761 << shift_5; // @[Div.scala 95:25]
-  assign _T_150 = current_5_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_762 = {{1'd0}, shifted_5}; // @[Div.scala 98:23]
-  assign _T_155 = current_5_ext_r + _GEN_762; // @[Div.scala 98:23]
-  assign _T_157 = current_5_ext_r - _GEN_762; // @[Div.scala 100:23]
-  assign nExt_5_r = _T_150 ? _T_155 : _T_157; // @[Div.scala 97:72]
-  assign _T_158 = nExt_5_r[127]; // @[Div.scala 103:32]
-  assign _T_159 = _T_158 == 1'h0; // @[Div.scala 103:25]
-  assign _T_160 = {current_5_ext_q,_T_159}; // @[Div.scala 103:21]
-  assign nExt_5_q = _T_160[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_167 = current_5_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_173 = _T_54 ? current_5_pipe_instr_vacant : current_6_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_164 = _T_146 | _GEN_167; // @[Common.scala 309:23]
-  assign shift_6 = 6'h27 - _GEN_740; // @[Div.scala 94:68]
-  assign _GEN_765 = {{63'd0}, current_6_ext_d}; // @[Div.scala 95:25]
-  assign shifted_6 = _GEN_765 << shift_6; // @[Div.scala 95:25]
-  assign _T_168 = current_6_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_766 = {{1'd0}, shifted_6}; // @[Div.scala 98:23]
-  assign _T_173 = current_6_ext_r + _GEN_766; // @[Div.scala 98:23]
-  assign _T_175 = current_6_ext_r - _GEN_766; // @[Div.scala 100:23]
-  assign nExt_6_r = _T_168 ? _T_173 : _T_175; // @[Div.scala 97:72]
-  assign _T_176 = nExt_6_r[127]; // @[Div.scala 103:32]
-  assign _T_177 = _T_176 == 1'h0; // @[Div.scala 103:25]
-  assign _T_178 = {current_6_ext_q,_T_177}; // @[Div.scala 103:21]
-  assign nExt_6_q = _T_178[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_193 = current_6_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_199 = _T_54 ? current_6_pipe_instr_vacant : current_7_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_182 = _T_164 | _GEN_193; // @[Common.scala 309:23]
-  assign shift_7 = 6'h23 - _GEN_740; // @[Div.scala 94:68]
-  assign _GEN_769 = {{63'd0}, current_7_ext_d}; // @[Div.scala 95:25]
-  assign shifted_7 = _GEN_769 << shift_7; // @[Div.scala 95:25]
-  assign _T_186 = current_7_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_770 = {{1'd0}, shifted_7}; // @[Div.scala 98:23]
-  assign _T_191 = current_7_ext_r + _GEN_770; // @[Div.scala 98:23]
-  assign _T_193 = current_7_ext_r - _GEN_770; // @[Div.scala 100:23]
-  assign nExt_7_r = _T_186 ? _T_191 : _T_193; // @[Div.scala 97:72]
-  assign _T_194 = nExt_7_r[127]; // @[Div.scala 103:32]
-  assign _T_195 = _T_194 == 1'h0; // @[Div.scala 103:25]
-  assign _T_196 = {current_7_ext_q,_T_195}; // @[Div.scala 103:21]
-  assign nExt_7_q = _T_196[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_219 = current_7_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_225 = _T_54 ? current_7_pipe_instr_vacant : current_8_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_200 = _T_182 | _GEN_219; // @[Common.scala 309:23]
-  assign _GEN_772 = {{3'd0}, round}; // @[Div.scala 94:68]
-  assign shift_8 = 5'h1f - _GEN_772; // @[Div.scala 94:68]
-  assign _GEN_773 = {{31'd0}, current_8_ext_d}; // @[Div.scala 95:25]
-  assign shifted_8 = _GEN_773 << shift_8; // @[Div.scala 95:25]
-  assign _T_204 = current_8_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_774 = {{33'd0}, shifted_8}; // @[Div.scala 98:23]
-  assign _T_209 = current_8_ext_r + _GEN_774; // @[Div.scala 98:23]
-  assign _T_211 = current_8_ext_r - _GEN_774; // @[Div.scala 100:23]
-  assign nExt_8_r = _T_204 ? _T_209 : _T_211; // @[Div.scala 97:72]
-  assign _T_212 = nExt_8_r[127]; // @[Div.scala 103:32]
-  assign _T_213 = _T_212 == 1'h0; // @[Div.scala 103:25]
-  assign _T_214 = {current_8_ext_q,_T_213}; // @[Div.scala 103:21]
-  assign nExt_8_q = _T_214[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_245 = current_8_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_251 = _T_54 ? current_8_pipe_instr_vacant : current_9_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_218 = _T_200 | _GEN_245; // @[Common.scala 309:23]
-  assign shift_9 = 5'h1b - _GEN_772; // @[Div.scala 94:68]
-  assign _GEN_777 = {{31'd0}, current_9_ext_d}; // @[Div.scala 95:25]
-  assign shifted_9 = _GEN_777 << shift_9; // @[Div.scala 95:25]
-  assign _T_222 = current_9_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_778 = {{33'd0}, shifted_9}; // @[Div.scala 98:23]
-  assign _T_227 = current_9_ext_r + _GEN_778; // @[Div.scala 98:23]
-  assign _T_229 = current_9_ext_r - _GEN_778; // @[Div.scala 100:23]
-  assign nExt_9_r = _T_222 ? _T_227 : _T_229; // @[Div.scala 97:72]
-  assign _T_230 = nExt_9_r[127]; // @[Div.scala 103:32]
-  assign _T_231 = _T_230 == 1'h0; // @[Div.scala 103:25]
-  assign _T_232 = {current_9_ext_q,_T_231}; // @[Div.scala 103:21]
-  assign nExt_9_q = _T_232[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_271 = current_9_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_277 = _T_54 ? current_9_pipe_instr_vacant : current_10_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_236 = _T_218 | _GEN_271; // @[Common.scala 309:23]
-  assign shift_10 = 5'h17 - _GEN_772; // @[Div.scala 94:68]
-  assign _GEN_781 = {{31'd0}, current_10_ext_d}; // @[Div.scala 95:25]
-  assign shifted_10 = _GEN_781 << shift_10; // @[Div.scala 95:25]
-  assign _T_240 = current_10_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_782 = {{33'd0}, shifted_10}; // @[Div.scala 98:23]
-  assign _T_245 = current_10_ext_r + _GEN_782; // @[Div.scala 98:23]
-  assign _T_247 = current_10_ext_r - _GEN_782; // @[Div.scala 100:23]
-  assign nExt_10_r = _T_240 ? _T_245 : _T_247; // @[Div.scala 97:72]
-  assign _T_248 = nExt_10_r[127]; // @[Div.scala 103:32]
-  assign _T_249 = _T_248 == 1'h0; // @[Div.scala 103:25]
-  assign _T_250 = {current_10_ext_q,_T_249}; // @[Div.scala 103:21]
-  assign nExt_10_q = _T_250[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_297 = current_10_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_303 = _T_54 ? current_10_pipe_instr_vacant : current_11_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_254 = _T_236 | _GEN_297; // @[Common.scala 309:23]
-  assign shift_11 = 5'h13 - _GEN_772; // @[Div.scala 94:68]
-  assign _GEN_785 = {{31'd0}, current_11_ext_d}; // @[Div.scala 95:25]
-  assign shifted_11 = _GEN_785 << shift_11; // @[Div.scala 95:25]
-  assign _T_258 = current_11_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_786 = {{33'd0}, shifted_11}; // @[Div.scala 98:23]
-  assign _T_263 = current_11_ext_r + _GEN_786; // @[Div.scala 98:23]
-  assign _T_265 = current_11_ext_r - _GEN_786; // @[Div.scala 100:23]
-  assign nExt_11_r = _T_258 ? _T_263 : _T_265; // @[Div.scala 97:72]
-  assign _T_266 = nExt_11_r[127]; // @[Div.scala 103:32]
-  assign _T_267 = _T_266 == 1'h0; // @[Div.scala 103:25]
-  assign _T_268 = {current_11_ext_q,_T_267}; // @[Div.scala 103:21]
-  assign nExt_11_q = _T_268[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_323 = current_11_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_329 = _T_54 ? current_11_pipe_instr_vacant : current_12_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_272 = _T_254 | _GEN_323; // @[Common.scala 309:23]
-  assign _GEN_788 = {{2'd0}, round}; // @[Div.scala 94:68]
-  assign shift_12 = 4'hf - _GEN_788; // @[Div.scala 94:68]
-  assign _GEN_789 = {{15'd0}, current_12_ext_d}; // @[Div.scala 95:25]
-  assign shifted_12 = _GEN_789 << shift_12; // @[Div.scala 95:25]
-  assign _T_276 = current_12_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_790 = {{49'd0}, shifted_12}; // @[Div.scala 98:23]
-  assign _T_281 = current_12_ext_r + _GEN_790; // @[Div.scala 98:23]
-  assign _T_283 = current_12_ext_r - _GEN_790; // @[Div.scala 100:23]
-  assign nExt_12_r = _T_276 ? _T_281 : _T_283; // @[Div.scala 97:72]
-  assign _T_284 = nExt_12_r[127]; // @[Div.scala 103:32]
-  assign _T_285 = _T_284 == 1'h0; // @[Div.scala 103:25]
-  assign _T_286 = {current_12_ext_q,_T_285}; // @[Div.scala 103:21]
-  assign nExt_12_q = _T_286[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_349 = current_12_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_355 = _T_54 ? current_12_pipe_instr_vacant : current_13_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_290 = _T_272 | _GEN_349; // @[Common.scala 309:23]
-  assign shift_13 = 4'hb - _GEN_788; // @[Div.scala 94:68]
-  assign _GEN_793 = {{15'd0}, current_13_ext_d}; // @[Div.scala 95:25]
-  assign shifted_13 = _GEN_793 << shift_13; // @[Div.scala 95:25]
-  assign _T_294 = current_13_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_794 = {{49'd0}, shifted_13}; // @[Div.scala 98:23]
-  assign _T_299 = current_13_ext_r + _GEN_794; // @[Div.scala 98:23]
-  assign _T_301 = current_13_ext_r - _GEN_794; // @[Div.scala 100:23]
-  assign nExt_13_r = _T_294 ? _T_299 : _T_301; // @[Div.scala 97:72]
-  assign _T_302 = nExt_13_r[127]; // @[Div.scala 103:32]
-  assign _T_303 = _T_302 == 1'h0; // @[Div.scala 103:25]
-  assign _T_304 = {current_13_ext_q,_T_303}; // @[Div.scala 103:21]
-  assign nExt_13_q = _T_304[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_375 = current_13_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_381 = _T_54 ? current_13_pipe_instr_vacant : current_14_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_308 = _T_290 | _GEN_375; // @[Common.scala 309:23]
-  assign _GEN_796 = {{1'd0}, round}; // @[Div.scala 94:68]
-  assign shift_14 = 3'h7 - _GEN_796; // @[Div.scala 94:68]
-  assign _GEN_797 = {{7'd0}, current_14_ext_d}; // @[Div.scala 95:25]
-  assign shifted_14 = _GEN_797 << shift_14; // @[Div.scala 95:25]
-  assign _T_312 = current_14_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_798 = {{57'd0}, shifted_14}; // @[Div.scala 98:23]
-  assign _T_317 = current_14_ext_r + _GEN_798; // @[Div.scala 98:23]
-  assign _T_319 = current_14_ext_r - _GEN_798; // @[Div.scala 100:23]
-  assign nExt_14_r = _T_312 ? _T_317 : _T_319; // @[Div.scala 97:72]
-  assign _T_320 = nExt_14_r[127]; // @[Div.scala 103:32]
-  assign _T_321 = _T_320 == 1'h0; // @[Div.scala 103:25]
-  assign _T_322 = {current_14_ext_q,_T_321}; // @[Div.scala 103:21]
-  assign nExt_14_q = _T_322[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_401 = current_14_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_407 = _T_54 ? current_14_pipe_instr_vacant : current_15_pipe_instr_vacant; // @[Common.scala 300:38]
-  assign _T_326 = _T_308 | _GEN_401; // @[Common.scala 309:23]
-  assign shift_15 = 2'h3 - round; // @[Div.scala 94:68]
-  assign _GEN_800 = {{3'd0}, current_15_ext_d}; // @[Div.scala 95:25]
-  assign shifted_15 = _GEN_800 << shift_15; // @[Div.scala 95:25]
-  assign _T_330 = current_15_ext_r[127]; // @[Div.scala 97:15]
-  assign _GEN_801 = {{61'd0}, shifted_15}; // @[Div.scala 98:23]
-  assign _T_335 = current_15_ext_r + _GEN_801; // @[Div.scala 98:23]
-  assign _T_337 = current_15_ext_r - _GEN_801; // @[Div.scala 100:23]
-  assign nExt_15_r = _T_330 ? _T_335 : _T_337; // @[Div.scala 97:72]
-  assign _T_338 = nExt_15_r[127]; // @[Div.scala 103:32]
-  assign _T_339 = _T_338 == 1'h0; // @[Div.scala 103:25]
-  assign _T_340 = {current_15_ext_q,_T_339}; // @[Div.scala 103:21]
-  assign nExt_15_q = _T_340[63:0]; // @[Div.scala 91:20 Div.scala 103:12]
-  assign _GEN_427 = current_15_pipe_instr_vacant ? 1'h0 : stall; // @[Common.scala 353:29]
-  assign _GEN_436 = io_flush | _GEN_20; // @[Common.scala 318:22]
-  assign _GEN_454 = io_flush | _GEN_43; // @[Common.scala 318:22]
-  assign _GEN_472 = io_flush | _GEN_69; // @[Common.scala 318:22]
-  assign _GEN_490 = io_flush | _GEN_95; // @[Common.scala 318:22]
-  assign _GEN_508 = io_flush | _GEN_121; // @[Common.scala 318:22]
-  assign _GEN_526 = io_flush | _GEN_147; // @[Common.scala 318:22]
-  assign _GEN_544 = io_flush | _GEN_173; // @[Common.scala 318:22]
-  assign _GEN_562 = io_flush | _GEN_199; // @[Common.scala 318:22]
-  assign _GEN_580 = io_flush | _GEN_225; // @[Common.scala 318:22]
-  assign _GEN_598 = io_flush | _GEN_251; // @[Common.scala 318:22]
-  assign _GEN_616 = io_flush | _GEN_277; // @[Common.scala 318:22]
-  assign _GEN_634 = io_flush | _GEN_303; // @[Common.scala 318:22]
-  assign _GEN_652 = io_flush | _GEN_329; // @[Common.scala 318:22]
-  assign _GEN_670 = io_flush | _GEN_355; // @[Common.scala 318:22]
-  assign _GEN_688 = io_flush | _GEN_381; // @[Common.scala 318:22]
-  assign _GEN_706 = io_flush | _GEN_407; // @[Common.scala 318:22]
-  assign _T_374 = current_15_pipe_instr_instr_op == 5'h4; // @[Div.scala 119:27]
-  assign _T_375 = current_15_pipe_instr_instr_op == 5'hc; // @[Div.scala 120:30]
-  assign isDWord_1 = _T_374 | _T_375; // @[Div.scala 120:7]
-  assign _T_376 = $signed(current_15_pipe_rs1val); // @[Div.scala 124:27]
-  assign _T_377 = $signed(current_15_pipe_rs2val); // @[Div.scala 125:27]
-  assign _T_378 = current_15_pipe_rs1val[31:0]; // @[Div.scala 127:26]
-  assign _T_379 = $signed(_T_378); // @[Div.scala 127:34]
-  assign _T_380 = current_15_pipe_rs2val[31:0]; // @[Div.scala 128:26]
-  assign _T_381 = $signed(_T_380); // @[Div.scala 128:34]
-  assign op1s_1 = isDWord_1 ? $signed(_T_376) : $signed({{32{_T_379[31]}},_T_379}); // @[Div.scala 123:19]
-  assign op2s_1 = isDWord_1 ? $signed(_T_377) : $signed({{32{_T_381[31]}},_T_381}); // @[Div.scala 123:19]
-  assign _T_382 = current_15_pipe_instr_instr_funct3 == 3'h5; // @[Div.scala 134:31]
-  assign _T_383 = current_15_pipe_instr_instr_funct3 == 3'h7; // @[Div.scala 135:34]
-  assign _T_384 = _T_382 | _T_383; // @[Div.scala 135:7]
-  assign _T_385 = op1s_1[63]; // @[Div.scala 140:20]
-  assign _T_386 = op2s_1[63]; // @[Div.scala 140:43]
-  assign _T_387 = _T_385 ^ _T_386; // @[Div.scala 140:37]
-  assign _T_388 = $unsigned(op2s_1); // @[Div.scala 140:75]
-  assign _T_389 = _T_388 != 64'h0; // @[Div.scala 140:81]
-  assign _T_390 = _T_387 & _T_389; // @[Div.scala 140:61]
-  assign qneg = _T_384 ? 1'h0 : _T_390; // @[Div.scala 136:7]
-  assign rneg = _T_384 ? 1'h0 : _T_385; // @[Div.scala 136:7]
-  assign _T_392 = nExt_15_q[0]; // @[Div.scala 148:12]
-  assign _T_393 = _T_392 == 1'h0; // @[Div.scala 148:10]
-  assign _GEN_803 = {{64'd0}, current_15_ext_d}; // @[Div.scala 150:18]
-  assign _T_395 = nExt_15_r + _GEN_803; // @[Div.scala 150:18]
-  assign r = _T_393 ? _T_395 : nExt_15_r; // @[Div.scala 148:17]
-  assign _T_396 = $signed(nExt_15_q); // @[Div.scala 159:22]
-  assign _T_398 = $signed(64'sh0) - $signed(_T_396); // @[Div.scala 159:13]
-  assign _T_399 = $signed(_T_398); // @[Div.scala 159:13]
-  assign sq = qneg ? $signed(_T_399) : $signed(_T_396); // @[Div.scala 158:16]
-  assign _T_401 = $signed(r); // @[Div.scala 165:22]
-  assign _T_403 = $signed(128'sh0) - $signed(_T_401); // @[Div.scala 165:13]
-  assign _T_404 = $signed(_T_403); // @[Div.scala 165:13]
-  assign _GEN_725 = rneg ? $signed(_T_404) : $signed(_T_401); // @[Div.scala 164:16]
-  assign _T_406 = sq[31:0]; // @[Div.scala 174:15]
-  assign _T_407 = $signed(_T_406); // @[Div.scala 174:23]
-  assign _GEN_804 = _GEN_725[63:0]; // @[Div.scala 154:18 Div.scala 165:10 Div.scala 167:10]
-  assign sr = $signed(_GEN_804); // @[Div.scala 154:18 Div.scala 165:10 Div.scala 167:10]
-  assign _T_408 = sr[31:0]; // @[Div.scala 175:15]
-  assign _T_409 = $signed(_T_408); // @[Div.scala 175:23]
-  assign fq = isDWord_1 ? $signed(sq) : $signed({{32{_T_407[31]}},_T_407}); // @[Div.scala 170:19]
-  assign fr = isDWord_1 ? $signed(sr) : $signed({{32{_T_409[31]}},_T_409}); // @[Div.scala 170:19]
-  assign _T_411 = current_15_pipe_instr_instr_funct3 == 3'h4; // @[Div.scala 192:31]
-  assign _T_413 = _T_411 | _T_382; // @[Div.scala 193:7]
-  assign extended = _T_413 ? $signed(fq) : $signed(fr); // @[Div.scala 194:7]
+  assign _GEN_124 = io_flush | _GEN_20; // @[Common.scala 318:22]
+  assign _GEN_142 = io_flush | _GEN_43; // @[Common.scala 318:22]
+  assign _GEN_160 = io_flush | _GEN_69; // @[Common.scala 318:22]
+  assign _GEN_178 = io_flush | _GEN_95; // @[Common.scala 318:22]
+  assign _T_122 = current_3_pipe_instr_instr_op == 5'h4; // @[Div.scala 119:27]
+  assign _T_123 = current_3_pipe_instr_instr_op == 5'hc; // @[Div.scala 120:30]
+  assign isDWord_1 = _T_122 | _T_123; // @[Div.scala 120:7]
+  assign _T_124 = $signed(current_3_pipe_rs1val); // @[Div.scala 124:27]
+  assign _T_125 = $signed(current_3_pipe_rs2val); // @[Div.scala 125:27]
+  assign _T_126 = current_3_pipe_rs1val[31:0]; // @[Div.scala 127:26]
+  assign _T_127 = $signed(_T_126); // @[Div.scala 127:34]
+  assign _T_128 = current_3_pipe_rs2val[31:0]; // @[Div.scala 128:26]
+  assign _T_129 = $signed(_T_128); // @[Div.scala 128:34]
+  assign op1s_1 = isDWord_1 ? $signed(_T_124) : $signed({{32{_T_127[31]}},_T_127}); // @[Div.scala 123:19]
+  assign op2s_1 = isDWord_1 ? $signed(_T_125) : $signed({{32{_T_129[31]}},_T_129}); // @[Div.scala 123:19]
+  assign _T_130 = current_3_pipe_instr_instr_funct3 == 3'h5; // @[Div.scala 134:31]
+  assign _T_131 = current_3_pipe_instr_instr_funct3 == 3'h7; // @[Div.scala 135:34]
+  assign _T_132 = _T_130 | _T_131; // @[Div.scala 135:7]
+  assign _T_133 = op1s_1[63]; // @[Div.scala 140:20]
+  assign _T_134 = op2s_1[63]; // @[Div.scala 140:43]
+  assign _T_135 = _T_133 ^ _T_134; // @[Div.scala 140:37]
+  assign _T_136 = $unsigned(op2s_1); // @[Div.scala 140:75]
+  assign _T_137 = _T_136 != 64'h0; // @[Div.scala 140:81]
+  assign _T_138 = _T_135 & _T_137; // @[Div.scala 140:61]
+  assign qneg = _T_132 ? 1'h0 : _T_138; // @[Div.scala 136:7]
+  assign rneg = _T_132 ? 1'h0 : _T_133; // @[Div.scala 136:7]
+  assign _T_140 = nExt_3_q[0]; // @[Div.scala 148:12]
+  assign _T_141 = _T_140 == 1'h0; // @[Div.scala 148:10]
+  assign _GEN_227 = {{64'd0}, current_3_ext_d}; // @[Div.scala 150:18]
+  assign _T_143 = nExt_3_r + _GEN_227; // @[Div.scala 150:18]
+  assign r = _T_141 ? _T_143 : nExt_3_r; // @[Div.scala 148:17]
+  assign _T_144 = $signed(nExt_3_q); // @[Div.scala 159:22]
+  assign _T_146 = $signed(64'sh0) - $signed(_T_144); // @[Div.scala 159:13]
+  assign _T_147 = $signed(_T_146); // @[Div.scala 159:13]
+  assign sq = qneg ? $signed(_T_147) : $signed(_T_144); // @[Div.scala 158:16]
+  assign _T_149 = $signed(r); // @[Div.scala 165:22]
+  assign _T_151 = $signed(128'sh0) - $signed(_T_149); // @[Div.scala 165:13]
+  assign _T_152 = $signed(_T_151); // @[Div.scala 165:13]
+  assign _GEN_197 = rneg ? $signed(_T_152) : $signed(_T_149); // @[Div.scala 164:16]
+  assign _T_154 = sq[31:0]; // @[Div.scala 174:15]
+  assign _T_155 = $signed(_T_154); // @[Div.scala 174:23]
+  assign _GEN_228 = _GEN_197[63:0]; // @[Div.scala 154:18 Div.scala 165:10 Div.scala 167:10]
+  assign sr = $signed(_GEN_228); // @[Div.scala 154:18 Div.scala 165:10 Div.scala 167:10]
+  assign _T_156 = sr[31:0]; // @[Div.scala 175:15]
+  assign _T_157 = $signed(_T_156); // @[Div.scala 175:23]
+  assign fq = isDWord_1 ? $signed(sq) : $signed({{32{_T_155[31]}},_T_155}); // @[Div.scala 170:19]
+  assign fr = isDWord_1 ? $signed(sr) : $signed({{32{_T_157[31]}},_T_157}); // @[Div.scala 170:19]
+  assign _T_159 = current_3_pipe_instr_instr_funct3 == 3'h4; // @[Div.scala 192:31]
+  assign _T_161 = _T_159 | _T_130; // @[Div.scala 193:7]
+  assign extended = _T_161 ? $signed(fq) : $signed(fr); // @[Div.scala 194:7]
   assign info_wb = $unsigned(extended); // @[Div.scala 189:31]
-  assign io_stall = _T_326 | _GEN_427; // @[Common.scala 331:16]
+  assign io_stall = _T_98 | _GEN_115; // @[Common.scala 331:16]
   assign io_retirement_wb = io_retired_instr_vacant ? 64'h0 : info_wb; // @[Common.scala 327:23 Common.scala 329:23]
-  assign io_retired_instr_addr = current_15_pipe_instr_addr; // @[Common.scala 325:18]
-  assign io_retired_instr_instr_op = current_15_pipe_instr_instr_op; // @[Common.scala 325:18]
-  assign io_retired_instr_instr_base = current_15_pipe_instr_instr_base; // @[Common.scala 325:18]
-  assign io_retired_instr_instr_rd = current_15_pipe_instr_instr_rd; // @[Common.scala 325:18]
-  assign io_retired_instr_vacant = current_15_pipe_instr_vacant; // @[Common.scala 325:18]
-  assign io_retired_rdname = current_15_pipe_rdname; // @[Common.scala 325:18]
-  assign io_retired_tag = current_15_pipe_tag; // @[Common.scala 325:18]
+  assign io_retired_instr_addr = current_3_pipe_instr_addr; // @[Common.scala 325:18]
+  assign io_retired_instr_instr_op = current_3_pipe_instr_instr_op; // @[Common.scala 325:18]
+  assign io_retired_instr_instr_base = current_3_pipe_instr_instr_base; // @[Common.scala 325:18]
+  assign io_retired_instr_instr_rd = current_3_pipe_instr_instr_rd; // @[Common.scala 325:18]
+  assign io_retired_instr_vacant = current_3_pipe_instr_vacant; // @[Common.scala 325:18]
+  assign io_retired_rdname = current_3_pipe_rdname; // @[Common.scala 325:18]
+  assign io_retired_tag = current_3_pipe_tag; // @[Common.scala 325:18]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -27119,632 +26588,8 @@ initial begin
   current_3_ext_q = _RAND_51[63:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_52 = {2{`RANDOM}};
-  current_4_pipe_instr_addr = _RAND_52[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_53 = {1{`RANDOM}};
-  current_4_pipe_instr_instr_op = _RAND_53[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_54 = {1{`RANDOM}};
-  current_4_pipe_instr_instr_base = _RAND_54[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_55 = {1{`RANDOM}};
-  current_4_pipe_instr_instr_rd = _RAND_55[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_56 = {1{`RANDOM}};
-  current_4_pipe_instr_instr_funct3 = _RAND_56[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_57 = {1{`RANDOM}};
-  current_4_pipe_instr_vacant = _RAND_57[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_58 = {2{`RANDOM}};
-  current_4_pipe_rs1val = _RAND_58[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_59 = {2{`RANDOM}};
-  current_4_pipe_rs2val = _RAND_59[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_60 = {1{`RANDOM}};
-  current_4_pipe_rdname = _RAND_60[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_61 = {1{`RANDOM}};
-  current_4_pipe_tag = _RAND_61[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_62 = {4{`RANDOM}};
-  current_4_ext_r = _RAND_62[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_63 = {2{`RANDOM}};
-  current_4_ext_d = _RAND_63[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_64 = {2{`RANDOM}};
-  current_4_ext_q = _RAND_64[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_65 = {2{`RANDOM}};
-  current_5_pipe_instr_addr = _RAND_65[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_66 = {1{`RANDOM}};
-  current_5_pipe_instr_instr_op = _RAND_66[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_67 = {1{`RANDOM}};
-  current_5_pipe_instr_instr_base = _RAND_67[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_68 = {1{`RANDOM}};
-  current_5_pipe_instr_instr_rd = _RAND_68[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_69 = {1{`RANDOM}};
-  current_5_pipe_instr_instr_funct3 = _RAND_69[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_70 = {1{`RANDOM}};
-  current_5_pipe_instr_vacant = _RAND_70[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_71 = {2{`RANDOM}};
-  current_5_pipe_rs1val = _RAND_71[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_72 = {2{`RANDOM}};
-  current_5_pipe_rs2val = _RAND_72[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_73 = {1{`RANDOM}};
-  current_5_pipe_rdname = _RAND_73[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_74 = {1{`RANDOM}};
-  current_5_pipe_tag = _RAND_74[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_75 = {4{`RANDOM}};
-  current_5_ext_r = _RAND_75[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_76 = {2{`RANDOM}};
-  current_5_ext_d = _RAND_76[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_77 = {2{`RANDOM}};
-  current_5_ext_q = _RAND_77[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_78 = {2{`RANDOM}};
-  current_6_pipe_instr_addr = _RAND_78[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_79 = {1{`RANDOM}};
-  current_6_pipe_instr_instr_op = _RAND_79[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_80 = {1{`RANDOM}};
-  current_6_pipe_instr_instr_base = _RAND_80[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_81 = {1{`RANDOM}};
-  current_6_pipe_instr_instr_rd = _RAND_81[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_82 = {1{`RANDOM}};
-  current_6_pipe_instr_instr_funct3 = _RAND_82[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_83 = {1{`RANDOM}};
-  current_6_pipe_instr_vacant = _RAND_83[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_84 = {2{`RANDOM}};
-  current_6_pipe_rs1val = _RAND_84[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_85 = {2{`RANDOM}};
-  current_6_pipe_rs2val = _RAND_85[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_86 = {1{`RANDOM}};
-  current_6_pipe_rdname = _RAND_86[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_87 = {1{`RANDOM}};
-  current_6_pipe_tag = _RAND_87[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_88 = {4{`RANDOM}};
-  current_6_ext_r = _RAND_88[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_89 = {2{`RANDOM}};
-  current_6_ext_d = _RAND_89[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_90 = {2{`RANDOM}};
-  current_6_ext_q = _RAND_90[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_91 = {2{`RANDOM}};
-  current_7_pipe_instr_addr = _RAND_91[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_92 = {1{`RANDOM}};
-  current_7_pipe_instr_instr_op = _RAND_92[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_93 = {1{`RANDOM}};
-  current_7_pipe_instr_instr_base = _RAND_93[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_94 = {1{`RANDOM}};
-  current_7_pipe_instr_instr_rd = _RAND_94[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_95 = {1{`RANDOM}};
-  current_7_pipe_instr_instr_funct3 = _RAND_95[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_96 = {1{`RANDOM}};
-  current_7_pipe_instr_vacant = _RAND_96[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_97 = {2{`RANDOM}};
-  current_7_pipe_rs1val = _RAND_97[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_98 = {2{`RANDOM}};
-  current_7_pipe_rs2val = _RAND_98[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_99 = {1{`RANDOM}};
-  current_7_pipe_rdname = _RAND_99[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_100 = {1{`RANDOM}};
-  current_7_pipe_tag = _RAND_100[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_101 = {4{`RANDOM}};
-  current_7_ext_r = _RAND_101[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_102 = {2{`RANDOM}};
-  current_7_ext_d = _RAND_102[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_103 = {2{`RANDOM}};
-  current_7_ext_q = _RAND_103[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_104 = {2{`RANDOM}};
-  current_8_pipe_instr_addr = _RAND_104[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_105 = {1{`RANDOM}};
-  current_8_pipe_instr_instr_op = _RAND_105[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_106 = {1{`RANDOM}};
-  current_8_pipe_instr_instr_base = _RAND_106[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_107 = {1{`RANDOM}};
-  current_8_pipe_instr_instr_rd = _RAND_107[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_108 = {1{`RANDOM}};
-  current_8_pipe_instr_instr_funct3 = _RAND_108[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_109 = {1{`RANDOM}};
-  current_8_pipe_instr_vacant = _RAND_109[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_110 = {2{`RANDOM}};
-  current_8_pipe_rs1val = _RAND_110[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_111 = {2{`RANDOM}};
-  current_8_pipe_rs2val = _RAND_111[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_112 = {1{`RANDOM}};
-  current_8_pipe_rdname = _RAND_112[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_113 = {1{`RANDOM}};
-  current_8_pipe_tag = _RAND_113[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_114 = {4{`RANDOM}};
-  current_8_ext_r = _RAND_114[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_115 = {2{`RANDOM}};
-  current_8_ext_d = _RAND_115[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_116 = {2{`RANDOM}};
-  current_8_ext_q = _RAND_116[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_117 = {2{`RANDOM}};
-  current_9_pipe_instr_addr = _RAND_117[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_118 = {1{`RANDOM}};
-  current_9_pipe_instr_instr_op = _RAND_118[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_119 = {1{`RANDOM}};
-  current_9_pipe_instr_instr_base = _RAND_119[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_120 = {1{`RANDOM}};
-  current_9_pipe_instr_instr_rd = _RAND_120[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_121 = {1{`RANDOM}};
-  current_9_pipe_instr_instr_funct3 = _RAND_121[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_122 = {1{`RANDOM}};
-  current_9_pipe_instr_vacant = _RAND_122[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_123 = {2{`RANDOM}};
-  current_9_pipe_rs1val = _RAND_123[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_124 = {2{`RANDOM}};
-  current_9_pipe_rs2val = _RAND_124[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_125 = {1{`RANDOM}};
-  current_9_pipe_rdname = _RAND_125[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_126 = {1{`RANDOM}};
-  current_9_pipe_tag = _RAND_126[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_127 = {4{`RANDOM}};
-  current_9_ext_r = _RAND_127[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_128 = {2{`RANDOM}};
-  current_9_ext_d = _RAND_128[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_129 = {2{`RANDOM}};
-  current_9_ext_q = _RAND_129[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_130 = {2{`RANDOM}};
-  current_10_pipe_instr_addr = _RAND_130[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_131 = {1{`RANDOM}};
-  current_10_pipe_instr_instr_op = _RAND_131[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_132 = {1{`RANDOM}};
-  current_10_pipe_instr_instr_base = _RAND_132[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_133 = {1{`RANDOM}};
-  current_10_pipe_instr_instr_rd = _RAND_133[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_134 = {1{`RANDOM}};
-  current_10_pipe_instr_instr_funct3 = _RAND_134[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_135 = {1{`RANDOM}};
-  current_10_pipe_instr_vacant = _RAND_135[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_136 = {2{`RANDOM}};
-  current_10_pipe_rs1val = _RAND_136[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_137 = {2{`RANDOM}};
-  current_10_pipe_rs2val = _RAND_137[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_138 = {1{`RANDOM}};
-  current_10_pipe_rdname = _RAND_138[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_139 = {1{`RANDOM}};
-  current_10_pipe_tag = _RAND_139[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_140 = {4{`RANDOM}};
-  current_10_ext_r = _RAND_140[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_141 = {2{`RANDOM}};
-  current_10_ext_d = _RAND_141[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_142 = {2{`RANDOM}};
-  current_10_ext_q = _RAND_142[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_143 = {2{`RANDOM}};
-  current_11_pipe_instr_addr = _RAND_143[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_144 = {1{`RANDOM}};
-  current_11_pipe_instr_instr_op = _RAND_144[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_145 = {1{`RANDOM}};
-  current_11_pipe_instr_instr_base = _RAND_145[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_146 = {1{`RANDOM}};
-  current_11_pipe_instr_instr_rd = _RAND_146[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_147 = {1{`RANDOM}};
-  current_11_pipe_instr_instr_funct3 = _RAND_147[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_148 = {1{`RANDOM}};
-  current_11_pipe_instr_vacant = _RAND_148[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_149 = {2{`RANDOM}};
-  current_11_pipe_rs1val = _RAND_149[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_150 = {2{`RANDOM}};
-  current_11_pipe_rs2val = _RAND_150[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_151 = {1{`RANDOM}};
-  current_11_pipe_rdname = _RAND_151[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_152 = {1{`RANDOM}};
-  current_11_pipe_tag = _RAND_152[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_153 = {4{`RANDOM}};
-  current_11_ext_r = _RAND_153[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_154 = {2{`RANDOM}};
-  current_11_ext_d = _RAND_154[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_155 = {2{`RANDOM}};
-  current_11_ext_q = _RAND_155[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_156 = {2{`RANDOM}};
-  current_12_pipe_instr_addr = _RAND_156[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_157 = {1{`RANDOM}};
-  current_12_pipe_instr_instr_op = _RAND_157[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_158 = {1{`RANDOM}};
-  current_12_pipe_instr_instr_base = _RAND_158[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_159 = {1{`RANDOM}};
-  current_12_pipe_instr_instr_rd = _RAND_159[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_160 = {1{`RANDOM}};
-  current_12_pipe_instr_instr_funct3 = _RAND_160[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_161 = {1{`RANDOM}};
-  current_12_pipe_instr_vacant = _RAND_161[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_162 = {2{`RANDOM}};
-  current_12_pipe_rs1val = _RAND_162[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_163 = {2{`RANDOM}};
-  current_12_pipe_rs2val = _RAND_163[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_164 = {1{`RANDOM}};
-  current_12_pipe_rdname = _RAND_164[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_165 = {1{`RANDOM}};
-  current_12_pipe_tag = _RAND_165[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_166 = {4{`RANDOM}};
-  current_12_ext_r = _RAND_166[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_167 = {2{`RANDOM}};
-  current_12_ext_d = _RAND_167[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_168 = {2{`RANDOM}};
-  current_12_ext_q = _RAND_168[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_169 = {2{`RANDOM}};
-  current_13_pipe_instr_addr = _RAND_169[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_170 = {1{`RANDOM}};
-  current_13_pipe_instr_instr_op = _RAND_170[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_171 = {1{`RANDOM}};
-  current_13_pipe_instr_instr_base = _RAND_171[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_172 = {1{`RANDOM}};
-  current_13_pipe_instr_instr_rd = _RAND_172[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_173 = {1{`RANDOM}};
-  current_13_pipe_instr_instr_funct3 = _RAND_173[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_174 = {1{`RANDOM}};
-  current_13_pipe_instr_vacant = _RAND_174[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_175 = {2{`RANDOM}};
-  current_13_pipe_rs1val = _RAND_175[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_176 = {2{`RANDOM}};
-  current_13_pipe_rs2val = _RAND_176[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_177 = {1{`RANDOM}};
-  current_13_pipe_rdname = _RAND_177[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_178 = {1{`RANDOM}};
-  current_13_pipe_tag = _RAND_178[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_179 = {4{`RANDOM}};
-  current_13_ext_r = _RAND_179[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_180 = {2{`RANDOM}};
-  current_13_ext_d = _RAND_180[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_181 = {2{`RANDOM}};
-  current_13_ext_q = _RAND_181[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_182 = {2{`RANDOM}};
-  current_14_pipe_instr_addr = _RAND_182[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_183 = {1{`RANDOM}};
-  current_14_pipe_instr_instr_op = _RAND_183[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_184 = {1{`RANDOM}};
-  current_14_pipe_instr_instr_base = _RAND_184[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_185 = {1{`RANDOM}};
-  current_14_pipe_instr_instr_rd = _RAND_185[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_186 = {1{`RANDOM}};
-  current_14_pipe_instr_instr_funct3 = _RAND_186[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_187 = {1{`RANDOM}};
-  current_14_pipe_instr_vacant = _RAND_187[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_188 = {2{`RANDOM}};
-  current_14_pipe_rs1val = _RAND_188[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_189 = {2{`RANDOM}};
-  current_14_pipe_rs2val = _RAND_189[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_190 = {1{`RANDOM}};
-  current_14_pipe_rdname = _RAND_190[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_191 = {1{`RANDOM}};
-  current_14_pipe_tag = _RAND_191[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_192 = {4{`RANDOM}};
-  current_14_ext_r = _RAND_192[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_193 = {2{`RANDOM}};
-  current_14_ext_d = _RAND_193[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_194 = {2{`RANDOM}};
-  current_14_ext_q = _RAND_194[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_195 = {2{`RANDOM}};
-  current_15_pipe_instr_addr = _RAND_195[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_196 = {1{`RANDOM}};
-  current_15_pipe_instr_instr_op = _RAND_196[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_197 = {1{`RANDOM}};
-  current_15_pipe_instr_instr_base = _RAND_197[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_198 = {1{`RANDOM}};
-  current_15_pipe_instr_instr_rd = _RAND_198[4:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_199 = {1{`RANDOM}};
-  current_15_pipe_instr_instr_funct3 = _RAND_199[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_200 = {1{`RANDOM}};
-  current_15_pipe_instr_vacant = _RAND_200[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_201 = {2{`RANDOM}};
-  current_15_pipe_rs1val = _RAND_201[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_202 = {2{`RANDOM}};
-  current_15_pipe_rs2val = _RAND_202[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_203 = {1{`RANDOM}};
-  current_15_pipe_rdname = _RAND_203[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_204 = {1{`RANDOM}};
-  current_15_pipe_tag = _RAND_204[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_205 = {4{`RANDOM}};
-  current_15_ext_r = _RAND_205[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_206 = {2{`RANDOM}};
-  current_15_ext_d = _RAND_206[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_207 = {2{`RANDOM}};
-  current_15_ext_q = _RAND_207[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_208 = {1{`RANDOM}};
-  round = _RAND_208[1:0];
+  _RAND_52 = {1{`RANDOM}};
+  round = _RAND_52[3:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -27752,1116 +26597,288 @@ end // initial
   always @(posedge clock) begin
     if (io_flush) begin
       current_0_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_instr_addr <= io_next_instr_addr;
     end
     if (io_flush) begin
       current_0_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_instr_instr_op <= io_next_instr_instr_op;
     end
     if (io_flush) begin
       current_0_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_instr_instr_base <= io_next_instr_instr_base;
     end
     if (io_flush) begin
       current_0_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_instr_instr_rd <= io_next_instr_instr_rd;
     end
     if (io_flush) begin
       current_0_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_instr_instr_funct3 <= io_next_instr_instr_funct3;
     end
-    current_0_pipe_instr_vacant <= reset | _GEN_436;
+    current_0_pipe_instr_vacant <= reset | _GEN_124;
     if (io_flush) begin
       current_0_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_rs1val <= io_next_rs1val;
     end
     if (io_flush) begin
       current_0_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_rs2val <= io_next_rs2val;
     end
     if (io_flush) begin
       current_0_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_rdname <= io_next_rdname;
     end
     if (io_flush) begin
       current_0_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_pipe_tag <= io_next_tag;
     end
     if (_GEN_37) begin
-      if (_T_63) begin
-        current_0_ext_r <= _T_65;
+      if (_T_51) begin
+        current_0_ext_r <= _T_53;
       end else begin
-        current_0_ext_r <= _T_67;
+        current_0_ext_r <= _T_55;
       end
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_ext_r <= init_r;
     end
     if (!(_GEN_37)) begin
-      if (_T_54) begin
+      if (_T_42) begin
         if (isUnsigned) begin
-          current_0_ext_d <= _T_41;
-        end else if (_T_48) begin
-          current_0_ext_d <= _T_52;
+          current_0_ext_d <= _T_29;
+        end else if (_T_36) begin
+          current_0_ext_d <= _T_40;
         end else begin
-          current_0_ext_d <= _T_41;
+          current_0_ext_d <= _T_29;
         end
       end
     end
     if (_GEN_37) begin
       current_0_ext_q <= nExt_q;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_0_ext_q <= 64'h0;
     end
     if (io_flush) begin
       current_1_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_instr_addr <= current_0_pipe_instr_addr;
     end
     if (io_flush) begin
       current_1_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_instr_instr_op <= current_0_pipe_instr_instr_op;
     end
     if (io_flush) begin
       current_1_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_instr_instr_base <= current_0_pipe_instr_instr_base;
     end
     if (io_flush) begin
       current_1_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_instr_instr_rd <= current_0_pipe_instr_instr_rd;
     end
     if (io_flush) begin
       current_1_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_instr_instr_funct3 <= current_0_pipe_instr_instr_funct3;
     end
-    current_1_pipe_instr_vacant <= reset | _GEN_454;
+    current_1_pipe_instr_vacant <= reset | _GEN_142;
     if (io_flush) begin
       current_1_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_rs1val <= current_0_pipe_rs1val;
     end
     if (io_flush) begin
       current_1_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_rs2val <= current_0_pipe_rs2val;
     end
     if (io_flush) begin
       current_1_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_rdname <= current_0_pipe_rdname;
     end
     if (io_flush) begin
       current_1_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_pipe_tag <= current_0_pipe_tag;
     end
     if (_GEN_63) begin
-      if (_T_78) begin
-        current_1_ext_r <= _T_83;
+      if (_T_66) begin
+        current_1_ext_r <= _T_71;
       end else begin
-        current_1_ext_r <= _T_85;
+        current_1_ext_r <= _T_73;
       end
-    end else if (_T_54) begin
-      if (_T_63) begin
-        current_1_ext_r <= _T_65;
+    end else if (_T_42) begin
+      if (_T_51) begin
+        current_1_ext_r <= _T_53;
       end else begin
-        current_1_ext_r <= _T_67;
+        current_1_ext_r <= _T_55;
       end
     end
     if (!(_GEN_63)) begin
-      if (_T_54) begin
+      if (_T_42) begin
         current_1_ext_d <= current_0_ext_d;
       end
     end
     if (_GEN_63) begin
       current_1_ext_q <= nExt_1_q;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_1_ext_q <= nExt_q;
     end
     if (io_flush) begin
       current_2_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_instr_addr <= current_1_pipe_instr_addr;
     end
     if (io_flush) begin
       current_2_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_instr_instr_op <= current_1_pipe_instr_instr_op;
     end
     if (io_flush) begin
       current_2_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_instr_instr_base <= current_1_pipe_instr_instr_base;
     end
     if (io_flush) begin
       current_2_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_instr_instr_rd <= current_1_pipe_instr_instr_rd;
     end
     if (io_flush) begin
       current_2_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_instr_instr_funct3 <= current_1_pipe_instr_instr_funct3;
     end
-    current_2_pipe_instr_vacant <= reset | _GEN_472;
+    current_2_pipe_instr_vacant <= reset | _GEN_160;
     if (io_flush) begin
       current_2_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_rs1val <= current_1_pipe_rs1val;
     end
     if (io_flush) begin
       current_2_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_rs2val <= current_1_pipe_rs2val;
     end
     if (io_flush) begin
       current_2_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_rdname <= current_1_pipe_rdname;
     end
     if (io_flush) begin
       current_2_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_pipe_tag <= current_1_pipe_tag;
     end
     if (_GEN_89) begin
-      if (_T_96) begin
-        current_2_ext_r <= _T_101;
+      if (_T_84) begin
+        current_2_ext_r <= _T_89;
       end else begin
-        current_2_ext_r <= _T_103;
+        current_2_ext_r <= _T_91;
       end
-    end else if (_T_54) begin
-      if (_T_78) begin
-        current_2_ext_r <= _T_83;
+    end else if (_T_42) begin
+      if (_T_66) begin
+        current_2_ext_r <= _T_71;
       end else begin
-        current_2_ext_r <= _T_85;
+        current_2_ext_r <= _T_73;
       end
     end
     if (!(_GEN_89)) begin
-      if (_T_54) begin
+      if (_T_42) begin
         current_2_ext_d <= current_1_ext_d;
       end
     end
     if (_GEN_89) begin
       current_2_ext_q <= nExt_2_q;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_2_ext_q <= nExt_1_q;
     end
     if (io_flush) begin
       current_3_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_instr_addr <= current_2_pipe_instr_addr;
     end
     if (io_flush) begin
       current_3_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_instr_instr_op <= current_2_pipe_instr_instr_op;
     end
     if (io_flush) begin
       current_3_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_instr_instr_base <= current_2_pipe_instr_instr_base;
     end
     if (io_flush) begin
       current_3_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_instr_instr_rd <= current_2_pipe_instr_instr_rd;
     end
     if (io_flush) begin
       current_3_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_instr_instr_funct3 <= current_2_pipe_instr_instr_funct3;
     end
-    current_3_pipe_instr_vacant <= reset | _GEN_490;
+    current_3_pipe_instr_vacant <= reset | _GEN_178;
     if (io_flush) begin
       current_3_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_rs1val <= current_2_pipe_rs1val;
     end
     if (io_flush) begin
       current_3_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_rs2val <= current_2_pipe_rs2val;
     end
     if (io_flush) begin
       current_3_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_rdname <= current_2_pipe_rdname;
     end
     if (io_flush) begin
       current_3_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_pipe_tag <= current_2_pipe_tag;
     end
     if (_GEN_115) begin
-      if (_T_114) begin
-        current_3_ext_r <= _T_119;
+      if (_T_102) begin
+        current_3_ext_r <= _T_107;
       end else begin
-        current_3_ext_r <= _T_121;
+        current_3_ext_r <= _T_109;
       end
-    end else if (_T_54) begin
-      if (_T_96) begin
-        current_3_ext_r <= _T_101;
+    end else if (_T_42) begin
+      if (_T_84) begin
+        current_3_ext_r <= _T_89;
       end else begin
-        current_3_ext_r <= _T_103;
+        current_3_ext_r <= _T_91;
       end
     end
     if (!(_GEN_115)) begin
-      if (_T_54) begin
+      if (_T_42) begin
         current_3_ext_d <= current_2_ext_d;
       end
     end
     if (_GEN_115) begin
       current_3_ext_q <= nExt_3_q;
-    end else if (_T_54) begin
+    end else if (_T_42) begin
       current_3_ext_q <= nExt_2_q;
     end
-    if (io_flush) begin
-      current_4_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_4_pipe_instr_addr <= current_3_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_4_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_4_pipe_instr_instr_op <= current_3_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_4_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_4_pipe_instr_instr_base <= current_3_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_4_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_4_pipe_instr_instr_rd <= current_3_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_4_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_4_pipe_instr_instr_funct3 <= current_3_pipe_instr_instr_funct3;
-    end
-    current_4_pipe_instr_vacant <= reset | _GEN_508;
-    if (io_flush) begin
-      current_4_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_4_pipe_rs1val <= current_3_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_4_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_4_pipe_rs2val <= current_3_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_4_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_4_pipe_rdname <= current_3_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_4_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_4_pipe_tag <= current_3_pipe_tag;
-    end
-    if (_GEN_141) begin
-      if (_T_132) begin
-        current_4_ext_r <= _T_137;
-      end else begin
-        current_4_ext_r <= _T_139;
-      end
-    end else if (_T_54) begin
-      if (_T_114) begin
-        current_4_ext_r <= _T_119;
-      end else begin
-        current_4_ext_r <= _T_121;
-      end
-    end
-    if (!(_GEN_141)) begin
-      if (_T_54) begin
-        current_4_ext_d <= current_3_ext_d;
-      end
-    end
-    if (_GEN_141) begin
-      current_4_ext_q <= nExt_4_q;
-    end else if (_T_54) begin
-      current_4_ext_q <= nExt_3_q;
-    end
-    if (io_flush) begin
-      current_5_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_5_pipe_instr_addr <= current_4_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_5_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_5_pipe_instr_instr_op <= current_4_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_5_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_5_pipe_instr_instr_base <= current_4_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_5_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_5_pipe_instr_instr_rd <= current_4_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_5_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_5_pipe_instr_instr_funct3 <= current_4_pipe_instr_instr_funct3;
-    end
-    current_5_pipe_instr_vacant <= reset | _GEN_526;
-    if (io_flush) begin
-      current_5_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_5_pipe_rs1val <= current_4_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_5_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_5_pipe_rs2val <= current_4_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_5_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_5_pipe_rdname <= current_4_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_5_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_5_pipe_tag <= current_4_pipe_tag;
-    end
-    if (_GEN_167) begin
-      if (_T_150) begin
-        current_5_ext_r <= _T_155;
-      end else begin
-        current_5_ext_r <= _T_157;
-      end
-    end else if (_T_54) begin
-      if (_T_132) begin
-        current_5_ext_r <= _T_137;
-      end else begin
-        current_5_ext_r <= _T_139;
-      end
-    end
-    if (!(_GEN_167)) begin
-      if (_T_54) begin
-        current_5_ext_d <= current_4_ext_d;
-      end
-    end
-    if (_GEN_167) begin
-      current_5_ext_q <= nExt_5_q;
-    end else if (_T_54) begin
-      current_5_ext_q <= nExt_4_q;
-    end
-    if (io_flush) begin
-      current_6_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_6_pipe_instr_addr <= current_5_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_6_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_6_pipe_instr_instr_op <= current_5_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_6_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_6_pipe_instr_instr_base <= current_5_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_6_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_6_pipe_instr_instr_rd <= current_5_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_6_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_6_pipe_instr_instr_funct3 <= current_5_pipe_instr_instr_funct3;
-    end
-    current_6_pipe_instr_vacant <= reset | _GEN_544;
-    if (io_flush) begin
-      current_6_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_6_pipe_rs1val <= current_5_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_6_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_6_pipe_rs2val <= current_5_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_6_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_6_pipe_rdname <= current_5_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_6_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_6_pipe_tag <= current_5_pipe_tag;
-    end
-    if (_GEN_193) begin
-      if (_T_168) begin
-        current_6_ext_r <= _T_173;
-      end else begin
-        current_6_ext_r <= _T_175;
-      end
-    end else if (_T_54) begin
-      if (_T_150) begin
-        current_6_ext_r <= _T_155;
-      end else begin
-        current_6_ext_r <= _T_157;
-      end
-    end
-    if (!(_GEN_193)) begin
-      if (_T_54) begin
-        current_6_ext_d <= current_5_ext_d;
-      end
-    end
-    if (_GEN_193) begin
-      current_6_ext_q <= nExt_6_q;
-    end else if (_T_54) begin
-      current_6_ext_q <= nExt_5_q;
-    end
-    if (io_flush) begin
-      current_7_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_7_pipe_instr_addr <= current_6_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_7_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_7_pipe_instr_instr_op <= current_6_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_7_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_7_pipe_instr_instr_base <= current_6_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_7_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_7_pipe_instr_instr_rd <= current_6_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_7_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_7_pipe_instr_instr_funct3 <= current_6_pipe_instr_instr_funct3;
-    end
-    current_7_pipe_instr_vacant <= reset | _GEN_562;
-    if (io_flush) begin
-      current_7_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_7_pipe_rs1val <= current_6_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_7_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_7_pipe_rs2val <= current_6_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_7_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_7_pipe_rdname <= current_6_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_7_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_7_pipe_tag <= current_6_pipe_tag;
-    end
-    if (_GEN_219) begin
-      if (_T_186) begin
-        current_7_ext_r <= _T_191;
-      end else begin
-        current_7_ext_r <= _T_193;
-      end
-    end else if (_T_54) begin
-      if (_T_168) begin
-        current_7_ext_r <= _T_173;
-      end else begin
-        current_7_ext_r <= _T_175;
-      end
-    end
-    if (!(_GEN_219)) begin
-      if (_T_54) begin
-        current_7_ext_d <= current_6_ext_d;
-      end
-    end
-    if (_GEN_219) begin
-      current_7_ext_q <= nExt_7_q;
-    end else if (_T_54) begin
-      current_7_ext_q <= nExt_6_q;
-    end
-    if (io_flush) begin
-      current_8_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_8_pipe_instr_addr <= current_7_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_8_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_8_pipe_instr_instr_op <= current_7_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_8_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_8_pipe_instr_instr_base <= current_7_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_8_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_8_pipe_instr_instr_rd <= current_7_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_8_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_8_pipe_instr_instr_funct3 <= current_7_pipe_instr_instr_funct3;
-    end
-    current_8_pipe_instr_vacant <= reset | _GEN_580;
-    if (io_flush) begin
-      current_8_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_8_pipe_rs1val <= current_7_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_8_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_8_pipe_rs2val <= current_7_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_8_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_8_pipe_rdname <= current_7_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_8_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_8_pipe_tag <= current_7_pipe_tag;
-    end
-    if (_GEN_245) begin
-      if (_T_204) begin
-        current_8_ext_r <= _T_209;
-      end else begin
-        current_8_ext_r <= _T_211;
-      end
-    end else if (_T_54) begin
-      if (_T_186) begin
-        current_8_ext_r <= _T_191;
-      end else begin
-        current_8_ext_r <= _T_193;
-      end
-    end
-    if (!(_GEN_245)) begin
-      if (_T_54) begin
-        current_8_ext_d <= current_7_ext_d;
-      end
-    end
-    if (_GEN_245) begin
-      current_8_ext_q <= nExt_8_q;
-    end else if (_T_54) begin
-      current_8_ext_q <= nExt_7_q;
-    end
-    if (io_flush) begin
-      current_9_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_9_pipe_instr_addr <= current_8_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_9_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_9_pipe_instr_instr_op <= current_8_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_9_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_9_pipe_instr_instr_base <= current_8_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_9_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_9_pipe_instr_instr_rd <= current_8_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_9_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_9_pipe_instr_instr_funct3 <= current_8_pipe_instr_instr_funct3;
-    end
-    current_9_pipe_instr_vacant <= reset | _GEN_598;
-    if (io_flush) begin
-      current_9_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_9_pipe_rs1val <= current_8_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_9_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_9_pipe_rs2val <= current_8_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_9_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_9_pipe_rdname <= current_8_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_9_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_9_pipe_tag <= current_8_pipe_tag;
-    end
-    if (_GEN_271) begin
-      if (_T_222) begin
-        current_9_ext_r <= _T_227;
-      end else begin
-        current_9_ext_r <= _T_229;
-      end
-    end else if (_T_54) begin
-      if (_T_204) begin
-        current_9_ext_r <= _T_209;
-      end else begin
-        current_9_ext_r <= _T_211;
-      end
-    end
-    if (!(_GEN_271)) begin
-      if (_T_54) begin
-        current_9_ext_d <= current_8_ext_d;
-      end
-    end
-    if (_GEN_271) begin
-      current_9_ext_q <= nExt_9_q;
-    end else if (_T_54) begin
-      current_9_ext_q <= nExt_8_q;
-    end
-    if (io_flush) begin
-      current_10_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_10_pipe_instr_addr <= current_9_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_10_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_10_pipe_instr_instr_op <= current_9_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_10_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_10_pipe_instr_instr_base <= current_9_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_10_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_10_pipe_instr_instr_rd <= current_9_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_10_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_10_pipe_instr_instr_funct3 <= current_9_pipe_instr_instr_funct3;
-    end
-    current_10_pipe_instr_vacant <= reset | _GEN_616;
-    if (io_flush) begin
-      current_10_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_10_pipe_rs1val <= current_9_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_10_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_10_pipe_rs2val <= current_9_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_10_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_10_pipe_rdname <= current_9_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_10_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_10_pipe_tag <= current_9_pipe_tag;
-    end
-    if (_GEN_297) begin
-      if (_T_240) begin
-        current_10_ext_r <= _T_245;
-      end else begin
-        current_10_ext_r <= _T_247;
-      end
-    end else if (_T_54) begin
-      if (_T_222) begin
-        current_10_ext_r <= _T_227;
-      end else begin
-        current_10_ext_r <= _T_229;
-      end
-    end
-    if (!(_GEN_297)) begin
-      if (_T_54) begin
-        current_10_ext_d <= current_9_ext_d;
-      end
-    end
-    if (_GEN_297) begin
-      current_10_ext_q <= nExt_10_q;
-    end else if (_T_54) begin
-      current_10_ext_q <= nExt_9_q;
-    end
-    if (io_flush) begin
-      current_11_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_11_pipe_instr_addr <= current_10_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_11_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_11_pipe_instr_instr_op <= current_10_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_11_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_11_pipe_instr_instr_base <= current_10_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_11_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_11_pipe_instr_instr_rd <= current_10_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_11_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_11_pipe_instr_instr_funct3 <= current_10_pipe_instr_instr_funct3;
-    end
-    current_11_pipe_instr_vacant <= reset | _GEN_634;
-    if (io_flush) begin
-      current_11_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_11_pipe_rs1val <= current_10_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_11_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_11_pipe_rs2val <= current_10_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_11_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_11_pipe_rdname <= current_10_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_11_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_11_pipe_tag <= current_10_pipe_tag;
-    end
-    if (_GEN_323) begin
-      if (_T_258) begin
-        current_11_ext_r <= _T_263;
-      end else begin
-        current_11_ext_r <= _T_265;
-      end
-    end else if (_T_54) begin
-      if (_T_240) begin
-        current_11_ext_r <= _T_245;
-      end else begin
-        current_11_ext_r <= _T_247;
-      end
-    end
-    if (!(_GEN_323)) begin
-      if (_T_54) begin
-        current_11_ext_d <= current_10_ext_d;
-      end
-    end
-    if (_GEN_323) begin
-      current_11_ext_q <= nExt_11_q;
-    end else if (_T_54) begin
-      current_11_ext_q <= nExt_10_q;
-    end
-    if (io_flush) begin
-      current_12_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_12_pipe_instr_addr <= current_11_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_12_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_12_pipe_instr_instr_op <= current_11_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_12_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_12_pipe_instr_instr_base <= current_11_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_12_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_12_pipe_instr_instr_rd <= current_11_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_12_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_12_pipe_instr_instr_funct3 <= current_11_pipe_instr_instr_funct3;
-    end
-    current_12_pipe_instr_vacant <= reset | _GEN_652;
-    if (io_flush) begin
-      current_12_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_12_pipe_rs1val <= current_11_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_12_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_12_pipe_rs2val <= current_11_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_12_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_12_pipe_rdname <= current_11_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_12_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_12_pipe_tag <= current_11_pipe_tag;
-    end
-    if (_GEN_349) begin
-      if (_T_276) begin
-        current_12_ext_r <= _T_281;
-      end else begin
-        current_12_ext_r <= _T_283;
-      end
-    end else if (_T_54) begin
-      if (_T_258) begin
-        current_12_ext_r <= _T_263;
-      end else begin
-        current_12_ext_r <= _T_265;
-      end
-    end
-    if (!(_GEN_349)) begin
-      if (_T_54) begin
-        current_12_ext_d <= current_11_ext_d;
-      end
-    end
-    if (_GEN_349) begin
-      current_12_ext_q <= nExt_12_q;
-    end else if (_T_54) begin
-      current_12_ext_q <= nExt_11_q;
-    end
-    if (io_flush) begin
-      current_13_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_13_pipe_instr_addr <= current_12_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_13_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_13_pipe_instr_instr_op <= current_12_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_13_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_13_pipe_instr_instr_base <= current_12_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_13_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_13_pipe_instr_instr_rd <= current_12_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_13_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_13_pipe_instr_instr_funct3 <= current_12_pipe_instr_instr_funct3;
-    end
-    current_13_pipe_instr_vacant <= reset | _GEN_670;
-    if (io_flush) begin
-      current_13_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_13_pipe_rs1val <= current_12_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_13_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_13_pipe_rs2val <= current_12_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_13_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_13_pipe_rdname <= current_12_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_13_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_13_pipe_tag <= current_12_pipe_tag;
-    end
-    if (_GEN_375) begin
-      if (_T_294) begin
-        current_13_ext_r <= _T_299;
-      end else begin
-        current_13_ext_r <= _T_301;
-      end
-    end else if (_T_54) begin
-      if (_T_276) begin
-        current_13_ext_r <= _T_281;
-      end else begin
-        current_13_ext_r <= _T_283;
-      end
-    end
-    if (!(_GEN_375)) begin
-      if (_T_54) begin
-        current_13_ext_d <= current_12_ext_d;
-      end
-    end
-    if (_GEN_375) begin
-      current_13_ext_q <= nExt_13_q;
-    end else if (_T_54) begin
-      current_13_ext_q <= nExt_12_q;
-    end
-    if (io_flush) begin
-      current_14_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_14_pipe_instr_addr <= current_13_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_14_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_14_pipe_instr_instr_op <= current_13_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_14_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_14_pipe_instr_instr_base <= current_13_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_14_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_14_pipe_instr_instr_rd <= current_13_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_14_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_14_pipe_instr_instr_funct3 <= current_13_pipe_instr_instr_funct3;
-    end
-    current_14_pipe_instr_vacant <= reset | _GEN_688;
-    if (io_flush) begin
-      current_14_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_14_pipe_rs1val <= current_13_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_14_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_14_pipe_rs2val <= current_13_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_14_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_14_pipe_rdname <= current_13_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_14_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_14_pipe_tag <= current_13_pipe_tag;
-    end
-    if (_GEN_401) begin
-      if (_T_312) begin
-        current_14_ext_r <= _T_317;
-      end else begin
-        current_14_ext_r <= _T_319;
-      end
-    end else if (_T_54) begin
-      if (_T_294) begin
-        current_14_ext_r <= _T_299;
-      end else begin
-        current_14_ext_r <= _T_301;
-      end
-    end
-    if (!(_GEN_401)) begin
-      if (_T_54) begin
-        current_14_ext_d <= current_13_ext_d;
-      end
-    end
-    if (_GEN_401) begin
-      current_14_ext_q <= nExt_14_q;
-    end else if (_T_54) begin
-      current_14_ext_q <= nExt_13_q;
-    end
-    if (io_flush) begin
-      current_15_pipe_instr_addr <= 64'h0;
-    end else if (_T_54) begin
-      current_15_pipe_instr_addr <= current_14_pipe_instr_addr;
-    end
-    if (io_flush) begin
-      current_15_pipe_instr_instr_op <= 5'h0;
-    end else if (_T_54) begin
-      current_15_pipe_instr_instr_op <= current_14_pipe_instr_instr_op;
-    end
-    if (io_flush) begin
-      current_15_pipe_instr_instr_base <= 3'h0;
-    end else if (_T_54) begin
-      current_15_pipe_instr_instr_base <= current_14_pipe_instr_instr_base;
-    end
-    if (io_flush) begin
-      current_15_pipe_instr_instr_rd <= 5'h0;
-    end else if (_T_54) begin
-      current_15_pipe_instr_instr_rd <= current_14_pipe_instr_instr_rd;
-    end
-    if (io_flush) begin
-      current_15_pipe_instr_instr_funct3 <= 3'h0;
-    end else if (_T_54) begin
-      current_15_pipe_instr_instr_funct3 <= current_14_pipe_instr_instr_funct3;
-    end
-    current_15_pipe_instr_vacant <= reset | _GEN_706;
-    if (io_flush) begin
-      current_15_pipe_rs1val <= 64'h0;
-    end else if (_T_54) begin
-      current_15_pipe_rs1val <= current_14_pipe_rs1val;
-    end
-    if (io_flush) begin
-      current_15_pipe_rs2val <= 64'h0;
-    end else if (_T_54) begin
-      current_15_pipe_rs2val <= current_14_pipe_rs2val;
-    end
-    if (io_flush) begin
-      current_15_pipe_rdname <= 3'h0;
-    end else if (_T_54) begin
-      current_15_pipe_rdname <= current_14_pipe_rdname;
-    end
-    if (io_flush) begin
-      current_15_pipe_tag <= 3'h0;
-    end else if (_T_54) begin
-      current_15_pipe_tag <= current_14_pipe_tag;
-    end
-    if (_GEN_427) begin
-      if (_T_330) begin
-        current_15_ext_r <= _T_335;
-      end else begin
-        current_15_ext_r <= _T_337;
-      end
-    end else if (_T_54) begin
-      if (_T_312) begin
-        current_15_ext_r <= _T_317;
-      end else begin
-        current_15_ext_r <= _T_319;
-      end
-    end
-    if (!(_GEN_427)) begin
-      if (_T_54) begin
-        current_15_ext_d <= current_14_ext_d;
-      end
-    end
-    if (_GEN_427) begin
-      current_15_ext_q <= nExt_15_q;
-    end else if (_T_54) begin
-      current_15_ext_q <= nExt_14_q;
-    end
     if (reset) begin
-      round <= 2'h0;
+      round <= 4'h0;
     end else if (io_flush) begin
-      round <= 2'h0;
-    end else if (_T_16) begin
-      round <= _T_18;
+      round <= 4'h0;
+    end else if (_T_4) begin
+      round <= _T_6;
     end
   end
 endmodule

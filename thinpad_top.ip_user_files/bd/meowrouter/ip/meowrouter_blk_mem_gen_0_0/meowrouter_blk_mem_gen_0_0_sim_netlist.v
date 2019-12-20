@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Sun Dec 15 01:31:31 2019
+// Date        : Sun Dec 15 21:15:41 2019
 // Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
 //               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_blk_mem_gen_0_0/meowrouter_blk_mem_gen_0_0_sim_netlist.v
@@ -29,7 +29,7 @@ module meowrouter_blk_mem_gen_0_0
     doutb,
     rsta_busy,
     rstb_busy);
-  (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME BRAM_PORTA, MEM_SIZE 16384, MEM_WIDTH 32, MEM_ECC NONE, MASTER_TYPE OTHER, READ_WRITE_MODE READ_WRITE, READ_LATENCY 2" *) input clka;
+  (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME BRAM_PORTA, MEM_SIZE 16384, MEM_WIDTH 32, MEM_ECC NONE, MASTER_TYPE OTHER, READ_WRITE_MODE READ_WRITE, READ_LATENCY 1" *) input clka;
   (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA RST" *) input rsta;
   (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA EN" *) input ena;
   (* x_interface_info = "xilinx.com:interface:bram:1.0 BRAM_PORTA WE" *) input [3:0]wea;
@@ -105,7 +105,7 @@ module meowrouter_blk_mem_gen_0_0
   (* C_HAS_ENA = "1" *) 
   (* C_HAS_ENB = "0" *) 
   (* C_HAS_INJECTERR = "0" *) 
-  (* C_HAS_MEM_OUTPUT_REGS_A = "1" *) 
+  (* C_HAS_MEM_OUTPUT_REGS_A = "0" *) 
   (* C_HAS_MEM_OUTPUT_REGS_B = "0" *) 
   (* C_HAS_MUX_OUTPUT_REGS_A = "0" *) 
   (* C_HAS_MUX_OUTPUT_REGS_B = "0" *) 
@@ -220,33 +220,33 @@ endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
 module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
-   (douta,
-    rsta_busy,
+   (rsta_busy,
     rstb_busy,
+    douta,
     doutb,
     clkb,
     clka,
-    ena,
     addra,
     addrb,
     dina,
     dinb,
     wea,
     web,
+    ena,
     rsta);
-  output [31:0]douta;
   output rsta_busy;
   output rstb_busy;
+  output [31:0]douta;
   output [7:0]doutb;
   input clkb;
   input clka;
-  input ena;
   input [11:0]addra;
   input [13:0]addrb;
   input [31:0]dina;
   input [7:0]dinb;
   input [3:0]wea;
   input [0:0]web;
+  input ena;
   input rsta;
 
   wire ENA_I;
@@ -255,7 +255,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
   wire ENB_I;
   wire ENB_I_0;
   wire ENB_I_1;
-  wire POR_A;
   wire POR_B;
   wire [11:0]addra;
   wire [13:0]addrb;
@@ -270,9 +269,9 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
   wire [31:0]ram_douta10_out;
   wire [31:0]ram_douta14_out;
   wire [31:0]ram_douta6_out;
-  wire ram_rstreg_a;
-  wire \ramloop[0].ram.r_n_43 ;
-  wire \ramloop[0].ram.r_n_50 ;
+  wire ram_rstram_a;
+  wire \ramloop[0].ram.r_n_42 ;
+  wire \ramloop[0].ram.r_n_49 ;
   wire \ramloop[3].ram.r_n_0 ;
   wire \ramloop[3].ram.r_n_1 ;
   wire \ramloop[3].ram.r_n_10 ;
@@ -335,12 +334,11 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
         .ENB_I(ENB_I_1),
         .ENB_I_2(ENB_I_0),
         .ENB_I_3(ENB_I),
-        .POR_A(POR_A),
         .POR_B(POR_B),
-        .\SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0 (\ramloop[3].ram.r_n_40 ),
+        .\SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0 (\ramloop[3].ram.r_n_40 ),
         .\SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg_0 (\ramloop[3].ram.r_n_41 ),
-        .\SAFETY_CKT_GEN.POR_A_reg_0 (\ramloop[0].ram.r_n_43 ),
-        .\SAFETY_CKT_GEN.POR_B_reg_0 (\ramloop[0].ram.r_n_50 ),
+        .\SAFETY_CKT_GEN.POR_A_reg_0 (\ramloop[0].ram.r_n_42 ),
+        .\SAFETY_CKT_GEN.POR_B_reg_0 (\ramloop[0].ram.r_n_49 ),
         .addra(addra),
         .addrb(addrb),
         .clka(clka),
@@ -349,7 +347,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
         .dinb(dinb),
         .doutb_array(doutb_array[7:0]),
         .ena(ena),
-        .ram_rstreg_a(ram_rstreg_a),
+        .ram_rstram_a(ram_rstram_a),
         .rsta(rsta),
         .wea(wea),
         .web(web));
@@ -357,7 +355,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
        (.\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram (ram_douta10_out),
         .ENA_I(ENA_I_3),
         .ENB_I(ENB_I_1),
-        .POR_A(POR_A),
         .POR_B(POR_B),
         .addra(addra[9:0]),
         .addrb(addrb[11:0]),
@@ -366,15 +363,13 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
         .dina(dina),
         .dinb(dinb),
         .doutb_array(doutb_array[15:8]),
-        .ena(ena),
-        .ram_rstreg_a(ram_rstreg_a),
+        .ram_rstram_a(ram_rstram_a),
         .wea(wea),
         .web(web));
   meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized1 \ramloop[2].ram.r 
        (.DOADO(ram_douta6_out),
         .ENA_I(ENA_I_2),
         .ENB_I(ENB_I_0),
-        .POR_A(POR_A),
         .POR_B(POR_B),
         .addra(addra[9:0]),
         .addrb(addrb[11:0]),
@@ -383,20 +378,18 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
         .dina(dina),
         .dinb(dinb),
         .doutb_array(doutb_array[23:16]),
-        .ena(ena),
-        .ram_rstreg_a(ram_rstreg_a),
+        .ram_rstram_a(ram_rstram_a),
         .wea(wea),
         .web(web));
   meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2 \ramloop[3].ram.r 
        (.\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ({\ramloop[3].ram.r_n_0 ,\ramloop[3].ram.r_n_1 ,\ramloop[3].ram.r_n_2 ,\ramloop[3].ram.r_n_3 ,\ramloop[3].ram.r_n_4 ,\ramloop[3].ram.r_n_5 ,\ramloop[3].ram.r_n_6 ,\ramloop[3].ram.r_n_7 ,\ramloop[3].ram.r_n_8 ,\ramloop[3].ram.r_n_9 ,\ramloop[3].ram.r_n_10 ,\ramloop[3].ram.r_n_11 ,\ramloop[3].ram.r_n_12 ,\ramloop[3].ram.r_n_13 ,\ramloop[3].ram.r_n_14 ,\ramloop[3].ram.r_n_15 ,\ramloop[3].ram.r_n_16 ,\ramloop[3].ram.r_n_17 ,\ramloop[3].ram.r_n_18 ,\ramloop[3].ram.r_n_19 ,\ramloop[3].ram.r_n_20 ,\ramloop[3].ram.r_n_21 ,\ramloop[3].ram.r_n_22 ,\ramloop[3].ram.r_n_23 ,\ramloop[3].ram.r_n_24 ,\ramloop[3].ram.r_n_25 ,\ramloop[3].ram.r_n_26 ,\ramloop[3].ram.r_n_27 ,\ramloop[3].ram.r_n_28 ,\ramloop[3].ram.r_n_29 ,\ramloop[3].ram.r_n_30 ,\ramloop[3].ram.r_n_31 }),
         .ENA_I(ENA_I),
         .ENB_I(ENB_I),
-        .POR_A(POR_A),
         .POR_B(POR_B),
-        .\SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg_0 (\ramloop[3].ram.r_n_40 ),
+        .\SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg_0 (\ramloop[3].ram.r_n_40 ),
         .\SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg_0 (\ramloop[3].ram.r_n_41 ),
-        .\SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg_0 (\ramloop[0].ram.r_n_43 ),
-        .\SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg_0 (\ramloop[0].ram.r_n_50 ),
+        .\SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg_0 (\ramloop[0].ram.r_n_42 ),
+        .\SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg_0 (\ramloop[0].ram.r_n_49 ),
         .addra(addra[9:0]),
         .addrb(addrb[11:0]),
         .clka(clka),
@@ -404,8 +397,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_generic_cstr
         .dina(dina),
         .dinb(dinb),
         .doutb_array(doutb_array[31:24]),
-        .ena(ena),
-        .ram_rstreg_a(ram_rstreg_a),
+        .ram_rstram_a(ram_rstram_a),
         .rsta_busy(rsta_busy),
         .rstb_busy(rstb_busy),
         .wea(wea),
@@ -439,12 +431,9 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
   wire [31:0]\douta[31]_0 ;
   wire [31:0]\douta[31]_1 ;
   wire ena;
-  wire \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1_n_0 ;
-  wire \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1_n_0 ;
   wire \no_softecc_sel_reg.ce_pri.sel_pipe[0]_i_1_n_0 ;
   wire \no_softecc_sel_reg.ce_pri.sel_pipe[1]_i_1_n_0 ;
   wire [1:0]sel_pipe;
-  wire [1:0]sel_pipe_d1;
 
   LUT6 #(
     .INIT(64'hCCFFAAF0CC00AAF0)) 
@@ -452,8 +441,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[0]),
         .I1(\douta[31] [0]),
         .I2(\douta[31]_0 [0]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [0]),
         .O(douta[0]));
   LUT6 #(
@@ -462,8 +451,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[10]),
         .I1(\douta[31] [10]),
         .I2(\douta[31]_0 [10]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [10]),
         .O(douta[10]));
   LUT6 #(
@@ -472,8 +461,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[11]),
         .I1(\douta[31] [11]),
         .I2(\douta[31]_0 [11]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [11]),
         .O(douta[11]));
   LUT6 #(
@@ -482,8 +471,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[12]),
         .I1(\douta[31] [12]),
         .I2(\douta[31]_0 [12]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [12]),
         .O(douta[12]));
   LUT6 #(
@@ -492,8 +481,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[13]),
         .I1(\douta[31] [13]),
         .I2(\douta[31]_0 [13]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [13]),
         .O(douta[13]));
   LUT6 #(
@@ -502,8 +491,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[14]),
         .I1(\douta[31] [14]),
         .I2(\douta[31]_0 [14]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [14]),
         .O(douta[14]));
   LUT6 #(
@@ -512,8 +501,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[15]),
         .I1(\douta[31] [15]),
         .I2(\douta[31]_0 [15]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [15]),
         .O(douta[15]));
   LUT6 #(
@@ -522,8 +511,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[16]),
         .I1(\douta[31] [16]),
         .I2(\douta[31]_0 [16]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [16]),
         .O(douta[16]));
   LUT6 #(
@@ -532,8 +521,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[17]),
         .I1(\douta[31] [17]),
         .I2(\douta[31]_0 [17]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [17]),
         .O(douta[17]));
   LUT6 #(
@@ -542,8 +531,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[18]),
         .I1(\douta[31] [18]),
         .I2(\douta[31]_0 [18]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [18]),
         .O(douta[18]));
   LUT6 #(
@@ -552,8 +541,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[19]),
         .I1(\douta[31] [19]),
         .I2(\douta[31]_0 [19]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [19]),
         .O(douta[19]));
   LUT6 #(
@@ -562,8 +551,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[1]),
         .I1(\douta[31] [1]),
         .I2(\douta[31]_0 [1]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [1]),
         .O(douta[1]));
   LUT6 #(
@@ -572,8 +561,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[20]),
         .I1(\douta[31] [20]),
         .I2(\douta[31]_0 [20]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [20]),
         .O(douta[20]));
   LUT6 #(
@@ -582,8 +571,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[21]),
         .I1(\douta[31] [21]),
         .I2(\douta[31]_0 [21]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [21]),
         .O(douta[21]));
   LUT6 #(
@@ -592,8 +581,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[22]),
         .I1(\douta[31] [22]),
         .I2(\douta[31]_0 [22]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [22]),
         .O(douta[22]));
   LUT6 #(
@@ -602,8 +591,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[23]),
         .I1(\douta[31] [23]),
         .I2(\douta[31]_0 [23]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [23]),
         .O(douta[23]));
   LUT6 #(
@@ -612,8 +601,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[24]),
         .I1(\douta[31] [24]),
         .I2(\douta[31]_0 [24]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [24]),
         .O(douta[24]));
   LUT6 #(
@@ -622,8 +611,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[25]),
         .I1(\douta[31] [25]),
         .I2(\douta[31]_0 [25]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [25]),
         .O(douta[25]));
   LUT6 #(
@@ -632,8 +621,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[26]),
         .I1(\douta[31] [26]),
         .I2(\douta[31]_0 [26]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [26]),
         .O(douta[26]));
   LUT6 #(
@@ -642,8 +631,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[27]),
         .I1(\douta[31] [27]),
         .I2(\douta[31]_0 [27]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [27]),
         .O(douta[27]));
   LUT6 #(
@@ -652,8 +641,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[28]),
         .I1(\douta[31] [28]),
         .I2(\douta[31]_0 [28]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [28]),
         .O(douta[28]));
   LUT6 #(
@@ -662,8 +651,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[29]),
         .I1(\douta[31] [29]),
         .I2(\douta[31]_0 [29]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [29]),
         .O(douta[29]));
   LUT6 #(
@@ -672,8 +661,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[2]),
         .I1(\douta[31] [2]),
         .I2(\douta[31]_0 [2]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [2]),
         .O(douta[2]));
   LUT6 #(
@@ -682,8 +671,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[30]),
         .I1(\douta[31] [30]),
         .I2(\douta[31]_0 [30]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [30]),
         .O(douta[30]));
   LUT6 #(
@@ -692,8 +681,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[31]),
         .I1(\douta[31] [31]),
         .I2(\douta[31]_0 [31]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [31]),
         .O(douta[31]));
   LUT6 #(
@@ -702,8 +691,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[3]),
         .I1(\douta[31] [3]),
         .I2(\douta[31]_0 [3]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [3]),
         .O(douta[3]));
   LUT6 #(
@@ -712,8 +701,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[4]),
         .I1(\douta[31] [4]),
         .I2(\douta[31]_0 [4]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [4]),
         .O(douta[4]));
   LUT6 #(
@@ -722,8 +711,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[5]),
         .I1(\douta[31] [5]),
         .I2(\douta[31]_0 [5]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [5]),
         .O(douta[5]));
   LUT6 #(
@@ -732,8 +721,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[6]),
         .I1(\douta[31] [6]),
         .I2(\douta[31]_0 [6]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [6]),
         .O(douta[6]));
   LUT6 #(
@@ -742,8 +731,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[7]),
         .I1(\douta[31] [7]),
         .I2(\douta[31]_0 [7]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [7]),
         .O(douta[7]));
   LUT6 #(
@@ -752,8 +741,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[8]),
         .I1(\douta[31] [8]),
         .I2(\douta[31]_0 [8]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [8]),
         .O(douta[8]));
   LUT6 #(
@@ -762,43 +751,11 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_mux
        (.I0(DOADO[9]),
         .I1(\douta[31] [9]),
         .I2(\douta[31]_0 [9]),
-        .I3(sel_pipe_d1[1]),
-        .I4(sel_pipe_d1[0]),
+        .I3(sel_pipe[1]),
+        .I4(sel_pipe[0]),
         .I5(\douta[31]_1 [9]),
         .O(douta[9]));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1 
-       (.I0(sel_pipe[0]),
-        .I1(ena),
-        .I2(sel_pipe_d1[0]),
-        .O(\no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair0" *) 
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1 
-       (.I0(sel_pipe[1]),
-        .I1(ena),
-        .I2(sel_pipe_d1[1]),
-        .O(\no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1_reg[0] 
-       (.C(clka),
-        .CE(1'b1),
-        .D(\no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[0]_i_1_n_0 ),
-        .Q(sel_pipe_d1[0]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1_reg[1] 
-       (.C(clka),
-        .CE(1'b1),
-        .D(\no_softecc_norm_sel2.has_mem_regs.WITHOUT_ECC_PIPE.ce_pri.sel_pipe_d1[1]_i_1_n_0 ),
-        .Q(sel_pipe_d1[1]),
-        .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \no_softecc_sel_reg.ce_pri.sel_pipe[0]_i_1 
@@ -952,9 +909,8 @@ endmodule
 module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width
    (\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ,
     doutb_array,
-    POR_A,
+    ram_rstram_a,
     POR_B,
-    ram_rstreg_a,
     \SAFETY_CKT_GEN.POR_A_reg_0 ,
     ENA_I,
     ENA_I_0,
@@ -965,21 +921,20 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width
     \SAFETY_CKT_GEN.POR_B_reg_0 ,
     clkb,
     clka,
-    ena,
     addra,
     addrb,
     dina,
     dinb,
     wea,
     web,
-    \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0 ,
+    \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0 ,
     \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg_0 ,
-    rsta);
+    rsta,
+    ena);
   output [31:0]\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ;
   output [7:0]doutb_array;
-  output POR_A;
+  output ram_rstram_a;
   output POR_B;
-  output ram_rstreg_a;
   output \SAFETY_CKT_GEN.POR_A_reg_0 ;
   output ENA_I;
   output ENA_I_0;
@@ -990,22 +945,22 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width
   output \SAFETY_CKT_GEN.POR_B_reg_0 ;
   input clkb;
   input clka;
-  input ena;
   input [11:0]addra;
   input [13:0]addrb;
   input [31:0]dina;
   input [7:0]dinb;
   input [3:0]wea;
   input [0:0]web;
-  input \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0 ;
+  input \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0 ;
   input \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg_0 ;
   input rsta;
+  input ena;
 
   wire [31:0]\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ;
   wire ENA_I;
   wire ENA_I_0;
   wire ENA_I_1;
-  wire ENA_dly_reg_D;
+  wire ENA_dly_D;
   wire ENB_I;
   wire ENB_I_2;
   wire ENB_I_3;
@@ -1014,7 +969,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width
   wire POR_B;
   wire [4:0]RSTA_SHFT_REG;
   wire [4:0]RSTB_SHFT_REG;
-  wire \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0 ;
+  wire \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0 ;
   wire \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_D_reg_0 ;
   wire \SAFETY_CKT_GEN.POR_A_reg_0 ;
   wire \SAFETY_CKT_GEN.POR_B_reg_0 ;
@@ -1030,18 +985,18 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width
   wire ena;
   wire p_1_out;
   wire p_3_out;
-  wire ram_rstreg_a;
+  wire ram_rstram_a;
   wire rsta;
   wire [3:0]wea;
   wire [0:0]web;
 
   FDRE #(
     .INIT(1'b0)) 
-    \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg 
+    \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg 
        (.C(clka),
         .CE(1'b1),
-        .D(\SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0 ),
-        .Q(ENA_dly_reg_D),
+        .D(\SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0 ),
+        .Q(ENA_dly_D),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -1081,11 +1036,11 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width
         .R(1'b0));
   LUT4 #(
     .INIT(16'hFFFE)) 
-    \SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_i_1 
+    \SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_i_1 
        (.I0(POR_A),
         .I1(rsta),
-        .I2(\SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_D_reg_0 ),
-        .I3(ENA_dly_reg_D),
+        .I2(\SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_D_reg_0 ),
+        .I3(ENA_dly_D),
         .O(\SAFETY_CKT_GEN.POR_A_reg_0 ));
   FDRE #(
     .INIT(1'b0)) 
@@ -1154,15 +1109,15 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width
         .O(\SAFETY_CKT_GEN.POR_B_reg_0 ));
   meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper \prim_noinit.ram 
        (.\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0 (\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ),
-        .\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1 (POR_A),
         .ENA_I(ENA_I),
         .ENA_I_0(ENA_I_0),
         .ENA_I_1(ENA_I_1),
-        .ENA_dly_reg_D(ENA_dly_reg_D),
+        .ENA_dly_D(ENA_dly_D),
         .ENB_I(ENB_I),
         .ENB_I_2(ENB_I_2),
         .ENB_I_3(ENB_I_3),
         .ENB_dly_D(ENB_dly_D),
+        .POR_A(POR_A),
         .POR_B(POR_B),
         .addra(addra),
         .addrb(addrb),
@@ -1172,7 +1127,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width
         .dinb(dinb),
         .doutb_array(doutb_array),
         .ena(ena),
-        .ram_rstreg_a(ram_rstreg_a),
+        .ram_rstram_a(ram_rstram_a),
         .rsta(rsta),
         .wea(wea),
         .web(web));
@@ -1186,10 +1141,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized0
     clkb,
     ENA_I,
     ENB_I,
-    ena,
-    POR_A,
+    ram_rstram_a,
     POR_B,
-    ram_rstreg_a,
     addra,
     addrb,
     dina,
@@ -1202,10 +1155,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized0
   input clkb;
   input ENA_I;
   input ENB_I;
-  input ena;
-  input POR_A;
+  input ram_rstram_a;
   input POR_B;
-  input ram_rstreg_a;
   input [9:0]addra;
   input [11:0]addrb;
   input [31:0]dina;
@@ -1216,7 +1167,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized0
   wire [31:0]\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ;
   wire ENA_I;
   wire ENB_I;
-  wire POR_A;
   wire POR_B;
   wire [9:0]addra;
   wire [11:0]addrb;
@@ -1225,8 +1175,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized0
   wire [31:0]dina;
   wire [7:0]dinb;
   wire [7:0]doutb_array;
-  wire ena;
-  wire ram_rstreg_a;
+  wire ram_rstram_a;
   wire [3:0]wea;
   wire [0:0]web;
 
@@ -1234,7 +1183,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized0
        (.\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0 (\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ),
         .ENA_I(ENA_I),
         .ENB_I(ENB_I),
-        .POR_A(POR_A),
         .POR_B(POR_B),
         .addra(addra),
         .addrb(addrb),
@@ -1243,8 +1191,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized0
         .dina(dina),
         .dinb(dinb),
         .doutb_array(doutb_array),
-        .ena(ena),
-        .ram_rstreg_a(ram_rstreg_a),
+        .ram_rstram_a(ram_rstram_a),
         .wea(wea),
         .web(web));
 endmodule
@@ -1257,10 +1204,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized1
     clkb,
     ENA_I,
     ENB_I,
-    ena,
-    POR_A,
+    ram_rstram_a,
     POR_B,
-    ram_rstreg_a,
     addra,
     addrb,
     dina,
@@ -1273,10 +1218,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized1
   input clkb;
   input ENA_I;
   input ENB_I;
-  input ena;
-  input POR_A;
+  input ram_rstram_a;
   input POR_B;
-  input ram_rstreg_a;
   input [9:0]addra;
   input [11:0]addrb;
   input [31:0]dina;
@@ -1287,7 +1230,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized1
   wire [31:0]DOADO;
   wire ENA_I;
   wire ENB_I;
-  wire POR_A;
   wire POR_B;
   wire [9:0]addra;
   wire [11:0]addrb;
@@ -1296,8 +1238,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized1
   wire [31:0]dina;
   wire [7:0]dinb;
   wire [7:0]doutb_array;
-  wire ena;
-  wire ram_rstreg_a;
+  wire ram_rstram_a;
   wire [3:0]wea;
   wire [0:0]web;
 
@@ -1305,7 +1246,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized1
        (.DOADO(DOADO),
         .ENA_I(ENA_I),
         .ENB_I(ENB_I),
-        .POR_A(POR_A),
         .POR_B(POR_B),
         .addra(addra),
         .addrb(addrb),
@@ -1314,8 +1254,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized1
         .dina(dina),
         .dinb(dinb),
         .doutb_array(doutb_array),
-        .ena(ena),
-        .ram_rstreg_a(ram_rstreg_a),
+        .ram_rstram_a(ram_rstram_a),
         .wea(wea),
         .web(web));
 endmodule
@@ -1324,7 +1263,7 @@ endmodule
 module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2
    (\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ,
     doutb_array,
-    \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg_0 ,
+    \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg_0 ,
     \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg_0 ,
     rsta_busy,
     rstb_busy,
@@ -1332,21 +1271,19 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2
     clkb,
     ENA_I,
     ENB_I,
-    ena,
-    POR_A,
+    ram_rstram_a,
     POR_B,
-    ram_rstreg_a,
     addra,
     addrb,
     dina,
     dinb,
     wea,
     web,
-    \SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg_0 ,
+    \SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg_0 ,
     \SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg_0 );
   output [31:0]\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ;
   output [7:0]doutb_array;
-  output \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg_0 ;
+  output \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg_0 ;
   output \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg_0 ;
   output rsta_busy;
   output rstb_busy;
@@ -1354,27 +1291,24 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2
   input clkb;
   input ENA_I;
   input ENB_I;
-  input ena;
-  input POR_A;
+  input ram_rstram_a;
   input POR_B;
-  input ram_rstreg_a;
   input [9:0]addra;
   input [11:0]addrb;
   input [31:0]dina;
   input [7:0]dinb;
   input [3:0]wea;
   input [0:0]web;
-  input \SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg_0 ;
+  input \SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg_0 ;
   input \SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg_0 ;
 
   wire [31:0]\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ;
   wire ENA_I;
   wire ENB_I;
-  wire POR_A;
   wire POR_B;
-  wire \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg_0 ;
+  wire \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg_0 ;
   wire \SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg_0 ;
-  wire \SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg_0 ;
+  wire \SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg_0 ;
   wire \SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg_0 ;
   wire [9:0]addra;
   wire [11:0]addrb;
@@ -1383,8 +1317,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2
   wire [31:0]dina;
   wire [7:0]dinb;
   wire [7:0]doutb_array;
-  wire ena;
-  wire ram_rstreg_a;
+  wire ram_rstram_a;
   wire rsta_busy;
   wire rstb_busy;
   wire [3:0]wea;
@@ -1392,11 +1325,11 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2
 
   FDRE #(
     .INIT(1'b0)) 
-    \SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg 
+    \SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg 
        (.C(clka),
         .CE(1'b1),
-        .D(ram_rstreg_a),
-        .Q(\SAFETY_CKT_GEN.ENA_WITH_REG.ENA_dly_reg_reg_0 ),
+        .D(ram_rstram_a),
+        .Q(\SAFETY_CKT_GEN.ENA_NO_REG.ENA_dly_reg_0 ),
         .R(1'b0));
   FDRE #(
     .INIT(1'b0)) 
@@ -1406,10 +1339,10 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2
         .D(POR_B),
         .Q(\SAFETY_CKT_GEN.ENB_NO_REG.ENB_dly_reg_0 ),
         .R(1'b0));
-  FDRE \SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg 
+  FDRE \SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg 
        (.C(clka),
         .CE(1'b1),
-        .D(\SAFETY_CKT_GEN.RSTA_BUSY_WITH_REG.RSTA_BUSY_reg_0 ),
+        .D(\SAFETY_CKT_GEN.RSTA_BUSY_NO_REG.RSTA_BUSY_reg_0 ),
         .Q(rsta_busy),
         .R(1'b0));
   FDRE \SAFETY_CKT_GEN.nSPRAM_RST_BUSY.RSTB_BUSY_NO_REG.RSTB_BUSY_reg 
@@ -1422,7 +1355,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2
        (.\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0 (\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram ),
         .ENA_I(ENA_I),
         .ENB_I(ENB_I),
-        .POR_A(POR_A),
         .POR_B(POR_B),
         .addra(addra),
         .addrb(addrb),
@@ -1431,8 +1363,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_width__parameterized2
         .dina(dina),
         .dinb(dinb),
         .doutb_array(doutb_array),
-        .ena(ena),
-        .ram_rstreg_a(ram_rstreg_a),
+        .ram_rstram_a(ram_rstram_a),
         .wea(wea),
         .web(web));
 endmodule
@@ -1441,7 +1372,7 @@ endmodule
 module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
    (\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0 ,
     doutb_array,
-    ram_rstreg_a,
+    ram_rstram_a,
     ENA_I,
     ENA_I_0,
     ENA_I_1,
@@ -1450,8 +1381,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
     ENB_I_3,
     clka,
     clkb,
-    ena,
-    \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1 ,
     POR_B,
     addra,
     addrb,
@@ -1460,11 +1389,13 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
     wea,
     web,
     rsta,
-    ENA_dly_reg_D,
+    POR_A,
+    ENA_dly_D,
+    ena,
     ENB_dly_D);
   output [31:0]\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0 ;
   output [7:0]doutb_array;
-  output ram_rstreg_a;
+  output ram_rstram_a;
   output ENA_I;
   output ENA_I_0;
   output ENA_I_1;
@@ -1473,8 +1404,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
   output ENB_I_3;
   input clka;
   input clkb;
-  input ena;
-  input \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1 ;
   input POR_B;
   input [11:0]addra;
   input [13:0]addrb;
@@ -1483,11 +1412,12 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
   input [3:0]wea;
   input [0:0]web;
   input rsta;
-  input ENA_dly_reg_D;
+  input POR_A;
+  input ENA_dly_D;
+  input ena;
   input ENB_dly_D;
 
   wire [31:0]\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_0 ;
-  wire \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1 ;
   wire \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_n_68 ;
   wire \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_n_69 ;
   wire \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_n_70 ;
@@ -1497,12 +1427,13 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
   wire ENA_I_0;
   wire ENA_I_1;
   wire ENA_I_2;
-  wire ENA_dly_reg_D;
+  wire ENA_dly_D;
   wire ENB_I;
   wire ENB_I_2;
   wire ENB_I_3;
   wire ENB_I_4;
   wire ENB_dly_D;
+  wire POR_A;
   wire POR_B;
   wire [11:0]addra;
   wire [13:0]addrb;
@@ -1512,7 +1443,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
   wire [7:0]dinb;
   wire [7:0]doutb_array;
   wire ena;
-  wire ram_rstreg_a;
+  wire ram_rstram_a;
   wire rsta;
   wire [3:0]wea;
   wire [0:0]web;
@@ -1527,7 +1458,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
 
   (* box_type = "PRIMITIVE" *) 
   RAMB36E1 #(
-    .DOA_REG(1),
+    .DOA_REG(0),
     .DOB_REG(0),
     .EN_ECC_READ("FALSE"),
     .EN_ECC_WRITE("FALSE"),
@@ -1726,11 +1657,11 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
         .INJECTDBITERR(1'b0),
         .INJECTSBITERR(1'b0),
         .RDADDRECC(\NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_RDADDRECC_UNCONNECTED [8:0]),
-        .REGCEAREGCE(ena),
+        .REGCEAREGCE(1'b0),
         .REGCEB(1'b0),
-        .RSTRAMARSTRAM(\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1 ),
+        .RSTRAMARSTRAM(ram_rstram_a),
         .RSTRAMB(POR_B),
-        .RSTREGARSTREG(ram_rstreg_a),
+        .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
         .WEA(wea),
@@ -1738,7 +1669,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
   LUT4 #(
     .INIT(16'hABAA)) 
     \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_i_1 
-       (.I0(ENA_dly_reg_D),
+       (.I0(ENA_dly_D),
         .I1(addra[11]),
         .I2(addra[10]),
         .I3(ena),
@@ -1746,7 +1677,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
   LUT4 #(
     .INIT(16'hAAEA)) 
     \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_i_1__0 
-       (.I0(ENA_dly_reg_D),
+       (.I0(ENA_dly_D),
         .I1(ena),
         .I2(addra[10]),
         .I3(addra[11]),
@@ -1754,7 +1685,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
   LUT4 #(
     .INIT(16'hAAEA)) 
     \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_i_1__1 
-       (.I0(ENA_dly_reg_D),
+       (.I0(ENA_dly_D),
         .I1(addra[11]),
         .I2(ena),
         .I3(addra[10]),
@@ -1762,7 +1693,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
   LUT4 #(
     .INIT(16'hEAAA)) 
     \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_i_1__2 
-       (.I0(ENA_dly_reg_D),
+       (.I0(ENA_dly_D),
         .I1(ena),
         .I2(addra[10]),
         .I3(addra[11]),
@@ -1799,8 +1730,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper
     .INIT(4'hE)) 
     \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_i_3 
        (.I0(rsta),
-        .I1(\DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_1 ),
-        .O(ram_rstreg_a));
+        .I1(POR_A),
+        .O(ram_rstram_a));
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
@@ -1811,10 +1742,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized0
     clkb,
     ENA_I,
     ENB_I,
-    ena,
-    POR_A,
+    ram_rstram_a,
     POR_B,
-    ram_rstreg_a,
     addra,
     addrb,
     dina,
@@ -1827,10 +1756,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized0
   input clkb;
   input ENA_I;
   input ENB_I;
-  input ena;
-  input POR_A;
+  input ram_rstram_a;
   input POR_B;
-  input ram_rstreg_a;
   input [9:0]addra;
   input [11:0]addrb;
   input [31:0]dina;
@@ -1846,7 +1773,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized0
   wire \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_n_75 ;
   wire ENA_I;
   wire ENB_I;
-  wire POR_A;
   wire POR_B;
   wire [9:0]addra;
   wire [11:0]addrb;
@@ -1855,8 +1781,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized0
   wire [31:0]dina;
   wire [7:0]dinb;
   wire [7:0]doutb_array;
-  wire ena;
-  wire ram_rstreg_a;
+  wire ram_rstram_a;
   wire [3:0]wea;
   wire [0:0]web;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
@@ -1870,7 +1795,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized0
 
   (* box_type = "PRIMITIVE" *) 
   RAMB36E1 #(
-    .DOA_REG(1),
+    .DOA_REG(0),
     .DOB_REG(0),
     .EN_ECC_READ("FALSE"),
     .EN_ECC_WRITE("FALSE"),
@@ -2069,11 +1994,11 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized0
         .INJECTDBITERR(1'b0),
         .INJECTSBITERR(1'b0),
         .RDADDRECC(\NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_RDADDRECC_UNCONNECTED [8:0]),
-        .REGCEAREGCE(ena),
+        .REGCEAREGCE(1'b0),
         .REGCEB(1'b0),
-        .RSTRAMARSTRAM(POR_A),
+        .RSTRAMARSTRAM(ram_rstram_a),
         .RSTRAMB(POR_B),
-        .RSTREGARSTREG(ram_rstreg_a),
+        .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
         .WEA(wea),
@@ -2088,10 +2013,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized1
     clkb,
     ENA_I,
     ENB_I,
-    ena,
-    POR_A,
+    ram_rstram_a,
     POR_B,
-    ram_rstreg_a,
     addra,
     addrb,
     dina,
@@ -2104,10 +2027,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized1
   input clkb;
   input ENA_I;
   input ENB_I;
-  input ena;
-  input POR_A;
+  input ram_rstram_a;
   input POR_B;
-  input ram_rstreg_a;
   input [9:0]addra;
   input [11:0]addrb;
   input [31:0]dina;
@@ -2123,7 +2044,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized1
   wire [31:0]DOADO;
   wire ENA_I;
   wire ENB_I;
-  wire POR_A;
   wire POR_B;
   wire [9:0]addra;
   wire [11:0]addrb;
@@ -2132,8 +2052,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized1
   wire [31:0]dina;
   wire [7:0]dinb;
   wire [7:0]doutb_array;
-  wire ena;
-  wire ram_rstreg_a;
+  wire ram_rstram_a;
   wire [3:0]wea;
   wire [0:0]web;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
@@ -2147,7 +2066,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized1
 
   (* box_type = "PRIMITIVE" *) 
   RAMB36E1 #(
-    .DOA_REG(1),
+    .DOA_REG(0),
     .DOB_REG(0),
     .EN_ECC_READ("FALSE"),
     .EN_ECC_WRITE("FALSE"),
@@ -2346,11 +2265,11 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized1
         .INJECTDBITERR(1'b0),
         .INJECTSBITERR(1'b0),
         .RDADDRECC(\NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_RDADDRECC_UNCONNECTED [8:0]),
-        .REGCEAREGCE(ena),
+        .REGCEAREGCE(1'b0),
         .REGCEB(1'b0),
-        .RSTRAMARSTRAM(POR_A),
+        .RSTRAMARSTRAM(ram_rstram_a),
         .RSTRAMB(POR_B),
-        .RSTREGARSTREG(ram_rstreg_a),
+        .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
         .WEA(wea),
@@ -2365,10 +2284,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized2
     clkb,
     ENA_I,
     ENB_I,
-    ena,
-    POR_A,
+    ram_rstram_a,
     POR_B,
-    ram_rstreg_a,
     addra,
     addrb,
     dina,
@@ -2381,10 +2298,8 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized2
   input clkb;
   input ENA_I;
   input ENB_I;
-  input ena;
-  input POR_A;
+  input ram_rstram_a;
   input POR_B;
-  input ram_rstreg_a;
   input [9:0]addra;
   input [11:0]addrb;
   input [31:0]dina;
@@ -2400,7 +2315,6 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized2
   wire \DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_n_75 ;
   wire ENA_I;
   wire ENB_I;
-  wire POR_A;
   wire POR_B;
   wire [9:0]addra;
   wire [11:0]addrb;
@@ -2409,8 +2323,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized2
   wire [31:0]dina;
   wire [7:0]dinb;
   wire [7:0]doutb_array;
-  wire ena;
-  wire ram_rstreg_a;
+  wire ram_rstram_a;
   wire [3:0]wea;
   wire [0:0]web;
   wire \NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_CASCADEOUTA_UNCONNECTED ;
@@ -2424,7 +2337,7 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized2
 
   (* box_type = "PRIMITIVE" *) 
   RAMB36E1 #(
-    .DOA_REG(1),
+    .DOA_REG(0),
     .DOB_REG(0),
     .EN_ECC_READ("FALSE"),
     .EN_ECC_WRITE("FALSE"),
@@ -2623,11 +2536,11 @@ module meowrouter_blk_mem_gen_0_0_blk_mem_gen_prim_wrapper__parameterized2
         .INJECTDBITERR(1'b0),
         .INJECTSBITERR(1'b0),
         .RDADDRECC(\NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_RDADDRECC_UNCONNECTED [8:0]),
-        .REGCEAREGCE(ena),
+        .REGCEAREGCE(1'b0),
         .REGCEB(1'b0),
-        .RSTRAMARSTRAM(POR_A),
+        .RSTRAMARSTRAM(ram_rstram_a),
         .RSTRAMB(POR_B),
-        .RSTREGARSTREG(ram_rstreg_a),
+        .RSTREGARSTREG(1'b0),
         .RSTREGB(1'b0),
         .SBITERR(\NLW_DEVICE_7SERIES.NO_BMM_INFO.TRUE_DP.SIMPLE_PRIM36.ram_SBITERR_UNCONNECTED ),
         .WEA(wea),
@@ -2636,33 +2549,33 @@ endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_top" *) 
 module meowrouter_blk_mem_gen_0_0_blk_mem_gen_top
-   (douta,
-    rsta_busy,
+   (rsta_busy,
     rstb_busy,
+    douta,
     doutb,
     clkb,
     clka,
-    ena,
     addra,
     addrb,
     dina,
     dinb,
     wea,
     web,
+    ena,
     rsta);
-  output [31:0]douta;
   output rsta_busy;
   output rstb_busy;
+  output [31:0]douta;
   output [7:0]doutb;
   input clkb;
   input clka;
-  input ena;
   input [11:0]addra;
   input [13:0]addrb;
   input [31:0]dina;
   input [7:0]dinb;
   input [3:0]wea;
   input [0:0]web;
+  input ena;
   input rsta;
 
   wire [11:0]addra;
@@ -2706,7 +2619,7 @@ endmodule
 (* C_EN_RDADDRA_CHG = "0" *) (* C_EN_RDADDRB_CHG = "0" *) (* C_EN_SAFETY_CKT = "1" *) 
 (* C_EN_SHUTDOWN_PIN = "0" *) (* C_EN_SLEEP_PIN = "0" *) (* C_EST_POWER_SUMMARY = "Estimated Power for IP     :     4.971749 mW" *) 
 (* C_FAMILY = "artix7" *) (* C_HAS_AXI_ID = "0" *) (* C_HAS_ENA = "1" *) 
-(* C_HAS_ENB = "0" *) (* C_HAS_INJECTERR = "0" *) (* C_HAS_MEM_OUTPUT_REGS_A = "1" *) 
+(* C_HAS_ENB = "0" *) (* C_HAS_INJECTERR = "0" *) (* C_HAS_MEM_OUTPUT_REGS_A = "0" *) 
 (* C_HAS_MEM_OUTPUT_REGS_B = "0" *) (* C_HAS_MUX_OUTPUT_REGS_A = "0" *) (* C_HAS_MUX_OUTPUT_REGS_B = "0" *) 
 (* C_HAS_REGCEA = "0" *) (* C_HAS_REGCEB = "0" *) (* C_HAS_RSTA = "1" *) 
 (* C_HAS_RSTB = "0" *) (* C_HAS_SOFTECC_INPUT_REGS_A = "0" *) (* C_HAS_SOFTECC_OUTPUT_REGS_B = "0" *) 
@@ -2946,33 +2859,33 @@ endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_v8_4_2_synth" *) 
 module meowrouter_blk_mem_gen_0_0_blk_mem_gen_v8_4_2_synth
-   (douta,
-    rsta_busy,
+   (rsta_busy,
     rstb_busy,
+    douta,
     doutb,
     clkb,
     clka,
-    ena,
     addra,
     addrb,
     dina,
     dinb,
     wea,
     web,
+    ena,
     rsta);
-  output [31:0]douta;
   output rsta_busy;
   output rstb_busy;
+  output [31:0]douta;
   output [7:0]doutb;
   input clkb;
   input clka;
-  input ena;
   input [11:0]addra;
   input [13:0]addrb;
   input [31:0]dina;
   input [7:0]dinb;
   input [3:0]wea;
   input [0:0]web;
+  input ena;
   input rsta;
 
   wire [11:0]addra;

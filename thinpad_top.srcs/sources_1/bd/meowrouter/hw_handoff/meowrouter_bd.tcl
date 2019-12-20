@@ -320,7 +320,7 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.ENABLE_ADVANCED_OPTIONS {0} \
    CONFIG.M00_HAS_DATA_FIFO {0} \
-   CONFIG.NUM_MI {6} \
+   CONFIG.NUM_MI {7} \
    CONFIG.NUM_SI {1} \
    CONFIG.S00_HAS_DATA_FIFO {2} \
    CONFIG.S01_HAS_DATA_FIFO {2} \
@@ -353,6 +353,27 @@ proc create_root_design { parentCell } {
      return 1
    }
   
+  # Create instance: RouterCmd, and set properties
+  set RouterCmd [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 RouterCmd ]
+  set_property -dict [ list \
+   CONFIG.C_ALL_OUTPUTS {1} \
+   CONFIG.C_ALL_OUTPUTS_2 {1} \
+   CONFIG.C_GPIO_WIDTH {32} \
+   CONFIG.C_INTERRUPT_PRESENT {0} \
+   CONFIG.C_IS_DUAL {1} \
+ ] $RouterCmd
+
+  # Create instance: RouterCmdConcat, and set properties
+  set RouterCmdConcat [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 RouterCmdConcat ]
+
+  # Create instance: RouterCmdNRST, and set properties
+  set RouterCmdNRST [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 RouterCmdNRST ]
+  set_property -dict [ list \
+   CONFIG.C_OPERATION {not} \
+   CONFIG.C_SIZE {1} \
+   CONFIG.LOGO_FILE {data/sym_notgate.png} \
+ ] $RouterCmdNRST
+
   # Create instance: UART, and set properties
   set UART [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uartlite:2.0 UART ]
   set_property -dict [ list \
@@ -379,6 +400,7 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net Primary_M03_AXI [get_bd_intf_pins Primary/M03_AXI] [get_bd_intf_pins RAMEMC/S_AXI_MEM]
   connect_bd_intf_net -intf_net Primary_M04_AXI [get_bd_intf_pins FlashEMC/S_AXI_MEM] [get_bd_intf_pins Primary/M04_AXI]
   connect_bd_intf_net -intf_net Primary_M05_AXI [get_bd_intf_pins IntCont/s_axi] [get_bd_intf_pins Primary/M05_AXI]
+  connect_bd_intf_net -intf_net Primary_M06_AXI [get_bd_intf_pins Primary/M06_AXI] [get_bd_intf_pins RouterCmd/S_AXI]
   connect_bd_intf_net -intf_net RAMEMC_EMC_INTF [get_bd_intf_ports RAMEMC] [get_bd_intf_pins RAMEMC/EMC_INTF]
   connect_bd_intf_net -intf_net Router_io_tx [get_bd_intf_ports data_tx] [get_bd_intf_pins Router/io_tx]
   connect_bd_intf_net -intf_net axi_gpio_0_GPIO2 [get_bd_intf_ports DISP] [get_bd_intf_pins Board/GPIO2]
@@ -396,6 +418,9 @@ proc create_root_design { parentCell } {
   connect_bd_net -net EthBufCtrl_bram_wrdata_a [get_bd_pins EthBuf/dina] [get_bd_pins EthBufCtrl/bram_wrdata_a]
   connect_bd_net -net EthBuf_douta [get_bd_pins EthBuf/douta] [get_bd_pins EthBufCtrl/bram_rddata_a]
   connect_bd_net -net EthBuf_doutb [get_bd_pins EthBuf/doutb] [get_bd_pins Router/io_buf_dout]
+  connect_bd_net -net RouterCmdNRST_Res [get_bd_pins Primary/M06_ARESETN] [get_bd_pins RouterCmd/s_axi_aresetn] [get_bd_pins RouterCmdNRST/Res]
+  connect_bd_net -net RouterCmd_gpio2_io_o [get_bd_pins RouterCmd/gpio2_io_o] [get_bd_pins RouterCmdConcat/In1]
+  connect_bd_net -net RouterCmd_gpio_io_o [get_bd_pins RouterCmd/gpio_io_o] [get_bd_pins RouterCmdConcat/In0]
   connect_bd_net -net Router_io_buf_addr [get_bd_pins EthBuf/addrb] [get_bd_pins Router/io_buf_addr]
   connect_bd_net -net Router_io_buf_clk [get_bd_pins EthBuf/clkb] [get_bd_pins Router/io_buf_clk]
   connect_bd_net -net Router_io_buf_din [get_bd_pins EthBuf/dinb] [get_bd_pins Router/io_buf_din]
@@ -406,12 +431,13 @@ proc create_root_design { parentCell } {
   connect_bd_net -net proc_sys_reset_0_interconnect_aresetn [get_bd_pins Primary/ARESETN] [get_bd_pins Reset/interconnect_aresetn]
   connect_bd_net -net proc_sys_reset_0_mb_reset [get_bd_pins CPU/reset] [get_bd_pins NRST/Op1] [get_bd_pins Reset/mb_reset]
   connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins Board/s_axi_aresetn] [get_bd_pins EthBufCtrl/s_axi_aresetn] [get_bd_pins FlashEMC/s_axi_aresetn] [get_bd_pins IntCont/s_axi_aresetn] [get_bd_pins Primary/M00_ARESETN] [get_bd_pins Primary/M01_ARESETN] [get_bd_pins Primary/M02_ARESETN] [get_bd_pins Primary/M03_ARESETN] [get_bd_pins Primary/M04_ARESETN] [get_bd_pins Primary/M05_ARESETN] [get_bd_pins RAMEMC/s_axi_aresetn] [get_bd_pins Reset/peripheral_aresetn] [get_bd_pins UART/s_axi_aresetn]
-  connect_bd_net -net rst_1 [get_bd_ports rst] [get_bd_pins Reset/ext_reset_in] [get_bd_pins Router/reset]
-  connect_bd_net -net rtclk_1 [get_bd_ports data_clk] [get_bd_pins Router/clock]
+  connect_bd_net -net rst_1 [get_bd_ports rst] [get_bd_pins Reset/ext_reset_in] [get_bd_pins Router/reset] [get_bd_pins RouterCmdNRST/Op1]
+  connect_bd_net -net rtclk_1 [get_bd_ports data_clk] [get_bd_pins Primary/M06_ACLK] [get_bd_pins Router/clock] [get_bd_pins RouterCmd/s_axi_aclk]
   connect_bd_net -net rx_clk_1 [get_bd_ports data_rx_clk] [get_bd_pins Router/io_rx_clk]
   connect_bd_net -net tx_clk_1 [get_bd_ports data_tx_clk] [get_bd_pins Router/io_tx_clk]
   connect_bd_net -net util_vector_logic_0_Res [get_bd_pins AXIVerif/aresetn] [get_bd_pins NRST/Res] [get_bd_pins Primary/S00_ARESETN]
   connect_bd_net -net vio_0_probe_out0 [get_bd_ports vio_rst] [get_bd_pins VIO/probe_out0]
+  connect_bd_net -net xlconcat_0_dout [get_bd_pins Router/io_cmd] [get_bd_pins RouterCmdConcat/dout]
   connect_bd_net -net xlslice_0_Dout [get_bd_pins BufAddrSlice/Dout] [get_bd_pins EthBuf/addra]
 
   # Create address segments
@@ -419,6 +445,7 @@ proc create_root_design { parentCell } {
   create_bd_addr_seg -range 0x00004000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
   create_bd_addr_seg -range 0x00800000 -offset 0xFFFF20000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs FlashEMC/S_AXI_MEM/Mem0] SEG_FlashEMC_Mem0
   create_bd_addr_seg -range 0x00800000 -offset 0x00000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs RAMEMC/S_AXI_MEM/Mem0] SEG_RAMEMC_Mem0
+  create_bd_addr_seg -range 0x00001000 -offset 0xFFFF40000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs RouterCmd/S_AXI/Reg] SEG_RouterCmd_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0xE00000000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs IntCont/S_AXI/Reg] SEG_axi_intc_0_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0xFFFF00000000 [get_bd_addr_spaces CPU/io_axi] [get_bd_addr_segs UART/S_AXI/Reg] SEG_axi_uartlite_0_Reg
 
