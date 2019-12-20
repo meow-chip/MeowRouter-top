@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-// Date        : Fri Dec 20 15:15:35 2019
+// Date        : Fri Dec 20 15:15:33 2019
 // Host        : imac running 64-bit Arch Linux
-// Command     : write_verilog -force -mode synth_stub
-//               /home/thu-skyworks/meow/Desktop/workspace/cod19grp3/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_auto_ds_5/meowrouter_auto_ds_5_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top meowrouter_auto_ds_5 -prefix
+//               meowrouter_auto_ds_5_ meowrouter_auto_ds_5_stub.v
 // Design      : meowrouter_auto_ds_5
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tfgg676-2L

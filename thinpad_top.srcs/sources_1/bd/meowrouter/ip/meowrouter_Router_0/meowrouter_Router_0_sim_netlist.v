@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-// Date        : Fri Dec 20 15:13:41 2019
+// Date        : Fri Dec 20 21:35:47 2019
 // Host        : imac running 64-bit Arch Linux
 // Command     : write_verilog -force -mode funcsim
 //               /home/thu-skyworks/meow/Desktop/workspace/cod19grp3/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_Router_0/meowrouter_Router_0_sim_netlist.v
@@ -115,6 +115,7 @@ endmodule
 (* ORIG_REF_NAME = "ARPTable" *) 
 module meowrouter_Router_0_ARPTable
    (arp_io_outputStatus,
+    \pipeStatus_reg[0]_0 ,
     E,
     \pipeStatus_reg[1]_0 ,
     D,
@@ -138,7 +139,8 @@ module meowrouter_Router_0_ARPTable
     reset,
     \pipeStatus_reg[1]_1 ,
     clock,
-    \pipeStatus_reg[0]_0 ,
+    \pipeStatus_reg[0]_1 ,
+    p_0_out,
     \sending_packet_eth_pactype_reg[1] ,
     _T_34,
     \pipe_forward_status_reg[1]_0 ,
@@ -161,6 +163,7 @@ module meowrouter_Router_0_ARPTable
     \pipe_packet_ip_src_reg[31]_1 ,
     \pipe_packet_ip_dest_reg[31]_1 );
   output [1:0]arp_io_outputStatus;
+  output [0:0]\pipeStatus_reg[0]_0 ;
   output [0:0]E;
   output \pipeStatus_reg[1]_0 ;
   output [1:0]D;
@@ -184,7 +187,8 @@ module meowrouter_Router_0_ARPTable
   input reset;
   input \pipeStatus_reg[1]_1 ;
   input clock;
-  input \pipeStatus_reg[0]_0 ;
+  input \pipeStatus_reg[0]_1 ;
+  input [0:0]p_0_out;
   input \sending_packet_eth_pactype_reg[1] ;
   input _T_34;
   input [1:0]\pipe_forward_status_reg[1]_0 ;
@@ -215,7 +219,9 @@ module meowrouter_Router_0_ARPTable
   wire [1:0]arp_io_outputStatus;
   wire [1:0]arp_io_output_forward_status;
   wire clock;
-  wire \pipeStatus_reg[0]_0 ;
+  wire [0:0]p_0_out;
+  wire [0:0]\pipeStatus_reg[0]_0 ;
+  wire \pipeStatus_reg[0]_1 ;
   wire \pipeStatus_reg[1]_0 ;
   wire \pipeStatus_reg[1]_1 ;
   wire [1:0]\pipe_forward_status_reg[1]_0 ;
@@ -255,7 +261,13 @@ module meowrouter_Router_0_ARPTable
   wire reset;
   wire \sending_packet_eth_pactype_reg[1] ;
 
-  (* SOFT_HLUTNM = "soft_lutpair53" *) 
+  LUT2 #(
+    .INIT(4'hE)) 
+    \cnt[4]_i_4 
+       (.I0(E),
+        .I1(p_0_out),
+        .O(\pipeStatus_reg[0]_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair58" *) 
   LUT4 #(
     .INIT(16'hD0DD)) 
     \localReq[0]_i_1 
@@ -264,7 +276,7 @@ module meowrouter_Router_0_ARPTable
         .I2(arp_io_output_forward_status[1]),
         .I3(arp_io_output_forward_status[0]),
         .O(D[0]));
-  (* SOFT_HLUTNM = "soft_lutpair53" *) 
+  (* SOFT_HLUTNM = "soft_lutpair58" *) 
   LUT4 #(
     .INIT(16'h0D00)) 
     \localReq[1]_i_1 
@@ -276,7 +288,7 @@ module meowrouter_Router_0_ARPTable
   FDRE \pipeStatus_reg[0] 
        (.C(clock),
         .CE(1'b1),
-        .D(\pipeStatus_reg[0]_0 ),
+        .D(\pipeStatus_reg[0]_1 ),
         .Q(arp_io_outputStatus[0]),
         .R(reset));
   FDRE \pipeStatus_reg[1] 
@@ -1863,7 +1875,7 @@ module meowrouter_Router_0_ARPTable
         .D(\pipe_packet_ip_version_reg[3]_1 [3]),
         .Q(\pipe_packet_ip_version_reg[3]_0 [3]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair52" *) 
+  (* SOFT_HLUTNM = "soft_lutpair59" *) 
   LUT4 #(
     .INIT(16'h2800)) 
     \sending_packet_eth_pactype[1]_i_1 
@@ -1872,10 +1884,10 @@ module meowrouter_Router_0_ARPTable
         .I2(arp_io_outputStatus[1]),
         .I3(_T_34),
         .O(E));
-  (* SOFT_HLUTNM = "soft_lutpair52" *) 
+  (* SOFT_HLUTNM = "soft_lutpair59" *) 
   LUT3 #(
     .INIT(8'h28)) 
-    \state[3]_i_3 
+    \state[1]_i_3 
        (.I0(_T_34),
         .I1(arp_io_outputStatus[1]),
         .I2(arp_io_outputStatus[0]),
@@ -1887,7 +1899,7 @@ module meowrouter_Router_0_Acceptor
    (\state_reg[1]_0 ,
     \state_reg[0]_0 ,
     io_rx_tlast,
-    \io_rx_tdata[2] ,
+    \io_rx_tdata[0] ,
     wr_en,
     dropped_reg_0,
     \header_17_reg[7]_0 ,
@@ -1906,7 +1918,7 @@ module meowrouter_Router_0_Acceptor
   output \state_reg[1]_0 ;
   output \state_reg[0]_0 ;
   output io_rx_tlast;
-  output \io_rx_tdata[2] ;
+  output \io_rx_tdata[0] ;
   output wr_en;
   output dropped_reg_0;
   output [260:0]\header_17_reg[7]_0 ;
@@ -2034,7 +2046,7 @@ module meowrouter_Router_0_Acceptor
   wire _T_86_carry_i_17_n_0;
   wire _T_86_carry_i_18_n_0;
   wire _T_86_carry_i_19_n_0;
-  wire _T_86_carry_i_1__0_n_0;
+  wire _T_86_carry_i_1_n_0;
   wire _T_86_carry_i_20_n_0;
   wire _T_86_carry_i_21_n_0;
   wire _T_86_carry_i_22_n_0;
@@ -2044,10 +2056,10 @@ module meowrouter_Router_0_Acceptor
   wire _T_86_carry_i_26_n_0;
   wire _T_86_carry_i_27_n_0;
   wire _T_86_carry_i_28_n_0;
-  wire _T_86_carry_i_2__0_n_0;
-  wire _T_86_carry_i_3__0_n_0;
-  wire _T_86_carry_i_4__0_n_0;
-  wire _T_86_carry_i_5__0_n_0;
+  wire _T_86_carry_i_2_n_0;
+  wire _T_86_carry_i_3_n_0;
+  wire _T_86_carry_i_4_n_0;
+  wire _T_86_carry_i_5_n_0;
   wire _T_86_carry_i_6_n_0;
   wire _T_86_carry_i_7_n_0;
   wire _T_86_carry_i_8_n_0;
@@ -2057,9 +2069,6 @@ module meowrouter_Router_0_Acceptor
   wire _T_86_carry_n_2;
   wire _T_86_carry_n_3;
   wire _T_89;
-  wire \cnt[0]_i_10_n_0 ;
-  wire \cnt[0]_i_11_n_0 ;
-  wire \cnt[0]_i_12_n_0 ;
   wire \cnt[0]_i_1__0_n_0 ;
   wire \cnt[0]_i_2_n_0 ;
   wire \cnt[0]_i_5_n_0 ;
@@ -2115,6 +2124,7 @@ module meowrouter_Router_0_Acceptor
   wire emitted_i_12_n_0;
   wire emitted_i_13_n_0;
   wire emitted_i_14_n_0;
+  wire emitted_i_15_n_0;
   wire emitted_i_2_n_0;
   wire emitted_i_3_n_0;
   wire emitted_i_4_n_0;
@@ -2163,7 +2173,7 @@ module meowrouter_Router_0_Acceptor
   wire header_8;
   wire header_9;
   wire io_rx_clk;
-  wire \io_rx_tdata[2] ;
+  wire \io_rx_tdata[0] ;
   wire io_rx_tlast;
   wire io_rx_tvalid;
   wire \ip_0[7]_i_1_n_0 ;
@@ -2190,7 +2200,7 @@ module meowrouter_Router_0_Acceptor
   wire \ip_9[7]_i_1_n_0 ;
   wire prog_full;
   wire reset;
-  wire \state[1]_i_1__0_n_0 ;
+  wire \state[1]_i_1__1_n_0 ;
   wire \state_reg[0]_0 ;
   wire \state_reg[0]_1 ;
   wire \state_reg[1]_0 ;
@@ -2210,7 +2220,7 @@ module meowrouter_Router_0_Acceptor
         .CYINIT(1'b1),
         .DI({1'b0,1'b0,1'b0,1'b0}),
         .O(NLW__T_86_carry_O_UNCONNECTED[3:0]),
-        .S({_T_86_carry_i_1__0_n_0,_T_86_carry_i_2__0_n_0,_T_86_carry_i_3__0_n_0,_T_86_carry_i_4__0_n_0}));
+        .S({_T_86_carry_i_1_n_0,_T_86_carry_i_2_n_0,_T_86_carry_i_3_n_0,_T_86_carry_i_4_n_0}));
   CARRY4 _T_86_carry__0
        (.CI(_T_86_carry_n_0),
         .CO({_T_86_carry__0_n_0,_T_86_carry__0_n_1,_T_86_carry__0_n_2,_T_86_carry__0_n_3}),
@@ -3073,6 +3083,16 @@ module meowrouter_Router_0_Acceptor
         .I5(_T_86_carry__2_i_22_n_0),
         .O(_T_86_carry__2_i_9_n_0));
   LUT6 #(
+    .INIT(64'hEEEEEEFCCCCCCCEE)) 
+    _T_86_carry_i_1
+       (.I0(_T_86_carry_i_5_n_0),
+        .I1(_T_86_carry_i_6_n_0),
+        .I2(_T_86_carry_i_7_n_0),
+        .I3(\header_17_reg[7]_0 [160]),
+        .I4(\header_17_reg[7]_0 [161]),
+        .I5(\header_17_reg[7]_0 [162]),
+        .O(_T_86_carry_i_1_n_0));
+  LUT6 #(
     .INIT(64'h9009000000009009)) 
     _T_86_carry_i_10
        (.I0(_T_86_carry__2_i_1_0[8]),
@@ -3174,14 +3194,14 @@ module meowrouter_Router_0_Acceptor
         .O(_T_86_carry_i_19_n_0));
   LUT6 #(
     .INIT(64'hEEEEEEFCCCCCCCEE)) 
-    _T_86_carry_i_1__0
-       (.I0(_T_86_carry_i_5__0_n_0),
-        .I1(_T_86_carry_i_6_n_0),
-        .I2(_T_86_carry_i_7_n_0),
+    _T_86_carry_i_2
+       (.I0(_T_86_carry_i_8_n_0),
+        .I1(_T_86_carry_i_9_n_0),
+        .I2(_T_86_carry_i_10_n_0),
         .I3(\header_17_reg[7]_0 [160]),
         .I4(\header_17_reg[7]_0 [161]),
         .I5(\header_17_reg[7]_0 [162]),
-        .O(_T_86_carry_i_1__0_n_0));
+        .O(_T_86_carry_i_2_n_0));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     _T_86_carry_i_20
@@ -3274,44 +3294,34 @@ module meowrouter_Router_0_Acceptor
         .O(_T_86_carry_i_28_n_0));
   LUT6 #(
     .INIT(64'hEEEEEEFCCCCCCCEE)) 
-    _T_86_carry_i_2__0
-       (.I0(_T_86_carry_i_8_n_0),
-        .I1(_T_86_carry_i_9_n_0),
-        .I2(_T_86_carry_i_10_n_0),
-        .I3(\header_17_reg[7]_0 [160]),
-        .I4(\header_17_reg[7]_0 [161]),
-        .I5(\header_17_reg[7]_0 [162]),
-        .O(_T_86_carry_i_2__0_n_0));
-  LUT6 #(
-    .INIT(64'hEEEEEEFCCCCCCCEE)) 
-    _T_86_carry_i_3__0
+    _T_86_carry_i_3
        (.I0(_T_86_carry_i_11_n_0),
         .I1(_T_86_carry_i_12_n_0),
         .I2(_T_86_carry_i_13_n_0),
         .I3(\header_17_reg[7]_0 [160]),
         .I4(\header_17_reg[7]_0 [161]),
         .I5(\header_17_reg[7]_0 [162]),
-        .O(_T_86_carry_i_3__0_n_0));
+        .O(_T_86_carry_i_3_n_0));
   LUT6 #(
     .INIT(64'hEEEEEEFCCCCCCCEE)) 
-    _T_86_carry_i_4__0
+    _T_86_carry_i_4
        (.I0(_T_86_carry_i_14_n_0),
         .I1(_T_86_carry_i_15_n_0),
         .I2(_T_86_carry_i_16_n_0),
         .I3(\header_17_reg[7]_0 [160]),
         .I4(\header_17_reg[7]_0 [161]),
         .I5(\header_17_reg[7]_0 [162]),
-        .O(_T_86_carry_i_4__0_n_0));
+        .O(_T_86_carry_i_4_n_0));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
-    _T_86_carry_i_5__0
+    _T_86_carry_i_5
        (.I0(_T_86_carry__2_i_1_1[11]),
         .I1(\header_17_reg[7]_0 [224]),
         .I2(_T_86_carry__2_i_1_1[10]),
         .I3(\header_17_reg[7]_0 [223]),
         .I4(\header_17_reg[7]_0 [222]),
         .I5(_T_86_carry__2_i_1_1[9]),
-        .O(_T_86_carry_i_5__0_n_0));
+        .O(_T_86_carry_i_5_n_0));
   LUT6 #(
     .INIT(64'h0000ACF00000AC00)) 
     _T_86_carry_i_6
@@ -3352,40 +3362,10 @@ module meowrouter_Router_0_Acceptor
         .I4(\header_17_reg[7]_0 [162]),
         .I5(_T_86_carry_i_22_n_0),
         .O(_T_86_carry_i_9_n_0));
-  LUT6 #(
-    .INIT(64'hE2E2E2FFFFFFE2FF)) 
-    \cnt[0]_i_10 
-       (.I0(din[2]),
-        .I1(\header_0[7]_i_3_n_0 ),
-        .I2(header_0[1]),
-        .I3(header_1[3]),
-        .I4(\header_1[7]_i_2_n_0 ),
-        .I5(din[4]),
-        .O(\cnt[0]_i_10_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFE2E2E2FFE2)) 
-    \cnt[0]_i_11 
-       (.I0(din[1]),
-        .I1(\header_0[7]_i_3_n_0 ),
-        .I2(header_0[0]),
-        .I3(header_1[7]),
-        .I4(\header_1[7]_i_2_n_0 ),
-        .I5(din[8]),
-        .O(\cnt[0]_i_11_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFE2E2E2FFE2)) 
-    \cnt[0]_i_12 
-       (.I0(din[6]),
-        .I1(\header_0[7]_i_3_n_0 ),
-        .I2(header_0[5]),
-        .I3(header_1[4]),
-        .I4(\header_1[7]_i_2_n_0 ),
-        .I5(din[5]),
-        .O(\cnt[0]_i_12_n_0 ));
   LUT3 #(
     .INIT(8'hF4)) 
     \cnt[0]_i_1__0 
-       (.I0(\io_rx_tdata[2] ),
+       (.I0(\io_rx_tdata[0] ),
         .I1(emitted_i_6_n_0),
         .I2(\cnt[0]_i_5_n_0 ),
         .O(\cnt[0]_i_1__0_n_0 ));
@@ -3402,13 +3382,13 @@ module meowrouter_Router_0_Acceptor
     .INIT(64'hFFFFFFFFFFFFFFFE)) 
     \cnt[0]_i_4 
        (.I0(emitted_i_2_n_0),
-        .I1(\cnt[0]_i_9_n_0 ),
-        .I2(\cnt[0]_i_10_n_0 ),
-        .I3(emitted_i_4_n_0),
-        .I4(\cnt[0]_i_11_n_0 ),
-        .I5(\cnt[0]_i_12_n_0 ),
-        .O(\io_rx_tdata[2] ));
-  (* SOFT_HLUTNM = "soft_lutpair2" *) 
+        .I1(emitted_i_3_n_0),
+        .I2(emitted_i_4_n_0),
+        .I3(\header_1[7]_i_1_n_0 ),
+        .I4(\header_0[0]_i_1_n_0 ),
+        .I5(\cnt[0]_i_9_n_0 ),
+        .O(\io_rx_tdata[0] ));
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
   LUT5 #(
     .INIT(32'hAEAAAAAA)) 
     \cnt[0]_i_5 
@@ -3421,7 +3401,7 @@ module meowrouter_Router_0_Acceptor
   LUT6 #(
     .INIT(64'h00000002AAAAAAAA)) 
     \cnt[0]_i_6 
-       (.I0(emitted_i_11_n_0),
+       (.I0(emitted_i_12_n_0),
         .I1(cnt_reg[1]),
         .I2(cnt_reg[2]),
         .I3(cnt_reg[3]),
@@ -3431,7 +3411,7 @@ module meowrouter_Router_0_Acceptor
   LUT6 #(
     .INIT(64'h00020202AAAAAAAA)) 
     \cnt[0]_i_7 
-       (.I0(emitted_i_11_n_0),
+       (.I0(emitted_i_12_n_0),
         .I1(cnt_reg[2]),
         .I2(cnt_reg[3]),
         .I3(cnt_reg[1]),
@@ -3446,12 +3426,12 @@ module meowrouter_Router_0_Acceptor
   LUT6 #(
     .INIT(64'hFFFFFFE2E2E2FFE2)) 
     \cnt[0]_i_9 
-       (.I0(din[8]),
+       (.I0(din[6]),
         .I1(\header_0[7]_i_3_n_0 ),
-        .I2(header_0[7]),
-        .I3(header_1[1]),
+        .I2(header_0[5]),
+        .I3(header_1[4]),
         .I4(\header_1[7]_i_2_n_0 ),
-        .I5(din[2]),
+        .I5(din[5]),
         .O(\cnt[0]_i_9_n_0 ));
   FDRE \cnt_reg[0] 
        (.C(io_rx_clk),
@@ -3694,63 +3674,73 @@ module meowrouter_Router_0_Acceptor
         .I4(emitted_i_6_n_0),
         .I5(emitted_i_7_n_0),
         .O(emitted));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
+  (* SOFT_HLUTNM = "soft_lutpair2" *) 
+  LUT5 #(
+    .INIT(32'hFFFACCFA)) 
+    emitted_i_10
+       (.I0(header_1[5]),
+        .I1(din[6]),
+        .I2(header_1[6]),
+        .I3(\header_1[7]_i_2_n_0 ),
+        .I4(din[7]),
+        .O(emitted_i_10_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair6" *) 
   LUT4 #(
     .INIT(16'h0001)) 
-    emitted_i_10
+    emitted_i_11
        (.I0(cnt_reg[1]),
         .I1(cnt_reg[2]),
         .I2(cnt_reg[3]),
         .I3(cnt_reg[0]),
-        .O(emitted_i_10_n_0));
+        .O(emitted_i_11_n_0));
   LUT4 #(
     .INIT(16'h0001)) 
-    emitted_i_11
+    emitted_i_12
        (.I0(cnt_reg__0[8]),
         .I1(cnt_reg__0[6]),
         .I2(cnt_reg__0[7]),
-        .I3(emitted_i_14_n_0),
-        .O(emitted_i_11_n_0));
+        .I3(emitted_i_15_n_0),
+        .O(emitted_i_12_n_0));
   LUT2 #(
     .INIT(4'h8)) 
-    emitted_i_12
+    emitted_i_13
        (.I0(cnt_reg[0]),
         .I1(cnt_reg[1]),
-        .O(emitted_i_12_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
+        .O(emitted_i_13_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair6" *) 
   LUT2 #(
     .INIT(4'hE)) 
-    emitted_i_13
+    emitted_i_14
        (.I0(cnt_reg[3]),
         .I1(cnt_reg[2]),
-        .O(emitted_i_13_n_0));
+        .O(emitted_i_14_n_0));
   LUT4 #(
     .INIT(16'hFFFE)) 
-    emitted_i_14
+    emitted_i_15
        (.I0(cnt_reg__0[9]),
         .I1(cnt_reg__0[11]),
         .I2(cnt_reg__0[5]),
         .I3(cnt_reg__0[10]),
-        .O(emitted_i_14_n_0));
+        .O(emitted_i_15_n_0));
   LUT6 #(
-    .INIT(64'hFFFFEFEAEFEEEFEE)) 
+    .INIT(64'hFFFFFFFFFFBBFCB8)) 
     emitted_i_2
-       (.I0(emitted_i_8_n_0),
-        .I1(din[3]),
-        .I2(\header_1[7]_i_2_n_0 ),
-        .I3(header_1[2]),
-        .I4(header_0[2]),
-        .I5(\header_0[7]_i_3_n_0 ),
+       (.I0(din[1]),
+        .I1(\header_1[7]_i_2_n_0 ),
+        .I2(header_1[0]),
+        .I3(din[2]),
+        .I4(header_1[1]),
+        .I5(emitted_i_8_n_0),
         .O(emitted_i_2_n_0));
   LUT6 #(
-    .INIT(64'hFFFFFFFFFFB8FFFF)) 
+    .INIT(64'hFFFFFFFFFF77CF47)) 
     emitted_i_3
-       (.I0(din[2]),
+       (.I0(din[4]),
         .I1(\header_1[7]_i_2_n_0 ),
-        .I2(header_1[1]),
-        .I3(\header_0[7]_i_2_n_0 ),
-        .I4(\header_1[3]_i_1_n_0 ),
-        .I5(\header_0[1]_i_1_n_0 ),
+        .I2(header_1[3]),
+        .I3(din[3]),
+        .I4(header_1[2]),
+        .I5(emitted_i_9_n_0),
         .O(emitted_i_3_n_0));
   LUT6 #(
     .INIT(64'hFFFFFFFFFFBBFCB8)) 
@@ -3760,7 +3750,7 @@ module meowrouter_Router_0_Acceptor
         .I2(din[4]),
         .I3(header_0[4]),
         .I4(din[5]),
-        .I5(emitted_i_9_n_0),
+        .I5(emitted_i_10_n_0),
         .O(emitted_i_4_n_0));
   LUT6 #(
     .INIT(64'hFFFFFFFFFFFFFFB8)) 
@@ -3776,8 +3766,8 @@ module meowrouter_Router_0_Acceptor
     .INIT(64'h0000002F00000000)) 
     emitted_i_6
        (.I0(cnt_reg[4]),
-        .I1(emitted_i_10_n_0),
-        .I2(emitted_i_11_n_0),
+        .I1(emitted_i_11_n_0),
+        .I2(emitted_i_12_n_0),
         .I3(\state_reg[0]_0 ),
         .I4(\state_reg[1]_0 ),
         .I5(io_rx_tvalid),
@@ -3786,31 +3776,31 @@ module meowrouter_Router_0_Acceptor
     .INIT(64'hA8FF000000000000)) 
     emitted_i_7
        (.I0(cnt_reg[4]),
-        .I1(emitted_i_12_n_0),
-        .I2(emitted_i_13_n_0),
-        .I3(emitted_i_11_n_0),
+        .I1(emitted_i_13_n_0),
+        .I2(emitted_i_14_n_0),
+        .I3(emitted_i_12_n_0),
         .I4(\ip_1[7]_i_2_n_0 ),
         .I5(io_rx_tvalid),
         .O(emitted_i_7_n_0));
-  LUT6 #(
-    .INIT(64'hFFFFFFE2E2E2FFE2)) 
+  (* SOFT_HLUTNM = "soft_lutpair4" *) 
+  LUT5 #(
+    .INIT(32'hFFFACCFA)) 
     emitted_i_8
        (.I0(din[7]),
-        .I1(\header_0[7]_i_3_n_0 ),
-        .I2(header_0[6]),
-        .I3(header_1[0]),
-        .I4(\header_1[7]_i_2_n_0 ),
-        .I5(din[1]),
+        .I1(header_0[6]),
+        .I2(din[3]),
+        .I3(\header_0[7]_i_3_n_0 ),
+        .I4(header_0[2]),
         .O(emitted_i_8_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
   LUT5 #(
     .INIT(32'hFFFACCFA)) 
     emitted_i_9
-       (.I0(header_1[5]),
-        .I1(din[6]),
-        .I2(header_1[6]),
-        .I3(\header_1[7]_i_2_n_0 ),
-        .I4(din[7]),
+       (.I0(din[8]),
+        .I1(header_0[7]),
+        .I2(din[2]),
+        .I3(\header_0[7]_i_3_n_0 ),
+        .I4(header_0[1]),
         .O(emitted_i_9_n_0));
   FDRE emitted_reg
        (.C(io_rx_clk),
@@ -3826,7 +3816,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_0[7]_i_3_n_0 ),
         .I2(din[1]),
         .O(\header_0[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair5" *) 
+  (* SOFT_HLUTNM = "soft_lutpair13" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_0[1]_i_1 
@@ -3834,7 +3824,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_0[7]_i_3_n_0 ),
         .I2(din[2]),
         .O(\header_0[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair8" *) 
+  (* SOFT_HLUTNM = "soft_lutpair13" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_0[2]_i_1 
@@ -3842,7 +3832,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_0[7]_i_3_n_0 ),
         .I2(din[3]),
         .O(\header_0[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair6" *) 
+  (* SOFT_HLUTNM = "soft_lutpair7" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_0[3]_i_1 
@@ -3858,7 +3848,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_0[7]_i_3_n_0 ),
         .I2(din[5]),
         .O(\header_0[4]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair8" *) 
+  (* SOFT_HLUTNM = "soft_lutpair9" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_0[5]_i_1 
@@ -3866,7 +3856,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_0[7]_i_3_n_0 ),
         .I2(din[6]),
         .O(\header_0[5]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair7" *) 
+  (* SOFT_HLUTNM = "soft_lutpair4" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_0[6]_i_1 
@@ -3880,7 +3870,7 @@ module meowrouter_Router_0_Acceptor
        (.I0(\state_reg[0]_0 ),
         .I1(\state_reg[1]_0 ),
         .O(_T_89));
-  (* SOFT_HLUTNM = "soft_lutpair6" *) 
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_0[7]_i_2 
@@ -3888,7 +3878,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_0[7]_i_3_n_0 ),
         .I2(din[8]),
         .O(\header_0[7]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
   LUT5 #(
     .INIT(32'hFFEFFFFF)) 
     \header_0[7]_i_3 
@@ -4410,7 +4400,6 @@ module meowrouter_Router_0_Acceptor
         .D(din[8]),
         .Q(\header_17_reg[7]_0 [260]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair9" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_1[0]_i_1 
@@ -4418,7 +4407,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_1[7]_i_2_n_0 ),
         .I2(header_1[0]),
         .O(\header_1[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair5" *) 
+  (* SOFT_HLUTNM = "soft_lutpair12" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_1[1]_i_1 
@@ -4426,7 +4415,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_1[7]_i_2_n_0 ),
         .I2(header_1[1]),
         .O(\header_1[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair12" *) 
+  (* SOFT_HLUTNM = "soft_lutpair10" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_1[2]_i_1 
@@ -4442,7 +4431,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_1[7]_i_2_n_0 ),
         .I2(header_1[3]),
         .O(\header_1[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair12" *) 
+  (* SOFT_HLUTNM = "soft_lutpair11" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_1[4]_i_1 
@@ -4450,7 +4439,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_1[7]_i_2_n_0 ),
         .I2(header_1[4]),
         .O(\header_1[4]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
+  (* SOFT_HLUTNM = "soft_lutpair2" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_1[5]_i_1 
@@ -4458,7 +4447,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_1[7]_i_2_n_0 ),
         .I2(header_1[5]),
         .O(\header_1[5]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair11" *) 
+  (* SOFT_HLUTNM = "soft_lutpair10" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_1[6]_i_1 
@@ -4466,6 +4455,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_1[7]_i_2_n_0 ),
         .I2(header_1[6]),
         .O(\header_1[6]_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair12" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_1[7]_i_1 
@@ -4473,7 +4463,7 @@ module meowrouter_Router_0_Acceptor
         .I1(\header_1[7]_i_2_n_0 ),
         .I2(header_1[7]),
         .O(\header_1[7]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
   LUT5 #(
     .INIT(32'h00000002)) 
     \header_1[7]_i_2 
@@ -4531,7 +4521,6 @@ module meowrouter_Router_0_Acceptor
         .D(\header_1[7]_i_1_n_0 ),
         .Q(header_1[7]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair10" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_2[0]_i_1 
@@ -4539,6 +4528,7 @@ module meowrouter_Router_0_Acceptor
         .I1(header_2),
         .I2(\header_17_reg[7]_0 [160]),
         .O(\header_2[0]_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair8" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_2[1]_i_1 
@@ -4546,7 +4536,7 @@ module meowrouter_Router_0_Acceptor
         .I1(header_2),
         .I2(\header_17_reg[7]_0 [161]),
         .O(\header_2[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair10" *) 
+  (* SOFT_HLUTNM = "soft_lutpair8" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \header_2[2]_i_1 
@@ -4823,7 +4813,7 @@ module meowrouter_Router_0_Acceptor
         .I3(\ip_0[7]_i_2_n_0 ),
         .I4(cnt_reg[1]),
         .O(\ip_0[7]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair4" *) 
+  (* SOFT_HLUTNM = "soft_lutpair5" *) 
   LUT3 #(
     .INIT(8'h40)) 
     \ip_0[7]_i_2 
@@ -5465,7 +5455,7 @@ module meowrouter_Router_0_Acceptor
         .I4(\ip_1[7]_i_2_n_0 ),
         .I5(cnt_reg[0]),
         .O(\ip_1[7]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair2" *) 
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \ip_1[7]_i_2 
@@ -5980,13 +5970,13 @@ module meowrouter_Router_0_Acceptor
         .R(1'b0));
   LUT5 #(
     .INIT(32'h14001414)) 
-    \state[1]_i_1__0 
+    \state[1]_i_1__1 
        (.I0(reset),
         .I1(io_rx_tlast),
         .I2(\state_reg[1]_0 ),
-        .I3(\io_rx_tdata[2] ),
+        .I3(\io_rx_tdata[0] ),
         .I4(emitted_i_6_n_0),
-        .O(\state[1]_i_1__0_n_0 ));
+        .O(\state[1]_i_1__1_n_0 ));
   LUT6 #(
     .INIT(64'hAAEAAAAAAFEAAAAA)) 
     \state[1]_i_2 
@@ -6006,7 +5996,7 @@ module meowrouter_Router_0_Acceptor
   FDRE \state_reg[1] 
        (.C(io_rx_clk),
         .CE(1'b1),
-        .D(\state[1]_i_1__0_n_0 ),
+        .D(\state[1]_i_1__1_n_0 ),
         .Q(\state_reg[1]_0 ),
         .R(1'b0));
   LUT2 #(
@@ -6015,7 +6005,7 @@ module meowrouter_Router_0_Acceptor
        (.I0(emitted_reg_n_0),
         .I1(dropped__0),
         .O(wr_en));
-  (* SOFT_HLUTNM = "soft_lutpair4" *) 
+  (* SOFT_HLUTNM = "soft_lutpair5" *) 
   LUT4 #(
     .INIT(16'h0400)) 
     xpm_fifo_async_i_1__0
@@ -6045,12 +6035,12 @@ module meowrouter_Router_0_Acceptor
         .I5(xpm_fifo_async_i_6__0_n_0),
         .O(\header_17_reg[7]_0 [163]));
   LUT5 #(
-    .INIT(32'h00000010)) 
+    .INIT(32'h00000001)) 
     xpm_fifo_async_i_5__1
        (.I0(header_1[0]),
-        .I1(header_1[1]),
-        .I2(header_1[3]),
-        .I3(header_1[2]),
+        .I1(header_1[7]),
+        .I2(header_1[5]),
+        .I3(header_1[6]),
         .I4(xpm_fifo_async_i_7__0_n_0),
         .O(xpm_fifo_async_i_5__1_n_0));
   LUT4 #(
@@ -6062,123 +6052,120 @@ module meowrouter_Router_0_Acceptor
         .I3(header_0[5]),
         .O(xpm_fifo_async_i_6__0_n_0));
   LUT4 #(
-    .INIT(16'hFFFE)) 
+    .INIT(16'hFFFD)) 
     xpm_fifo_async_i_7__0
-       (.I0(header_1[7]),
-        .I1(header_1[5]),
-        .I2(header_1[6]),
-        .I3(header_1[4]),
+       (.I0(header_1[3]),
+        .I1(header_1[2]),
+        .I2(header_1[4]),
+        .I3(header_1[1]),
         .O(xpm_fifo_async_i_7__0_n_0));
 endmodule
 
 (* ORIG_REF_NAME = "Adapter" *) 
 module meowrouter_Router_0_Adapter
    (dropping_reg_0,
-    \state_reg[2]_0 ,
-    \state_reg[1]_0 ,
     \state_reg[0]_0 ,
     CO,
-    io_buf_dout_0_sp_1,
-    state,
     io_buf_addr,
-    \transferState_reg[1]_0 ,
-    \state_reg[1]_1 ,
+    \state_reg[1]_0 ,
+    io_buf_dout_0_sp_1,
+    \head_reg[0]_0 ,
+    dropping_reg_1,
     io_buf_din,
     io_buf_we,
-    \head_reg[0]_0 ,
-    \cnt_reg[1]_0 ,
-    \transferState_reg[1]_1 ,
-    \state_reg[1]_2 ,
-    reset,
-    dropping_reg_1,
-    clock,
-    Q,
+    \transferState_reg[2]_0 ,
+    \transferState_reg[0]_0 ,
+    \rstCnt_reg[1]_0 ,
     \state_reg[0]_1 ,
-    io_buf_addr_0_sp_1,
-    \io_buf_addr[1]_INST_0_i_4_0 ,
+    \state_reg[1]_1 ,
+    reset,
+    dropping_reg_2,
+    clock,
+    \state_reg[0]_2 ,
+    io_buf_addr_3_sp_1,
+    \state_reg[2]_0 ,
+    \state[1]_i_2__0 ,
     full,
-    io_buf_addr_2_sp_1,
-    \transferState[2]_i_3_0 ,
-    \io_buf_din[7] ,
-    io_buf_din_5_sp_1,
-    \io_buf_din[5]_0 ,
-    \io_buf_din[5]_1 ,
+    \state[1]_i_2__0_0 ,
+    io_buf_addr_0_sp_1,
+    io_buf_we_0,
+    \transferState_reg[0]_1 ,
+    io_buf_din_0_sp_1,
+    io_buf_din_1_sp_1,
+    io_buf_din_2_sp_1,
     io_buf_din_3_sp_1,
     \io_buf_din[3]_0 ,
-    io_buf_din_0_sp_1,
-    io_buf_din_2_sp_1,
-    \io_buf_din[2]_0 ,
+    \io_buf_din[3]_1 ,
     io_buf_din_4_sp_1,
-    io_buf_we_0,
-    \cnt_reg[0]_0 ,
-    \transferState[2]_i_3_1 ,
-    io_buf_dout,
-    E);
+    \io_buf_din[4]_0 ,
+    io_buf_din_5_sp_1,
+    io_buf_din_6_sp_1,
+    \io_buf_din[6]_0 ,
+    io_buf_din_7_sp_1,
+    \io_buf_din[7]_0 ,
+    Q,
+    io_buf_dout);
   output dropping_reg_0;
-  output \state_reg[2]_0 ;
-  output \state_reg[1]_0 ;
   output \state_reg[0]_0 ;
   output [0:0]CO;
-  output io_buf_dout_0_sp_1;
-  output [0:0]state;
   output [13:0]io_buf_addr;
-  output \transferState_reg[1]_0 ;
-  output \state_reg[1]_1 ;
-  output [5:0]io_buf_din;
-  output io_buf_we;
+  output \state_reg[1]_0 ;
+  output io_buf_dout_0_sp_1;
   output \head_reg[0]_0 ;
-  output \cnt_reg[1]_0 ;
-  output \transferState_reg[1]_1 ;
-  output \state_reg[1]_2 ;
+  output dropping_reg_1;
+  output [7:0]io_buf_din;
+  output io_buf_we;
+  output \transferState_reg[2]_0 ;
+  output \transferState_reg[0]_0 ;
+  output \rstCnt_reg[1]_0 ;
+  output \state_reg[0]_1 ;
+  output \state_reg[1]_1 ;
   input reset;
-  input dropping_reg_1;
+  input dropping_reg_2;
   input clock;
-  input [1:0]Q;
-  input \state_reg[0]_1 ;
-  input io_buf_addr_0_sp_1;
-  input \io_buf_addr[1]_INST_0_i_4_0 ;
+  input \state_reg[0]_2 ;
+  input io_buf_addr_3_sp_1;
+  input \state_reg[2]_0 ;
+  input \state[1]_i_2__0 ;
   input full;
-  input io_buf_addr_2_sp_1;
-  input \transferState[2]_i_3_0 ;
-  input \io_buf_din[7] ;
-  input io_buf_din_5_sp_1;
-  input \io_buf_din[5]_0 ;
-  input \io_buf_din[5]_1 ;
+  input \state[1]_i_2__0_0 ;
+  input io_buf_addr_0_sp_1;
+  input io_buf_we_0;
+  input \transferState_reg[0]_1 ;
+  input io_buf_din_0_sp_1;
+  input io_buf_din_1_sp_1;
+  input io_buf_din_2_sp_1;
   input io_buf_din_3_sp_1;
   input \io_buf_din[3]_0 ;
-  input io_buf_din_0_sp_1;
-  input io_buf_din_2_sp_1;
-  input \io_buf_din[2]_0 ;
+  input \io_buf_din[3]_1 ;
   input io_buf_din_4_sp_1;
-  input io_buf_we_0;
-  input \cnt_reg[0]_0 ;
-  input \transferState[2]_i_3_1 ;
+  input \io_buf_din[4]_0 ;
+  input io_buf_din_5_sp_1;
+  input io_buf_din_6_sp_1;
+  input \io_buf_din[6]_0 ;
+  input io_buf_din_7_sp_1;
+  input \io_buf_din[7]_0 ;
+  input [1:0]Q;
   input [7:0]io_buf_dout;
-  input [0:0]E;
 
   wire [0:0]CO;
-  wire [0:0]E;
   wire [1:0]Q;
-  wire [0:0]_T_37;
-  wire [10:1]_T_37_0;
-  wire [13:11]_T_74;
-  wire _T_86_carry_i_1_n_0;
-  wire _T_86_carry_i_2_n_0;
-  wire _T_86_carry_i_3_n_0;
-  wire _T_86_carry_i_4_n_0;
-  wire _T_86_carry_i_5_n_0;
-  wire _T_86_carry_n_1;
-  wire _T_86_carry_n_2;
-  wire _T_86_carry_n_3;
+  wire [0:0]_T_44;
+  wire [10:1]_T_44_0;
+  wire [13:11]_T_48;
+  wire _T_93_carry_i_1_n_0;
+  wire _T_93_carry_i_2_n_0;
+  wire _T_93_carry_i_3_n_0;
+  wire _T_93_carry_i_4_n_0;
+  wire _T_93_carry_i_5_n_0;
+  wire _T_93_carry_n_1;
+  wire _T_93_carry_n_2;
+  wire _T_93_carry_n_3;
   wire clock;
+  wire cnt;
   wire \cnt[10]_i_1_n_0 ;
+  wire \cnt[10]_i_4_n_0 ;
   wire \cnt[10]_i_5_n_0 ;
-  wire \cnt[4]_i_1_n_0 ;
-  wire \cnt[6]_i_1_n_0 ;
-  wire \cnt[7]_i_1_n_0 ;
-  wire \cnt[8]_i_1_n_0 ;
-  wire \cnt_reg[0]_0 ;
-  wire \cnt_reg[1]_0 ;
   wire \cnt_reg_n_0_[0] ;
   wire \cnt_reg_n_0_[1] ;
   wire \cnt_reg_n_0_[2] ;
@@ -6187,10 +6174,10 @@ module meowrouter_Router_0_Adapter
   wire \cnt_reg_n_0_[5] ;
   wire \cnt_reg_n_0_[6] ;
   wire \cnt_reg_n_0_[7] ;
-  wire [13:11]data1;
   wire [2:0]data2;
   wire dropping_reg_0;
   wire dropping_reg_1;
+  wire dropping_reg_2;
   wire full;
   wire \head[0]_i_1_n_0 ;
   wire \head[1]_i_1_n_0 ;
@@ -6204,9 +6191,14 @@ module meowrouter_Router_0_Adapter
   wire \head_reg_n_0_[2] ;
   wire [13:0]io_buf_addr;
   wire \io_buf_addr[0]_INST_0_i_1_n_0 ;
+  wire \io_buf_addr[0]_INST_0_i_2_n_0 ;
+  wire \io_buf_addr[0]_INST_0_i_3_n_0 ;
+  wire \io_buf_addr[0]_INST_0_i_4_n_0 ;
   wire \io_buf_addr[10]_INST_0_i_1_n_0 ;
   wire \io_buf_addr[10]_INST_0_i_2_n_0 ;
   wire \io_buf_addr[10]_INST_0_i_3_n_0 ;
+  wire \io_buf_addr[11]_INST_0_i_1_n_0 ;
+  wire \io_buf_addr[12]_INST_0_i_1_n_0 ;
   wire \io_buf_addr[13]_INST_0_i_1_n_0 ;
   wire \io_buf_addr[13]_INST_0_i_2_n_0 ;
   wire \io_buf_addr[13]_INST_0_i_3_n_0 ;
@@ -6214,328 +6206,347 @@ module meowrouter_Router_0_Adapter
   wire \io_buf_addr[1]_INST_0_i_1_n_0 ;
   wire \io_buf_addr[1]_INST_0_i_2_n_0 ;
   wire \io_buf_addr[1]_INST_0_i_3_n_0 ;
-  wire \io_buf_addr[1]_INST_0_i_4_0 ;
-  wire \io_buf_addr[1]_INST_0_i_4_n_0 ;
-  wire \io_buf_addr[1]_INST_0_i_5_n_0 ;
-  wire \io_buf_addr[2]_INST_0_i_1_n_0 ;
   wire \io_buf_addr[3]_INST_0_i_1_n_0 ;
+  wire \io_buf_addr[3]_INST_0_i_2_n_0 ;
   wire \io_buf_addr[4]_INST_0_i_1_n_0 ;
-  wire \io_buf_addr[4]_INST_0_i_2_n_0 ;
-  wire \io_buf_addr[4]_INST_0_i_3_n_0 ;
   wire \io_buf_addr[5]_INST_0_i_1_n_0 ;
-  wire \io_buf_addr[5]_INST_0_i_2_n_0 ;
-  wire \io_buf_addr[6]_INST_0_i_1_n_0 ;
+  wire \io_buf_addr[6]_INST_0_i_3_n_0 ;
+  wire \io_buf_addr[6]_INST_0_i_4_n_0 ;
   wire \io_buf_addr[7]_INST_0_i_1_n_0 ;
   wire \io_buf_addr[7]_INST_0_i_2_n_0 ;
   wire \io_buf_addr[8]_INST_0_i_1_n_0 ;
+  wire \io_buf_addr[8]_INST_0_i_2_n_0 ;
   wire \io_buf_addr[9]_INST_0_i_1_n_0 ;
+  wire \io_buf_addr[9]_INST_0_i_2_n_0 ;
+  wire \io_buf_addr[9]_INST_0_i_4_n_0 ;
+  wire \io_buf_addr[9]_INST_0_i_5_n_0 ;
   wire io_buf_addr_0_sn_1;
-  wire io_buf_addr_2_sn_1;
-  wire [5:0]io_buf_din;
+  wire io_buf_addr_3_sn_1;
+  wire [7:0]io_buf_din;
   wire \io_buf_din[0]_INST_0_i_1_n_0 ;
-  wire \io_buf_din[1]_INST_0_i_5_n_0 ;
-  wire \io_buf_din[2]_0 ;
+  wire \io_buf_din[1]_INST_0_i_1_n_0 ;
   wire \io_buf_din[2]_INST_0_i_1_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_4_n_0 ;
+  wire \io_buf_din[2]_INST_0_i_2_n_0 ;
   wire \io_buf_din[3]_0 ;
-  wire \io_buf_din[3]_INST_0_i_1_n_0 ;
-  wire \io_buf_din[5]_0 ;
-  wire \io_buf_din[5]_1 ;
-  wire \io_buf_din[5]_INST_0_i_1_n_0 ;
-  wire \io_buf_din[5]_INST_0_i_2_n_0 ;
-  wire \io_buf_din[7] ;
+  wire \io_buf_din[3]_1 ;
+  wire \io_buf_din[3]_INST_0_i_3_n_0 ;
+  wire \io_buf_din[4]_0 ;
+  wire \io_buf_din[4]_INST_0_i_3_n_0 ;
+  wire \io_buf_din[6]_0 ;
+  wire \io_buf_din[6]_INST_0_i_1_n_0 ;
+  wire \io_buf_din[7]_0 ;
+  wire \io_buf_din[7]_INST_0_i_4_n_0 ;
   wire io_buf_din_0_sn_1;
+  wire io_buf_din_1_sn_1;
   wire io_buf_din_2_sn_1;
   wire io_buf_din_3_sn_1;
   wire io_buf_din_4_sn_1;
   wire io_buf_din_5_sn_1;
+  wire io_buf_din_6_sn_1;
+  wire io_buf_din_7_sn_1;
   wire [7:0]io_buf_dout;
   wire io_buf_dout_0_sn_1;
   wire io_buf_we;
   wire io_buf_we_0;
+  wire io_buf_we_INST_0_i_1_n_0;
   wire io_buf_we_INST_0_i_2_n_0;
+  wire io_buf_we_INST_0_i_3_n_0;
   wire reset;
+  wire [2:0]rstCnt;
+  wire \rstCnt[0]_i_1_n_0 ;
+  wire \rstCnt[1]_i_1_n_0 ;
+  wire \rstCnt[2]_i_1_n_0 ;
+  wire \rstCnt_reg[1]_0 ;
   wire \sendingSlot[0]_i_1_n_0 ;
   wire \sendingSlot[1]_i_1_n_0 ;
   wire \sendingSlot[2]_i_1_n_0 ;
-  wire [0:0]state;
-  wire \state[0]_i_1_n_0 ;
-  wire \state[0]_i_3_n_0 ;
-  wire \state[1]_i_1__1_n_0 ;
-  wire \state[1]_i_2__1_n_0 ;
+  wire \sendingSlot_reg_n_0_[0] ;
+  wire \sendingSlot_reg_n_0_[1] ;
+  wire \sendingSlot_reg_n_0_[2] ;
+  wire \state[1]_i_1__0_n_0 ;
+  wire \state[1]_i_2__0 ;
+  wire \state[1]_i_2__0_0 ;
   wire \state[2]_i_1_n_0 ;
+  wire \state[2]_i_2__0_n_0 ;
+  wire \state[2]_i_3_n_0 ;
   wire \state_reg[0]_0 ;
   wire \state_reg[0]_1 ;
+  wire \state_reg[0]_2 ;
   wire \state_reg[1]_0 ;
   wire \state_reg[1]_1 ;
-  wire \state_reg[1]_2 ;
   wire \state_reg[2]_0 ;
+  wire \state_reg_n_0_[1] ;
+  wire \state_reg_n_0_[2] ;
   wire tail;
   wire \tail[0]_i_1_n_0 ;
   wire \tail[1]_i_1_n_0 ;
-  wire \tail[2]_i_1_n_0 ;
+  wire \tail[2]_i_2_n_0 ;
+  wire \tail[2]_i_3_n_0 ;
   wire [10:0]totCnt;
+  wire [10:7]totCnt0;
   wire \totCnt[10]_i_1_n_0 ;
-  wire \totCnt[10]_i_2_n_0 ;
-  wire \totCnt[7]_i_1_n_0 ;
+  wire \totCnt[10]_i_3_n_0 ;
   wire \totCnt[8]_i_1_n_0 ;
   wire \totCnt[9]_i_1_n_0 ;
   wire \transferState[0]_i_1_n_0 ;
-  wire \transferState[0]_i_2_n_0 ;
+  wire \transferState[0]_i_3_n_0 ;
   wire \transferState[1]_i_1_n_0 ;
   wire \transferState[1]_i_2_n_0 ;
   wire \transferState[2]_i_1_n_0 ;
   wire \transferState[2]_i_2_n_0 ;
-  wire \transferState[2]_i_3_0 ;
-  wire \transferState[2]_i_3_1 ;
   wire \transferState[2]_i_3_n_0 ;
   wire \transferState[2]_i_4_n_0 ;
   wire \transferState[2]_i_5_n_0 ;
-  wire \transferState_reg[1]_0 ;
-  wire \transferState_reg[1]_1 ;
+  wire \transferState_reg[0]_0 ;
+  wire \transferState_reg[0]_1 ;
+  wire \transferState_reg[2]_0 ;
   wire \transferState_reg_n_0_[0] ;
   wire \transferState_reg_n_0_[1] ;
   wire \transferState_reg_n_0_[2] ;
-  wire [3:0]NLW__T_86_carry_O_UNCONNECTED;
+  wire [3:0]NLW__T_93_carry_O_UNCONNECTED;
 
   assign io_buf_addr_0_sn_1 = io_buf_addr_0_sp_1;
-  assign io_buf_addr_2_sn_1 = io_buf_addr_2_sp_1;
+  assign io_buf_addr_3_sn_1 = io_buf_addr_3_sp_1;
   assign io_buf_din_0_sn_1 = io_buf_din_0_sp_1;
+  assign io_buf_din_1_sn_1 = io_buf_din_1_sp_1;
   assign io_buf_din_2_sn_1 = io_buf_din_2_sp_1;
   assign io_buf_din_3_sn_1 = io_buf_din_3_sp_1;
   assign io_buf_din_4_sn_1 = io_buf_din_4_sp_1;
   assign io_buf_din_5_sn_1 = io_buf_din_5_sp_1;
+  assign io_buf_din_6_sn_1 = io_buf_din_6_sp_1;
+  assign io_buf_din_7_sn_1 = io_buf_din_7_sp_1;
   assign io_buf_dout_0_sp_1 = io_buf_dout_0_sn_1;
-  CARRY4 _T_86_carry
+  CARRY4 _T_93_carry
        (.CI(1'b0),
-        .CO({CO,_T_86_carry_n_1,_T_86_carry_n_2,_T_86_carry_n_3}),
+        .CO({CO,_T_93_carry_n_1,_T_93_carry_n_2,_T_93_carry_n_3}),
         .CYINIT(1'b1),
         .DI({1'b0,1'b0,1'b0,1'b0}),
-        .O(NLW__T_86_carry_O_UNCONNECTED[3:0]),
-        .S({_T_86_carry_i_1_n_0,_T_86_carry_i_2_n_0,_T_86_carry_i_3_n_0,_T_86_carry_i_4_n_0}));
-  LUT5 #(
-    .INIT(32'h09906009)) 
-    _T_86_carry_i_1
+        .O(NLW__T_93_carry_O_UNCONNECTED[3:0]),
+        .S({_T_93_carry_i_1_n_0,_T_93_carry_i_2_n_0,_T_93_carry_i_3_n_0,_T_93_carry_i_4_n_0}));
+  LUT6 #(
+    .INIT(64'h0990909060090909)) 
+    _T_93_carry_i_1
        (.I0(data2[2]),
         .I1(totCnt[10]),
         .I2(data2[1]),
-        .I3(_T_86_carry_i_5_n_0),
-        .I4(totCnt[9]),
-        .O(_T_86_carry_i_1_n_0));
+        .I3(data2[0]),
+        .I4(_T_93_carry_i_5_n_0),
+        .I5(totCnt[9]),
+        .O(_T_93_carry_i_1_n_0));
+  LUT6 #(
+    .INIT(64'h0660000000000660)) 
+    _T_93_carry_i_2
+       (.I0(\io_buf_addr[8]_INST_0_i_2_n_0 ),
+        .I1(totCnt[8]),
+        .I2(totCnt[7]),
+        .I3(\io_buf_addr[7]_INST_0_i_2_n_0 ),
+        .I4(totCnt[6]),
+        .I5(_T_44_0[6]),
+        .O(_T_93_carry_i_2_n_0));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
-    _T_86_carry_i_2
-       (.I0(totCnt[7]),
-        .I1(\cnt[7]_i_1_n_0 ),
-        .I2(totCnt[6]),
-        .I3(\cnt[6]_i_1_n_0 ),
-        .I4(\cnt[8]_i_1_n_0 ),
-        .I5(totCnt[8]),
-        .O(_T_86_carry_i_2_n_0));
-  LUT6 #(
-    .INIT(64'h9009000000009009)) 
-    _T_86_carry_i_3
+    _T_93_carry_i_3
        (.I0(totCnt[4]),
-        .I1(\cnt[4]_i_1_n_0 ),
+        .I1(\io_buf_addr[4]_INST_0_i_1_n_0 ),
         .I2(totCnt[3]),
-        .I3(\io_buf_addr[3]_INST_0_i_1_n_0 ),
-        .I4(\io_buf_addr[5]_INST_0_i_2_n_0 ),
+        .I3(\io_buf_addr[3]_INST_0_i_2_n_0 ),
+        .I4(\io_buf_addr[5]_INST_0_i_1_n_0 ),
         .I5(totCnt[5]),
-        .O(_T_86_carry_i_3_n_0));
+        .O(_T_93_carry_i_3_n_0));
   LUT6 #(
-    .INIT(64'h0840021010084002)) 
-    _T_86_carry_i_4
+    .INIT(64'h0480012010084002)) 
+    _T_93_carry_i_4
        (.I0(totCnt[0]),
         .I1(totCnt[2]),
-        .I2(\cnt_reg_n_0_[0] ),
-        .I3(\cnt_reg_n_0_[1] ),
+        .I2(\cnt_reg_n_0_[1] ),
+        .I3(\cnt_reg_n_0_[0] ),
         .I4(\cnt_reg_n_0_[2] ),
         .I5(totCnt[1]),
-        .O(_T_86_carry_i_4_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair48" *) 
-  LUT4 #(
-    .INIT(16'h0800)) 
-    _T_86_carry_i_5
-       (.I0(data2[0]),
-        .I1(\cnt_reg_n_0_[7] ),
-        .I2(\cnt[10]_i_5_n_0 ),
-        .I3(\cnt_reg_n_0_[6] ),
-        .O(_T_86_carry_i_5_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair51" *) 
+        .O(_T_93_carry_i_4_n_0));
+  LUT6 #(
+    .INIT(64'h0080000000000000)) 
+    _T_93_carry_i_5
+       (.I0(\cnt_reg_n_0_[7] ),
+        .I1(\cnt_reg_n_0_[6] ),
+        .I2(\cnt_reg_n_0_[4] ),
+        .I3(\io_buf_addr[6]_INST_0_i_4_n_0 ),
+        .I4(\cnt_reg_n_0_[3] ),
+        .I5(\cnt_reg_n_0_[5] ),
+        .O(_T_93_carry_i_5_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair57" *) 
   LUT1 #(
     .INIT(2'h1)) 
     \cnt[0]_i_1__1 
        (.I0(\cnt_reg_n_0_[0] ),
-        .O(_T_37));
-  LUT6 #(
-    .INIT(64'hABAEABAEABAAAAAA)) 
+        .O(_T_44));
+  LUT2 #(
+    .INIT(4'hB)) 
     \cnt[10]_i_1 
        (.I0(reset),
-        .I1(\state_reg[1]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(io_buf_dout_0_sn_1),
+        .I1(\cnt[10]_i_4_n_0 ),
         .O(\cnt[10]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hAAAA6AAAAAAAAAAA)) 
+    .INIT(64'hAAAAAAAAAAAAAABA)) 
+    \cnt[10]_i_2 
+       (.I0(io_buf_addr_3_sn_1),
+        .I1(io_buf_we_0),
+        .I2(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I3(\transferState_reg_n_0_[2] ),
+        .I4(\transferState_reg_n_0_[0] ),
+        .I5(\transferState_reg_n_0_[1] ),
+        .O(cnt));
+  (* SOFT_HLUTNM = "soft_lutpair36" *) 
+  LUT5 #(
+    .INIT(32'hF7FF0800)) 
     \cnt[10]_i_3 
-       (.I0(data2[2]),
-        .I1(data2[1]),
-        .I2(data2[0]),
-        .I3(\cnt_reg_n_0_[7] ),
-        .I4(\cnt[10]_i_5_n_0 ),
-        .I5(\cnt_reg_n_0_[6] ),
-        .O(_T_37_0[10]));
+       (.I0(data2[0]),
+        .I1(\cnt_reg_n_0_[7] ),
+        .I2(\cnt[10]_i_5_n_0 ),
+        .I3(data2[1]),
+        .I4(data2[2]),
+        .O(_T_44_0[10]));
   LUT6 #(
-    .INIT(64'h7FFFFFFFFFFFFFFF)) 
+    .INIT(64'hFF55FFFFFF51FFFF)) 
+    \cnt[10]_i_4 
+       (.I0(io_buf_dout_0_sn_1),
+        .I1(\state_reg[2]_0 ),
+        .I2(\head_reg[0]_0 ),
+        .I3(\state_reg_n_0_[2] ),
+        .I4(\state_reg_n_0_[1] ),
+        .I5(\state_reg[0]_0 ),
+        .O(\cnt[10]_i_4_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair41" *) 
+  LUT5 #(
+    .INIT(32'hF7FFFFFF)) 
     \cnt[10]_i_5 
-       (.I0(\cnt_reg_n_0_[4] ),
-        .I1(\cnt_reg_n_0_[2] ),
-        .I2(\cnt_reg_n_0_[0] ),
-        .I3(\cnt_reg_n_0_[1] ),
-        .I4(\cnt_reg_n_0_[3] ),
-        .I5(\cnt_reg_n_0_[5] ),
+       (.I0(\cnt_reg_n_0_[5] ),
+        .I1(\cnt_reg_n_0_[3] ),
+        .I2(\io_buf_addr[6]_INST_0_i_4_n_0 ),
+        .I3(\cnt_reg_n_0_[4] ),
+        .I4(\cnt_reg_n_0_[6] ),
         .O(\cnt[10]_i_5_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair35" *) 
+  (* SOFT_HLUTNM = "soft_lutpair57" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \cnt[1]_i_1__1 
        (.I0(\cnt_reg_n_0_[0] ),
         .I1(\cnt_reg_n_0_[1] ),
-        .O(_T_37_0[1]));
-  (* SOFT_HLUTNM = "soft_lutpair34" *) 
-  LUT5 #(
-    .INIT(32'h6AAAAAAA)) 
-    \cnt[4]_i_1 
-       (.I0(\cnt_reg_n_0_[4] ),
-        .I1(\cnt_reg_n_0_[3] ),
-        .I2(\cnt_reg_n_0_[1] ),
-        .I3(\cnt_reg_n_0_[0] ),
-        .I4(\cnt_reg_n_0_[2] ),
-        .O(\cnt[4]_i_1_n_0 ));
-  LUT2 #(
-    .INIT(4'h9)) 
-    \cnt[6]_i_1 
-       (.I0(\cnt_reg_n_0_[6] ),
-        .I1(\cnt[10]_i_5_n_0 ),
-        .O(\cnt[6]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair48" *) 
+        .O(_T_44_0[1]));
+  (* SOFT_HLUTNM = "soft_lutpair49" *) 
   LUT3 #(
-    .INIT(8'hA6)) 
+    .INIT(8'h6A)) 
+    \cnt[2]_i_1__0 
+       (.I0(\cnt_reg_n_0_[2] ),
+        .I1(\cnt_reg_n_0_[0] ),
+        .I2(\cnt_reg_n_0_[1] ),
+        .O(_T_44_0[2]));
+  LUT6 #(
+    .INIT(64'hF7FFFFFF08000000)) 
     \cnt[7]_i_1 
-       (.I0(\cnt_reg_n_0_[7] ),
-        .I1(\cnt_reg_n_0_[6] ),
-        .I2(\cnt[10]_i_5_n_0 ),
-        .O(\cnt[7]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair39" *) 
-  LUT4 #(
-    .INIT(16'hA6AA)) 
+       (.I0(\cnt_reg_n_0_[5] ),
+        .I1(\cnt_reg_n_0_[3] ),
+        .I2(\io_buf_addr[6]_INST_0_i_4_n_0 ),
+        .I3(\cnt_reg_n_0_[4] ),
+        .I4(\cnt_reg_n_0_[6] ),
+        .I5(\cnt_reg_n_0_[7] ),
+        .O(_T_44_0[7]));
+  (* SOFT_HLUTNM = "soft_lutpair52" *) 
+  LUT3 #(
+    .INIT(8'hD2)) 
     \cnt[8]_i_1 
-       (.I0(data2[0]),
-        .I1(\cnt_reg_n_0_[7] ),
-        .I2(\cnt[10]_i_5_n_0 ),
-        .I3(\cnt_reg_n_0_[6] ),
-        .O(\cnt[8]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair39" *) 
-  LUT5 #(
-    .INIT(32'hA6AAAAAA)) 
+       (.I0(\cnt_reg_n_0_[7] ),
+        .I1(\cnt[10]_i_5_n_0 ),
+        .I2(data2[0]),
+        .O(_T_44_0[8]));
+  (* SOFT_HLUTNM = "soft_lutpair47" *) 
+  LUT4 #(
+    .INIT(16'hBF40)) 
     \cnt[9]_i_1 
-       (.I0(data2[1]),
-        .I1(\cnt_reg_n_0_[6] ),
-        .I2(\cnt[10]_i_5_n_0 ),
-        .I3(\cnt_reg_n_0_[7] ),
-        .I4(data2[0]),
-        .O(_T_37_0[9]));
+       (.I0(\cnt[10]_i_5_n_0 ),
+        .I1(\cnt_reg_n_0_[7] ),
+        .I2(data2[0]),
+        .I3(data2[1]),
+        .O(_T_44_0[9]));
   FDRE \cnt_reg[0] 
        (.C(clock),
-        .CE(E),
-        .D(_T_37),
+        .CE(cnt),
+        .D(_T_44),
         .Q(\cnt_reg_n_0_[0] ),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[10] 
        (.C(clock),
-        .CE(E),
-        .D(_T_37_0[10]),
+        .CE(cnt),
+        .D(_T_44_0[10]),
         .Q(data2[2]),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[1] 
        (.C(clock),
-        .CE(E),
-        .D(_T_37_0[1]),
+        .CE(cnt),
+        .D(_T_44_0[1]),
         .Q(\cnt_reg_n_0_[1] ),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[2] 
        (.C(clock),
-        .CE(E),
-        .D(\io_buf_addr[2]_INST_0_i_1_n_0 ),
+        .CE(cnt),
+        .D(_T_44_0[2]),
         .Q(\cnt_reg_n_0_[2] ),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[3] 
        (.C(clock),
-        .CE(E),
-        .D(\io_buf_addr[3]_INST_0_i_1_n_0 ),
+        .CE(cnt),
+        .D(\io_buf_addr[3]_INST_0_i_2_n_0 ),
         .Q(\cnt_reg_n_0_[3] ),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[4] 
        (.C(clock),
-        .CE(E),
-        .D(\cnt[4]_i_1_n_0 ),
+        .CE(cnt),
+        .D(\io_buf_addr[4]_INST_0_i_1_n_0 ),
         .Q(\cnt_reg_n_0_[4] ),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[5] 
        (.C(clock),
-        .CE(E),
-        .D(\io_buf_addr[5]_INST_0_i_2_n_0 ),
+        .CE(cnt),
+        .D(\io_buf_addr[5]_INST_0_i_1_n_0 ),
         .Q(\cnt_reg_n_0_[5] ),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[6] 
        (.C(clock),
-        .CE(E),
-        .D(\cnt[6]_i_1_n_0 ),
+        .CE(cnt),
+        .D(_T_44_0[6]),
         .Q(\cnt_reg_n_0_[6] ),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[7] 
        (.C(clock),
-        .CE(E),
-        .D(\cnt[7]_i_1_n_0 ),
+        .CE(cnt),
+        .D(_T_44_0[7]),
         .Q(\cnt_reg_n_0_[7] ),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[8] 
        (.C(clock),
-        .CE(E),
-        .D(\cnt[8]_i_1_n_0 ),
+        .CE(cnt),
+        .D(_T_44_0[8]),
         .Q(data2[0]),
         .R(\cnt[10]_i_1_n_0 ));
   FDRE \cnt_reg[9] 
        (.C(clock),
-        .CE(E),
-        .D(_T_37_0[9]),
+        .CE(cnt),
+        .D(_T_44_0[9]),
         .Q(data2[1]),
         .R(\cnt[10]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hE7FFFFE7FD7FBFFD)) 
-    dropping_i_2
+    .INIT(64'h1800001802804002)) 
+    dropping_i_3
        (.I0(\head_reg_n_0_[0] ),
-        .I1(data1[12]),
-        .I2(data1[11]),
+        .I1(_T_48[12]),
+        .I2(_T_48[11]),
         .I3(\head_reg_n_0_[2] ),
-        .I4(data1[13]),
+        .I4(_T_48[13]),
         .I5(\head_reg_n_0_[1] ),
         .O(\head_reg[0]_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair46" *) 
-  LUT4 #(
-    .INIT(16'h0010)) 
-    dropping_i_3
-       (.I0(\state_reg[1]_0 ),
-        .I1(\state_reg[2]_0 ),
-        .I2(\state_reg[0]_0 ),
-        .I3(io_buf_dout_0_sn_1),
-        .O(\state_reg[1]_2 ));
   FDRE dropping_reg
        (.C(clock),
         .CE(1'b1),
-        .D(dropping_reg_1),
+        .D(dropping_reg_2),
         .Q(dropping_reg_0),
         .R(reset));
   LUT4 #(
@@ -6546,7 +6557,7 @@ module meowrouter_Router_0_Adapter
         .I2(\head[2]_i_2_n_0 ),
         .I3(\head_reg_n_0_[0] ),
         .O(\head[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair49" *) 
+  (* SOFT_HLUTNM = "soft_lutpair48" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \head[1]_i_1 
@@ -6554,7 +6565,7 @@ module meowrouter_Router_0_Adapter
         .I1(\head[2]_i_2_n_0 ),
         .I2(\head_reg_n_0_[1] ),
         .O(\head[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair49" *) 
+  (* SOFT_HLUTNM = "soft_lutpair48" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \head[2]_i_1 
@@ -6564,17 +6575,17 @@ module meowrouter_Router_0_Adapter
         .I3(\head_reg_n_0_[2] ),
         .O(\head[2]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'h0000000000440F00)) 
+    .INIT(64'h00008800000F0000)) 
     \head[2]_i_2 
-       (.I0(\state[1]_i_2__1_n_0 ),
-        .I1(\transferState_reg_n_0_[2] ),
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\tail[2]_i_3_n_0 ),
         .I2(\head[2]_i_3_n_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\state_reg[2]_0 ),
-        .I5(\state_reg[1]_0 ),
+        .I3(\state_reg_n_0_[2] ),
+        .I4(\state_reg_n_0_[1] ),
+        .I5(\state_reg[0]_0 ),
         .O(\head[2]_i_2_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFFFFE)) 
+    .INIT(64'hFFFFFFFDFFFFFFFF)) 
     \head[2]_i_3 
        (.I0(\head[2]_i_4_n_0 ),
         .I1(io_buf_dout[2]),
@@ -6584,156 +6595,195 @@ module meowrouter_Router_0_Adapter
         .I5(\io_buf_addr[13]_INST_0_i_5_n_0 ),
         .O(\head[2]_i_3_n_0 ));
   LUT6 #(
-    .INIT(64'h9009000000009009)) 
+    .INIT(64'h6FF6FFFFFFFF6FF6)) 
     \head[2]_i_4 
-       (.I0(data1[11]),
-        .I1(\head_reg_n_0_[0] ),
-        .I2(data1[12]),
-        .I3(\head_reg_n_0_[1] ),
-        .I4(\head_reg_n_0_[2] ),
-        .I5(data1[13]),
+       (.I0(\head_reg_n_0_[2] ),
+        .I1(_T_48[13]),
+        .I2(_T_48[11]),
+        .I3(\head_reg_n_0_[0] ),
+        .I4(_T_48[12]),
+        .I5(\head_reg_n_0_[1] ),
         .O(\head[2]_i_4_n_0 ));
   FDSE \head_reg[0] 
        (.C(clock),
         .CE(1'b1),
         .D(\head[0]_i_1_n_0 ),
         .Q(\head_reg_n_0_[0] ),
-        .S(reset));
+        .S(tail));
   FDRE \head_reg[1] 
        (.C(clock),
         .CE(1'b1),
         .D(\head[1]_i_1_n_0 ),
         .Q(\head_reg_n_0_[1] ),
-        .R(reset));
+        .R(tail));
   FDRE \head_reg[2] 
        (.C(clock),
         .CE(1'b1),
         .D(\head[2]_i_1_n_0 ),
         .Q(\head_reg_n_0_[2] ),
-        .R(reset));
+        .R(tail));
   LUT6 #(
-    .INIT(64'h00000000FFFF8A88)) 
+    .INIT(64'h4545454544454544)) 
     \io_buf_addr[0]_INST_0 
-       (.I0(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I1(\io_buf_addr[1]_INST_0_i_3_n_0 ),
-        .I2(\transferState_reg_n_0_[1] ),
+       (.I0(\io_buf_addr[1]_INST_0_i_1_n_0 ),
+        .I1(\io_buf_addr[0]_INST_0_i_1_n_0 ),
+        .I2(\io_buf_addr[0]_INST_0_i_2_n_0 ),
         .I3(\cnt_reg_n_0_[0] ),
-        .I4(\io_buf_addr[1]_INST_0_i_1_n_0 ),
-        .I5(\io_buf_addr[0]_INST_0_i_1_n_0 ),
+        .I4(\io_buf_addr[0]_INST_0_i_3_n_0 ),
+        .I5(\io_buf_addr[0]_INST_0_i_4_n_0 ),
         .O(io_buf_addr[0]));
   LUT6 #(
-    .INIT(64'h0300000900000000)) 
+    .INIT(64'hEF00EE00FFFFFFFF)) 
     \io_buf_addr[0]_INST_0_i_1 
-       (.I0(io_buf_addr_0_sn_1),
-        .I1(\cnt_reg_n_0_[0] ),
-        .I2(\transferState_reg_n_0_[2] ),
-        .I3(\transferState_reg_n_0_[0] ),
-        .I4(\transferState_reg_n_0_[1] ),
-        .I5(\state_reg[2]_0 ),
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[1] ),
+        .I3(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I4(\cnt_reg_n_0_[0] ),
+        .I5(\state_reg_n_0_[2] ),
         .O(\io_buf_addr[0]_INST_0_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair45" *) 
+  LUT3 #(
+    .INIT(8'h04)) 
+    \io_buf_addr[0]_INST_0_i_2 
+       (.I0(\state_reg[0]_0 ),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg_n_0_[1] ),
+        .O(\io_buf_addr[0]_INST_0_i_2_n_0 ));
   LUT6 #(
-    .INIT(64'hFBFF0000FBFFF3FF)) 
+    .INIT(64'h0000000000200000)) 
+    \io_buf_addr[0]_INST_0_i_3 
+       (.I0(\state_reg_n_0_[2] ),
+        .I1(\state_reg_n_0_[1] ),
+        .I2(\state_reg[0]_0 ),
+        .I3(\io_buf_addr[10]_INST_0_i_2_n_0 ),
+        .I4(io_buf_addr_0_sn_1),
+        .I5(full),
+        .O(\io_buf_addr[0]_INST_0_i_3_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair50" *) 
+  LUT3 #(
+    .INIT(8'hBE)) 
+    \io_buf_addr[0]_INST_0_i_4 
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[1] ),
+        .O(\io_buf_addr[0]_INST_0_i_4_n_0 ));
+  LUT6 #(
+    .INIT(64'hABABABA8FFFFFFFF)) 
     \io_buf_addr[10]_INST_0 
        (.I0(\io_buf_addr[10]_INST_0_i_1_n_0 ),
-        .I1(\io_buf_addr[10]_INST_0_i_2_n_0 ),
-        .I2(\io_buf_addr[10]_INST_0_i_3_n_0 ),
-        .I3(\state_reg[2]_0 ),
+        .I1(\state_reg_n_0_[1] ),
+        .I2(\state_reg[0]_0 ),
+        .I3(\io_buf_addr[10]_INST_0_i_2_n_0 ),
         .I4(data2[2]),
-        .I5(\state_reg[1]_1 ),
+        .I5(\state_reg_n_0_[2] ),
         .O(io_buf_addr[10]));
-  (* SOFT_HLUTNM = "soft_lutpair38" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
+  LUT6 #(
+    .INIT(64'hF2FF0000F2FFF2F2)) 
     \io_buf_addr[10]_INST_0_i_1 
+       (.I0(io_buf_addr_3_sn_1),
+        .I1(\io_buf_addr[10]_INST_0_i_3_n_0 ),
+        .I2(\io_buf_addr[10]_INST_0_i_2_n_0 ),
+        .I3(\io_buf_addr[0]_INST_0_i_3_n_0 ),
+        .I4(data2[2]),
+        .I5(\io_buf_addr[9]_INST_0_i_4_n_0 ),
+        .O(\io_buf_addr[10]_INST_0_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair51" *) 
+  LUT3 #(
+    .INIT(8'hFE)) 
+    \io_buf_addr[10]_INST_0_i_2 
        (.I0(\transferState_reg_n_0_[1] ),
         .I1(\transferState_reg_n_0_[0] ),
         .I2(\transferState_reg_n_0_[2] ),
-        .O(\io_buf_addr[10]_INST_0_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h7575303075753033)) 
-    \io_buf_addr[10]_INST_0_i_2 
-       (.I0(_T_37_0[10]),
-        .I1(\transferState_reg_n_0_[2] ),
-        .I2(\transferState_reg_n_0_[1] ),
-        .I3(data2[2]),
-        .I4(io_buf_addr_2_sn_1),
-        .I5(\transferState_reg_n_0_[0] ),
         .O(\io_buf_addr[10]_INST_0_i_2_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair36" *) 
-  LUT3 #(
-    .INIT(8'h02)) 
+  LUT5 #(
+    .INIT(32'h59555555)) 
     \io_buf_addr[10]_INST_0_i_3 
-       (.I0(\transferState_reg_n_0_[1] ),
-        .I1(\transferState_reg_n_0_[0] ),
-        .I2(\transferState_reg_n_0_[2] ),
+       (.I0(data2[2]),
+        .I1(data2[1]),
+        .I2(\cnt[10]_i_5_n_0 ),
+        .I3(\cnt_reg_n_0_[7] ),
+        .I4(data2[0]),
         .O(\io_buf_addr[10]_INST_0_i_3_n_0 ));
   LUT6 #(
-    .INIT(64'h0000000000000008)) 
-    \io_buf_addr[10]_INST_0_i_4 
-       (.I0(\state_reg[1]_0 ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\transferState_reg_n_0_[2] ),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[1] ),
-        .O(\state_reg[1]_1 ));
-  LUT6 #(
-    .INIT(64'hF222FFFFF222F222)) 
+    .INIT(64'h0FFF0F0F22222222)) 
     \io_buf_addr[11]_INST_0 
-       (.I0(\head_reg_n_0_[0] ),
-        .I1(\io_buf_addr[13]_INST_0_i_1_n_0 ),
-        .I2(data1[11]),
+       (.I0(rstCnt[0]),
+        .I1(\state_reg[0]_0 ),
+        .I2(\io_buf_addr[11]_INST_0_i_1_n_0 ),
         .I3(\io_buf_addr[13]_INST_0_i_2_n_0 ),
-        .I4(\io_buf_addr[13]_INST_0_i_3_n_0 ),
-        .I5(_T_74[11]),
+        .I4(\head_reg_n_0_[0] ),
+        .I5(\io_buf_addr[13]_INST_0_i_3_n_0 ),
         .O(io_buf_addr[11]));
   LUT6 #(
-    .INIT(64'hF222FFFFF222F222)) 
+    .INIT(64'hFFFFFFFF33F335F3)) 
+    \io_buf_addr[11]_INST_0_i_1 
+       (.I0(_T_48[11]),
+        .I1(\sendingSlot_reg_n_0_[0] ),
+        .I2(\state_reg_n_0_[1] ),
+        .I3(\state_reg_n_0_[2] ),
+        .I4(\state_reg[0]_0 ),
+        .I5(\transferState_reg_n_0_[2] ),
+        .O(\io_buf_addr[11]_INST_0_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h0FFF0F0F44444444)) 
     \io_buf_addr[12]_INST_0 
-       (.I0(\head_reg_n_0_[1] ),
-        .I1(\io_buf_addr[13]_INST_0_i_1_n_0 ),
-        .I2(data1[12]),
+       (.I0(\state_reg[0]_0 ),
+        .I1(rstCnt[1]),
+        .I2(\io_buf_addr[12]_INST_0_i_1_n_0 ),
         .I3(\io_buf_addr[13]_INST_0_i_2_n_0 ),
-        .I4(\io_buf_addr[13]_INST_0_i_3_n_0 ),
-        .I5(_T_74[12]),
+        .I4(\head_reg_n_0_[1] ),
+        .I5(\io_buf_addr[13]_INST_0_i_3_n_0 ),
         .O(io_buf_addr[12]));
   LUT6 #(
-    .INIT(64'hF222FFFFF222F222)) 
+    .INIT(64'hFFFFFFFF33F335F3)) 
+    \io_buf_addr[12]_INST_0_i_1 
+       (.I0(_T_48[12]),
+        .I1(\sendingSlot_reg_n_0_[1] ),
+        .I2(\state_reg_n_0_[1] ),
+        .I3(\state_reg_n_0_[2] ),
+        .I4(\state_reg[0]_0 ),
+        .I5(\transferState_reg_n_0_[2] ),
+        .O(\io_buf_addr[12]_INST_0_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h0FFF0F0F44444444)) 
     \io_buf_addr[13]_INST_0 
-       (.I0(\head_reg_n_0_[2] ),
-        .I1(\io_buf_addr[13]_INST_0_i_1_n_0 ),
-        .I2(\io_buf_addr[13]_INST_0_i_2_n_0 ),
-        .I3(data1[13]),
-        .I4(\io_buf_addr[13]_INST_0_i_3_n_0 ),
-        .I5(_T_74[13]),
+       (.I0(\state_reg[0]_0 ),
+        .I1(rstCnt[2]),
+        .I2(\io_buf_addr[13]_INST_0_i_1_n_0 ),
+        .I3(\io_buf_addr[13]_INST_0_i_2_n_0 ),
+        .I4(\head_reg_n_0_[2] ),
+        .I5(\io_buf_addr[13]_INST_0_i_3_n_0 ),
         .O(io_buf_addr[13]));
+  LUT6 #(
+    .INIT(64'hCFCCFFFFCFDCFFDF)) 
+    \io_buf_addr[13]_INST_0_i_1 
+       (.I0(_T_48[13]),
+        .I1(\transferState_reg_n_0_[2] ),
+        .I2(\state_reg_n_0_[2] ),
+        .I3(\state_reg_n_0_[1] ),
+        .I4(\sendingSlot_reg_n_0_[2] ),
+        .I5(\state_reg[0]_0 ),
+        .O(\io_buf_addr[13]_INST_0_i_1_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair46" *) 
   LUT4 #(
-    .INIT(16'hFDFB)) 
-    \io_buf_addr[13]_INST_0_i_1 
-       (.I0(io_buf_dout_0_sn_1),
-        .I1(\state_reg[1]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .O(\io_buf_addr[13]_INST_0_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair42" *) 
-  LUT4 #(
-    .INIT(16'h0008)) 
+    .INIT(16'hEFDF)) 
     \io_buf_addr[13]_INST_0_i_2 
-       (.I0(\state_reg[1]_0 ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\transferState_reg_n_0_[2] ),
+       (.I0(\state_reg[0]_0 ),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg_n_0_[1] ),
+        .I3(io_buf_dout_0_sn_1),
         .O(\io_buf_addr[13]_INST_0_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair50" *) 
+  (* SOFT_HLUTNM = "soft_lutpair42" *) 
   LUT2 #(
-    .INIT(4'hB)) 
+    .INIT(4'hE)) 
     \io_buf_addr[13]_INST_0_i_3 
-       (.I0(\transferState_reg_n_0_[2] ),
-        .I1(\state_reg[2]_0 ),
+       (.I0(\state_reg_n_0_[2] ),
+        .I1(\state_reg_n_0_[1] ),
         .O(\io_buf_addr[13]_INST_0_i_3_n_0 ));
   LUT5 #(
-    .INIT(32'h00000010)) 
+    .INIT(32'h00000020)) 
     \io_buf_addr[13]_INST_0_i_4 
        (.I0(\io_buf_addr[13]_INST_0_i_5_n_0 ),
         .I1(io_buf_dout[0]),
@@ -6742,648 +6792,765 @@ module meowrouter_Router_0_Adapter
         .I4(io_buf_dout[2]),
         .O(io_buf_dout_0_sn_1));
   LUT4 #(
-    .INIT(16'hFFFE)) 
+    .INIT(16'h0001)) 
     \io_buf_addr[13]_INST_0_i_5 
        (.I0(io_buf_dout[5]),
         .I1(io_buf_dout[6]),
         .I2(io_buf_dout[4]),
         .I3(io_buf_dout[7]),
         .O(\io_buf_addr[13]_INST_0_i_5_n_0 ));
-  LUT6 #(
-    .INIT(64'h00000000EAEAEAAA)) 
+  (* SOFT_HLUTNM = "soft_lutpair54" *) 
+  LUT3 #(
+    .INIT(8'h45)) 
     \io_buf_addr[1]_INST_0 
        (.I0(\io_buf_addr[1]_INST_0_i_1_n_0 ),
-        .I1(\io_buf_addr[4]_INST_0_i_1_n_0 ),
-        .I2(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I3(\io_buf_addr[1]_INST_0_i_3_n_0 ),
-        .I4(\cnt_reg_n_0_[1] ),
-        .I5(\io_buf_addr[1]_INST_0_i_4_n_0 ),
+        .I1(\io_buf_addr[1]_INST_0_i_2_n_0 ),
+        .I2(\state_reg_n_0_[2] ),
         .O(io_buf_addr[1]));
-  (* SOFT_HLUTNM = "soft_lutpair43" *) 
-  LUT4 #(
-    .INIT(16'hABBF)) 
-    \io_buf_addr[1]_INST_0_i_1 
-       (.I0(\state_reg[2]_0 ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[1]_0 ),
-        .I3(io_buf_dout_0_sn_1),
-        .O(\io_buf_addr[1]_INST_0_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair45" *) 
+  (* SOFT_HLUTNM = "soft_lutpair55" *) 
   LUT3 #(
-    .INIT(8'h40)) 
-    \io_buf_addr[1]_INST_0_i_2 
-       (.I0(\state_reg[2]_0 ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[1]_0 ),
-        .O(\io_buf_addr[1]_INST_0_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair44" *) 
-  LUT2 #(
-    .INIT(4'hE)) 
-    \io_buf_addr[1]_INST_0_i_3 
-       (.I0(\transferState_reg_n_0_[2] ),
-        .I1(\transferState_reg_n_0_[0] ),
-        .O(\io_buf_addr[1]_INST_0_i_3_n_0 ));
+    .INIT(8'h20)) 
+    \io_buf_addr[1]_INST_0_i_1 
+       (.I0(io_buf_dout_0_sn_1),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg_n_0_[1] ),
+        .O(\io_buf_addr[1]_INST_0_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'h000C00CC00000044)) 
-    \io_buf_addr[1]_INST_0_i_4 
-       (.I0(\io_buf_addr[1]_INST_0_i_5_n_0 ),
-        .I1(\state_reg[2]_0 ),
-        .I2(\cnt_reg_n_0_[1] ),
+    .INIT(64'hF303F300F3F3F3A3)) 
+    \io_buf_addr[1]_INST_0_i_2 
+       (.I0(\cnt_reg_n_0_[1] ),
+        .I1(\io_buf_addr[1]_INST_0_i_3_n_0 ),
+        .I2(\io_buf_addr[0]_INST_0_i_2_n_0 ),
         .I3(\transferState_reg_n_0_[2] ),
         .I4(\transferState_reg_n_0_[0] ),
         .I5(\transferState_reg_n_0_[1] ),
-        .O(\io_buf_addr[1]_INST_0_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair35" *) 
-  LUT5 #(
-    .INIT(32'hFFDF0020)) 
-    \io_buf_addr[1]_INST_0_i_5 
-       (.I0(\cnt_reg_n_0_[0] ),
-        .I1(\transferState_reg[1]_0 ),
-        .I2(\io_buf_addr[1]_INST_0_i_4_0 ),
-        .I3(full),
-        .I4(\cnt_reg_n_0_[1] ),
-        .O(\io_buf_addr[1]_INST_0_i_5_n_0 ));
+        .O(\io_buf_addr[1]_INST_0_i_2_n_0 ));
   LUT6 #(
-    .INIT(64'hF5FF0000F5FFD5DD)) 
+    .INIT(64'h0900000900090009)) 
+    \io_buf_addr[1]_INST_0_i_3 
+       (.I0(\transferState_reg_n_0_[1] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[2] ),
+        .I3(\cnt_reg_n_0_[1] ),
+        .I4(\io_buf_addr[0]_INST_0_i_3_n_0 ),
+        .I5(\cnt_reg_n_0_[0] ),
+        .O(\io_buf_addr[1]_INST_0_i_3_n_0 ));
+  LUT6 #(
+    .INIT(64'h7FD57F00FFFFFFFF)) 
     \io_buf_addr[2]_INST_0 
-       (.I0(\state_reg[2]_0 ),
-        .I1(\io_buf_addr[5]_INST_0_i_1_n_0 ),
-        .I2(\io_buf_addr[2]_INST_0_i_1_n_0 ),
-        .I3(io_buf_addr_2_sn_1),
-        .I4(\cnt_reg_n_0_[2] ),
-        .I5(\state_reg[1]_1 ),
-        .O(io_buf_addr[2]));
-  (* SOFT_HLUTNM = "soft_lutpair51" *) 
-  LUT3 #(
-    .INIT(8'h6A)) 
-    \io_buf_addr[2]_INST_0_i_1 
-       (.I0(\cnt_reg_n_0_[2] ),
+       (.I0(io_buf_addr_3_sn_1),
         .I1(\cnt_reg_n_0_[1] ),
         .I2(\cnt_reg_n_0_[0] ),
-        .O(\io_buf_addr[2]_INST_0_i_1_n_0 ));
+        .I3(\cnt_reg_n_0_[2] ),
+        .I4(\io_buf_addr[6]_INST_0_i_3_n_0 ),
+        .I5(\state_reg_n_0_[2] ),
+        .O(io_buf_addr[2]));
   LUT6 #(
-    .INIT(64'hF5FF0000F5FFD5DD)) 
+    .INIT(64'hD500D5D5FFFFFFFF)) 
     \io_buf_addr[3]_INST_0 
-       (.I0(\state_reg[2]_0 ),
-        .I1(\io_buf_addr[5]_INST_0_i_1_n_0 ),
-        .I2(\io_buf_addr[3]_INST_0_i_1_n_0 ),
-        .I3(io_buf_addr_2_sn_1),
-        .I4(\cnt_reg_n_0_[3] ),
-        .I5(\state_reg[1]_1 ),
+       (.I0(\io_buf_addr[3]_INST_0_i_1_n_0 ),
+        .I1(\io_buf_addr[3]_INST_0_i_2_n_0 ),
+        .I2(io_buf_addr_3_sn_1),
+        .I3(\cnt_reg_n_0_[3] ),
+        .I4(\state_reg[1]_0 ),
+        .I5(\state_reg_n_0_[2] ),
         .O(io_buf_addr[3]));
-  (* SOFT_HLUTNM = "soft_lutpair34" *) 
+  LUT6 #(
+    .INIT(64'h0041000000410041)) 
+    \io_buf_addr[3]_INST_0_i_1 
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[1] ),
+        .I3(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I4(\io_buf_addr[0]_INST_0_i_3_n_0 ),
+        .I5(\cnt_reg_n_0_[3] ),
+        .O(\io_buf_addr[3]_INST_0_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair38" *) 
   LUT4 #(
     .INIT(16'h6AAA)) 
-    \io_buf_addr[3]_INST_0_i_1 
+    \io_buf_addr[3]_INST_0_i_2 
        (.I0(\cnt_reg_n_0_[3] ),
         .I1(\cnt_reg_n_0_[2] ),
         .I2(\cnt_reg_n_0_[0] ),
         .I3(\cnt_reg_n_0_[1] ),
-        .O(\io_buf_addr[3]_INST_0_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h7073707070737073)) 
+        .O(\io_buf_addr[3]_INST_0_i_2_n_0 ));
+  LUT5 #(
+    .INIT(32'hDDD0FFFF)) 
     \io_buf_addr[4]_INST_0 
-       (.I0(\io_buf_addr[4]_INST_0_i_1_n_0 ),
-        .I1(\io_buf_addr[4]_INST_0_i_2_n_0 ),
+       (.I0(io_buf_addr_3_sn_1),
+        .I1(\io_buf_addr[4]_INST_0_i_1_n_0 ),
         .I2(\cnt_reg_n_0_[4] ),
-        .I3(\state_reg[1]_1 ),
-        .I4(\io_buf_addr[4]_INST_0_i_3_n_0 ),
-        .I5(\state_reg[2]_0 ),
+        .I3(\io_buf_addr[6]_INST_0_i_3_n_0 ),
+        .I4(\state_reg_n_0_[2] ),
         .O(io_buf_addr[4]));
-  LUT2 #(
-    .INIT(4'hB)) 
+  (* SOFT_HLUTNM = "soft_lutpair38" *) 
+  LUT5 #(
+    .INIT(32'h6AAAAAAA)) 
     \io_buf_addr[4]_INST_0_i_1 
-       (.I0(\transferState_reg_n_0_[2] ),
-        .I1(\transferState_reg_n_0_[1] ),
+       (.I0(\cnt_reg_n_0_[4] ),
+        .I1(\cnt_reg_n_0_[3] ),
+        .I2(\cnt_reg_n_0_[1] ),
+        .I3(\cnt_reg_n_0_[0] ),
+        .I4(\cnt_reg_n_0_[2] ),
         .O(\io_buf_addr[4]_INST_0_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h00C0888800C000C0)) 
-    \io_buf_addr[4]_INST_0_i_2 
-       (.I0(\transferState_reg_n_0_[0] ),
-        .I1(\state_reg[2]_0 ),
-        .I2(io_buf_addr_2_sn_1),
-        .I3(\cnt[4]_i_1_n_0 ),
-        .I4(\transferState_reg_n_0_[2] ),
-        .I5(\transferState_reg_n_0_[1] ),
-        .O(\io_buf_addr[4]_INST_0_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair44" *) 
-  LUT4 #(
-    .INIT(16'hFFFE)) 
-    \io_buf_addr[4]_INST_0_i_3 
-       (.I0(\transferState_reg_n_0_[2] ),
-        .I1(\transferState_reg_n_0_[0] ),
-        .I2(\transferState_reg_n_0_[1] ),
-        .I3(io_buf_addr_2_sn_1),
-        .O(\io_buf_addr[4]_INST_0_i_3_n_0 ));
-  LUT6 #(
-    .INIT(64'hF5FF0000F5FFD5DD)) 
+  LUT5 #(
+    .INIT(32'hDDD0FFFF)) 
     \io_buf_addr[5]_INST_0 
-       (.I0(\state_reg[2]_0 ),
+       (.I0(io_buf_addr_3_sn_1),
         .I1(\io_buf_addr[5]_INST_0_i_1_n_0 ),
-        .I2(\io_buf_addr[5]_INST_0_i_2_n_0 ),
-        .I3(io_buf_addr_2_sn_1),
-        .I4(\cnt_reg_n_0_[5] ),
-        .I5(\state_reg[1]_1 ),
+        .I2(\cnt_reg_n_0_[5] ),
+        .I3(\io_buf_addr[6]_INST_0_i_3_n_0 ),
+        .I4(\state_reg_n_0_[2] ),
         .O(io_buf_addr[5]));
-  (* SOFT_HLUTNM = "soft_lutpair41" *) 
-  LUT4 #(
-    .INIT(16'hCFFE)) 
-    \io_buf_addr[5]_INST_0_i_1 
-       (.I0(io_buf_addr_2_sn_1),
-        .I1(\transferState_reg_n_0_[2] ),
-        .I2(\transferState_reg_n_0_[0] ),
-        .I3(\transferState_reg_n_0_[1] ),
-        .O(\io_buf_addr[5]_INST_0_i_1_n_0 ));
   LUT6 #(
     .INIT(64'h6AAAAAAAAAAAAAAA)) 
-    \io_buf_addr[5]_INST_0_i_2 
+    \io_buf_addr[5]_INST_0_i_1 
        (.I0(\cnt_reg_n_0_[5] ),
         .I1(\cnt_reg_n_0_[4] ),
         .I2(\cnt_reg_n_0_[2] ),
         .I3(\cnt_reg_n_0_[0] ),
         .I4(\cnt_reg_n_0_[1] ),
         .I5(\cnt_reg_n_0_[3] ),
-        .O(\io_buf_addr[5]_INST_0_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'hFF750000FF75FF55)) 
-    \io_buf_addr[6]_INST_0 
-       (.I0(\io_buf_addr[7]_INST_0_i_1_n_0 ),
-        .I1(\transferState_reg_n_0_[2] ),
-        .I2(\transferState_reg_n_0_[1] ),
-        .I3(\io_buf_addr[6]_INST_0_i_1_n_0 ),
-        .I4(\cnt_reg_n_0_[6] ),
-        .I5(\state_reg[1]_1 ),
-        .O(io_buf_addr[6]));
-  LUT6 #(
-    .INIT(64'h8A8ACFCF8A8ACFCC)) 
-    \io_buf_addr[6]_INST_0_i_1 
-       (.I0(\cnt[6]_i_1_n_0 ),
-        .I1(\transferState_reg_n_0_[2] ),
-        .I2(\transferState_reg_n_0_[1] ),
-        .I3(\cnt_reg_n_0_[6] ),
-        .I4(io_buf_addr_2_sn_1),
-        .I5(\transferState_reg_n_0_[0] ),
-        .O(\io_buf_addr[6]_INST_0_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h31F13131F5F5F5F5)) 
-    \io_buf_addr[7]_INST_0 
-       (.I0(\state_reg[1]_1 ),
-        .I1(\io_buf_addr[7]_INST_0_i_1_n_0 ),
-        .I2(\cnt_reg_n_0_[7] ),
-        .I3(\transferState_reg_n_0_[2] ),
-        .I4(\transferState_reg_n_0_[1] ),
-        .I5(\io_buf_addr[7]_INST_0_i_2_n_0 ),
-        .O(io_buf_addr[7]));
-  (* SOFT_HLUTNM = "soft_lutpair40" *) 
-  LUT4 #(
-    .INIT(16'hA8AA)) 
-    \io_buf_addr[7]_INST_0_i_1 
-       (.I0(\state_reg[2]_0 ),
-        .I1(\transferState_reg_n_0_[2] ),
-        .I2(\transferState_reg_n_0_[0] ),
-        .I3(\transferState_reg_n_0_[1] ),
-        .O(\io_buf_addr[7]_INST_0_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h44444445FFFF4445)) 
-    \io_buf_addr[7]_INST_0_i_2 
-       (.I0(\transferState_reg_n_0_[2] ),
-        .I1(\transferState_reg_n_0_[1] ),
-        .I2(\cnt_reg_n_0_[7] ),
-        .I3(\transferState_reg_n_0_[0] ),
-        .I4(io_buf_addr_2_sn_1),
-        .I5(\cnt[7]_i_1_n_0 ),
-        .O(\io_buf_addr[7]_INST_0_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'hDDC0DDDDDDDDDDDD)) 
-    \io_buf_addr[8]_INST_0 
-       (.I0(\state_reg[1]_1 ),
-        .I1(data2[0]),
-        .I2(\io_buf_addr[10]_INST_0_i_1_n_0 ),
-        .I3(\io_buf_addr[10]_INST_0_i_3_n_0 ),
-        .I4(\state_reg[2]_0 ),
-        .I5(\io_buf_addr[8]_INST_0_i_1_n_0 ),
-        .O(io_buf_addr[8]));
-  LUT6 #(
-    .INIT(64'h50505050FF505053)) 
-    \io_buf_addr[8]_INST_0_i_1 
-       (.I0(\cnt[8]_i_1_n_0 ),
-        .I1(data2[0]),
-        .I2(io_buf_addr_2_sn_1),
-        .I3(\transferState_reg_n_0_[1] ),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[2] ),
-        .O(\io_buf_addr[8]_INST_0_i_1_n_0 ));
+        .O(\io_buf_addr[5]_INST_0_i_1_n_0 ));
   LUT5 #(
-    .INIT(32'hDD0DDDDD)) 
-    \io_buf_addr[9]_INST_0 
-       (.I0(\state_reg[1]_1 ),
-        .I1(data2[1]),
-        .I2(\state_reg[2]_0 ),
-        .I3(\io_buf_addr[10]_INST_0_i_3_n_0 ),
-        .I4(\io_buf_addr[9]_INST_0_i_1_n_0 ),
-        .O(io_buf_addr[9]));
+    .INIT(32'hDDD0FFFF)) 
+    \io_buf_addr[6]_INST_0 
+       (.I0(io_buf_addr_3_sn_1),
+        .I1(_T_44_0[6]),
+        .I2(\cnt_reg_n_0_[6] ),
+        .I3(\io_buf_addr[6]_INST_0_i_3_n_0 ),
+        .I4(\state_reg_n_0_[2] ),
+        .O(io_buf_addr[6]));
+  (* SOFT_HLUTNM = "soft_lutpair41" *) 
+  LUT5 #(
+    .INIT(32'hA6AAAAAA)) 
+    \io_buf_addr[6]_INST_0_i_2 
+       (.I0(\cnt_reg_n_0_[6] ),
+        .I1(\cnt_reg_n_0_[4] ),
+        .I2(\io_buf_addr[6]_INST_0_i_4_n_0 ),
+        .I3(\cnt_reg_n_0_[3] ),
+        .I4(\cnt_reg_n_0_[5] ),
+        .O(_T_44_0[6]));
+  (* SOFT_HLUTNM = "soft_lutpair39" *) 
+  LUT5 #(
+    .INIT(32'hFFFFEFF2)) 
+    \io_buf_addr[6]_INST_0_i_3 
+       (.I0(io_buf_addr_3_sn_1),
+        .I1(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I2(\transferState_reg_n_0_[1] ),
+        .I3(\transferState_reg_n_0_[0] ),
+        .I4(\transferState_reg_n_0_[2] ),
+        .O(\io_buf_addr[6]_INST_0_i_3_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair49" *) 
+  LUT3 #(
+    .INIT(8'h7F)) 
+    \io_buf_addr[6]_INST_0_i_4 
+       (.I0(\cnt_reg_n_0_[1] ),
+        .I1(\cnt_reg_n_0_[0] ),
+        .I2(\cnt_reg_n_0_[2] ),
+        .O(\io_buf_addr[6]_INST_0_i_4_n_0 ));
   LUT6 #(
-    .INIT(64'h0008000901090009)) 
-    \io_buf_addr[9]_INST_0_i_1 
+    .INIT(64'hFFFFDDFF0DFF0DFF)) 
+    \io_buf_addr[7]_INST_0 
+       (.I0(\io_buf_addr[9]_INST_0_i_1_n_0 ),
+        .I1(\io_buf_addr[7]_INST_0_i_1_n_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg_n_0_[2] ),
+        .I4(\io_buf_addr[9]_INST_0_i_4_n_0 ),
+        .I5(\cnt_reg_n_0_[7] ),
+        .O(io_buf_addr[7]));
+  LUT6 #(
+    .INIT(64'hF6F7F7F7F6F7F6F6)) 
+    \io_buf_addr[7]_INST_0_i_1 
        (.I0(\transferState_reg_n_0_[1] ),
         .I1(\transferState_reg_n_0_[0] ),
         .I2(\transferState_reg_n_0_[2] ),
-        .I3(data2[1]),
-        .I4(io_buf_addr_0_sn_1),
-        .I5(_T_37_0[9]),
+        .I3(\io_buf_addr[7]_INST_0_i_2_n_0 ),
+        .I4(\io_buf_addr[0]_INST_0_i_3_n_0 ),
+        .I5(\cnt_reg_n_0_[7] ),
+        .O(\io_buf_addr[7]_INST_0_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h5595555555555555)) 
+    \io_buf_addr[7]_INST_0_i_2 
+       (.I0(\cnt_reg_n_0_[7] ),
+        .I1(\cnt_reg_n_0_[6] ),
+        .I2(\cnt_reg_n_0_[4] ),
+        .I3(\io_buf_addr[6]_INST_0_i_4_n_0 ),
+        .I4(\cnt_reg_n_0_[3] ),
+        .I5(\cnt_reg_n_0_[5] ),
+        .O(\io_buf_addr[7]_INST_0_i_2_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFDDFF0DFF0DFF)) 
+    \io_buf_addr[8]_INST_0 
+       (.I0(\io_buf_addr[9]_INST_0_i_1_n_0 ),
+        .I1(\io_buf_addr[8]_INST_0_i_1_n_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg_n_0_[2] ),
+        .I4(\io_buf_addr[9]_INST_0_i_4_n_0 ),
+        .I5(data2[0]),
+        .O(io_buf_addr[8]));
+  LUT6 #(
+    .INIT(64'hF6F7F7F7F6F7F6F6)) 
+    \io_buf_addr[8]_INST_0_i_1 
+       (.I0(\transferState_reg_n_0_[1] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[2] ),
+        .I3(\io_buf_addr[8]_INST_0_i_2_n_0 ),
+        .I4(\io_buf_addr[0]_INST_0_i_3_n_0 ),
+        .I5(data2[0]),
+        .O(\io_buf_addr[8]_INST_0_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair52" *) 
+  LUT3 #(
+    .INIT(8'h65)) 
+    \io_buf_addr[8]_INST_0_i_2 
+       (.I0(data2[0]),
+        .I1(\cnt[10]_i_5_n_0 ),
+        .I2(\cnt_reg_n_0_[7] ),
+        .O(\io_buf_addr[8]_INST_0_i_2_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFDDFF0DFF0DFF)) 
+    \io_buf_addr[9]_INST_0 
+       (.I0(\io_buf_addr[9]_INST_0_i_1_n_0 ),
+        .I1(\io_buf_addr[9]_INST_0_i_2_n_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg_n_0_[2] ),
+        .I4(\io_buf_addr[9]_INST_0_i_4_n_0 ),
+        .I5(data2[1]),
+        .O(io_buf_addr[9]));
+  LUT6 #(
+    .INIT(64'hFBFBFB00FBFBFBFB)) 
+    \io_buf_addr[9]_INST_0_i_1 
+       (.I0(\state_reg_n_0_[1] ),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg[0]_0 ),
+        .I3(\transferState_reg_n_0_[2] ),
+        .I4(\transferState_reg_n_0_[0] ),
+        .I5(\transferState_reg_n_0_[1] ),
         .O(\io_buf_addr[9]_INST_0_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'h5500DD0055005F00)) 
-    \io_buf_din[0]_INST_0 
-       (.I0(\io_buf_din[0]_INST_0_i_1_n_0 ),
-        .I1(\cnt_reg_n_0_[0] ),
-        .I2(io_buf_din_0_sn_1),
-        .I3(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I4(\io_buf_addr[1]_INST_0_i_3_n_0 ),
+    .INIT(64'hF6F7F7F7F6F7F6F6)) 
+    \io_buf_addr[9]_INST_0_i_2 
+       (.I0(\transferState_reg_n_0_[1] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[2] ),
+        .I3(\io_buf_addr[9]_INST_0_i_5_n_0 ),
+        .I4(\io_buf_addr[0]_INST_0_i_3_n_0 ),
+        .I5(data2[1]),
+        .O(\io_buf_addr[9]_INST_0_i_2_n_0 ));
+  LUT6 #(
+    .INIT(64'h0000000000000004)) 
+    \io_buf_addr[9]_INST_0_i_3 
+       (.I0(\state_reg_n_0_[1] ),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg[0]_0 ),
+        .I3(\transferState_reg_n_0_[2] ),
+        .I4(\transferState_reg_n_0_[0] ),
         .I5(\transferState_reg_n_0_[1] ),
+        .O(\state_reg[1]_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair50" *) 
+  LUT3 #(
+    .INIT(8'h08)) 
+    \io_buf_addr[9]_INST_0_i_4 
+       (.I0(\transferState_reg_n_0_[1] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[2] ),
+        .O(\io_buf_addr[9]_INST_0_i_4_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair47" *) 
+  LUT4 #(
+    .INIT(16'h5595)) 
+    \io_buf_addr[9]_INST_0_i_5 
+       (.I0(data2[1]),
+        .I1(data2[0]),
+        .I2(\cnt_reg_n_0_[7] ),
+        .I3(\cnt[10]_i_5_n_0 ),
+        .O(\io_buf_addr[9]_INST_0_i_5_n_0 ));
+  LUT6 #(
+    .INIT(64'h8888A8AA8888A888)) 
+    \io_buf_din[0]_INST_0 
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(\io_buf_din[0]_INST_0_i_1_n_0 ),
+        .I2(\cnt_reg_n_0_[0] ),
+        .I3(\transferState_reg_n_0_[1] ),
+        .I4(\io_buf_din[2]_INST_0_i_2_n_0 ),
+        .I5(io_buf_din_0_sn_1),
         .O(io_buf_din[0]));
   LUT6 #(
-    .INIT(64'h2222222202F2FFFF)) 
+    .INIT(64'hEE40EEEEAE00AEAE)) 
     \io_buf_din[0]_INST_0_i_1 
-       (.I0(Q[0]),
-        .I1(Q[1]),
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\transferState_reg_n_0_[0] ),
         .I2(\transferState_reg_n_0_[1] ),
-        .I3(data2[0]),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[2] ),
+        .I3(Q[1]),
+        .I4(Q[0]),
+        .I5(data2[0]),
         .O(\io_buf_din[0]_INST_0_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'h00080000AAAAAAAA)) 
+    .INIT(64'h88AA888A88A88888)) 
+    \io_buf_din[1]_INST_0 
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(\io_buf_din[1]_INST_0_i_1_n_0 ),
+        .I2(\transferState_reg_n_0_[1] ),
+        .I3(\io_buf_din[2]_INST_0_i_2_n_0 ),
+        .I4(\cnt_reg_n_0_[1] ),
+        .I5(io_buf_din_1_sn_1),
+        .O(io_buf_din[1]));
+  LUT6 #(
+    .INIT(64'h2F20222020202220)) 
     \io_buf_din[1]_INST_0_i_1 
-       (.I0(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I1(\cnt_reg_n_0_[1] ),
+       (.I0(Q[1]),
+        .I1(Q[0]),
         .I2(\transferState_reg_n_0_[2] ),
         .I3(\transferState_reg_n_0_[0] ),
         .I4(\transferState_reg_n_0_[1] ),
-        .I5(\io_buf_din[1]_INST_0_i_5_n_0 ),
-        .O(\cnt_reg[1]_0 ));
+        .I5(data2[1]),
+        .O(\io_buf_din[1]_INST_0_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hDDDDDDDD0DFDFFFF)) 
-    \io_buf_din[1]_INST_0_i_5 
-       (.I0(Q[1]),
-        .I1(Q[0]),
-        .I2(\transferState_reg_n_0_[1] ),
-        .I3(data2[1]),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[2] ),
-        .O(\io_buf_din[1]_INST_0_i_5_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFF44F444444444)) 
+    .INIT(64'h88AA888A88A88888)) 
     \io_buf_din[2]_INST_0 
-       (.I0(\io_buf_din[2]_INST_0_i_1_n_0 ),
-        .I1(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I2(\io_buf_din[5]_1 ),
-        .I3(io_buf_din_2_sn_1),
-        .I4(\io_buf_din[2]_0 ),
-        .I5(\state_reg[1]_1 ),
-        .O(io_buf_din[1]));
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(\io_buf_din[2]_INST_0_i_1_n_0 ),
+        .I2(\transferState_reg_n_0_[1] ),
+        .I3(\io_buf_din[2]_INST_0_i_2_n_0 ),
+        .I4(\cnt_reg_n_0_[2] ),
+        .I5(io_buf_din_2_sn_1),
+        .O(io_buf_din[2]));
   LUT6 #(
-    .INIT(64'hCCCCCCCCDDCC0FFF)) 
+    .INIT(64'h0C0C0C0CAA0C0000)) 
     \io_buf_din[2]_INST_0_i_1 
        (.I0(data2[2]),
-        .I1(\io_buf_din[2]_INST_0_i_4_n_0 ),
-        .I2(\cnt_reg_n_0_[2] ),
+        .I1(Q[0]),
+        .I2(Q[1]),
         .I3(\transferState_reg_n_0_[1] ),
         .I4(\transferState_reg_n_0_[0] ),
         .I5(\transferState_reg_n_0_[2] ),
         .O(\io_buf_din[2]_INST_0_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair37" *) 
-  LUT5 #(
-    .INIT(32'hD0DDDDDD)) 
-    \io_buf_din[2]_INST_0_i_4 
-       (.I0(Q[0]),
-        .I1(Q[1]),
+  (* SOFT_HLUTNM = "soft_lutpair56" *) 
+  LUT2 #(
+    .INIT(4'hE)) 
+    \io_buf_din[2]_INST_0_i_2 
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .O(\io_buf_din[2]_INST_0_i_2_n_0 ));
+  LUT6 #(
+    .INIT(64'h00022202AAAAAAAA)) 
+    \io_buf_din[3]_INST_0 
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(\io_buf_addr[10]_INST_0_i_2_n_0 ),
+        .I2(io_buf_din_3_sn_1),
+        .I3(\io_buf_din[3]_0 ),
+        .I4(\io_buf_din[3]_1 ),
+        .I5(\io_buf_din[3]_INST_0_i_3_n_0 ),
+        .O(io_buf_din[3]));
+  (* SOFT_HLUTNM = "soft_lutpair43" *) 
+  LUT4 #(
+    .INIT(16'hFDFF)) 
+    \io_buf_din[3]_INST_0_i_3 
+       (.I0(\cnt_reg_n_0_[3] ),
+        .I1(\transferState_reg_n_0_[2] ),
+        .I2(\transferState_reg_n_0_[0] ),
+        .I3(\transferState_reg_n_0_[1] ),
+        .O(\io_buf_din[3]_INST_0_i_3_n_0 ));
+  LUT6 #(
+    .INIT(64'h0000A808AAAAAAAA)) 
+    \io_buf_din[4]_INST_0 
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(io_buf_din_4_sn_1),
+        .I2(\io_buf_din[3]_0 ),
+        .I3(\io_buf_din[4]_0 ),
+        .I4(\io_buf_addr[10]_INST_0_i_2_n_0 ),
+        .I5(\io_buf_din[4]_INST_0_i_3_n_0 ),
+        .O(io_buf_din[4]));
+  (* SOFT_HLUTNM = "soft_lutpair44" *) 
+  LUT4 #(
+    .INIT(16'hFDFF)) 
+    \io_buf_din[4]_INST_0_i_3 
+       (.I0(\cnt_reg_n_0_[4] ),
+        .I1(\transferState_reg_n_0_[2] ),
+        .I2(\transferState_reg_n_0_[0] ),
+        .I3(\transferState_reg_n_0_[1] ),
+        .O(\io_buf_din[4]_INST_0_i_3_n_0 ));
+  LUT6 #(
+    .INIT(64'h000A000800000008)) 
+    \io_buf_din[5]_INST_0 
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(io_buf_din_5_sn_1),
         .I2(\transferState_reg_n_0_[2] ),
         .I3(\transferState_reg_n_0_[0] ),
         .I4(\transferState_reg_n_0_[1] ),
-        .O(\io_buf_din[2]_INST_0_i_4_n_0 ));
-  LUT6 #(
-    .INIT(64'h8A888A8A8A888A88)) 
-    \io_buf_din[3]_INST_0 
-       (.I0(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I1(\io_buf_din[3]_INST_0_i_1_n_0 ),
-        .I2(\io_buf_din[5]_INST_0_i_2_n_0 ),
-        .I3(io_buf_din_3_sn_1),
-        .I4(\io_buf_din[3]_0 ),
-        .I5(\io_buf_din[5]_1 ),
-        .O(io_buf_din[2]));
-  (* SOFT_HLUTNM = "soft_lutpair41" *) 
-  LUT4 #(
-    .INIT(16'h1000)) 
-    \io_buf_din[3]_INST_0_i_1 
-       (.I0(\transferState_reg_n_0_[2] ),
-        .I1(\transferState_reg_n_0_[0] ),
-        .I2(\transferState_reg_n_0_[1] ),
-        .I3(\cnt_reg_n_0_[3] ),
-        .O(\io_buf_din[3]_INST_0_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h000000A000000030)) 
-    \io_buf_din[4]_INST_0 
-       (.I0(\cnt_reg_n_0_[4] ),
-        .I1(io_buf_din_4_sn_1),
-        .I2(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I3(\transferState_reg_n_0_[2] ),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[1] ),
-        .O(io_buf_din[3]));
-  LUT6 #(
-    .INIT(64'h8A888A8A8A888A88)) 
-    \io_buf_din[5]_INST_0 
-       (.I0(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I1(\io_buf_din[5]_INST_0_i_1_n_0 ),
-        .I2(\io_buf_din[5]_INST_0_i_2_n_0 ),
-        .I3(io_buf_din_5_sn_1),
-        .I4(\io_buf_din[5]_0 ),
-        .I5(\io_buf_din[5]_1 ),
-        .O(io_buf_din[4]));
-  (* SOFT_HLUTNM = "soft_lutpair40" *) 
-  LUT4 #(
-    .INIT(16'h1000)) 
-    \io_buf_din[5]_INST_0_i_1 
-       (.I0(\transferState_reg_n_0_[2] ),
-        .I1(\transferState_reg_n_0_[0] ),
-        .I2(\transferState_reg_n_0_[1] ),
-        .I3(\cnt_reg_n_0_[5] ),
-        .O(\io_buf_din[5]_INST_0_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair37" *) 
-  LUT3 #(
-    .INIT(8'hFE)) 
-    \io_buf_din[5]_INST_0_i_2 
-       (.I0(\transferState_reg_n_0_[1] ),
-        .I1(\transferState_reg_n_0_[0] ),
-        .I2(\transferState_reg_n_0_[2] ),
-        .O(\io_buf_din[5]_INST_0_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair38" *) 
-  LUT5 #(
-    .INIT(32'h00000800)) 
-    \io_buf_din[6]_INST_0_i_1 
-       (.I0(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I1(\transferState_reg_n_0_[1] ),
-        .I2(\transferState_reg_n_0_[2] ),
-        .I3(\cnt_reg_n_0_[6] ),
-        .I4(\transferState_reg_n_0_[0] ),
-        .O(\transferState_reg[1]_1 ));
-  LUT6 #(
-    .INIT(64'h000000A000000030)) 
-    \io_buf_din[7]_INST_0 
-       (.I0(\cnt_reg_n_0_[7] ),
-        .I1(\io_buf_din[7] ),
-        .I2(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I3(\transferState_reg_n_0_[2] ),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[1] ),
+        .I5(\cnt_reg_n_0_[5] ),
         .O(io_buf_din[5]));
   LUT6 #(
-    .INIT(64'h0C0C0C0C0CFF0404)) 
-    io_buf_we_INST_0
-       (.I0(io_buf_we_0),
-        .I1(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I2(\transferState_reg_n_0_[2] ),
-        .I3(io_buf_we_INST_0_i_2_n_0),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[1] ),
-        .O(io_buf_we));
-  (* SOFT_HLUTNM = "soft_lutpair42" *) 
+    .INIT(64'h8888888A8A8A888A)) 
+    \io_buf_din[6]_INST_0 
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(\io_buf_din[6]_INST_0_i_1_n_0 ),
+        .I2(\io_buf_addr[10]_INST_0_i_2_n_0 ),
+        .I3(io_buf_din_6_sn_1),
+        .I4(\io_buf_din[3]_0 ),
+        .I5(\io_buf_din[6]_0 ),
+        .O(io_buf_din[6]));
+  (* SOFT_HLUTNM = "soft_lutpair44" *) 
   LUT4 #(
-    .INIT(16'hFFEF)) 
-    io_buf_we_INST_0_i_2
+    .INIT(16'h0200)) 
+    \io_buf_din[6]_INST_0_i_1 
+       (.I0(\cnt_reg_n_0_[6] ),
+        .I1(\transferState_reg_n_0_[2] ),
+        .I2(\transferState_reg_n_0_[0] ),
+        .I3(\transferState_reg_n_0_[1] ),
+        .O(\io_buf_din[6]_INST_0_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h0000A808AAAAAAAA)) 
+    \io_buf_din[7]_INST_0 
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(io_buf_din_7_sn_1),
+        .I2(\io_buf_din[3]_0 ),
+        .I3(\io_buf_din[7]_0 ),
+        .I4(\io_buf_addr[10]_INST_0_i_2_n_0 ),
+        .I5(\io_buf_din[7]_INST_0_i_4_n_0 ),
+        .O(io_buf_din[7]));
+  (* SOFT_HLUTNM = "soft_lutpair43" *) 
+  LUT4 #(
+    .INIT(16'hFDFF)) 
+    \io_buf_din[7]_INST_0_i_4 
+       (.I0(\cnt_reg_n_0_[7] ),
+        .I1(\transferState_reg_n_0_[2] ),
+        .I2(\transferState_reg_n_0_[0] ),
+        .I3(\transferState_reg_n_0_[1] ),
+        .O(\io_buf_din[7]_INST_0_i_4_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFAAAEAFFFFAAEA)) 
+    io_buf_we_INST_0
+       (.I0(io_buf_we_INST_0_i_1_n_0),
+        .I1(io_buf_we_INST_0_i_2_n_0),
+        .I2(\transferState_reg_n_0_[0] ),
+        .I3(\transferState_reg_n_0_[1] ),
+        .I4(io_buf_we_INST_0_i_3_n_0),
+        .I5(io_buf_we_0),
+        .O(io_buf_we));
+  (* SOFT_HLUTNM = "soft_lutpair54" *) 
+  LUT3 #(
+    .INIT(8'h01)) 
+    io_buf_we_INST_0_i_1
        (.I0(\state_reg[0]_0 ),
-        .I1(\state_reg[1]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\transferState_reg_n_0_[2] ),
+        .I1(\state_reg_n_0_[1] ),
+        .I2(\state_reg_n_0_[2] ),
+        .O(io_buf_we_INST_0_i_1_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair45" *) 
+  LUT4 #(
+    .INIT(16'h0400)) 
+    io_buf_we_INST_0_i_2
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg_n_0_[1] ),
+        .I3(\state_reg_n_0_[2] ),
         .O(io_buf_we_INST_0_i_2_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair40" *) 
+  LUT4 #(
+    .INIT(16'h0004)) 
+    io_buf_we_INST_0_i_3
+       (.I0(\state_reg_n_0_[1] ),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg[0]_0 ),
+        .I3(\transferState_reg_n_0_[2] ),
+        .O(io_buf_we_INST_0_i_3_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair37" *) 
+  LUT4 #(
+    .INIT(16'hFE01)) 
+    \rstCnt[0]_i_1 
+       (.I0(\state_reg_n_0_[2] ),
+        .I1(\state_reg_n_0_[1] ),
+        .I2(\state_reg[0]_0 ),
+        .I3(rstCnt[0]),
+        .O(\rstCnt[0]_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair37" *) 
+  LUT5 #(
+    .INIT(32'hFFFD0002)) 
+    \rstCnt[1]_i_1 
+       (.I0(rstCnt[0]),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg_n_0_[1] ),
+        .I3(\state_reg_n_0_[2] ),
+        .I4(rstCnt[1]),
+        .O(\rstCnt[1]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hAAACAA0AAAAAAAAA)) 
+    .INIT(64'hFFFFFFF700000008)) 
+    \rstCnt[2]_i_1 
+       (.I0(rstCnt[1]),
+        .I1(rstCnt[0]),
+        .I2(\state_reg[0]_0 ),
+        .I3(\state_reg_n_0_[1] ),
+        .I4(\state_reg_n_0_[2] ),
+        .I5(rstCnt[2]),
+        .O(\rstCnt[2]_i_1_n_0 ));
+  FDRE \rstCnt_reg[0] 
+       (.C(clock),
+        .CE(1'b1),
+        .D(\rstCnt[0]_i_1_n_0 ),
+        .Q(rstCnt[0]),
+        .R(reset));
+  FDRE \rstCnt_reg[1] 
+       (.C(clock),
+        .CE(1'b1),
+        .D(\rstCnt[1]_i_1_n_0 ),
+        .Q(rstCnt[1]),
+        .R(reset));
+  FDRE \rstCnt_reg[2] 
+       (.C(clock),
+        .CE(1'b1),
+        .D(\rstCnt[2]_i_1_n_0 ),
+        .Q(rstCnt[2]),
+        .R(reset));
+  LUT4 #(
+    .INIT(16'h0CAA)) 
     \sendingSlot[0]_i_1 
-       (.I0(_T_74[11]),
+       (.I0(\sendingSlot_reg_n_0_[0] ),
         .I1(\head_reg_n_0_[0] ),
-        .I2(\state_reg[1]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .I4(\state_reg[0]_0 ),
-        .I5(io_buf_dout_0_sn_1),
+        .I2(\state_reg[0]_0 ),
+        .I3(\io_buf_addr[1]_INST_0_i_1_n_0 ),
         .O(\sendingSlot[0]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'hAAACAA0AAAAAAAAA)) 
+  LUT4 #(
+    .INIT(16'h0CAA)) 
     \sendingSlot[1]_i_1 
-       (.I0(_T_74[12]),
+       (.I0(\sendingSlot_reg_n_0_[1] ),
         .I1(\head_reg_n_0_[1] ),
-        .I2(\state_reg[1]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .I4(\state_reg[0]_0 ),
-        .I5(io_buf_dout_0_sn_1),
+        .I2(\state_reg[0]_0 ),
+        .I3(\io_buf_addr[1]_INST_0_i_1_n_0 ),
         .O(\sendingSlot[1]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'hAAACAA0AAAAAAAAA)) 
+  LUT4 #(
+    .INIT(16'h0CAA)) 
     \sendingSlot[2]_i_1 
-       (.I0(_T_74[13]),
+       (.I0(\sendingSlot_reg_n_0_[2] ),
         .I1(\head_reg_n_0_[2] ),
-        .I2(\state_reg[1]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .I4(\state_reg[0]_0 ),
-        .I5(io_buf_dout_0_sn_1),
+        .I2(\state_reg[0]_0 ),
+        .I3(\io_buf_addr[1]_INST_0_i_1_n_0 ),
         .O(\sendingSlot[2]_i_1_n_0 ));
   FDRE \sendingSlot_reg[0] 
        (.C(clock),
         .CE(1'b1),
         .D(\sendingSlot[0]_i_1_n_0 ),
-        .Q(_T_74[11]),
+        .Q(\sendingSlot_reg_n_0_[0] ),
         .R(1'b0));
   FDRE \sendingSlot_reg[1] 
        (.C(clock),
         .CE(1'b1),
         .D(\sendingSlot[1]_i_1_n_0 ),
-        .Q(_T_74[12]),
+        .Q(\sendingSlot_reg_n_0_[1] ),
         .R(1'b0));
   FDRE \sendingSlot_reg[2] 
        (.C(clock),
         .CE(1'b1),
         .D(\sendingSlot[2]_i_1_n_0 ),
-        .Q(_T_74[13]),
+        .Q(\sendingSlot_reg_n_0_[2] ),
         .R(1'b0));
   LUT6 #(
-    .INIT(64'h0000000055540000)) 
-    \state[0]_i_1 
-       (.I0(reset),
-        .I1(\state_reg[1]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\state_reg[0]_1 ),
-        .I5(\state[0]_i_3_n_0 ),
-        .O(\state[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair43" *) 
-  LUT4 #(
-    .INIT(16'h0200)) 
-    \state[0]_i_3 
-       (.I0(io_buf_dout_0_sn_1),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[1]_0 ),
-        .O(\state[0]_i_3_n_0 ));
+    .INIT(64'h0000000800000000)) 
+    \state[0]_i_3__0 
+       (.I0(rstCnt[1]),
+        .I1(rstCnt[0]),
+        .I2(\state_reg[0]_0 ),
+        .I3(\state_reg_n_0_[1] ),
+        .I4(\state_reg_n_0_[2] ),
+        .I5(rstCnt[2]),
+        .O(\rstCnt_reg[1]_0 ));
   LUT6 #(
-    .INIT(64'hCDC3CDC3CDF3CDC3)) 
-    \state[1]_i_1__1 
-       (.I0(io_buf_dout_0_sn_1),
-        .I1(\state_reg[1]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\transferState_reg_n_0_[2] ),
-        .I5(\state[1]_i_2__1_n_0 ),
-        .O(\state[1]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair47" *) 
-  LUT2 #(
-    .INIT(4'hE)) 
-    \state[1]_i_2__1 
+    .INIT(64'h0000FFFF1010FF00)) 
+    \state[0]_i_4 
        (.I0(\transferState_reg_n_0_[0] ),
         .I1(\transferState_reg_n_0_[1] ),
-        .O(\state[1]_i_2__1_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000055085580)) 
-    \state[2]_i_1 
-       (.I0(state),
-        .I1(io_buf_dout_0_sn_1),
-        .I2(\state_reg[0]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .I4(\state_reg[1]_0 ),
-        .I5(reset),
-        .O(\state[2]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h000002FF0002FF00)) 
-    \state[2]_i_2__0 
-       (.I0(\transferState_reg_n_0_[2] ),
-        .I1(\transferState_reg_n_0_[0] ),
-        .I2(\transferState_reg_n_0_[1] ),
+        .I2(\transferState_reg_n_0_[2] ),
         .I3(\state_reg[0]_0 ),
-        .I4(\state_reg[2]_0 ),
-        .I5(\state_reg[1]_0 ),
-        .O(state));
+        .I4(\state_reg_n_0_[2] ),
+        .I5(\state_reg_n_0_[1] ),
+        .O(\transferState_reg[0]_0 ));
+  LUT6 #(
+    .INIT(64'hBAFE888800000000)) 
+    \state[1]_i_1__0 
+       (.I0(\state_reg_n_0_[1] ),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg[0]_0 ),
+        .I3(\state[2]_i_3_n_0 ),
+        .I4(\cnt[10]_i_4_n_0 ),
+        .I5(\state[2]_i_2__0_n_0 ),
+        .O(\state[1]_i_1__0_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair42" *) 
+  LUT5 #(
+    .INIT(32'hA0A880A8)) 
+    \state[2]_i_1 
+       (.I0(\state[2]_i_2__0_n_0 ),
+        .I1(\state_reg_n_0_[1] ),
+        .I2(\state_reg_n_0_[2] ),
+        .I3(\cnt[10]_i_4_n_0 ),
+        .I4(\state[2]_i_3_n_0 ),
+        .O(\state[2]_i_1_n_0 ));
+  LUT5 #(
+    .INIT(32'h15555555)) 
+    \state[2]_i_2__0 
+       (.I0(reset),
+        .I1(rstCnt[2]),
+        .I2(io_buf_we_INST_0_i_1_n_0),
+        .I3(rstCnt[0]),
+        .I4(rstCnt[1]),
+        .O(\state[2]_i_2__0_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair51" *) 
+  LUT3 #(
+    .INIT(8'hFD)) 
+    \state[2]_i_3 
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\transferState_reg_n_0_[1] ),
+        .I2(\transferState_reg_n_0_[0] ),
+        .O(\state[2]_i_3_n_0 ));
+  LUT6 #(
+    .INIT(64'h0DFF0D00FFFFFFFF)) 
+    \state[3]_i_7 
+       (.I0(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I1(\io_buf_addr[10]_INST_0_i_2_n_0 ),
+        .I2(dropping_reg_0),
+        .I3(\state[1]_i_2__0 ),
+        .I4(full),
+        .I5(\state[1]_i_2__0_0 ),
+        .O(dropping_reg_1));
   FDRE \state_reg[0] 
        (.C(clock),
         .CE(1'b1),
-        .D(\state[0]_i_1_n_0 ),
+        .D(\state_reg[0]_2 ),
         .Q(\state_reg[0]_0 ),
-        .R(1'b0));
+        .R(reset));
   FDRE \state_reg[1] 
        (.C(clock),
         .CE(1'b1),
-        .D(\state[1]_i_1__1_n_0 ),
-        .Q(\state_reg[1]_0 ),
-        .R(reset));
+        .D(\state[1]_i_1__0_n_0 ),
+        .Q(\state_reg_n_0_[1] ),
+        .R(1'b0));
   FDRE \state_reg[2] 
        (.C(clock),
         .CE(1'b1),
         .D(\state[2]_i_1_n_0 ),
-        .Q(\state_reg[2]_0 ),
+        .Q(\state_reg_n_0_[2] ),
         .R(1'b0));
-  LUT4 #(
-    .INIT(16'h8FF0)) 
+  LUT6 #(
+    .INIT(64'h8FFFFFFFF0000000)) 
     \tail[0]_i_1 
-       (.I0(data1[12]),
-        .I1(data1[13]),
-        .I2(tail),
-        .I3(data1[11]),
+       (.I0(_T_48[13]),
+        .I1(_T_48[12]),
+        .I2(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I3(\tail[2]_i_3_n_0 ),
+        .I4(\transferState_reg_n_0_[2] ),
+        .I5(_T_48[11]),
         .O(\tail[0]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFFFF7F00000080)) 
+    .INIT(64'hFFF7FFFF00080000)) 
     \tail[1]_i_1 
-       (.I0(data1[11]),
-        .I1(\io_buf_addr[1]_INST_0_i_2_n_0 ),
-        .I2(\transferState_reg_n_0_[2] ),
-        .I3(\transferState_reg_n_0_[0] ),
-        .I4(\transferState_reg_n_0_[1] ),
-        .I5(data1[12]),
+       (.I0(_T_48[11]),
+        .I1(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I2(\transferState_reg_n_0_[0] ),
+        .I3(\transferState_reg_n_0_[1] ),
+        .I4(\transferState_reg_n_0_[2] ),
+        .I5(_T_48[12]),
         .O(\tail[1]_i_1_n_0 ));
   LUT4 #(
-    .INIT(16'h7F80)) 
+    .INIT(16'hAAAB)) 
     \tail[2]_i_1 
-       (.I0(data1[12]),
-        .I1(data1[11]),
-        .I2(tail),
-        .I3(data1[13]),
-        .O(\tail[2]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000000000800)) 
-    \tail[2]_i_2 
-       (.I0(\state_reg[1]_0 ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\transferState_reg_n_0_[2] ),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[1] ),
+       (.I0(reset),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg_n_0_[1] ),
+        .I3(\state_reg[0]_0 ),
         .O(tail));
+  LUT6 #(
+    .INIT(64'h7FFFFFFF80000000)) 
+    \tail[2]_i_2 
+       (.I0(_T_48[12]),
+        .I1(_T_48[11]),
+        .I2(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I3(\tail[2]_i_3_n_0 ),
+        .I4(\transferState_reg_n_0_[2] ),
+        .I5(_T_48[13]),
+        .O(\tail[2]_i_2_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair56" *) 
+  LUT2 #(
+    .INIT(4'h1)) 
+    \tail[2]_i_3 
+       (.I0(\transferState_reg_n_0_[0] ),
+        .I1(\transferState_reg_n_0_[1] ),
+        .O(\tail[2]_i_3_n_0 ));
   FDSE \tail_reg[0] 
        (.C(clock),
         .CE(1'b1),
         .D(\tail[0]_i_1_n_0 ),
-        .Q(data1[11]),
-        .S(reset));
+        .Q(_T_48[11]),
+        .S(tail));
   FDRE \tail_reg[1] 
        (.C(clock),
         .CE(1'b1),
         .D(\tail[1]_i_1_n_0 ),
-        .Q(data1[12]),
-        .R(reset));
+        .Q(_T_48[12]),
+        .R(tail));
   FDRE \tail_reg[2] 
        (.C(clock),
         .CE(1'b1),
-        .D(\tail[2]_i_1_n_0 ),
-        .Q(data1[13]),
-        .R(reset));
+        .D(\tail[2]_i_2_n_0 ),
+        .Q(_T_48[13]),
+        .R(tail));
   LUT6 #(
-    .INIT(64'h0000000000AAB8AA)) 
+    .INIT(64'h0000000000002E22)) 
     \totCnt[10]_i_1 
        (.I0(totCnt[10]),
-        .I1(\io_buf_addr[4]_INST_0_i_1_n_0 ),
-        .I2(io_buf_dout[2]),
-        .I3(\totCnt[10]_i_2_n_0 ),
-        .I4(\io_buf_addr[10]_INST_0_i_3_n_0 ),
+        .I1(totCnt0[10]),
+        .I2(\totCnt[10]_i_3_n_0 ),
+        .I3(io_buf_dout[2]),
+        .I4(totCnt0[7]),
         .I5(reset),
         .O(\totCnt[10]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair50" *) 
+  (* SOFT_HLUTNM = "soft_lutpair40" *) 
+  LUT5 #(
+    .INIT(32'h00002000)) 
+    \totCnt[10]_i_2 
+       (.I0(\state_reg[0]_0 ),
+        .I1(\state_reg_n_0_[1] ),
+        .I2(\state_reg_n_0_[2] ),
+        .I3(\transferState_reg_n_0_[1] ),
+        .I4(\transferState_reg_n_0_[2] ),
+        .O(totCnt0[10]));
+  (* SOFT_HLUTNM = "soft_lutpair39" *) 
   LUT3 #(
     .INIT(8'h02)) 
-    \totCnt[10]_i_2 
-       (.I0(\state_reg[2]_0 ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[1]_0 ),
-        .O(\totCnt[10]_i_2_n_0 ));
+    \totCnt[10]_i_3 
+       (.I0(\transferState_reg_n_0_[1] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[2] ),
+        .O(\totCnt[10]_i_3_n_0 ));
   LUT6 #(
-    .INIT(64'h0000001000000000)) 
+    .INIT(64'h0000100000000000)) 
     \totCnt[7]_i_1 
-       (.I0(\state_reg[1]_0 ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\transferState_reg_n_0_[2] ),
-        .I4(\transferState_reg_n_0_[0] ),
-        .I5(\transferState_reg_n_0_[1] ),
-        .O(\totCnt[7]_i_1_n_0 ));
+       (.I0(\transferState_reg_n_0_[2] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[1] ),
+        .I3(\state_reg[0]_0 ),
+        .I4(\state_reg_n_0_[1] ),
+        .I5(\state_reg_n_0_[2] ),
+        .O(totCnt0[7]));
   LUT6 #(
-    .INIT(64'h0000000000AAB8AA)) 
+    .INIT(64'h0000000000002E22)) 
     \totCnt[8]_i_1 
        (.I0(totCnt[8]),
-        .I1(\io_buf_addr[4]_INST_0_i_1_n_0 ),
-        .I2(io_buf_dout[0]),
-        .I3(\totCnt[10]_i_2_n_0 ),
-        .I4(\io_buf_addr[10]_INST_0_i_3_n_0 ),
+        .I1(totCnt0[10]),
+        .I2(\totCnt[10]_i_3_n_0 ),
+        .I3(io_buf_dout[0]),
+        .I4(totCnt0[7]),
         .I5(reset),
         .O(\totCnt[8]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'h0000000000AAB8AA)) 
+    .INIT(64'h0000000000002E22)) 
     \totCnt[9]_i_1 
        (.I0(totCnt[9]),
-        .I1(\io_buf_addr[4]_INST_0_i_1_n_0 ),
-        .I2(io_buf_dout[1]),
-        .I3(\totCnt[10]_i_2_n_0 ),
-        .I4(\io_buf_addr[10]_INST_0_i_3_n_0 ),
+        .I1(totCnt0[10]),
+        .I2(\totCnt[10]_i_3_n_0 ),
+        .I3(io_buf_dout[1]),
+        .I4(totCnt0[7]),
         .I5(reset),
         .O(\totCnt[9]_i_1_n_0 ));
   FDRE \totCnt_reg[0] 
        (.C(clock),
-        .CE(\totCnt[7]_i_1_n_0 ),
+        .CE(totCnt0[7]),
         .D(io_buf_dout[0]),
         .Q(totCnt[0]),
         .R(reset));
@@ -7395,43 +7562,43 @@ module meowrouter_Router_0_Adapter
         .R(1'b0));
   FDRE \totCnt_reg[1] 
        (.C(clock),
-        .CE(\totCnt[7]_i_1_n_0 ),
+        .CE(totCnt0[7]),
         .D(io_buf_dout[1]),
         .Q(totCnt[1]),
         .R(reset));
   FDRE \totCnt_reg[2] 
        (.C(clock),
-        .CE(\totCnt[7]_i_1_n_0 ),
+        .CE(totCnt0[7]),
         .D(io_buf_dout[2]),
         .Q(totCnt[2]),
         .R(reset));
   FDRE \totCnt_reg[3] 
        (.C(clock),
-        .CE(\totCnt[7]_i_1_n_0 ),
+        .CE(totCnt0[7]),
         .D(io_buf_dout[3]),
         .Q(totCnt[3]),
         .R(reset));
   FDRE \totCnt_reg[4] 
        (.C(clock),
-        .CE(\totCnt[7]_i_1_n_0 ),
+        .CE(totCnt0[7]),
         .D(io_buf_dout[4]),
         .Q(totCnt[4]),
         .R(reset));
   FDRE \totCnt_reg[5] 
        (.C(clock),
-        .CE(\totCnt[7]_i_1_n_0 ),
+        .CE(totCnt0[7]),
         .D(io_buf_dout[5]),
         .Q(totCnt[5]),
         .R(reset));
   FDRE \totCnt_reg[6] 
        (.C(clock),
-        .CE(\totCnt[7]_i_1_n_0 ),
+        .CE(totCnt0[7]),
         .D(io_buf_dout[6]),
         .Q(totCnt[6]),
         .R(reset));
   FDRE \totCnt_reg[7] 
        (.C(clock),
-        .CE(\totCnt[7]_i_1_n_0 ),
+        .CE(totCnt0[7]),
         .D(io_buf_dout[7]),
         .Q(totCnt[7]),
         .R(reset));
@@ -7447,88 +7614,107 @@ module meowrouter_Router_0_Adapter
         .D(\totCnt[9]_i_1_n_0 ),
         .Q(totCnt[9]),
         .R(1'b0));
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \transferState[0]_i_1 
-       (.I0(\transferState[0]_i_2_n_0 ),
-        .I1(\transferState[2]_i_3_n_0 ),
-        .I2(\transferState_reg_n_0_[0] ),
-        .O(\transferState[0]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'h1010101115101011)) 
+    .INIT(64'h010101FF01010100)) 
+    \transferState[0]_i_1 
+       (.I0(\state_reg[1]_1 ),
+        .I1(reset),
+        .I2(\transferState[0]_i_3_n_0 ),
+        .I3(\cnt[10]_i_1_n_0 ),
+        .I4(\transferState[2]_i_3_n_0 ),
+        .I5(\transferState_reg_n_0_[0] ),
+        .O(\transferState[0]_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair55" *) 
+  LUT2 #(
+    .INIT(4'h2)) 
     \transferState[0]_i_2 
-       (.I0(reset),
-        .I1(\io_buf_addr[1]_INST_0_i_3_n_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[1]_0 ),
-        .I4(\state_reg[0]_0 ),
-        .I5(\io_buf_addr[4]_INST_0_i_1_n_0 ),
-        .O(\transferState[0]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair47" *) 
-  LUT4 #(
-    .INIT(16'h1F10)) 
+       (.I0(\state_reg_n_0_[1] ),
+        .I1(\state_reg_n_0_[2] ),
+        .O(\state_reg[1]_1 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFDFFFFF0010)) 
+    \transferState[0]_i_3 
+       (.I0(\transferState_reg_n_0_[1] ),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg_n_0_[2] ),
+        .I3(\state_reg_n_0_[1] ),
+        .I4(\transferState_reg_n_0_[2] ),
+        .I5(\transferState_reg_n_0_[0] ),
+        .O(\transferState[0]_i_3_n_0 ));
+  LUT6 #(
+    .INIT(64'h010101FF01010100)) 
     \transferState[1]_i_1 
-       (.I0(reset),
-        .I1(\transferState[1]_i_2_n_0 ),
-        .I2(\transferState[2]_i_3_n_0 ),
-        .I3(\transferState_reg_n_0_[1] ),
+       (.I0(\transferState[1]_i_2_n_0 ),
+        .I1(reset),
+        .I2(\state_reg[0]_1 ),
+        .I3(\cnt[10]_i_1_n_0 ),
+        .I4(\transferState[2]_i_3_n_0 ),
+        .I5(\transferState_reg_n_0_[1] ),
         .O(\transferState[1]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hFDF30100FDF3F1F3)) 
+    .INIT(64'hFDFD0000FDFCFDFD)) 
     \transferState[1]_i_2 
-       (.I0(io_buf_dout_0_sn_1),
-        .I1(\state_reg[1]_0 ),
-        .I2(\state_reg[2]_0 ),
+       (.I0(\transferState_reg_n_0_[1] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg_n_0_[2] ),
         .I3(\state_reg[0]_0 ),
-        .I4(\io_buf_addr[1]_INST_0_i_3_n_0 ),
-        .I5(\transferState_reg_n_0_[1] ),
+        .I4(\state_reg_n_0_[2] ),
+        .I5(\state_reg_n_0_[1] ),
         .O(\transferState[1]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair36" *) 
-  LUT5 #(
-    .INIT(32'hAAFF2000)) 
+  (* SOFT_HLUTNM = "soft_lutpair46" *) 
+  LUT4 #(
+    .INIT(16'h0004)) 
+    \transferState[1]_i_3 
+       (.I0(\state_reg[0]_0 ),
+        .I1(\state_reg_n_0_[1] ),
+        .I2(\state_reg_n_0_[2] ),
+        .I3(io_buf_dout_0_sn_1),
+        .O(\state_reg[0]_1 ));
+  LUT6 #(
+    .INIT(64'hAAAAAAFF20202000)) 
     \transferState[2]_i_1 
        (.I0(\transferState[2]_i_2_n_0 ),
         .I1(\transferState_reg_n_0_[1] ),
         .I2(\transferState_reg_n_0_[0] ),
-        .I3(\transferState[2]_i_3_n_0 ),
-        .I4(\transferState_reg_n_0_[2] ),
+        .I3(\cnt[10]_i_1_n_0 ),
+        .I4(\transferState[2]_i_3_n_0 ),
+        .I5(\transferState_reg_n_0_[2] ),
         .O(\transferState[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair45" *) 
-  LUT4 #(
-    .INIT(16'h5451)) 
+  (* SOFT_HLUTNM = "soft_lutpair53" *) 
+  LUT3 #(
+    .INIT(8'h45)) 
     \transferState[2]_i_2 
        (.I0(reset),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[1]_0 ),
+        .I1(\state_reg_n_0_[2] ),
+        .I2(\state_reg_n_0_[1] ),
         .O(\transferState[2]_i_2_n_0 ));
-  LUT4 #(
-    .INIT(16'hFFFE)) 
+  LUT6 #(
+    .INIT(64'hFFFFFFFF0000FE00)) 
     \transferState[2]_i_3 
-       (.I0(\transferState[2]_i_4_n_0 ),
-        .I1(\transferState[2]_i_5_n_0 ),
-        .I2(\state[0]_i_3_n_0 ),
-        .I3(reset),
+       (.I0(\transferState_reg_n_0_[1] ),
+        .I1(\transferState_reg_n_0_[0] ),
+        .I2(\transferState_reg[0]_1 ),
+        .I3(\io_buf_addr[0]_INST_0_i_2_n_0 ),
+        .I4(\transferState_reg_n_0_[2] ),
+        .I5(\transferState[2]_i_4_n_0 ),
         .O(\transferState[2]_i_3_n_0 ));
   LUT6 #(
-    .INIT(64'hC8C8C8C8FFF8F8F8)) 
+    .INIT(64'h1111111111111000)) 
     \transferState[2]_i_4 
-       (.I0(\transferState[2]_i_3_0 ),
-        .I1(\io_buf_addr[13]_INST_0_i_2_n_0 ),
-        .I2(\state[1]_i_2__1_n_0 ),
-        .I3(io_buf_addr_2_sn_1),
-        .I4(CO),
-        .I5(io_buf_we_INST_0_i_2_n_0),
+       (.I0(\transferState[2]_i_5_n_0 ),
+        .I1(\transferState_reg_n_0_[2] ),
+        .I2(CO),
+        .I3(io_buf_addr_3_sn_1),
+        .I4(\transferState_reg_n_0_[0] ),
+        .I5(\transferState_reg_n_0_[1] ),
         .O(\transferState[2]_i_4_n_0 ));
-  LUT6 #(
-    .INIT(64'h1010101010000000)) 
+  (* SOFT_HLUTNM = "soft_lutpair53" *) 
+  LUT3 #(
+    .INIT(8'hDF)) 
     \transferState[2]_i_5 
-       (.I0(\state_reg[1]_0 ),
-        .I1(\state_reg[2]_0 ),
+       (.I0(\state_reg_n_0_[2] ),
+        .I1(\state_reg_n_0_[1] ),
         .I2(\state_reg[0]_0 ),
-        .I3(\head_reg[0]_0 ),
-        .I4(\transferState[2]_i_3_1 ),
-        .I5(io_buf_dout_0_sn_1),
         .O(\transferState[2]_i_5_n_0 ));
   FDRE \transferState_reg[0] 
        (.C(clock),
@@ -7549,15 +7735,15 @@ module meowrouter_Router_0_Adapter
         .Q(\transferState_reg_n_0_[2] ),
         .R(1'b0));
   LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFFEFF)) 
-    xpm_fifo_async_i_11
-       (.I0(\transferState_reg_n_0_[1] ),
+    .INIT(64'hFFFFFEFFFFFFFFFF)) 
+    xpm_fifo_async_i_12
+       (.I0(\transferState_reg_n_0_[2] ),
         .I1(\transferState_reg_n_0_[0] ),
-        .I2(\transferState_reg_n_0_[2] ),
-        .I3(\state_reg[2]_0 ),
-        .I4(\state_reg[1]_0 ),
-        .I5(\state_reg[0]_0 ),
-        .O(\transferState_reg[1]_0 ));
+        .I2(\transferState_reg_n_0_[1] ),
+        .I3(\state_reg[0]_0 ),
+        .I4(\state_reg_n_0_[1] ),
+        .I5(\state_reg_n_0_[2] ),
+        .O(\transferState_reg[2]_0 ));
 endmodule
 
 (* ORIG_REF_NAME = "AsyncBridge" *) 
@@ -7571,7 +7757,7 @@ module meowrouter_Router_0_AsyncBridge
     \gen_fwft.empty_fwft_i_reg_0 ,
     S,
     \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][22] ,
-    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][28] ,
+    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][27] ,
     D,
     reset,
     io_rx_clk,
@@ -7621,7 +7807,7 @@ module meowrouter_Router_0_AsyncBridge
   output \gen_fwft.empty_fwft_i_reg_0 ;
   output [3:0]S;
   output [3:0]\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][22] ;
-  output [1:0]\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][28] ;
+  output [1:0]\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][27] ;
   output [0:0]D;
   input reset;
   input io_rx_clk;
@@ -7716,7 +7902,7 @@ module meowrouter_Router_0_AsyncBridge
   wire [260:0]\gen_rd_b.doutb_reg_reg[259] ;
   wire \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][164] ;
   wire [3:0]\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][22] ;
-  wire [1:0]\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][28] ;
+  wire [1:0]\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][27] ;
   wire io_rx_clk;
   wire reset;
   wire reset_0;
@@ -7779,23 +7965,23 @@ module meowrouter_Router_0_AsyncBridge
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     _T_37_carry__1_i_2
-       (.I0(dout[28]),
+       (.I0(dout[27]),
         .I1(_T_37_carry__1_2),
         .I2(dout[29]),
         .I3(_T_37_carry__1_3),
         .I4(_T_37_carry__1_4),
-        .I5(dout[27]),
-        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][28] [1]));
+        .I5(dout[28]),
+        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][27] [1]));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     _T_37_carry__1_i_3
-       (.I0(dout[25]),
+       (.I0(dout[26]),
         .I1(_T_37_carry__1),
-        .I2(dout[26]),
+        .I2(dout[25]),
         .I3(_T_37_carry__1_0),
         .I4(_T_37_carry__1_1),
         .I5(dout[24]),
-        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][28] [0]));
+        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][27] [0]));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     _T_37_carry_i_1
@@ -7821,21 +8007,22 @@ module meowrouter_Router_0_AsyncBridge
     _T_37_carry_i_3
        (.I0(dout[4]),
         .I1(_T_37_carry_2),
-        .I2(dout[5]),
+        .I2(dout[3]),
         .I3(_T_37_carry_3),
         .I4(_T_37_carry_4),
-        .I5(dout[3]),
+        .I5(dout[5]),
         .O(S[1]));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     _T_37_carry_i_4
-       (.I0(dout[1]),
+       (.I0(dout[0]),
         .I1(_T_37_carry),
-        .I2(dout[0]),
+        .I2(dout[2]),
         .I3(_T_37_carry_0),
         .I4(_T_37_carry_1),
-        .I5(dout[2]),
+        .I5(dout[1]),
         .O(S[0]));
+  (* SOFT_HLUTNM = "soft_lutpair35" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \addr[31]_i_2 
@@ -7845,18 +8032,19 @@ module meowrouter_Router_0_AsyncBridge
   LUT4 #(
     .INIT(16'h7FFF)) 
     \cnt[2]_i_10 
-       (.I0(dout[27]),
-        .I1(dout[8]),
-        .I2(dout[12]),
-        .I3(dout[6]),
+       (.I0(dout[30]),
+        .I1(dout[25]),
+        .I2(dout[24]),
+        .I3(dout[9]),
         .O(\cnt[2]_i_10_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair35" *) 
   LUT4 #(
     .INIT(16'h7FFF)) 
     \cnt[2]_i_11 
-       (.I0(dout[11]),
-        .I1(dout[0]),
-        .I2(dout[23]),
-        .I3(dout[16]),
+       (.I0(dout[31]),
+        .I1(dout[10]),
+        .I2(dout[28]),
+        .I3(dout[4]),
         .O(\cnt[2]_i_11_n_0 ));
   LUT6 #(
     .INIT(64'hFFFBFFFBFFFBFFFF)) 
@@ -7872,54 +8060,54 @@ module meowrouter_Router_0_AsyncBridge
     .INIT(64'hFFFFFFFFBFFFFFFF)) 
     \cnt[2]_i_4 
        (.I0(\cnt[2]_i_6_n_0 ),
-        .I1(dout[31]),
-        .I2(dout[25]),
-        .I3(dout[24]),
-        .I4(dout[9]),
+        .I1(dout[15]),
+        .I2(dout[0]),
+        .I3(dout[14]),
+        .I4(dout[7]),
         .I5(\cnt[2]_i_7_n_0 ),
         .O(\cnt[2]_i_4_n_0 ));
   LUT6 #(
     .INIT(64'hFFFFFFFFBFFFFFFF)) 
     \cnt[2]_i_5 
        (.I0(\cnt[2]_i_8_n_0 ),
-        .I1(dout[20]),
-        .I2(dout[10]),
+        .I1(dout[26]),
+        .I2(dout[13]),
         .I3(dout[29]),
-        .I4(dout[7]),
+        .I4(dout[20]),
         .I5(\cnt[2]_i_9_n_0 ),
         .O(\cnt[2]_i_5_n_0 ));
   LUT4 #(
     .INIT(16'h7FFF)) 
     \cnt[2]_i_6 
-       (.I0(dout[15]),
-        .I1(dout[3]),
-        .I2(dout[14]),
-        .I3(dout[4]),
+       (.I0(dout[23]),
+        .I1(dout[17]),
+        .I2(dout[5]),
+        .I3(dout[2]),
         .O(\cnt[2]_i_6_n_0 ));
   LUT5 #(
     .INIT(32'hFFFF7FFF)) 
     \cnt[2]_i_7 
-       (.I0(dout[21]),
-        .I1(dout[30]),
-        .I2(dout[1]),
-        .I3(dout[28]),
+       (.I0(dout[18]),
+        .I1(dout[21]),
+        .I2(dout[8]),
+        .I3(dout[19]),
         .I4(\cnt[2]_i_10_n_0 ),
         .O(\cnt[2]_i_7_n_0 ));
   LUT4 #(
     .INIT(16'h7FFF)) 
     \cnt[2]_i_8 
-       (.I0(dout[19]),
-        .I1(dout[18]),
-        .I2(dout[26]),
-        .I3(dout[13]),
+       (.I0(dout[27]),
+        .I1(dout[12]),
+        .I2(dout[6]),
+        .I3(dout[1]),
         .O(\cnt[2]_i_8_n_0 ));
   LUT5 #(
     .INIT(32'hFFFF7FFF)) 
     \cnt[2]_i_9 
-       (.I0(dout[2]),
-        .I1(dout[5]),
-        .I2(dout[17]),
-        .I3(dout[22]),
+       (.I0(dout[16]),
+        .I1(dout[22]),
+        .I2(dout[3]),
+        .I3(dout[11]),
         .I4(\cnt[2]_i_11_n_0 ),
         .O(\cnt[2]_i_9_n_0 ));
   LUT5 #(
@@ -8200,11 +8388,9 @@ endmodule
 (* ORIG_REF_NAME = "Ctrl" *) 
 module meowrouter_Router_0_Ctrl
    (\ipStore_4_reg[2]_0 ,
-    \ipStore_4_reg[1]_0 ,
-    \ipStore_4_reg[0]_0 ,
-    \ipStore_4_reg[3]_0 ,
-    \ipStore_4_reg[4]_0 ,
     \ipStore_4_reg[5]_0 ,
+    \ipStore_4_reg[4]_0 ,
+    \ipStore_4_reg[3]_0 ,
     \ipStore_4_reg[8]_0 ,
     \ipStore_4_reg[9]_0 ,
     \ipStore_4_reg[10]_0 ,
@@ -8213,23 +8399,25 @@ module meowrouter_Router_0_Ctrl
     \ipStore_4_reg[13]_0 ,
     \ipStore_4_reg[14]_0 ,
     \ipStore_4_reg[15]_0 ,
-    \ipStore_4_reg[16]_0 ,
-    \ipStore_4_reg[17]_0 ,
+    \ipStore_4_reg[19]_0 ,
     \ipStore_4_reg[18]_0 ,
-    \ipStore_4_reg[20]_0 ,
     \ipStore_4_reg[21]_0 ,
     \ipStore_4_reg[22]_0 ,
     \ipStore_4_reg[23]_0 ,
     \ipStore_4_reg[24]_0 ,
-    \ipStore_4_reg[25]_0 ,
     \ipStore_4_reg[26]_0 ,
-    \ipStore_4_reg[27]_0 ,
+    \ipStore_4_reg[25]_0 ,
     \ipStore_4_reg[28]_0 ,
+    \ipStore_4_reg[27]_0 ,
     \ipStore_4_reg[29]_0 ,
     S,
-    \ipStore_4_reg[19]_0 ,
+    \ipStore_4_reg[20]_0 ,
+    \ipStore_4_reg[17]_0 ,
+    \ipStore_4_reg[16]_0 ,
     \ipStore_4_reg[6]_0 ,
     \ipStore_4_reg[7]_0 ,
+    \ipStore_4_reg[0]_0 ,
+    \ipStore_4_reg[1]_0 ,
     Q,
     \macStore_1_reg[47]_0 ,
     \macStore_2_reg[47]_0 ,
@@ -8240,11 +8428,9 @@ module meowrouter_Router_0_Ctrl
     clock,
     reset);
   output \ipStore_4_reg[2]_0 ;
-  output \ipStore_4_reg[1]_0 ;
-  output \ipStore_4_reg[0]_0 ;
-  output \ipStore_4_reg[3]_0 ;
-  output \ipStore_4_reg[4]_0 ;
   output \ipStore_4_reg[5]_0 ;
+  output \ipStore_4_reg[4]_0 ;
+  output \ipStore_4_reg[3]_0 ;
   output \ipStore_4_reg[8]_0 ;
   output \ipStore_4_reg[9]_0 ;
   output \ipStore_4_reg[10]_0 ;
@@ -8253,23 +8439,25 @@ module meowrouter_Router_0_Ctrl
   output \ipStore_4_reg[13]_0 ;
   output \ipStore_4_reg[14]_0 ;
   output \ipStore_4_reg[15]_0 ;
-  output \ipStore_4_reg[16]_0 ;
-  output \ipStore_4_reg[17]_0 ;
+  output \ipStore_4_reg[19]_0 ;
   output \ipStore_4_reg[18]_0 ;
-  output \ipStore_4_reg[20]_0 ;
   output \ipStore_4_reg[21]_0 ;
   output \ipStore_4_reg[22]_0 ;
   output \ipStore_4_reg[23]_0 ;
   output \ipStore_4_reg[24]_0 ;
-  output \ipStore_4_reg[25]_0 ;
   output \ipStore_4_reg[26]_0 ;
-  output \ipStore_4_reg[27]_0 ;
+  output \ipStore_4_reg[25]_0 ;
   output \ipStore_4_reg[28]_0 ;
+  output \ipStore_4_reg[27]_0 ;
   output \ipStore_4_reg[29]_0 ;
   output [0:0]S;
-  output \ipStore_4_reg[19]_0 ;
+  output \ipStore_4_reg[20]_0 ;
+  output \ipStore_4_reg[17]_0 ;
+  output \ipStore_4_reg[16]_0 ;
   output \ipStore_4_reg[6]_0 ;
   output \ipStore_4_reg[7]_0 ;
+  output \ipStore_4_reg[0]_0 ;
+  output \ipStore_4_reg[1]_0 ;
   output [47:0]Q;
   output [47:0]\macStore_1_reg[47]_0 ;
   output [47:0]\macStore_2_reg[47]_0 ;
@@ -8618,20 +8806,20 @@ module meowrouter_Router_0_Ctrl
     .INIT(16'h9009)) 
     _T_37_carry__1_i_1
        (.I0(_T_37_carry__1_i_4_n_0),
-        .I1(dout[1]),
+        .I1(dout[0]),
         .I2(_T_37_carry__1_i_5_n_0),
-        .I3(dout[0]),
+        .I3(dout[1]),
         .O(S));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry__1_i_10
-       (.I0(ctrl_ips_4[26]),
+       (.I0(ctrl_ips_4[25]),
         .I1(dout[4]),
         .I2(dout[3]),
-        .I3(ctrl_ips_0[26]),
+        .I3(ctrl_ips_0[25]),
         .I4(dout[2]),
         .I5(_T_37_carry__1_i_18_n_0),
-        .O(\ipStore_4_reg[26]_0 ));
+        .O(\ipStore_4_reg[25]_0 ));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry__1_i_11
@@ -8645,32 +8833,32 @@ module meowrouter_Router_0_Ctrl
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     _T_37_carry__1_i_12
-       (.I0(ctrl_ips_3[31]),
-        .I1(ctrl_ips_2[31]),
-        .I2(dout[3]),
-        .I3(ctrl_ips_1[31]),
-        .I4(dout[2]),
-        .I5(ctrl_ips_0[31]),
-        .O(_T_37_carry__1_i_12_n_0));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    _T_37_carry__1_i_13
        (.I0(ctrl_ips_3[30]),
         .I1(ctrl_ips_2[30]),
         .I2(dout[3]),
         .I3(ctrl_ips_1[30]),
         .I4(dout[2]),
         .I5(ctrl_ips_0[30]),
+        .O(_T_37_carry__1_i_12_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    _T_37_carry__1_i_13
+       (.I0(ctrl_ips_3[31]),
+        .I1(ctrl_ips_2[31]),
+        .I2(dout[3]),
+        .I3(ctrl_ips_1[31]),
+        .I4(dout[2]),
+        .I5(ctrl_ips_0[31]),
         .O(_T_37_carry__1_i_13_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     _T_37_carry__1_i_14
-       (.I0(ctrl_ips_3[28]),
-        .I1(ctrl_ips_2[28]),
+       (.I0(ctrl_ips_3[27]),
+        .I1(ctrl_ips_2[27]),
         .I2(dout[3]),
-        .I3(ctrl_ips_1[28]),
+        .I3(ctrl_ips_1[27]),
         .I4(dout[2]),
-        .I5(ctrl_ips_0[28]),
+        .I5(ctrl_ips_0[27]),
         .O(_T_37_carry__1_i_14_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
@@ -8685,32 +8873,32 @@ module meowrouter_Router_0_Ctrl
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     _T_37_carry__1_i_16
-       (.I0(ctrl_ips_3[27]),
-        .I1(ctrl_ips_2[27]),
+       (.I0(ctrl_ips_3[28]),
+        .I1(ctrl_ips_2[28]),
         .I2(dout[3]),
-        .I3(ctrl_ips_1[27]),
+        .I3(ctrl_ips_1[28]),
         .I4(dout[2]),
-        .I5(ctrl_ips_0[27]),
+        .I5(ctrl_ips_0[28]),
         .O(_T_37_carry__1_i_16_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     _T_37_carry__1_i_17
-       (.I0(ctrl_ips_3[25]),
-        .I1(ctrl_ips_2[25]),
-        .I2(dout[3]),
-        .I3(ctrl_ips_1[25]),
-        .I4(dout[2]),
-        .I5(ctrl_ips_0[25]),
-        .O(_T_37_carry__1_i_17_n_0));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    _T_37_carry__1_i_18
        (.I0(ctrl_ips_3[26]),
         .I1(ctrl_ips_2[26]),
         .I2(dout[3]),
         .I3(ctrl_ips_1[26]),
         .I4(dout[2]),
         .I5(ctrl_ips_0[26]),
+        .O(_T_37_carry__1_i_17_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    _T_37_carry__1_i_18
+       (.I0(ctrl_ips_3[25]),
+        .I1(ctrl_ips_2[25]),
+        .I2(dout[3]),
+        .I3(ctrl_ips_1[25]),
+        .I4(dout[2]),
+        .I5(ctrl_ips_0[25]),
         .O(_T_37_carry__1_i_18_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
@@ -8725,33 +8913,33 @@ module meowrouter_Router_0_Ctrl
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry__1_i_4
-       (.I0(ctrl_ips_4[31]),
+       (.I0(ctrl_ips_4[30]),
         .I1(dout[4]),
         .I2(dout[3]),
-        .I3(ctrl_ips_0[31]),
+        .I3(ctrl_ips_0[30]),
         .I4(dout[2]),
         .I5(_T_37_carry__1_i_12_n_0),
         .O(_T_37_carry__1_i_4_n_0));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry__1_i_5
-       (.I0(ctrl_ips_4[30]),
+       (.I0(ctrl_ips_4[31]),
         .I1(dout[4]),
         .I2(dout[3]),
-        .I3(ctrl_ips_0[30]),
+        .I3(ctrl_ips_0[31]),
         .I4(dout[2]),
         .I5(_T_37_carry__1_i_13_n_0),
         .O(_T_37_carry__1_i_5_n_0));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry__1_i_6
-       (.I0(ctrl_ips_4[28]),
+       (.I0(ctrl_ips_4[27]),
         .I1(dout[4]),
         .I2(dout[3]),
-        .I3(ctrl_ips_0[28]),
+        .I3(ctrl_ips_0[27]),
         .I4(dout[2]),
         .I5(_T_37_carry__1_i_14_n_0),
-        .O(\ipStore_4_reg[28]_0 ));
+        .O(\ipStore_4_reg[27]_0 ));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry__1_i_7
@@ -8765,23 +8953,23 @@ module meowrouter_Router_0_Ctrl
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry__1_i_8
-       (.I0(ctrl_ips_4[27]),
+       (.I0(ctrl_ips_4[28]),
         .I1(dout[4]),
         .I2(dout[3]),
-        .I3(ctrl_ips_0[27]),
+        .I3(ctrl_ips_0[28]),
         .I4(dout[2]),
         .I5(_T_37_carry__1_i_16_n_0),
-        .O(\ipStore_4_reg[27]_0 ));
+        .O(\ipStore_4_reg[28]_0 ));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry__1_i_9
-       (.I0(ctrl_ips_4[25]),
+       (.I0(ctrl_ips_4[26]),
         .I1(dout[4]),
         .I2(dout[3]),
-        .I3(ctrl_ips_0[25]),
+        .I3(ctrl_ips_0[26]),
         .I4(dout[2]),
         .I5(_T_37_carry__1_i_17_n_0),
-        .O(\ipStore_4_reg[25]_0 ));
+        .O(\ipStore_4_reg[26]_0 ));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry_i_10
@@ -8805,53 +8993,53 @@ module meowrouter_Router_0_Ctrl
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
     _T_37_carry_i_12
-       (.I0(ctrl_ips_4[5]),
-        .I1(dout[4]),
-        .I2(dout[3]),
-        .I3(ctrl_ips_0[5]),
-        .I4(dout[2]),
-        .I5(_T_37_carry_i_24_n_0),
-        .O(\ipStore_4_reg[5]_0 ));
-  LUT6 #(
-    .INIT(64'hFF33FB3BCC00C808)) 
-    _T_37_carry_i_13
        (.I0(ctrl_ips_4[3]),
         .I1(dout[4]),
         .I2(dout[3]),
         .I3(ctrl_ips_0[3]),
         .I4(dout[2]),
-        .I5(_T_37_carry_i_25_n_0),
+        .I5(_T_37_carry_i_24_n_0),
         .O(\ipStore_4_reg[3]_0 ));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
-    _T_37_carry_i_14
-       (.I0(ctrl_ips_4[1]),
+    _T_37_carry_i_13
+       (.I0(ctrl_ips_4[5]),
         .I1(dout[4]),
         .I2(dout[3]),
-        .I3(ctrl_ips_0[1]),
+        .I3(ctrl_ips_0[5]),
         .I4(dout[2]),
-        .I5(_T_37_carry_i_26_n_0),
-        .O(\ipStore_4_reg[1]_0 ));
+        .I5(_T_37_carry_i_25_n_0),
+        .O(\ipStore_4_reg[5]_0 ));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
-    _T_37_carry_i_15
+    _T_37_carry_i_14
        (.I0(ctrl_ips_4[0]),
         .I1(dout[4]),
         .I2(dout[3]),
         .I3(ctrl_ips_0[0]),
         .I4(dout[2]),
-        .I5(_T_37_carry_i_27_n_0),
+        .I5(_T_37_carry_i_26_n_0),
         .O(\ipStore_4_reg[0]_0 ));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
-    _T_37_carry_i_16
+    _T_37_carry_i_15
        (.I0(ctrl_ips_4[2]),
         .I1(dout[4]),
         .I2(dout[3]),
         .I3(ctrl_ips_0[2]),
         .I4(dout[2]),
-        .I5(_T_37_carry_i_28_n_0),
+        .I5(_T_37_carry_i_27_n_0),
         .O(\ipStore_4_reg[2]_0 ));
+  LUT6 #(
+    .INIT(64'hFF33FB3BCC00C808)) 
+    _T_37_carry_i_16
+       (.I0(ctrl_ips_4[1]),
+        .I1(dout[4]),
+        .I2(dout[3]),
+        .I3(ctrl_ips_0[1]),
+        .I4(dout[2]),
+        .I5(_T_37_carry_i_28_n_0),
+        .O(\ipStore_4_reg[1]_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     _T_37_carry_i_17
@@ -8925,52 +9113,52 @@ module meowrouter_Router_0_Ctrl
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     _T_37_carry_i_24
-       (.I0(ctrl_ips_3[5]),
-        .I1(ctrl_ips_2[5]),
-        .I2(dout[3]),
-        .I3(ctrl_ips_1[5]),
-        .I4(dout[2]),
-        .I5(ctrl_ips_0[5]),
-        .O(_T_37_carry_i_24_n_0));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    _T_37_carry_i_25
        (.I0(ctrl_ips_3[3]),
         .I1(ctrl_ips_2[3]),
         .I2(dout[3]),
         .I3(ctrl_ips_1[3]),
         .I4(dout[2]),
         .I5(ctrl_ips_0[3]),
+        .O(_T_37_carry_i_24_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    _T_37_carry_i_25
+       (.I0(ctrl_ips_3[5]),
+        .I1(ctrl_ips_2[5]),
+        .I2(dout[3]),
+        .I3(ctrl_ips_1[5]),
+        .I4(dout[2]),
+        .I5(ctrl_ips_0[5]),
         .O(_T_37_carry_i_25_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     _T_37_carry_i_26
-       (.I0(ctrl_ips_3[1]),
-        .I1(ctrl_ips_2[1]),
-        .I2(dout[3]),
-        .I3(ctrl_ips_1[1]),
-        .I4(dout[2]),
-        .I5(ctrl_ips_0[1]),
-        .O(_T_37_carry_i_26_n_0));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    _T_37_carry_i_27
        (.I0(ctrl_ips_3[0]),
         .I1(ctrl_ips_2[0]),
         .I2(dout[3]),
         .I3(ctrl_ips_1[0]),
         .I4(dout[2]),
         .I5(ctrl_ips_0[0]),
-        .O(_T_37_carry_i_27_n_0));
+        .O(_T_37_carry_i_26_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    _T_37_carry_i_28
+    _T_37_carry_i_27
        (.I0(ctrl_ips_3[2]),
         .I1(ctrl_ips_2[2]),
         .I2(dout[3]),
         .I3(ctrl_ips_1[2]),
         .I4(dout[2]),
         .I5(ctrl_ips_0[2]),
+        .O(_T_37_carry_i_27_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    _T_37_carry_i_28
+       (.I0(ctrl_ips_3[1]),
+        .I1(ctrl_ips_2[1]),
+        .I2(dout[3]),
+        .I3(ctrl_ips_1[1]),
+        .I4(dout[2]),
+        .I5(ctrl_ips_0[1]),
         .O(_T_37_carry_i_28_n_0));
   LUT6 #(
     .INIT(64'hFF33FB3BCC00C808)) 
@@ -11604,6 +11792,7 @@ endmodule
 module meowrouter_Router_0_Encoder
    (\state_reg[3]_0 ,
     \state_reg[2]_0 ,
+    \state_reg[1]_0 ,
     \state_reg[0]_0 ,
     \cnt_reg[4]_0 ,
     \cnt_reg[3]_0 ,
@@ -11611,66 +11800,63 @@ module meowrouter_Router_0_Encoder
     \cnt_reg[1]_0 ,
     \cnt_reg[0]_0 ,
     reset_0,
-    dropping_reg,
-    \state_reg[2]_1 ,
-    dropping_reg_0,
+    \cnt_reg[4]_1 ,
     cnt,
+    p_0_out,
     SR,
     _T_34,
     \sending_packet_eth_pactype_reg[1]_0 ,
-    \state_reg[0]_1 ,
+    \pipeStatus_reg[1] ,
     rd_en,
-    \state_reg[0]_2 ,
+    \state_reg[2]_1 ,
+    \state_reg[0]_1 ,
     din,
+    \cnt_reg[4]_2 ,
+    \cnt_reg[4]_3 ,
+    \cnt_reg[4]_4 ,
+    wr_en,
+    \state_reg[2]_2 ,
+    \state_reg[2]_3 ,
+    \state_reg[3]_1 ,
+    \cnt_reg[0]_1 ,
+    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][1] ,
+    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][2] ,
+    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][3] ,
+    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][6] ,
+    \gen_fwft.empty_fwft_i_reg ,
+    \gen_fwft.empty_fwft_i_reg_0 ,
+    dropping_reg,
+    \gen_fwft.empty_fwft_i_reg_1 ,
     \cnt_reg[3]_1 ,
     \cnt_reg[3]_2 ,
-    wr_en,
-    \gen_fwft.empty_fwft_i_reg ,
-    \state_reg[2]_2 ,
-    \state_reg[1]_0 ,
-    \state_reg[1]_1 ,
-    \pipeStatus_reg[1] ,
-    \state_reg[2]_3 ,
-    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][8] ,
-    io_buf_din,
-    \state_reg[3]_1 ,
-    \state_reg[3]_2 ,
-    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][1] ,
-    \state_reg[3]_3 ,
-    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][5] ,
-    \gen_fwft.empty_fwft_i_reg_0 ,
-    \gen_fwft.empty_fwft_i_reg_1 ,
-    \gen_fwft.empty_fwft_i_reg_2 ,
-    \state_reg[3]_4 ,
+    \cnt_reg[0]_2 ,
     \cnt_reg[3]_3 ,
     \cnt_reg[3]_4 ,
-    \cnt_reg[0]_1 ,
+    \cnt_reg[3]_5 ,
     Q,
     reset,
-    \state_reg[3]_5 ,
+    \state_reg[3]_2 ,
     clock,
     \state_reg[2]_4 ,
-    \state_reg[0]_3 ,
-    \cnt_reg[4]_1 ,
-    \cnt_reg[3]_5 ,
+    \state_reg[0]_2 ,
+    \cnt_reg[4]_5 ,
+    \cnt_reg[3]_6 ,
     \cnt_reg[2]_1 ,
-    \cnt_reg[0]_2 ,
-    dout,
-    \count_value_i_reg[3] ,
     \cnt_reg[0]_3 ,
-    empty,
-    full,
+    \state_reg[1]_1 ,
     \state_reg[1]_2 ,
     E,
     \shiftCnt_reg[5] ,
+    \state_reg[2]_5 ,
+    dout,
+    full,
+    empty,
     CO,
-    \cnt_reg[10] ,
     io_buf_dout,
-    arp_io_outputStatus,
+    \guf.underflow_i_reg ,
+    \state_reg[0]_3 ,
     ctrl_io_forward_stall,
-    \io_buf_din[6] ,
-    io_buf_din_1_sp_1,
-    \cnt_reg[0]_4 ,
+    \state_reg[0]_4 ,
     D,
     \sending_packet_eth_dest_reg[47]_0 ,
     \sending_packet_eth_sender_reg[47]_0 ,
@@ -11691,6 +11877,7 @@ module meowrouter_Router_0_Encoder
     \localReq_reg[1]_0 );
   output \state_reg[3]_0 ;
   output \state_reg[2]_0 ;
+  output \state_reg[1]_0 ;
   output \state_reg[0]_0 ;
   output \cnt_reg[4]_0 ;
   output \cnt_reg[3]_0 ;
@@ -11698,66 +11885,63 @@ module meowrouter_Router_0_Encoder
   output \cnt_reg[1]_0 ;
   output \cnt_reg[0]_0 ;
   output reset_0;
-  output dropping_reg;
-  output \state_reg[2]_1 ;
-  output dropping_reg_0;
+  output \cnt_reg[4]_1 ;
   output cnt;
+  output [0:0]p_0_out;
   output [0:0]SR;
   output _T_34;
   output \sending_packet_eth_pactype_reg[1]_0 ;
-  output \state_reg[0]_1 ;
+  output \pipeStatus_reg[1] ;
   output rd_en;
-  output \state_reg[0]_2 ;
+  output \state_reg[2]_1 ;
+  output \state_reg[0]_1 ;
   output [8:0]din;
+  output \cnt_reg[4]_2 ;
+  output \cnt_reg[4]_3 ;
+  output \cnt_reg[4]_4 ;
+  output wr_en;
+  output \state_reg[2]_2 ;
+  output \state_reg[2]_3 ;
+  output \state_reg[3]_1 ;
+  output \cnt_reg[0]_1 ;
+  output \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][1] ;
+  output \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][2] ;
+  output \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][3] ;
+  output \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][6] ;
+  output \gen_fwft.empty_fwft_i_reg ;
+  output \gen_fwft.empty_fwft_i_reg_0 ;
+  output dropping_reg;
+  output \gen_fwft.empty_fwft_i_reg_1 ;
   output \cnt_reg[3]_1 ;
   output \cnt_reg[3]_2 ;
-  output wr_en;
-  output [0:0]\gen_fwft.empty_fwft_i_reg ;
-  output \state_reg[2]_2 ;
-  output \state_reg[1]_0 ;
-  output \state_reg[1]_1 ;
-  output [0:0]\pipeStatus_reg[1] ;
-  output \state_reg[2]_3 ;
-  output \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][8] ;
-  output [1:0]io_buf_din;
-  output \state_reg[3]_1 ;
-  output \state_reg[3]_2 ;
-  output \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][1] ;
-  output \state_reg[3]_3 ;
-  output \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][5] ;
-  output \gen_fwft.empty_fwft_i_reg_0 ;
-  output \gen_fwft.empty_fwft_i_reg_1 ;
-  output \gen_fwft.empty_fwft_i_reg_2 ;
-  output \state_reg[3]_4 ;
+  output \cnt_reg[0]_2 ;
   output \cnt_reg[3]_3 ;
   output \cnt_reg[3]_4 ;
-  output \cnt_reg[0]_1 ;
+  output \cnt_reg[3]_5 ;
   output [1:0]Q;
   input reset;
-  input \state_reg[3]_5 ;
+  input \state_reg[3]_2 ;
   input clock;
   input \state_reg[2]_4 ;
-  input \state_reg[0]_3 ;
-  input \cnt_reg[4]_1 ;
-  input \cnt_reg[3]_5 ;
+  input \state_reg[0]_2 ;
+  input \cnt_reg[4]_5 ;
+  input \cnt_reg[3]_6 ;
   input \cnt_reg[2]_1 ;
-  input \cnt_reg[0]_2 ;
-  input [8:0]dout;
-  input \count_value_i_reg[3] ;
   input \cnt_reg[0]_3 ;
-  input empty;
-  input full;
+  input \state_reg[1]_1 ;
   input \state_reg[1]_2 ;
   input [0:0]E;
   input \shiftCnt_reg[5] ;
+  input \state_reg[2]_5 ;
+  input [8:0]dout;
+  input full;
+  input empty;
   input [0:0]CO;
-  input \cnt_reg[10] ;
   input [7:0]io_buf_dout;
-  input [1:0]arp_io_outputStatus;
+  input \guf.underflow_i_reg ;
+  input \state_reg[0]_3 ;
   input ctrl_io_forward_stall;
-  input \io_buf_din[6] ;
-  input io_buf_din_1_sp_1;
-  input \cnt_reg[0]_4 ;
+  input \state_reg[0]_4 ;
   input [1:0]D;
   input [47:0]\sending_packet_eth_dest_reg[47]_0 ;
   input [47:0]\sending_packet_eth_sender_reg[47]_0 ;
@@ -11783,7 +11967,6 @@ module meowrouter_Router_0_Encoder
   wire [1:0]Q;
   wire [0:0]SR;
   wire _T_34;
-  wire [1:0]arp_io_outputStatus;
   wire clock;
   wire cnt;
   wire \cnt[1]_i_1__0_n_0 ;
@@ -11797,8 +11980,6 @@ module meowrouter_Router_0_Encoder
   wire \cnt_reg[0]_1 ;
   wire \cnt_reg[0]_2 ;
   wire \cnt_reg[0]_3 ;
-  wire \cnt_reg[0]_4 ;
-  wire \cnt_reg[10] ;
   wire \cnt_reg[1]_0 ;
   wire \cnt_reg[2]_0 ;
   wire \cnt_reg[2]_1 ;
@@ -11808,9 +11989,13 @@ module meowrouter_Router_0_Encoder
   wire \cnt_reg[3]_3 ;
   wire \cnt_reg[3]_4 ;
   wire \cnt_reg[3]_5 ;
+  wire \cnt_reg[3]_6 ;
   wire \cnt_reg[4]_0 ;
   wire \cnt_reg[4]_1 ;
-  wire \count_value_i_reg[3] ;
+  wire \cnt_reg[4]_2 ;
+  wire \cnt_reg[4]_3 ;
+  wire \cnt_reg[4]_4 ;
+  wire \cnt_reg[4]_5 ;
   wire ctrl_io_forward_stall;
   wire [7:0]data0;
   wire [7:0]data1;
@@ -11828,33 +12013,22 @@ module meowrouter_Router_0_Encoder
   wire [8:0]din;
   wire [8:0]dout;
   wire dropping_reg;
-  wire dropping_reg_0;
   wire empty;
   wire full;
-  wire [0:0]\gen_fwft.empty_fwft_i_reg ;
+  wire \gen_fwft.empty_fwft_i_reg ;
   wire \gen_fwft.empty_fwft_i_reg_0 ;
   wire \gen_fwft.empty_fwft_i_reg_1 ;
-  wire \gen_fwft.empty_fwft_i_reg_2 ;
   wire \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][1] ;
-  wire \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][5] ;
-  wire \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][8] ;
-  wire [1:0]io_buf_din;
-  wire \io_buf_din[0]_INST_0_i_10_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_11_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_12_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_13_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_14_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_15_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_16_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_17_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_18_n_0 ;
+  wire \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][2] ;
+  wire \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][3] ;
+  wire \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][6] ;
+  wire \guf.underflow_i_reg ;
   wire \io_buf_din[0]_INST_0_i_3_n_0 ;
   wire \io_buf_din[0]_INST_0_i_4_n_0 ;
   wire \io_buf_din[0]_INST_0_i_5_n_0 ;
   wire \io_buf_din[0]_INST_0_i_6_n_0 ;
   wire \io_buf_din[0]_INST_0_i_7_n_0 ;
   wire \io_buf_din[0]_INST_0_i_8_n_0 ;
-  wire \io_buf_din[0]_INST_0_i_9_n_0 ;
   wire \io_buf_din[1]_INST_0_i_10_n_0 ;
   wire \io_buf_din[1]_INST_0_i_11_n_0 ;
   wire \io_buf_din[1]_INST_0_i_12_n_0 ;
@@ -11865,10 +12039,9 @@ module meowrouter_Router_0_Encoder
   wire \io_buf_din[1]_INST_0_i_17_n_0 ;
   wire \io_buf_din[1]_INST_0_i_18_n_0 ;
   wire \io_buf_din[1]_INST_0_i_19_n_0 ;
-  wire \io_buf_din[1]_INST_0_i_20_n_0 ;
-  wire \io_buf_din[1]_INST_0_i_2_n_0 ;
   wire \io_buf_din[1]_INST_0_i_3_n_0 ;
   wire \io_buf_din[1]_INST_0_i_4_n_0 ;
+  wire \io_buf_din[1]_INST_0_i_5_n_0 ;
   wire \io_buf_din[1]_INST_0_i_6_n_0 ;
   wire \io_buf_din[1]_INST_0_i_7_n_0 ;
   wire \io_buf_din[1]_INST_0_i_8_n_0 ;
@@ -11876,14 +12049,7 @@ module meowrouter_Router_0_Encoder
   wire \io_buf_din[2]_INST_0_i_10_n_0 ;
   wire \io_buf_din[2]_INST_0_i_11_n_0 ;
   wire \io_buf_din[2]_INST_0_i_12_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_13_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_14_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_15_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_16_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_17_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_18_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_19_n_0 ;
-  wire \io_buf_din[2]_INST_0_i_20_n_0 ;
+  wire \io_buf_din[2]_INST_0_i_4_n_0 ;
   wire \io_buf_din[2]_INST_0_i_5_n_0 ;
   wire \io_buf_din[2]_INST_0_i_6_n_0 ;
   wire \io_buf_din[2]_INST_0_i_7_n_0 ;
@@ -11896,7 +12062,6 @@ module meowrouter_Router_0_Encoder
   wire \io_buf_din[3]_INST_0_i_14_n_0 ;
   wire \io_buf_din[3]_INST_0_i_15_n_0 ;
   wire \io_buf_din[3]_INST_0_i_16_n_0 ;
-  wire \io_buf_din[3]_INST_0_i_17_n_0 ;
   wire \io_buf_din[3]_INST_0_i_4_n_0 ;
   wire \io_buf_din[3]_INST_0_i_5_n_0 ;
   wire \io_buf_din[3]_INST_0_i_6_n_0 ;
@@ -11911,21 +12076,26 @@ module meowrouter_Router_0_Encoder
   wire \io_buf_din[4]_INST_0_i_15_n_0 ;
   wire \io_buf_din[4]_INST_0_i_16_n_0 ;
   wire \io_buf_din[4]_INST_0_i_17_n_0 ;
-  wire \io_buf_din[4]_INST_0_i_2_n_0 ;
-  wire \io_buf_din[4]_INST_0_i_3_n_0 ;
+  wire \io_buf_din[4]_INST_0_i_18_n_0 ;
   wire \io_buf_din[4]_INST_0_i_4_n_0 ;
   wire \io_buf_din[4]_INST_0_i_5_n_0 ;
   wire \io_buf_din[4]_INST_0_i_6_n_0 ;
   wire \io_buf_din[4]_INST_0_i_7_n_0 ;
   wire \io_buf_din[4]_INST_0_i_8_n_0 ;
   wire \io_buf_din[4]_INST_0_i_9_n_0 ;
+  wire \io_buf_din[5]_INST_0_i_2_n_0 ;
+  wire \io_buf_din[5]_INST_0_i_3_n_0 ;
+  wire \io_buf_din[5]_INST_0_i_4_n_0 ;
   wire \io_buf_din[5]_INST_0_i_5_n_0 ;
   wire \io_buf_din[5]_INST_0_i_6_n_0 ;
   wire \io_buf_din[5]_INST_0_i_7_n_0 ;
-  wire \io_buf_din[5]_INST_0_i_8_n_0 ;
-  wire \io_buf_din[5]_INST_0_i_9_n_0 ;
-  wire \io_buf_din[6] ;
-  wire \io_buf_din[6]_INST_0_i_3_n_0 ;
+  wire \io_buf_din[6]_INST_0_i_10_n_0 ;
+  wire \io_buf_din[6]_INST_0_i_11_n_0 ;
+  wire \io_buf_din[6]_INST_0_i_12_n_0 ;
+  wire \io_buf_din[6]_INST_0_i_13_n_0 ;
+  wire \io_buf_din[6]_INST_0_i_14_n_0 ;
+  wire \io_buf_din[6]_INST_0_i_15_n_0 ;
+  wire \io_buf_din[6]_INST_0_i_16_n_0 ;
   wire \io_buf_din[6]_INST_0_i_4_n_0 ;
   wire \io_buf_din[6]_INST_0_i_5_n_0 ;
   wire \io_buf_din[6]_INST_0_i_6_n_0 ;
@@ -11940,20 +12110,15 @@ module meowrouter_Router_0_Encoder
   wire \io_buf_din[7]_INST_0_i_15_n_0 ;
   wire \io_buf_din[7]_INST_0_i_16_n_0 ;
   wire \io_buf_din[7]_INST_0_i_17_n_0 ;
-  wire \io_buf_din[7]_INST_0_i_18_n_0 ;
-  wire \io_buf_din[7]_INST_0_i_2_n_0 ;
-  wire \io_buf_din[7]_INST_0_i_3_n_0 ;
-  wire \io_buf_din[7]_INST_0_i_4_n_0 ;
   wire \io_buf_din[7]_INST_0_i_5_n_0 ;
   wire \io_buf_din[7]_INST_0_i_6_n_0 ;
   wire \io_buf_din[7]_INST_0_i_7_n_0 ;
   wire \io_buf_din[7]_INST_0_i_8_n_0 ;
   wire \io_buf_din[7]_INST_0_i_9_n_0 ;
-  wire io_buf_din_1_sn_1;
   wire [7:0]io_buf_dout;
   wire [1:0]\localReq_reg[1]_0 ;
-  wire [1:1]p_0_out;
-  wire [0:0]\pipeStatus_reg[1] ;
+  wire [0:0]p_0_out;
+  wire \pipeStatus_reg[1] ;
   wire rd_en;
   wire reset;
   wire reset_0;
@@ -12046,18 +12211,20 @@ module meowrouter_Router_0_Encoder
   wire \shiftCnt_reg[5] ;
   wire \state[1]_i_1_n_0 ;
   wire \state[1]_i_2__0_n_0 ;
+  wire \state[1]_i_4_n_0 ;
+  wire \state[1]_i_5_n_0 ;
   wire \state[3]_i_10_n_0 ;
-  wire \state[3]_i_11_n_0 ;
-  wire \state[3]_i_12_n_0 ;
-  wire \state[3]_i_13_n_0 ;
+  wire \state[3]_i_3_n_0 ;
+  wire \state[3]_i_4_n_0 ;
+  wire \state[3]_i_5_n_0 ;
   wire \state[3]_i_6_n_0 ;
-  wire \state[3]_i_7_n_0 ;
   wire \state[3]_i_8_n_0 ;
   wire \state[3]_i_9_n_0 ;
   wire \state_reg[0]_0 ;
   wire \state_reg[0]_1 ;
   wire \state_reg[0]_2 ;
   wire \state_reg[0]_3 ;
+  wire \state_reg[0]_4 ;
   wire \state_reg[1]_0 ;
   wire \state_reg[1]_1 ;
   wire \state_reg[1]_2 ;
@@ -12066,15 +12233,12 @@ module meowrouter_Router_0_Encoder
   wire \state_reg[2]_2 ;
   wire \state_reg[2]_3 ;
   wire \state_reg[2]_4 ;
+  wire \state_reg[2]_5 ;
   wire \state_reg[3]_0 ;
   wire \state_reg[3]_1 ;
   wire \state_reg[3]_2 ;
-  wire \state_reg[3]_3 ;
-  wire \state_reg[3]_4 ;
-  wire \state_reg[3]_5 ;
-  wire \state_reg_n_0_[1] ;
   wire wr_en;
-  wire xpm_fifo_async_i_12_n_0;
+  wire xpm_fifo_async_i_11_n_0;
   wire xpm_fifo_async_i_13_n_0;
   wire xpm_fifo_async_i_14_n_0;
   wire xpm_fifo_async_i_15_n_0;
@@ -12084,6 +12248,7 @@ module meowrouter_Router_0_Encoder
   wire xpm_fifo_async_i_19_n_0;
   wire xpm_fifo_async_i_20_n_0;
   wire xpm_fifo_async_i_21_n_0;
+  wire xpm_fifo_async_i_22_n_0;
   wire xpm_fifo_async_i_23_n_0;
   wire xpm_fifo_async_i_24_n_0;
   wire xpm_fifo_async_i_25_n_0;
@@ -12111,30 +12276,40 @@ module meowrouter_Router_0_Encoder
   wire xpm_fifo_async_i_46_n_0;
   wire xpm_fifo_async_i_47_n_0;
   wire xpm_fifo_async_i_48_n_0;
+  wire xpm_fifo_async_i_49_n_0;
   wire xpm_fifo_async_i_4__1_n_0;
+  wire xpm_fifo_async_i_50_n_0;
+  wire xpm_fifo_async_i_51_n_0;
+  wire xpm_fifo_async_i_52_n_0;
+  wire xpm_fifo_async_i_53_n_0;
+  wire xpm_fifo_async_i_54_n_0;
+  wire xpm_fifo_async_i_55_n_0;
+  wire xpm_fifo_async_i_56_n_0;
+  wire xpm_fifo_async_i_57_n_0;
+  wire xpm_fifo_async_i_58_n_0;
+  wire xpm_fifo_async_i_59_n_0;
   wire xpm_fifo_async_i_5__0_n_0;
+  wire xpm_fifo_async_i_60_n_0;
+  wire xpm_fifo_async_i_61_n_0;
+  wire xpm_fifo_async_i_62_n_0;
+  wire xpm_fifo_async_i_63_n_0;
+  wire xpm_fifo_async_i_64_n_0;
+  wire xpm_fifo_async_i_65_n_0;
+  wire xpm_fifo_async_i_66_n_0;
+  wire xpm_fifo_async_i_67_n_0;
+  wire xpm_fifo_async_i_68_n_0;
+  wire xpm_fifo_async_i_69_n_0;
 
-  assign io_buf_din_1_sn_1 = io_buf_din_1_sp_1;
   LUT6 #(
-    .INIT(64'hAAAABFFAAAAAAAAA)) 
-    \cnt[10]_i_2 
-       (.I0(\state_reg[2]_2 ),
-        .I1(empty),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\state_reg[0]_0 ),
-        .I4(xpm_fifo_async_i_5__0_n_0),
-        .I5(\cnt_reg[10] ),
-        .O(\gen_fwft.empty_fwft_i_reg ));
-  LUT6 #(
-    .INIT(64'h0000000000002AA0)) 
-    \cnt[10]_i_4 
-       (.I0(\cnt_reg[0]_4 ),
-        .I1(empty),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\state_reg[0]_0 ),
-        .I4(xpm_fifo_async_i_5__0_n_0),
-        .I5(\cnt_reg[0]_3 ),
-        .O(\gen_fwft.empty_fwft_i_reg_1 ));
+    .INIT(64'h0000140000005400)) 
+    \cnt[10]_i_6 
+       (.I0(\state_reg[0]_3 ),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[2]_0 ),
+        .I4(\state_reg[3]_0 ),
+        .I5(empty),
+        .O(dropping_reg));
   LUT6 #(
     .INIT(64'h0000000055455510)) 
     \cnt[1]_i_1__0 
@@ -12146,110 +12321,101 @@ module meowrouter_Router_0_Encoder
         .I5(E),
         .O(\cnt[1]_i_1__0_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFF200020002000)) 
+    .INIT(64'h44444F4444444444)) 
     \cnt[1]_i_2 
-       (.I0(\io_buf_din[7]_INST_0_i_3_n_0 ),
-        .I1(sending_packet_eth_pactype[1]),
-        .I2(sending_packet_eth_pactype[0]),
-        .I3(\cnt[1]_i_3_n_0 ),
-        .I4(\cnt[1]_i_4_n_0 ),
-        .I5(\cnt[1]_i_5_n_0 ),
+       (.I0(\cnt[1]_i_3_n_0 ),
+        .I1(\cnt[1]_i_4_n_0 ),
+        .I2(\cnt[1]_i_5_n_0 ),
+        .I3(\state_reg[3]_1 ),
+        .I4(sending_packet_eth_pactype[1]),
+        .I5(sending_packet_eth_pactype[0]),
         .O(p_0_out));
   LUT6 #(
-    .INIT(64'h0010001000100000)) 
+    .INIT(64'hFFFFFFFFFFFFFFFE)) 
     \cnt[1]_i_3 
-       (.I0(\cnt_reg[1]_0 ),
-        .I1(\cnt_reg[0]_0 ),
-        .I2(\cnt_reg[3]_3 ),
-        .I3(\cnt_reg[4]_0 ),
-        .I4(\cnt_reg[10] ),
-        .I5(\cnt_reg[0]_3 ),
-        .O(\cnt[1]_i_3_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000000000001)) 
-    \cnt[1]_i_4 
        (.I0(full),
-        .I1(\cnt_reg[1]_0 ),
-        .I2(\cnt_reg[0]_0 ),
-        .I3(\cnt_reg[2]_0 ),
-        .I4(\cnt_reg[3]_0 ),
-        .I5(\cnt_reg[4]_0 ),
-        .O(\cnt[1]_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair62" *) 
+        .I1(\cnt_reg[4]_0 ),
+        .I2(\cnt_reg[2]_0 ),
+        .I3(\cnt_reg[3]_0 ),
+        .I4(\cnt_reg[1]_0 ),
+        .I5(\cnt_reg[0]_0 ),
+        .O(\cnt[1]_i_3_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair73" *) 
   LUT4 #(
     .INIT(16'h0100)) 
-    \cnt[1]_i_5 
+    \cnt[1]_i_4 
        (.I0(\state_reg[2]_0 ),
         .I1(\state_reg[3]_0 ),
-        .I2(\state_reg_n_0_[1] ),
+        .I2(\state_reg[1]_0 ),
         .I3(\state_reg[0]_0 ),
+        .O(\cnt[1]_i_4_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFEFFFEFFFEFFFF)) 
+    \cnt[1]_i_5 
+       (.I0(\cnt_reg[4]_0 ),
+        .I1(\cnt_reg[3]_2 ),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(\guf.underflow_i_reg ),
+        .I5(\state_reg[0]_3 ),
         .O(\cnt[1]_i_5_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair56" *) 
+  (* SOFT_HLUTNM = "soft_lutpair60" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \cnt[3]_i_2 
        (.I0(\cnt_reg[0]_0 ),
         .I1(\cnt_reg[1]_0 ),
-        .O(\cnt_reg[0]_1 ));
-  (* SOFT_HLUTNM = "soft_lutpair61" *) 
+        .O(\cnt_reg[0]_2 ));
+  (* SOFT_HLUTNM = "soft_lutpair66" *) 
   LUT2 #(
-    .INIT(4'h1)) 
+    .INIT(4'hE)) 
     \cnt[4]_i_2 
        (.I0(\cnt_reg[3]_0 ),
         .I1(\cnt_reg[2]_0 ),
-        .O(\cnt_reg[3]_3 ));
+        .O(\cnt_reg[3]_2 ));
   LUT6 #(
     .INIT(64'h00000000FFFFAB0B)) 
     \cnt[4]_i_3 
        (.I0(\cnt[4]_i_5_n_0 ),
         .I1(\state_reg[2]_0 ),
         .I2(\cnt[4]_i_6_n_0 ),
-        .I3(\state_reg[2]_3 ),
+        .I3(\io_buf_din[7]_INST_0_i_8_n_0 ),
         .I4(\cnt[4]_i_7_n_0 ),
         .I5(\state_reg[3]_0 ),
         .O(cnt));
-  LUT5 #(
-    .INIT(32'hFFFF2800)) 
-    \cnt[4]_i_4 
-       (.I0(_T_34),
-        .I1(arp_io_outputStatus[1]),
-        .I2(arp_io_outputStatus[0]),
-        .I3(\count_value_i_reg[3] ),
-        .I4(p_0_out),
-        .O(\pipeStatus_reg[1] ));
   LUT6 #(
-    .INIT(64'hFFEFFFEFFFEF0000)) 
+    .INIT(64'hEEEEEEEEEEEEEEE0)) 
     \cnt[4]_i_5 
-       (.I0(\cnt_reg[1]_0 ),
-        .I1(\cnt_reg[0]_0 ),
-        .I2(\cnt_reg[3]_3 ),
-        .I3(\cnt_reg[4]_0 ),
-        .I4(\cnt_reg[10] ),
-        .I5(\cnt_reg[0]_3 ),
+       (.I0(\guf.underflow_i_reg ),
+        .I1(\state_reg[0]_3 ),
+        .I2(\cnt_reg[4]_0 ),
+        .I3(\cnt_reg[3]_2 ),
+        .I4(\cnt_reg[1]_0 ),
+        .I5(\cnt_reg[0]_0 ),
         .O(\cnt[4]_i_5_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair63" *) 
+  (* SOFT_HLUTNM = "soft_lutpair68" *) 
   LUT4 #(
     .INIT(16'hBBFB)) 
     \cnt[4]_i_6 
-       (.I0(\state_reg_n_0_[1] ),
+       (.I0(\state_reg[1]_0 ),
         .I1(\state_reg[0]_0 ),
         .I2(full),
         .I3(\state_reg[2]_0 ),
         .O(\cnt[4]_i_6_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair63" *) 
+  (* SOFT_HLUTNM = "soft_lutpair68" *) 
   LUT5 #(
-    .INIT(32'h00000200)) 
+    .INIT(32'h00000100)) 
     \cnt[4]_i_7 
-       (.I0(\state[3]_i_7_n_0 ),
+       (.I0(\cnt_reg[0]_1 ),
         .I1(\state_reg[2]_0 ),
         .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
+        .I3(\state_reg[1]_0 ),
         .I4(full),
         .O(\cnt[4]_i_7_n_0 ));
   FDRE \cnt_reg[0] 
        (.C(clock),
         .CE(1'b1),
-        .D(\cnt_reg[0]_2 ),
+        .D(\cnt_reg[0]_3 ),
         .Q(\cnt_reg[0]_0 ),
         .R(reset));
   FDRE \cnt_reg[1] 
@@ -12267,671 +12433,472 @@ module meowrouter_Router_0_Encoder
   FDRE \cnt_reg[3] 
        (.C(clock),
         .CE(1'b1),
-        .D(\cnt_reg[3]_5 ),
+        .D(\cnt_reg[3]_6 ),
         .Q(\cnt_reg[3]_0 ),
         .R(1'b0));
   FDRE \cnt_reg[4] 
        (.C(clock),
         .CE(1'b1),
-        .D(\cnt_reg[4]_1 ),
+        .D(\cnt_reg[4]_5 ),
         .Q(\cnt_reg[4]_0 ),
         .R(reset));
-  (* SOFT_HLUTNM = "soft_lutpair65" *) 
-  LUT4 #(
-    .INIT(16'h0440)) 
-    dropping_i_4
-       (.I0(\state_reg[3]_0 ),
-        .I1(\state_reg[2]_0 ),
+  LUT6 #(
+    .INIT(64'h0000000040000000)) 
+    dropping_i_2
+       (.I0(empty),
+        .I1(dout[0]),
         .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
-        .O(\state_reg[3]_4 ));
+        .I3(\state_reg[1]_0 ),
+        .I4(\state_reg[2]_0 ),
+        .I5(\state_reg[3]_0 ),
+        .O(\gen_fwft.empty_fwft_i_reg ));
+  (* SOFT_HLUTNM = "soft_lutpair71" *) 
+  LUT4 #(
+    .INIT(16'h0010)) 
+    \io_buf_addr[0]_INST_0_i_5 
+       (.I0(\state_reg[0]_0 ),
+        .I1(\state_reg[1]_0 ),
+        .I2(\state_reg[3]_0 ),
+        .I3(\state_reg[2]_0 ),
+        .O(\state_reg[0]_1 ));
   LUT6 #(
     .INIT(64'h0000000000010000)) 
-    \io_buf_addr[5]_INST_0_i_3 
-       (.I0(\count_value_i_reg[3] ),
+    \io_buf_addr[6]_INST_0_i_1 
+       (.I0(\state_reg[1]_1 ),
         .I1(\state_reg[2]_0 ),
         .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
+        .I3(\state_reg[1]_0 ),
         .I4(\state_reg[3]_0 ),
         .I5(full),
         .O(\state_reg[2]_2 ));
-  LUT6 #(
-    .INIT(64'h0000000000000100)) 
-    \io_buf_addr[9]_INST_0_i_2 
-       (.I0(\count_value_i_reg[3] ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\state_reg[3]_0 ),
-        .I4(\state_reg[2]_0 ),
-        .I5(full),
-        .O(\state_reg[0]_2 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[0]_INST_0_i_10 
-       (.I0(\sending_packet_eth_sender_reg_n_0_[40] ),
-        .I1(data7[0]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data8[0]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(data9[0]),
-        .O(\io_buf_din[0]_INST_0_i_10_n_0 ));
-  LUT6 #(
-    .INIT(64'hA0A0F0F0CFC00000)) 
-    \io_buf_din[0]_INST_0_i_11 
-       (.I0(data10[0]),
-        .I1(\sending_packet_eth_sender_reg_n_0_[0] ),
-        .I2(\cnt_reg[2]_0 ),
-        .I3(sending_packet_eth_vlan[0]),
-        .I4(\cnt_reg[1]_0 ),
-        .I5(\cnt_reg[0]_0 ),
-        .O(\io_buf_din[0]_INST_0_i_11_n_0 ));
-  LUT6 #(
-    .INIT(64'hFCFCFEFEFCFCFFFC)) 
-    \io_buf_din[0]_INST_0_i_12 
-       (.I0(sending_packet_ip_len[8]),
-        .I1(\cnt_reg[3]_0 ),
-        .I2(\cnt_reg[2]_0 ),
-        .I3(sending_packet_ip_len[0]),
-        .I4(\cnt_reg[1]_0 ),
-        .I5(\cnt_reg[0]_0 ),
-        .O(\io_buf_din[0]_INST_0_i_12_n_0 ));
-  MUXF7 \io_buf_din[0]_INST_0_i_13 
-       (.I0(\io_buf_din[0]_INST_0_i_15_n_0 ),
-        .I1(\io_buf_din[0]_INST_0_i_16_n_0 ),
-        .O(\io_buf_din[0]_INST_0_i_13_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  MUXF7 \io_buf_din[0]_INST_0_i_14 
-       (.I0(\io_buf_din[0]_INST_0_i_17_n_0 ),
-        .I1(\io_buf_din[0]_INST_0_i_18_n_0 ),
-        .O(\io_buf_din[0]_INST_0_i_14_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[0]_INST_0_i_15 
-       (.I0(data16[0]),
-        .I1(data17[0]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data18[0]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_dest_reg_n_0_[0] ),
-        .O(\io_buf_din[0]_INST_0_i_15_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[0]_INST_0_i_16 
-       (.I0(data12[0]),
-        .I1(data13[0]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data14[0]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_src_reg_n_0_[0] ),
-        .O(\io_buf_din[0]_INST_0_i_16_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[0]_INST_0_i_17 
-       (.I0(sending_packet_ip_ttl[0]),
-        .I1(sending_packet_ip_proto[0]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_chksum[8]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_chksum[0]),
-        .O(\io_buf_din[0]_INST_0_i_17_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[0]_INST_0_i_18 
-       (.I0(sending_packet_ip_id[8]),
-        .I1(sending_packet_ip_id[0]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_foff[8]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_foff[0]),
-        .O(\io_buf_din[0]_INST_0_i_18_n_0 ));
   LUT5 #(
-    .INIT(32'h00477747)) 
+    .INIT(32'hB8BBB888)) 
     \io_buf_din[0]_INST_0_i_2 
        (.I0(\io_buf_din[0]_INST_0_i_3_n_0 ),
-        .I1(\io_buf_din[7]_INST_0_i_3_n_0 ),
-        .I2(dout[1]),
-        .I3(\state_reg[2]_3 ),
-        .I4(\io_buf_din[0]_INST_0_i_4_n_0 ),
+        .I1(\state_reg[3]_1 ),
+        .I2(xpm_fifo_async_i_30_n_0),
+        .I3(\io_buf_din[7]_INST_0_i_8_n_0 ),
+        .I4(dout[1]),
         .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][1] ));
   MUXF7 \io_buf_din[0]_INST_0_i_3 
-       (.I0(\io_buf_din[0]_INST_0_i_5_n_0 ),
-        .I1(\io_buf_din[0]_INST_0_i_6_n_0 ),
+       (.I0(\io_buf_din[0]_INST_0_i_4_n_0 ),
+        .I1(\io_buf_din[0]_INST_0_i_5_n_0 ),
         .O(\io_buf_din[0]_INST_0_i_3_n_0 ),
         .S(\cnt_reg[4]_0 ));
-  LUT6 #(
-    .INIT(64'hAA02FFFFAA020000)) 
-    \io_buf_din[0]_INST_0_i_4 
-       (.I0(\io_buf_din[0]_INST_0_i_7_n_0 ),
-        .I1(\cnt_reg[3]_0 ),
-        .I2(\cnt_reg[2]_0 ),
-        .I3(\sending_packet_ip_dest_reg_n_0_[0] ),
-        .I4(\cnt_reg[4]_0 ),
-        .I5(\io_buf_din[0]_INST_0_i_8_n_0 ),
-        .O(\io_buf_din[0]_INST_0_i_4_n_0 ));
   LUT5 #(
     .INIT(32'hB8FFB800)) 
-    \io_buf_din[0]_INST_0_i_5 
-       (.I0(\io_buf_din[0]_INST_0_i_9_n_0 ),
+    \io_buf_din[0]_INST_0_i_4 
+       (.I0(\io_buf_din[0]_INST_0_i_6_n_0 ),
         .I1(\cnt_reg[2]_0 ),
-        .I2(\io_buf_din[0]_INST_0_i_10_n_0 ),
+        .I2(\io_buf_din[0]_INST_0_i_7_n_0 ),
         .I3(\cnt_reg[3]_0 ),
-        .I4(\io_buf_din[0]_INST_0_i_11_n_0 ),
-        .O(\io_buf_din[0]_INST_0_i_5_n_0 ));
+        .I4(\io_buf_din[0]_INST_0_i_8_n_0 ),
+        .O(\io_buf_din[0]_INST_0_i_4_n_0 ));
   LUT6 #(
     .INIT(64'h0000005400000004)) 
-    \io_buf_din[0]_INST_0_i_6 
+    \io_buf_din[0]_INST_0_i_5 
        (.I0(\cnt_reg[3]_0 ),
         .I1(data1[0]),
         .I2(\cnt_reg[0]_0 ),
         .I3(\cnt_reg[1]_0 ),
         .I4(\cnt_reg[2]_0 ),
         .I5(data0[0]),
-        .O(\io_buf_din[0]_INST_0_i_6_n_0 ));
-  LUT5 #(
-    .INIT(32'hFFFF8A80)) 
-    \io_buf_din[0]_INST_0_i_7 
-       (.I0(\cnt_reg[1]_0 ),
-        .I1(sending_packet_ip_ihl[0]),
-        .I2(\cnt_reg[0]_0 ),
-        .I3(sending_packet_ip_ecn[0]),
-        .I4(\io_buf_din[0]_INST_0_i_12_n_0 ),
-        .O(\io_buf_din[0]_INST_0_i_7_n_0 ));
-  MUXF8 \io_buf_din[0]_INST_0_i_8 
-       (.I0(\io_buf_din[0]_INST_0_i_13_n_0 ),
-        .I1(\io_buf_din[0]_INST_0_i_14_n_0 ),
-        .O(\io_buf_din[0]_INST_0_i_8_n_0 ),
-        .S(\cnt_reg[3]_0 ));
+        .O(\io_buf_din[0]_INST_0_i_5_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[0]_INST_0_i_9 
+    \io_buf_din[0]_INST_0_i_6 
        (.I0(data2[0]),
         .I1(\sending_packet_eth_dest_reg_n_0_[16] ),
         .I2(\cnt_reg[1]_0 ),
         .I3(\sending_packet_eth_dest_reg_n_0_[8] ),
         .I4(\cnt_reg[0]_0 ),
         .I5(\sending_packet_eth_dest_reg_n_0_[0] ),
-        .O(\io_buf_din[0]_INST_0_i_9_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFABFBAAAAAAAA)) 
-    \io_buf_din[1]_INST_0 
-       (.I0(io_buf_din_1_sn_1),
-        .I1(\io_buf_din[1]_INST_0_i_2_n_0 ),
-        .I2(\state_reg[2]_3 ),
-        .I3(\io_buf_din[1]_INST_0_i_3_n_0 ),
-        .I4(\io_buf_din[1]_INST_0_i_4_n_0 ),
-        .I5(\cnt_reg[10] ),
-        .O(io_buf_din[0]));
-  MUXF7 \io_buf_din[1]_INST_0_i_10 
-       (.I0(\io_buf_din[1]_INST_0_i_17_n_0 ),
-        .I1(\io_buf_din[1]_INST_0_i_18_n_0 ),
-        .O(\io_buf_din[1]_INST_0_i_10_n_0 ),
-        .S(\cnt_reg[2]_0 ));
+        .O(\io_buf_din[0]_INST_0_i_6_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[1]_INST_0_i_11 
-       (.I0(sending_packet_ip_ttl[1]),
-        .I1(sending_packet_ip_proto[1]),
+    \io_buf_din[0]_INST_0_i_7 
+       (.I0(\sending_packet_eth_sender_reg_n_0_[40] ),
+        .I1(data7[0]),
         .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_chksum[9]),
+        .I3(data8[0]),
         .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_chksum[1]),
-        .O(\io_buf_din[1]_INST_0_i_11_n_0 ));
+        .I5(data9[0]),
+        .O(\io_buf_din[0]_INST_0_i_7_n_0 ));
+  LUT6 #(
+    .INIT(64'hA0A0F0F0CFC00000)) 
+    \io_buf_din[0]_INST_0_i_8 
+       (.I0(data10[0]),
+        .I1(\sending_packet_eth_sender_reg_n_0_[0] ),
+        .I2(\cnt_reg[2]_0 ),
+        .I3(sending_packet_eth_vlan[0]),
+        .I4(\cnt_reg[1]_0 ),
+        .I5(\cnt_reg[0]_0 ),
+        .O(\io_buf_din[0]_INST_0_i_8_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[1]_INST_0_i_12 
-       (.I0(sending_packet_ip_id[9]),
-        .I1(sending_packet_ip_id[1]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_foff[9]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_foff[1]),
-        .O(\io_buf_din[1]_INST_0_i_12_n_0 ));
-  LUT6 #(
-    .INIT(64'hA2A2A2AAAAA2AAAA)) 
-    \io_buf_din[1]_INST_0_i_13 
-       (.I0(\io_buf_din[2]_INST_0_i_17_n_0 ),
-        .I1(\cnt_reg[3]_3 ),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\io_buf_din[2]_INST_0_i_18_n_0 ),
-        .I4(data0[1]),
-        .I5(data1[1]),
-        .O(\io_buf_din[1]_INST_0_i_13_n_0 ));
-  LUT6 #(
-    .INIT(64'h4040400000400000)) 
-    \io_buf_din[1]_INST_0_i_14 
-       (.I0(\cnt_reg[3]_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\cnt_reg[0]_0 ),
-        .I4(\sending_packet_eth_sender_reg_n_0_[1] ),
-        .I5(data10[1]),
-        .O(\io_buf_din[1]_INST_0_i_14_n_0 ));
-  LUT6 #(
-    .INIT(64'h00800080008A0080)) 
-    \io_buf_din[1]_INST_0_i_15 
-       (.I0(\cnt_reg[3]_3 ),
-        .I1(sending_packet_eth_vlan[1]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\cnt_reg[0]_0 ),
-        .I4(sending_packet_eth_pactype[1]),
-        .I5(sending_packet_eth_pactype[0]),
-        .O(\io_buf_din[1]_INST_0_i_15_n_0 ));
-  MUXF7 \io_buf_din[1]_INST_0_i_16 
-       (.I0(\io_buf_din[1]_INST_0_i_19_n_0 ),
-        .I1(\io_buf_din[1]_INST_0_i_20_n_0 ),
-        .O(\io_buf_din[1]_INST_0_i_16_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[1]_INST_0_i_17 
-       (.I0(data16[1]),
-        .I1(data17[1]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data18[1]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_dest_reg_n_0_[1] ),
-        .O(\io_buf_din[1]_INST_0_i_17_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[1]_INST_0_i_18 
-       (.I0(data12[1]),
-        .I1(data13[1]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data14[1]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_src_reg_n_0_[1] ),
-        .O(\io_buf_din[1]_INST_0_i_18_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[1]_INST_0_i_19 
+    \io_buf_din[1]_INST_0_i_10 
        (.I0(\sending_packet_eth_sender_reg_n_0_[41] ),
         .I1(data7[1]),
         .I2(\cnt_reg[1]_0 ),
         .I3(data8[1]),
         .I4(\cnt_reg[0]_0 ),
         .I5(data9[1]),
-        .O(\io_buf_din[1]_INST_0_i_19_n_0 ));
+        .O(\io_buf_din[1]_INST_0_i_10_n_0 ));
+  LUT4 #(
+    .INIT(16'hA820)) 
+    \io_buf_din[1]_INST_0_i_11 
+       (.I0(\cnt_reg[1]_0 ),
+        .I1(\cnt_reg[0]_0 ),
+        .I2(\sending_packet_eth_sender_reg_n_0_[1] ),
+        .I3(data10[1]),
+        .O(\io_buf_din[1]_INST_0_i_11_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair60" *) 
   LUT5 #(
-    .INIT(32'h0040FFFF)) 
-    \io_buf_din[1]_INST_0_i_2 
-       (.I0(\state_reg[3]_0 ),
-        .I1(\state_reg[2]_0 ),
-        .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
-        .I4(dout[2]),
-        .O(\io_buf_din[1]_INST_0_i_2_n_0 ));
+    .INIT(32'h00AA0030)) 
+    \io_buf_din[1]_INST_0_i_12 
+       (.I0(sending_packet_eth_vlan[1]),
+        .I1(sending_packet_eth_pactype[0]),
+        .I2(sending_packet_eth_pactype[1]),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(\cnt_reg[1]_0 ),
+        .O(\io_buf_din[1]_INST_0_i_12_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFFFFFFF00CA)) 
+    \io_buf_din[1]_INST_0_i_13 
+       (.I0(sending_packet_ip_len[1]),
+        .I1(sending_packet_ip_len[9]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[2]_0 ),
+        .O(\io_buf_din[1]_INST_0_i_13_n_0 ));
+  MUXF7 \io_buf_din[1]_INST_0_i_14 
+       (.I0(\io_buf_din[1]_INST_0_i_16_n_0 ),
+        .I1(\io_buf_din[1]_INST_0_i_17_n_0 ),
+        .O(\io_buf_din[1]_INST_0_i_14_n_0 ),
+        .S(\cnt_reg[2]_0 ));
+  MUXF7 \io_buf_din[1]_INST_0_i_15 
+       (.I0(\io_buf_din[1]_INST_0_i_18_n_0 ),
+        .I1(\io_buf_din[1]_INST_0_i_19_n_0 ),
+        .O(\io_buf_din[1]_INST_0_i_15_n_0 ),
+        .S(\cnt_reg[2]_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[1]_INST_0_i_20 
+    \io_buf_din[1]_INST_0_i_16 
+       (.I0(data16[1]),
+        .I1(data17[1]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data18[1]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_dest_reg_n_0_[1] ),
+        .O(\io_buf_din[1]_INST_0_i_16_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[1]_INST_0_i_17 
+       (.I0(data12[1]),
+        .I1(data13[1]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data14[1]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_src_reg_n_0_[1] ),
+        .O(\io_buf_din[1]_INST_0_i_17_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[1]_INST_0_i_18 
+       (.I0(sending_packet_ip_ttl[1]),
+        .I1(sending_packet_ip_proto[1]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_chksum[9]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_chksum[1]),
+        .O(\io_buf_din[1]_INST_0_i_18_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[1]_INST_0_i_19 
+       (.I0(sending_packet_ip_id[9]),
+        .I1(sending_packet_ip_id[1]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_foff[9]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_foff[1]),
+        .O(\io_buf_din[1]_INST_0_i_19_n_0 ));
+  LUT5 #(
+    .INIT(32'hB8BBB888)) 
+    \io_buf_din[1]_INST_0_i_2 
+       (.I0(\io_buf_din[1]_INST_0_i_3_n_0 ),
+        .I1(\state_reg[3]_1 ),
+        .I2(\io_buf_din[1]_INST_0_i_4_n_0 ),
+        .I3(\io_buf_din[7]_INST_0_i_8_n_0 ),
+        .I4(dout[2]),
+        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][2] ));
+  MUXF7 \io_buf_din[1]_INST_0_i_3 
+       (.I0(\io_buf_din[1]_INST_0_i_5_n_0 ),
+        .I1(\io_buf_din[1]_INST_0_i_6_n_0 ),
+        .O(\io_buf_din[1]_INST_0_i_3_n_0 ),
+        .S(\cnt_reg[4]_0 ));
+  LUT6 #(
+    .INIT(64'h888AFFFF888A0000)) 
+    \io_buf_din[1]_INST_0_i_4 
+       (.I0(\io_buf_din[1]_INST_0_i_7_n_0 ),
+        .I1(\sending_packet_ip_dest_reg_n_0_[1] ),
+        .I2(\cnt_reg[3]_0 ),
+        .I3(\cnt_reg[2]_0 ),
+        .I4(\cnt_reg[4]_0 ),
+        .I5(\io_buf_din[1]_INST_0_i_8_n_0 ),
+        .O(\io_buf_din[1]_INST_0_i_4_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[1]_INST_0_i_5 
+       (.I0(\io_buf_din[1]_INST_0_i_9_n_0 ),
+        .I1(\io_buf_din[1]_INST_0_i_10_n_0 ),
+        .I2(\cnt_reg[3]_0 ),
+        .I3(\io_buf_din[1]_INST_0_i_11_n_0 ),
+        .I4(\cnt_reg[2]_0 ),
+        .I5(\io_buf_din[1]_INST_0_i_12_n_0 ),
+        .O(\io_buf_din[1]_INST_0_i_5_n_0 ));
+  LUT6 #(
+    .INIT(64'h4F404F4F4F404040)) 
+    \io_buf_din[1]_INST_0_i_6 
+       (.I0(sending_packet_eth_pactype[0]),
+        .I1(sending_packet_eth_pactype[1]),
+        .I2(\io_buf_din[2]_INST_0_i_12_n_0 ),
+        .I3(data1[1]),
+        .I4(\io_buf_din[2]_INST_0_i_11_n_0 ),
+        .I5(data0[1]),
+        .O(\io_buf_din[1]_INST_0_i_6_n_0 ));
+  LUT5 #(
+    .INIT(32'hFFFF8A80)) 
+    \io_buf_din[1]_INST_0_i_7 
+       (.I0(\cnt_reg[1]_0 ),
+        .I1(sending_packet_ip_ihl[1]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(sending_packet_ip_ecn[1]),
+        .I4(\io_buf_din[1]_INST_0_i_13_n_0 ),
+        .O(\io_buf_din[1]_INST_0_i_7_n_0 ));
+  MUXF8 \io_buf_din[1]_INST_0_i_8 
+       (.I0(\io_buf_din[1]_INST_0_i_14_n_0 ),
+        .I1(\io_buf_din[1]_INST_0_i_15_n_0 ),
+        .O(\io_buf_din[1]_INST_0_i_8_n_0 ),
+        .S(\cnt_reg[3]_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[1]_INST_0_i_9 
        (.I0(data2[1]),
         .I1(\sending_packet_eth_dest_reg_n_0_[17] ),
         .I2(\cnt_reg[1]_0 ),
         .I3(\sending_packet_eth_dest_reg_n_0_[9] ),
         .I4(\cnt_reg[0]_0 ),
         .I5(\sending_packet_eth_dest_reg_n_0_[1] ),
-        .O(\io_buf_din[1]_INST_0_i_20_n_0 ));
-  LUT6 #(
-    .INIT(64'h00000000FFFF0EFF)) 
-    \io_buf_din[1]_INST_0_i_3 
-       (.I0(\cnt_reg[3]_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\sending_packet_ip_dest_reg_n_0_[1] ),
-        .I3(\cnt_reg[4]_0 ),
-        .I4(\io_buf_din[1]_INST_0_i_6_n_0 ),
-        .I5(\io_buf_din[1]_INST_0_i_7_n_0 ),
-        .O(\io_buf_din[1]_INST_0_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair67" *) 
-  LUT5 #(
-    .INIT(32'h00000040)) 
-    \io_buf_din[1]_INST_0_i_4 
-       (.I0(\state_reg[3]_0 ),
-        .I1(\state_reg[2]_0 ),
-        .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
-        .I4(\io_buf_din[1]_INST_0_i_8_n_0 ),
-        .O(\io_buf_din[1]_INST_0_i_4_n_0 ));
-  LUT5 #(
-    .INIT(32'h000047FF)) 
-    \io_buf_din[1]_INST_0_i_6 
-       (.I0(sending_packet_ip_ihl[1]),
-        .I1(\cnt_reg[0]_0 ),
-        .I2(sending_packet_ip_ecn[1]),
-        .I3(\cnt_reg[1]_0 ),
-        .I4(\io_buf_din[1]_INST_0_i_9_n_0 ),
-        .O(\io_buf_din[1]_INST_0_i_6_n_0 ));
-  LUT6 #(
-    .INIT(64'h00000000FA0ACACA)) 
-    \io_buf_din[1]_INST_0_i_7 
-       (.I0(\io_buf_din[1]_INST_0_i_10_n_0 ),
-        .I1(\io_buf_din[1]_INST_0_i_11_n_0 ),
-        .I2(\cnt_reg[3]_0 ),
-        .I3(\io_buf_din[1]_INST_0_i_12_n_0 ),
-        .I4(\cnt_reg[2]_0 ),
-        .I5(\cnt_reg[4]_0 ),
-        .O(\io_buf_din[1]_INST_0_i_7_n_0 ));
-  LUT6 #(
-    .INIT(64'hAAAAAAABAAABAAAB)) 
-    \io_buf_din[1]_INST_0_i_8 
-       (.I0(\io_buf_din[1]_INST_0_i_13_n_0 ),
-        .I1(\io_buf_din[1]_INST_0_i_14_n_0 ),
-        .I2(\cnt_reg[4]_0 ),
-        .I3(\io_buf_din[1]_INST_0_i_15_n_0 ),
-        .I4(\cnt_reg[3]_0 ),
-        .I5(\io_buf_din[1]_INST_0_i_16_n_0 ),
-        .O(\io_buf_din[1]_INST_0_i_8_n_0 ));
-  LUT6 #(
-    .INIT(64'hFCFCFCFCFFFCFEFE)) 
-    \io_buf_din[1]_INST_0_i_9 
-       (.I0(sending_packet_ip_len[1]),
-        .I1(\cnt_reg[3]_0 ),
-        .I2(\cnt_reg[2]_0 ),
-        .I3(sending_packet_ip_len[9]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\cnt_reg[1]_0 ),
         .O(\io_buf_din[1]_INST_0_i_9_n_0 ));
-  MUXF7 \io_buf_din[2]_INST_0_i_10 
-       (.I0(\io_buf_din[2]_INST_0_i_15_n_0 ),
-        .I1(\io_buf_din[2]_INST_0_i_16_n_0 ),
-        .O(\io_buf_din[2]_INST_0_i_10_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  LUT6 #(
-    .INIT(64'hA2A2A2AAAAA2AAAA)) 
-    \io_buf_din[2]_INST_0_i_11 
-       (.I0(\io_buf_din[2]_INST_0_i_17_n_0 ),
-        .I1(\cnt_reg[3]_3 ),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\io_buf_din[2]_INST_0_i_18_n_0 ),
-        .I4(data0[2]),
-        .I5(data1[2]),
-        .O(\io_buf_din[2]_INST_0_i_11_n_0 ));
-  LUT6 #(
-    .INIT(64'h4040400000400000)) 
-    \io_buf_din[2]_INST_0_i_12 
-       (.I0(\cnt_reg[3]_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\cnt_reg[0]_0 ),
-        .I4(\sending_packet_eth_sender_reg_n_0_[2] ),
-        .I5(data10[2]),
-        .O(\io_buf_din[2]_INST_0_i_12_n_0 ));
-  LUT6 #(
-    .INIT(64'h00800080008A0080)) 
-    \io_buf_din[2]_INST_0_i_13 
-       (.I0(\cnt_reg[3]_3 ),
-        .I1(sending_packet_eth_vlan[2]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\cnt_reg[0]_0 ),
-        .I4(sending_packet_eth_pactype[1]),
-        .I5(sending_packet_eth_pactype[0]),
-        .O(\io_buf_din[2]_INST_0_i_13_n_0 ));
-  MUXF7 \io_buf_din[2]_INST_0_i_14 
-       (.I0(\io_buf_din[2]_INST_0_i_19_n_0 ),
-        .I1(\io_buf_din[2]_INST_0_i_20_n_0 ),
-        .O(\io_buf_din[2]_INST_0_i_14_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[2]_INST_0_i_15 
-       (.I0(data16[2]),
-        .I1(data17[2]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data18[2]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_dest_reg_n_0_[2] ),
-        .O(\io_buf_din[2]_INST_0_i_15_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[2]_INST_0_i_16 
-       (.I0(data12[2]),
-        .I1(data13[2]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data14[2]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_src_reg_n_0_[2] ),
-        .O(\io_buf_din[2]_INST_0_i_16_n_0 ));
-  LUT6 #(
-    .INIT(64'h8A8A8A8A8A8A8AAA)) 
-    \io_buf_din[2]_INST_0_i_17 
-       (.I0(\cnt_reg[4]_0 ),
-        .I1(sending_packet_eth_pactype[0]),
-        .I2(sending_packet_eth_pactype[1]),
+  LUT5 #(
+    .INIT(32'hF0FBFFFB)) 
+    \io_buf_din[2]_INST_0_i_10 
+       (.I0(sending_packet_eth_pactype[0]),
+        .I1(sending_packet_eth_pactype[1]),
+        .I2(\cnt_reg[0]_0 ),
         .I3(\cnt_reg[1]_0 ),
-        .I4(\cnt_reg[2]_0 ),
-        .I5(\cnt_reg[3]_0 ),
-        .O(\io_buf_din[2]_INST_0_i_17_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair64" *) 
+        .I4(sending_packet_eth_vlan[2]),
+        .O(\io_buf_din[2]_INST_0_i_10_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair63" *) 
   LUT3 #(
     .INIT(8'h0D)) 
-    \io_buf_din[2]_INST_0_i_18 
+    \io_buf_din[2]_INST_0_i_11 
        (.I0(\cnt_reg[0]_0 ),
         .I1(\cnt_reg[1]_0 ),
         .I2(\cnt_reg[2]_0 ),
-        .O(\io_buf_din[2]_INST_0_i_18_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[2]_INST_0_i_19 
-       (.I0(\sending_packet_eth_sender_reg_n_0_[42] ),
-        .I1(data7[2]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data8[2]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(data9[2]),
-        .O(\io_buf_din[2]_INST_0_i_19_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFF0100EF00)) 
-    \io_buf_din[2]_INST_0_i_2 
-       (.I0(\cnt_reg[3]_0 ),
+        .O(\io_buf_din[2]_INST_0_i_11_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair64" *) 
+  LUT3 #(
+    .INIT(8'hFE)) 
+    \io_buf_din[2]_INST_0_i_12 
+       (.I0(\cnt_reg[1]_0 ),
         .I1(\cnt_reg[2]_0 ),
-        .I2(\io_buf_din[2]_INST_0_i_5_n_0 ),
-        .I3(\cnt_reg[4]_0 ),
-        .I4(\sending_packet_ip_dest_reg_n_0_[2] ),
-        .I5(\io_buf_din[2]_INST_0_i_6_n_0 ),
-        .O(\cnt_reg[3]_1 ));
+        .I2(\cnt_reg[3]_0 ),
+        .O(\io_buf_din[2]_INST_0_i_12_n_0 ));
+  LUT5 #(
+    .INIT(32'hB8BBB888)) 
+    \io_buf_din[2]_INST_0_i_3 
+       (.I0(\io_buf_din[2]_INST_0_i_4_n_0 ),
+        .I1(\state_reg[3]_1 ),
+        .I2(xpm_fifo_async_i_27_n_0),
+        .I3(\io_buf_din[7]_INST_0_i_8_n_0 ),
+        .I4(dout[3]),
+        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][3] ));
+  MUXF7 \io_buf_din[2]_INST_0_i_4 
+       (.I0(\io_buf_din[2]_INST_0_i_5_n_0 ),
+        .I1(\io_buf_din[2]_INST_0_i_6_n_0 ),
+        .O(\io_buf_din[2]_INST_0_i_4_n_0 ),
+        .S(\cnt_reg[4]_0 ));
+  LUT6 #(
+    .INIT(64'hFAFCF0F0FAFCF0FF)) 
+    \io_buf_din[2]_INST_0_i_5 
+       (.I0(\io_buf_din[2]_INST_0_i_7_n_0 ),
+        .I1(\io_buf_din[2]_INST_0_i_8_n_0 ),
+        .I2(\io_buf_din[2]_INST_0_i_9_n_0 ),
+        .I3(\cnt_reg[2]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\io_buf_din[2]_INST_0_i_10_n_0 ),
+        .O(\io_buf_din[2]_INST_0_i_5_n_0 ));
+  LUT6 #(
+    .INIT(64'h00FF0000B8B8B8B8)) 
+    \io_buf_din[2]_INST_0_i_6 
+       (.I0(data1[2]),
+        .I1(\io_buf_din[2]_INST_0_i_11_n_0 ),
+        .I2(data0[2]),
+        .I3(sending_packet_eth_pactype[0]),
+        .I4(sending_packet_eth_pactype[1]),
+        .I5(\io_buf_din[2]_INST_0_i_12_n_0 ),
+        .O(\io_buf_din[2]_INST_0_i_6_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[2]_INST_0_i_20 
+    \io_buf_din[2]_INST_0_i_7 
        (.I0(data2[2]),
         .I1(\sending_packet_eth_dest_reg_n_0_[18] ),
         .I2(\cnt_reg[1]_0 ),
         .I3(\sending_packet_eth_dest_reg_n_0_[10] ),
         .I4(\cnt_reg[0]_0 ),
         .I5(\sending_packet_eth_dest_reg_n_0_[2] ),
-        .O(\io_buf_din[2]_INST_0_i_20_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFCFDFFF00001000)) 
-    \io_buf_din[2]_INST_0_i_3 
-       (.I0(\io_buf_din[2]_INST_0_i_7_n_0 ),
-        .I1(\state_reg[3]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\state_reg_n_0_[1] ),
-        .I5(dout[3]),
-        .O(\state_reg[3]_3 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[2]_INST_0_i_5 
-       (.I0(sending_packet_ip_ihl[2]),
-        .I1(sending_packet_ip_dscp[0]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_len[10]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_len[2]),
-        .O(\io_buf_din[2]_INST_0_i_5_n_0 ));
-  LUT6 #(
-    .INIT(64'h00000000474700FF)) 
-    \io_buf_din[2]_INST_0_i_6 
-       (.I0(\io_buf_din[2]_INST_0_i_8_n_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\io_buf_din[2]_INST_0_i_9_n_0 ),
-        .I3(\io_buf_din[2]_INST_0_i_10_n_0 ),
-        .I4(\cnt_reg[3]_0 ),
-        .I5(\cnt_reg[4]_0 ),
-        .O(\io_buf_din[2]_INST_0_i_6_n_0 ));
-  LUT6 #(
-    .INIT(64'hAAAAAAABAAABAAAB)) 
-    \io_buf_din[2]_INST_0_i_7 
-       (.I0(\io_buf_din[2]_INST_0_i_11_n_0 ),
-        .I1(\cnt_reg[4]_0 ),
-        .I2(\io_buf_din[2]_INST_0_i_12_n_0 ),
-        .I3(\io_buf_din[2]_INST_0_i_13_n_0 ),
-        .I4(\cnt_reg[3]_0 ),
-        .I5(\io_buf_din[2]_INST_0_i_14_n_0 ),
         .O(\io_buf_din[2]_INST_0_i_7_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     \io_buf_din[2]_INST_0_i_8 
-       (.I0(sending_packet_ip_id[10]),
-        .I1(sending_packet_ip_id[2]),
+       (.I0(\sending_packet_eth_sender_reg_n_0_[42] ),
+        .I1(data7[2]),
         .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_foff[10]),
+        .I3(data8[2]),
         .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_foff[2]),
+        .I5(data9[2]),
         .O(\io_buf_din[2]_INST_0_i_8_n_0 ));
   LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    .INIT(64'h4040400000400000)) 
     \io_buf_din[2]_INST_0_i_9 
-       (.I0(sending_packet_ip_ttl[2]),
-        .I1(sending_packet_ip_proto[2]),
+       (.I0(\cnt_reg[3]_0 ),
+        .I1(\cnt_reg[2]_0 ),
         .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_chksum[10]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_chksum[2]),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(\sending_packet_eth_sender_reg_n_0_[2] ),
+        .I5(data10[2]),
         .O(\io_buf_din[2]_INST_0_i_9_n_0 ));
+  LUT6 #(
+    .INIT(64'hABBB0000ABBBFFFF)) 
+    \io_buf_din[3]_INST_0_i_1 
+       (.I0(\io_buf_din[3]_INST_0_i_4_n_0 ),
+        .I1(\io_buf_din[3]_INST_0_i_5_n_0 ),
+        .I2(\cnt_reg[3]_0 ),
+        .I3(\io_buf_din[3]_INST_0_i_6_n_0 ),
+        .I4(\io_buf_din[7]_INST_0_i_8_n_0 ),
+        .I5(dout[4]),
+        .O(\cnt_reg[3]_5 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     \io_buf_din[3]_INST_0_i_10 
-       (.I0(data12[3]),
-        .I1(data13[3]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data14[3]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_src_reg_n_0_[3] ),
-        .O(\io_buf_din[3]_INST_0_i_10_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[3]_INST_0_i_11 
        (.I0(data16[3]),
         .I1(data17[3]),
         .I2(\cnt_reg[1]_0 ),
         .I3(data18[3]),
         .I4(\cnt_reg[0]_0 ),
         .I5(\sending_packet_ip_dest_reg_n_0_[3] ),
-        .O(\io_buf_din[3]_INST_0_i_11_n_0 ));
+        .O(\io_buf_din[3]_INST_0_i_10_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[3]_INST_0_i_12 
-       (.I0(data2[3]),
-        .I1(\sending_packet_eth_dest_reg_n_0_[19] ),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\sending_packet_eth_dest_reg_n_0_[11] ),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_eth_dest_reg_n_0_[3] ),
-        .O(\io_buf_din[3]_INST_0_i_12_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[3]_INST_0_i_13 
-       (.I0(\sending_packet_eth_sender_reg_n_0_[43] ),
-        .I1(data7[3]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data8[3]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(data9[3]),
-        .O(\io_buf_din[3]_INST_0_i_13_n_0 ));
-  LUT4 #(
-    .INIT(16'hE200)) 
-    \io_buf_din[3]_INST_0_i_14 
-       (.I0(\sending_packet_eth_sender_reg_n_0_[3] ),
-        .I1(\cnt_reg[0]_0 ),
-        .I2(data10[3]),
-        .I3(\cnt_reg[1]_0 ),
-        .O(\io_buf_din[3]_INST_0_i_14_n_0 ));
-  LUT4 #(
-    .INIT(16'h0060)) 
-    \io_buf_din[3]_INST_0_i_15 
-       (.I0(sending_packet_eth_pactype[0]),
-        .I1(sending_packet_eth_pactype[1]),
-        .I2(\cnt_reg[0]_0 ),
-        .I3(\cnt_reg[1]_0 ),
-        .O(\io_buf_din[3]_INST_0_i_15_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[3]_INST_0_i_16 
+    \io_buf_din[3]_INST_0_i_11 
        (.I0(sending_packet_ip_ttl[3]),
         .I1(sending_packet_ip_proto[3]),
         .I2(\cnt_reg[1]_0 ),
         .I3(sending_packet_ip_chksum[11]),
         .I4(\cnt_reg[0]_0 ),
         .I5(sending_packet_ip_chksum[3]),
-        .O(\io_buf_din[3]_INST_0_i_16_n_0 ));
+        .O(\io_buf_din[3]_INST_0_i_11_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[3]_INST_0_i_17 
+    \io_buf_din[3]_INST_0_i_12 
        (.I0(sending_packet_ip_id[11]),
         .I1(sending_packet_ip_id[3]),
         .I2(\cnt_reg[1]_0 ),
         .I3(sending_packet_ip_foff[11]),
         .I4(\cnt_reg[0]_0 ),
         .I5(sending_packet_ip_foff[3]),
-        .O(\io_buf_din[3]_INST_0_i_17_n_0 ));
+        .O(\io_buf_din[3]_INST_0_i_12_n_0 ));
   LUT6 #(
-    .INIT(64'hFFCFEFFF00002000)) 
-    \io_buf_din[3]_INST_0_i_2 
-       (.I0(\io_buf_din[3]_INST_0_i_4_n_0 ),
-        .I1(\state_reg[3]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\state_reg_n_0_[1] ),
-        .I5(dout[4]),
-        .O(\state_reg[3]_2 ));
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[3]_INST_0_i_13 
+       (.I0(data2[3]),
+        .I1(\sending_packet_eth_dest_reg_n_0_[19] ),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\sending_packet_eth_dest_reg_n_0_[11] ),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_eth_dest_reg_n_0_[3] ),
+        .O(\io_buf_din[3]_INST_0_i_13_n_0 ));
   LUT6 #(
-    .INIT(64'hAAABAAAAFEFFAAAA)) 
-    \io_buf_din[3]_INST_0_i_3 
-       (.I0(\io_buf_din[3]_INST_0_i_5_n_0 ),
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[3]_INST_0_i_14 
+       (.I0(\sending_packet_eth_sender_reg_n_0_[43] ),
+        .I1(data7[3]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data8[3]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(data9[3]),
+        .O(\io_buf_din[3]_INST_0_i_14_n_0 ));
+  LUT6 #(
+    .INIT(64'h0000011000000000)) 
+    \io_buf_din[3]_INST_0_i_15 
+       (.I0(\cnt_reg[2]_0 ),
         .I1(\cnt_reg[3]_0 ),
-        .I2(\cnt_reg[2]_0 ),
-        .I3(\io_buf_din[3]_INST_0_i_6_n_0 ),
-        .I4(\cnt_reg[4]_0 ),
-        .I5(\sending_packet_ip_dest_reg_n_0_[3] ),
-        .O(\cnt_reg[3]_2 ));
-  MUXF7 \io_buf_din[3]_INST_0_i_4 
+        .I2(sending_packet_eth_pactype[1]),
+        .I3(sending_packet_eth_pactype[0]),
+        .I4(\cnt_reg[1]_0 ),
+        .I5(\cnt_reg[0]_0 ),
+        .O(\io_buf_din[3]_INST_0_i_15_n_0 ));
+  LUT6 #(
+    .INIT(64'h4040004040000000)) 
+    \io_buf_din[3]_INST_0_i_16 
+       (.I0(\cnt_reg[3]_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(data10[3]),
+        .I5(\sending_packet_eth_sender_reg_n_0_[3] ),
+        .O(\io_buf_din[3]_INST_0_i_16_n_0 ));
+  MUXF7 \io_buf_din[3]_INST_0_i_2 
        (.I0(\io_buf_din[3]_INST_0_i_7_n_0 ),
         .I1(\io_buf_din[3]_INST_0_i_8_n_0 ),
-        .O(\io_buf_din[3]_INST_0_i_4_n_0 ),
+        .O(\cnt_reg[4]_2 ),
         .S(\cnt_reg[4]_0 ));
-  LUT6 #(
-    .INIT(64'h1010131010131313)) 
-    \io_buf_din[3]_INST_0_i_5 
-       (.I0(\io_buf_din[3]_INST_0_i_9_n_0 ),
+  LUT5 #(
+    .INIT(32'h0C0C0C44)) 
+    \io_buf_din[3]_INST_0_i_4 
+       (.I0(xpm_fifo_async_i_40_n_0),
         .I1(\cnt_reg[4]_0 ),
-        .I2(\cnt_reg[3]_0 ),
+        .I2(\sending_packet_ip_dest_reg_n_0_[3] ),
+        .I3(\cnt_reg[2]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .O(\io_buf_din[3]_INST_0_i_4_n_0 ));
+  LUT5 #(
+    .INIT(32'hBABBBAAA)) 
+    \io_buf_din[3]_INST_0_i_5 
+       (.I0(\cnt_reg[4]_0 ),
+        .I1(\cnt_reg[3]_0 ),
+        .I2(\io_buf_din[3]_INST_0_i_9_n_0 ),
         .I3(\cnt_reg[2]_0 ),
         .I4(\io_buf_din[3]_INST_0_i_10_n_0 ),
-        .I5(\io_buf_din[3]_INST_0_i_11_n_0 ),
         .O(\io_buf_din[3]_INST_0_i_5_n_0 ));
+  MUXF7 \io_buf_din[3]_INST_0_i_6 
+       (.I0(\io_buf_din[3]_INST_0_i_11_n_0 ),
+        .I1(\io_buf_din[3]_INST_0_i_12_n_0 ),
+        .O(\io_buf_din[3]_INST_0_i_6_n_0 ),
+        .S(\cnt_reg[2]_0 ));
   LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[3]_INST_0_i_6 
-       (.I0(sending_packet_ip_ihl[3]),
-        .I1(sending_packet_ip_dscp[1]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_len[11]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_len[3]),
-        .O(\io_buf_din[3]_INST_0_i_6_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    .INIT(64'h00000000000047FF)) 
     \io_buf_din[3]_INST_0_i_7 
-       (.I0(\io_buf_din[3]_INST_0_i_12_n_0 ),
-        .I1(\io_buf_din[3]_INST_0_i_13_n_0 ),
-        .I2(\cnt_reg[3]_0 ),
-        .I3(\io_buf_din[3]_INST_0_i_14_n_0 ),
-        .I4(\cnt_reg[2]_0 ),
-        .I5(\io_buf_din[3]_INST_0_i_15_n_0 ),
+       (.I0(\io_buf_din[3]_INST_0_i_13_n_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\io_buf_din[3]_INST_0_i_14_n_0 ),
+        .I3(\cnt_reg[3]_0 ),
+        .I4(\io_buf_din[3]_INST_0_i_15_n_0 ),
+        .I5(\io_buf_din[3]_INST_0_i_16_n_0 ),
         .O(\io_buf_din[3]_INST_0_i_7_n_0 ));
   LUT6 #(
-    .INIT(64'h0000005400000004)) 
+    .INIT(64'hFFFFFFABFFFFFFFB)) 
     \io_buf_din[3]_INST_0_i_8 
        (.I0(\cnt_reg[3]_0 ),
         .I1(data1[3]),
@@ -12940,469 +12907,516 @@ module meowrouter_Router_0_Encoder
         .I4(\cnt_reg[2]_0 ),
         .I5(data0[3]),
         .O(\io_buf_din[3]_INST_0_i_8_n_0 ));
-  MUXF7 \io_buf_din[3]_INST_0_i_9 
-       (.I0(\io_buf_din[3]_INST_0_i_16_n_0 ),
-        .I1(\io_buf_din[3]_INST_0_i_17_n_0 ),
-        .O(\io_buf_din[3]_INST_0_i_9_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  LUT5 #(
-    .INIT(32'h00535F53)) 
-    \io_buf_din[4]_INST_0_i_1 
-       (.I0(\io_buf_din[4]_INST_0_i_2_n_0 ),
-        .I1(dout[5]),
-        .I2(\io_buf_din[7]_INST_0_i_3_n_0 ),
-        .I3(\state_reg[2]_3 ),
-        .I4(\io_buf_din[4]_INST_0_i_3_n_0 ),
-        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][5] ));
-  MUXF7 \io_buf_din[4]_INST_0_i_10 
-       (.I0(\io_buf_din[4]_INST_0_i_14_n_0 ),
-        .I1(\io_buf_din[4]_INST_0_i_15_n_0 ),
-        .O(\io_buf_din[4]_INST_0_i_10_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  MUXF7 \io_buf_din[4]_INST_0_i_11 
-       (.I0(\io_buf_din[4]_INST_0_i_16_n_0 ),
-        .I1(\io_buf_din[4]_INST_0_i_17_n_0 ),
-        .O(\io_buf_din[4]_INST_0_i_11_n_0 ),
-        .S(\cnt_reg[2]_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[4]_INST_0_i_12 
-       (.I0(\sending_packet_eth_sender_reg_n_0_[44] ),
-        .I1(data7[4]),
+    \io_buf_din[3]_INST_0_i_9 
+       (.I0(data12[3]),
+        .I1(data13[3]),
         .I2(\cnt_reg[1]_0 ),
-        .I3(data8[4]),
+        .I3(data14[3]),
         .I4(\cnt_reg[0]_0 ),
-        .I5(data9[4]),
+        .I5(\sending_packet_ip_src_reg_n_0_[3] ),
+        .O(\io_buf_din[3]_INST_0_i_9_n_0 ));
+  LUT6 #(
+    .INIT(64'hBBABFFFFBBAB0000)) 
+    \io_buf_din[4]_INST_0_i_1 
+       (.I0(\io_buf_din[4]_INST_0_i_4_n_0 ),
+        .I1(\io_buf_din[4]_INST_0_i_5_n_0 ),
+        .I2(\cnt_reg[3]_0 ),
+        .I3(\io_buf_din[4]_INST_0_i_6_n_0 ),
+        .I4(\io_buf_din[7]_INST_0_i_8_n_0 ),
+        .I5(dout[5]),
+        .O(\cnt_reg[3]_1 ));
+  (* SOFT_HLUTNM = "soft_lutpair72" *) 
+  LUT4 #(
+    .INIT(16'h54FF)) 
+    \io_buf_din[4]_INST_0_i_10 
+       (.I0(\sending_packet_ip_dest_reg_n_0_[4] ),
+        .I1(\cnt_reg[3]_0 ),
+        .I2(\cnt_reg[2]_0 ),
+        .I3(\cnt_reg[4]_0 ),
+        .O(\io_buf_din[4]_INST_0_i_10_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFFFFFFF0A0C)) 
+    \io_buf_din[4]_INST_0_i_11 
+       (.I0(data18[4]),
+        .I1(\sending_packet_ip_dest_reg_n_0_[4] ),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[2]_0 ),
+        .O(\io_buf_din[4]_INST_0_i_11_n_0 ));
+  LUT6 #(
+    .INIT(64'hABABABBBBBBBABBB)) 
+    \io_buf_din[4]_INST_0_i_12 
+       (.I0(\cnt_reg[4]_0 ),
+        .I1(\io_buf_din[4]_INST_0_i_16_n_0 ),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data13[4]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(data12[4]),
         .O(\io_buf_din[4]_INST_0_i_12_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     \io_buf_din[4]_INST_0_i_13 
-       (.I0(data2[4]),
-        .I1(\sending_packet_eth_dest_reg_n_0_[20] ),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\sending_packet_eth_dest_reg_n_0_[12] ),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_eth_dest_reg_n_0_[4] ),
-        .O(\io_buf_din[4]_INST_0_i_13_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[4]_INST_0_i_14 
-       (.I0(data16[4]),
-        .I1(data17[4]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data18[4]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_dest_reg_n_0_[4] ),
-        .O(\io_buf_din[4]_INST_0_i_14_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[4]_INST_0_i_15 
-       (.I0(data12[4]),
-        .I1(data13[4]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data14[4]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_src_reg_n_0_[4] ),
-        .O(\io_buf_din[4]_INST_0_i_15_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[4]_INST_0_i_16 
        (.I0(sending_packet_ip_ttl[4]),
         .I1(sending_packet_ip_proto[4]),
         .I2(\cnt_reg[1]_0 ),
         .I3(sending_packet_ip_chksum[12]),
         .I4(\cnt_reg[0]_0 ),
         .I5(sending_packet_ip_chksum[4]),
-        .O(\io_buf_din[4]_INST_0_i_16_n_0 ));
+        .O(\io_buf_din[4]_INST_0_i_13_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[4]_INST_0_i_17 
+    \io_buf_din[4]_INST_0_i_14 
        (.I0(sending_packet_ip_id[12]),
         .I1(sending_packet_ip_id[4]),
         .I2(\cnt_reg[1]_0 ),
         .I3(sending_packet_ip_foff[12]),
         .I4(\cnt_reg[0]_0 ),
         .I5(sending_packet_ip_foff[4]),
+        .O(\io_buf_din[4]_INST_0_i_14_n_0 ));
+  MUXF7 \io_buf_din[4]_INST_0_i_15 
+       (.I0(\io_buf_din[4]_INST_0_i_17_n_0 ),
+        .I1(\io_buf_din[4]_INST_0_i_18_n_0 ),
+        .O(\io_buf_din[4]_INST_0_i_15_n_0 ),
+        .S(\cnt_reg[2]_0 ));
+  LUT6 #(
+    .INIT(64'hFFFF00CAFFFFFFFF)) 
+    \io_buf_din[4]_INST_0_i_16 
+       (.I0(\sending_packet_ip_src_reg_n_0_[4] ),
+        .I1(data14[4]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[2]_0 ),
+        .O(\io_buf_din[4]_INST_0_i_16_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[4]_INST_0_i_17 
+       (.I0(\sending_packet_eth_sender_reg_n_0_[44] ),
+        .I1(data7[4]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data8[4]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(data9[4]),
         .O(\io_buf_din[4]_INST_0_i_17_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[4]_INST_0_i_18 
+       (.I0(data2[4]),
+        .I1(\sending_packet_eth_dest_reg_n_0_[20] ),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\sending_packet_eth_dest_reg_n_0_[12] ),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_eth_dest_reg_n_0_[4] ),
+        .O(\io_buf_din[4]_INST_0_i_18_n_0 ));
   MUXF7 \io_buf_din[4]_INST_0_i_2 
-       (.I0(\io_buf_din[4]_INST_0_i_4_n_0 ),
-        .I1(\io_buf_din[4]_INST_0_i_5_n_0 ),
-        .O(\io_buf_din[4]_INST_0_i_2_n_0 ),
+       (.I0(\io_buf_din[4]_INST_0_i_7_n_0 ),
+        .I1(\io_buf_din[4]_INST_0_i_8_n_0 ),
+        .O(\cnt_reg[4]_3 ),
         .S(\cnt_reg[4]_0 ));
   LUT6 #(
-    .INIT(64'h00F1FFFF00F10000)) 
-    \io_buf_din[4]_INST_0_i_3 
-       (.I0(\cnt_reg[3]_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\sending_packet_ip_dest_reg_n_0_[4] ),
-        .I3(\io_buf_din[4]_INST_0_i_6_n_0 ),
-        .I4(\cnt_reg[4]_0 ),
-        .I5(\io_buf_din[4]_INST_0_i_7_n_0 ),
-        .O(\io_buf_din[4]_INST_0_i_3_n_0 ));
+    .INIT(64'h00000000FEAEAAAA)) 
+    \io_buf_din[4]_INST_0_i_4 
+       (.I0(\io_buf_din[4]_INST_0_i_9_n_0 ),
+        .I1(sending_packet_ip_dscp[2]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(sending_packet_ip_version[0]),
+        .I4(\cnt_reg[1]_0 ),
+        .I5(\io_buf_din[4]_INST_0_i_10_n_0 ),
+        .O(\io_buf_din[4]_INST_0_i_4_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFFF11155515)) 
+    \io_buf_din[4]_INST_0_i_5 
+       (.I0(\io_buf_din[4]_INST_0_i_11_n_0 ),
+        .I1(\cnt_reg[1]_0 ),
+        .I2(data17[4]),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(data16[4]),
+        .I5(\io_buf_din[4]_INST_0_i_12_n_0 ),
+        .O(\io_buf_din[4]_INST_0_i_5_n_0 ));
+  MUXF7 \io_buf_din[4]_INST_0_i_6 
+       (.I0(\io_buf_din[4]_INST_0_i_13_n_0 ),
+        .I1(\io_buf_din[4]_INST_0_i_14_n_0 ),
+        .O(\io_buf_din[4]_INST_0_i_6_n_0 ),
+        .S(\cnt_reg[2]_0 ));
   LUT6 #(
     .INIT(64'hFFFFB800B800B800)) 
-    \io_buf_din[4]_INST_0_i_4 
+    \io_buf_din[4]_INST_0_i_7 
        (.I0(data10[4]),
         .I1(\cnt_reg[0]_0 ),
         .I2(\sending_packet_eth_sender_reg_n_0_[4] ),
-        .I3(xpm_fifo_async_i_40_n_0),
+        .I3(\io_buf_din[6]_INST_0_i_13_n_0 ),
         .I4(\cnt_reg[3]_0 ),
-        .I5(\io_buf_din[4]_INST_0_i_8_n_0 ),
-        .O(\io_buf_din[4]_INST_0_i_4_n_0 ));
+        .I5(\io_buf_din[4]_INST_0_i_15_n_0 ),
+        .O(\io_buf_din[4]_INST_0_i_7_n_0 ));
   LUT6 #(
     .INIT(64'h0000005400000004)) 
-    \io_buf_din[4]_INST_0_i_5 
+    \io_buf_din[4]_INST_0_i_8 
        (.I0(\cnt_reg[3]_0 ),
         .I1(data1[4]),
         .I2(\cnt_reg[0]_0 ),
         .I3(\cnt_reg[1]_0 ),
         .I4(\cnt_reg[2]_0 ),
         .I5(data0[4]),
-        .O(\io_buf_din[4]_INST_0_i_5_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair56" *) 
-  LUT5 #(
-    .INIT(32'h000047FF)) 
-    \io_buf_din[4]_INST_0_i_6 
-       (.I0(sending_packet_ip_version[0]),
-        .I1(\cnt_reg[0]_0 ),
-        .I2(sending_packet_ip_dscp[2]),
-        .I3(\cnt_reg[1]_0 ),
-        .I4(\io_buf_din[4]_INST_0_i_9_n_0 ),
-        .O(\io_buf_din[4]_INST_0_i_6_n_0 ));
-  MUXF8 \io_buf_din[4]_INST_0_i_7 
-       (.I0(\io_buf_din[4]_INST_0_i_10_n_0 ),
-        .I1(\io_buf_din[4]_INST_0_i_11_n_0 ),
-        .O(\io_buf_din[4]_INST_0_i_7_n_0 ),
-        .S(\cnt_reg[3]_0 ));
-  MUXF7 \io_buf_din[4]_INST_0_i_8 
-       (.I0(\io_buf_din[4]_INST_0_i_12_n_0 ),
-        .I1(\io_buf_din[4]_INST_0_i_13_n_0 ),
-        .O(\io_buf_din[4]_INST_0_i_8_n_0 ),
-        .S(\cnt_reg[2]_0 ));
+        .O(\io_buf_din[4]_INST_0_i_8_n_0 ));
   LUT6 #(
-    .INIT(64'hFCFCFEFEFCFCFFFC)) 
+    .INIT(64'hFFFFFFFFFFFF00CA)) 
     \io_buf_din[4]_INST_0_i_9 
-       (.I0(sending_packet_ip_len[12]),
-        .I1(\cnt_reg[3]_0 ),
-        .I2(\cnt_reg[2]_0 ),
-        .I3(sending_packet_ip_len[4]),
-        .I4(\cnt_reg[1]_0 ),
-        .I5(\cnt_reg[0]_0 ),
+       (.I0(sending_packet_ip_len[4]),
+        .I1(sending_packet_ip_len[12]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[2]_0 ),
         .O(\io_buf_din[4]_INST_0_i_9_n_0 ));
+  LUT5 #(
+    .INIT(32'hB8BBB888)) 
+    \io_buf_din[5]_INST_0_i_1 
+       (.I0(\io_buf_din[5]_INST_0_i_2_n_0 ),
+        .I1(\state_reg[3]_1 ),
+        .I2(xpm_fifo_async_i_21_n_0),
+        .I3(\io_buf_din[7]_INST_0_i_8_n_0 ),
+        .I4(dout[6]),
+        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][6] ));
+  MUXF7 \io_buf_din[5]_INST_0_i_2 
+       (.I0(\io_buf_din[5]_INST_0_i_3_n_0 ),
+        .I1(\io_buf_din[5]_INST_0_i_4_n_0 ),
+        .O(\io_buf_din[5]_INST_0_i_2_n_0 ),
+        .S(\cnt_reg[4]_0 ));
   LUT6 #(
-    .INIT(64'hFFCFEFFF00002000)) 
+    .INIT(64'hFFFFB800B800B800)) 
     \io_buf_din[5]_INST_0_i_3 
-       (.I0(xpm_fifo_async_i_20_n_0),
-        .I1(\state_reg[3]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\state_reg_n_0_[1] ),
-        .I5(dout[6]),
-        .O(\state_reg[3]_1 ));
+       (.I0(data10[5]),
+        .I1(\cnt_reg[0]_0 ),
+        .I2(\sending_packet_eth_sender_reg_n_0_[5] ),
+        .I3(\io_buf_din[6]_INST_0_i_13_n_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\io_buf_din[5]_INST_0_i_5_n_0 ),
+        .O(\io_buf_din[5]_INST_0_i_3_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFFFFFF0E001F00)) 
+    .INIT(64'h0000005400000004)) 
     \io_buf_din[5]_INST_0_i_4 
        (.I0(\cnt_reg[3]_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\sending_packet_ip_dest_reg_n_0_[5] ),
-        .I3(\cnt_reg[4]_0 ),
-        .I4(\io_buf_din[5]_INST_0_i_5_n_0 ),
-        .I5(\io_buf_din[5]_INST_0_i_6_n_0 ),
-        .O(\cnt_reg[3]_4 ));
+        .I1(data1[5]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(\cnt_reg[2]_0 ),
+        .I5(data0[5]),
+        .O(\io_buf_din[5]_INST_0_i_4_n_0 ));
+  MUXF7 \io_buf_din[5]_INST_0_i_5 
+       (.I0(\io_buf_din[5]_INST_0_i_6_n_0 ),
+        .I1(\io_buf_din[5]_INST_0_i_7_n_0 ),
+        .O(\io_buf_din[5]_INST_0_i_5_n_0 ),
+        .S(\cnt_reg[2]_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[5]_INST_0_i_5 
-       (.I0(sending_packet_ip_version[1]),
-        .I1(sending_packet_ip_dscp[3]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_len[13]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_len[5]),
-        .O(\io_buf_din[5]_INST_0_i_5_n_0 ));
-  LUT6 #(
-    .INIT(64'h00000000474700FF)) 
     \io_buf_din[5]_INST_0_i_6 
-       (.I0(\io_buf_din[5]_INST_0_i_7_n_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\io_buf_din[5]_INST_0_i_8_n_0 ),
-        .I3(\io_buf_din[5]_INST_0_i_9_n_0 ),
-        .I4(\cnt_reg[3]_0 ),
-        .I5(\cnt_reg[4]_0 ),
+       (.I0(\sending_packet_eth_sender_reg_n_0_[45] ),
+        .I1(data7[5]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data8[5]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(data9[5]),
         .O(\io_buf_din[5]_INST_0_i_6_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
     \io_buf_din[5]_INST_0_i_7 
-       (.I0(sending_packet_ip_id[13]),
-        .I1(sending_packet_ip_id[5]),
+       (.I0(data2[5]),
+        .I1(\sending_packet_eth_dest_reg_n_0_[21] ),
         .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_flags[0]),
+        .I3(\sending_packet_eth_dest_reg_n_0_[13] ),
         .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_foff[5]),
+        .I5(\sending_packet_eth_dest_reg_n_0_[5] ),
         .O(\io_buf_din[5]_INST_0_i_7_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[5]_INST_0_i_8 
-       (.I0(sending_packet_ip_ttl[5]),
-        .I1(sending_packet_ip_proto[5]),
+    \io_buf_din[6]_INST_0_i_10 
+       (.I0(data16[6]),
+        .I1(data17[6]),
         .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_chksum[13]),
+        .I3(data18[6]),
         .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_chksum[5]),
-        .O(\io_buf_din[5]_INST_0_i_8_n_0 ));
-  MUXF7 \io_buf_din[5]_INST_0_i_9 
-       (.I0(xpm_fifo_async_i_43_n_0),
-        .I1(xpm_fifo_async_i_42_n_0),
-        .O(\io_buf_din[5]_INST_0_i_9_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  LUT5 #(
-    .INIT(32'hFFAEAAAA)) 
-    \io_buf_din[6]_INST_0 
-       (.I0(\io_buf_din[6] ),
-        .I1(\state_reg[2]_3 ),
-        .I2(\io_buf_din[6]_INST_0_i_3_n_0 ),
-        .I3(\io_buf_din[6]_INST_0_i_4_n_0 ),
-        .I4(\cnt_reg[10] ),
-        .O(io_buf_din[1]));
-  (* SOFT_HLUTNM = "soft_lutpair68" *) 
-  LUT4 #(
-    .INIT(16'h0020)) 
-    \io_buf_din[6]_INST_0_i_2 
-       (.I0(\state_reg[2]_0 ),
-        .I1(\state_reg[3]_0 ),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\state_reg[0]_0 ),
-        .O(\state_reg[2]_3 ));
-  LUT6 #(
-    .INIT(64'hAAFEAAAAABFFAAAA)) 
-    \io_buf_din[6]_INST_0_i_3 
-       (.I0(\io_buf_din[6]_INST_0_i_5_n_0 ),
-        .I1(\cnt_reg[3]_0 ),
-        .I2(\cnt_reg[2]_0 ),
-        .I3(\sending_packet_ip_dest_reg_n_0_[6] ),
-        .I4(\cnt_reg[4]_0 ),
-        .I5(\io_buf_din[6]_INST_0_i_6_n_0 ),
-        .O(\io_buf_din[6]_INST_0_i_3_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFCFEFFF00002000)) 
-    \io_buf_din[6]_INST_0_i_4 
-       (.I0(xpm_fifo_async_i_16_n_0),
-        .I1(\state_reg[3]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\state_reg_n_0_[1] ),
-        .I5(dout[7]),
-        .O(\io_buf_din[6]_INST_0_i_4_n_0 ));
-  LUT6 #(
-    .INIT(64'h00000000474700FF)) 
-    \io_buf_din[6]_INST_0_i_5 
-       (.I0(\io_buf_din[6]_INST_0_i_7_n_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\io_buf_din[6]_INST_0_i_8_n_0 ),
-        .I3(\io_buf_din[6]_INST_0_i_9_n_0 ),
-        .I4(\cnt_reg[3]_0 ),
-        .I5(\cnt_reg[4]_0 ),
-        .O(\io_buf_din[6]_INST_0_i_5_n_0 ));
+        .I5(\sending_packet_ip_dest_reg_n_0_[6] ),
+        .O(\io_buf_din[6]_INST_0_i_10_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[6]_INST_0_i_6 
-       (.I0(sending_packet_ip_version[2]),
-        .I1(sending_packet_ip_dscp[4]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_len[14]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_len[6]),
-        .O(\io_buf_din[6]_INST_0_i_6_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[6]_INST_0_i_7 
-       (.I0(sending_packet_ip_id[14]),
-        .I1(sending_packet_ip_id[6]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_flags[1]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_foff[6]),
-        .O(\io_buf_din[6]_INST_0_i_7_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[6]_INST_0_i_8 
+    \io_buf_din[6]_INST_0_i_11 
        (.I0(sending_packet_ip_ttl[6]),
         .I1(sending_packet_ip_proto[6]),
         .I2(\cnt_reg[1]_0 ),
         .I3(sending_packet_ip_chksum[14]),
         .I4(\cnt_reg[0]_0 ),
         .I5(sending_packet_ip_chksum[6]),
-        .O(\io_buf_din[6]_INST_0_i_8_n_0 ));
-  MUXF7 \io_buf_din[6]_INST_0_i_9 
-       (.I0(xpm_fifo_async_i_39_n_0),
-        .I1(xpm_fifo_async_i_38_n_0),
-        .O(\io_buf_din[6]_INST_0_i_9_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  LUT5 #(
-    .INIT(32'h050355F3)) 
-    \io_buf_din[7]_INST_0_i_1 
-       (.I0(\io_buf_din[7]_INST_0_i_2_n_0 ),
-        .I1(dout[8]),
-        .I2(\io_buf_din[7]_INST_0_i_3_n_0 ),
-        .I3(\state_reg[2]_3 ),
-        .I4(\io_buf_din[7]_INST_0_i_4_n_0 ),
-        .O(\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][8] ));
-  MUXF7 \io_buf_din[7]_INST_0_i_10 
-       (.I0(\io_buf_din[7]_INST_0_i_15_n_0 ),
-        .I1(\io_buf_din[7]_INST_0_i_16_n_0 ),
-        .O(\io_buf_din[7]_INST_0_i_10_n_0 ),
-        .S(\cnt_reg[2]_0 ));
-  MUXF7 \io_buf_din[7]_INST_0_i_11 
-       (.I0(\io_buf_din[7]_INST_0_i_17_n_0 ),
-        .I1(\io_buf_din[7]_INST_0_i_18_n_0 ),
-        .O(\io_buf_din[7]_INST_0_i_11_n_0 ),
-        .S(\cnt_reg[2]_0 ));
+        .O(\io_buf_din[6]_INST_0_i_11_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[7]_INST_0_i_12 
-       (.I0(data2[7]),
-        .I1(\sending_packet_eth_dest_reg_n_0_[23] ),
+    \io_buf_din[6]_INST_0_i_12 
+       (.I0(sending_packet_ip_id[14]),
+        .I1(sending_packet_ip_id[6]),
         .I2(\cnt_reg[1]_0 ),
-        .I3(\sending_packet_eth_dest_reg_n_0_[15] ),
+        .I3(sending_packet_ip_flags[1]),
         .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_eth_dest_reg_n_0_[7] ),
-        .O(\io_buf_din[7]_INST_0_i_12_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[7]_INST_0_i_13 
-       (.I0(\sending_packet_eth_sender_reg_n_0_[47] ),
-        .I1(data7[7]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data8[7]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(data9[7]),
-        .O(\io_buf_din[7]_INST_0_i_13_n_0 ));
-  LUT5 #(
-    .INIT(32'hDA8A0000)) 
-    \io_buf_din[7]_INST_0_i_14 
-       (.I0(\cnt_reg[0]_0 ),
-        .I1(data10[7]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\sending_packet_eth_sender_reg_n_0_[7] ),
-        .I4(\cnt_reg[2]_0 ),
-        .O(\io_buf_din[7]_INST_0_i_14_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[7]_INST_0_i_15 
-       (.I0(data16[7]),
-        .I1(data17[7]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data18[7]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_dest_reg_n_0_[7] ),
-        .O(\io_buf_din[7]_INST_0_i_15_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[7]_INST_0_i_16 
-       (.I0(data12[7]),
-        .I1(data13[7]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data14[7]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_src_reg_n_0_[7] ),
-        .O(\io_buf_din[7]_INST_0_i_16_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[7]_INST_0_i_17 
-       (.I0(sending_packet_ip_ttl[7]),
-        .I1(sending_packet_ip_proto[7]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_chksum[15]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_chksum[7]),
-        .O(\io_buf_din[7]_INST_0_i_17_n_0 ));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \io_buf_din[7]_INST_0_i_18 
-       (.I0(sending_packet_ip_id[15]),
-        .I1(sending_packet_ip_id[7]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(sending_packet_ip_flags[2]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(sending_packet_ip_foff[7]),
-        .O(\io_buf_din[7]_INST_0_i_18_n_0 ));
-  LUT6 #(
-    .INIT(64'h00F1FFFF00F10000)) 
-    \io_buf_din[7]_INST_0_i_2 
-       (.I0(\cnt_reg[3]_0 ),
+        .I5(sending_packet_ip_foff[6]),
+        .O(\io_buf_din[6]_INST_0_i_12_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair72" *) 
+  LUT3 #(
+    .INIT(8'h08)) 
+    \io_buf_din[6]_INST_0_i_13 
+       (.I0(\cnt_reg[1]_0 ),
         .I1(\cnt_reg[2]_0 ),
-        .I2(\sending_packet_ip_dest_reg_n_0_[7] ),
-        .I3(\io_buf_din[7]_INST_0_i_5_n_0 ),
-        .I4(\cnt_reg[4]_0 ),
-        .I5(\io_buf_din[7]_INST_0_i_6_n_0 ),
-        .O(\io_buf_din[7]_INST_0_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair67" *) 
-  LUT4 #(
-    .INIT(16'h0040)) 
-    \io_buf_din[7]_INST_0_i_3 
-       (.I0(\state_reg_n_0_[1] ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[3]_0 ),
-        .O(\io_buf_din[7]_INST_0_i_3_n_0 ));
-  MUXF7 \io_buf_din[7]_INST_0_i_4 
-       (.I0(\io_buf_din[7]_INST_0_i_7_n_0 ),
-        .I1(\io_buf_din[7]_INST_0_i_8_n_0 ),
-        .O(\io_buf_din[7]_INST_0_i_4_n_0 ),
-        .S(\cnt_reg[4]_0 ));
+        .I2(\cnt_reg[3]_0 ),
+        .O(\io_buf_din[6]_INST_0_i_13_n_0 ));
+  MUXF7 \io_buf_din[6]_INST_0_i_14 
+       (.I0(\io_buf_din[6]_INST_0_i_15_n_0 ),
+        .I1(\io_buf_din[6]_INST_0_i_16_n_0 ),
+        .O(\io_buf_din[6]_INST_0_i_14_n_0 ),
+        .S(\cnt_reg[2]_0 ));
   LUT6 #(
-    .INIT(64'h0003330311331133)) 
-    \io_buf_din[7]_INST_0_i_5 
-       (.I0(sending_packet_ip_len[15]),
-        .I1(\io_buf_din[7]_INST_0_i_9_n_0 ),
-        .I2(sending_packet_ip_dscp[5]),
+    .INIT(64'hF0FFF000AACCAACC)) 
+    \io_buf_din[6]_INST_0_i_15 
+       (.I0(data8[6]),
+        .I1(data9[6]),
+        .I2(\sending_packet_eth_sender_reg_n_0_[46] ),
         .I3(\cnt_reg[0]_0 ),
-        .I4(sending_packet_ip_version[3]),
+        .I4(data7[6]),
         .I5(\cnt_reg[1]_0 ),
-        .O(\io_buf_din[7]_INST_0_i_5_n_0 ));
-  MUXF8 \io_buf_din[7]_INST_0_i_6 
-       (.I0(\io_buf_din[7]_INST_0_i_10_n_0 ),
-        .I1(\io_buf_din[7]_INST_0_i_11_n_0 ),
-        .O(\io_buf_din[7]_INST_0_i_6_n_0 ),
-        .S(\cnt_reg[3]_0 ));
+        .O(\io_buf_din[6]_INST_0_i_15_n_0 ));
+  LUT6 #(
+    .INIT(64'hF0FFF000AACCAACC)) 
+    \io_buf_din[6]_INST_0_i_16 
+       (.I0(\sending_packet_eth_dest_reg_n_0_[14] ),
+        .I1(\sending_packet_eth_dest_reg_n_0_[6] ),
+        .I2(data2[6]),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(\sending_packet_eth_dest_reg_n_0_[22] ),
+        .I5(\cnt_reg[1]_0 ),
+        .O(\io_buf_din[6]_INST_0_i_16_n_0 ));
+  LUT6 #(
+    .INIT(64'hFF150000FF15FFFF)) 
+    \io_buf_din[6]_INST_0_i_2 
+       (.I0(\io_buf_din[6]_INST_0_i_4_n_0 ),
+        .I1(\cnt_reg[3]_0 ),
+        .I2(\io_buf_din[6]_INST_0_i_5_n_0 ),
+        .I3(\io_buf_din[6]_INST_0_i_6_n_0 ),
+        .I4(\io_buf_din[7]_INST_0_i_8_n_0 ),
+        .I5(dout[7]),
+        .O(\cnt_reg[3]_4 ));
+  MUXF7 \io_buf_din[6]_INST_0_i_3 
+       (.I0(\io_buf_din[6]_INST_0_i_7_n_0 ),
+        .I1(\io_buf_din[6]_INST_0_i_8_n_0 ),
+        .O(\cnt_reg[4]_1 ),
+        .S(\cnt_reg[4]_0 ));
   LUT5 #(
-    .INIT(32'hB8FFB800)) 
-    \io_buf_din[7]_INST_0_i_7 
-       (.I0(\io_buf_din[7]_INST_0_i_12_n_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\io_buf_din[7]_INST_0_i_13_n_0 ),
+    .INIT(32'hFFFF00AC)) 
+    \io_buf_din[6]_INST_0_i_4 
+       (.I0(\io_buf_din[6]_INST_0_i_9_n_0 ),
+        .I1(\io_buf_din[6]_INST_0_i_10_n_0 ),
+        .I2(\cnt_reg[2]_0 ),
         .I3(\cnt_reg[3]_0 ),
-        .I4(\io_buf_din[7]_INST_0_i_14_n_0 ),
-        .O(\io_buf_din[7]_INST_0_i_7_n_0 ));
+        .I4(\cnt_reg[4]_0 ),
+        .O(\io_buf_din[6]_INST_0_i_4_n_0 ));
+  MUXF7 \io_buf_din[6]_INST_0_i_5 
+       (.I0(\io_buf_din[6]_INST_0_i_11_n_0 ),
+        .I1(\io_buf_din[6]_INST_0_i_12_n_0 ),
+        .O(\io_buf_din[6]_INST_0_i_5_n_0 ),
+        .S(\cnt_reg[2]_0 ));
+  LUT5 #(
+    .INIT(32'h0C0C0C44)) 
+    \io_buf_din[6]_INST_0_i_6 
+       (.I0(xpm_fifo_async_i_35_n_0),
+        .I1(\cnt_reg[4]_0 ),
+        .I2(\sending_packet_ip_dest_reg_n_0_[6] ),
+        .I3(\cnt_reg[2]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .O(\io_buf_din[6]_INST_0_i_6_n_0 ));
+  LUT6 #(
+    .INIT(64'h0000757F757F757F)) 
+    \io_buf_din[6]_INST_0_i_7 
+       (.I0(\io_buf_din[6]_INST_0_i_13_n_0 ),
+        .I1(data10[6]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(\sending_packet_eth_sender_reg_n_0_[6] ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\io_buf_din[6]_INST_0_i_14_n_0 ),
+        .O(\io_buf_din[6]_INST_0_i_7_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFABFFFFFFFB)) 
+    \io_buf_din[6]_INST_0_i_8 
+       (.I0(\cnt_reg[3]_0 ),
+        .I1(data1[6]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(\cnt_reg[2]_0 ),
+        .I5(data0[6]),
+        .O(\io_buf_din[6]_INST_0_i_8_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[6]_INST_0_i_9 
+       (.I0(data12[6]),
+        .I1(data13[6]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data14[6]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_src_reg_n_0_[6] ),
+        .O(\io_buf_din[6]_INST_0_i_9_n_0 ));
+  LUT6 #(
+    .INIT(64'h5444FFFF54440000)) 
+    \io_buf_din[7]_INST_0_i_1 
+       (.I0(\io_buf_din[7]_INST_0_i_5_n_0 ),
+        .I1(\io_buf_din[7]_INST_0_i_6_n_0 ),
+        .I2(\cnt_reg[3]_0 ),
+        .I3(\io_buf_din[7]_INST_0_i_7_n_0 ),
+        .I4(\io_buf_din[7]_INST_0_i_8_n_0 ),
+        .I5(dout[8]),
+        .O(\cnt_reg[3]_3 ));
   LUT6 #(
     .INIT(64'h0000005400000004)) 
-    \io_buf_din[7]_INST_0_i_8 
+    \io_buf_din[7]_INST_0_i_10 
        (.I0(\cnt_reg[3]_0 ),
         .I1(data1[7]),
         .I2(\cnt_reg[0]_0 ),
         .I3(\cnt_reg[1]_0 ),
         .I4(\cnt_reg[2]_0 ),
         .I5(data0[7]),
-        .O(\io_buf_din[7]_INST_0_i_8_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair69" *) 
+        .O(\io_buf_din[7]_INST_0_i_10_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[7]_INST_0_i_11 
+       (.I0(data12[7]),
+        .I1(data13[7]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data14[7]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_src_reg_n_0_[7] ),
+        .O(\io_buf_din[7]_INST_0_i_11_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[7]_INST_0_i_12 
+       (.I0(data16[7]),
+        .I1(data17[7]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data18[7]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_dest_reg_n_0_[7] ),
+        .O(\io_buf_din[7]_INST_0_i_12_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[7]_INST_0_i_13 
+       (.I0(sending_packet_ip_ttl[7]),
+        .I1(sending_packet_ip_proto[7]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_chksum[15]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_chksum[7]),
+        .O(\io_buf_din[7]_INST_0_i_13_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[7]_INST_0_i_14 
+       (.I0(sending_packet_ip_id[15]),
+        .I1(sending_packet_ip_id[7]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_flags[2]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_foff[7]),
+        .O(\io_buf_din[7]_INST_0_i_14_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[7]_INST_0_i_15 
+       (.I0(data2[7]),
+        .I1(\sending_packet_eth_dest_reg_n_0_[23] ),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\sending_packet_eth_dest_reg_n_0_[15] ),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_eth_dest_reg_n_0_[7] ),
+        .O(\io_buf_din[7]_INST_0_i_15_n_0 ));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \io_buf_din[7]_INST_0_i_16 
+       (.I0(\sending_packet_eth_sender_reg_n_0_[47] ),
+        .I1(data7[7]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data8[7]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(data9[7]),
+        .O(\io_buf_din[7]_INST_0_i_16_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair63" *) 
   LUT5 #(
-    .INIT(32'hFFFFFF10)) 
-    \io_buf_din[7]_INST_0_i_9 
+    .INIT(32'hDA8A0000)) 
+    \io_buf_din[7]_INST_0_i_17 
        (.I0(\cnt_reg[0]_0 ),
-        .I1(\cnt_reg[1]_0 ),
-        .I2(sending_packet_ip_len[7]),
-        .I3(\cnt_reg[2]_0 ),
-        .I4(\cnt_reg[3]_0 ),
-        .O(\io_buf_din[7]_INST_0_i_9_n_0 ));
+        .I1(data10[7]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\sending_packet_eth_sender_reg_n_0_[7] ),
+        .I4(\cnt_reg[2]_0 ),
+        .O(\io_buf_din[7]_INST_0_i_17_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair74" *) 
+  LUT4 #(
+    .INIT(16'h0400)) 
+    \io_buf_din[7]_INST_0_i_2 
+       (.I0(\state_reg[3]_0 ),
+        .I1(\state_reg[2]_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .O(\state_reg[3]_1 ));
+  MUXF7 \io_buf_din[7]_INST_0_i_3 
+       (.I0(\io_buf_din[7]_INST_0_i_9_n_0 ),
+        .I1(\io_buf_din[7]_INST_0_i_10_n_0 ),
+        .O(\cnt_reg[4]_4 ),
+        .S(\cnt_reg[4]_0 ));
   (* SOFT_HLUTNM = "soft_lutpair66" *) 
   LUT5 #(
-    .INIT(32'hFFFF83FF)) 
-    io_buf_we_INST_0_i_1
-       (.I0(empty),
-        .I1(\state_reg_n_0_[1] ),
+    .INIT(32'h0C0C0C44)) 
+    \io_buf_din[7]_INST_0_i_5 
+       (.I0(xpm_fifo_async_i_32_n_0),
+        .I1(\cnt_reg[4]_0 ),
+        .I2(\sending_packet_ip_dest_reg_n_0_[7] ),
+        .I3(\cnt_reg[2]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .O(\io_buf_din[7]_INST_0_i_5_n_0 ));
+  LUT5 #(
+    .INIT(32'hBABBBAAA)) 
+    \io_buf_din[7]_INST_0_i_6 
+       (.I0(\cnt_reg[4]_0 ),
+        .I1(\cnt_reg[3]_0 ),
+        .I2(\io_buf_din[7]_INST_0_i_11_n_0 ),
+        .I3(\cnt_reg[2]_0 ),
+        .I4(\io_buf_din[7]_INST_0_i_12_n_0 ),
+        .O(\io_buf_din[7]_INST_0_i_6_n_0 ));
+  MUXF7 \io_buf_din[7]_INST_0_i_7 
+       (.I0(\io_buf_din[7]_INST_0_i_13_n_0 ),
+        .I1(\io_buf_din[7]_INST_0_i_14_n_0 ),
+        .O(\io_buf_din[7]_INST_0_i_7_n_0 ),
+        .S(\cnt_reg[2]_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair71" *) 
+  LUT4 #(
+    .INIT(16'h0400)) 
+    \io_buf_din[7]_INST_0_i_8 
+       (.I0(\state_reg[3]_0 ),
+        .I1(\state_reg[2]_0 ),
         .I2(\state_reg[0]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .I4(\state_reg[3]_0 ),
-        .O(\gen_fwft.empty_fwft_i_reg_2 ));
+        .I3(\state_reg[1]_0 ),
+        .O(\io_buf_din[7]_INST_0_i_8_n_0 ));
+  LUT5 #(
+    .INIT(32'hB8FFB800)) 
+    \io_buf_din[7]_INST_0_i_9 
+       (.I0(\io_buf_din[7]_INST_0_i_15_n_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\io_buf_din[7]_INST_0_i_16_n_0 ),
+        .I3(\cnt_reg[3]_0 ),
+        .I4(\io_buf_din[7]_INST_0_i_17_n_0 ),
+        .O(\io_buf_din[7]_INST_0_i_9_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair65" *) 
+  LUT5 #(
+    .INIT(32'hEFCFCFFF)) 
+    io_buf_we_INST_0_i_4
+       (.I0(empty),
+        .I1(\state_reg[3]_0 ),
+        .I2(\state_reg[2]_0 ),
+        .I3(\state_reg[1]_0 ),
+        .I4(\state_reg[0]_0 ),
+        .O(\gen_fwft.empty_fwft_i_reg_1 ));
   FDRE \localReq_reg[0] 
        (.C(clock),
         .CE(E),
@@ -14993,166 +15007,186 @@ module meowrouter_Router_0_Encoder
        (.I0(sending_packet_eth_pactype[1]),
         .I1(sending_packet_eth_pactype[0]),
         .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
+        .I3(\state_reg[1]_0 ),
         .I4(\state_reg[2]_0 ),
         .I5(\state_reg[3]_0 ),
         .O(\sending_packet_eth_pactype_reg[1]_0 ));
   LUT6 #(
-    .INIT(64'h00000000888A8880)) 
-    \state[1]_i_1 
-       (.I0(reset_0),
-        .I1(\state[1]_i_2__0_n_0 ),
-        .I2(\state_reg[2]_1 ),
-        .I3(dropping_reg_0),
-        .I4(\state_reg_n_0_[1] ),
-        .I5(\state_reg[1]_2 ),
-        .O(\state[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair70" *) 
-  LUT3 #(
-    .INIT(8'h06)) 
-    \state[1]_i_2__0 
-       (.I0(\state_reg[0]_0 ),
-        .I1(\state_reg_n_0_[1] ),
-        .I2(\state_reg[3]_0 ),
-        .O(\state[1]_i_2__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair60" *) 
+    .INIT(64'h0000000000004CC0)) 
+    \state[0]_i_2__0 
+       (.I0(empty),
+        .I1(xpm_fifo_async_i_5__0_n_0),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .I4(\state_reg[0]_3 ),
+        .I5(\state_reg[0]_4 ),
+        .O(\gen_fwft.empty_fwft_i_reg_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair73" *) 
   LUT4 #(
-    .INIT(16'h0061)) 
-    \state[2]_i_2 
-       (.I0(\state_reg_n_0_[1] ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[3]_0 ),
-        .O(\state_reg[1]_0 ));
-  LUT6 #(
-    .INIT(64'h5555555555555554)) 
-    \state[2]_i_3 
-       (.I0(reset),
-        .I1(\count_value_i_reg[3] ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[3]_0 ),
-        .I4(\state_reg[0]_0 ),
-        .I5(\state_reg_n_0_[1] ),
-        .O(reset_0));
-  (* SOFT_HLUTNM = "soft_lutpair54" *) 
-  LUT5 #(
-    .INIT(32'hDDDA0000)) 
-    \state[3]_i_10 
+    .INIT(16'h0001)) 
+    \state[0]_i_3 
        (.I0(\state_reg[2]_0 ),
         .I1(\state_reg[3]_0 ),
         .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
-        .I4(dout[0]),
-        .O(\state[3]_i_10_n_0 ));
+        .I3(\state_reg[1]_0 ),
+        .O(\state_reg[2]_3 ));
   LUT6 #(
-    .INIT(64'h5555555555545005)) 
-    \state[3]_i_11 
-       (.I0(xpm_fifo_async_i_12_n_0),
-        .I1(\count_value_i_reg[3] ),
-        .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
-        .I4(\state_reg[3]_0 ),
-        .I5(\state_reg[2]_0 ),
-        .O(\state[3]_i_11_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair65" *) 
-  LUT5 #(
-    .INIT(32'hFBFBFBEE)) 
-    \state[3]_i_12 
-       (.I0(full),
-        .I1(\state_reg[2]_0 ),
+    .INIT(64'h0000000002AA0800)) 
+    \state[1]_i_1 
+       (.I0(reset_0),
+        .I1(\state_reg[0]_0 ),
         .I2(\state_reg[3]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\state_reg_n_0_[1] ),
-        .O(\state[3]_i_12_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair54" *) 
+        .I3(\state[1]_i_2__0_n_0 ),
+        .I4(\state_reg[1]_0 ),
+        .I5(\state_reg[1]_2 ),
+        .O(\state[1]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'h3077307730773044)) 
+    \state[1]_i_2__0 
+       (.I0(\state_reg[2]_5 ),
+        .I1(\state[3]_i_6_n_0 ),
+        .I2(\state[3]_i_5_n_0 ),
+        .I3(\state[3]_i_4_n_0 ),
+        .I4(\state[1]_i_4_n_0 ),
+        .I5(\state[1]_i_5_n_0 ),
+        .O(\state[1]_i_2__0_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair69" *) 
+  LUT5 #(
+    .INIT(32'hAA02A8A8)) 
+    \state[1]_i_4 
+       (.I0(dout[0]),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[3]_0 ),
+        .I4(\state_reg[2]_0 ),
+        .O(\state[1]_i_4_n_0 ));
+  LUT6 #(
+    .INIT(64'h0000000000F80000)) 
+    \state[1]_i_5 
+       (.I0(CO),
+        .I1(\state_reg[0]_1 ),
+        .I2(\state[3]_i_10_n_0 ),
+        .I3(full),
+        .I4(\state_reg[2]_1 ),
+        .I5(\state[3]_i_8_n_0 ),
+        .O(\state[1]_i_5_n_0 ));
+  LUT6 #(
+    .INIT(64'h5555555555555554)) 
+    \state[2]_i_2 
+       (.I0(reset),
+        .I1(\state_reg[1]_1 ),
+        .I2(\state_reg[2]_0 ),
+        .I3(\state_reg[3]_0 ),
+        .I4(\state_reg[0]_0 ),
+        .I5(\state_reg[1]_0 ),
+        .O(reset_0));
+  (* SOFT_HLUTNM = "soft_lutpair69" *) 
   LUT5 #(
     .INIT(32'h00002000)) 
-    \state[3]_i_13 
+    \state[3]_i_10 
        (.I0(dout[0]),
         .I1(\state_reg[3]_0 ),
         .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
+        .I3(\state_reg[1]_0 ),
         .I4(\state_reg[2]_0 ),
-        .O(\state[3]_i_13_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair58" *) 
+        .O(\state[3]_i_10_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair61" *) 
+  LUT4 #(
+    .INIT(16'h2225)) 
+    \state[3]_i_11 
+       (.I0(\state_reg[2]_0 ),
+        .I1(\state_reg[3]_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .O(\state_reg[2]_1 ));
+  (* SOFT_HLUTNM = "soft_lutpair64" *) 
   LUT5 #(
     .INIT(32'h00000001)) 
+    \state[3]_i_12 
+       (.I0(\cnt_reg[0]_0 ),
+        .I1(\cnt_reg[1]_0 ),
+        .I2(\cnt_reg[3]_0 ),
+        .I3(\cnt_reg[2]_0 ),
+        .I4(\cnt_reg[4]_0 ),
+        .O(\cnt_reg[0]_1 ));
+  LUT6 #(
+    .INIT(64'hAAAAFEAEAFAFFEAE)) 
     \state[3]_i_2 
-       (.I0(\state_reg_n_0_[1] ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[3]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .I4(\count_value_i_reg[3] ),
-        .O(\state_reg[1]_1 ));
+       (.I0(\state_reg[1]_2 ),
+        .I1(\state[3]_i_3_n_0 ),
+        .I2(\state[3]_i_4_n_0 ),
+        .I3(\state[3]_i_5_n_0 ),
+        .I4(\state[3]_i_6_n_0 ),
+        .I5(\state_reg[2]_5 ),
+        .O(\pipeStatus_reg[1] ));
   LUT6 #(
-    .INIT(64'h000000E00000F0E0)) 
-    \state[3]_i_4 
-       (.I0(\cnt_reg[10] ),
-        .I1(\cnt_reg[0]_3 ),
-        .I2(\state[1]_i_2__0_n_0 ),
-        .I3(\state[3]_i_6_n_0 ),
-        .I4(\state[3]_i_7_n_0 ),
-        .I5(full),
-        .O(dropping_reg_0));
-  LUT6 #(
-    .INIT(64'h00CC000000000AA0)) 
-    \state[3]_i_5 
-       (.I0(\state[3]_i_8_n_0 ),
-        .I1(\state[3]_i_9_n_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[3]_0 ),
-        .I4(\state_reg_n_0_[1] ),
-        .I5(\state_reg[0]_0 ),
-        .O(\state_reg[2]_1 ));
-  (* SOFT_HLUTNM = "soft_lutpair58" *) 
+    .INIT(64'hABABABAAABAAABAA)) 
+    \state[3]_i_3 
+       (.I0(\state[1]_i_4_n_0 ),
+        .I1(\state[3]_i_8_n_0 ),
+        .I2(\state[3]_i_9_n_0 ),
+        .I3(\state[3]_i_10_n_0 ),
+        .I4(\state_reg[0]_1 ),
+        .I5(CO),
+        .O(\state[3]_i_3_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair62" *) 
   LUT4 #(
-    .INIT(16'hF1EE)) 
+    .INIT(16'hFCC9)) 
+    \state[3]_i_4 
+       (.I0(\state_reg[2]_0 ),
+        .I1(\state_reg[3]_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .O(\state[3]_i_4_n_0 ));
+  LUT5 #(
+    .INIT(32'h8080808C)) 
+    \state[3]_i_5 
+       (.I0(rd_en),
+        .I1(dout[0]),
+        .I2(\state_reg[2]_1 ),
+        .I3(full),
+        .I4(empty),
+        .O(\state[3]_i_5_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair67" *) 
+  LUT4 #(
+    .INIT(16'hF6E7)) 
     \state[3]_i_6 
-       (.I0(\state_reg_n_0_[1] ),
-        .I1(\state_reg[0]_0 ),
+       (.I0(\state_reg[0]_0 ),
+        .I1(\state_reg[1]_0 ),
         .I2(\state_reg[3]_0 ),
         .I3(\state_reg[2]_0 ),
         .O(\state[3]_i_6_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair64" *) 
-  LUT5 #(
-    .INIT(32'hFFFFFFFE)) 
-    \state[3]_i_7 
-       (.I0(\cnt_reg[4]_0 ),
-        .I1(\cnt_reg[3]_0 ),
-        .I2(\cnt_reg[2]_0 ),
-        .I3(\cnt_reg[0]_0 ),
-        .I4(\cnt_reg[1]_0 ),
-        .O(\state[3]_i_7_n_0 ));
   LUT6 #(
-    .INIT(64'hABABABAAABAAABAA)) 
+    .INIT(64'h3333333333323003)) 
     \state[3]_i_8 
-       (.I0(\state[3]_i_10_n_0 ),
-        .I1(\state[3]_i_11_n_0 ),
-        .I2(\state[3]_i_12_n_0 ),
-        .I3(\state[3]_i_13_n_0 ),
-        .I4(\state_reg[0]_1 ),
-        .I5(CO),
+       (.I0(\state_reg[1]_1 ),
+        .I1(xpm_fifo_async_i_11_n_0),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .I4(\state_reg[3]_0 ),
+        .I5(\state_reg[2]_0 ),
         .O(\state[3]_i_8_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair62" *) 
   LUT5 #(
-    .INIT(32'h03AA0000)) 
+    .INIT(32'hFFABFEFE)) 
     \state[3]_i_9 
-       (.I0(rd_en),
-        .I1(full),
-        .I2(empty),
-        .I3(\state[3]_i_6_n_0 ),
-        .I4(dout[0]),
+       (.I0(full),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[3]_0 ),
+        .I4(\state_reg[2]_0 ),
         .O(\state[3]_i_9_n_0 ));
   FDRE \state_reg[0] 
        (.C(clock),
         .CE(1'b1),
-        .D(\state_reg[0]_3 ),
+        .D(\state_reg[0]_2 ),
         .Q(\state_reg[0]_0 ),
         .R(1'b0));
   FDRE \state_reg[1] 
        (.C(clock),
         .CE(1'b1),
         .D(\state[1]_i_1_n_0 ),
-        .Q(\state_reg_n_0_[1] ),
+        .Q(\state_reg[1]_0 ),
         .R(1'b0));
   FDRE \state_reg[2] 
        (.C(clock),
@@ -15163,494 +15197,660 @@ module meowrouter_Router_0_Encoder
   FDRE \state_reg[3] 
        (.C(clock),
         .CE(1'b1),
-        .D(\state_reg[3]_5 ),
+        .D(\state_reg[3]_2 ),
         .Q(\state_reg[3]_0 ),
         .R(reset));
-  LUT6 #(
-    .INIT(64'h0400000000000000)) 
-    \transferState[2]_i_6 
-       (.I0(empty),
-        .I1(dout[0]),
-        .I2(\state_reg[3]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .I4(\state_reg[0]_0 ),
-        .I5(\state_reg_n_0_[1] ),
-        .O(\gen_fwft.empty_fwft_i_reg_0 ));
-  LUT6 #(
-    .INIT(64'h0010100010101000)) 
-    \transferState[2]_i_7 
-       (.I0(\cnt_reg[0]_3 ),
-        .I1(\state_reg[3]_0 ),
-        .I2(\state_reg[2]_0 ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\state_reg_n_0_[1] ),
-        .I5(empty),
-        .O(dropping_reg));
   LUT6 #(
     .INIT(64'h0000038000000080)) 
     xpm_fifo_async_i_10
        (.I0(dout[0]),
         .I1(\state_reg[0]_0 ),
-        .I2(\state_reg_n_0_[1] ),
+        .I2(\state_reg[1]_0 ),
         .I3(\state_reg[3]_0 ),
         .I4(\state_reg[2]_0 ),
         .I5(CO),
         .O(din[0]));
   LUT6 #(
-    .INIT(64'h0000000000000040)) 
-    xpm_fifo_async_i_12
-       (.I0(\state_reg[3]_0 ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\state_reg[2]_0 ),
-        .I4(empty),
-        .I5(full),
-        .O(xpm_fifo_async_i_12_n_0));
-  LUT5 #(
-    .INIT(32'hAFA0C0C0)) 
+    .INIT(64'h0000000001000000)) 
+    xpm_fifo_async_i_11
+       (.I0(empty),
+        .I1(full),
+        .I2(\state_reg[3]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .I4(\state_reg[1]_0 ),
+        .I5(\state_reg[2]_0 ),
+        .O(xpm_fifo_async_i_11_n_0));
+  LUT6 #(
+    .INIT(64'h00000000F1FFE0FF)) 
     xpm_fifo_async_i_13
-       (.I0(dout[8]),
-        .I1(\io_buf_din[7]_INST_0_i_2_n_0 ),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\io_buf_din[7]_INST_0_i_4_n_0 ),
-        .I4(\state_reg[0]_0 ),
+       (.I0(\cnt_reg[3]_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\sending_packet_ip_dest_reg_n_0_[7] ),
+        .I3(\cnt_reg[4]_0 ),
+        .I4(xpm_fifo_async_i_32_n_0),
+        .I5(xpm_fifo_async_i_33_n_0),
         .O(xpm_fifo_async_i_13_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair59" *) 
+  (* SOFT_HLUTNM = "soft_lutpair74" *) 
+  LUT2 #(
+    .INIT(4'h1)) 
+    xpm_fifo_async_i_14
+       (.I0(\state_reg[3]_0 ),
+        .I1(\state_reg[2]_0 ),
+        .O(xpm_fifo_async_i_14_n_0));
+  LUT6 #(
+    .INIT(64'h0000000C00000A00)) 
+    xpm_fifo_async_i_15
+       (.I0(io_buf_dout[7]),
+        .I1(\cnt_reg[4]_4 ),
+        .I2(\state_reg[2]_0 ),
+        .I3(\state_reg[3]_0 ),
+        .I4(\state_reg[1]_0 ),
+        .I5(\state_reg[0]_0 ),
+        .O(xpm_fifo_async_i_15_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair61" *) 
   LUT5 #(
     .INIT(32'h00000020)) 
-    xpm_fifo_async_i_14
+    xpm_fifo_async_i_16
        (.I0(io_buf_dout[6]),
         .I1(\state_reg[2]_0 ),
         .I2(\state_reg[3]_0 ),
-        .I3(\state_reg_n_0_[1] ),
+        .I3(\state_reg[1]_0 ),
         .I4(\state_reg[0]_0 ),
-        .O(xpm_fifo_async_i_14_n_0));
-  LUT6 #(
-    .INIT(64'h55555555FFFF0333)) 
-    xpm_fifo_async_i_15
-       (.I0(dout[7]),
-        .I1(xpm_fifo_async_i_28_n_0),
-        .I2(\cnt_reg[3]_0 ),
-        .I3(xpm_fifo_async_i_29_n_0),
-        .I4(xpm_fifo_async_i_30_n_0),
-        .I5(\state_reg[0]_0 ),
-        .O(xpm_fifo_async_i_15_n_0));
-  MUXF7 xpm_fifo_async_i_16
-       (.I0(xpm_fifo_async_i_31_n_0),
-        .I1(xpm_fifo_async_i_32_n_0),
-        .O(xpm_fifo_async_i_16_n_0),
-        .S(\cnt_reg[4]_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair71" *) 
-  LUT2 #(
-    .INIT(4'h1)) 
+        .O(xpm_fifo_async_i_16_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair75" *) 
+  LUT3 #(
+    .INIT(8'hEF)) 
     xpm_fifo_async_i_17
-       (.I0(\state_reg[3]_0 ),
-        .I1(\state_reg[2]_0 ),
+       (.I0(\cnt_reg[4]_1 ),
+        .I1(\state_reg[1]_0 ),
+        .I2(\state_reg[0]_0 ),
         .O(xpm_fifo_async_i_17_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair62" *) 
-  LUT5 #(
-    .INIT(32'h00000020)) 
+  LUT3 #(
+    .INIT(8'h80)) 
     xpm_fifo_async_i_18
-       (.I0(io_buf_dout[5]),
-        .I1(\state_reg[2]_0 ),
-        .I2(\state_reg[3]_0 ),
-        .I3(\state_reg_n_0_[1] ),
-        .I4(\state_reg[0]_0 ),
+       (.I0(dout[7]),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg[1]_0 ),
         .O(xpm_fifo_async_i_18_n_0));
-  LUT6 #(
-    .INIT(64'h55555555CCCFCFCF)) 
+  (* SOFT_HLUTNM = "soft_lutpair75" *) 
+  LUT2 #(
+    .INIT(4'h2)) 
     xpm_fifo_async_i_19
-       (.I0(dout[6]),
-        .I1(xpm_fifo_async_i_33_n_0),
-        .I2(xpm_fifo_async_i_34_n_0),
-        .I3(\cnt_reg[3]_0 ),
-        .I4(xpm_fifo_async_i_35_n_0),
-        .I5(\state_reg[0]_0 ),
+       (.I0(\state_reg[1]_0 ),
+        .I1(\state_reg[0]_0 ),
         .O(xpm_fifo_async_i_19_n_0));
   LUT6 #(
-    .INIT(64'hFFFFFFFF01100114)) 
+    .INIT(64'hFFFF0110FFFF0114)) 
     xpm_fifo_async_i_1__1
        (.I0(\state_reg[2]_0 ),
         .I1(\state_reg[3]_0 ),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\state_reg[0]_0 ),
-        .I4(\count_value_i_reg[3] ),
-        .I5(xpm_fifo_async_i_12_n_0),
+        .I2(\state_reg[0]_0 ),
+        .I3(\state_reg[1]_0 ),
+        .I4(xpm_fifo_async_i_11_n_0),
+        .I5(\state_reg[1]_1 ),
         .O(wr_en));
   LUT6 #(
-    .INIT(64'h000010FF00001000)) 
+    .INIT(64'hFFFFFFFFA0C00000)) 
     xpm_fifo_async_i_2
-       (.I0(\state_reg[0]_0 ),
-        .I1(\state_reg_n_0_[1] ),
-        .I2(io_buf_dout[7]),
+       (.I0(dout[8]),
+        .I1(xpm_fifo_async_i_13_n_0),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .I4(xpm_fifo_async_i_14_n_0),
+        .I5(xpm_fifo_async_i_15_n_0),
+        .O(din[8]));
+  LUT6 #(
+    .INIT(64'hAAFEAAAAABFFAAAA)) 
+    xpm_fifo_async_i_20
+       (.I0(xpm_fifo_async_i_34_n_0),
+        .I1(\cnt_reg[3]_0 ),
+        .I2(\cnt_reg[2]_0 ),
+        .I3(\sending_packet_ip_dest_reg_n_0_[6] ),
+        .I4(\cnt_reg[4]_0 ),
+        .I5(xpm_fifo_async_i_35_n_0),
+        .O(xpm_fifo_async_i_20_n_0));
+  LUT6 #(
+    .INIT(64'h888AFFFF888A0000)) 
+    xpm_fifo_async_i_21
+       (.I0(xpm_fifo_async_i_36_n_0),
+        .I1(\sending_packet_ip_dest_reg_n_0_[5] ),
+        .I2(\cnt_reg[3]_0 ),
+        .I3(\cnt_reg[2]_0 ),
+        .I4(\cnt_reg[4]_0 ),
+        .I5(xpm_fifo_async_i_37_n_0),
+        .O(xpm_fifo_async_i_21_n_0));
+  LUT6 #(
+    .INIT(64'h0000000C00000A00)) 
+    xpm_fifo_async_i_22
+       (.I0(io_buf_dout[5]),
+        .I1(\io_buf_din[5]_INST_0_i_2_n_0 ),
+        .I2(\state_reg[2]_0 ),
+        .I3(\state_reg[3]_0 ),
+        .I4(\state_reg[1]_0 ),
+        .I5(\state_reg[0]_0 ),
+        .O(xpm_fifo_async_i_22_n_0));
+  LUT6 #(
+    .INIT(64'hAB000000FFFFFFFF)) 
+    xpm_fifo_async_i_23
+       (.I0(\sending_packet_ip_dest_reg_n_0_[4] ),
+        .I1(\cnt_reg[3]_0 ),
+        .I2(\cnt_reg[2]_0 ),
+        .I3(\cnt_reg[4]_0 ),
+        .I4(xpm_fifo_async_i_38_n_0),
+        .I5(xpm_fifo_async_i_39_n_0),
+        .O(xpm_fifo_async_i_23_n_0));
+  LUT6 #(
+    .INIT(64'h0000000C00000A00)) 
+    xpm_fifo_async_i_24
+       (.I0(io_buf_dout[4]),
+        .I1(\cnt_reg[4]_3 ),
+        .I2(\state_reg[2]_0 ),
+        .I3(\state_reg[3]_0 ),
+        .I4(\state_reg[1]_0 ),
+        .I5(\state_reg[0]_0 ),
+        .O(xpm_fifo_async_i_24_n_0));
+  LUT6 #(
+    .INIT(64'hFFFFFFFF0E001F00)) 
+    xpm_fifo_async_i_25
+       (.I0(\cnt_reg[3]_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\sending_packet_ip_dest_reg_n_0_[3] ),
+        .I3(\cnt_reg[4]_0 ),
+        .I4(xpm_fifo_async_i_40_n_0),
+        .I5(xpm_fifo_async_i_41_n_0),
+        .O(xpm_fifo_async_i_25_n_0));
+  LUT6 #(
+    .INIT(64'h0000000300000A00)) 
+    xpm_fifo_async_i_26
+       (.I0(io_buf_dout[3]),
+        .I1(\cnt_reg[4]_2 ),
+        .I2(\state_reg[2]_0 ),
+        .I3(\state_reg[3]_0 ),
+        .I4(\state_reg[1]_0 ),
+        .I5(\state_reg[0]_0 ),
+        .O(xpm_fifo_async_i_26_n_0));
+  LUT6 #(
+    .INIT(64'h00F1FFFF00F10000)) 
+    xpm_fifo_async_i_27
+       (.I0(\cnt_reg[3]_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\sending_packet_ip_dest_reg_n_0_[2] ),
+        .I3(xpm_fifo_async_i_42_n_0),
+        .I4(\cnt_reg[4]_0 ),
+        .I5(xpm_fifo_async_i_43_n_0),
+        .O(xpm_fifo_async_i_27_n_0));
+  LUT6 #(
+    .INIT(64'hFFFFFCF7FFFFFFF7)) 
+    xpm_fifo_async_i_28
+       (.I0(\io_buf_din[2]_INST_0_i_4_n_0 ),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg[1]_0 ),
         .I3(\state_reg[3]_0 ),
         .I4(\state_reg[2]_0 ),
-        .I5(xpm_fifo_async_i_13_n_0),
-        .O(din[8]));
-  MUXF7 xpm_fifo_async_i_20
-       (.I0(xpm_fifo_async_i_36_n_0),
-        .I1(xpm_fifo_async_i_37_n_0),
-        .O(xpm_fifo_async_i_20_n_0),
-        .S(\cnt_reg[4]_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair55" *) 
-  LUT5 #(
-    .INIT(32'hAFA0C0C0)) 
-    xpm_fifo_async_i_21
-       (.I0(dout[5]),
-        .I1(\io_buf_din[4]_INST_0_i_3_n_0 ),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\io_buf_din[4]_INST_0_i_2_n_0 ),
-        .I4(\state_reg[0]_0 ),
-        .O(xpm_fifo_async_i_21_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair59" *) 
-  LUT4 #(
-    .INIT(16'h0010)) 
-    xpm_fifo_async_i_22
-       (.I0(\state_reg[0]_0 ),
-        .I1(\state_reg_n_0_[1] ),
-        .I2(\state_reg[3]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .O(\state_reg[0]_1 ));
-  (* SOFT_HLUTNM = "soft_lutpair57" *) 
-  LUT2 #(
-    .INIT(4'hB)) 
-    xpm_fifo_async_i_23
-       (.I0(\state_reg[0]_0 ),
-        .I1(\state_reg_n_0_[1] ),
-        .O(xpm_fifo_async_i_23_n_0));
-  LUT4 #(
-    .INIT(16'hE020)) 
-    xpm_fifo_async_i_24
-       (.I0(\io_buf_din[3]_INST_0_i_4_n_0 ),
-        .I1(\state_reg_n_0_[1] ),
-        .I2(\state_reg[0]_0 ),
-        .I3(dout[4]),
-        .O(xpm_fifo_async_i_24_n_0));
-  LUT4 #(
-    .INIT(16'hA030)) 
-    xpm_fifo_async_i_25
-       (.I0(dout[3]),
-        .I1(\io_buf_din[2]_INST_0_i_7_n_0 ),
-        .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
-        .O(xpm_fifo_async_i_25_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair70" *) 
-  LUT4 #(
-    .INIT(16'hD010)) 
-    xpm_fifo_async_i_26
-       (.I0(\io_buf_din[1]_INST_0_i_8_n_0 ),
-        .I1(\state_reg_n_0_[1] ),
-        .I2(\state_reg[0]_0 ),
-        .I3(dout[2]),
-        .O(xpm_fifo_async_i_26_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair57" *) 
-  LUT5 #(
-    .INIT(32'h350F35FF)) 
-    xpm_fifo_async_i_27
-       (.I0(\io_buf_din[0]_INST_0_i_4_n_0 ),
-        .I1(dout[1]),
-        .I2(\state_reg[0]_0 ),
-        .I3(\state_reg_n_0_[1] ),
-        .I4(\io_buf_din[0]_INST_0_i_3_n_0 ),
-        .O(xpm_fifo_async_i_27_n_0));
-  LUT5 #(
-    .INIT(32'hBABBBAAA)) 
-    xpm_fifo_async_i_28
-       (.I0(\cnt_reg[4]_0 ),
-        .I1(\cnt_reg[3]_0 ),
-        .I2(xpm_fifo_async_i_38_n_0),
-        .I3(\cnt_reg[2]_0 ),
-        .I4(xpm_fifo_async_i_39_n_0),
+        .I5(io_buf_dout[2]),
         .O(xpm_fifo_async_i_28_n_0));
-  MUXF7 xpm_fifo_async_i_29
-       (.I0(\io_buf_din[6]_INST_0_i_8_n_0 ),
-        .I1(\io_buf_din[6]_INST_0_i_7_n_0 ),
-        .O(xpm_fifo_async_i_29_n_0),
-        .S(\cnt_reg[2]_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair70" *) 
+  LUT5 #(
+    .INIT(32'h035FF35F)) 
+    xpm_fifo_async_i_29
+       (.I0(\io_buf_din[1]_INST_0_i_4_n_0 ),
+        .I1(\io_buf_din[1]_INST_0_i_3_n_0 ),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .I4(dout[2]),
+        .O(xpm_fifo_async_i_29_n_0));
   LUT6 #(
-    .INIT(64'hAAFEAAFEFFFFAAFE)) 
+    .INIT(64'hFFFFAAFEAAFEAAFE)) 
     xpm_fifo_async_i_2__0
-       (.I0(xpm_fifo_async_i_12_n_0),
-        .I1(\cnt_reg[10] ),
-        .I2(\cnt_reg[0]_3 ),
+       (.I0(xpm_fifo_async_i_11_n_0),
+        .I1(\guf.underflow_i_reg ),
+        .I2(\state_reg[0]_3 ),
         .I3(xpm_fifo_async_i_3__0_n_0),
         .I4(xpm_fifo_async_i_4__1_n_0),
         .I5(xpm_fifo_async_i_5__0_n_0),
         .O(rd_en));
   LUT6 #(
-    .INIT(64'hBFBABABAAAAAAAAA)) 
+    .INIT(64'hFBFBFFFBAAAAAAAA)) 
     xpm_fifo_async_i_3
-       (.I0(xpm_fifo_async_i_14_n_0),
-        .I1(xpm_fifo_async_i_15_n_0),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\state_reg[0]_0 ),
-        .I4(xpm_fifo_async_i_16_n_0),
-        .I5(xpm_fifo_async_i_17_n_0),
+       (.I0(xpm_fifo_async_i_16_n_0),
+        .I1(xpm_fifo_async_i_17_n_0),
+        .I2(xpm_fifo_async_i_18_n_0),
+        .I3(xpm_fifo_async_i_19_n_0),
+        .I4(xpm_fifo_async_i_20_n_0),
+        .I5(xpm_fifo_async_i_14_n_0),
         .O(din[7]));
-  LUT5 #(
-    .INIT(32'h0C0C0C44)) 
+  LUT6 #(
+    .INIT(64'h00F1FFFF00F10000)) 
     xpm_fifo_async_i_30
-       (.I0(\io_buf_din[6]_INST_0_i_6_n_0 ),
-        .I1(\cnt_reg[4]_0 ),
-        .I2(\sending_packet_ip_dest_reg_n_0_[6] ),
-        .I3(\cnt_reg[2]_0 ),
-        .I4(\cnt_reg[3]_0 ),
+       (.I0(\cnt_reg[3]_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\sending_packet_ip_dest_reg_n_0_[0] ),
+        .I3(xpm_fifo_async_i_44_n_0),
+        .I4(\cnt_reg[4]_0 ),
+        .I5(xpm_fifo_async_i_45_n_0),
         .O(xpm_fifo_async_i_30_n_0));
   LUT6 #(
-    .INIT(64'hFFFF8A808A808A80)) 
+    .INIT(64'h0000000C00000A00)) 
     xpm_fifo_async_i_31
-       (.I0(xpm_fifo_async_i_40_n_0),
-        .I1(data10[6]),
-        .I2(\cnt_reg[0]_0 ),
-        .I3(\sending_packet_eth_sender_reg_n_0_[6] ),
-        .I4(\cnt_reg[3]_0 ),
-        .I5(xpm_fifo_async_i_41_n_0),
+       (.I0(io_buf_dout[0]),
+        .I1(\io_buf_din[0]_INST_0_i_3_n_0 ),
+        .I2(\state_reg[2]_0 ),
+        .I3(\state_reg[3]_0 ),
+        .I4(\state_reg[1]_0 ),
+        .I5(\state_reg[0]_0 ),
         .O(xpm_fifo_async_i_31_n_0));
   LUT6 #(
-    .INIT(64'h0000005400000004)) 
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
     xpm_fifo_async_i_32
-       (.I0(\cnt_reg[3]_0 ),
-        .I1(data1[6]),
-        .I2(\cnt_reg[0]_0 ),
-        .I3(\cnt_reg[1]_0 ),
-        .I4(\cnt_reg[2]_0 ),
-        .I5(data0[6]),
+       (.I0(sending_packet_ip_version[3]),
+        .I1(sending_packet_ip_dscp[5]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_len[15]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_len[7]),
         .O(xpm_fifo_async_i_32_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair61" *) 
-  LUT5 #(
-    .INIT(32'h0C0C0C44)) 
+  LUT6 #(
+    .INIT(64'h00000000474700FF)) 
     xpm_fifo_async_i_33
-       (.I0(\io_buf_din[5]_INST_0_i_5_n_0 ),
-        .I1(\cnt_reg[4]_0 ),
-        .I2(\sending_packet_ip_dest_reg_n_0_[5] ),
-        .I3(\cnt_reg[2]_0 ),
+       (.I0(\io_buf_din[7]_INST_0_i_14_n_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\io_buf_din[7]_INST_0_i_13_n_0 ),
+        .I3(xpm_fifo_async_i_46_n_0),
         .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[4]_0 ),
         .O(xpm_fifo_async_i_33_n_0));
-  LUT5 #(
-    .INIT(32'hBABBBAAA)) 
+  LUT6 #(
+    .INIT(64'h1010101313101313)) 
     xpm_fifo_async_i_34
-       (.I0(\cnt_reg[4]_0 ),
-        .I1(\cnt_reg[3]_0 ),
-        .I2(xpm_fifo_async_i_42_n_0),
+       (.I0(\io_buf_din[6]_INST_0_i_5_n_0 ),
+        .I1(\cnt_reg[4]_0 ),
+        .I2(\cnt_reg[3]_0 ),
         .I3(\cnt_reg[2]_0 ),
-        .I4(xpm_fifo_async_i_43_n_0),
+        .I4(\io_buf_din[6]_INST_0_i_10_n_0 ),
+        .I5(\io_buf_din[6]_INST_0_i_9_n_0 ),
         .O(xpm_fifo_async_i_34_n_0));
-  MUXF7 xpm_fifo_async_i_35
-       (.I0(\io_buf_din[5]_INST_0_i_8_n_0 ),
-        .I1(\io_buf_din[5]_INST_0_i_7_n_0 ),
-        .O(xpm_fifo_async_i_35_n_0),
-        .S(\cnt_reg[2]_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFB800B800B800)) 
-    xpm_fifo_async_i_36
-       (.I0(data10[5]),
-        .I1(\cnt_reg[0]_0 ),
-        .I2(\sending_packet_eth_sender_reg_n_0_[5] ),
-        .I3(xpm_fifo_async_i_40_n_0),
-        .I4(\cnt_reg[3]_0 ),
-        .I5(xpm_fifo_async_i_44_n_0),
-        .O(xpm_fifo_async_i_36_n_0));
-  LUT6 #(
-    .INIT(64'h0000005400000004)) 
-    xpm_fifo_async_i_37
-       (.I0(\cnt_reg[3]_0 ),
-        .I1(data1[5]),
-        .I2(\cnt_reg[0]_0 ),
-        .I3(\cnt_reg[1]_0 ),
-        .I4(\cnt_reg[2]_0 ),
-        .I5(data0[5]),
-        .O(xpm_fifo_async_i_37_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    xpm_fifo_async_i_38
-       (.I0(data12[6]),
-        .I1(data13[6]),
+    xpm_fifo_async_i_35
+       (.I0(sending_packet_ip_version[2]),
+        .I1(sending_packet_ip_dscp[4]),
         .I2(\cnt_reg[1]_0 ),
-        .I3(data14[6]),
+        .I3(sending_packet_ip_len[14]),
         .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_src_reg_n_0_[6] ),
+        .I5(sending_packet_ip_len[6]),
+        .O(xpm_fifo_async_i_35_n_0));
+  LUT5 #(
+    .INIT(32'hFFFF8A80)) 
+    xpm_fifo_async_i_36
+       (.I0(\cnt_reg[1]_0 ),
+        .I1(sending_packet_ip_version[1]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(sending_packet_ip_dscp[3]),
+        .I4(xpm_fifo_async_i_47_n_0),
+        .O(xpm_fifo_async_i_36_n_0));
+  MUXF8 xpm_fifo_async_i_37
+       (.I0(xpm_fifo_async_i_48_n_0),
+        .I1(xpm_fifo_async_i_49_n_0),
+        .O(xpm_fifo_async_i_37_n_0),
+        .S(\cnt_reg[3]_0 ));
+  LUT5 #(
+    .INIT(32'hFFFF8A80)) 
+    xpm_fifo_async_i_38
+       (.I0(\cnt_reg[1]_0 ),
+        .I1(sending_packet_ip_version[0]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(sending_packet_ip_dscp[2]),
+        .I4(\io_buf_din[4]_INST_0_i_9_n_0 ),
         .O(xpm_fifo_async_i_38_n_0));
   LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    .INIT(64'hFFFFFFFFFFFF4700)) 
     xpm_fifo_async_i_39
-       (.I0(data16[6]),
-        .I1(data17[6]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data18[6]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_dest_reg_n_0_[6] ),
+       (.I0(\io_buf_din[4]_INST_0_i_14_n_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\io_buf_din[4]_INST_0_i_13_n_0 ),
+        .I3(\cnt_reg[3]_0 ),
+        .I4(\io_buf_din[4]_INST_0_i_12_n_0 ),
+        .I5(xpm_fifo_async_i_50_n_0),
         .O(xpm_fifo_async_i_39_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair66" *) 
+  (* SOFT_HLUTNM = "soft_lutpair65" *) 
   LUT5 #(
-    .INIT(32'hFFFFDFFF)) 
+    .INIT(32'hFFFFBFFF)) 
     xpm_fifo_async_i_3__0
-       (.I0(\state_reg[2]_0 ),
-        .I1(\state_reg[3]_0 ),
-        .I2(\state_reg_n_0_[1] ),
+       (.I0(\state_reg[3]_0 ),
+        .I1(\state_reg[2]_0 ),
+        .I2(\state_reg[1]_0 ),
         .I3(\state_reg[0]_0 ),
         .I4(empty),
         .O(xpm_fifo_async_i_3__0_n_0));
   LUT6 #(
-    .INIT(64'hBFBABABAAAAAAAAA)) 
+    .INIT(64'hFFFFFFFF8C800000)) 
     xpm_fifo_async_i_4
-       (.I0(xpm_fifo_async_i_18_n_0),
-        .I1(xpm_fifo_async_i_19_n_0),
-        .I2(\state_reg_n_0_[1] ),
-        .I3(\state_reg[0]_0 ),
-        .I4(xpm_fifo_async_i_20_n_0),
-        .I5(xpm_fifo_async_i_17_n_0),
+       (.I0(dout[6]),
+        .I1(\state_reg[1]_0 ),
+        .I2(\state_reg[0]_0 ),
+        .I3(xpm_fifo_async_i_21_n_0),
+        .I4(xpm_fifo_async_i_14_n_0),
+        .I5(xpm_fifo_async_i_22_n_0),
         .O(din[6]));
-  (* SOFT_HLUTNM = "soft_lutpair69" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
     xpm_fifo_async_i_40
-       (.I0(\cnt_reg[1]_0 ),
-        .I1(\cnt_reg[2]_0 ),
-        .I2(\cnt_reg[3]_0 ),
+       (.I0(sending_packet_ip_ihl[3]),
+        .I1(sending_packet_ip_dscp[1]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_len[11]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_len[3]),
         .O(xpm_fifo_async_i_40_n_0));
-  MUXF7 xpm_fifo_async_i_41
-       (.I0(xpm_fifo_async_i_45_n_0),
-        .I1(xpm_fifo_async_i_46_n_0),
-        .O(xpm_fifo_async_i_41_n_0),
+  LUT6 #(
+    .INIT(64'h00000000474700FF)) 
+    xpm_fifo_async_i_41
+       (.I0(\io_buf_din[3]_INST_0_i_12_n_0 ),
+        .I1(\cnt_reg[2]_0 ),
+        .I2(\io_buf_din[3]_INST_0_i_11_n_0 ),
+        .I3(xpm_fifo_async_i_51_n_0),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[4]_0 ),
+        .O(xpm_fifo_async_i_41_n_0));
+  LUT5 #(
+    .INIT(32'h000047FF)) 
+    xpm_fifo_async_i_42
+       (.I0(sending_packet_ip_ihl[2]),
+        .I1(\cnt_reg[0]_0 ),
+        .I2(sending_packet_ip_dscp[0]),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(xpm_fifo_async_i_52_n_0),
+        .O(xpm_fifo_async_i_42_n_0));
+  MUXF8 xpm_fifo_async_i_43
+       (.I0(xpm_fifo_async_i_53_n_0),
+        .I1(xpm_fifo_async_i_54_n_0),
+        .O(xpm_fifo_async_i_43_n_0),
+        .S(\cnt_reg[3]_0 ));
+  LUT5 #(
+    .INIT(32'h000047FF)) 
+    xpm_fifo_async_i_44
+       (.I0(sending_packet_ip_ihl[0]),
+        .I1(\cnt_reg[0]_0 ),
+        .I2(sending_packet_ip_ecn[0]),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(xpm_fifo_async_i_55_n_0),
+        .O(xpm_fifo_async_i_44_n_0));
+  MUXF8 xpm_fifo_async_i_45
+       (.I0(xpm_fifo_async_i_56_n_0),
+        .I1(xpm_fifo_async_i_57_n_0),
+        .O(xpm_fifo_async_i_45_n_0),
+        .S(\cnt_reg[3]_0 ));
+  MUXF7 xpm_fifo_async_i_46
+       (.I0(\io_buf_din[7]_INST_0_i_12_n_0 ),
+        .I1(\io_buf_din[7]_INST_0_i_11_n_0 ),
+        .O(xpm_fifo_async_i_46_n_0),
+        .S(\cnt_reg[2]_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFFFFFFF00CA)) 
+    xpm_fifo_async_i_47
+       (.I0(sending_packet_ip_len[5]),
+        .I1(sending_packet_ip_len[13]),
+        .I2(\cnt_reg[0]_0 ),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[2]_0 ),
+        .O(xpm_fifo_async_i_47_n_0));
+  MUXF7 xpm_fifo_async_i_48
+       (.I0(xpm_fifo_async_i_58_n_0),
+        .I1(xpm_fifo_async_i_59_n_0),
+        .O(xpm_fifo_async_i_48_n_0),
+        .S(\cnt_reg[2]_0 ));
+  MUXF7 xpm_fifo_async_i_49
+       (.I0(xpm_fifo_async_i_60_n_0),
+        .I1(xpm_fifo_async_i_61_n_0),
+        .O(xpm_fifo_async_i_49_n_0),
+        .S(\cnt_reg[2]_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair67" *) 
+  LUT5 #(
+    .INIT(32'h00000001)) 
+    xpm_fifo_async_i_4__0
+       (.I0(\state_reg[1]_0 ),
+        .I1(\state_reg[0]_0 ),
+        .I2(\state_reg[3]_0 ),
+        .I3(\state_reg[2]_0 ),
+        .I4(ctrl_io_forward_stall),
+        .O(_T_34));
+  (* SOFT_HLUTNM = "soft_lutpair70" *) 
+  LUT2 #(
+    .INIT(4'h1)) 
+    xpm_fifo_async_i_4__1
+       (.I0(\state_reg[1]_0 ),
+        .I1(\state_reg[0]_0 ),
+        .O(xpm_fifo_async_i_4__1_n_0));
+  LUT6 #(
+    .INIT(64'hFFFFFFFFA0C00000)) 
+    xpm_fifo_async_i_5
+       (.I0(dout[5]),
+        .I1(xpm_fifo_async_i_23_n_0),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .I4(xpm_fifo_async_i_14_n_0),
+        .I5(xpm_fifo_async_i_24_n_0),
+        .O(din[5]));
+  LUT5 #(
+    .INIT(32'h000047FF)) 
+    xpm_fifo_async_i_50
+       (.I0(data16[4]),
+        .I1(\cnt_reg[0]_0 ),
+        .I2(data17[4]),
+        .I3(\cnt_reg[1]_0 ),
+        .I4(\io_buf_din[4]_INST_0_i_11_n_0 ),
+        .O(xpm_fifo_async_i_50_n_0));
+  MUXF7 xpm_fifo_async_i_51
+       (.I0(\io_buf_din[3]_INST_0_i_10_n_0 ),
+        .I1(\io_buf_din[3]_INST_0_i_9_n_0 ),
+        .O(xpm_fifo_async_i_51_n_0),
+        .S(\cnt_reg[2]_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFFFFFFF0A0C)) 
+    xpm_fifo_async_i_52
+       (.I0(sending_packet_ip_len[10]),
+        .I1(sending_packet_ip_len[2]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[2]_0 ),
+        .O(xpm_fifo_async_i_52_n_0));
+  MUXF7 xpm_fifo_async_i_53
+       (.I0(xpm_fifo_async_i_62_n_0),
+        .I1(xpm_fifo_async_i_63_n_0),
+        .O(xpm_fifo_async_i_53_n_0),
+        .S(\cnt_reg[2]_0 ));
+  MUXF7 xpm_fifo_async_i_54
+       (.I0(xpm_fifo_async_i_64_n_0),
+        .I1(xpm_fifo_async_i_65_n_0),
+        .O(xpm_fifo_async_i_54_n_0),
+        .S(\cnt_reg[2]_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFFFFFFF0A0C)) 
+    xpm_fifo_async_i_55
+       (.I0(sending_packet_ip_len[8]),
+        .I1(sending_packet_ip_len[0]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(\cnt_reg[0]_0 ),
+        .I4(\cnt_reg[3]_0 ),
+        .I5(\cnt_reg[2]_0 ),
+        .O(xpm_fifo_async_i_55_n_0));
+  MUXF7 xpm_fifo_async_i_56
+       (.I0(xpm_fifo_async_i_66_n_0),
+        .I1(xpm_fifo_async_i_67_n_0),
+        .O(xpm_fifo_async_i_56_n_0),
+        .S(\cnt_reg[2]_0 ));
+  MUXF7 xpm_fifo_async_i_57
+       (.I0(xpm_fifo_async_i_68_n_0),
+        .I1(xpm_fifo_async_i_69_n_0),
+        .O(xpm_fifo_async_i_57_n_0),
         .S(\cnt_reg[2]_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    xpm_fifo_async_i_42
-       (.I0(data12[5]),
-        .I1(data13[5]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data14[5]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_ip_src_reg_n_0_[5] ),
-        .O(xpm_fifo_async_i_42_n_0));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    xpm_fifo_async_i_43
+    xpm_fifo_async_i_58
        (.I0(data16[5]),
         .I1(data17[5]),
         .I2(\cnt_reg[1]_0 ),
         .I3(data18[5]),
         .I4(\cnt_reg[0]_0 ),
         .I5(\sending_packet_ip_dest_reg_n_0_[5] ),
-        .O(xpm_fifo_async_i_43_n_0));
-  MUXF7 xpm_fifo_async_i_44
-       (.I0(xpm_fifo_async_i_47_n_0),
-        .I1(xpm_fifo_async_i_48_n_0),
-        .O(xpm_fifo_async_i_44_n_0),
-        .S(\cnt_reg[2]_0 ));
+        .O(xpm_fifo_async_i_58_n_0));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    xpm_fifo_async_i_45
-       (.I0(\sending_packet_eth_sender_reg_n_0_[46] ),
-        .I1(data7[6]),
+    xpm_fifo_async_i_59
+       (.I0(data12[5]),
+        .I1(data13[5]),
         .I2(\cnt_reg[1]_0 ),
-        .I3(data8[6]),
+        .I3(data14[5]),
         .I4(\cnt_reg[0]_0 ),
-        .I5(data9[6]),
-        .O(xpm_fifo_async_i_45_n_0));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    xpm_fifo_async_i_46
-       (.I0(data2[6]),
-        .I1(\sending_packet_eth_dest_reg_n_0_[22] ),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\sending_packet_eth_dest_reg_n_0_[14] ),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_eth_dest_reg_n_0_[6] ),
-        .O(xpm_fifo_async_i_46_n_0));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    xpm_fifo_async_i_47
-       (.I0(\sending_packet_eth_sender_reg_n_0_[45] ),
-        .I1(data7[5]),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(data8[5]),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(data9[5]),
-        .O(xpm_fifo_async_i_47_n_0));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    xpm_fifo_async_i_48
-       (.I0(data2[5]),
-        .I1(\sending_packet_eth_dest_reg_n_0_[21] ),
-        .I2(\cnt_reg[1]_0 ),
-        .I3(\sending_packet_eth_dest_reg_n_0_[13] ),
-        .I4(\cnt_reg[0]_0 ),
-        .I5(\sending_packet_eth_dest_reg_n_0_[5] ),
-        .O(xpm_fifo_async_i_48_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair68" *) 
-  LUT5 #(
-    .INIT(32'h00000001)) 
-    xpm_fifo_async_i_4__0
-       (.I0(\state_reg_n_0_[1] ),
-        .I1(\state_reg[0]_0 ),
-        .I2(\state_reg[3]_0 ),
-        .I3(\state_reg[2]_0 ),
-        .I4(ctrl_io_forward_stall),
-        .O(_T_34));
-  (* SOFT_HLUTNM = "soft_lutpair55" *) 
+        .I5(\sending_packet_ip_src_reg_n_0_[5] ),
+        .O(xpm_fifo_async_i_59_n_0));
   LUT2 #(
-    .INIT(4'h1)) 
-    xpm_fifo_async_i_4__1
-       (.I0(\state_reg_n_0_[1] ),
-        .I1(\state_reg[0]_0 ),
-        .O(xpm_fifo_async_i_4__1_n_0));
-  LUT6 #(
-    .INIT(64'h000010FF00001000)) 
-    xpm_fifo_async_i_5
-       (.I0(\state_reg[0]_0 ),
-        .I1(\state_reg_n_0_[1] ),
-        .I2(io_buf_dout[4]),
-        .I3(\state_reg[3]_0 ),
-        .I4(\state_reg[2]_0 ),
-        .I5(xpm_fifo_async_i_21_n_0),
-        .O(din[5]));
-  (* SOFT_HLUTNM = "soft_lutpair71" *) 
-  LUT2 #(
-    .INIT(4'hB)) 
+    .INIT(4'h2)) 
     xpm_fifo_async_i_5__0
-       (.I0(\state_reg[3]_0 ),
-        .I1(\state_reg[2]_0 ),
+       (.I0(\state_reg[2]_0 ),
+        .I1(\state_reg[3]_0 ),
         .O(xpm_fifo_async_i_5__0_n_0));
   LUT6 #(
-    .INIT(64'hFFFF888F88888888)) 
+    .INIT(64'hFFFFFFFFA0300000)) 
     xpm_fifo_async_i_6
-       (.I0(\state_reg[0]_1 ),
-        .I1(io_buf_dout[3]),
-        .I2(\cnt_reg[3]_2 ),
-        .I3(xpm_fifo_async_i_23_n_0),
-        .I4(xpm_fifo_async_i_24_n_0),
-        .I5(xpm_fifo_async_i_17_n_0),
+       (.I0(dout[4]),
+        .I1(xpm_fifo_async_i_25_n_0),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .I4(xpm_fifo_async_i_14_n_0),
+        .I5(xpm_fifo_async_i_26_n_0),
         .O(din[4]));
   LUT6 #(
-    .INIT(64'hFFFF888F88888888)) 
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_60
+       (.I0(sending_packet_ip_ttl[5]),
+        .I1(sending_packet_ip_proto[5]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_chksum[13]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_chksum[5]),
+        .O(xpm_fifo_async_i_60_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_61
+       (.I0(sending_packet_ip_id[13]),
+        .I1(sending_packet_ip_id[5]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_flags[0]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_foff[5]),
+        .O(xpm_fifo_async_i_61_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_62
+       (.I0(data16[2]),
+        .I1(data17[2]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data18[2]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_dest_reg_n_0_[2] ),
+        .O(xpm_fifo_async_i_62_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_63
+       (.I0(data12[2]),
+        .I1(data13[2]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data14[2]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_src_reg_n_0_[2] ),
+        .O(xpm_fifo_async_i_63_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_64
+       (.I0(sending_packet_ip_ttl[2]),
+        .I1(sending_packet_ip_proto[2]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_chksum[10]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_chksum[2]),
+        .O(xpm_fifo_async_i_64_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_65
+       (.I0(sending_packet_ip_id[10]),
+        .I1(sending_packet_ip_id[2]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_foff[10]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_foff[2]),
+        .O(xpm_fifo_async_i_65_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_66
+       (.I0(data16[0]),
+        .I1(data17[0]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data18[0]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_dest_reg_n_0_[0] ),
+        .O(xpm_fifo_async_i_66_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_67
+       (.I0(data12[0]),
+        .I1(data13[0]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(data14[0]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(\sending_packet_ip_src_reg_n_0_[0] ),
+        .O(xpm_fifo_async_i_67_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_68
+       (.I0(sending_packet_ip_ttl[0]),
+        .I1(sending_packet_ip_proto[0]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_chksum[8]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_chksum[0]),
+        .O(xpm_fifo_async_i_68_n_0));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    xpm_fifo_async_i_69
+       (.I0(sending_packet_ip_id[8]),
+        .I1(sending_packet_ip_id[0]),
+        .I2(\cnt_reg[1]_0 ),
+        .I3(sending_packet_ip_foff[8]),
+        .I4(\cnt_reg[0]_0 ),
+        .I5(sending_packet_ip_foff[0]),
+        .O(xpm_fifo_async_i_69_n_0));
+  LUT6 #(
+    .INIT(64'h80A08000FFFFFFFF)) 
     xpm_fifo_async_i_7
-       (.I0(\state_reg[0]_1 ),
-        .I1(io_buf_dout[2]),
-        .I2(\cnt_reg[3]_1 ),
-        .I3(xpm_fifo_async_i_23_n_0),
-        .I4(xpm_fifo_async_i_25_n_0),
-        .I5(xpm_fifo_async_i_17_n_0),
+       (.I0(xpm_fifo_async_i_14_n_0),
+        .I1(dout[3]),
+        .I2(\state_reg[1]_0 ),
+        .I3(\state_reg[0]_0 ),
+        .I4(xpm_fifo_async_i_27_n_0),
+        .I5(xpm_fifo_async_i_28_n_0),
         .O(din[3]));
   LUT6 #(
-    .INIT(64'hFFFF888F88888888)) 
-    xpm_fifo_async_i_8
-       (.I0(\state_reg[0]_1 ),
-        .I1(io_buf_dout[1]),
-        .I2(\io_buf_din[1]_INST_0_i_3_n_0 ),
-        .I3(xpm_fifo_async_i_23_n_0),
-        .I4(xpm_fifo_async_i_26_n_0),
-        .I5(xpm_fifo_async_i_17_n_0),
-        .O(din[2]));
-  LUT6 #(
     .INIT(64'h00000000101000FF)) 
-    xpm_fifo_async_i_9
+    xpm_fifo_async_i_8
        (.I0(\state_reg[0]_0 ),
-        .I1(\state_reg_n_0_[1] ),
-        .I2(io_buf_dout[0]),
-        .I3(xpm_fifo_async_i_27_n_0),
+        .I1(\state_reg[1]_0 ),
+        .I2(io_buf_dout[1]),
+        .I3(xpm_fifo_async_i_29_n_0),
         .I4(\state_reg[3]_0 ),
         .I5(\state_reg[2]_0 ),
+        .O(din[2]));
+  LUT6 #(
+    .INIT(64'hFFFFFFFF8C800000)) 
+    xpm_fifo_async_i_9
+       (.I0(dout[1]),
+        .I1(\state_reg[1]_0 ),
+        .I2(\state_reg[0]_0 ),
+        .I3(xpm_fifo_async_i_30_n_0),
+        .I4(xpm_fifo_async_i_14_n_0),
+        .I5(xpm_fifo_async_i_31_n_0),
         .O(din[1]));
 endmodule
 
@@ -15968,7 +16168,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[0]),
         .O(p_1_in[0]));
-  (* SOFT_HLUTNM = "soft_lutpair87" *) 
+  (* SOFT_HLUTNM = "soft_lutpair91" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[10]_i_1 
@@ -15976,7 +16176,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[10]),
         .O(p_1_in[10]));
-  (* SOFT_HLUTNM = "soft_lutpair86" *) 
+  (* SOFT_HLUTNM = "soft_lutpair90" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[11]_i_1 
@@ -15984,7 +16184,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[11]),
         .O(p_1_in[11]));
-  (* SOFT_HLUTNM = "soft_lutpair86" *) 
+  (* SOFT_HLUTNM = "soft_lutpair90" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[12]_i_1 
@@ -15992,7 +16192,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[12]),
         .O(p_1_in[12]));
-  (* SOFT_HLUTNM = "soft_lutpair85" *) 
+  (* SOFT_HLUTNM = "soft_lutpair89" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[13]_i_1 
@@ -16000,7 +16200,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[13]),
         .O(p_1_in[13]));
-  (* SOFT_HLUTNM = "soft_lutpair85" *) 
+  (* SOFT_HLUTNM = "soft_lutpair89" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[14]_i_1 
@@ -16008,7 +16208,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[14]),
         .O(p_1_in[14]));
-  (* SOFT_HLUTNM = "soft_lutpair84" *) 
+  (* SOFT_HLUTNM = "soft_lutpair88" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[15]_i_1 
@@ -16016,7 +16216,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[15]),
         .O(p_1_in[15]));
-  (* SOFT_HLUTNM = "soft_lutpair84" *) 
+  (* SOFT_HLUTNM = "soft_lutpair88" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[16]_i_1 
@@ -16024,7 +16224,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[16]),
         .O(p_1_in[16]));
-  (* SOFT_HLUTNM = "soft_lutpair83" *) 
+  (* SOFT_HLUTNM = "soft_lutpair87" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[17]_i_1 
@@ -16032,7 +16232,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[17]),
         .O(p_1_in[17]));
-  (* SOFT_HLUTNM = "soft_lutpair83" *) 
+  (* SOFT_HLUTNM = "soft_lutpair87" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[18]_i_1 
@@ -16040,7 +16240,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[18]),
         .O(p_1_in[18]));
-  (* SOFT_HLUTNM = "soft_lutpair82" *) 
+  (* SOFT_HLUTNM = "soft_lutpair86" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[19]_i_1 
@@ -16048,7 +16248,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[19]),
         .O(p_1_in[19]));
-  (* SOFT_HLUTNM = "soft_lutpair91" *) 
+  (* SOFT_HLUTNM = "soft_lutpair95" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[1]_i_1 
@@ -16056,7 +16256,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[1]),
         .O(p_1_in[1]));
-  (* SOFT_HLUTNM = "soft_lutpair82" *) 
+  (* SOFT_HLUTNM = "soft_lutpair86" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[20]_i_1 
@@ -16064,7 +16264,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[20]),
         .O(p_1_in[20]));
-  (* SOFT_HLUTNM = "soft_lutpair80" *) 
+  (* SOFT_HLUTNM = "soft_lutpair84" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[21]_i_1 
@@ -16072,7 +16272,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[21]),
         .O(p_1_in[21]));
-  (* SOFT_HLUTNM = "soft_lutpair80" *) 
+  (* SOFT_HLUTNM = "soft_lutpair84" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[22]_i_1 
@@ -16080,7 +16280,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[22]),
         .O(p_1_in[22]));
-  (* SOFT_HLUTNM = "soft_lutpair79" *) 
+  (* SOFT_HLUTNM = "soft_lutpair83" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[23]_i_1 
@@ -16088,7 +16288,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[23]),
         .O(p_1_in[23]));
-  (* SOFT_HLUTNM = "soft_lutpair79" *) 
+  (* SOFT_HLUTNM = "soft_lutpair83" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[24]_i_1 
@@ -16096,7 +16296,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[24]),
         .O(p_1_in[24]));
-  (* SOFT_HLUTNM = "soft_lutpair78" *) 
+  (* SOFT_HLUTNM = "soft_lutpair82" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[25]_i_1 
@@ -16104,7 +16304,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[25]),
         .O(p_1_in[25]));
-  (* SOFT_HLUTNM = "soft_lutpair78" *) 
+  (* SOFT_HLUTNM = "soft_lutpair82" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[26]_i_1 
@@ -16112,7 +16312,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[26]),
         .O(p_1_in[26]));
-  (* SOFT_HLUTNM = "soft_lutpair77" *) 
+  (* SOFT_HLUTNM = "soft_lutpair81" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[27]_i_1 
@@ -16120,7 +16320,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[27]),
         .O(p_1_in[27]));
-  (* SOFT_HLUTNM = "soft_lutpair77" *) 
+  (* SOFT_HLUTNM = "soft_lutpair81" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[28]_i_1 
@@ -16128,7 +16328,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[28]),
         .O(p_1_in[28]));
-  (* SOFT_HLUTNM = "soft_lutpair76" *) 
+  (* SOFT_HLUTNM = "soft_lutpair80" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[29]_i_1 
@@ -16136,7 +16336,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[29]),
         .O(p_1_in[29]));
-  (* SOFT_HLUTNM = "soft_lutpair91" *) 
+  (* SOFT_HLUTNM = "soft_lutpair95" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[2]_i_1 
@@ -16144,7 +16344,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[2]),
         .O(p_1_in[2]));
-  (* SOFT_HLUTNM = "soft_lutpair76" *) 
+  (* SOFT_HLUTNM = "soft_lutpair80" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[30]_i_1 
@@ -16159,7 +16359,7 @@ module meowrouter_Router_0_LLFT
         .I1(\cnt_reg[2]_0 ),
         .I2(_T_34),
         .O(\addr[31]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair90" *) 
+  (* SOFT_HLUTNM = "soft_lutpair94" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[3]_i_1 
@@ -16167,7 +16367,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[3]),
         .O(p_1_in[3]));
-  (* SOFT_HLUTNM = "soft_lutpair90" *) 
+  (* SOFT_HLUTNM = "soft_lutpair94" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[4]_i_1 
@@ -16175,7 +16375,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[4]),
         .O(p_1_in[4]));
-  (* SOFT_HLUTNM = "soft_lutpair89" *) 
+  (* SOFT_HLUTNM = "soft_lutpair93" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[5]_i_1 
@@ -16183,7 +16383,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[5]),
         .O(p_1_in[5]));
-  (* SOFT_HLUTNM = "soft_lutpair89" *) 
+  (* SOFT_HLUTNM = "soft_lutpair93" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[6]_i_1 
@@ -16191,7 +16391,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[6]),
         .O(p_1_in[6]));
-  (* SOFT_HLUTNM = "soft_lutpair88" *) 
+  (* SOFT_HLUTNM = "soft_lutpair92" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[7]_i_1 
@@ -16199,7 +16399,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[7]),
         .O(p_1_in[7]));
-  (* SOFT_HLUTNM = "soft_lutpair88" *) 
+  (* SOFT_HLUTNM = "soft_lutpair92" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[8]_i_1 
@@ -16207,7 +16407,7 @@ module meowrouter_Router_0_LLFT
         .I1(ctrl_io_forward_stall),
         .I2(dout[8]),
         .O(p_1_in[8]));
-  (* SOFT_HLUTNM = "soft_lutpair87" *) 
+  (* SOFT_HLUTNM = "soft_lutpair91" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \addr[9]_i_1 
@@ -16407,7 +16607,7 @@ module meowrouter_Router_0_LLFT
         .D(p_1_in[9]),
         .Q(addr[9]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair72" *) 
+  (* SOFT_HLUTNM = "soft_lutpair76" *) 
   LUT4 #(
     .INIT(16'h6066)) 
     \cnt[0]_i_1 
@@ -16416,7 +16616,7 @@ module meowrouter_Router_0_LLFT
         .I2(\cnt_reg[2]_0 ),
         .I3(_T_34),
         .O(\cnt[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair72" *) 
+  (* SOFT_HLUTNM = "soft_lutpair76" *) 
   LUT5 #(
     .INIT(32'h6A006A6A)) 
     \cnt[1]_i_1 
@@ -16474,7 +16674,7 @@ module meowrouter_Router_0_LLFT
         .I4(state4_out),
         .I5(\lookup_status_reg[1]_0 [0]),
         .O(\lookup_status[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair74" *) 
+  (* SOFT_HLUTNM = "soft_lutpair78" *) 
   LUT4 #(
     .INIT(16'h1000)) 
     \lookup_status[0]_i_2 
@@ -16493,7 +16693,7 @@ module meowrouter_Router_0_LLFT
         .I4(state4_out),
         .I5(\lookup_status_reg[1]_0 [1]),
         .O(\lookup_status[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair74" *) 
+  (* SOFT_HLUTNM = "soft_lutpair78" *) 
   LUT4 #(
     .INIT(16'hA8AA)) 
     \lookup_status[1]_i_2 
@@ -16524,7 +16724,7 @@ module meowrouter_Router_0_LLFT
         .D(\lookup_status[1]_i_1_n_0 ),
         .Q(\lookup_status_reg[1]_0 [1]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair81" *) 
+  (* SOFT_HLUTNM = "soft_lutpair85" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \pipeStatus[0]_i_1 
@@ -16532,7 +16732,7 @@ module meowrouter_Router_0_LLFT
         .I1(_T_34),
         .I2(arp_io_outputStatus[0]),
         .O(\status_reg[0]_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair81" *) 
+  (* SOFT_HLUTNM = "soft_lutpair85" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \pipeStatus[1]_i_1 
@@ -16540,7 +16740,7 @@ module meowrouter_Router_0_LLFT
         .I1(_T_34),
         .I2(arp_io_outputStatus[1]),
         .O(\status_reg[1]_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair75" *) 
+  (* SOFT_HLUTNM = "soft_lutpair79" *) 
   LUT3 #(
     .INIT(8'h08)) 
     \pipe_packet_eth_dest[47]_i_1 
@@ -16772,7 +16972,7 @@ module meowrouter_Router_0_LLFT
         .I2(forward_io_outputStatus[0]),
         .I3(D[34]),
         .O(\working_eth_sender_reg[47]_0 [34]));
-  (* SOFT_HLUTNM = "soft_lutpair75" *) 
+  (* SOFT_HLUTNM = "soft_lutpair79" *) 
   LUT4 #(
     .INIT(16'hBA8A)) 
     \pipe_packet_eth_sender[35]_i_1 
@@ -16938,14 +17138,14 @@ module meowrouter_Router_0_LLFT
     \shiftCnt[0]_i_1 
        (.I0(shiftCnt_reg__0[0]),
         .O(_T_45[0]));
-  (* SOFT_HLUTNM = "soft_lutpair92" *) 
+  (* SOFT_HLUTNM = "soft_lutpair96" *) 
   LUT2 #(
     .INIT(4'h9)) 
     \shiftCnt[1]_i_1 
        (.I0(shiftCnt_reg__0[0]),
         .I1(shiftCnt_reg__0[1]),
         .O(\shiftCnt[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair92" *) 
+  (* SOFT_HLUTNM = "soft_lutpair96" *) 
   LUT3 #(
     .INIT(8'hA9)) 
     \shiftCnt[2]_i_1 
@@ -16953,7 +17153,7 @@ module meowrouter_Router_0_LLFT
         .I1(shiftCnt_reg__0[1]),
         .I2(shiftCnt_reg__0[0]),
         .O(_T_45[2]));
-  (* SOFT_HLUTNM = "soft_lutpair73" *) 
+  (* SOFT_HLUTNM = "soft_lutpair77" *) 
   LUT4 #(
     .INIT(16'hAAA9)) 
     \shiftCnt[3]_i_1 
@@ -16962,7 +17162,7 @@ module meowrouter_Router_0_LLFT
         .I2(shiftCnt_reg__0[0]),
         .I3(shiftCnt_reg__0[1]),
         .O(_T_45[3]));
-  (* SOFT_HLUTNM = "soft_lutpair73" *) 
+  (* SOFT_HLUTNM = "soft_lutpair77" *) 
   LUT5 #(
     .INIT(32'hAAAAAAA9)) 
     \shiftCnt[4]_i_1 
@@ -18644,11 +18844,11 @@ endmodule
 module meowrouter_Router_0_Router
    (dout,
     empty,
-    \gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0] ,
     \state_reg[1] ,
     \state_reg[0] ,
     \state_reg[3] ,
     \state_reg[2] ,
+    \state_reg[1]_0 ,
     \state_reg[0]_0 ,
     \cnt_reg[4] ,
     \cnt_reg[3] ,
@@ -18656,32 +18856,30 @@ module meowrouter_Router_0_Router
     \cnt_reg[1] ,
     \cnt_reg[0] ,
     dropping,
-    \state_reg[2]_0 ,
-    \state_reg[1]_0 ,
     \state_reg[0]_1 ,
-    reset_0,
-    io_buf_dout_0_sp_1,
-    \state_reg[2]_1 ,
-    dropping_reg,
-    \pipeStatus_reg[1] ,
-    cnt,
-    \pipeStatus_reg[1]_0 ,
-    state,
-    io_rx_tlast_0,
-    io_rx_tdata_2_sp_1,
-    \sending_packet_eth_pactype_reg[1] ,
     io_buf_addr,
+    reset_0,
+    \transferState_reg[2] ,
+    io_buf_dout_0_sp_1,
+    \head_reg[0] ,
+    \state_reg[0]_2 ,
     \state_reg[1]_1 ,
-    \state_reg[1]_2 ,
-    io_buf_din,
-    io_buf_we,
+    cnt,
+    \pipeStatus_reg[0] ,
+    io_rx_tlast_0,
+    io_rx_tdata_0_sp_1,
+    \sending_packet_eth_pactype_reg[1] ,
+    \pipeStatus_reg[1] ,
     \gen_fwft.empty_fwft_i_reg ,
     \gen_fwft.empty_fwft_i_reg_0 ,
-    \head_reg[0] ,
-    \state_reg[3]_0 ,
+    \state_reg[2]_0 ,
+    io_buf_din,
+    io_buf_we,
+    \gen_fwft.empty_fwft_i_reg_1 ,
     \cnt_reg[3]_0 ,
     \cnt_reg[0]_0 ,
-    \state_reg[1]_3 ,
+    \transferState_reg[0] ,
+    \rstCnt_reg[1] ,
     reset,
     io_rx_clk,
     clock,
@@ -18689,26 +18887,26 @@ module meowrouter_Router_0_Router
     io_tx_tready,
     io_rx_tdata,
     io_rx_tlast,
-    \state_reg[0]_2 ,
-    \state_reg[3]_1 ,
-    \state_reg[2]_2 ,
     \state_reg[0]_3 ,
+    \state_reg[3]_0 ,
+    \state_reg[2]_1 ,
+    \state_reg[0]_4 ,
     \cnt_reg[4]_0 ,
     \cnt_reg[3]_1 ,
     \cnt_reg[2]_0 ,
     \cnt_reg[0]_1 ,
-    dropping_reg_0,
+    dropping_reg,
+    \state_reg[0]_5 ,
     io_cmd,
     io_buf_dout,
-    \state_reg[0]_4 ,
     io_rx_tvalid);
   output [8:0]dout;
   output empty;
-  output [0:0]\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0] ;
   output \state_reg[1] ;
   output \state_reg[0] ;
   output \state_reg[3] ;
   output \state_reg[2] ;
+  output \state_reg[1]_0 ;
   output \state_reg[0]_0 ;
   output \cnt_reg[4] ;
   output \cnt_reg[3] ;
@@ -18716,32 +18914,30 @@ module meowrouter_Router_0_Router
   output \cnt_reg[1] ;
   output \cnt_reg[0] ;
   output dropping;
-  output \state_reg[2]_0 ;
-  output \state_reg[1]_0 ;
   output \state_reg[0]_1 ;
-  output reset_0;
-  output io_buf_dout_0_sp_1;
-  output \state_reg[2]_1 ;
-  output dropping_reg;
-  output \pipeStatus_reg[1] ;
-  output cnt;
-  output [0:0]\pipeStatus_reg[1]_0 ;
-  output [0:0]state;
-  output io_rx_tlast_0;
-  output io_rx_tdata_2_sp_1;
-  output \sending_packet_eth_pactype_reg[1] ;
   output [13:0]io_buf_addr;
+  output reset_0;
+  output \transferState_reg[2] ;
+  output io_buf_dout_0_sp_1;
+  output \head_reg[0] ;
+  output \state_reg[0]_2 ;
   output \state_reg[1]_1 ;
-  output \state_reg[1]_2 ;
-  output [7:0]io_buf_din;
-  output io_buf_we;
+  output cnt;
+  output [0:0]\pipeStatus_reg[0] ;
+  output io_rx_tlast_0;
+  output io_rx_tdata_0_sp_1;
+  output \sending_packet_eth_pactype_reg[1] ;
+  output \pipeStatus_reg[1] ;
   output \gen_fwft.empty_fwft_i_reg ;
   output \gen_fwft.empty_fwft_i_reg_0 ;
-  output \head_reg[0] ;
-  output \state_reg[3]_0 ;
+  output \state_reg[2]_0 ;
+  output [7:0]io_buf_din;
+  output io_buf_we;
+  output \gen_fwft.empty_fwft_i_reg_1 ;
   output \cnt_reg[3]_0 ;
   output \cnt_reg[0]_0 ;
-  output \state_reg[1]_3 ;
+  output \transferState_reg[0] ;
+  output \rstCnt_reg[1] ;
   input reset;
   input io_rx_clk;
   input clock;
@@ -18749,18 +18945,18 @@ module meowrouter_Router_0_Router
   input io_tx_tready;
   input [7:0]io_rx_tdata;
   input io_rx_tlast;
-  input \state_reg[0]_2 ;
-  input \state_reg[3]_1 ;
-  input \state_reg[2]_2 ;
   input \state_reg[0]_3 ;
+  input \state_reg[3]_0 ;
+  input \state_reg[2]_1 ;
+  input \state_reg[0]_4 ;
   input \cnt_reg[4]_0 ;
   input \cnt_reg[3]_1 ;
   input \cnt_reg[2]_0 ;
   input \cnt_reg[0]_1 ;
-  input dropping_reg_0;
+  input dropping_reg;
+  input \state_reg[0]_5 ;
   input [58:0]io_cmd;
   input [7:0]io_buf_dout;
-  input \state_reg[0]_4 ;
   input io_rx_tvalid;
 
   wire Acceptor_n_103;
@@ -18827,10 +19023,8 @@ module meowrouter_Router_0_Router
   wire acceptorBridge_n_274;
   wire acceptorBridge_n_275;
   wire acceptorBridge_n_276;
-  wire adapter_n_21;
-  wire adapter_n_22;
-  wire adapter_n_31;
-  wire adapter_n_32;
+  wire adapter_n_17;
+  wire adapter_n_20;
   wire [1:0]arp_io_outputStatus;
   wire [47:0]arp_io_output_packet_eth_dest;
   wire [1:0]arp_io_output_packet_eth_pactype;
@@ -18849,9 +19043,9 @@ module meowrouter_Router_0_Router
   wire [31:0]arp_io_output_packet_ip_src;
   wire [7:0]arp_io_output_packet_ip_ttl;
   wire [3:0]arp_io_output_packet_ip_version;
+  wire arp_n_4;
   wire clock;
   wire cnt;
-  wire cnt_0;
   wire \cnt_reg[0] ;
   wire \cnt_reg[0]_0 ;
   wire \cnt_reg[0]_1 ;
@@ -18903,24 +19097,26 @@ module meowrouter_Router_0_Router
   wire [8:0]dout;
   wire dropping;
   wire dropping_reg;
-  wire dropping_reg_0;
   wire empty;
   wire encoder_fromAdapter_writer_data_last;
-  wire encoder_n_16;
+  wire encoder_n_10;
   wire encoder_n_18;
-  wire encoder_n_28;
+  wire encoder_n_19;
   wire encoder_n_29;
-  wire encoder_n_32;
+  wire encoder_n_30;
+  wire encoder_n_31;
+  wire encoder_n_33;
+  wire encoder_n_35;
   wire encoder_n_36;
   wire encoder_n_37;
+  wire encoder_n_38;
+  wire encoder_n_39;
   wire encoder_n_40;
-  wire encoder_n_41;
-  wire encoder_n_42;
   wire encoder_n_43;
-  wire encoder_n_44;
   wire encoder_n_45;
+  wire encoder_n_48;
+  wire encoder_n_49;
   wire encoder_n_50;
-  wire encoder_n_9;
   wire [1:0]encoder_toAdapter_req;
   wire [1:0]forward_io_outputStatus;
   wire [1:0]forward_io_output_lookup_status;
@@ -18944,7 +19140,7 @@ module meowrouter_Router_0_Router
   wire forward_n_5;
   wire \gen_fwft.empty_fwft_i_reg ;
   wire \gen_fwft.empty_fwft_i_reg_0 ;
-  wire [0:0]\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0] ;
+  wire \gen_fwft.empty_fwft_i_reg_1 ;
   wire \head_reg[0] ;
   wire [13:0]io_buf_addr;
   wire [7:0]io_buf_din;
@@ -18954,7 +19150,7 @@ module meowrouter_Router_0_Router
   wire [58:0]io_cmd;
   wire io_rx_clk;
   wire [7:0]io_rx_tdata;
-  wire io_rx_tdata_2_sn_1;
+  wire io_rx_tdata_0_sn_1;
   wire io_rx_tlast;
   wire io_rx_tlast_0;
   wire io_rx_tvalid;
@@ -18962,20 +19158,22 @@ module meowrouter_Router_0_Router
   wire io_tx_tready;
   wire [1:0]localReq;
   wire [47:0]p_0_in;
+  wire [1:1]p_0_out;
   wire [31:31]p_1_in;
   wire [7:0]payloadBridge_io_read_data_data;
+  wire payloadBridge_io_read_data_last;
   wire payloadBridge_io_read_empty;
   wire payloadBridge_io_read_en;
   wire payloadBridge_io_write_en;
   wire payloadBridge_io_write_progfull;
+  wire [0:0]\pipeStatus_reg[0] ;
   wire \pipeStatus_reg[1] ;
-  wire [0:0]\pipeStatus_reg[1]_0 ;
   wire pipe_packet_eth_dest;
   wire reset;
   wire reset_0;
+  wire \rstCnt_reg[1] ;
   wire sending_packet_eth_dest;
   wire \sending_packet_eth_pactype_reg[1] ;
-  wire [0:0]state;
   wire state7_out;
   wire \state_reg[0] ;
   wire \state_reg[0]_0 ;
@@ -18983,25 +19181,24 @@ module meowrouter_Router_0_Router
   wire \state_reg[0]_2 ;
   wire \state_reg[0]_3 ;
   wire \state_reg[0]_4 ;
+  wire \state_reg[0]_5 ;
   wire \state_reg[1] ;
   wire \state_reg[1]_0 ;
   wire \state_reg[1]_1 ;
-  wire \state_reg[1]_2 ;
-  wire \state_reg[1]_3 ;
   wire \state_reg[2] ;
   wire \state_reg[2]_0 ;
   wire \state_reg[2]_1 ;
-  wire \state_reg[2]_2 ;
   wire \state_reg[3] ;
   wire \state_reg[3]_0 ;
-  wire \state_reg[3]_1 ;
+  wire \transferState_reg[0] ;
+  wire \transferState_reg[2] ;
   wire [7:0]transmitterBridge_io_write_data_data;
   wire transmitterBridge_io_write_data_last;
   wire transmitterBridge_io_write_en;
   wire transmitterBridge_io_write_full;
 
   assign io_buf_dout_0_sp_1 = io_buf_dout_0_sn_1;
-  assign io_rx_tdata_2_sp_1 = io_rx_tdata_2_sn_1;
+  assign io_rx_tdata_0_sp_1 = io_rx_tdata_0_sn_1;
   meowrouter_Router_0_Acceptor Acceptor
        (.Q(_T_2_1),
         ._T_86_carry__2_i_1_0(_T_2_4),
@@ -19013,13 +19210,13 @@ module meowrouter_Router_0_Router
         .full(acceptorBridge_io_write_full),
         .\header_17_reg[7]_0 ({acceptorBridge_io_write_data_eth_dest,acceptorBridge_io_write_data_eth_sender,acceptorBridge_io_write_data_eth_pactype,Acceptor_n_103,acceptorBridge_io_write_data_eth_vlan,acceptorBridge_io_write_data_ip_version,acceptorBridge_io_write_data_ip_ihl,acceptorBridge_io_write_data_ip_dscp,acceptorBridge_io_write_data_ip_ecn,acceptorBridge_io_write_data_ip_len,acceptorBridge_io_write_data_ip_id,acceptorBridge_io_write_data_ip_flags,acceptorBridge_io_write_data_ip_foff,acceptorBridge_io_write_data_ip_ttl,acceptorBridge_io_write_data_ip_proto,acceptorBridge_io_write_data_ip_chksum,acceptorBridge_io_write_data_ip_src,acceptorBridge_io_write_data_ip_dest}),
         .io_rx_clk(io_rx_clk),
-        .\io_rx_tdata[2] (io_rx_tdata_2_sn_1),
+        .\io_rx_tdata[0] (io_rx_tdata_0_sn_1),
         .io_rx_tlast(io_rx_tlast_0),
         .io_rx_tvalid(io_rx_tvalid),
         .prog_full(payloadBridge_io_write_progfull),
         .reset(reset),
         .\state_reg[0]_0 (\state_reg[0] ),
-        .\state_reg[0]_1 (\state_reg[0]_2 ),
+        .\state_reg[0]_1 (\state_reg[0]_3 ),
         .\state_reg[1]_0 (\state_reg[1] ),
         .wr_en(acceptorBridge_io_write_en));
   FDRE \_T_1_0_reg[0] 
@@ -21907,36 +22104,36 @@ module meowrouter_Router_0_Router
         .D(p_1_in),
         .S({acceptorBridge_n_267,acceptorBridge_n_268,acceptorBridge_n_269,acceptorBridge_n_270}),
         ._T_34(_T_34),
-        ._T_37_carry(ctrl_n_1),
-        ._T_37_carry_0(ctrl_n_2),
-        ._T_37_carry_1(ctrl_n_0),
-        ._T_37_carry_10(ctrl_n_7),
-        ._T_37_carry_2(ctrl_n_4),
-        ._T_37_carry_3(ctrl_n_5),
-        ._T_37_carry_4(ctrl_n_3),
-        ._T_37_carry_5(ctrl_n_29),
-        ._T_37_carry_6(ctrl_n_6),
-        ._T_37_carry_7(ctrl_n_30),
-        ._T_37_carry_8(ctrl_n_8),
-        ._T_37_carry_9(ctrl_n_9),
-        ._T_37_carry__0(ctrl_n_11),
-        ._T_37_carry__0_0(ctrl_n_12),
-        ._T_37_carry__0_1(ctrl_n_10),
-        ._T_37_carry__0_10(ctrl_n_18),
-        ._T_37_carry__0_2(ctrl_n_14),
-        ._T_37_carry__0_3(ctrl_n_15),
-        ._T_37_carry__0_4(ctrl_n_13),
-        ._T_37_carry__0_5(ctrl_n_16),
-        ._T_37_carry__0_6(ctrl_n_17),
-        ._T_37_carry__0_7(ctrl_n_28),
-        ._T_37_carry__0_8(ctrl_n_19),
-        ._T_37_carry__0_9(ctrl_n_20),
-        ._T_37_carry__1(ctrl_n_22),
-        ._T_37_carry__1_0(ctrl_n_23),
-        ._T_37_carry__1_1(ctrl_n_21),
-        ._T_37_carry__1_2(ctrl_n_25),
-        ._T_37_carry__1_3(ctrl_n_26),
-        ._T_37_carry__1_4(ctrl_n_24),
+        ._T_37_carry(ctrl_n_29),
+        ._T_37_carry_0(ctrl_n_0),
+        ._T_37_carry_1(ctrl_n_30),
+        ._T_37_carry_10(ctrl_n_5),
+        ._T_37_carry_2(ctrl_n_2),
+        ._T_37_carry_3(ctrl_n_3),
+        ._T_37_carry_4(ctrl_n_1),
+        ._T_37_carry_5(ctrl_n_27),
+        ._T_37_carry_6(ctrl_n_4),
+        ._T_37_carry_7(ctrl_n_28),
+        ._T_37_carry_8(ctrl_n_6),
+        ._T_37_carry_9(ctrl_n_7),
+        ._T_37_carry__0(ctrl_n_9),
+        ._T_37_carry__0_0(ctrl_n_10),
+        ._T_37_carry__0_1(ctrl_n_8),
+        ._T_37_carry__0_10(ctrl_n_14),
+        ._T_37_carry__0_2(ctrl_n_26),
+        ._T_37_carry__0_3(ctrl_n_25),
+        ._T_37_carry__0_4(ctrl_n_11),
+        ._T_37_carry__0_5(ctrl_n_13),
+        ._T_37_carry__0_6(ctrl_n_24),
+        ._T_37_carry__0_7(ctrl_n_12),
+        ._T_37_carry__0_8(ctrl_n_15),
+        ._T_37_carry__0_9(ctrl_n_16),
+        ._T_37_carry__1(ctrl_n_18),
+        ._T_37_carry__1_0(ctrl_n_19),
+        ._T_37_carry__1_1(ctrl_n_17),
+        ._T_37_carry__1_2(ctrl_n_21),
+        ._T_37_carry__1_3(ctrl_n_22),
+        ._T_37_carry__1_4(ctrl_n_20),
         .clock(clock),
         .ctrl_io_forward_stall(ctrl_io_forward_stall),
         .dout({acceptorBridge_io_read_data_eth_dest,acceptorBridge_io_read_data_eth_sender,acceptorBridge_io_read_data_eth_pactype,acceptorBridge_io_read_data_eth_vlan,acceptorBridge_io_read_data_ip_version,acceptorBridge_io_read_data_ip_ihl,acceptorBridge_io_read_data_ip_dscp,acceptorBridge_io_read_data_ip_ecn,acceptorBridge_io_read_data_ip_len,acceptorBridge_io_read_data_ip_id,acceptorBridge_io_read_data_ip_flags,acceptorBridge_io_read_data_ip_foff,acceptorBridge_io_read_data_ip_ttl,acceptorBridge_io_read_data_ip_proto,acceptorBridge_io_read_data_ip_chksum,acceptorBridge_io_read_data_ip_src,acceptorBridge_io_read_data_ip_dest}),
@@ -21948,53 +22145,54 @@ module meowrouter_Router_0_Router
         .\gen_rd_b.doutb_reg_reg[259] ({acceptorBridge_io_write_data_eth_dest,acceptorBridge_io_write_data_eth_sender,acceptorBridge_io_write_data_eth_pactype,Acceptor_n_103,acceptorBridge_io_write_data_eth_vlan,acceptorBridge_io_write_data_ip_version,acceptorBridge_io_write_data_ip_ihl,acceptorBridge_io_write_data_ip_dscp,acceptorBridge_io_write_data_ip_ecn,acceptorBridge_io_write_data_ip_len,acceptorBridge_io_write_data_ip_id,acceptorBridge_io_write_data_ip_flags,acceptorBridge_io_write_data_ip_foff,acceptorBridge_io_write_data_ip_ttl,acceptorBridge_io_write_data_ip_proto,acceptorBridge_io_write_data_ip_chksum,acceptorBridge_io_write_data_ip_src,acceptorBridge_io_write_data_ip_dest}),
         .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][164] (acceptorBridge_n_264),
         .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][22] ({acceptorBridge_n_271,acceptorBridge_n_272,acceptorBridge_n_273,acceptorBridge_n_274}),
-        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][28] ({acceptorBridge_n_275,acceptorBridge_n_276}),
+        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][27] ({acceptorBridge_n_275,acceptorBridge_n_276}),
         .io_rx_clk(io_rx_clk),
         .reset(reset),
         .reset_0(acceptorBridge_n_265),
         .wr_en(acceptorBridge_io_write_en));
   meowrouter_Router_0_Adapter adapter
        (.CO(encoder_fromAdapter_writer_data_last),
-        .E(cnt_0),
         .Q(encoder_toAdapter_req),
         .clock(clock),
-        .\cnt_reg[0]_0 (\gen_fwft.empty_fwft_i_reg_0 ),
-        .\cnt_reg[1]_0 (adapter_n_31),
         .dropping_reg_0(dropping),
-        .dropping_reg_1(dropping_reg_0),
+        .dropping_reg_1(adapter_n_20),
+        .dropping_reg_2(dropping_reg),
         .full(transmitterBridge_io_write_full),
         .\head_reg[0]_0 (\head_reg[0] ),
         .io_buf_addr(io_buf_addr),
-        .\io_buf_addr[1]_INST_0_i_4_0 (encoder_n_16),
-        .io_buf_addr_0_sp_1(encoder_n_18),
-        .io_buf_addr_2_sp_1(encoder_n_32),
-        .io_buf_din({io_buf_din[7],io_buf_din[5:2],io_buf_din[0]}),
-        .\io_buf_din[2]_0 (encoder_n_43),
-        .\io_buf_din[3]_0 (encoder_n_29),
-        .\io_buf_din[5]_0 (encoder_n_50),
-        .\io_buf_din[5]_1 (encoder_n_36),
-        .\io_buf_din[7] (encoder_n_37),
-        .io_buf_din_0_sp_1(encoder_n_42),
-        .io_buf_din_2_sp_1(encoder_n_28),
-        .io_buf_din_3_sp_1(encoder_n_41),
-        .io_buf_din_4_sp_1(encoder_n_44),
+        .io_buf_addr_0_sp_1(encoder_n_19),
+        .io_buf_addr_3_sp_1(encoder_n_33),
+        .io_buf_din(io_buf_din),
+        .\io_buf_din[3]_0 (encoder_n_35),
+        .\io_buf_din[3]_1 (encoder_n_29),
+        .\io_buf_din[4]_0 (encoder_n_30),
+        .\io_buf_din[6]_0 (encoder_n_10),
+        .\io_buf_din[7]_0 (encoder_n_31),
+        .io_buf_din_0_sp_1(encoder_n_37),
+        .io_buf_din_1_sp_1(encoder_n_38),
+        .io_buf_din_2_sp_1(encoder_n_39),
+        .io_buf_din_3_sp_1(encoder_n_50),
+        .io_buf_din_4_sp_1(encoder_n_45),
         .io_buf_din_5_sp_1(encoder_n_40),
+        .io_buf_din_6_sp_1(encoder_n_49),
+        .io_buf_din_7_sp_1(encoder_n_48),
         .io_buf_dout(io_buf_dout),
         .io_buf_dout_0_sp_1(io_buf_dout_0_sn_1),
         .io_buf_we(io_buf_we),
         .io_buf_we_0(\gen_fwft.empty_fwft_i_reg ),
         .reset(reset),
-        .state(state),
+        .\rstCnt_reg[1]_0 (\rstCnt_reg[1] ),
+        .\state[1]_i_2__0 (encoder_n_18),
+        .\state[1]_i_2__0_0 (encoder_n_36),
         .\state_reg[0]_0 (\state_reg[0]_1 ),
-        .\state_reg[0]_1 (\state_reg[0]_4 ),
-        .\state_reg[1]_0 (\state_reg[1]_0 ),
-        .\state_reg[1]_1 (adapter_n_22),
-        .\state_reg[1]_2 (\state_reg[1]_3 ),
-        .\state_reg[2]_0 (\state_reg[2]_0 ),
-        .\transferState[2]_i_3_0 (encoder_n_45),
-        .\transferState[2]_i_3_1 (encoder_n_9),
-        .\transferState_reg[1]_0 (adapter_n_21),
-        .\transferState_reg[1]_1 (adapter_n_32));
+        .\state_reg[0]_1 (\state_reg[0]_2 ),
+        .\state_reg[0]_2 (\state_reg[0]_5 ),
+        .\state_reg[1]_0 (adapter_n_17),
+        .\state_reg[1]_1 (\state_reg[1]_1 ),
+        .\state_reg[2]_0 (encoder_n_43),
+        .\transferState_reg[0]_0 (\transferState_reg[0] ),
+        .\transferState_reg[0]_1 (\gen_fwft.empty_fwft_i_reg_0 ),
+        .\transferState_reg[2]_0 (\transferState_reg[2] ));
   meowrouter_Router_0_ARPTable arp
        (.D(localReq),
         .E(sending_packet_eth_dest),
@@ -22003,8 +22201,10 @@ module meowrouter_Router_0_Router
         ._T_34(_T_34),
         .arp_io_outputStatus(arp_io_outputStatus),
         .clock(clock),
-        .\pipeStatus_reg[0]_0 (forward_n_5),
-        .\pipeStatus_reg[1]_0 (\pipeStatus_reg[1] ),
+        .p_0_out(p_0_out),
+        .\pipeStatus_reg[0]_0 (\pipeStatus_reg[0] ),
+        .\pipeStatus_reg[0]_1 (forward_n_5),
+        .\pipeStatus_reg[1]_0 (arp_n_4),
         .\pipeStatus_reg[1]_1 (forward_n_4),
         .\pipe_forward_status_reg[1]_0 (forward_io_output_lookup_status),
         .\pipe_packet_eth_dest_reg[47]_0 (forward_io_output_packet_eth_dest),
@@ -22041,43 +22241,43 @@ module meowrouter_Router_0_Router
         .\pipe_packet_ip_version_reg[3]_0 (arp_io_output_packet_ip_version),
         .\pipe_packet_ip_version_reg[3]_1 (forward_io_output_packet_ip_version),
         .reset(reset),
-        .\sending_packet_eth_pactype_reg[1] (adapter_n_21));
+        .\sending_packet_eth_pactype_reg[1] (\transferState_reg[2] ));
   meowrouter_Router_0_Ctrl ctrl
        (.Q(ctrl_macs_0),
-        .S(ctrl_n_27),
+        .S(ctrl_n_23),
         .clock(clock),
         .dout({acceptorBridge_io_read_data_eth_vlan,acceptorBridge_io_read_data_ip_dest[31:30]}),
         .io_cmd(io_cmd),
-        .\ipStore_4_reg[0]_0 (ctrl_n_2),
-        .\ipStore_4_reg[10]_0 (ctrl_n_8),
-        .\ipStore_4_reg[11]_0 (ctrl_n_9),
-        .\ipStore_4_reg[12]_0 (ctrl_n_10),
-        .\ipStore_4_reg[13]_0 (ctrl_n_11),
-        .\ipStore_4_reg[14]_0 (ctrl_n_12),
-        .\ipStore_4_reg[15]_0 (ctrl_n_13),
-        .\ipStore_4_reg[16]_0 (ctrl_n_14),
-        .\ipStore_4_reg[17]_0 (ctrl_n_15),
-        .\ipStore_4_reg[18]_0 (ctrl_n_16),
-        .\ipStore_4_reg[19]_0 (ctrl_n_28),
-        .\ipStore_4_reg[1]_0 (ctrl_n_1),
-        .\ipStore_4_reg[20]_0 (ctrl_n_17),
-        .\ipStore_4_reg[21]_0 (ctrl_n_18),
-        .\ipStore_4_reg[22]_0 (ctrl_n_19),
-        .\ipStore_4_reg[23]_0 (ctrl_n_20),
-        .\ipStore_4_reg[24]_0 (ctrl_n_21),
-        .\ipStore_4_reg[25]_0 (ctrl_n_22),
-        .\ipStore_4_reg[26]_0 (ctrl_n_23),
-        .\ipStore_4_reg[27]_0 (ctrl_n_24),
-        .\ipStore_4_reg[28]_0 (ctrl_n_25),
-        .\ipStore_4_reg[29]_0 (ctrl_n_26),
+        .\ipStore_4_reg[0]_0 (ctrl_n_29),
+        .\ipStore_4_reg[10]_0 (ctrl_n_6),
+        .\ipStore_4_reg[11]_0 (ctrl_n_7),
+        .\ipStore_4_reg[12]_0 (ctrl_n_8),
+        .\ipStore_4_reg[13]_0 (ctrl_n_9),
+        .\ipStore_4_reg[14]_0 (ctrl_n_10),
+        .\ipStore_4_reg[15]_0 (ctrl_n_11),
+        .\ipStore_4_reg[16]_0 (ctrl_n_26),
+        .\ipStore_4_reg[17]_0 (ctrl_n_25),
+        .\ipStore_4_reg[18]_0 (ctrl_n_13),
+        .\ipStore_4_reg[19]_0 (ctrl_n_12),
+        .\ipStore_4_reg[1]_0 (ctrl_n_30),
+        .\ipStore_4_reg[20]_0 (ctrl_n_24),
+        .\ipStore_4_reg[21]_0 (ctrl_n_14),
+        .\ipStore_4_reg[22]_0 (ctrl_n_15),
+        .\ipStore_4_reg[23]_0 (ctrl_n_16),
+        .\ipStore_4_reg[24]_0 (ctrl_n_17),
+        .\ipStore_4_reg[25]_0 (ctrl_n_19),
+        .\ipStore_4_reg[26]_0 (ctrl_n_18),
+        .\ipStore_4_reg[27]_0 (ctrl_n_21),
+        .\ipStore_4_reg[28]_0 (ctrl_n_20),
+        .\ipStore_4_reg[29]_0 (ctrl_n_22),
         .\ipStore_4_reg[2]_0 (ctrl_n_0),
         .\ipStore_4_reg[3]_0 (ctrl_n_3),
-        .\ipStore_4_reg[4]_0 (ctrl_n_4),
-        .\ipStore_4_reg[5]_0 (ctrl_n_5),
-        .\ipStore_4_reg[6]_0 (ctrl_n_29),
-        .\ipStore_4_reg[7]_0 (ctrl_n_30),
-        .\ipStore_4_reg[8]_0 (ctrl_n_6),
-        .\ipStore_4_reg[9]_0 (ctrl_n_7),
+        .\ipStore_4_reg[4]_0 (ctrl_n_2),
+        .\ipStore_4_reg[5]_0 (ctrl_n_1),
+        .\ipStore_4_reg[6]_0 (ctrl_n_27),
+        .\ipStore_4_reg[7]_0 (ctrl_n_28),
+        .\ipStore_4_reg[8]_0 (ctrl_n_4),
+        .\ipStore_4_reg[9]_0 (ctrl_n_5),
         .\macStore_1_reg[47]_0 (ctrl_macs_1),
         .\macStore_2_reg[47]_0 (ctrl_macs_2),
         .\macStore_3_reg[47]_0 (ctrl_macs_3),
@@ -22090,47 +22290,46 @@ module meowrouter_Router_0_Router
         .Q(encoder_toAdapter_req),
         .SR(state7_out),
         ._T_34(_T_34),
-        .arp_io_outputStatus(arp_io_outputStatus),
         .clock(clock),
         .cnt(cnt),
         .\cnt_reg[0]_0 (\cnt_reg[0] ),
-        .\cnt_reg[0]_1 (\cnt_reg[0]_0 ),
-        .\cnt_reg[0]_2 (\cnt_reg[0]_1 ),
-        .\cnt_reg[0]_3 (dropping),
-        .\cnt_reg[0]_4 (\head_reg[0] ),
-        .\cnt_reg[10] (adapter_n_22),
+        .\cnt_reg[0]_1 (encoder_n_36),
+        .\cnt_reg[0]_2 (\cnt_reg[0]_0 ),
+        .\cnt_reg[0]_3 (\cnt_reg[0]_1 ),
         .\cnt_reg[1]_0 (\cnt_reg[1] ),
         .\cnt_reg[2]_0 (\cnt_reg[2] ),
         .\cnt_reg[2]_1 (\cnt_reg[2]_0 ),
         .\cnt_reg[3]_0 (\cnt_reg[3] ),
-        .\cnt_reg[3]_1 (encoder_n_28),
-        .\cnt_reg[3]_2 (encoder_n_29),
-        .\cnt_reg[3]_3 (\cnt_reg[3]_0 ),
-        .\cnt_reg[3]_4 (encoder_n_50),
-        .\cnt_reg[3]_5 (\cnt_reg[3]_1 ),
+        .\cnt_reg[3]_1 (encoder_n_45),
+        .\cnt_reg[3]_2 (\cnt_reg[3]_0 ),
+        .\cnt_reg[3]_3 (encoder_n_48),
+        .\cnt_reg[3]_4 (encoder_n_49),
+        .\cnt_reg[3]_5 (encoder_n_50),
+        .\cnt_reg[3]_6 (\cnt_reg[3]_1 ),
         .\cnt_reg[4]_0 (\cnt_reg[4] ),
-        .\cnt_reg[4]_1 (\cnt_reg[4]_0 ),
-        .\count_value_i_reg[3] (adapter_n_21),
+        .\cnt_reg[4]_1 (encoder_n_10),
+        .\cnt_reg[4]_2 (encoder_n_29),
+        .\cnt_reg[4]_3 (encoder_n_30),
+        .\cnt_reg[4]_4 (encoder_n_31),
+        .\cnt_reg[4]_5 (\cnt_reg[4]_0 ),
         .ctrl_io_forward_stall(ctrl_io_forward_stall),
         .din({transmitterBridge_io_write_data_data,transmitterBridge_io_write_data_last}),
-        .dout({payloadBridge_io_read_data_data,\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0] }),
-        .dropping_reg(encoder_n_9),
-        .dropping_reg_0(dropping_reg),
+        .dout({payloadBridge_io_read_data_data,payloadBridge_io_read_data_last}),
+        .dropping_reg(encoder_n_43),
         .empty(payloadBridge_io_read_empty),
         .full(transmitterBridge_io_write_full),
-        .\gen_fwft.empty_fwft_i_reg (cnt_0),
-        .\gen_fwft.empty_fwft_i_reg_0 (encoder_n_45),
-        .\gen_fwft.empty_fwft_i_reg_1 (\gen_fwft.empty_fwft_i_reg_0 ),
-        .\gen_fwft.empty_fwft_i_reg_2 (\gen_fwft.empty_fwft_i_reg ),
-        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][1] (encoder_n_42),
-        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][5] (encoder_n_44),
-        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][8] (encoder_n_37),
-        .io_buf_din({io_buf_din[6],io_buf_din[1]}),
-        .\io_buf_din[6] (adapter_n_32),
-        .io_buf_din_1_sp_1(adapter_n_31),
+        .\gen_fwft.empty_fwft_i_reg (\gen_fwft.empty_fwft_i_reg_0 ),
+        .\gen_fwft.empty_fwft_i_reg_0 (\gen_fwft.empty_fwft_i_reg_1 ),
+        .\gen_fwft.empty_fwft_i_reg_1 (\gen_fwft.empty_fwft_i_reg ),
+        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][1] (encoder_n_37),
+        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][2] (encoder_n_38),
+        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][3] (encoder_n_39),
+        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][6] (encoder_n_40),
+        .\guf.underflow_i_reg (adapter_n_17),
         .io_buf_dout(io_buf_dout),
         .\localReq_reg[1]_0 (localReq),
-        .\pipeStatus_reg[1] (\pipeStatus_reg[1]_0 ),
+        .p_0_out(p_0_out),
+        .\pipeStatus_reg[1] (\pipeStatus_reg[1] ),
         .rd_en(payloadBridge_io_read_en),
         .reset(reset),
         .reset_0(reset_0),
@@ -22153,23 +22352,22 @@ module meowrouter_Router_0_Router
         .\sending_packet_ip_version_reg[3]_0 (arp_io_output_packet_ip_version),
         .\shiftCnt_reg[5] (acceptorBridge_n_266),
         .\state_reg[0]_0 (\state_reg[0]_0 ),
-        .\state_reg[0]_1 (encoder_n_16),
-        .\state_reg[0]_2 (encoder_n_18),
-        .\state_reg[0]_3 (\state_reg[0]_3 ),
-        .\state_reg[1]_0 (\state_reg[1]_1 ),
-        .\state_reg[1]_1 (\state_reg[1]_2 ),
-        .\state_reg[1]_2 (\pipeStatus_reg[1] ),
+        .\state_reg[0]_1 (encoder_n_19),
+        .\state_reg[0]_2 (\state_reg[0]_4 ),
+        .\state_reg[0]_3 (dropping),
+        .\state_reg[0]_4 (\head_reg[0] ),
+        .\state_reg[1]_0 (\state_reg[1]_0 ),
+        .\state_reg[1]_1 (\transferState_reg[2] ),
+        .\state_reg[1]_2 (arp_n_4),
         .\state_reg[2]_0 (\state_reg[2] ),
-        .\state_reg[2]_1 (\state_reg[2]_1 ),
-        .\state_reg[2]_2 (encoder_n_32),
-        .\state_reg[2]_3 (encoder_n_36),
-        .\state_reg[2]_4 (\state_reg[2]_2 ),
+        .\state_reg[2]_1 (encoder_n_18),
+        .\state_reg[2]_2 (encoder_n_33),
+        .\state_reg[2]_3 (\state_reg[2]_0 ),
+        .\state_reg[2]_4 (\state_reg[2]_1 ),
+        .\state_reg[2]_5 (adapter_n_20),
         .\state_reg[3]_0 (\state_reg[3] ),
-        .\state_reg[3]_1 (encoder_n_40),
-        .\state_reg[3]_2 (encoder_n_41),
-        .\state_reg[3]_3 (encoder_n_43),
-        .\state_reg[3]_4 (\state_reg[3]_0 ),
-        .\state_reg[3]_5 (\state_reg[3]_1 ),
+        .\state_reg[3]_1 (encoder_n_35),
+        .\state_reg[3]_2 (\state_reg[3]_0 ),
         .wr_en(transmitterBridge_io_write_en));
   meowrouter_Router_0_LLFT forward
        (.CO(_T_37),
@@ -22187,7 +22385,7 @@ module meowrouter_Router_0_Router
         .dout({acceptorBridge_io_read_data_eth_dest,acceptorBridge_io_read_data_eth_sender,acceptorBridge_io_read_data_eth_pactype,acceptorBridge_io_read_data_eth_vlan,acceptorBridge_io_read_data_ip_version,acceptorBridge_io_read_data_ip_ihl,acceptorBridge_io_read_data_ip_dscp,acceptorBridge_io_read_data_ip_ecn,acceptorBridge_io_read_data_ip_len,acceptorBridge_io_read_data_ip_id,acceptorBridge_io_read_data_ip_flags,acceptorBridge_io_read_data_ip_foff,acceptorBridge_io_read_data_ip_ttl,acceptorBridge_io_read_data_ip_proto,acceptorBridge_io_read_data_ip_chksum,acceptorBridge_io_read_data_ip_src,acceptorBridge_io_read_data_ip_dest}),
         .empty(acceptorBridge_io_read_empty),
         .forward_io_outputStatus(forward_io_outputStatus),
-        .\lookup_status[1]_i_3 ({ctrl_n_27,acceptorBridge_n_275,acceptorBridge_n_276}),
+        .\lookup_status[1]_i_3 ({ctrl_n_23,acceptorBridge_n_275,acceptorBridge_n_276}),
         .\lookup_status_reg[1]_0 (forward_io_output_lookup_status),
         .\lookup_status_reg[1]_1 (acceptorBridge_n_264),
         .reset(reset),
@@ -22216,7 +22414,7 @@ module meowrouter_Router_0_Router
        (.clock(clock),
         .\count_value_i_reg[12] (payloadBridge_io_write_en),
         .din({io_rx_tdata,io_rx_tlast}),
-        .dout({payloadBridge_io_read_data_data,\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0] }),
+        .dout({payloadBridge_io_read_data_data,payloadBridge_io_read_data_last}),
         .empty(payloadBridge_io_read_empty),
         .io_rx_clk(io_rx_clk),
         .prog_full(payloadBridge_io_write_progfull),
@@ -22236,8 +22434,8 @@ endmodule
 
 (* ORIG_REF_NAME = "Top" *) 
 module meowrouter_Router_0_Top
-   (dout,
-    io_buf_addr,
+   (io_buf_addr,
+    dout,
     io_buf_din,
     io_buf_we,
     io_tx_tvalid,
@@ -22251,8 +22449,8 @@ module meowrouter_Router_0_Top
     io_rx_tlast,
     io_buf_dout,
     io_rx_tvalid);
-  output [8:0]dout;
   output [13:0]io_buf_addr;
+  output [8:0]dout;
   output [7:0]io_buf_din;
   output io_buf_we;
   output io_tx_tvalid;
@@ -22268,12 +22466,11 @@ module meowrouter_Router_0_Top
   input io_rx_tvalid;
 
   wire \adapter/dropping ;
-  wire [0:0]\adapter/state ;
   wire clock;
   wire \cnt[0]_i_1__2_n_0 ;
-  wire \cnt[2]_i_1__0_n_0 ;
+  wire \cnt[2]_i_1__1_n_0 ;
   wire \cnt[3]_i_1_n_0 ;
-  wire \cnt[4]_i_1__0_n_0 ;
+  wire \cnt[4]_i_1_n_0 ;
   wire [8:0]dout;
   wire dropping_i_1_n_0;
   wire \encoder/cnt ;
@@ -22290,8 +22487,8 @@ module meowrouter_Router_0_Top
   wire io_tx_clk;
   wire io_tx_tready;
   wire io_tx_tvalid;
-  wire payloadBridge_io_read_data_last;
   wire reset;
+  wire router_n_10;
   wire router_n_11;
   wire router_n_12;
   wire router_n_13;
@@ -22303,16 +22500,17 @@ module meowrouter_Router_0_Top
   wire router_n_19;
   wire router_n_20;
   wire router_n_22;
-  wire router_n_23;
-  wire router_n_24;
-  wire router_n_25;
-  wire router_n_26;
-  wire router_n_27;
-  wire router_n_28;
-  wire router_n_29;
-  wire router_n_33;
-  wire router_n_34;
-  wire router_n_35;
+  wire router_n_37;
+  wire router_n_38;
+  wire router_n_39;
+  wire router_n_40;
+  wire router_n_41;
+  wire router_n_42;
+  wire router_n_45;
+  wire router_n_46;
+  wire router_n_47;
+  wire router_n_48;
+  wire router_n_49;
   wire router_n_50;
   wire router_n_51;
   wire router_n_61;
@@ -22320,11 +22518,9 @@ module meowrouter_Router_0_Top
   wire router_n_63;
   wire router_n_64;
   wire router_n_65;
-  wire router_n_66;
-  wire router_n_67;
-  wire \state[0]_i_1__0__0_n_0 ;
   wire \state[0]_i_1__0_n_0 ;
-  wire \state[0]_i_2__0_n_0 ;
+  wire \state[0]_i_1__1_n_0 ;
+  wire \state[0]_i_1_n_0 ;
   wire \state[2]_i_1__0_n_0 ;
   wire \state[3]_i_1_n_0 ;
   wire transmitterBridge_io_read_empty;
@@ -22338,43 +22534,42 @@ module meowrouter_Router_0_Top
         .O(\cnt[0]_i_1__2_n_0 ));
   LUT6 #(
     .INIT(64'h000000000000AAA6)) 
-    \cnt[2]_i_1__0 
+    \cnt[2]_i_1__1 
        (.I0(router_n_18),
         .I1(\encoder/cnt ),
         .I2(router_n_20),
         .I3(router_n_19),
         .I4(\encoder/p_0_out ),
         .I5(reset),
-        .O(\cnt[2]_i_1__0_n_0 ));
+        .O(\cnt[2]_i_1__1_n_0 ));
   LUT6 #(
     .INIT(64'h000000000000AAA6)) 
     \cnt[3]_i_1 
        (.I0(router_n_17),
         .I1(\encoder/cnt ),
         .I2(router_n_18),
-        .I3(router_n_66),
+        .I3(router_n_63),
         .I4(\encoder/p_0_out ),
         .I5(reset),
         .O(\cnt[3]_i_1_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFFEFFFFFFF1000)) 
-    \cnt[4]_i_1__0 
-       (.I0(router_n_19),
-        .I1(router_n_20),
-        .I2(router_n_65),
+    .INIT(64'hFFFFFEFFFFFF0100)) 
+    \cnt[4]_i_1 
+       (.I0(router_n_62),
+        .I1(router_n_19),
+        .I2(router_n_20),
         .I3(\encoder/cnt ),
         .I4(\encoder/p_0_out ),
         .I5(router_n_16),
-        .O(\cnt[4]_i_1__0_n_0 ));
-  LUT6 #(
-    .INIT(64'hF0F4F0F4F004F0F4)) 
+        .O(\cnt[4]_i_1_n_0 ));
+  LUT5 #(
+    .INIT(32'h550055C0)) 
     dropping_i_1
-       (.I0(router_n_63),
-        .I1(router_n_67),
-        .I2(\adapter/dropping ),
-        .I3(router_n_61),
-        .I4(payloadBridge_io_read_data_last),
-        .I5(router_n_64),
+       (.I0(router_n_50),
+        .I1(router_n_40),
+        .I2(router_n_41),
+        .I3(\adapter/dropping ),
+        .I4(router_n_49),
         .O(dropping_i_1_n_0));
   LUT1 #(
     .INIT(2'h1)) 
@@ -22385,110 +22580,109 @@ module meowrouter_Router_0_Top
        (.clock(clock),
         .cnt(\encoder/cnt ),
         .\cnt_reg[0] (router_n_20),
-        .\cnt_reg[0]_0 (router_n_66),
+        .\cnt_reg[0]_0 (router_n_63),
         .\cnt_reg[0]_1 (\cnt[0]_i_1__2_n_0 ),
         .\cnt_reg[1] (router_n_19),
         .\cnt_reg[2] (router_n_18),
-        .\cnt_reg[2]_0 (\cnt[2]_i_1__0_n_0 ),
+        .\cnt_reg[2]_0 (\cnt[2]_i_1__1_n_0 ),
         .\cnt_reg[3] (router_n_17),
-        .\cnt_reg[3]_0 (router_n_65),
+        .\cnt_reg[3]_0 (router_n_62),
         .\cnt_reg[3]_1 (\cnt[3]_i_1_n_0 ),
         .\cnt_reg[4] (router_n_16),
-        .\cnt_reg[4]_0 (\cnt[4]_i_1__0_n_0 ),
+        .\cnt_reg[4]_0 (\cnt[4]_i_1_n_0 ),
         .dout(dout),
         .dropping(\adapter/dropping ),
-        .dropping_reg(router_n_28),
-        .dropping_reg_0(dropping_i_1_n_0),
+        .dropping_reg(dropping_i_1_n_0),
         .empty(transmitterBridge_io_read_empty),
-        .\gen_fwft.empty_fwft_i_reg (router_n_61),
-        .\gen_fwft.empty_fwft_i_reg_0 (router_n_62),
-        .\gen_rd_b.gen_doutb_pipe.doutb_pipe_reg[0][0] (payloadBridge_io_read_data_last),
-        .\head_reg[0] (router_n_63),
+        .\gen_fwft.empty_fwft_i_reg (router_n_49),
+        .\gen_fwft.empty_fwft_i_reg_0 (router_n_50),
+        .\gen_fwft.empty_fwft_i_reg_1 (router_n_61),
+        .\head_reg[0] (router_n_40),
         .io_buf_addr(io_buf_addr),
         .io_buf_din(io_buf_din),
         .io_buf_dout(io_buf_dout),
-        .io_buf_dout_0_sp_1(router_n_26),
+        .io_buf_dout_0_sp_1(router_n_39),
         .io_buf_we(io_buf_we),
         .io_cmd(io_cmd),
         .io_rx_clk(io_rx_clk),
         .io_rx_tdata(io_rx_tdata),
-        .io_rx_tdata_2_sp_1(router_n_34),
+        .io_rx_tdata_0_sp_1(router_n_46),
         .io_rx_tlast(io_rx_tlast),
-        .io_rx_tlast_0(router_n_33),
+        .io_rx_tlast_0(router_n_45),
         .io_rx_tvalid(io_rx_tvalid),
         .io_tx_clk(io_tx_clk),
         .io_tx_tready(io_tx_tready),
-        .\pipeStatus_reg[1] (router_n_29),
-        .\pipeStatus_reg[1]_0 (\encoder/p_0_out ),
+        .\pipeStatus_reg[0] (\encoder/p_0_out ),
+        .\pipeStatus_reg[1] (router_n_48),
         .reset(reset),
-        .reset_0(router_n_25),
-        .\sending_packet_eth_pactype_reg[1] (router_n_35),
-        .state(\adapter/state ),
-        .\state_reg[0] (router_n_12),
+        .reset_0(router_n_37),
+        .\rstCnt_reg[1] (router_n_65),
+        .\sending_packet_eth_pactype_reg[1] (router_n_47),
+        .\state_reg[0] (router_n_11),
         .\state_reg[0]_0 (router_n_15),
-        .\state_reg[0]_1 (router_n_24),
-        .\state_reg[0]_2 (\state[0]_i_1__0_n_0 ),
-        .\state_reg[0]_3 (\state[0]_i_1__0__0_n_0 ),
-        .\state_reg[0]_4 (\state[0]_i_2__0_n_0 ),
-        .\state_reg[1] (router_n_11),
-        .\state_reg[1]_0 (router_n_23),
-        .\state_reg[1]_1 (router_n_50),
-        .\state_reg[1]_2 (router_n_51),
-        .\state_reg[1]_3 (router_n_67),
-        .\state_reg[2] (router_n_14),
-        .\state_reg[2]_0 (router_n_22),
-        .\state_reg[2]_1 (router_n_27),
-        .\state_reg[2]_2 (\state[2]_i_1__0_n_0 ),
-        .\state_reg[3] (router_n_13),
-        .\state_reg[3]_0 (router_n_64),
-        .\state_reg[3]_1 (\state[3]_i_1_n_0 ));
+        .\state_reg[0]_1 (router_n_22),
+        .\state_reg[0]_2 (router_n_41),
+        .\state_reg[0]_3 (\state[0]_i_1__0_n_0 ),
+        .\state_reg[0]_4 (\state[0]_i_1__1_n_0 ),
+        .\state_reg[0]_5 (\state[0]_i_1_n_0 ),
+        .\state_reg[1] (router_n_10),
+        .\state_reg[1]_0 (router_n_14),
+        .\state_reg[1]_1 (router_n_42),
+        .\state_reg[2] (router_n_13),
+        .\state_reg[2]_0 (router_n_51),
+        .\state_reg[2]_1 (\state[2]_i_1__0_n_0 ),
+        .\state_reg[3] (router_n_12),
+        .\state_reg[3]_0 (\state[3]_i_1_n_0 ),
+        .\transferState_reg[0] (router_n_64),
+        .\transferState_reg[2] (router_n_38));
+  LUT6 #(
+    .INIT(64'hF3F3F3FFF7F7F700)) 
+    \state[0]_i_1 
+       (.I0(router_n_61),
+        .I1(router_n_42),
+        .I2(router_n_39),
+        .I3(router_n_65),
+        .I4(router_n_64),
+        .I5(router_n_22),
+        .O(\state[0]_i_1_n_0 ));
   LUT5 #(
     .INIT(32'h00002226)) 
     \state[0]_i_1__0 
-       (.I0(router_n_12),
-        .I1(router_n_33),
-        .I2(router_n_34),
-        .I3(router_n_11),
+       (.I0(router_n_11),
+        .I1(router_n_45),
+        .I2(router_n_46),
+        .I3(router_n_10),
         .I4(reset),
         .O(\state[0]_i_1__0_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFE000200000000)) 
-    \state[0]_i_1__0__0 
+    .INIT(64'h00E2000000E200E2)) 
+    \state[0]_i_1__1 
        (.I0(router_n_15),
-        .I1(router_n_29),
-        .I2(router_n_28),
-        .I3(router_n_27),
-        .I4(router_n_35),
-        .I5(router_n_25),
-        .O(\state[0]_i_1__0__0_n_0 ));
+        .I1(router_n_48),
+        .I2(router_n_47),
+        .I3(reset),
+        .I4(router_n_38),
+        .I5(router_n_51),
+        .O(\state[0]_i_1__1_n_0 ));
   LUT6 #(
-    .INIT(64'h0100FFFF22220000)) 
-    \state[0]_i_2__0 
-       (.I0(router_n_23),
-        .I1(router_n_22),
-        .I2(router_n_26),
-        .I3(router_n_62),
-        .I4(\adapter/state ),
-        .I5(router_n_24),
-        .O(\state[0]_i_2__0_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFE000200000000)) 
+    .INIT(64'h22222AA600000000)) 
     \state[2]_i_1__0 
-       (.I0(router_n_14),
-        .I1(router_n_29),
-        .I2(router_n_28),
-        .I3(router_n_27),
-        .I4(router_n_50),
-        .I5(router_n_25),
+       (.I0(router_n_13),
+        .I1(router_n_48),
+        .I2(router_n_14),
+        .I3(router_n_15),
+        .I4(router_n_12),
+        .I5(router_n_37),
         .O(\state[2]_i_1__0_n_0 ));
-  LUT5 #(
-    .INIT(32'hAAABAAAA)) 
+  LUT6 #(
+    .INIT(64'h5500550055005503)) 
     \state[3]_i_1 
-       (.I0(router_n_51),
-        .I1(router_n_29),
-        .I2(router_n_28),
-        .I3(router_n_27),
-        .I4(router_n_13),
+       (.I0(router_n_48),
+        .I1(router_n_38),
+        .I2(router_n_13),
+        .I3(router_n_12),
+        .I4(router_n_14),
+        .I5(router_n_15),
         .O(\state[3]_i_1_n_0 ));
 endmodule
 
@@ -22610,14 +22804,14 @@ module meowrouter_Router_0_xpm_cdc_gray
        (.I0(\dest_graysync_ff[1] [2]),
         .I1(\dest_graysync_ff[1] [3]),
         .O(\^dest_out_bin [2]));
-  (* SOFT_HLUTNM = "soft_lutpair138" *) 
+  (* SOFT_HLUTNM = "soft_lutpair142" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair138" *) 
+  (* SOFT_HLUTNM = "soft_lutpair142" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
@@ -22774,14 +22968,14 @@ module meowrouter_Router_0_xpm_cdc_gray__4
        (.I0(\dest_graysync_ff[1] [2]),
         .I1(\dest_graysync_ff[1] [3]),
         .O(\^dest_out_bin [2]));
-  (* SOFT_HLUTNM = "soft_lutpair13" *) 
+  (* SOFT_HLUTNM = "soft_lutpair14" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair13" *) 
+  (* SOFT_HLUTNM = "soft_lutpair14" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
@@ -22938,14 +23132,14 @@ module meowrouter_Router_0_xpm_cdc_gray__5
        (.I0(\dest_graysync_ff[1] [2]),
         .I1(\dest_graysync_ff[1] [3]),
         .O(\^dest_out_bin [2]));
-  (* SOFT_HLUTNM = "soft_lutpair16" *) 
+  (* SOFT_HLUTNM = "soft_lutpair17" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair16" *) 
+  (* SOFT_HLUTNM = "soft_lutpair17" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
@@ -23102,14 +23296,14 @@ module meowrouter_Router_0_xpm_cdc_gray__6
        (.I0(\dest_graysync_ff[1] [2]),
         .I1(\dest_graysync_ff[1] [3]),
         .O(\^dest_out_bin [2]));
-  (* SOFT_HLUTNM = "soft_lutpair135" *) 
+  (* SOFT_HLUTNM = "soft_lutpair139" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair135" *) 
+  (* SOFT_HLUTNM = "soft_lutpair139" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
@@ -23385,28 +23579,28 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized0
        (.I0(\dest_graysync_ff[3] [3]),
         .I1(\dest_graysync_ff[3] [4]),
         .O(\^dest_out_bin [3]));
-  (* SOFT_HLUTNM = "soft_lutpair136" *) 
+  (* SOFT_HLUTNM = "soft_lutpair140" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair136" *) 
+  (* SOFT_HLUTNM = "soft_lutpair140" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
        (.I0(src_in_bin[2]),
         .I1(src_in_bin[1]),
         .O(gray_enc[1]));
-  (* SOFT_HLUTNM = "soft_lutpair137" *) 
+  (* SOFT_HLUTNM = "soft_lutpair141" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[2]_i_1 
        (.I0(src_in_bin[3]),
         .I1(src_in_bin[2]),
         .O(gray_enc[2]));
-  (* SOFT_HLUTNM = "soft_lutpair137" *) 
+  (* SOFT_HLUTNM = "soft_lutpair141" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[3]_i_1 
@@ -23682,28 +23876,28 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized0__2
        (.I0(\dest_graysync_ff[3] [3]),
         .I1(\dest_graysync_ff[3] [4]),
         .O(\^dest_out_bin [3]));
-  (* SOFT_HLUTNM = "soft_lutpair14" *) 
+  (* SOFT_HLUTNM = "soft_lutpair15" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair14" *) 
+  (* SOFT_HLUTNM = "soft_lutpair15" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
        (.I0(src_in_bin[2]),
         .I1(src_in_bin[1]),
         .O(gray_enc[1]));
-  (* SOFT_HLUTNM = "soft_lutpair15" *) 
+  (* SOFT_HLUTNM = "soft_lutpair16" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[2]_i_1 
        (.I0(src_in_bin[3]),
         .I1(src_in_bin[2]),
         .O(gray_enc[2]));
-  (* SOFT_HLUTNM = "soft_lutpair15" *) 
+  (* SOFT_HLUTNM = "soft_lutpair16" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[3]_i_1 
@@ -23887,28 +24081,28 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized1
        (.I0(\dest_graysync_ff[1] [3]),
         .I1(\dest_graysync_ff[1] [4]),
         .O(\^dest_out_bin [3]));
-  (* SOFT_HLUTNM = "soft_lutpair139" *) 
+  (* SOFT_HLUTNM = "soft_lutpair143" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair139" *) 
+  (* SOFT_HLUTNM = "soft_lutpair143" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
        (.I0(src_in_bin[2]),
         .I1(src_in_bin[1]),
         .O(gray_enc[1]));
-  (* SOFT_HLUTNM = "soft_lutpair140" *) 
+  (* SOFT_HLUTNM = "soft_lutpair144" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[2]_i_1 
        (.I0(src_in_bin[3]),
         .I1(src_in_bin[2]),
         .O(gray_enc[2]));
-  (* SOFT_HLUTNM = "soft_lutpair140" *) 
+  (* SOFT_HLUTNM = "soft_lutpair144" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[3]_i_1 
@@ -24092,28 +24286,28 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized1__2
        (.I0(\dest_graysync_ff[1] [3]),
         .I1(\dest_graysync_ff[1] [4]),
         .O(\^dest_out_bin [3]));
-  (* SOFT_HLUTNM = "soft_lutpair17" *) 
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair17" *) 
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
        (.I0(src_in_bin[2]),
         .I1(src_in_bin[1]),
         .O(gray_enc[1]));
-  (* SOFT_HLUTNM = "soft_lutpair18" *) 
+  (* SOFT_HLUTNM = "soft_lutpair19" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[2]_i_1 
        (.I0(src_in_bin[3]),
         .I1(src_in_bin[2]),
         .O(gray_enc[2]));
-  (* SOFT_HLUTNM = "soft_lutpair18" *) 
+  (* SOFT_HLUTNM = "soft_lutpair19" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[3]_i_1 
@@ -24504,84 +24698,84 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized2
         .I2(\dest_graysync_ff[1] [12]),
         .I3(\dest_graysync_ff[1] [10]),
         .O(\^dest_out_bin [9]));
-  (* SOFT_HLUTNM = "soft_lutpair116" *) 
+  (* SOFT_HLUTNM = "soft_lutpair120" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair121" *) 
+  (* SOFT_HLUTNM = "soft_lutpair125" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[10]_i_1 
        (.I0(src_in_bin[11]),
         .I1(src_in_bin[10]),
         .O(gray_enc[10]));
-  (* SOFT_HLUTNM = "soft_lutpair121" *) 
+  (* SOFT_HLUTNM = "soft_lutpair125" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[11]_i_1 
        (.I0(src_in_bin[12]),
         .I1(src_in_bin[11]),
         .O(gray_enc[11]));
-  (* SOFT_HLUTNM = "soft_lutpair116" *) 
+  (* SOFT_HLUTNM = "soft_lutpair120" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
        (.I0(src_in_bin[2]),
         .I1(src_in_bin[1]),
         .O(gray_enc[1]));
-  (* SOFT_HLUTNM = "soft_lutpair117" *) 
+  (* SOFT_HLUTNM = "soft_lutpair121" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[2]_i_1 
        (.I0(src_in_bin[3]),
         .I1(src_in_bin[2]),
         .O(gray_enc[2]));
-  (* SOFT_HLUTNM = "soft_lutpair117" *) 
+  (* SOFT_HLUTNM = "soft_lutpair121" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[3]_i_1 
        (.I0(src_in_bin[4]),
         .I1(src_in_bin[3]),
         .O(gray_enc[3]));
-  (* SOFT_HLUTNM = "soft_lutpair118" *) 
+  (* SOFT_HLUTNM = "soft_lutpair122" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[4]_i_1 
        (.I0(src_in_bin[5]),
         .I1(src_in_bin[4]),
         .O(gray_enc[4]));
-  (* SOFT_HLUTNM = "soft_lutpair118" *) 
+  (* SOFT_HLUTNM = "soft_lutpair122" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[5]_i_1 
        (.I0(src_in_bin[6]),
         .I1(src_in_bin[5]),
         .O(gray_enc[5]));
-  (* SOFT_HLUTNM = "soft_lutpair119" *) 
+  (* SOFT_HLUTNM = "soft_lutpair123" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[6]_i_1 
        (.I0(src_in_bin[7]),
         .I1(src_in_bin[6]),
         .O(gray_enc[6]));
-  (* SOFT_HLUTNM = "soft_lutpair119" *) 
+  (* SOFT_HLUTNM = "soft_lutpair123" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[7]_i_1 
        (.I0(src_in_bin[8]),
         .I1(src_in_bin[7]),
         .O(gray_enc[7]));
-  (* SOFT_HLUTNM = "soft_lutpair120" *) 
+  (* SOFT_HLUTNM = "soft_lutpair124" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[8]_i_1 
        (.I0(src_in_bin[9]),
         .I1(src_in_bin[8]),
         .O(gray_enc[8]));
-  (* SOFT_HLUTNM = "soft_lutpair120" *) 
+  (* SOFT_HLUTNM = "soft_lutpair124" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[9]_i_1 
@@ -25020,84 +25214,84 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized2__2
         .I2(\dest_graysync_ff[1] [12]),
         .I3(\dest_graysync_ff[1] [10]),
         .O(\^dest_out_bin [9]));
-  (* SOFT_HLUTNM = "soft_lutpair104" *) 
+  (* SOFT_HLUTNM = "soft_lutpair108" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair109" *) 
+  (* SOFT_HLUTNM = "soft_lutpair113" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[10]_i_1 
        (.I0(src_in_bin[11]),
         .I1(src_in_bin[10]),
         .O(gray_enc[10]));
-  (* SOFT_HLUTNM = "soft_lutpair109" *) 
+  (* SOFT_HLUTNM = "soft_lutpair113" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[11]_i_1 
        (.I0(src_in_bin[12]),
         .I1(src_in_bin[11]),
         .O(gray_enc[11]));
-  (* SOFT_HLUTNM = "soft_lutpair104" *) 
+  (* SOFT_HLUTNM = "soft_lutpair108" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
        (.I0(src_in_bin[2]),
         .I1(src_in_bin[1]),
         .O(gray_enc[1]));
-  (* SOFT_HLUTNM = "soft_lutpair105" *) 
+  (* SOFT_HLUTNM = "soft_lutpair109" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[2]_i_1 
        (.I0(src_in_bin[3]),
         .I1(src_in_bin[2]),
         .O(gray_enc[2]));
-  (* SOFT_HLUTNM = "soft_lutpair105" *) 
+  (* SOFT_HLUTNM = "soft_lutpair109" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[3]_i_1 
        (.I0(src_in_bin[4]),
         .I1(src_in_bin[3]),
         .O(gray_enc[3]));
-  (* SOFT_HLUTNM = "soft_lutpair106" *) 
+  (* SOFT_HLUTNM = "soft_lutpair110" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[4]_i_1 
        (.I0(src_in_bin[5]),
         .I1(src_in_bin[4]),
         .O(gray_enc[4]));
-  (* SOFT_HLUTNM = "soft_lutpair106" *) 
+  (* SOFT_HLUTNM = "soft_lutpair110" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[5]_i_1 
        (.I0(src_in_bin[6]),
         .I1(src_in_bin[5]),
         .O(gray_enc[5]));
-  (* SOFT_HLUTNM = "soft_lutpair107" *) 
+  (* SOFT_HLUTNM = "soft_lutpair111" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[6]_i_1 
        (.I0(src_in_bin[7]),
         .I1(src_in_bin[6]),
         .O(gray_enc[6]));
-  (* SOFT_HLUTNM = "soft_lutpair107" *) 
+  (* SOFT_HLUTNM = "soft_lutpair111" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[7]_i_1 
        (.I0(src_in_bin[8]),
         .I1(src_in_bin[7]),
         .O(gray_enc[7]));
-  (* SOFT_HLUTNM = "soft_lutpair108" *) 
+  (* SOFT_HLUTNM = "soft_lutpair112" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[8]_i_1 
        (.I0(src_in_bin[9]),
         .I1(src_in_bin[8]),
         .O(gray_enc[8]));
-  (* SOFT_HLUTNM = "soft_lutpair108" *) 
+  (* SOFT_HLUTNM = "soft_lutpair112" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[9]_i_1 
@@ -25816,21 +26010,21 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized3
         .I3(\dest_graysync_ff[3] [12]),
         .I4(\dest_graysync_ff[3] [10]),
         .O(\^dest_out_bin [9]));
-  (* SOFT_HLUTNM = "soft_lutpair110" *) 
+  (* SOFT_HLUTNM = "soft_lutpair114" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair115" *) 
+  (* SOFT_HLUTNM = "soft_lutpair119" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[10]_i_1 
        (.I0(src_in_bin[11]),
         .I1(src_in_bin[10]),
         .O(gray_enc[10]));
-  (* SOFT_HLUTNM = "soft_lutpair115" *) 
+  (* SOFT_HLUTNM = "soft_lutpair119" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[11]_i_1 
@@ -25843,63 +26037,63 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized3
        (.I0(src_in_bin[13]),
         .I1(src_in_bin[12]),
         .O(gray_enc[12]));
-  (* SOFT_HLUTNM = "soft_lutpair110" *) 
+  (* SOFT_HLUTNM = "soft_lutpair114" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
        (.I0(src_in_bin[2]),
         .I1(src_in_bin[1]),
         .O(gray_enc[1]));
-  (* SOFT_HLUTNM = "soft_lutpair111" *) 
+  (* SOFT_HLUTNM = "soft_lutpair115" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[2]_i_1 
        (.I0(src_in_bin[3]),
         .I1(src_in_bin[2]),
         .O(gray_enc[2]));
-  (* SOFT_HLUTNM = "soft_lutpair111" *) 
+  (* SOFT_HLUTNM = "soft_lutpair115" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[3]_i_1 
        (.I0(src_in_bin[4]),
         .I1(src_in_bin[3]),
         .O(gray_enc[3]));
-  (* SOFT_HLUTNM = "soft_lutpair112" *) 
+  (* SOFT_HLUTNM = "soft_lutpair116" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[4]_i_1 
        (.I0(src_in_bin[5]),
         .I1(src_in_bin[4]),
         .O(gray_enc[4]));
-  (* SOFT_HLUTNM = "soft_lutpair112" *) 
+  (* SOFT_HLUTNM = "soft_lutpair116" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[5]_i_1 
        (.I0(src_in_bin[6]),
         .I1(src_in_bin[5]),
         .O(gray_enc[5]));
-  (* SOFT_HLUTNM = "soft_lutpair113" *) 
+  (* SOFT_HLUTNM = "soft_lutpair117" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[6]_i_1 
        (.I0(src_in_bin[7]),
         .I1(src_in_bin[6]),
         .O(gray_enc[6]));
-  (* SOFT_HLUTNM = "soft_lutpair113" *) 
+  (* SOFT_HLUTNM = "soft_lutpair117" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[7]_i_1 
        (.I0(src_in_bin[8]),
         .I1(src_in_bin[7]),
         .O(gray_enc[7]));
-  (* SOFT_HLUTNM = "soft_lutpair114" *) 
+  (* SOFT_HLUTNM = "soft_lutpair118" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[8]_i_1 
        (.I0(src_in_bin[9]),
         .I1(src_in_bin[8]),
         .O(gray_enc[8]));
-  (* SOFT_HLUTNM = "soft_lutpair114" *) 
+  (* SOFT_HLUTNM = "soft_lutpair118" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[9]_i_1 
@@ -26370,21 +26564,21 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized4
         .I3(\dest_graysync_ff[1] [12]),
         .I4(\dest_graysync_ff[1] [10]),
         .O(\^dest_out_bin [9]));
-  (* SOFT_HLUTNM = "soft_lutpair122" *) 
+  (* SOFT_HLUTNM = "soft_lutpair126" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[0]_i_1 
        (.I0(src_in_bin[1]),
         .I1(src_in_bin[0]),
         .O(gray_enc[0]));
-  (* SOFT_HLUTNM = "soft_lutpair127" *) 
+  (* SOFT_HLUTNM = "soft_lutpair131" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[10]_i_1 
        (.I0(src_in_bin[11]),
         .I1(src_in_bin[10]),
         .O(gray_enc[10]));
-  (* SOFT_HLUTNM = "soft_lutpair127" *) 
+  (* SOFT_HLUTNM = "soft_lutpair131" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[11]_i_1 
@@ -26397,63 +26591,63 @@ module meowrouter_Router_0_xpm_cdc_gray__parameterized4
        (.I0(src_in_bin[13]),
         .I1(src_in_bin[12]),
         .O(gray_enc[12]));
-  (* SOFT_HLUTNM = "soft_lutpair122" *) 
+  (* SOFT_HLUTNM = "soft_lutpair126" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[1]_i_1 
        (.I0(src_in_bin[2]),
         .I1(src_in_bin[1]),
         .O(gray_enc[1]));
-  (* SOFT_HLUTNM = "soft_lutpair123" *) 
+  (* SOFT_HLUTNM = "soft_lutpair127" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[2]_i_1 
        (.I0(src_in_bin[3]),
         .I1(src_in_bin[2]),
         .O(gray_enc[2]));
-  (* SOFT_HLUTNM = "soft_lutpair123" *) 
+  (* SOFT_HLUTNM = "soft_lutpair127" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[3]_i_1 
        (.I0(src_in_bin[4]),
         .I1(src_in_bin[3]),
         .O(gray_enc[3]));
-  (* SOFT_HLUTNM = "soft_lutpair124" *) 
+  (* SOFT_HLUTNM = "soft_lutpair128" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[4]_i_1 
        (.I0(src_in_bin[5]),
         .I1(src_in_bin[4]),
         .O(gray_enc[4]));
-  (* SOFT_HLUTNM = "soft_lutpair124" *) 
+  (* SOFT_HLUTNM = "soft_lutpair128" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[5]_i_1 
        (.I0(src_in_bin[6]),
         .I1(src_in_bin[5]),
         .O(gray_enc[5]));
-  (* SOFT_HLUTNM = "soft_lutpair125" *) 
+  (* SOFT_HLUTNM = "soft_lutpair129" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[6]_i_1 
        (.I0(src_in_bin[7]),
         .I1(src_in_bin[6]),
         .O(gray_enc[6]));
-  (* SOFT_HLUTNM = "soft_lutpair125" *) 
+  (* SOFT_HLUTNM = "soft_lutpair129" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[7]_i_1 
        (.I0(src_in_bin[8]),
         .I1(src_in_bin[7]),
         .O(gray_enc[7]));
-  (* SOFT_HLUTNM = "soft_lutpair126" *) 
+  (* SOFT_HLUTNM = "soft_lutpair130" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[8]_i_1 
        (.I0(src_in_bin[9]),
         .I1(src_in_bin[8]),
         .O(gray_enc[8]));
-  (* SOFT_HLUTNM = "soft_lutpair126" *) 
+  (* SOFT_HLUTNM = "soft_lutpair130" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \src_gray_ff[9]_i_1 
@@ -27155,7 +27349,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0
   wire rd_en;
   wire [3:0]src_in_bin;
 
-  (* SOFT_HLUTNM = "soft_lutpair143" *) 
+  (* SOFT_HLUTNM = "soft_lutpair147" *) 
   LUT4 #(
     .INIT(16'h10EF)) 
     \count_value_i[0]_i_1__3 
@@ -27164,7 +27358,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0
         .I2(Q[1]),
         .I3(\count_value_i_reg[3]_0 [0]),
         .O(\count_value_i[0]_i_1__3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair143" *) 
+  (* SOFT_HLUTNM = "soft_lutpair147" *) 
   LUT5 #(
     .INIT(32'h02FFFD00)) 
     \count_value_i[1]_i_1__3 
@@ -27174,7 +27368,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0
         .I3(\count_value_i_reg[3]_0 [0]),
         .I4(\count_value_i_reg[3]_0 [1]),
         .O(\count_value_i[1]_i_1__3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair142" *) 
+  (* SOFT_HLUTNM = "soft_lutpair146" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1__3 
@@ -27182,7 +27376,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0
         .I1(\count_value_i_reg[3]_0 [1]),
         .I2(\count_value_i_reg[3]_0 [2]),
         .O(\count_value_i[2]_i_1__3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair141" *) 
+  (* SOFT_HLUTNM = "soft_lutpair145" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1__3 
@@ -27191,7 +27385,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0
         .I2(\count_value_i_reg[3]_0 [2]),
         .I3(\count_value_i_reg[3]_0 [3]),
         .O(\count_value_i[3]_i_1__3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair141" *) 
+  (* SOFT_HLUTNM = "soft_lutpair145" *) 
   LUT5 #(
     .INIT(32'h7FFF8000)) 
     \count_value_i[4]_i_1__0 
@@ -27261,7 +27455,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0
         .I4(\count_value_i_reg[3]_0 [0]),
         .I5(\count_value_i_reg[3]_0 [3]),
         .O(src_in_bin[2]));
-  (* SOFT_HLUTNM = "soft_lutpair142" *) 
+  (* SOFT_HLUTNM = "soft_lutpair146" *) 
   LUT5 #(
     .INIT(32'hB0FB4F04)) 
     \gen_cdc_pntr.rd_pntr_cdc_dc_inst_i_3 
@@ -27271,14 +27465,14 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0
         .I3(count_value_i[1]),
         .I4(\count_value_i_reg[3]_0 [2]),
         .O(src_in_bin[1]));
-  (* SOFT_HLUTNM = "soft_lutpair144" *) 
+  (* SOFT_HLUTNM = "soft_lutpair148" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \gen_cdc_pntr.rd_pntr_cdc_dc_inst_i_5 
        (.I0(\count_value_i_reg[3]_0 [0]),
         .I1(count_value_i[0]),
         .O(src_in_bin[0]));
-  (* SOFT_HLUTNM = "soft_lutpair144" *) 
+  (* SOFT_HLUTNM = "soft_lutpair148" *) 
   LUT2 #(
     .INIT(4'hB)) 
     \gen_cdc_pntr.rd_pntr_cdc_dc_inst_i_6 
@@ -27424,7 +27618,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_15
   wire rd_en;
   wire [3:0]src_in_bin;
 
-  (* SOFT_HLUTNM = "soft_lutpair21" *) 
+  (* SOFT_HLUTNM = "soft_lutpair22" *) 
   LUT4 #(
     .INIT(16'h10EF)) 
     \count_value_i[0]_i_1__3 
@@ -27433,7 +27627,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_15
         .I2(Q[1]),
         .I3(\count_value_i_reg[3]_0 [0]),
         .O(\count_value_i[0]_i_1__3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair21" *) 
+  (* SOFT_HLUTNM = "soft_lutpair22" *) 
   LUT5 #(
     .INIT(32'h02FFFD00)) 
     \count_value_i[1]_i_1__3 
@@ -27443,7 +27637,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_15
         .I3(\count_value_i_reg[3]_0 [0]),
         .I4(\count_value_i_reg[3]_0 [1]),
         .O(\count_value_i[1]_i_1__3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair20" *) 
+  (* SOFT_HLUTNM = "soft_lutpair21" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1__3 
@@ -27451,7 +27645,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_15
         .I1(\count_value_i_reg[3]_0 [1]),
         .I2(\count_value_i_reg[3]_0 [2]),
         .O(\count_value_i[2]_i_1__3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair19" *) 
+  (* SOFT_HLUTNM = "soft_lutpair20" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1__3 
@@ -27460,7 +27654,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_15
         .I2(\count_value_i_reg[3]_0 [2]),
         .I3(\count_value_i_reg[3]_0 [3]),
         .O(\count_value_i[3]_i_1__3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair19" *) 
+  (* SOFT_HLUTNM = "soft_lutpair20" *) 
   LUT5 #(
     .INIT(32'h7FFF8000)) 
     \count_value_i[4]_i_1__0 
@@ -27530,7 +27724,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_15
         .I4(\count_value_i_reg[3]_0 [0]),
         .I5(\count_value_i_reg[3]_0 [3]),
         .O(src_in_bin[2]));
-  (* SOFT_HLUTNM = "soft_lutpair20" *) 
+  (* SOFT_HLUTNM = "soft_lutpair21" *) 
   LUT5 #(
     .INIT(32'hB0FB4F04)) 
     \gen_cdc_pntr.rd_pntr_cdc_dc_inst_i_3 
@@ -27540,14 +27734,14 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_15
         .I3(count_value_i[1]),
         .I4(\count_value_i_reg[3]_0 [2]),
         .O(src_in_bin[1]));
-  (* SOFT_HLUTNM = "soft_lutpair22" *) 
+  (* SOFT_HLUTNM = "soft_lutpair23" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \gen_cdc_pntr.rd_pntr_cdc_dc_inst_i_5 
        (.I0(\count_value_i_reg[3]_0 [0]),
         .I1(count_value_i[0]),
         .O(src_in_bin[0]));
-  (* SOFT_HLUTNM = "soft_lutpair22" *) 
+  (* SOFT_HLUTNM = "soft_lutpair23" *) 
   LUT2 #(
     .INIT(4'hB)) 
     \gen_cdc_pntr.rd_pntr_cdc_dc_inst_i_6 
@@ -27661,14 +27855,14 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_18
     \count_value_i[0]_i_1__1 
        (.I0(Q[0]),
         .O(\count_value_i[0]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair25" *) 
+  (* SOFT_HLUTNM = "soft_lutpair26" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \count_value_i[1]_i_1__1 
        (.I0(Q[0]),
         .I1(Q[1]),
         .O(\count_value_i[1]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair25" *) 
+  (* SOFT_HLUTNM = "soft_lutpair26" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1__1 
@@ -27676,7 +27870,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_18
         .I1(Q[1]),
         .I2(Q[2]),
         .O(\count_value_i[2]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair24" *) 
+  (* SOFT_HLUTNM = "soft_lutpair25" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1__1 
@@ -27685,7 +27879,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_18
         .I2(Q[2]),
         .I3(Q[3]),
         .O(\count_value_i[3]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair24" *) 
+  (* SOFT_HLUTNM = "soft_lutpair25" *) 
   LUT5 #(
     .INIT(32'h7FFF8000)) 
     \count_value_i[4]_i_1 
@@ -27763,14 +27957,14 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_2
     \count_value_i[0]_i_1__1 
        (.I0(Q[0]),
         .O(\count_value_i[0]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair147" *) 
+  (* SOFT_HLUTNM = "soft_lutpair151" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \count_value_i[1]_i_1__1 
        (.I0(Q[0]),
         .I1(Q[1]),
         .O(\count_value_i[1]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair147" *) 
+  (* SOFT_HLUTNM = "soft_lutpair151" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1__1 
@@ -27778,7 +27972,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_2
         .I1(Q[1]),
         .I2(Q[2]),
         .O(\count_value_i[2]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair146" *) 
+  (* SOFT_HLUTNM = "soft_lutpair150" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1__1 
@@ -27787,7 +27981,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized0_2
         .I2(Q[2]),
         .I3(Q[3]),
         .O(\count_value_i[3]_i_1__1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair146" *) 
+  (* SOFT_HLUTNM = "soft_lutpair150" *) 
   LUT5 #(
     .INIT(32'h7FFF8000)) 
     \count_value_i[4]_i_1 
@@ -27882,7 +28076,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1
         .I3(Q[0]),
         .I4(Q[1]),
         .O(\count_value_i[1]_i_1__2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair145" *) 
+  (* SOFT_HLUTNM = "soft_lutpair149" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1__2 
@@ -27890,7 +28084,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1
         .I1(Q[1]),
         .I2(Q[2]),
         .O(\count_value_i[2]_i_1__2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair145" *) 
+  (* SOFT_HLUTNM = "soft_lutpair149" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1__2 
@@ -27976,7 +28170,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1_16
         .I3(Q[0]),
         .I4(Q[1]),
         .O(\count_value_i[1]_i_1__2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair23" *) 
+  (* SOFT_HLUTNM = "soft_lutpair24" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1__2 
@@ -27984,7 +28178,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1_16
         .I1(Q[1]),
         .I2(Q[2]),
         .O(\count_value_i[2]_i_1__2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair23" *) 
+  (* SOFT_HLUTNM = "soft_lutpair24" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1__2 
@@ -28058,14 +28252,14 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1_19
     \count_value_i[0]_i_1__0 
        (.I0(Q[0]),
         .O(\count_value_i[0]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair26" *) 
+  (* SOFT_HLUTNM = "soft_lutpair27" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \count_value_i[1]_i_1__0 
        (.I0(Q[0]),
         .I1(Q[1]),
         .O(\count_value_i[1]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair27" *) 
+  (* SOFT_HLUTNM = "soft_lutpair28" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1__0 
@@ -28073,7 +28267,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1_19
         .I1(Q[1]),
         .I2(Q[2]),
         .O(\count_value_i[2]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair27" *) 
+  (* SOFT_HLUTNM = "soft_lutpair28" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1__0 
@@ -28114,7 +28308,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1_19
         .D(\count_value_i[3]_i_1__0_n_0 ),
         .Q(Q[3]),
         .R(wrst_busy));
-  (* SOFT_HLUTNM = "soft_lutpair26" *) 
+  (* SOFT_HLUTNM = "soft_lutpair27" *) 
   LUT5 #(
     .INIT(32'h718E8E71)) 
     \gen_pf_ic_rc.gpf_ic.diff_pntr_pf_q[2]_i_1 
@@ -28157,14 +28351,14 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1_3
     \count_value_i[0]_i_1__0 
        (.I0(Q[0]),
         .O(\count_value_i[0]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair148" *) 
+  (* SOFT_HLUTNM = "soft_lutpair152" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \count_value_i[1]_i_1__0 
        (.I0(Q[0]),
         .I1(Q[1]),
         .O(\count_value_i[1]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair149" *) 
+  (* SOFT_HLUTNM = "soft_lutpair153" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1__0 
@@ -28172,7 +28366,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1_3
         .I1(Q[1]),
         .I2(Q[2]),
         .O(\count_value_i[2]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair149" *) 
+  (* SOFT_HLUTNM = "soft_lutpair153" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1__0 
@@ -28213,7 +28407,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized1_3
         .D(\count_value_i[3]_i_1__0_n_0 ),
         .Q(Q[3]),
         .R(wrst_busy));
-  (* SOFT_HLUTNM = "soft_lutpair148" *) 
+  (* SOFT_HLUTNM = "soft_lutpair152" *) 
   LUT5 #(
     .INIT(32'h718E8E71)) 
     \gen_pf_ic_rc.gpf_ic.diff_pntr_pf_q[2]_i_1 
@@ -28256,7 +28450,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized2
        (.I0(Q[0]),
         .I1(Q[1]),
         .O(\count_value_i[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair150" *) 
+  (* SOFT_HLUTNM = "soft_lutpair154" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1 
@@ -28264,7 +28458,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized2
         .I1(Q[1]),
         .I2(Q[2]),
         .O(\count_value_i[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair150" *) 
+  (* SOFT_HLUTNM = "soft_lutpair154" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1 
@@ -28338,7 +28532,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized2_20
        (.I0(Q[0]),
         .I1(Q[1]),
         .O(\count_value_i[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair28" *) 
+  (* SOFT_HLUTNM = "soft_lutpair29" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \count_value_i[2]_i_1 
@@ -28346,7 +28540,7 @@ module meowrouter_Router_0_xpm_counter_updn__parameterized2_20
         .I1(Q[1]),
         .I2(Q[2]),
         .O(\count_value_i[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair28" *) 
+  (* SOFT_HLUTNM = "soft_lutpair29" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \count_value_i[3]_i_1 
@@ -30758,7 +30952,7 @@ module meowrouter_Router_0_xpm_fifo_base
   assign full_n = \<const0> ;
   assign sbiterr = \<const0> ;
   assign wr_ack = \<const0> ;
-  (* SOFT_HLUTNM = "soft_lutpair33" *) 
+  (* SOFT_HLUTNM = "soft_lutpair34" *) 
   LUT4 #(
     .INIT(16'h6A85)) 
     \FSM_sequential_gen_fwft.curr_fwft_state[0]_i_1 
@@ -30767,7 +30961,7 @@ module meowrouter_Router_0_xpm_fifo_base
         .I2(curr_fwft_state[1]),
         .I3(ram_empty_i),
         .O(next_fwft_state__0[0]));
-  (* SOFT_HLUTNM = "soft_lutpair33" *) 
+  (* SOFT_HLUTNM = "soft_lutpair34" *) 
   LUT3 #(
     .INIT(8'h7C)) 
     \FSM_sequential_gen_fwft.curr_fwft_state[1]_i_1 
@@ -30888,7 +31082,7 @@ module meowrouter_Router_0_xpm_fifo_base
         .dest_out_bin(wr_pntr_rd_cdc),
         .src_clk(wr_clk),
         .src_in_bin(wr_pntr_ext[3:0]));
-  (* SOFT_HLUTNM = "soft_lutpair32" *) 
+  (* SOFT_HLUTNM = "soft_lutpair33" *) 
   LUT4 #(
     .INIT(16'hF380)) 
     \gen_fwft.empty_fwft_i_i_1 
@@ -31120,7 +31314,7 @@ module meowrouter_Router_0_xpm_fifo_base
         .sleep(sleep),
         .wea(1'b0),
         .web(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair32" *) 
+  (* SOFT_HLUTNM = "soft_lutpair33" *) 
   LUT3 #(
     .INIT(8'h62)) 
     \gen_sdpram.xpm_memory_base_inst_i_3 
@@ -31389,7 +31583,7 @@ module meowrouter_Router_0_xpm_fifo_base__parameterized0
   assign full_n = \<const0> ;
   assign sbiterr = \<const0> ;
   assign wr_ack = \<const0> ;
-  (* SOFT_HLUTNM = "soft_lutpair155" *) 
+  (* SOFT_HLUTNM = "soft_lutpair159" *) 
   LUT4 #(
     .INIT(16'h6A85)) 
     \FSM_sequential_gen_fwft.curr_fwft_state[0]_i_1 
@@ -31398,7 +31592,7 @@ module meowrouter_Router_0_xpm_fifo_base__parameterized0
         .I2(curr_fwft_state[1]),
         .I3(ram_empty_i),
         .O(next_fwft_state__0[0]));
-  (* SOFT_HLUTNM = "soft_lutpair155" *) 
+  (* SOFT_HLUTNM = "soft_lutpair159" *) 
   LUT3 #(
     .INIT(8'h7C)) 
     \FSM_sequential_gen_fwft.curr_fwft_state[1]_i_1 
@@ -31519,7 +31713,7 @@ module meowrouter_Router_0_xpm_fifo_base__parameterized0
         .dest_out_bin(wr_pntr_rd_cdc),
         .src_clk(wr_clk),
         .src_in_bin(wr_pntr_ext[3:0]));
-  (* SOFT_HLUTNM = "soft_lutpair154" *) 
+  (* SOFT_HLUTNM = "soft_lutpair158" *) 
   LUT4 #(
     .INIT(16'hF380)) 
     \gen_fwft.empty_fwft_i_i_1 
@@ -31751,7 +31945,7 @@ module meowrouter_Router_0_xpm_fifo_base__parameterized0
         .sleep(sleep),
         .wea(1'b0),
         .web(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair154" *) 
+  (* SOFT_HLUTNM = "soft_lutpair158" *) 
   LUT3 #(
     .INIT(8'h62)) 
     \gen_sdpram.xpm_memory_base_inst_i_3 
@@ -32112,7 +32306,7 @@ module meowrouter_Router_0_xpm_fifo_base__parameterized1
   assign full_n = \<const0> ;
   assign sbiterr = \<const0> ;
   assign wr_ack = \<const0> ;
-  (* SOFT_HLUTNM = "soft_lutpair134" *) 
+  (* SOFT_HLUTNM = "soft_lutpair138" *) 
   LUT4 #(
     .INIT(16'h6A85)) 
     \FSM_sequential_gen_fwft.curr_fwft_state[0]_i_1 
@@ -32121,7 +32315,7 @@ module meowrouter_Router_0_xpm_fifo_base__parameterized1
         .I2(curr_fwft_state[1]),
         .I3(ram_empty_i),
         .O(next_fwft_state__0[0]));
-  (* SOFT_HLUTNM = "soft_lutpair134" *) 
+  (* SOFT_HLUTNM = "soft_lutpair138" *) 
   LUT3 #(
     .INIT(8'h7C)) 
     \FSM_sequential_gen_fwft.curr_fwft_state[1]_i_1 
@@ -32255,7 +32449,7 @@ module meowrouter_Router_0_xpm_fifo_base__parameterized1
         .dest_out_bin(wr_pntr_rd_cdc),
         .src_clk(wr_clk),
         .src_in_bin(wr_pntr_ext[12:0]));
-  (* SOFT_HLUTNM = "soft_lutpair133" *) 
+  (* SOFT_HLUTNM = "soft_lutpair137" *) 
   LUT4 #(
     .INIT(16'hF380)) 
     \gen_fwft.empty_fwft_i_i_1 
@@ -32673,7 +32867,7 @@ module meowrouter_Router_0_xpm_fifo_base__parameterized1
         .sleep(sleep),
         .wea(1'b0),
         .web(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair133" *) 
+  (* SOFT_HLUTNM = "soft_lutpair137" *) 
   LUT3 #(
     .INIT(8'h62)) 
     \gen_sdpram.xpm_memory_base_inst_i_3 
@@ -35015,7 +35209,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .I3(\gen_rst_ic.rst_seq_reentered ),
         .I4(\FSM_onehot_gen_rst_ic.curr_wrst_state_reg_n_0_[2] ),
         .O(\/i__n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair128" *) 
+  (* SOFT_HLUTNM = "soft_lutpair132" *) 
   LUT5 #(
     .INIT(32'hF0F40044)) 
     \FSM_onehot_gen_rst_ic.curr_wrst_state[0]_i_1 
@@ -35051,7 +35245,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .I3(\gen_rst_ic.rst_seq_reentered_reg_n_0 ),
         .I4(\FSM_onehot_gen_rst_ic.curr_wrst_state_reg_n_0_[3] ),
         .O(\FSM_onehot_gen_rst_ic.curr_wrst_state[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair128" *) 
+  (* SOFT_HLUTNM = "soft_lutpair132" *) 
   LUT3 #(
     .INIT(8'h02)) 
     \FSM_onehot_gen_rst_ic.curr_wrst_state[4]_i_1 
@@ -35128,7 +35322,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .D(\gen_rst_ic.next_rrst_state [1]),
         .Q(\gen_rst_ic.curr_rrst_state [1]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair132" *) 
+  (* SOFT_HLUTNM = "soft_lutpair136" *) 
   LUT3 #(
     .INIT(8'h06)) 
     \__2/i_ 
@@ -35146,7 +35340,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .I4(prog_full),
         .I5(\gen_pf_ic_rc.gpf_ic.prog_full_i_i_3_n_0 ),
         .O(\gen_pf_ic_rc.gpf_ic.diff_pntr_pf_q_reg[12] ));
-  (* SOFT_HLUTNM = "soft_lutpair131" *) 
+  (* SOFT_HLUTNM = "soft_lutpair135" *) 
   LUT3 #(
     .INIT(8'hAE)) 
     \gen_pf_ic_rc.gpf_ic.prog_full_i_i_3 
@@ -35154,7 +35348,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .I1(rst_d1),
         .I2(rst),
         .O(\gen_pf_ic_rc.gpf_ic.prog_full_i_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair132" *) 
+  (* SOFT_HLUTNM = "soft_lutpair136" *) 
   LUT3 #(
     .INIT(8'h3E)) 
     \gen_rst_ic.fifo_rd_rst_ic_i_1 
@@ -35200,7 +35394,7 @@ module meowrouter_Router_0_xpm_fifo_rst
        (.dest_clk(wr_clk),
         .dest_rst(\gen_rst_ic.fifo_rd_rst_wr_i ),
         .src_rst(\gen_rst_ic.fifo_rd_rst_ic_reg_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair129" *) 
+  (* SOFT_HLUTNM = "soft_lutpair133" *) 
   LUT4 #(
     .INIT(16'h000E)) 
     \gen_rst_ic.rst_seq_reentered_i_1 
@@ -35227,7 +35421,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .I4(\FSM_onehot_gen_rst_ic.curr_wrst_state_reg_n_0_[1] ),
         .I5(wrst_busy),
         .O(\gen_rst_ic.wr_rst_busy_ic_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair129" *) 
+  (* SOFT_HLUTNM = "soft_lutpair133" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_rst_ic.wr_rst_busy_ic_i_2 
@@ -35262,7 +35456,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .I2(wrst_busy),
         .I3(rst_d1),
         .O(E));
-  (* SOFT_HLUTNM = "soft_lutpair130" *) 
+  (* SOFT_HLUTNM = "soft_lutpair134" *) 
   LUT3 #(
     .INIT(8'hAB)) 
     \grdc.rd_data_count_i[13]_i_1 
@@ -35270,7 +35464,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .I1(\grdc.rd_data_count_i_reg[13] [0]),
         .I2(\grdc.rd_data_count_i_reg[13] [1]),
         .O(\grdc.rd_data_count_i0 ));
-  (* SOFT_HLUTNM = "soft_lutpair130" *) 
+  (* SOFT_HLUTNM = "soft_lutpair134" *) 
   LUT3 #(
     .INIT(8'hE0)) 
     \guf.underflow_i_i_1 
@@ -35294,7 +35488,7 @@ module meowrouter_Router_0_xpm_fifo_rst
         .D(\power_on_rst_reg_n_0_[0] ),
         .Q(p_0_in),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair131" *) 
+  (* SOFT_HLUTNM = "soft_lutpair135" *) 
   LUT2 #(
     .INIT(4'hE)) 
     wr_rst_busy_INST_0
@@ -35370,7 +35564,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__1
   wire wr_rst_busy;
   wire wrst_busy;
 
-  (* SOFT_HLUTNM = "soft_lutpair29" *) 
+  (* SOFT_HLUTNM = "soft_lutpair30" *) 
   LUT5 #(
     .INIT(32'hF0F40044)) 
     \FSM_onehot_gen_rst_ic.curr_wrst_state[0]_i_1 
@@ -35406,7 +35600,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__1
         .I3(\gen_rst_ic.rst_seq_reentered_reg_n_0 ),
         .I4(\FSM_onehot_gen_rst_ic.curr_wrst_state_reg_n_0_[3] ),
         .O(\FSM_onehot_gen_rst_ic.curr_wrst_state[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair29" *) 
+  (* SOFT_HLUTNM = "soft_lutpair30" *) 
   LUT3 #(
     .INIT(8'h02)) 
     \FSM_onehot_gen_rst_ic.curr_wrst_state[4]_i_1 
@@ -35483,7 +35677,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__1
         .D(\gen_rst_ic.next_rrst_state [1]),
         .Q(\gen_rst_ic.curr_rrst_state [1]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair31" *) 
+  (* SOFT_HLUTNM = "soft_lutpair32" *) 
   LUT3 #(
     .INIT(8'h06)) 
     \__2/i_ 
@@ -35491,7 +35685,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__1
         .I1(\gen_rst_ic.curr_rrst_state [1]),
         .I2(\gen_rst_ic.curr_rrst_state [0]),
         .O(\gen_rst_ic.next_rrst_state [0]));
-  (* SOFT_HLUTNM = "soft_lutpair31" *) 
+  (* SOFT_HLUTNM = "soft_lutpair32" *) 
   LUT3 #(
     .INIT(8'h3E)) 
     \gen_rst_ic.fifo_rd_rst_ic_i_1 
@@ -35546,7 +35740,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__1
        (.dest_clk(wr_clk),
         .dest_rst(\gen_rst_ic.fifo_rd_rst_wr_i ),
         .src_rst(\gen_rst_ic.fifo_rd_rst_ic_reg_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair30" *) 
+  (* SOFT_HLUTNM = "soft_lutpair31" *) 
   LUT4 #(
     .INIT(16'h000E)) 
     \gen_rst_ic.rst_seq_reentered_i_1 
@@ -35573,7 +35767,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__1
         .I4(\FSM_onehot_gen_rst_ic.curr_wrst_state_reg_n_0_[1] ),
         .I5(wrst_busy),
         .O(\gen_rst_ic.wr_rst_busy_ic_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair30" *) 
+  (* SOFT_HLUTNM = "soft_lutpair31" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_rst_ic.wr_rst_busy_ic_i_2 
@@ -35706,7 +35900,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__2
   wire wr_rst_busy;
   wire wrst_busy;
 
-  (* SOFT_HLUTNM = "soft_lutpair151" *) 
+  (* SOFT_HLUTNM = "soft_lutpair155" *) 
   LUT5 #(
     .INIT(32'hF0F40044)) 
     \FSM_onehot_gen_rst_ic.curr_wrst_state[0]_i_1 
@@ -35742,7 +35936,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__2
         .I3(\gen_rst_ic.rst_seq_reentered_reg_n_0 ),
         .I4(\FSM_onehot_gen_rst_ic.curr_wrst_state_reg_n_0_[3] ),
         .O(\FSM_onehot_gen_rst_ic.curr_wrst_state[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair151" *) 
+  (* SOFT_HLUTNM = "soft_lutpair155" *) 
   LUT3 #(
     .INIT(8'h02)) 
     \FSM_onehot_gen_rst_ic.curr_wrst_state[4]_i_1 
@@ -35819,7 +36013,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__2
         .D(\gen_rst_ic.next_rrst_state [1]),
         .Q(\gen_rst_ic.curr_rrst_state [1]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair153" *) 
+  (* SOFT_HLUTNM = "soft_lutpair157" *) 
   LUT3 #(
     .INIT(8'h06)) 
     \__2/i_ 
@@ -35827,7 +36021,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__2
         .I1(\gen_rst_ic.curr_rrst_state [1]),
         .I2(\gen_rst_ic.curr_rrst_state [0]),
         .O(\gen_rst_ic.next_rrst_state [0]));
-  (* SOFT_HLUTNM = "soft_lutpair153" *) 
+  (* SOFT_HLUTNM = "soft_lutpair157" *) 
   LUT3 #(
     .INIT(8'h3E)) 
     \gen_rst_ic.fifo_rd_rst_ic_i_1 
@@ -35882,7 +36076,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__2
        (.dest_clk(wr_clk),
         .dest_rst(\gen_rst_ic.fifo_rd_rst_wr_i ),
         .src_rst(\gen_rst_ic.fifo_rd_rst_ic_reg_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair152" *) 
+  (* SOFT_HLUTNM = "soft_lutpair156" *) 
   LUT4 #(
     .INIT(16'h000E)) 
     \gen_rst_ic.rst_seq_reentered_i_1 
@@ -35909,7 +36103,7 @@ module meowrouter_Router_0_xpm_fifo_rst__xdcDup__2
         .I4(\FSM_onehot_gen_rst_ic.curr_wrst_state_reg_n_0_[1] ),
         .I5(wrst_busy),
         .O(\gen_rst_ic.wr_rst_busy_ic_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair152" *) 
+  (* SOFT_HLUTNM = "soft_lutpair156" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_rst_ic.wr_rst_busy_ic_i_2 
@@ -56952,7 +57146,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I3(ena),
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_0_63_0_2_i_2_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_0_63_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair93" *) 
+  (* SOFT_HLUTNM = "soft_lutpair97" *) 
   LUT4 #(
     .INIT(16'hFFFE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_0_63_0_2_i_2 
@@ -57136,7 +57330,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(addra[11]),
         .I5(addra[9]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_1088_1151_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair103" *) 
+  (* SOFT_HLUTNM = "soft_lutpair107" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_1088_1151_0_2_i_2 
@@ -58293,7 +58487,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(addra[10]),
         .I5(addra[9]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_1856_1919_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair102" *) 
+  (* SOFT_HLUTNM = "soft_lutpair106" *) 
   LUT2 #(
     .INIT(4'hB)) 
     \gen_wr_a.gen_word_narrow.mem_reg_1856_1919_0_2_i_2 
@@ -58388,7 +58582,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(addra[10]),
         .I5(addra[9]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_1920_1983_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair101" *) 
+  (* SOFT_HLUTNM = "soft_lutpair105" *) 
   LUT2 #(
     .INIT(4'hB)) 
     \gen_wr_a.gen_word_narrow.mem_reg_1920_1983_0_2_i_2 
@@ -58483,14 +58677,14 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_2_n_0 ),
         .I5(\gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_3_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair97" *) 
+  (* SOFT_HLUTNM = "soft_lutpair101" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_2 
        (.I0(addra[9]),
         .I1(addra[8]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair98" *) 
+  (* SOFT_HLUTNM = "soft_lutpair102" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_3 
@@ -58760,7 +58954,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(addra[10]),
         .I5(addra[9]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_2112_2175_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair103" *) 
+  (* SOFT_HLUTNM = "soft_lutpair107" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_2112_2175_0_2_i_2 
@@ -59119,7 +59313,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(addra[6]),
         .I5(\gen_wr_a.gen_word_narrow.mem_reg_2112_2175_0_2_i_2_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_2368_2431_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair99" *) 
+  (* SOFT_HLUTNM = "soft_lutpair103" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_2368_2431_0_2_i_2 
@@ -59478,7 +59672,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(addra[10]),
         .I5(addra[9]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_256_319_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair94" *) 
+  (* SOFT_HLUTNM = "soft_lutpair98" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_256_319_0_2_i_2 
@@ -60452,7 +60646,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_320_383_0_2_i_2_n_0 ),
         .I5(\gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_3_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_320_383_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair102" *) 
+  (* SOFT_HLUTNM = "soft_lutpair106" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_320_383_0_2_i_2 
@@ -60547,7 +60741,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_448_511_0_2_i_2_n_0 ),
         .I5(\gen_wr_a.gen_word_narrow.mem_reg_3264_3327_0_2_i_2_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_3264_3327_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair98" *) 
+  (* SOFT_HLUTNM = "soft_lutpair102" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_3264_3327_0_2_i_2 
@@ -61434,7 +61628,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_384_447_0_2_i_2_n_0 ),
         .I5(\gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_3_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_384_447_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair101" *) 
+  (* SOFT_HLUTNM = "soft_lutpair105" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_384_447_0_2_i_2 
@@ -61704,7 +61898,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I3(ena),
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_4032_4095_0_2_i_2_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_4032_4095_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair93" *) 
+  (* SOFT_HLUTNM = "soft_lutpair97" *) 
   LUT4 #(
     .INIT(16'h7FFF)) 
     \gen_wr_a.gen_word_narrow.mem_reg_4032_4095_0_2_i_2 
@@ -62423,7 +62617,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(ena),
         .I5(addra[8]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_448_511_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair94" *) 
+  (* SOFT_HLUTNM = "soft_lutpair98" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_448_511_0_2_i_2 
@@ -63662,7 +63856,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_448_511_0_2_i_2_n_0 ),
         .I5(\gen_wr_a.gen_word_narrow.mem_reg_5312_5375_0_2_i_2_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_5312_5375_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair99" *) 
+  (* SOFT_HLUTNM = "soft_lutpair103" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_5312_5375_0_2_i_2 
@@ -64549,7 +64743,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(addra[12]),
         .I5(addra[10]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_5888_5951_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair97" *) 
+  (* SOFT_HLUTNM = "soft_lutpair101" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_5888_5951_0_2_i_2 
@@ -65171,7 +65365,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_448_511_0_2_i_2_n_0 ),
         .I5(\gen_wr_a.gen_word_narrow.mem_reg_6336_6399_0_2_i_2_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_6336_6399_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair100" *) 
+  (* SOFT_HLUTNM = "soft_lutpair104" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_6336_6399_0_2_i_2 
@@ -65354,7 +65548,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(\gen_wr_a.gen_word_narrow.mem_reg_640_703_0_2_i_2_n_0 ),
         .I5(\gen_wr_a.gen_word_narrow.mem_reg_192_255_0_2_i_3_n_0 ),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_640_703_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair95" *) 
+  (* SOFT_HLUTNM = "soft_lutpair99" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_640_703_0_2_i_2 
@@ -65537,14 +65731,14 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(addra[10]),
         .I5(addra[9]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_64_127_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair100" *) 
+  (* SOFT_HLUTNM = "soft_lutpair104" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_64_127_0_2_i_2 
        (.I0(addra[12]),
         .I1(addra[11]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_64_127_0_2_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair96" *) 
+  (* SOFT_HLUTNM = "soft_lutpair100" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \gen_wr_a.gen_word_narrow.mem_reg_64_127_0_2_i_3 
@@ -68102,7 +68296,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(ena),
         .I5(addra[9]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_832_895_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair95" *) 
+  (* SOFT_HLUTNM = "soft_lutpair99" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_832_895_0_2_i_2 
@@ -68197,7 +68391,7 @@ module meowrouter_Router_0_xpm_memory_base__parameterized1
         .I4(ena),
         .I5(addra[9]),
         .O(\gen_wr_a.gen_word_narrow.mem_reg_896_959_0_2_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair96" *) 
+  (* SOFT_HLUTNM = "soft_lutpair100" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \gen_wr_a.gen_word_narrow.mem_reg_896_959_0_2_i_2 

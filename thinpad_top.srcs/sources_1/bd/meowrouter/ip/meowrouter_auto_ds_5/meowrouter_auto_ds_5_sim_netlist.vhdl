@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Fri Dec 20 15:15:36 2019
+-- Date        : Fri Dec 20 15:15:34 2019
 -- Host        : imac running 64-bit Arch Linux
--- Command     : write_vhdl -force -mode funcsim
---               /home/thu-skyworks/meow/Desktop/workspace/cod19grp3/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_auto_ds_5/meowrouter_auto_ds_5_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_auto_ds_5 -prefix
+--               meowrouter_auto_ds_5_ meowrouter_auto_ds_5_sim_netlist.vhdl
 -- Design      : meowrouter_auto_ds_5
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -28,8 +28,6 @@ entity meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_b_downsizer is
     empty : in STD_LOGIC;
     m_axi_bresp : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_b_downsizer : entity is "axi_dwidth_converter_v2_1_18_b_downsizer";
 end meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_b_downsizer;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_b_downsizer is
@@ -451,8 +449,6 @@ entity meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_r_downsizer is
     \WORD_LANE[0].S_AXI_RDATA_II_reg[31]_1\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     \WORD_LANE[1].S_AXI_RDATA_II_reg[32]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_r_downsizer : entity is "axi_dwidth_converter_v2_1_18_r_downsizer";
 end meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_r_downsizer;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_r_downsizer is
@@ -2262,8 +2258,6 @@ entity meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_w_downsizer is
     first_word_reg_0 : in STD_LOGIC_VECTOR ( 7 downto 0 );
     D : in STD_LOGIC_VECTOR ( 2 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_w_downsizer : entity is "axi_dwidth_converter_v2_1_18_w_downsizer";
 end meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_w_downsizer;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_w_downsizer is
@@ -2647,8 +2641,6 @@ entity meowrouter_auto_ds_5_xpm_cdc_async_rst is
   attribute INIT_SYNC_FF of meowrouter_auto_ds_5_xpm_cdc_async_rst : entity is 0;
   attribute INV_DEF_VAL : string;
   attribute INV_DEF_VAL of meowrouter_auto_ds_5_xpm_cdc_async_rst : entity is "1'b1";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_xpm_cdc_async_rst : entity is "xpm_cdc_async_rst";
   attribute RST_ACTIVE_HIGH : integer;
   attribute RST_ACTIVE_HIGH of meowrouter_auto_ds_5_xpm_cdc_async_rst : entity is 1;
   attribute VERSION : integer;
@@ -2853,8 +2845,6 @@ entity meowrouter_auto_ds_5_dmem is
     count_d10_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     \gpr1.dout_i_reg[0]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_dmem : entity is "dmem";
 end meowrouter_auto_ds_5_dmem;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_dmem is
@@ -3878,8 +3868,6 @@ entity meowrouter_auto_ds_5_rd_bin_cntr is
     clk : in STD_LOGIC;
     \gc0.count_d1_reg[0]_0\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_rd_bin_cntr : entity is "rd_bin_cntr";
 end meowrouter_auto_ds_5_rd_bin_cntr;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_rd_bin_cntr is
@@ -4442,8 +4430,6 @@ entity meowrouter_auto_ds_5_rd_fwft is
     rd_en : in STD_LOGIC;
     \gc0.count_reg[4]\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_rd_fwft : entity is "rd_fwft";
 end meowrouter_auto_ds_5_rd_fwft;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_rd_fwft is
@@ -5140,8 +5126,6 @@ entity meowrouter_auto_ds_5_rd_status_flags_ss is
     clk : in STD_LOGIC;
     ram_empty_fb_i_reg_0 : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_rd_status_flags_ss : entity is "rd_status_flags_ss";
 end meowrouter_auto_ds_5_rd_status_flags_ss;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_rd_status_flags_ss is
@@ -5310,8 +5294,6 @@ entity meowrouter_auto_ds_5_wr_bin_cntr is
     clk : in STD_LOGIC;
     AR : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_wr_bin_cntr : entity is "wr_bin_cntr";
 end meowrouter_auto_ds_5_wr_bin_cntr;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_wr_bin_cntr is
@@ -6208,8 +6190,6 @@ entity meowrouter_auto_ds_5_wr_status_flags_ss is
     AR : in STD_LOGIC_VECTOR ( 0 to 0 );
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_wr_status_flags_ss : entity is "wr_status_flags_ss";
 end meowrouter_auto_ds_5_wr_status_flags_ss;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_wr_status_flags_ss is
@@ -6470,8 +6450,6 @@ entity meowrouter_auto_ds_5_memory is
     count_d10_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     \gpr1.dout_i_reg[0]\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_memory : entity is "memory";
 end meowrouter_auto_ds_5_memory;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_memory is
@@ -7233,8 +7211,6 @@ entity meowrouter_auto_ds_5_rd_logic is
     \gc0.count_d1_reg[0]\ : in STD_LOGIC;
     rd_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_rd_logic : entity is "rd_logic";
 end meowrouter_auto_ds_5_rd_logic;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_rd_logic is
@@ -7393,8 +7369,6 @@ entity meowrouter_auto_ds_5_reset_blk_ramfifo is
     rd_en : in STD_LOGIC;
     \goreg_dm.dout_i_reg[25]\ : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_reset_blk_ramfifo : entity is "reset_blk_ramfifo";
 end meowrouter_auto_ds_5_reset_blk_ramfifo;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_reset_blk_ramfifo is
@@ -7677,8 +7651,6 @@ entity meowrouter_auto_ds_5_wr_logic is
     ram_empty_fb_i_i_3 : in STD_LOGIC_VECTOR ( 4 downto 0 );
     ram_empty_fb_i_i_2 : in STD_LOGIC_VECTOR ( 4 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_wr_logic : entity is "wr_logic";
 end meowrouter_auto_ds_5_wr_logic;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_wr_logic is
@@ -7836,8 +7808,6 @@ entity meowrouter_auto_ds_5_fifo_generator_ramfifo is
     rd_en : in STD_LOGIC;
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_fifo_generator_ramfifo : entity is "fifo_generator_ramfifo";
 end meowrouter_auto_ds_5_fifo_generator_ramfifo;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_fifo_generator_ramfifo is
@@ -8088,8 +8058,6 @@ entity meowrouter_auto_ds_5_fifo_generator_top is
     rd_en : in STD_LOGIC;
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_fifo_generator_top : entity is "fifo_generator_top";
 end meowrouter_auto_ds_5_fifo_generator_top;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_fifo_generator_top is
@@ -8187,8 +8155,6 @@ entity meowrouter_auto_ds_5_fifo_generator_v13_2_3_synth is
     rd_en : in STD_LOGIC;
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_fifo_generator_v13_2_3_synth : entity is "fifo_generator_v13_2_3_synth";
 end meowrouter_auto_ds_5_fifo_generator_v13_2_3_synth;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_fifo_generator_v13_2_3_synth is
@@ -8913,8 +8879,6 @@ entity meowrouter_auto_ds_5_fifo_generator_v13_2_3 is
   attribute C_WR_PNTR_WIDTH_WRCH of meowrouter_auto_ds_5_fifo_generator_v13_2_3 : entity is 4;
   attribute C_WR_RESPONSE_LATENCY : integer;
   attribute C_WR_RESPONSE_LATENCY of meowrouter_auto_ds_5_fifo_generator_v13_2_3 : entity is 1;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_fifo_generator_v13_2_3 : entity is "fifo_generator_v13_2_3";
 end meowrouter_auto_ds_5_fifo_generator_v13_2_3;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_fifo_generator_v13_2_3 is
@@ -12125,8 +12089,6 @@ entity meowrouter_auto_ds_5_axi_data_fifo_v2_1_17_fifo_gen is
     S_AXI_AID_Q : in STD_LOGIC;
     s_axi_bid : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_axi_data_fifo_v2_1_17_fifo_gen : entity is "axi_data_fifo_v2_1_17_fifo_gen";
 end meowrouter_auto_ds_5_axi_data_fifo_v2_1_17_fifo_gen;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_axi_data_fifo_v2_1_17_fifo_gen is
@@ -17109,8 +17071,6 @@ entity meowrouter_auto_ds_5_axi_data_fifo_v2_1_17_axic_fifo is
     S_AXI_AID_Q : in STD_LOGIC;
     s_axi_bid : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_axi_data_fifo_v2_1_17_axic_fifo : entity is "axi_data_fifo_v2_1_17_axic_fifo";
 end meowrouter_auto_ds_5_axi_data_fifo_v2_1_17_axic_fifo;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_axi_data_fifo_v2_1_17_axic_fifo is
@@ -17509,8 +17469,6 @@ entity meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_a_downsizer is
     s_axi_awregion : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s_axi_awqos : in STD_LOGIC_VECTOR ( 3 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_a_downsizer : entity is "axi_dwidth_converter_v2_1_18_a_downsizer";
 end meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_a_downsizer;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_a_downsizer is
@@ -27844,8 +27802,6 @@ entity meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_axi_downsizer is
     s_axi_awvalid : in STD_LOGIC;
     s_axi_arvalid : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_axi_downsizer : entity is "axi_dwidth_converter_v2_1_18_axi_downsizer";
 end meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_axi_downsizer;
 
 architecture STRUCTURE of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_axi_downsizer is
@@ -28184,8 +28140,6 @@ entity meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_top is
   attribute C_S_AXI_ID_WIDTH of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_top : entity is 1;
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_top : entity is "yes";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_top : entity is "axi_dwidth_converter_v2_1_18_top";
   attribute P_AXI3 : integer;
   attribute P_AXI3 of meowrouter_auto_ds_5_axi_dwidth_converter_v2_1_18_top : entity is 1;
   attribute P_AXI4 : integer;

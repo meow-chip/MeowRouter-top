@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Fri Dec 20 15:15:22 2019
+-- Date        : Fri Dec 20 15:15:21 2019
 -- Host        : imac running 64-bit Arch Linux
--- Command     : write_vhdl -force -mode funcsim
---               /home/thu-skyworks/meow/Desktop/workspace/cod19grp3/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_auto_pc_3/meowrouter_auto_pc_3_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_auto_pc_3 -prefix
+--               meowrouter_auto_pc_3_ meowrouter_auto_pc_3_sim_netlist.vhdl
 -- Design      : meowrouter_auto_pc_3
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -38,8 +38,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_incr_cmd is
     sel_first : in STD_LOGIC;
     \axlen_cnt_reg[0]_1\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_incr_cmd : entity is "axi_protocol_converter_v2_1_18_b2s_incr_cmd";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_incr_cmd;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_incr_cmd is
@@ -1983,8 +1981,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm is
     r_full : in STD_LOGIC;
     aclk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm : entity is "axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm is
@@ -2383,8 +2379,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_simple_fifo is
     \in\ : in STD_LOGIC_VECTOR ( 8 downto 0 );
     aclk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_simple_fifo : entity is "axi_protocol_converter_v2_1_18_b2s_simple_fifo";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_simple_fifo;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_simple_fifo is
@@ -3899,8 +3893,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_wr_cmd_fsm is
     cnt_read : in STD_LOGIC_VECTOR ( 1 downto 0 );
     aclk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_wr_cmd_fsm : entity is "axi_protocol_converter_v2_1_18_b2s_wr_cmd_fsm";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_wr_cmd_fsm;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_wr_cmd_fsm is
@@ -4165,8 +4157,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_wrap_cmd is
     \wrap_cnt_r_reg[3]_0\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \wrap_boundary_axaddr_r_reg[6]_0\ : in STD_LOGIC_VECTOR ( 6 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_wrap_cmd : entity is "axi_protocol_converter_v2_1_18_b2s_wrap_cmd";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_wrap_cmd;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_wrap_cmd is
@@ -5586,8 +5576,6 @@ entity meowrouter_auto_pc_3_axi_register_slice_v2_1_18_axic_register_slice is
     \m_axi_araddr[11]_2\ : in STD_LOGIC;
     \m_payload_i_reg[0]_0\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_register_slice_v2_1_18_axic_register_slice : entity is "axi_register_slice_v2_1_18_axic_register_slice";
 end meowrouter_auto_pc_3_axi_register_slice_v2_1_18_axic_register_slice;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_register_slice_v2_1_18_axic_register_slice is
@@ -11945,8 +11933,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_b_channel is
     \in\ : in STD_LOGIC_VECTOR ( 8 downto 0 );
     m_axi_bresp : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_b_channel : entity is "axi_protocol_converter_v2_1_18_b2s_b_channel";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_b_channel;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_b_channel is
@@ -12298,8 +12284,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_cmd_translator is
     \wrap_cnt_r_reg[3]\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \wrap_boundary_axaddr_r_reg[6]\ : in STD_LOGIC_VECTOR ( 6 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_cmd_translator : entity is "axi_protocol_converter_v2_1_18_b2s_cmd_translator";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_cmd_translator;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_cmd_translator is
@@ -12626,8 +12610,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_r_channel is
     \in\ : in STD_LOGIC_VECTOR ( 33 downto 0 );
     areset_d1 : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_r_channel : entity is "axi_protocol_converter_v2_1_18_b2s_r_channel";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_r_channel;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_r_channel is
@@ -12786,8 +12768,6 @@ entity meowrouter_auto_pc_3_axi_register_slice_v2_1_18_axi_register_slice is
     E : in STD_LOGIC_VECTOR ( 0 to 0 );
     \m_payload_i_reg[0]\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_register_slice_v2_1_18_axi_register_slice : entity is "axi_register_slice_v2_1_18_axi_register_slice";
 end meowrouter_auto_pc_3_axi_register_slice_v2_1_18_axi_register_slice;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_register_slice_v2_1_18_axi_register_slice is
@@ -12961,8 +12941,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_ar_channel is
     \wrap_cnt_r_reg[3]\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \wrap_boundary_axaddr_r_reg[6]\ : in STD_LOGIC_VECTOR ( 6 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_ar_channel : entity is "axi_protocol_converter_v2_1_18_b2s_ar_channel";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_ar_channel;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_ar_channel is
@@ -13211,8 +13189,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_aw_channel is
     \wrap_cnt_r_reg[3]\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \wrap_boundary_axaddr_r_reg[6]\ : in STD_LOGIC_VECTOR ( 6 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_aw_channel : entity is "axi_protocol_converter_v2_1_18_b2s_aw_channel";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_aw_channel;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s_aw_channel is
@@ -13446,8 +13422,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s is
     s_axi_rready : in STD_LOGIC;
     aresetn : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s : entity is "axi_protocol_converter_v2_1_18_b2s";
 end meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s;
 
 architecture STRUCTURE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_b2s is
@@ -14011,8 +13985,6 @@ entity meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_axi_protocol_converte
   attribute C_TRANSLATION_MODE of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_axi_protocol_converter : entity is 2;
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_axi_protocol_converter : entity is "yes";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_axi_protocol_converter : entity is "axi_protocol_converter_v2_1_18_axi_protocol_converter";
   attribute P_AXI3 : integer;
   attribute P_AXI3 of meowrouter_auto_pc_3_axi_protocol_converter_v2_1_18_axi_protocol_converter : entity is 1;
   attribute P_AXI4 : integer;

@@ -2801,204 +2801,222 @@ module Adapter(
   reg [31:0] _RAND_6;
   reg [2:0] transferState; // @[adapter.scala 89:30]
   reg [31:0] _RAND_7;
+  reg [2:0] rstCnt; // @[adapter.scala 95:23]
+  reg [31:0] _RAND_8;
   wire [2:0] _T_1; // @[Conditional.scala 37:39]
   wire  _T_2; // @[Conditional.scala 37:30]
-  wire  _T_5; // @[Conditional.scala 37:30]
-  wire  _T_7; // @[adapter.scala 102:23]
-  wire [13:0] _T_8; // @[adapter.scala 110:23]
-  wire [13:0] _GEN_2; // @[adapter.scala 102:53]
-  wire  _T_11; // @[Conditional.scala 37:30]
-  wire [13:0] _T_14; // @[adapter.scala 119:23]
-  wire  _T_15; // @[adapter.scala 121:35]
-  wire  _T_16; // @[adapter.scala 121:32]
-  wire  _T_17; // @[adapter.scala 72:13]
-  wire [2:0] _T_19; // @[adapter.scala 72:53]
-  wire [2:0] _T_20; // @[adapter.scala 72:8]
-  wire  _T_21; // @[adapter.scala 122:25]
-  wire [1:0] _GEN_5; // @[adapter.scala 122:35]
-  wire [1:0] _GEN_10; // @[adapter.scala 121:46]
-  wire [13:0] _GEN_18; // @[adapter.scala 115:53]
-  wire  _T_23; // @[adapter.scala 137:23]
-  wire  _T_24; // @[adapter.scala 138:19]
-  wire  _T_25; // @[adapter.scala 72:13]
-  wire [2:0] _T_27; // @[adapter.scala 72:53]
-  wire  _T_31; // @[Conditional.scala 37:30]
-  wire [2:0] _T_33; // @[Conditional.scala 37:39]
-  wire  _T_34; // @[Conditional.scala 37:30]
-  wire [13:0] _T_35; // @[adapter.scala 147:25]
-  wire [10:0] _T_37; // @[adapter.scala 153:24]
-  wire  _T_40; // @[Conditional.scala 37:30]
-  wire [13:0] _T_41; // @[adapter.scala 162:25]
-  wire [7:0] _T_42; // @[adapter.scala 164:27]
-  wire  _T_45; // @[Conditional.scala 37:30]
-  wire [13:0] _T_48; // @[adapter.scala 169:38]
-  wire [2:0] _T_49; // @[adapter.scala 171:28]
+  wire [13:0] _T_3; // @[adapter.scala 102:28]
+  wire [2:0] _T_5; // @[adapter.scala 106:24]
+  wire  _T_6; // @[adapter.scala 108:19]
+  wire  _T_9; // @[Conditional.scala 37:30]
+  wire  _T_12; // @[Conditional.scala 37:30]
+  wire  _T_14; // @[adapter.scala 119:23]
+  wire [13:0] _T_15; // @[adapter.scala 127:23]
+  wire [13:0] _GEN_3; // @[adapter.scala 119:53]
+  wire  _T_18; // @[Conditional.scala 37:30]
+  wire [13:0] _T_21; // @[adapter.scala 136:23]
+  wire  _T_22; // @[adapter.scala 138:35]
+  wire  _T_23; // @[adapter.scala 138:32]
+  wire  _T_24; // @[adapter.scala 72:13]
+  wire [2:0] _T_26; // @[adapter.scala 72:53]
+  wire [2:0] _T_27; // @[adapter.scala 72:8]
+  wire  _T_28; // @[adapter.scala 139:25]
+  wire [13:0] _GEN_19; // @[adapter.scala 132:53]
+  wire  _T_30; // @[adapter.scala 154:23]
+  wire  _T_31; // @[adapter.scala 155:19]
+  wire  _T_32; // @[adapter.scala 72:13]
+  wire [2:0] _T_34; // @[adapter.scala 72:53]
+  wire  _T_38; // @[Conditional.scala 37:30]
+  wire [2:0] _T_40; // @[Conditional.scala 37:39]
+  wire  _T_41; // @[Conditional.scala 37:30]
+  wire [13:0] _T_42; // @[adapter.scala 164:25]
+  wire [10:0] _T_44; // @[adapter.scala 170:24]
+  wire  _T_47; // @[Conditional.scala 37:30]
+  wire [13:0] _T_48; // @[adapter.scala 179:25]
+  wire [7:0] _T_49; // @[adapter.scala 181:27]
   wire  _T_52; // @[Conditional.scala 37:30]
-  wire [13:0] _T_53; // @[adapter.scala 176:25]
-  wire  _T_55; // @[adapter.scala 180:28]
-  wire  _T_57; // @[adapter.scala 182:34]
-  wire [1:0] _GEN_27; // @[adapter.scala 182:62]
-  wire [2:0] _GEN_28; // @[adapter.scala 180:52]
-  wire  _T_61; // @[Conditional.scala 37:30]
-  wire [13:0] _GEN_32; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_38; // @[Conditional.scala 39:67]
-  wire  _GEN_39; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_40; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_44; // @[Conditional.scala 39:67]
-  wire  _GEN_45; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_46; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_50; // @[Conditional.scala 40:58]
-  wire [7:0] _GEN_51; // @[Conditional.scala 40:58]
-  wire  _GEN_52; // @[Conditional.scala 40:58]
-  wire  _GEN_53; // @[Conditional.scala 40:58]
+  wire [13:0] _T_55; // @[adapter.scala 186:38]
+  wire [2:0] _T_56; // @[adapter.scala 188:28]
+  wire  _T_59; // @[Conditional.scala 37:30]
+  wire [13:0] _T_60; // @[adapter.scala 193:25]
+  wire  _T_62; // @[adapter.scala 197:28]
+  wire  _T_64; // @[adapter.scala 199:34]
+  wire [1:0] _GEN_28; // @[adapter.scala 199:62]
+  wire [2:0] _GEN_29; // @[adapter.scala 197:52]
   wire  _T_68; // @[Conditional.scala 37:30]
-  wire [13:0] _T_72; // @[adapter.scala 200:32]
-  wire [13:0] _T_74; // @[adapter.scala 200:45]
-  wire [13:0] _T_78; // @[adapter.scala 206:32]
-  wire [7:0] _T_79; // @[adapter.scala 208:41]
-  wire [15:0] _T_80; // @[adapter.scala 208:32]
-  wire  _T_86; // @[adapter.scala 212:37]
-  wire  _T_88; // @[adapter.scala 219:35]
-  wire  _T_89; // @[adapter.scala 219:32]
-  wire [13:0] _T_94; // @[adapter.scala 221:34]
-  wire [13:0] _GEN_60; // @[adapter.scala 219:55]
-  wire [13:0] _T_98; // @[adapter.scala 230:32]
-  wire [13:0] _GEN_65; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_74; // @[Conditional.scala 39:67]
-  wire  _GEN_77; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_81; // @[Conditional.scala 39:67]
-  wire [15:0] _GEN_83; // @[Conditional.scala 39:67]
-  wire  _GEN_86; // @[Conditional.scala 39:67]
-  wire  _GEN_88; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_92; // @[Conditional.scala 40:58]
-  wire [15:0] _GEN_94; // @[Conditional.scala 40:58]
-  wire  _GEN_97; // @[Conditional.scala 40:58]
-  wire  _GEN_99; // @[Conditional.scala 40:58]
-  wire [15:0] _GEN_105; // @[Conditional.scala 39:67]
-  wire  _GEN_108; // @[Conditional.scala 39:67]
-  wire  _GEN_110; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_114; // @[Conditional.scala 39:67]
-  wire  _GEN_116; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_33; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_39; // @[Conditional.scala 39:67]
+  wire  _GEN_40; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_41; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_45; // @[Conditional.scala 39:67]
+  wire  _GEN_46; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_47; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_51; // @[Conditional.scala 40:58]
+  wire [7:0] _GEN_52; // @[Conditional.scala 40:58]
+  wire  _GEN_53; // @[Conditional.scala 40:58]
+  wire  _GEN_54; // @[Conditional.scala 40:58]
+  wire  _T_75; // @[Conditional.scala 37:30]
+  wire [13:0] _T_79; // @[adapter.scala 217:32]
+  wire [13:0] _T_81; // @[adapter.scala 217:45]
+  wire [13:0] _T_85; // @[adapter.scala 223:32]
+  wire [7:0] _T_86; // @[adapter.scala 225:41]
+  wire [15:0] _T_87; // @[adapter.scala 225:32]
+  wire  _T_93; // @[adapter.scala 229:37]
+  wire  _T_95; // @[adapter.scala 236:35]
+  wire  _T_96; // @[adapter.scala 236:32]
+  wire [13:0] _T_101; // @[adapter.scala 238:34]
+  wire [13:0] _GEN_61; // @[adapter.scala 236:55]
+  wire [13:0] _T_105; // @[adapter.scala 247:32]
+  wire [13:0] _GEN_66; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_75; // @[Conditional.scala 39:67]
+  wire  _GEN_78; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_82; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_84; // @[Conditional.scala 39:67]
+  wire  _GEN_87; // @[Conditional.scala 39:67]
+  wire  _GEN_89; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_93; // @[Conditional.scala 40:58]
+  wire [15:0] _GEN_95; // @[Conditional.scala 40:58]
+  wire  _GEN_98; // @[Conditional.scala 40:58]
+  wire  _GEN_100; // @[Conditional.scala 40:58]
+  wire [15:0] _GEN_106; // @[Conditional.scala 39:67]
+  wire  _GEN_109; // @[Conditional.scala 39:67]
+  wire  _GEN_111; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_115; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_116; // @[Conditional.scala 39:67]
   wire  _GEN_117; // @[Conditional.scala 39:67]
-  wire [15:0] _GEN_122; // @[Conditional.scala 39:67]
-  wire  _GEN_125; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_130; // @[Conditional.scala 39:67]
-  wire  _GEN_135; // @[Conditional.scala 39:67]
+  wire  _GEN_118; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_123; // @[Conditional.scala 39:67]
+  wire  _GEN_126; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_131; // @[Conditional.scala 39:67]
   wire  _GEN_136; // @[Conditional.scala 39:67]
-  wire [15:0] _GEN_138; // @[Conditional.scala 39:67]
-  wire  _GEN_141; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_144; // @[Conditional.scala 39:67]
-  wire  _GEN_150; // @[Conditional.scala 39:67]
+  wire  _GEN_137; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_139; // @[Conditional.scala 39:67]
+  wire  _GEN_142; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_145; // @[Conditional.scala 39:67]
   wire  _GEN_151; // @[Conditional.scala 39:67]
-  wire [15:0] _GEN_153; // @[Conditional.scala 39:67]
-  wire  _GEN_156; // @[Conditional.scala 39:67]
-  wire [13:0] _GEN_158; // @[Conditional.scala 40:58]
-  wire  _GEN_165; // @[Conditional.scala 40:58]
-  wire [15:0] _GEN_168; // @[Conditional.scala 40:58]
-  wire  _T_107; // @[adapter.scala 248:24]
+  wire  _GEN_152; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_154; // @[Conditional.scala 39:67]
+  wire  _GEN_157; // @[Conditional.scala 39:67]
+  wire [13:0] _GEN_158; // @[Conditional.scala 39:67]
+  wire  _GEN_166; // @[Conditional.scala 39:67]
+  wire  _GEN_167; // @[Conditional.scala 39:67]
+  wire [15:0] _GEN_169; // @[Conditional.scala 39:67]
+  wire  _GEN_172; // @[Conditional.scala 39:67]
+  wire [31:0] raddr; // @[adapter.scala 91:19 adapter.scala 114:13 adapter.scala 122:15 adapter.scala 127:15 adapter.scala 136:15 adapter.scala 147:17 adapter.scala 151:15 adapter.scala 164:17 adapter.scala 179:17 adapter.scala 186:17 adapter.scala 193:17 adapter.scala 209:17 adapter.scala 217:17 adapter.scala 223:17 adapter.scala 234:17 adapter.scala 238:19 adapter.scala 247:17 adapter.scala 257:17]
+  wire  _GEN_185; // @[Conditional.scala 40:58]
+  wire [15:0] _GEN_186; // @[Conditional.scala 40:58]
+  wire  _T_114; // @[adapter.scala 265:24]
   assign _T_1 = $unsigned(state); // @[Conditional.scala 37:39]
   assign _T_2 = 3'h0 == _T_1; // @[Conditional.scala 37:30]
-  assign _T_5 = 3'h2 == _T_1; // @[Conditional.scala 37:30]
-  assign _T_7 = toBuf_dout == 8'h2; // @[adapter.scala 102:23]
-  assign _T_8 = {head,11'h7ff}; // @[adapter.scala 110:23]
-  assign _GEN_2 = _T_7 ? 14'h7fc : _T_8; // @[adapter.scala 102:53]
-  assign _T_11 = 3'h1 == _T_1; // @[Conditional.scala 37:30]
-  assign _T_14 = {head,11'h7fc}; // @[adapter.scala 119:23]
-  assign _T_15 = dropping == 1'h0; // @[adapter.scala 121:35]
-  assign _T_16 = fromEnc_valid & _T_15; // @[adapter.scala 121:32]
-  assign _T_17 = tail == 3'h7; // @[adapter.scala 72:13]
-  assign _T_19 = tail + 3'h1; // @[adapter.scala 72:53]
-  assign _T_20 = _T_17 ? 3'h1 : _T_19; // @[adapter.scala 72:8]
-  assign _T_21 = _T_20 != head; // @[adapter.scala 122:25]
-  assign _GEN_5 = _T_21 ? 2'h3 : 2'h2; // @[adapter.scala 122:35]
-  assign _GEN_10 = _T_16 ? _GEN_5 : 2'h2; // @[adapter.scala 121:46]
-  assign _GEN_18 = _T_7 ? _T_14 : 14'h7ff; // @[adapter.scala 115:53]
-  assign _T_23 = toBuf_dout == 8'h0; // @[adapter.scala 137:23]
-  assign _T_24 = head != tail; // @[adapter.scala 138:19]
-  assign _T_25 = head == 3'h7; // @[adapter.scala 72:13]
-  assign _T_27 = head + 3'h1; // @[adapter.scala 72:53]
-  assign _T_31 = 3'h3 == _T_1; // @[Conditional.scala 37:30]
-  assign _T_33 = $unsigned(transferState); // @[Conditional.scala 37:39]
-  assign _T_34 = 3'h0 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_35 = {tail,cnt}; // @[adapter.scala 147:25]
-  assign _T_37 = cnt + 11'h1; // @[adapter.scala 153:24]
-  assign _T_40 = 3'h2 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_41 = {tail,11'h7fc}; // @[adapter.scala 162:25]
-  assign _T_42 = cnt[7:0]; // @[adapter.scala 164:27]
-  assign _T_45 = 3'h3 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_48 = _T_41 + 14'h1; // @[adapter.scala 169:38]
-  assign _T_49 = cnt[10:8]; // @[adapter.scala 171:28]
-  assign _T_52 = 3'h1 == _T_33; // @[Conditional.scala 37:30]
-  assign _T_53 = {tail,11'h7ff}; // @[adapter.scala 176:25]
-  assign _T_55 = fromEnc_req == 2'h1; // @[adapter.scala 180:28]
-  assign _T_57 = fromEnc_req == 2'h2; // @[adapter.scala 182:34]
-  assign _GEN_27 = _T_57 ? 2'h3 : 2'h1; // @[adapter.scala 182:62]
-  assign _GEN_28 = _T_55 ? 3'h4 : {{1'd0}, _GEN_27}; // @[adapter.scala 180:52]
-  assign _T_61 = 3'h4 == _T_33; // @[Conditional.scala 37:30]
-  assign _GEN_32 = _T_52 ? _T_53 : 14'h7ff; // @[Conditional.scala 39:67]
-  assign _GEN_38 = _T_45 ? _T_48 : _GEN_32; // @[Conditional.scala 39:67]
-  assign _GEN_39 = _T_45 | _T_52; // @[Conditional.scala 39:67]
-  assign _GEN_40 = _T_45 ? _T_49 : _GEN_28; // @[Conditional.scala 39:67]
-  assign _GEN_44 = _T_40 ? _T_41 : _GEN_38; // @[Conditional.scala 39:67]
-  assign _GEN_45 = _T_40 | _GEN_39; // @[Conditional.scala 39:67]
-  assign _GEN_46 = _T_40 ? _T_42 : {{5'd0}, _GEN_40}; // @[Conditional.scala 39:67]
-  assign _GEN_50 = _T_34 ? _T_35 : _GEN_44; // @[Conditional.scala 40:58]
-  assign _GEN_51 = _T_34 ? fromEnc_input : _GEN_46; // @[Conditional.scala 40:58]
-  assign _GEN_52 = _T_34 ? 1'h0 : 1'h1; // @[Conditional.scala 40:58]
-  assign _GEN_53 = _T_34 ? fromEnc_valid : _GEN_45; // @[Conditional.scala 40:58]
-  assign _T_68 = 3'h4 == _T_1; // @[Conditional.scala 37:30]
-  assign _T_72 = {sendingSlot,11'h7fc}; // @[adapter.scala 200:32]
-  assign _T_74 = _T_72 + 14'h1; // @[adapter.scala 200:45]
-  assign _T_78 = {sendingSlot,cnt}; // @[adapter.scala 206:32]
-  assign _T_79 = totCnt[7:0]; // @[adapter.scala 208:41]
-  assign _T_80 = {toBuf_dout,_T_79}; // @[adapter.scala 208:32]
-  assign _T_86 = _T_37 == totCnt; // @[adapter.scala 212:37]
-  assign _T_88 = toEnc_writer_full == 1'h0; // @[adapter.scala 219:35]
-  assign _T_89 = toEnc_writer_en & _T_88; // @[adapter.scala 219:32]
-  assign _T_94 = {sendingSlot,_T_37}; // @[adapter.scala 221:34]
-  assign _GEN_60 = _T_89 ? _T_94 : _T_78; // @[adapter.scala 219:55]
-  assign _T_98 = {sendingSlot,11'h7ff}; // @[adapter.scala 230:32]
-  assign _GEN_65 = _T_52 ? _T_98 : 14'h7ff; // @[Conditional.scala 39:67]
-  assign _GEN_74 = _T_34 ? _GEN_60 : _GEN_65; // @[Conditional.scala 39:67]
-  assign _GEN_77 = _T_34 ? 1'h0 : _T_52; // @[Conditional.scala 39:67]
-  assign _GEN_81 = _T_45 ? _T_78 : _GEN_74; // @[Conditional.scala 39:67]
-  assign _GEN_83 = _T_45 ? _T_80 : {{5'd0}, totCnt}; // @[Conditional.scala 39:67]
-  assign _GEN_86 = _T_45 ? 1'h0 : _T_34; // @[Conditional.scala 39:67]
-  assign _GEN_88 = _T_45 ? 1'h0 : _GEN_77; // @[Conditional.scala 39:67]
-  assign _GEN_92 = _T_40 ? _T_74 : _GEN_81; // @[Conditional.scala 40:58]
-  assign _GEN_94 = _T_40 ? {{8'd0}, toBuf_dout} : _GEN_83; // @[Conditional.scala 40:58]
-  assign _GEN_97 = _T_40 ? 1'h0 : _GEN_86; // @[Conditional.scala 40:58]
-  assign _GEN_99 = _T_40 ? 1'h0 : _GEN_88; // @[Conditional.scala 40:58]
-  assign _GEN_105 = _T_68 ? _GEN_94 : {{5'd0}, totCnt}; // @[Conditional.scala 39:67]
-  assign _GEN_108 = _T_68 & _GEN_97; // @[Conditional.scala 39:67]
-  assign _GEN_110 = _T_68 & _GEN_99; // @[Conditional.scala 39:67]
-  assign _GEN_114 = _T_31 ? _GEN_50 : _GEN_92; // @[Conditional.scala 39:67]
-  assign _GEN_116 = _T_31 ? _GEN_52 : 1'h1; // @[Conditional.scala 39:67]
-  assign _GEN_117 = _T_31 ? _GEN_53 : _GEN_110; // @[Conditional.scala 39:67]
-  assign _GEN_122 = _T_31 ? {{5'd0}, totCnt} : _GEN_105; // @[Conditional.scala 39:67]
-  assign _GEN_125 = _T_31 ? 1'h0 : _GEN_108; // @[Conditional.scala 39:67]
-  assign _GEN_130 = _T_11 ? _GEN_18 : _GEN_114; // @[Conditional.scala 39:67]
-  assign _GEN_135 = _T_11 | _GEN_116; // @[Conditional.scala 39:67]
-  assign _GEN_136 = _T_11 ? 1'h0 : _GEN_117; // @[Conditional.scala 39:67]
-  assign _GEN_138 = _T_11 ? {{5'd0}, totCnt} : _GEN_122; // @[Conditional.scala 39:67]
-  assign _GEN_141 = _T_11 ? 1'h0 : _GEN_125; // @[Conditional.scala 39:67]
-  assign _GEN_144 = _T_5 ? _GEN_2 : _GEN_130; // @[Conditional.scala 39:67]
-  assign _GEN_150 = _T_5 | _GEN_135; // @[Conditional.scala 39:67]
-  assign _GEN_151 = _T_5 ? 1'h0 : _GEN_136; // @[Conditional.scala 39:67]
-  assign _GEN_153 = _T_5 ? {{5'd0}, totCnt} : _GEN_138; // @[Conditional.scala 39:67]
-  assign _GEN_156 = _T_5 ? 1'h0 : _GEN_141; // @[Conditional.scala 39:67]
-  assign _GEN_158 = _T_2 ? 14'h7ff : _GEN_144; // @[Conditional.scala 40:58]
-  assign _GEN_165 = _T_2 | _GEN_150; // @[Conditional.scala 40:58]
-  assign _GEN_168 = _T_2 ? {{5'd0}, totCnt} : _GEN_153; // @[Conditional.scala 40:58]
-  assign _T_107 = fromEnc_valid & fromEnc_last; // @[adapter.scala 248:24]
+  assign _T_3 = {rstCnt,11'h7ff}; // @[adapter.scala 102:28]
+  assign _T_5 = rstCnt + 3'h1; // @[adapter.scala 106:24]
+  assign _T_6 = rstCnt == 3'h7; // @[adapter.scala 108:19]
+  assign _T_9 = 3'h1 == _T_1; // @[Conditional.scala 37:30]
+  assign _T_12 = 3'h3 == _T_1; // @[Conditional.scala 37:30]
+  assign _T_14 = toBuf_dout == 8'h2; // @[adapter.scala 119:23]
+  assign _T_15 = {head,11'h7ff}; // @[adapter.scala 127:23]
+  assign _GEN_3 = _T_14 ? 14'h7fc : _T_15; // @[adapter.scala 119:53]
+  assign _T_18 = 3'h2 == _T_1; // @[Conditional.scala 37:30]
+  assign _T_21 = {head,11'h7fc}; // @[adapter.scala 136:23]
+  assign _T_22 = dropping == 1'h0; // @[adapter.scala 138:35]
+  assign _T_23 = fromEnc_valid & _T_22; // @[adapter.scala 138:32]
+  assign _T_24 = tail == 3'h7; // @[adapter.scala 72:13]
+  assign _T_26 = tail + 3'h1; // @[adapter.scala 72:53]
+  assign _T_27 = _T_24 ? 3'h1 : _T_26; // @[adapter.scala 72:8]
+  assign _T_28 = _T_27 != head; // @[adapter.scala 139:25]
+  assign _GEN_19 = _T_14 ? _T_21 : 14'h7ff; // @[adapter.scala 132:53]
+  assign _T_30 = toBuf_dout == 8'h0; // @[adapter.scala 154:23]
+  assign _T_31 = head != tail; // @[adapter.scala 155:19]
+  assign _T_32 = head == 3'h7; // @[adapter.scala 72:13]
+  assign _T_34 = head + 3'h1; // @[adapter.scala 72:53]
+  assign _T_38 = 3'h4 == _T_1; // @[Conditional.scala 37:30]
+  assign _T_40 = $unsigned(transferState); // @[Conditional.scala 37:39]
+  assign _T_41 = 3'h0 == _T_40; // @[Conditional.scala 37:30]
+  assign _T_42 = {tail,cnt}; // @[adapter.scala 164:25]
+  assign _T_44 = cnt + 11'h1; // @[adapter.scala 170:24]
+  assign _T_47 = 3'h2 == _T_40; // @[Conditional.scala 37:30]
+  assign _T_48 = {tail,11'h7fc}; // @[adapter.scala 179:25]
+  assign _T_49 = cnt[7:0]; // @[adapter.scala 181:27]
+  assign _T_52 = 3'h3 == _T_40; // @[Conditional.scala 37:30]
+  assign _T_55 = _T_48 + 14'h1; // @[adapter.scala 186:38]
+  assign _T_56 = cnt[10:8]; // @[adapter.scala 188:28]
+  assign _T_59 = 3'h1 == _T_40; // @[Conditional.scala 37:30]
+  assign _T_60 = {tail,11'h7ff}; // @[adapter.scala 193:25]
+  assign _T_62 = fromEnc_req == 2'h1; // @[adapter.scala 197:28]
+  assign _T_64 = fromEnc_req == 2'h2; // @[adapter.scala 199:34]
+  assign _GEN_28 = _T_64 ? 2'h3 : 2'h1; // @[adapter.scala 199:62]
+  assign _GEN_29 = _T_62 ? 3'h4 : {{1'd0}, _GEN_28}; // @[adapter.scala 197:52]
+  assign _T_68 = 3'h4 == _T_40; // @[Conditional.scala 37:30]
+  assign _GEN_33 = _T_59 ? _T_60 : 14'h7ff; // @[Conditional.scala 39:67]
+  assign _GEN_39 = _T_52 ? _T_55 : _GEN_33; // @[Conditional.scala 39:67]
+  assign _GEN_40 = _T_52 | _T_59; // @[Conditional.scala 39:67]
+  assign _GEN_41 = _T_52 ? _T_56 : _GEN_29; // @[Conditional.scala 39:67]
+  assign _GEN_45 = _T_47 ? _T_48 : _GEN_39; // @[Conditional.scala 39:67]
+  assign _GEN_46 = _T_47 | _GEN_40; // @[Conditional.scala 39:67]
+  assign _GEN_47 = _T_47 ? _T_49 : {{5'd0}, _GEN_41}; // @[Conditional.scala 39:67]
+  assign _GEN_51 = _T_41 ? _T_42 : _GEN_45; // @[Conditional.scala 40:58]
+  assign _GEN_52 = _T_41 ? fromEnc_input : _GEN_47; // @[Conditional.scala 40:58]
+  assign _GEN_53 = _T_41 ? 1'h0 : 1'h1; // @[Conditional.scala 40:58]
+  assign _GEN_54 = _T_41 ? fromEnc_valid : _GEN_46; // @[Conditional.scala 40:58]
+  assign _T_75 = 3'h5 == _T_1; // @[Conditional.scala 37:30]
+  assign _T_79 = {sendingSlot,11'h7fc}; // @[adapter.scala 217:32]
+  assign _T_81 = _T_79 + 14'h1; // @[adapter.scala 217:45]
+  assign _T_85 = {sendingSlot,cnt}; // @[adapter.scala 223:32]
+  assign _T_86 = totCnt[7:0]; // @[adapter.scala 225:41]
+  assign _T_87 = {toBuf_dout,_T_86}; // @[adapter.scala 225:32]
+  assign _T_93 = _T_44 == totCnt; // @[adapter.scala 229:37]
+  assign _T_95 = toEnc_writer_full == 1'h0; // @[adapter.scala 236:35]
+  assign _T_96 = toEnc_writer_en & _T_95; // @[adapter.scala 236:32]
+  assign _T_101 = {sendingSlot,_T_44}; // @[adapter.scala 238:34]
+  assign _GEN_61 = _T_96 ? _T_101 : _T_85; // @[adapter.scala 236:55]
+  assign _T_105 = {sendingSlot,11'h7ff}; // @[adapter.scala 247:32]
+  assign _GEN_66 = _T_59 ? _T_105 : 14'h7ff; // @[Conditional.scala 39:67]
+  assign _GEN_75 = _T_41 ? _GEN_61 : _GEN_66; // @[Conditional.scala 39:67]
+  assign _GEN_78 = _T_41 ? 1'h0 : _T_59; // @[Conditional.scala 39:67]
+  assign _GEN_82 = _T_52 ? _T_85 : _GEN_75; // @[Conditional.scala 39:67]
+  assign _GEN_84 = _T_52 ? _T_87 : {{5'd0}, totCnt}; // @[Conditional.scala 39:67]
+  assign _GEN_87 = _T_52 ? 1'h0 : _T_41; // @[Conditional.scala 39:67]
+  assign _GEN_89 = _T_52 ? 1'h0 : _GEN_78; // @[Conditional.scala 39:67]
+  assign _GEN_93 = _T_47 ? _T_81 : _GEN_82; // @[Conditional.scala 40:58]
+  assign _GEN_95 = _T_47 ? {{8'd0}, toBuf_dout} : _GEN_84; // @[Conditional.scala 40:58]
+  assign _GEN_98 = _T_47 ? 1'h0 : _GEN_87; // @[Conditional.scala 40:58]
+  assign _GEN_100 = _T_47 ? 1'h0 : _GEN_89; // @[Conditional.scala 40:58]
+  assign _GEN_106 = _T_75 ? _GEN_95 : {{5'd0}, totCnt}; // @[Conditional.scala 39:67]
+  assign _GEN_109 = _T_75 & _GEN_98; // @[Conditional.scala 39:67]
+  assign _GEN_111 = _T_75 & _GEN_100; // @[Conditional.scala 39:67]
+  assign _GEN_115 = _T_38 ? _GEN_51 : _GEN_93; // @[Conditional.scala 39:67]
+  assign _GEN_116 = _T_38 ? _GEN_52 : 8'h0; // @[Conditional.scala 39:67]
+  assign _GEN_117 = _T_38 ? _GEN_53 : 1'h1; // @[Conditional.scala 39:67]
+  assign _GEN_118 = _T_38 ? _GEN_54 : _GEN_111; // @[Conditional.scala 39:67]
+  assign _GEN_123 = _T_38 ? {{5'd0}, totCnt} : _GEN_106; // @[Conditional.scala 39:67]
+  assign _GEN_126 = _T_38 ? 1'h0 : _GEN_109; // @[Conditional.scala 39:67]
+  assign _GEN_131 = _T_18 ? _GEN_19 : _GEN_115; // @[Conditional.scala 39:67]
+  assign _GEN_136 = _T_18 | _GEN_117; // @[Conditional.scala 39:67]
+  assign _GEN_137 = _T_18 ? 1'h0 : _GEN_118; // @[Conditional.scala 39:67]
+  assign _GEN_139 = _T_18 ? {{5'd0}, totCnt} : _GEN_123; // @[Conditional.scala 39:67]
+  assign _GEN_142 = _T_18 ? 1'h0 : _GEN_126; // @[Conditional.scala 39:67]
+  assign _GEN_145 = _T_12 ? _GEN_3 : _GEN_131; // @[Conditional.scala 39:67]
+  assign _GEN_151 = _T_12 | _GEN_136; // @[Conditional.scala 39:67]
+  assign _GEN_152 = _T_12 ? 1'h0 : _GEN_137; // @[Conditional.scala 39:67]
+  assign _GEN_154 = _T_12 ? {{5'd0}, totCnt} : _GEN_139; // @[Conditional.scala 39:67]
+  assign _GEN_157 = _T_12 ? 1'h0 : _GEN_142; // @[Conditional.scala 39:67]
+  assign _GEN_158 = _T_9 ? 14'h7ff : _GEN_145; // @[Conditional.scala 39:67]
+  assign _GEN_166 = _T_9 | _GEN_151; // @[Conditional.scala 39:67]
+  assign _GEN_167 = _T_9 ? 1'h0 : _GEN_152; // @[Conditional.scala 39:67]
+  assign _GEN_169 = _T_9 ? {{5'd0}, totCnt} : _GEN_154; // @[Conditional.scala 39:67]
+  assign _GEN_172 = _T_9 ? 1'h0 : _GEN_157; // @[Conditional.scala 39:67]
+  assign raddr = {{18'd0}, _GEN_158}; // @[adapter.scala 91:19 adapter.scala 114:13 adapter.scala 122:15 adapter.scala 127:15 adapter.scala 136:15 adapter.scala 147:17 adapter.scala 151:15 adapter.scala 164:17 adapter.scala 179:17 adapter.scala 186:17 adapter.scala 193:17 adapter.scala 209:17 adapter.scala 217:17 adapter.scala 223:17 adapter.scala 234:17 adapter.scala 238:19 adapter.scala 247:17 adapter.scala 257:17]
+  assign _GEN_185 = _T_2 | _GEN_166; // @[Conditional.scala 40:58]
+  assign _GEN_186 = _T_2 ? {{5'd0}, totCnt} : _GEN_169; // @[Conditional.scala 40:58]
+  assign _T_114 = fromEnc_valid & fromEnc_last; // @[adapter.scala 265:24]
   assign toBuf_clk = clock; // @[adapter.scala 53:13]
-  assign toBuf_addr = {{18'd0}, _GEN_158}; // @[adapter.scala 93:14]
-  assign toBuf_din = _T_31 ? _GEN_51 : 8'h0; // @[adapter.scala 148:21 adapter.scala 164:21 adapter.scala 171:21 adapter.scala 178:21 adapter.scala 181:23 adapter.scala 183:23 adapter.scala 232:21]
-  assign toBuf_we = _T_2 ? 1'h0 : _GEN_151; // @[adapter.scala 55:12 adapter.scala 152:22 adapter.scala 163:20 adapter.scala 170:20 adapter.scala 177:20 adapter.scala 231:20]
-  assign fromEnc_stall = dropping ? 1'h0 : _GEN_165; // @[adapter.scala 58:17 adapter.scala 149:25 adapter.scala 247:19]
-  assign toEnc_writer_en = _T_2 ? 1'h0 : _GEN_156; // @[adapter.scala 60:19 adapter.scala 215:27]
-  assign toEnc_writer_data_data = toBuf_dout; // @[adapter.scala 213:34]
-  assign toEnc_writer_data_last = _T_37 == totCnt; // @[adapter.scala 214:34]
+  assign toBuf_addr = _T_2 ? {{18'd0}, _T_3} : raddr; // @[adapter.scala 93:14 adapter.scala 102:18]
+  assign toBuf_din = _T_2 ? 8'h0 : _GEN_116; // @[adapter.scala 103:17 adapter.scala 165:21 adapter.scala 181:21 adapter.scala 188:21 adapter.scala 195:21 adapter.scala 198:23 adapter.scala 200:23 adapter.scala 249:21]
+  assign toBuf_we = _T_2 | _GEN_167; // @[adapter.scala 55:12 adapter.scala 104:16 adapter.scala 169:22 adapter.scala 180:20 adapter.scala 187:20 adapter.scala 194:20 adapter.scala 248:20]
+  assign fromEnc_stall = dropping ? 1'h0 : _GEN_185; // @[adapter.scala 58:17 adapter.scala 166:25 adapter.scala 264:19]
+  assign toEnc_writer_en = _T_2 ? 1'h0 : _GEN_172; // @[adapter.scala 60:19 adapter.scala 232:27]
+  assign toEnc_writer_data_data = toBuf_dout; // @[adapter.scala 230:34]
+  assign toEnc_writer_data_last = _T_44 == totCnt; // @[adapter.scala 231:34]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -3062,6 +3080,10 @@ initial begin
   _RAND_7 = {1{`RANDOM}};
   transferState = _RAND_7[2:0];
   `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_8 = {1{`RANDOM}};
+  rstCnt = _RAND_8[2:0];
+  `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
@@ -3069,38 +3091,48 @@ end // initial
     if (reset) begin
       state <= 3'h0;
     end else if (_T_2) begin
-      state <= 3'h2;
-    end else if (_T_5) begin
-      if (_T_7) begin
-        state <= 3'h4;
-      end else begin
+      if (_T_6) begin
         state <= 3'h1;
       end
-    end else if (_T_11) begin
-      if (_T_7) begin
-        state <= 3'h4;
+    end else if (_T_9) begin
+      state <= 3'h3;
+    end else if (_T_12) begin
+      if (_T_14) begin
+        state <= 3'h5;
       end else begin
-        state <= {{1'd0}, _GEN_10};
+        state <= 3'h2;
       end
-    end else if (_T_31) begin
-      if (!(_T_34)) begin
-        if (!(_T_40)) begin
-          if (!(_T_45)) begin
-            if (!(_T_52)) begin
-              if (_T_61) begin
-                state <= 3'h2;
+    end else if (_T_18) begin
+      if (_T_14) begin
+        state <= 3'h5;
+      end else if (_T_23) begin
+        if (_T_28) begin
+          state <= 3'h4;
+        end else begin
+          state <= 3'h3;
+        end
+      end else begin
+        state <= 3'h3;
+      end
+    end else if (_T_38) begin
+      if (!(_T_41)) begin
+        if (!(_T_47)) begin
+          if (!(_T_52)) begin
+            if (!(_T_59)) begin
+              if (_T_68) begin
+                state <= 3'h3;
               end
             end
           end
         end
       end
-    end else if (_T_68) begin
-      if (!(_T_40)) begin
-        if (!(_T_45)) begin
-          if (!(_T_34)) begin
-            if (!(_T_52)) begin
-              if (_T_61) begin
-                state <= 3'h2;
+    end else if (_T_75) begin
+      if (!(_T_47)) begin
+        if (!(_T_52)) begin
+          if (!(_T_41)) begin
+            if (!(_T_59)) begin
+              if (_T_68) begin
+                state <= 3'h3;
               end
             end
           end
@@ -3109,29 +3141,31 @@ end // initial
     end
     if (reset) begin
       head <= 3'h1;
-    end else if (!(_T_2)) begin
-      if (!(_T_5)) begin
-        if (_T_11) begin
-          if (_T_23) begin
-            if (_T_24) begin
-              if (_T_25) begin
+    end else if (_T_2) begin
+      head <= 3'h1;
+    end else if (!(_T_9)) begin
+      if (!(_T_12)) begin
+        if (_T_18) begin
+          if (_T_30) begin
+            if (_T_31) begin
+              if (_T_32) begin
                 head <= 3'h1;
               end else begin
-                head <= _T_27;
+                head <= _T_34;
               end
             end
           end
-        end else if (!(_T_31)) begin
-          if (_T_68) begin
-            if (!(_T_40)) begin
-              if (!(_T_45)) begin
-                if (!(_T_34)) begin
-                  if (!(_T_52)) begin
-                    if (_T_61) begin
-                      if (_T_25) begin
+        end else if (!(_T_38)) begin
+          if (_T_75) begin
+            if (!(_T_47)) begin
+              if (!(_T_52)) begin
+                if (!(_T_41)) begin
+                  if (!(_T_59)) begin
+                    if (_T_68) begin
+                      if (_T_32) begin
                         head <= 3'h1;
                       end else begin
-                        head <= _T_27;
+                        head <= _T_34;
                       end
                     end
                   end
@@ -3144,19 +3178,21 @@ end // initial
     end
     if (reset) begin
       tail <= 3'h1;
-    end else if (!(_T_2)) begin
-      if (!(_T_5)) begin
-        if (!(_T_11)) begin
-          if (_T_31) begin
-            if (!(_T_34)) begin
-              if (!(_T_40)) begin
-                if (!(_T_45)) begin
-                  if (!(_T_52)) begin
-                    if (_T_61) begin
-                      if (_T_17) begin
+    end else if (_T_2) begin
+      tail <= 3'h1;
+    end else if (!(_T_9)) begin
+      if (!(_T_12)) begin
+        if (!(_T_18)) begin
+          if (_T_38) begin
+            if (!(_T_41)) begin
+              if (!(_T_47)) begin
+                if (!(_T_52)) begin
+                  if (!(_T_59)) begin
+                    if (_T_68) begin
+                      if (_T_24) begin
                         tail <= 3'h1;
                       end else begin
-                        tail <= _T_19;
+                        tail <= _T_26;
                       end
                     end
                   end
@@ -3168,28 +3204,32 @@ end // initial
       end
     end
     if (!(_T_2)) begin
-      if (_T_5) begin
-        if (_T_7) begin
-          sendingSlot <= 3'h0;
-        end
-      end else if (_T_11) begin
-        if (_T_7) begin
-          sendingSlot <= head;
+      if (!(_T_9)) begin
+        if (_T_12) begin
+          if (_T_14) begin
+            sendingSlot <= 3'h0;
+          end
+        end else if (_T_18) begin
+          if (_T_14) begin
+            sendingSlot <= head;
+          end
         end
       end
     end
     if (reset) begin
       dropping <= 1'h0;
     end else if (dropping) begin
-      if (_T_107) begin
+      if (_T_114) begin
         dropping <= 1'h0;
       end else if (!(_T_2)) begin
-        if (!(_T_5)) begin
-          if (_T_11) begin
-            if (!(_T_7)) begin
-              if (_T_16) begin
-                if (!(_T_21)) begin
-                  dropping <= 1'h1;
+        if (!(_T_9)) begin
+          if (!(_T_12)) begin
+            if (_T_18) begin
+              if (!(_T_14)) begin
+                if (_T_23) begin
+                  if (!(_T_28)) begin
+                    dropping <= 1'h1;
+                  end
                 end
               end
             end
@@ -3197,12 +3237,14 @@ end // initial
         end
       end
     end else if (!(_T_2)) begin
-      if (!(_T_5)) begin
-        if (_T_11) begin
-          if (!(_T_7)) begin
-            if (_T_16) begin
-              if (!(_T_21)) begin
-                dropping <= 1'h1;
+      if (!(_T_9)) begin
+        if (!(_T_12)) begin
+          if (_T_18) begin
+            if (!(_T_14)) begin
+              if (_T_23) begin
+                if (!(_T_28)) begin
+                  dropping <= 1'h1;
+                end
               end
             end
           end
@@ -3212,30 +3254,32 @@ end // initial
     if (reset) begin
       cnt <= 11'h0;
     end else if (!(_T_2)) begin
-      if (_T_5) begin
-        if (_T_7) begin
-          cnt <= 11'h0;
-        end
-      end else if (_T_11) begin
-        if (_T_7) begin
-          cnt <= 11'h0;
-        end else if (_T_16) begin
-          if (_T_21) begin
+      if (!(_T_9)) begin
+        if (_T_12) begin
+          if (_T_14) begin
             cnt <= 11'h0;
           end
-        end
-      end else if (_T_31) begin
-        if (_T_34) begin
-          if (fromEnc_valid) begin
-            cnt <= _T_37;
+        end else if (_T_18) begin
+          if (_T_14) begin
+            cnt <= 11'h0;
+          end else if (_T_23) begin
+            if (_T_28) begin
+              cnt <= 11'h0;
+            end
           end
-        end
-      end else if (_T_68) begin
-        if (!(_T_40)) begin
-          if (!(_T_45)) begin
-            if (_T_34) begin
-              if (_T_89) begin
-                cnt <= _T_37;
+        end else if (_T_38) begin
+          if (_T_41) begin
+            if (fromEnc_valid) begin
+              cnt <= _T_44;
+            end
+          end
+        end else if (_T_75) begin
+          if (!(_T_47)) begin
+            if (!(_T_52)) begin
+              if (_T_41) begin
+                if (_T_96) begin
+                  cnt <= _T_44;
+                end
               end
             end
           end
@@ -3245,52 +3289,59 @@ end // initial
     if (reset) begin
       totCnt <= 11'h0;
     end else begin
-      totCnt <= _GEN_168[10:0];
+      totCnt <= _GEN_186[10:0];
     end
     if (reset) begin
       transferState <= 3'h0;
     end else if (!(_T_2)) begin
-      if (_T_5) begin
-        if (_T_7) begin
-          transferState <= 3'h2;
-        end
-      end else if (_T_11) begin
-        if (_T_7) begin
-          transferState <= 3'h2;
-        end else if (_T_16) begin
-          if (_T_21) begin
+      if (!(_T_9)) begin
+        if (_T_12) begin
+          if (_T_14) begin
+            transferState <= 3'h2;
+          end
+        end else if (_T_18) begin
+          if (_T_14) begin
+            transferState <= 3'h2;
+          end else if (_T_23) begin
+            if (_T_28) begin
+              transferState <= 3'h0;
+            end
+          end
+        end else if (_T_38) begin
+          if (_T_41) begin
+            if (fromEnc_valid) begin
+              if (fromEnc_last) begin
+                transferState <= 3'h2;
+              end
+            end
+          end else if (_T_47) begin
+            transferState <= 3'h3;
+          end else if (_T_52) begin
+            transferState <= 3'h1;
+          end else if (_T_59) begin
+            transferState <= 3'h4;
+          end
+        end else if (_T_75) begin
+          if (_T_47) begin
+            transferState <= 3'h3;
+          end else if (_T_52) begin
             transferState <= 3'h0;
-          end
-        end
-      end else if (_T_31) begin
-        if (_T_34) begin
-          if (fromEnc_valid) begin
-            if (fromEnc_last) begin
-              transferState <= 3'h2;
+          end else if (_T_41) begin
+            if (_T_96) begin
+              if (_T_93) begin
+                transferState <= 3'h1;
+              end
             end
+          end else if (_T_59) begin
+            transferState <= 3'h4;
           end
-        end else if (_T_40) begin
-          transferState <= 3'h3;
-        end else if (_T_45) begin
-          transferState <= 3'h1;
-        end else if (_T_52) begin
-          transferState <= 3'h4;
-        end
-      end else if (_T_68) begin
-        if (_T_40) begin
-          transferState <= 3'h3;
-        end else if (_T_45) begin
-          transferState <= 3'h0;
-        end else if (_T_34) begin
-          if (_T_89) begin
-            if (_T_86) begin
-              transferState <= 3'h1;
-            end
-          end
-        end else if (_T_52) begin
-          transferState <= 3'h4;
         end
       end
+    end
+    if (reset) begin
+      rstCnt <= 3'h0;
+    end else if (_T_2) begin
+      rstCnt <= _T_5;
     end
   end
 endmodule
