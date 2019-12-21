@@ -2,12 +2,12 @@
 <Root MajorVersion="0" MinorVersion="36">
   <CompositeFile CompositeFileTopName="meowrouter" CanBeSetAsTop="false" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1576848884"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1576848884"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1576848884"/>
-    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1576848884"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1576954989"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1576954989"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1576954989"/>
+    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1576954989"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
-      <File Name="ip/meowrouter_xbar_0/meowrouter_xbar_0.xci" Type="IP">
+      <File Name="ip\meowrouter_xbar_0\meowrouter_xbar_0.xci" Type="IP">
         <Instance HierarchyPath="Primary/xbar"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -15,7 +15,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_interconnect_0_0/meowrouter_axi_interconnect_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_interconnect_0_0\meowrouter_axi_interconnect_0_0.xci" Type="IP">
         <Instance HierarchyPath="Primary"/>
         <Properties IsEditable="false" IsVisible="false" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -23,7 +23,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_blk_mem_gen_0_0/meowrouter_blk_mem_gen_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_blk_mem_gen_0_0\meowrouter_blk_mem_gen_0_0.xci" Type="IP">
         <Instance HierarchyPath="EthBuf"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -31,7 +31,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_bram_ctrl_0_1/meowrouter_axi_bram_ctrl_0_1.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_bram_ctrl_0_1\meowrouter_axi_bram_ctrl_0_1.xci" Type="IP">
         <Instance HierarchyPath="EthBufCtrl"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -39,7 +39,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_util_vector_logic_0_0/meowrouter_util_vector_logic_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_util_vector_logic_0_0\meowrouter_util_vector_logic_0_0.xci" Type="IP">
         <Instance HierarchyPath="NRST"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -47,7 +47,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_proc_sys_reset_0_0/meowrouter_proc_sys_reset_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_proc_sys_reset_0_0\meowrouter_proc_sys_reset_0_0.xci" Type="IP">
         <Instance HierarchyPath="Reset"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -55,7 +55,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_gpio_0_0/meowrouter_axi_gpio_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_gpio_0_0\meowrouter_axi_gpio_0_0.xci" Type="IP">
         <Instance HierarchyPath="Board"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -63,7 +63,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_emc_0_1/meowrouter_axi_emc_0_1.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_emc_0_1\meowrouter_axi_emc_0_1.xci" Type="IP">
         <Instance HierarchyPath="RAMEMC"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -71,7 +71,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_emc_0_2/meowrouter_axi_emc_0_2.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_emc_0_2\meowrouter_axi_emc_0_2.xci" Type="IP">
         <Instance HierarchyPath="FlashEMC"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -79,7 +79,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_vio_0_0/meowrouter_vio_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_vio_0_0\meowrouter_vio_0_0.xci" Type="IP">
         <Instance HierarchyPath="VIO"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -87,7 +87,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_CPU_0/meowrouter_CPU_0.xci" Type="IP">
+      <File Name="ip\meowrouter_CPU_0\meowrouter_CPU_0.xci" Type="IP">
         <Instance HierarchyPath="CPU"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -95,7 +95,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_Router_0/meowrouter_Router_0.xci" Type="IP">
+      <File Name="ip\meowrouter_Router_0\meowrouter_Router_0.xci" Type="IP">
         <Instance HierarchyPath="Router"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -103,7 +103,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_vip_0_0/meowrouter_axi_vip_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_vip_0_0\meowrouter_axi_vip_0_0.xci" Type="IP">
         <Instance HierarchyPath="AXIVerif"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -111,18 +111,18 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="synth/meowrouter.v" Type="Verilog">
+      <File Name="synth\meowrouter.v" Type="Verilog">
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
       </File>
-      <File Name="sim/meowrouter.v" Type="Verilog">
+      <File Name="sim\meowrouter.v" Type="Verilog">
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_intc_0_0/meowrouter_axi_intc_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_intc_0_0\meowrouter_axi_intc_0_0.xci" Type="IP">
         <Instance HierarchyPath="IntCont"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -130,7 +130,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_xlslice_0_1/meowrouter_xlslice_0_1.xci" Type="IP">
+      <File Name="ip\meowrouter_xlslice_0_1\meowrouter_xlslice_0_1.xci" Type="IP">
         <Instance HierarchyPath="BufAddrSlice"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -138,7 +138,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_uartlite_0_0/meowrouter_axi_uartlite_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_uartlite_0_0\meowrouter_axi_uartlite_0_0.xci" Type="IP">
         <Instance HierarchyPath="UART"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -146,7 +146,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_axi_gpio_0_1/meowrouter_axi_gpio_0_1.xci" Type="IP">
+      <File Name="ip\meowrouter_axi_gpio_0_1\meowrouter_axi_gpio_0_1.xci" Type="IP">
         <Instance HierarchyPath="RouterCmd"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -154,7 +154,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_xlconcat_0_0/meowrouter_xlconcat_0_0.xci" Type="IP">
+      <File Name="ip\meowrouter_xlconcat_0_0\meowrouter_xlconcat_0_0.xci" Type="IP">
         <Instance HierarchyPath="RouterCmdConcat"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -162,15 +162,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_NRST_0/meowrouter_NRST_0.xci" Type="IP">
-        <Instance HierarchyPath="RouterCmdNRST"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip/meowrouter_s00_data_fifo_0/meowrouter_s00_data_fifo_0.xci" Type="IP">
+      <File Name="ip\meowrouter_s00_data_fifo_0\meowrouter_s00_data_fifo_0.xci" Type="IP">
         <Instance HierarchyPath="Primary/s00_couplers/s00_data_fifo"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -178,7 +170,23 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_ds_0/meowrouter_auto_ds_0.xci" Type="IP">
+      <File Name="ip\meowrouter_s01_data_fifo_0\meowrouter_s01_data_fifo_0.xci" Type="IP">
+        <Instance HierarchyPath="Primary/s01_couplers/s01_data_fifo"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\meowrouter_s02_data_fifo_0\meowrouter_s02_data_fifo_0.xci" Type="IP">
+        <Instance HierarchyPath="Primary/s02_couplers/s02_data_fifo"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\meowrouter_auto_ds_0\meowrouter_auto_ds_0.xci" Type="IP">
         <Instance HierarchyPath="Primary/m00_couplers/auto_ds"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -186,7 +194,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_pc_0/meowrouter_auto_pc_0.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_pc_0\meowrouter_auto_pc_0.xci" Type="IP">
         <Instance HierarchyPath="Primary/m00_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -194,7 +202,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_ds_1/meowrouter_auto_ds_1.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_ds_1\meowrouter_auto_ds_1.xci" Type="IP">
         <Instance HierarchyPath="Primary/m01_couplers/auto_ds"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -202,7 +210,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_pc_1/meowrouter_auto_pc_1.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_pc_1\meowrouter_auto_pc_1.xci" Type="IP">
         <Instance HierarchyPath="Primary/m01_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -210,7 +218,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_ds_2/meowrouter_auto_ds_2.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_ds_2\meowrouter_auto_ds_2.xci" Type="IP">
         <Instance HierarchyPath="Primary/m02_couplers/auto_ds"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -218,7 +226,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_ds_3/meowrouter_auto_ds_3.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_ds_3\meowrouter_auto_ds_3.xci" Type="IP">
         <Instance HierarchyPath="Primary/m04_couplers/auto_ds"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -226,7 +234,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_ds_4/meowrouter_auto_ds_4.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_ds_4\meowrouter_auto_ds_4.xci" Type="IP">
         <Instance HierarchyPath="Primary/m05_couplers/auto_ds"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -234,7 +242,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_pc_2/meowrouter_auto_pc_2.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_pc_2\meowrouter_auto_pc_2.xci" Type="IP">
         <Instance HierarchyPath="Primary/m05_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -242,7 +250,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_cc_0/meowrouter_auto_cc_0.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_cc_0\meowrouter_auto_cc_0.xci" Type="IP">
         <Instance HierarchyPath="Primary/m06_couplers/auto_cc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -250,7 +258,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_ds_5/meowrouter_auto_ds_5.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_ds_5\meowrouter_auto_ds_5.xci" Type="IP">
         <Instance HierarchyPath="Primary/m06_couplers/auto_ds"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -258,7 +266,7 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip/meowrouter_auto_pc_3/meowrouter_auto_pc_3.xci" Type="IP">
+      <File Name="ip\meowrouter_auto_pc_3\meowrouter_auto_pc_3.xci" Type="IP">
         <Instance HierarchyPath="Primary/m06_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
@@ -273,22 +281,22 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="OUT_OF_CONTEXT"/>
       </File>
-      <File Name="hw_handoff/meowrouter.hwh" Type="HwHandoff">
+      <File Name="hw_handoff\meowrouter.hwh" Type="HwHandoff">
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="HW_HANDOFF"/>
       </File>
-      <File Name="hw_handoff/meowrouter_bd.tcl">
+      <File Name="hw_handoff\meowrouter_bd.tcl">
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="HW_HANDOFF"/>
       </File>
-      <File Name="synth/meowrouter.hwdef">
+      <File Name="synth\meowrouter.hwdef">
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="HW_HANDOFF"/>
       </File>
-      <File Name="sim/meowrouter.protoinst">
+      <File Name="sim\meowrouter.protoinst">
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SIMULATION"/>

@@ -57,172 +57,472 @@
 module meowrouter_CPU_0 (
   clock,
   reset,
-  io_axi_AWID,
-  io_axi_AWADDR,
-  io_axi_AWLEN,
-  io_axi_AWSIZE,
-  io_axi_AWBURST,
-  io_axi_AWCACHE,
-  io_axi_AWPROT,
-  io_axi_AWQOS,
-  io_axi_AWREGION,
-  io_axi_AWVALID,
-  io_axi_AWREADY,
-  io_axi_WDATA,
-  io_axi_WSTRB,
-  io_axi_WLAST,
-  io_axi_WVALID,
-  io_axi_WREADY,
-  io_axi_BID,
-  io_axi_BRESP,
-  io_axi_BVALID,
-  io_axi_BREADY,
-  io_axi_ARID,
-  io_axi_ARADDR,
-  io_axi_ARLEN,
-  io_axi_ARSIZE,
-  io_axi_ARBURST,
-  io_axi_ARCACHE,
-  io_axi_ARPROT,
-  io_axi_ARQOS,
-  io_axi_ARREGION,
-  io_axi_ARVALID,
-  io_axi_ARREADY,
-  io_axi_RID,
-  io_axi_RDATA,
-  io_axi_RRESP,
-  io_axi_RLAST,
-  io_axi_RVALID,
-  io_axi_RREADY,
+  io_iaxi_AWID,
+  io_iaxi_AWADDR,
+  io_iaxi_AWLEN,
+  io_iaxi_AWSIZE,
+  io_iaxi_AWBURST,
+  io_iaxi_AWCACHE,
+  io_iaxi_AWPROT,
+  io_iaxi_AWQOS,
+  io_iaxi_AWREGION,
+  io_iaxi_AWVALID,
+  io_iaxi_AWREADY,
+  io_iaxi_WDATA,
+  io_iaxi_WSTRB,
+  io_iaxi_WLAST,
+  io_iaxi_WVALID,
+  io_iaxi_WREADY,
+  io_iaxi_BID,
+  io_iaxi_BRESP,
+  io_iaxi_BVALID,
+  io_iaxi_BREADY,
+  io_iaxi_ARID,
+  io_iaxi_ARADDR,
+  io_iaxi_ARLEN,
+  io_iaxi_ARSIZE,
+  io_iaxi_ARBURST,
+  io_iaxi_ARCACHE,
+  io_iaxi_ARPROT,
+  io_iaxi_ARQOS,
+  io_iaxi_ARREGION,
+  io_iaxi_ARVALID,
+  io_iaxi_ARREADY,
+  io_iaxi_RID,
+  io_iaxi_RDATA,
+  io_iaxi_RRESP,
+  io_iaxi_RLAST,
+  io_iaxi_RVALID,
+  io_iaxi_RREADY,
+  io_daxi_AWID,
+  io_daxi_AWADDR,
+  io_daxi_AWLEN,
+  io_daxi_AWSIZE,
+  io_daxi_AWBURST,
+  io_daxi_AWCACHE,
+  io_daxi_AWPROT,
+  io_daxi_AWQOS,
+  io_daxi_AWREGION,
+  io_daxi_AWVALID,
+  io_daxi_AWREADY,
+  io_daxi_WDATA,
+  io_daxi_WSTRB,
+  io_daxi_WLAST,
+  io_daxi_WVALID,
+  io_daxi_WREADY,
+  io_daxi_BID,
+  io_daxi_BRESP,
+  io_daxi_BVALID,
+  io_daxi_BREADY,
+  io_daxi_ARID,
+  io_daxi_ARADDR,
+  io_daxi_ARLEN,
+  io_daxi_ARSIZE,
+  io_daxi_ARBURST,
+  io_daxi_ARCACHE,
+  io_daxi_ARPROT,
+  io_daxi_ARQOS,
+  io_daxi_ARREGION,
+  io_daxi_ARVALID,
+  io_daxi_ARREADY,
+  io_daxi_RID,
+  io_daxi_RDATA,
+  io_daxi_RRESP,
+  io_daxi_RLAST,
+  io_daxi_RVALID,
+  io_daxi_RREADY,
+  io_uaxi_AWID,
+  io_uaxi_AWADDR,
+  io_uaxi_AWLEN,
+  io_uaxi_AWSIZE,
+  io_uaxi_AWBURST,
+  io_uaxi_AWCACHE,
+  io_uaxi_AWPROT,
+  io_uaxi_AWQOS,
+  io_uaxi_AWREGION,
+  io_uaxi_AWVALID,
+  io_uaxi_AWREADY,
+  io_uaxi_WDATA,
+  io_uaxi_WSTRB,
+  io_uaxi_WLAST,
+  io_uaxi_WVALID,
+  io_uaxi_WREADY,
+  io_uaxi_BID,
+  io_uaxi_BRESP,
+  io_uaxi_BVALID,
+  io_uaxi_BREADY,
+  io_uaxi_ARID,
+  io_uaxi_ARADDR,
+  io_uaxi_ARLEN,
+  io_uaxi_ARSIZE,
+  io_uaxi_ARBURST,
+  io_uaxi_ARCACHE,
+  io_uaxi_ARPROT,
+  io_uaxi_ARQOS,
+  io_uaxi_ARREGION,
+  io_uaxi_ARVALID,
+  io_uaxi_ARREADY,
+  io_uaxi_RID,
+  io_uaxi_RDATA,
+  io_uaxi_RRESP,
+  io_uaxi_RLAST,
+  io_uaxi_RVALID,
+  io_uaxi_RREADY,
   io_eint,
   io_pc
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clock, ASSOCIATED_BUSIF io_axi, ASSOCIATED_RESET reset, FREQ_HZ 70000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clock, ASSOCIATED_BUSIF io_daxi:io_iaxi:io_uaxi, ASSOCIATED_RESET reset, FREQ_HZ 70000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clock CLK" *)
 input wire clock;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME reset, POLARITY ACTIVE_HIGH, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 reset RST" *)
 input wire reset;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWID" *)
-output wire [3 : 0] io_axi_AWID;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWADDR" *)
-output wire [47 : 0] io_axi_AWADDR;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWLEN" *)
-output wire [7 : 0] io_axi_AWLEN;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWSIZE" *)
-output wire [2 : 0] io_axi_AWSIZE;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWBURST" *)
-output wire [1 : 0] io_axi_AWBURST;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWCACHE" *)
-output wire [3 : 0] io_axi_AWCACHE;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWPROT" *)
-output wire [2 : 0] io_axi_AWPROT;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWQOS" *)
-output wire [2 : 0] io_axi_AWQOS;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWREGION" *)
-output wire [3 : 0] io_axi_AWREGION;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWVALID" *)
-output wire io_axi_AWVALID;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi AWREADY" *)
-input wire io_axi_AWREADY;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi WDATA" *)
-output wire [63 : 0] io_axi_WDATA;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi WSTRB" *)
-output wire [7 : 0] io_axi_WSTRB;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi WLAST" *)
-output wire io_axi_WLAST;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi WVALID" *)
-output wire io_axi_WVALID;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi WREADY" *)
-input wire io_axi_WREADY;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi BID" *)
-input wire [3 : 0] io_axi_BID;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi BRESP" *)
-input wire [1 : 0] io_axi_BRESP;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi BVALID" *)
-input wire io_axi_BVALID;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi BREADY" *)
-output wire io_axi_BREADY;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARID" *)
-output wire [3 : 0] io_axi_ARID;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARADDR" *)
-output wire [47 : 0] io_axi_ARADDR;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARLEN" *)
-output wire [7 : 0] io_axi_ARLEN;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARSIZE" *)
-output wire [2 : 0] io_axi_ARSIZE;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARBURST" *)
-output wire [1 : 0] io_axi_ARBURST;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARCACHE" *)
-output wire [3 : 0] io_axi_ARCACHE;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARPROT" *)
-output wire [2 : 0] io_axi_ARPROT;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARQOS" *)
-output wire [2 : 0] io_axi_ARQOS;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARREGION" *)
-output wire [3 : 0] io_axi_ARREGION;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARVALID" *)
-output wire io_axi_ARVALID;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi ARREADY" *)
-input wire io_axi_ARREADY;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi RID" *)
-input wire [3 : 0] io_axi_RID;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi RDATA" *)
-input wire [63 : 0] io_axi_RDATA;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi RRESP" *)
-input wire [1 : 0] io_axi_RRESP;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi RLAST" *)
-input wire io_axi_RLAST;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi RVALID" *)
-input wire io_axi_RVALID;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_axi, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1,\
- RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_axi RREADY" *)
-output wire io_axi_RREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWID" *)
+output wire [3 : 0] io_iaxi_AWID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWADDR" *)
+output wire [47 : 0] io_iaxi_AWADDR;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWLEN" *)
+output wire [7 : 0] io_iaxi_AWLEN;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWSIZE" *)
+output wire [2 : 0] io_iaxi_AWSIZE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWBURST" *)
+output wire [1 : 0] io_iaxi_AWBURST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWCACHE" *)
+output wire [3 : 0] io_iaxi_AWCACHE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWPROT" *)
+output wire [2 : 0] io_iaxi_AWPROT;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWQOS" *)
+output wire [2 : 0] io_iaxi_AWQOS;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWREGION" *)
+output wire [3 : 0] io_iaxi_AWREGION;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWVALID" *)
+output wire io_iaxi_AWVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi AWREADY" *)
+input wire io_iaxi_AWREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi WDATA" *)
+output wire [63 : 0] io_iaxi_WDATA;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi WSTRB" *)
+output wire [7 : 0] io_iaxi_WSTRB;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi WLAST" *)
+output wire io_iaxi_WLAST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi WVALID" *)
+output wire io_iaxi_WVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi WREADY" *)
+input wire io_iaxi_WREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi BID" *)
+input wire [3 : 0] io_iaxi_BID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi BRESP" *)
+input wire [1 : 0] io_iaxi_BRESP;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi BVALID" *)
+input wire io_iaxi_BVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi BREADY" *)
+output wire io_iaxi_BREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARID" *)
+output wire [3 : 0] io_iaxi_ARID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARADDR" *)
+output wire [47 : 0] io_iaxi_ARADDR;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARLEN" *)
+output wire [7 : 0] io_iaxi_ARLEN;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARSIZE" *)
+output wire [2 : 0] io_iaxi_ARSIZE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARBURST" *)
+output wire [1 : 0] io_iaxi_ARBURST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARCACHE" *)
+output wire [3 : 0] io_iaxi_ARCACHE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARPROT" *)
+output wire [2 : 0] io_iaxi_ARPROT;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARQOS" *)
+output wire [2 : 0] io_iaxi_ARQOS;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARREGION" *)
+output wire [3 : 0] io_iaxi_ARREGION;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARVALID" *)
+output wire io_iaxi_ARVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi ARREADY" *)
+input wire io_iaxi_ARREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi RID" *)
+input wire [3 : 0] io_iaxi_RID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi RDATA" *)
+input wire [63 : 0] io_iaxi_RDATA;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi RRESP" *)
+input wire [1 : 0] io_iaxi_RRESP;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi RLAST" *)
+input wire io_iaxi_RLAST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi RVALID" *)
+input wire io_iaxi_RVALID;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_iaxi, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1\
+, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_iaxi RREADY" *)
+output wire io_iaxi_RREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWID" *)
+output wire [3 : 0] io_daxi_AWID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWADDR" *)
+output wire [47 : 0] io_daxi_AWADDR;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWLEN" *)
+output wire [7 : 0] io_daxi_AWLEN;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWSIZE" *)
+output wire [2 : 0] io_daxi_AWSIZE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWBURST" *)
+output wire [1 : 0] io_daxi_AWBURST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWCACHE" *)
+output wire [3 : 0] io_daxi_AWCACHE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWPROT" *)
+output wire [2 : 0] io_daxi_AWPROT;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWQOS" *)
+output wire [2 : 0] io_daxi_AWQOS;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWREGION" *)
+output wire [3 : 0] io_daxi_AWREGION;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWVALID" *)
+output wire io_daxi_AWVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi AWREADY" *)
+input wire io_daxi_AWREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi WDATA" *)
+output wire [63 : 0] io_daxi_WDATA;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi WSTRB" *)
+output wire [7 : 0] io_daxi_WSTRB;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi WLAST" *)
+output wire io_daxi_WLAST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi WVALID" *)
+output wire io_daxi_WVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi WREADY" *)
+input wire io_daxi_WREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi BID" *)
+input wire [3 : 0] io_daxi_BID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi BRESP" *)
+input wire [1 : 0] io_daxi_BRESP;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi BVALID" *)
+input wire io_daxi_BVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi BREADY" *)
+output wire io_daxi_BREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARID" *)
+output wire [3 : 0] io_daxi_ARID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARADDR" *)
+output wire [47 : 0] io_daxi_ARADDR;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARLEN" *)
+output wire [7 : 0] io_daxi_ARLEN;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARSIZE" *)
+output wire [2 : 0] io_daxi_ARSIZE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARBURST" *)
+output wire [1 : 0] io_daxi_ARBURST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARCACHE" *)
+output wire [3 : 0] io_daxi_ARCACHE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARPROT" *)
+output wire [2 : 0] io_daxi_ARPROT;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARQOS" *)
+output wire [2 : 0] io_daxi_ARQOS;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARREGION" *)
+output wire [3 : 0] io_daxi_ARREGION;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARVALID" *)
+output wire io_daxi_ARVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi ARREADY" *)
+input wire io_daxi_ARREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi RID" *)
+input wire [3 : 0] io_daxi_RID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi RDATA" *)
+input wire [63 : 0] io_daxi_RDATA;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi RRESP" *)
+input wire [1 : 0] io_daxi_RRESP;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi RLAST" *)
+input wire io_daxi_RLAST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi RVALID" *)
+input wire io_daxi_RVALID;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_daxi, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1\
+, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_daxi RREADY" *)
+output wire io_daxi_RREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWID" *)
+output wire [3 : 0] io_uaxi_AWID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWADDR" *)
+output wire [47 : 0] io_uaxi_AWADDR;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWLEN" *)
+output wire [7 : 0] io_uaxi_AWLEN;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWSIZE" *)
+output wire [2 : 0] io_uaxi_AWSIZE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWBURST" *)
+output wire [1 : 0] io_uaxi_AWBURST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWCACHE" *)
+output wire [3 : 0] io_uaxi_AWCACHE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWPROT" *)
+output wire [2 : 0] io_uaxi_AWPROT;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWQOS" *)
+output wire [2 : 0] io_uaxi_AWQOS;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWREGION" *)
+output wire [3 : 0] io_uaxi_AWREGION;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWVALID" *)
+output wire io_uaxi_AWVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi AWREADY" *)
+input wire io_uaxi_AWREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi WDATA" *)
+output wire [63 : 0] io_uaxi_WDATA;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi WSTRB" *)
+output wire [7 : 0] io_uaxi_WSTRB;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi WLAST" *)
+output wire io_uaxi_WLAST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi WVALID" *)
+output wire io_uaxi_WVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi WREADY" *)
+input wire io_uaxi_WREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi BID" *)
+input wire [3 : 0] io_uaxi_BID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi BRESP" *)
+input wire [1 : 0] io_uaxi_BRESP;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi BVALID" *)
+input wire io_uaxi_BVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi BREADY" *)
+output wire io_uaxi_BREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARID" *)
+output wire [3 : 0] io_uaxi_ARID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARADDR" *)
+output wire [47 : 0] io_uaxi_ARADDR;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARLEN" *)
+output wire [7 : 0] io_uaxi_ARLEN;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARSIZE" *)
+output wire [2 : 0] io_uaxi_ARSIZE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARBURST" *)
+output wire [1 : 0] io_uaxi_ARBURST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARCACHE" *)
+output wire [3 : 0] io_uaxi_ARCACHE;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARPROT" *)
+output wire [2 : 0] io_uaxi_ARPROT;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARQOS" *)
+output wire [2 : 0] io_uaxi_ARQOS;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARREGION" *)
+output wire [3 : 0] io_uaxi_ARREGION;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARVALID" *)
+output wire io_uaxi_ARVALID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi ARREADY" *)
+input wire io_uaxi_ARREADY;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi RID" *)
+input wire [3 : 0] io_uaxi_RID;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi RDATA" *)
+input wire [63 : 0] io_uaxi_RDATA;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi RRESP" *)
+input wire [1 : 0] io_uaxi_RRESP;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi RLAST" *)
+input wire io_uaxi_RLAST;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi RVALID" *)
+input wire io_uaxi_RVALID;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME io_uaxi, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 4, ADDR_WIDTH 48, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1\
+, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 io_uaxi RREADY" *)
+output wire io_uaxi_RREADY;
 input wire io_eint;
 output wire [47 : 0] io_pc;
 
   Core inst (
     .clock(clock),
     .reset(reset),
-    .io_axi_AWID(io_axi_AWID),
-    .io_axi_AWADDR(io_axi_AWADDR),
-    .io_axi_AWLEN(io_axi_AWLEN),
-    .io_axi_AWSIZE(io_axi_AWSIZE),
-    .io_axi_AWBURST(io_axi_AWBURST),
-    .io_axi_AWCACHE(io_axi_AWCACHE),
-    .io_axi_AWPROT(io_axi_AWPROT),
-    .io_axi_AWQOS(io_axi_AWQOS),
-    .io_axi_AWREGION(io_axi_AWREGION),
-    .io_axi_AWVALID(io_axi_AWVALID),
-    .io_axi_AWREADY(io_axi_AWREADY),
-    .io_axi_WDATA(io_axi_WDATA),
-    .io_axi_WSTRB(io_axi_WSTRB),
-    .io_axi_WLAST(io_axi_WLAST),
-    .io_axi_WVALID(io_axi_WVALID),
-    .io_axi_WREADY(io_axi_WREADY),
-    .io_axi_BID(io_axi_BID),
-    .io_axi_BRESP(io_axi_BRESP),
-    .io_axi_BVALID(io_axi_BVALID),
-    .io_axi_BREADY(io_axi_BREADY),
-    .io_axi_ARID(io_axi_ARID),
-    .io_axi_ARADDR(io_axi_ARADDR),
-    .io_axi_ARLEN(io_axi_ARLEN),
-    .io_axi_ARSIZE(io_axi_ARSIZE),
-    .io_axi_ARBURST(io_axi_ARBURST),
-    .io_axi_ARCACHE(io_axi_ARCACHE),
-    .io_axi_ARPROT(io_axi_ARPROT),
-    .io_axi_ARQOS(io_axi_ARQOS),
-    .io_axi_ARREGION(io_axi_ARREGION),
-    .io_axi_ARVALID(io_axi_ARVALID),
-    .io_axi_ARREADY(io_axi_ARREADY),
-    .io_axi_RID(io_axi_RID),
-    .io_axi_RDATA(io_axi_RDATA),
-    .io_axi_RRESP(io_axi_RRESP),
-    .io_axi_RLAST(io_axi_RLAST),
-    .io_axi_RVALID(io_axi_RVALID),
-    .io_axi_RREADY(io_axi_RREADY),
+    .io_iaxi_AWID(io_iaxi_AWID),
+    .io_iaxi_AWADDR(io_iaxi_AWADDR),
+    .io_iaxi_AWLEN(io_iaxi_AWLEN),
+    .io_iaxi_AWSIZE(io_iaxi_AWSIZE),
+    .io_iaxi_AWBURST(io_iaxi_AWBURST),
+    .io_iaxi_AWCACHE(io_iaxi_AWCACHE),
+    .io_iaxi_AWPROT(io_iaxi_AWPROT),
+    .io_iaxi_AWQOS(io_iaxi_AWQOS),
+    .io_iaxi_AWREGION(io_iaxi_AWREGION),
+    .io_iaxi_AWVALID(io_iaxi_AWVALID),
+    .io_iaxi_AWREADY(io_iaxi_AWREADY),
+    .io_iaxi_WDATA(io_iaxi_WDATA),
+    .io_iaxi_WSTRB(io_iaxi_WSTRB),
+    .io_iaxi_WLAST(io_iaxi_WLAST),
+    .io_iaxi_WVALID(io_iaxi_WVALID),
+    .io_iaxi_WREADY(io_iaxi_WREADY),
+    .io_iaxi_BID(io_iaxi_BID),
+    .io_iaxi_BRESP(io_iaxi_BRESP),
+    .io_iaxi_BVALID(io_iaxi_BVALID),
+    .io_iaxi_BREADY(io_iaxi_BREADY),
+    .io_iaxi_ARID(io_iaxi_ARID),
+    .io_iaxi_ARADDR(io_iaxi_ARADDR),
+    .io_iaxi_ARLEN(io_iaxi_ARLEN),
+    .io_iaxi_ARSIZE(io_iaxi_ARSIZE),
+    .io_iaxi_ARBURST(io_iaxi_ARBURST),
+    .io_iaxi_ARCACHE(io_iaxi_ARCACHE),
+    .io_iaxi_ARPROT(io_iaxi_ARPROT),
+    .io_iaxi_ARQOS(io_iaxi_ARQOS),
+    .io_iaxi_ARREGION(io_iaxi_ARREGION),
+    .io_iaxi_ARVALID(io_iaxi_ARVALID),
+    .io_iaxi_ARREADY(io_iaxi_ARREADY),
+    .io_iaxi_RID(io_iaxi_RID),
+    .io_iaxi_RDATA(io_iaxi_RDATA),
+    .io_iaxi_RRESP(io_iaxi_RRESP),
+    .io_iaxi_RLAST(io_iaxi_RLAST),
+    .io_iaxi_RVALID(io_iaxi_RVALID),
+    .io_iaxi_RREADY(io_iaxi_RREADY),
+    .io_daxi_AWID(io_daxi_AWID),
+    .io_daxi_AWADDR(io_daxi_AWADDR),
+    .io_daxi_AWLEN(io_daxi_AWLEN),
+    .io_daxi_AWSIZE(io_daxi_AWSIZE),
+    .io_daxi_AWBURST(io_daxi_AWBURST),
+    .io_daxi_AWCACHE(io_daxi_AWCACHE),
+    .io_daxi_AWPROT(io_daxi_AWPROT),
+    .io_daxi_AWQOS(io_daxi_AWQOS),
+    .io_daxi_AWREGION(io_daxi_AWREGION),
+    .io_daxi_AWVALID(io_daxi_AWVALID),
+    .io_daxi_AWREADY(io_daxi_AWREADY),
+    .io_daxi_WDATA(io_daxi_WDATA),
+    .io_daxi_WSTRB(io_daxi_WSTRB),
+    .io_daxi_WLAST(io_daxi_WLAST),
+    .io_daxi_WVALID(io_daxi_WVALID),
+    .io_daxi_WREADY(io_daxi_WREADY),
+    .io_daxi_BID(io_daxi_BID),
+    .io_daxi_BRESP(io_daxi_BRESP),
+    .io_daxi_BVALID(io_daxi_BVALID),
+    .io_daxi_BREADY(io_daxi_BREADY),
+    .io_daxi_ARID(io_daxi_ARID),
+    .io_daxi_ARADDR(io_daxi_ARADDR),
+    .io_daxi_ARLEN(io_daxi_ARLEN),
+    .io_daxi_ARSIZE(io_daxi_ARSIZE),
+    .io_daxi_ARBURST(io_daxi_ARBURST),
+    .io_daxi_ARCACHE(io_daxi_ARCACHE),
+    .io_daxi_ARPROT(io_daxi_ARPROT),
+    .io_daxi_ARQOS(io_daxi_ARQOS),
+    .io_daxi_ARREGION(io_daxi_ARREGION),
+    .io_daxi_ARVALID(io_daxi_ARVALID),
+    .io_daxi_ARREADY(io_daxi_ARREADY),
+    .io_daxi_RID(io_daxi_RID),
+    .io_daxi_RDATA(io_daxi_RDATA),
+    .io_daxi_RRESP(io_daxi_RRESP),
+    .io_daxi_RLAST(io_daxi_RLAST),
+    .io_daxi_RVALID(io_daxi_RVALID),
+    .io_daxi_RREADY(io_daxi_RREADY),
+    .io_uaxi_AWID(io_uaxi_AWID),
+    .io_uaxi_AWADDR(io_uaxi_AWADDR),
+    .io_uaxi_AWLEN(io_uaxi_AWLEN),
+    .io_uaxi_AWSIZE(io_uaxi_AWSIZE),
+    .io_uaxi_AWBURST(io_uaxi_AWBURST),
+    .io_uaxi_AWCACHE(io_uaxi_AWCACHE),
+    .io_uaxi_AWPROT(io_uaxi_AWPROT),
+    .io_uaxi_AWQOS(io_uaxi_AWQOS),
+    .io_uaxi_AWREGION(io_uaxi_AWREGION),
+    .io_uaxi_AWVALID(io_uaxi_AWVALID),
+    .io_uaxi_AWREADY(io_uaxi_AWREADY),
+    .io_uaxi_WDATA(io_uaxi_WDATA),
+    .io_uaxi_WSTRB(io_uaxi_WSTRB),
+    .io_uaxi_WLAST(io_uaxi_WLAST),
+    .io_uaxi_WVALID(io_uaxi_WVALID),
+    .io_uaxi_WREADY(io_uaxi_WREADY),
+    .io_uaxi_BID(io_uaxi_BID),
+    .io_uaxi_BRESP(io_uaxi_BRESP),
+    .io_uaxi_BVALID(io_uaxi_BVALID),
+    .io_uaxi_BREADY(io_uaxi_BREADY),
+    .io_uaxi_ARID(io_uaxi_ARID),
+    .io_uaxi_ARADDR(io_uaxi_ARADDR),
+    .io_uaxi_ARLEN(io_uaxi_ARLEN),
+    .io_uaxi_ARSIZE(io_uaxi_ARSIZE),
+    .io_uaxi_ARBURST(io_uaxi_ARBURST),
+    .io_uaxi_ARCACHE(io_uaxi_ARCACHE),
+    .io_uaxi_ARPROT(io_uaxi_ARPROT),
+    .io_uaxi_ARQOS(io_uaxi_ARQOS),
+    .io_uaxi_ARREGION(io_uaxi_ARREGION),
+    .io_uaxi_ARVALID(io_uaxi_ARVALID),
+    .io_uaxi_ARREADY(io_uaxi_ARREADY),
+    .io_uaxi_RID(io_uaxi_RID),
+    .io_uaxi_RDATA(io_uaxi_RDATA),
+    .io_uaxi_RRESP(io_uaxi_RRESP),
+    .io_uaxi_RLAST(io_uaxi_RLAST),
+    .io_uaxi_RVALID(io_uaxi_RVALID),
+    .io_uaxi_RREADY(io_uaxi_RREADY),
     .io_eint(io_eint),
     .io_pc(io_pc)
   );

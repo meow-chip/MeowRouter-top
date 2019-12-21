@@ -1,8 +1,8 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Fri Dec 20 15:15:21 2019
--- Host        : imac running 64-bit Arch Linux
+-- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
+-- Date        : Wed Dec 18 03:42:38 2019
+-- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_auto_pc_3 -prefix
 --               meowrouter_auto_pc_3_ meowrouter_auto_pc_3_sim_netlist.vhdl
 -- Design      : meowrouter_auto_pc_3
@@ -14209,7 +14209,7 @@ entity meowrouter_auto_pc_3 is
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of meowrouter_auto_pc_3 : entity is "yes";
   attribute X_CORE_INFO : string;
-  attribute X_CORE_INFO of meowrouter_auto_pc_3 : entity is "axi_protocol_converter_v2_1_18_axi_protocol_converter,Vivado 2018.3";
+  attribute X_CORE_INFO of meowrouter_auto_pc_3 : entity is "axi_protocol_converter_v2_1_18_axi_protocol_converter,Vivado 2018.3_AR71898";
 end meowrouter_auto_pc_3;
 
 architecture STRUCTURE of meowrouter_auto_pc_3 is

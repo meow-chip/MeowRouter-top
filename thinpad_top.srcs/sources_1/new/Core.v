@@ -393,48 +393,82 @@ end // initial
     `endif // SYNTHESIS
   end
 endmodule
-module MaxPeriodFibonacciLFSR(
-  input   clock,
-  input   reset,
-  output  io_out_0,
-  output  io_out_1,
-  output  io_out_2,
-  output  io_out_3,
-  output  io_out_4,
-  output  io_out_5,
-  output  io_out_6,
-  output  io_out_7
+module L1ICPass(
+  input         clock,
+  input         reset,
+  input  [47:0] toCPU_addr,
+  input         toCPU_read,
+  output        toCPU_stall,
+  input         toCPU_rst,
+  output [31:0] toCPU_data,
+  output        toCPU_vacant,
+  output [47:0] axi_ARADDR,
+  output [2:0]  axi_ARSIZE,
+  output [1:0]  axi_ARBURST,
+  output        axi_ARVALID,
+  input         axi_ARREADY,
+  input  [63:0] axi_RDATA,
+  input         axi_RVALID,
+  output        axi_RREADY
 );
-  reg  state_0; // @[PRNG.scala 47:50]
+  reg  pipeRead; // @[L1ICPass.scala 20:25]
   reg [31:0] _RAND_0;
-  reg  state_1; // @[PRNG.scala 47:50]
-  reg [31:0] _RAND_1;
-  reg  state_2; // @[PRNG.scala 47:50]
+  reg [47:0] pipeAddr; // @[L1ICPass.scala 21:21]
+  reg [63:0] _RAND_1;
+  wire  _T_1; // @[L1ICPass.scala 23:8]
+  wire  _T_2; // @[L1ICPass.scala 24:31]
+  wire  _T_3; // @[L1ICPass.scala 24:28]
+  reg [1:0] rstate; // @[L1ICPass.scala 35:23]
   reg [31:0] _RAND_2;
-  reg  state_3; // @[PRNG.scala 47:50]
-  reg [31:0] _RAND_3;
-  reg  state_4; // @[PRNG.scala 47:50]
-  reg [31:0] _RAND_4;
-  reg  state_5; // @[PRNG.scala 47:50]
-  reg [31:0] _RAND_5;
-  reg  state_6; // @[PRNG.scala 47:50]
-  reg [31:0] _RAND_6;
-  reg  state_7; // @[PRNG.scala 47:50]
-  reg [31:0] _RAND_7;
-  wire  _T_1; // @[LFSR.scala 15:41]
-  wire  _T_2; // @[LFSR.scala 15:41]
-  wire  _T_3; // @[LFSR.scala 15:41]
-  assign _T_1 = state_7 ^ state_5; // @[LFSR.scala 15:41]
-  assign _T_2 = _T_1 ^ state_4; // @[LFSR.scala 15:41]
-  assign _T_3 = _T_2 ^ state_3; // @[LFSR.scala 15:41]
-  assign io_out_0 = state_0; // @[PRNG.scala 69:10]
-  assign io_out_1 = state_1; // @[PRNG.scala 69:10]
-  assign io_out_2 = state_2; // @[PRNG.scala 69:10]
-  assign io_out_3 = state_3; // @[PRNG.scala 69:10]
-  assign io_out_4 = state_4; // @[PRNG.scala 69:10]
-  assign io_out_5 = state_5; // @[PRNG.scala 69:10]
-  assign io_out_6 = state_6; // @[PRNG.scala 69:10]
-  assign io_out_7 = state_7; // @[PRNG.scala 69:10]
+  wire [1:0] _T_11; // @[Conditional.scala 37:39]
+  wire  _T_12; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_2; // @[L1ICPass.scala 48:22]
+  wire  _T_15; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_3; // @[L1ICPass.scala 60:25]
+  wire  _T_18; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_4; // @[L1ICPass.scala 67:24]
+  wire [1:0] _GEN_6; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_12; // @[Conditional.scala 39:67]
+  wire [1:0] nrstate; // @[Conditional.scala 40:58]
+  wire [44:0] _T_6; // @[L1ICPass.scala 41:25]
+  wire [47:0] aligned; // @[L1ICPass.scala 41:48]
+  wire  offset; // @[L1ICPass.scala 42:24]
+  wire [31:0] _T_7; // @[L1ICPass.scala 44:38]
+  wire [31:0] _T_8; // @[L1ICPass.scala 44:57]
+  wire [47:0] _GEN_7; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_9; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_11; // @[Conditional.scala 39:67]
+  wire  _GEN_13; // @[Conditional.scala 39:67]
+  assign _T_1 = toCPU_stall == 1'h0; // @[L1ICPass.scala 23:8]
+  assign _T_2 = toCPU_rst == 1'h0; // @[L1ICPass.scala 24:31]
+  assign _T_3 = toCPU_read & _T_2; // @[L1ICPass.scala 24:28]
+  assign _T_11 = $unsigned(rstate); // @[Conditional.scala 37:39]
+  assign _T_12 = 2'h0 == _T_11; // @[Conditional.scala 37:30]
+  assign _GEN_2 = pipeRead ? 2'h1 : rstate; // @[L1ICPass.scala 48:22]
+  assign _T_15 = 2'h1 == _T_11; // @[Conditional.scala 37:30]
+  assign _GEN_3 = axi_ARREADY ? 2'h2 : rstate; // @[L1ICPass.scala 60:25]
+  assign _T_18 = 2'h2 == _T_11; // @[Conditional.scala 37:30]
+  assign _GEN_4 = axi_RVALID ? 2'h0 : rstate; // @[L1ICPass.scala 67:24]
+  assign _GEN_6 = _T_18 ? _GEN_4 : rstate; // @[Conditional.scala 39:67]
+  assign _GEN_12 = _T_15 ? _GEN_3 : _GEN_6; // @[Conditional.scala 39:67]
+  assign nrstate = _T_12 ? _GEN_2 : _GEN_12; // @[Conditional.scala 40:58]
+  assign _T_6 = pipeAddr[47:3]; // @[L1ICPass.scala 41:25]
+  assign aligned = {_T_6,3'h0}; // @[L1ICPass.scala 41:48]
+  assign offset = pipeAddr[2]; // @[L1ICPass.scala 42:24]
+  assign _T_7 = axi_RDATA[63:32]; // @[L1ICPass.scala 44:38]
+  assign _T_8 = axi_RDATA[31:0]; // @[L1ICPass.scala 44:57]
+  assign _GEN_7 = _T_15 ? aligned : 48'h0; // @[Conditional.scala 39:67]
+  assign _GEN_9 = _T_15 ? 3'h3 : 3'h0; // @[Conditional.scala 39:67]
+  assign _GEN_11 = _T_15 ? 2'h1 : 2'h0; // @[Conditional.scala 39:67]
+  assign _GEN_13 = _T_15 ? 1'h0 : _T_18; // @[Conditional.scala 39:67]
+  assign toCPU_stall = nrstate != 2'h0; // @[L1ICPass.scala 39:15]
+  assign toCPU_data = offset ? _T_7 : _T_8; // @[L1ICPass.scala 44:14]
+  assign toCPU_vacant = pipeRead == 1'h0; // @[L1ICPass.scala 28:16]
+  assign axi_ARADDR = _T_12 ? 48'h0 : _GEN_7; // @[L1ICPass.scala 18:7 L1ICPass.scala 54:18]
+  assign axi_ARSIZE = _T_12 ? 3'h0 : _GEN_9; // @[L1ICPass.scala 18:7 L1ICPass.scala 56:18]
+  assign axi_ARBURST = _T_12 ? 2'h0 : _GEN_11; // @[L1ICPass.scala 18:7 L1ICPass.scala 58:19]
+  assign axi_ARVALID = _T_12 ? 1'h0 : _T_15; // @[L1ICPass.scala 18:7 L1ICPass.scala 55:19]
+  assign axi_RREADY = _T_12 ? 1'h0 : _GEN_13; // @[L1ICPass.scala 18:7 L1ICPass.scala 66:18]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -468,7773 +502,178 @@ initial begin
     `endif
   `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
-  state_0 = _RAND_0[0:0];
+  pipeRead = _RAND_0[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_1 = {1{`RANDOM}};
-  state_1 = _RAND_1[0:0];
+  _RAND_1 = {2{`RANDOM}};
+  pipeAddr = _RAND_1[47:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_2 = {1{`RANDOM}};
-  state_2 = _RAND_2[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_3 = {1{`RANDOM}};
-  state_3 = _RAND_3[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_4 = {1{`RANDOM}};
-  state_4 = _RAND_4[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_5 = {1{`RANDOM}};
-  state_5 = _RAND_5[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_6 = {1{`RANDOM}};
-  state_6 = _RAND_6[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_7 = {1{`RANDOM}};
-  state_7 = _RAND_7[0:0];
+  rstate = _RAND_2[1:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
-    state_0 <= reset | _T_3;
     if (reset) begin
-      state_1 <= 1'h0;
-    end else begin
-      state_1 <= state_0;
-    end
-    if (reset) begin
-      state_2 <= 1'h0;
-    end else begin
-      state_2 <= state_1;
-    end
-    if (reset) begin
-      state_3 <= 1'h0;
-    end else begin
-      state_3 <= state_2;
-    end
-    if (reset) begin
-      state_4 <= 1'h0;
-    end else begin
-      state_4 <= state_3;
-    end
-    if (reset) begin
-      state_5 <= 1'h0;
-    end else begin
-      state_5 <= state_4;
-    end
-    if (reset) begin
-      state_6 <= 1'h0;
-    end else begin
-      state_6 <= state_5;
-    end
-    if (reset) begin
-      state_7 <= 1'h0;
-    end else begin
-      state_7 <= state_6;
-    end
-  end
-endmodule
-module L2Cache(
-  input          clock,
-  input          reset,
-  input          ic_0_read,
-  input  [47:0]  ic_0_addr,
-  output         ic_0_stall,
-  output [127:0] ic_0_data,
-  input  [1:0]   dc_0_l1req,
-  input  [47:0]  dc_0_l1addr,
-  output         dc_0_l1stall,
-  output [1:0]   dc_0_l2req,
-  output [47:0]  dc_0_l2addr,
-  input          dc_0_l2stall,
-  input  [127:0] dc_0_wdata,
-  output [127:0] dc_0_rdata,
-  input          directs_0_read,
-  input          directs_0_write,
-  input  [47:0]  directs_0_addr,
-  input  [7:0]   directs_0_wstrb,
-  output         directs_0_stall,
-  input  [63:0]  directs_0_wdata,
-  output [63:0]  directs_0_rdata,
-  output [47:0]  axi_AWADDR,
-  output [7:0]   axi_AWLEN,
-  output [2:0]   axi_AWSIZE,
-  output [1:0]   axi_AWBURST,
-  output         axi_AWVALID,
-  input          axi_AWREADY,
-  output [63:0]  axi_WDATA,
-  output [7:0]   axi_WSTRB,
-  output         axi_WLAST,
-  output         axi_WVALID,
-  input          axi_WREADY,
-  input          axi_BVALID,
-  output         axi_BREADY,
-  output [3:0]   axi_ARID,
-  output [47:0]  axi_ARADDR,
-  output [7:0]   axi_ARLEN,
-  output [2:0]   axi_ARSIZE,
-  output [1:0]   axi_ARBURST,
-  output         axi_ARVALID,
-  input          axi_ARREADY,
-  input  [3:0]   axi_RID,
-  input  [63:0]  axi_RDATA,
-  input          axi_RLAST,
-  input          axi_RVALID,
-  output         axi_RREADY
-);
-  reg  directories_0_valid [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_0;
-  wire  directories_0_valid_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_0_valid_lookups_addr; // @[L2.scala 137:24]
-  wire  directories_0_valid__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_0_valid__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_0_valid__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_0_valid__T_6_en; // @[L2.scala 137:24]
-  reg  directories_0_dirty [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_1;
-  wire  directories_0_dirty_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_0_dirty_lookups_addr; // @[L2.scala 137:24]
-  wire  directories_0_dirty__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_0_dirty__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_0_dirty__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_0_dirty__T_6_en; // @[L2.scala 137:24]
-  reg [35:0] directories_0_tag [0:255]; // @[L2.scala 137:24]
-  reg [63:0] _RAND_2;
-  wire [35:0] directories_0_tag_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_0_tag_lookups_addr; // @[L2.scala 137:24]
-  wire [35:0] directories_0_tag__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_0_tag__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_0_tag__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_0_tag__T_6_en; // @[L2.scala 137:24]
-  reg [1:0] directories_0_states_0 [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_3;
-  wire [1:0] directories_0_states_0_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_0_states_0_lookups_addr; // @[L2.scala 137:24]
-  wire [1:0] directories_0_states_0__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_0_states_0__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_0_states_0__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_0_states_0__T_6_en; // @[L2.scala 137:24]
-  reg  directories_1_valid [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_4;
-  wire  directories_1_valid_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_1_valid_lookups_addr; // @[L2.scala 137:24]
-  wire  directories_1_valid__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_1_valid__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_1_valid__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_1_valid__T_6_en; // @[L2.scala 137:24]
-  reg  directories_1_dirty [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_5;
-  wire  directories_1_dirty_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_1_dirty_lookups_addr; // @[L2.scala 137:24]
-  wire  directories_1_dirty__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_1_dirty__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_1_dirty__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_1_dirty__T_6_en; // @[L2.scala 137:24]
-  reg [35:0] directories_1_tag [0:255]; // @[L2.scala 137:24]
-  reg [63:0] _RAND_6;
-  wire [35:0] directories_1_tag_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_1_tag_lookups_addr; // @[L2.scala 137:24]
-  wire [35:0] directories_1_tag__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_1_tag__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_1_tag__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_1_tag__T_6_en; // @[L2.scala 137:24]
-  reg [1:0] directories_1_states_0 [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_7;
-  wire [1:0] directories_1_states_0_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_1_states_0_lookups_addr; // @[L2.scala 137:24]
-  wire [1:0] directories_1_states_0__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_1_states_0__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_1_states_0__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_1_states_0__T_6_en; // @[L2.scala 137:24]
-  reg  directories_2_valid [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_8;
-  wire  directories_2_valid_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_2_valid_lookups_addr; // @[L2.scala 137:24]
-  wire  directories_2_valid__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_2_valid__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_2_valid__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_2_valid__T_6_en; // @[L2.scala 137:24]
-  reg  directories_2_dirty [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_9;
-  wire  directories_2_dirty_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_2_dirty_lookups_addr; // @[L2.scala 137:24]
-  wire  directories_2_dirty__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_2_dirty__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_2_dirty__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_2_dirty__T_6_en; // @[L2.scala 137:24]
-  reg [35:0] directories_2_tag [0:255]; // @[L2.scala 137:24]
-  reg [63:0] _RAND_10;
-  wire [35:0] directories_2_tag_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_2_tag_lookups_addr; // @[L2.scala 137:24]
-  wire [35:0] directories_2_tag__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_2_tag__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_2_tag__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_2_tag__T_6_en; // @[L2.scala 137:24]
-  reg [1:0] directories_2_states_0 [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_11;
-  wire [1:0] directories_2_states_0_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_2_states_0_lookups_addr; // @[L2.scala 137:24]
-  wire [1:0] directories_2_states_0__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_2_states_0__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_2_states_0__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_2_states_0__T_6_en; // @[L2.scala 137:24]
-  reg  directories_3_valid [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_12;
-  wire  directories_3_valid_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_3_valid_lookups_addr; // @[L2.scala 137:24]
-  wire  directories_3_valid__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_3_valid__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_3_valid__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_3_valid__T_6_en; // @[L2.scala 137:24]
-  reg  directories_3_dirty [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_13;
-  wire  directories_3_dirty_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_3_dirty_lookups_addr; // @[L2.scala 137:24]
-  wire  directories_3_dirty__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_3_dirty__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_3_dirty__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_3_dirty__T_6_en; // @[L2.scala 137:24]
-  reg [35:0] directories_3_tag [0:255]; // @[L2.scala 137:24]
-  reg [63:0] _RAND_14;
-  wire [35:0] directories_3_tag_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_3_tag_lookups_addr; // @[L2.scala 137:24]
-  wire [35:0] directories_3_tag__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_3_tag__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_3_tag__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_3_tag__T_6_en; // @[L2.scala 137:24]
-  reg [1:0] directories_3_states_0 [0:255]; // @[L2.scala 137:24]
-  reg [31:0] _RAND_15;
-  wire [1:0] directories_3_states_0_lookups_data; // @[L2.scala 137:24]
-  wire [7:0] directories_3_states_0_lookups_addr; // @[L2.scala 137:24]
-  wire [1:0] directories_3_states_0__T_6_data; // @[L2.scala 137:24]
-  wire [7:0] directories_3_states_0__T_6_addr; // @[L2.scala 137:24]
-  wire  directories_3_states_0__T_6_mask; // @[L2.scala 137:24]
-  wire  directories_3_states_0__T_6_en; // @[L2.scala 137:24]
-  reg [127:0] stores_0 [0:255]; // @[L2.scala 138:27]
-  reg [127:0] _RAND_16;
-  wire [127:0] stores_0_datas_data; // @[L2.scala 138:27]
-  wire [7:0] stores_0_datas_addr; // @[L2.scala 138:27]
-  wire [127:0] stores_0__T_4_data; // @[L2.scala 138:27]
-  wire [7:0] stores_0__T_4_addr; // @[L2.scala 138:27]
-  wire  stores_0__T_4_mask; // @[L2.scala 138:27]
-  wire  stores_0__T_4_en; // @[L2.scala 138:27]
-  reg  stores_0_datas_en_pipe_0;
-  reg [31:0] _RAND_17;
-  reg [7:0] stores_0_datas_addr_pipe_0;
-  reg [31:0] _RAND_18;
-  reg [127:0] stores_1 [0:255]; // @[L2.scala 138:27]
-  reg [127:0] _RAND_19;
-  wire [127:0] stores_1_datas_data; // @[L2.scala 138:27]
-  wire [7:0] stores_1_datas_addr; // @[L2.scala 138:27]
-  wire [127:0] stores_1__T_4_data; // @[L2.scala 138:27]
-  wire [7:0] stores_1__T_4_addr; // @[L2.scala 138:27]
-  wire  stores_1__T_4_mask; // @[L2.scala 138:27]
-  wire  stores_1__T_4_en; // @[L2.scala 138:27]
-  reg  stores_1_datas_en_pipe_0;
-  reg [31:0] _RAND_20;
-  reg [7:0] stores_1_datas_addr_pipe_0;
-  reg [31:0] _RAND_21;
-  reg [127:0] stores_2 [0:255]; // @[L2.scala 138:27]
-  reg [127:0] _RAND_22;
-  wire [127:0] stores_2_datas_data; // @[L2.scala 138:27]
-  wire [7:0] stores_2_datas_addr; // @[L2.scala 138:27]
-  wire [127:0] stores_2__T_4_data; // @[L2.scala 138:27]
-  wire [7:0] stores_2__T_4_addr; // @[L2.scala 138:27]
-  wire  stores_2__T_4_mask; // @[L2.scala 138:27]
-  wire  stores_2__T_4_en; // @[L2.scala 138:27]
-  reg  stores_2_datas_en_pipe_0;
-  reg [31:0] _RAND_23;
-  reg [7:0] stores_2_datas_addr_pipe_0;
-  reg [31:0] _RAND_24;
-  reg [127:0] stores_3 [0:255]; // @[L2.scala 138:27]
-  reg [127:0] _RAND_25;
-  wire [127:0] stores_3_datas_data; // @[L2.scala 138:27]
-  wire [7:0] stores_3_datas_addr; // @[L2.scala 138:27]
-  wire [127:0] stores_3__T_4_data; // @[L2.scala 138:27]
-  wire [7:0] stores_3__T_4_addr; // @[L2.scala 138:27]
-  wire  stores_3__T_4_mask; // @[L2.scala 138:27]
-  wire  stores_3__T_4_en; // @[L2.scala 138:27]
-  reg  stores_3_datas_en_pipe_0;
-  reg [31:0] _RAND_26;
-  reg [7:0] stores_3_datas_addr_pipe_0;
-  reg [31:0] _RAND_27;
-  wire  MaxPeriodFibonacciLFSR_clock; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_reset; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_0; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_1; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_2; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_3; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_4; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_5; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_6; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_7; // @[PRNG.scala 82:22]
-  reg [2:0] state; // @[L2.scala 252:22]
-  reg [31:0] _RAND_28;
-  wire [2:0] _T_161; // @[Conditional.scala 37:39]
-  wire  _T_162; // @[Conditional.scala 37:30]
-  wire  _T_171; // @[Conditional.scala 37:30]
-  reg  target; // @[L2.scala 258:23]
-  reg [31:0] _RAND_29;
-  wire [1:0] ops_1; // @[L1Defs.scala 49:22 L1Defs.scala 51:14 L1Defs.scala 53:14]
-  wire [1:0] _GEN_56; // @[Conditional.scala 37:39]
-  wire [1:0] _T_173; // @[Conditional.scala 37:39]
-  wire  _T_174; // @[Conditional.scala 37:30]
-  wire  _T_177; // @[Conditional.scala 37:30]
-  wire  _T_180; // @[Conditional.scala 37:30]
-  wire  _T_181; // @[Conditional.scala 37:55]
-  wire  _T_194; // @[Conditional.scala 37:30]
-  wire [47:0] _GEN_30; // @[L2.scala 261:31]
-  wire [35:0] _T_107; // @[L2.scala 40:44]
-  wire  _T_108; // @[L2.scala 40:85]
-  wire  _T_109; // @[L2.scala 40:37]
-  wire  _T_104; // @[L2.scala 40:85]
-  wire  _T_105; // @[L2.scala 40:37]
-  wire  _T_100; // @[L2.scala 40:85]
-  wire  _T_101; // @[L2.scala 40:37]
-  wire  _T_96; // @[L2.scala 40:85]
-  wire  _T_97; // @[L2.scala 40:37]
-  wire [1:0] _T_102; // @[L2.scala 277:20]
-  wire [1:0] _T_106; // @[L2.scala 277:20]
-  wire [1:0] hitIdx; // @[L2.scala 277:20]
-  wire  mask_2_0; // @[L2.scala 165:16]
-  wire  _GEN_187; // @[Conditional.scala 39:67]
-  wire  _GEN_222; // @[Conditional.scala 39:67]
-  wire  _GEN_256; // @[Conditional.scala 40:58]
-  wire  _T_226; // @[Conditional.scala 37:30]
-  wire  _T_279; // @[Conditional.scala 37:30]
-  reg [1:0] victim; // @[L2.scala 292:23]
-  reg [31:0] _RAND_30;
-  wire  _GEN_450; // @[L2.scala 546:12]
-  wire  _GEN_454; // @[L2.scala 546:12]
-  wire  _GEN_458; // @[L2.scala 546:12]
-  wire  _GEN_462; // @[L2.scala 546:12]
-  wire  _T_280; // @[L2.scala 546:12]
-  wire  mask_6_0; // @[L2.scala 165:16]
-  wire [1:0] _GEN_453; // @[L2.scala 546:12]
-  wire [1:0] _GEN_457; // @[L2.scala 546:12]
-  wire [1:0] _GEN_461; // @[L2.scala 546:12]
-  wire [1:0] _GEN_465; // @[L2.scala 546:12]
-  wire  hasDirty_1; // @[L2.scala 549:86]
-  wire  hasShared_1; // @[L2.scala 550:87]
-  wire  _GEN_451; // @[L2.scala 546:12]
-  wire  _GEN_455; // @[L2.scala 546:12]
-  wire  _GEN_459; // @[L2.scala 546:12]
-  wire  _GEN_463; // @[L2.scala 546:12]
-  reg [1:0] wbFifoHead; // @[L2.scala 239:27]
-  reg [31:0] _RAND_31;
-  reg [1:0] wbFifoTail; // @[L2.scala 240:27]
-  reg [31:0] _RAND_32;
-  wire [1:0] _T_47; // @[L2.scala 242:46]
-  wire  wbFifoFull; // @[L2.scala 242:31]
-  wire  _T_307; // @[L2.scala 576:16]
-  wire  _GEN_556; // @[L2.scala 576:29]
-  wire  _GEN_612; // @[L2.scala 572:43]
-  wire  _GEN_653; // @[L2.scala 562:31]
-  wire  _GEN_693; // @[L2.scala 552:24]
-  wire  _GEN_717; // @[L2.scala 546:36]
-  wire  _T_358; // @[Conditional.scala 37:30]
-  reg [1:0] pendings_0; // @[L2.scala 295:25]
-  reg [31:0] _RAND_33;
-  wire  _T_362; // @[L2.scala 612:16]
-  wire  _T_363; // @[L2.scala 612:43]
-  wire  commit; // @[L2.scala 612:40]
-  reg  pendingVictim; // @[L2.scala 297:30]
-  reg [31:0] _RAND_34;
-  reg [1:0] pipeHitIdx; // @[L2.scala 279:27]
-  reg [31:0] _RAND_35;
-  wire [1:0] writtenTowards; // @[L2.scala 597:27]
-  wire  mask_11_0; // @[L2.scala 165:16]
-  wire  _GEN_764; // @[L2.scala 620:20]
-  wire  _T_390; // @[Conditional.scala 37:30]
-  wire  _T_394; // @[L2.scala 660:12]
-  reg  pipeLookups_3_dirty; // @[L2.scala 271:28]
-  reg [31:0] _RAND_36;
-  reg  pipeLookups_2_dirty; // @[L2.scala 271:28]
-  reg [31:0] _RAND_37;
-  reg  pipeLookups_1_dirty; // @[L2.scala 271:28]
-  reg [31:0] _RAND_38;
-  reg  pipeLookups_0_dirty; // @[L2.scala 271:28]
-  reg [31:0] _RAND_39;
-  wire  _GEN_36; // @[L2.scala 303:43]
-  wire  _GEN_40; // @[L2.scala 303:43]
-  wire  _GEN_44; // @[L2.scala 303:43]
-  reg [1:0] pipeLookups_3_states_0; // @[L2.scala 271:28]
-  reg [31:0] _RAND_40;
-  reg [1:0] pipeLookups_2_states_0; // @[L2.scala 271:28]
-  reg [31:0] _RAND_41;
-  reg [1:0] pipeLookups_1_states_0; // @[L2.scala 271:28]
-  reg [31:0] _RAND_42;
-  reg [1:0] pipeLookups_0_states_0; // @[L2.scala 271:28]
-  reg [31:0] _RAND_43;
-  wire [1:0] _GEN_38; // @[L2.scala 303:43]
-  wire [1:0] _GEN_42; // @[L2.scala 303:43]
-  wire [1:0] _GEN_46; // @[L2.scala 303:43]
-  wire  hasDirty_2; // @[L2.scala 663:92]
-  wire  _T_396; // @[L2.scala 700:42]
-  wire  _GEN_931; // @[L2.scala 700:55]
-  wire  _GEN_968; // @[L2.scala 661:29]
-  wire  _GEN_1005; // @[L2.scala 660:22]
-  wire  _GEN_1044; // @[Conditional.scala 39:67]
-  wire  _GEN_1061; // @[Conditional.scala 39:67]
-  wire  _GEN_1116; // @[Conditional.scala 39:67]
-  wire  _GEN_1162; // @[Conditional.scala 39:67]
-  wire  _GEN_1207; // @[Conditional.scala 39:67]
-  reg [63:0] bufs_1_1; // @[L2.scala 230:21]
-  reg [63:0] _RAND_44;
-  reg [63:0] bufs_0_1; // @[L2.scala 230:21]
-  reg [63:0] _RAND_45;
-  wire [63:0] _GEN_469; // @[L2.scala 511:42]
-  reg [63:0] bufs_1_0; // @[L2.scala 230:21]
-  reg [63:0] _RAND_46;
-  reg [63:0] bufs_0_0; // @[L2.scala 230:21]
-  reg [63:0] _RAND_47;
-  wire [63:0] _GEN_468; // @[L2.scala 511:42]
-  wire [127:0] rdata; // @[L2.scala 511:42]
-  wire [127:0] _GEN_611; // @[L2.scala 572:43]
-  wire [127:0] _GEN_716; // @[L2.scala 546:36]
-  wire [127:0] _GEN_930; // @[L2.scala 700:55]
-  wire [127:0] _GEN_1060; // @[Conditional.scala 39:67]
-  wire [127:0] _GEN_1115; // @[Conditional.scala 39:67]
-  wire  mask_2_1; // @[L2.scala 165:16]
-  wire  _GEN_188; // @[Conditional.scala 39:67]
-  wire  _GEN_223; // @[Conditional.scala 39:67]
-  wire  _GEN_257; // @[Conditional.scala 40:58]
-  wire  mask_6_1; // @[L2.scala 165:16]
-  wire  _GEN_557; // @[L2.scala 576:29]
-  wire  _GEN_613; // @[L2.scala 572:43]
-  wire  _GEN_654; // @[L2.scala 562:31]
-  wire  _GEN_694; // @[L2.scala 552:24]
-  wire  _GEN_718; // @[L2.scala 546:36]
-  wire  mask_11_1; // @[L2.scala 165:16]
-  wire  _GEN_765; // @[L2.scala 620:20]
-  wire  _GEN_932; // @[L2.scala 700:55]
-  wire  _GEN_969; // @[L2.scala 661:29]
-  wire  _GEN_1006; // @[L2.scala 660:22]
-  wire  _GEN_1045; // @[Conditional.scala 39:67]
-  wire  _GEN_1062; // @[Conditional.scala 39:67]
-  wire  _GEN_1117; // @[Conditional.scala 39:67]
-  wire  _GEN_1163; // @[Conditional.scala 39:67]
-  wire  _GEN_1208; // @[Conditional.scala 39:67]
-  wire  mask_2_2; // @[L2.scala 165:16]
-  wire  _GEN_189; // @[Conditional.scala 39:67]
-  wire  _GEN_224; // @[Conditional.scala 39:67]
-  wire  _GEN_258; // @[Conditional.scala 40:58]
-  wire  mask_6_2; // @[L2.scala 165:16]
-  wire  _GEN_558; // @[L2.scala 576:29]
-  wire  _GEN_614; // @[L2.scala 572:43]
-  wire  _GEN_655; // @[L2.scala 562:31]
-  wire  _GEN_695; // @[L2.scala 552:24]
-  wire  _GEN_719; // @[L2.scala 546:36]
-  wire  mask_11_2; // @[L2.scala 165:16]
-  wire  _GEN_766; // @[L2.scala 620:20]
-  wire  _GEN_933; // @[L2.scala 700:55]
-  wire  _GEN_970; // @[L2.scala 661:29]
-  wire  _GEN_1007; // @[L2.scala 660:22]
-  wire  _GEN_1046; // @[Conditional.scala 39:67]
-  wire  _GEN_1063; // @[Conditional.scala 39:67]
-  wire  _GEN_1118; // @[Conditional.scala 39:67]
-  wire  _GEN_1164; // @[Conditional.scala 39:67]
-  wire  _GEN_1209; // @[Conditional.scala 39:67]
-  wire  mask_2_3; // @[L2.scala 165:16]
-  wire  _GEN_190; // @[Conditional.scala 39:67]
-  wire  _GEN_225; // @[Conditional.scala 39:67]
-  wire  _GEN_259; // @[Conditional.scala 40:58]
-  wire  mask_6_3; // @[L2.scala 165:16]
-  wire  _GEN_559; // @[L2.scala 576:29]
-  wire  _GEN_615; // @[L2.scala 572:43]
-  wire  _GEN_656; // @[L2.scala 562:31]
-  wire  _GEN_696; // @[L2.scala 552:24]
-  wire  _GEN_720; // @[L2.scala 546:36]
-  wire  mask_11_3; // @[L2.scala 165:16]
-  wire  _GEN_767; // @[L2.scala 620:20]
-  wire  _GEN_934; // @[L2.scala 700:55]
-  wire  _GEN_971; // @[L2.scala 661:29]
-  wire  _GEN_1008; // @[L2.scala 660:22]
-  wire  _GEN_1047; // @[Conditional.scala 39:67]
-  wire  _GEN_1064; // @[Conditional.scala 39:67]
-  wire  _GEN_1119; // @[Conditional.scala 39:67]
-  wire  _GEN_1165; // @[Conditional.scala 39:67]
-  wire  _GEN_1210; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_285; // @[L2.scala 439:33]
-  wire [1:0] _GEN_289; // @[L2.scala 439:33]
-  wire [1:0] _GEN_293; // @[L2.scala 439:33]
-  wire  _T_236; // @[L2.scala 439:33]
-  wire  hasShared; // @[L2.scala 439:55]
-  wire  _T_239; // @[L2.scala 442:12]
-  wire  isDC; // @[L2.scala 433:25]
-  wire  mask_3_0; // @[L2.scala 176:16]
-  wire  _GEN_326; // @[L2.scala 457:20]
-  wire  _T_231; // @[L2.scala 436:33]
-  wire  hasDirty; // @[L2.scala 436:57]
-  wire  _T_253; // @[L2.scala 467:18]
-  wire  _T_254; // @[L2.scala 469:24]
-  wire  _GEN_389; // @[L2.scala 469:49]
-  wire  _GEN_424; // @[L2.scala 467:29]
-  wire  _GEN_442; // @[L2.scala 442:24]
-  wire  _GEN_484; // @[L2.scala 528:20]
-  wire  _GEN_550; // @[L2.scala 576:29]
-  wire  _GEN_606; // @[L2.scala 572:43]
-  wire  _GEN_647; // @[L2.scala 562:31]
-  wire  _GEN_687; // @[L2.scala 552:24]
-  wire  _GEN_711; // @[L2.scala 546:36]
-  wire  _T_375; // @[L2.scala 629:14]
-  wire  _T_377; // @[L2.scala 629:29]
-  wire  _GEN_810; // @[L2.scala 629:67]
-  wire  _GEN_830; // @[L2.scala 624:22]
-  wire  _GEN_962; // @[L2.scala 661:29]
-  wire  _GEN_999; // @[L2.scala 660:22]
-  wire  _GEN_1038; // @[Conditional.scala 39:67]
-  wire  _GEN_1078; // @[Conditional.scala 39:67]
-  wire  _GEN_1110; // @[Conditional.scala 39:67]
-  wire  _GEN_1148; // @[Conditional.scala 39:67]
-  wire  _GEN_1201; // @[Conditional.scala 39:67]
-  wire [1:0] newState; // @[L2.scala 451:49]
-  wire [1:0] _GEN_438; // @[L2.scala 442:24]
-  wire [1:0] _GEN_602; // @[L2.scala 572:43]
-  wire [1:0] _GEN_707; // @[L2.scala 546:36]
-  wire  _T_403; // @[L2.scala 672:18]
-  wire [1:0] sinit; // @[L2.scala 672:25]
-  wire [1:0] _GEN_921; // @[L2.scala 700:55]
-  wire [1:0] _GEN_958; // @[L2.scala 661:29]
-  wire [1:0] _GEN_1074; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1106; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1144; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1197; // @[Conditional.scala 39:67]
-  wire [35:0] writtenDir_tag; // @[L2.scala 73:19]
-  wire [35:0] _GEN_307; // @[L2.scala 44:7]
-  wire [35:0] _GEN_311; // @[L2.scala 44:7]
-  wire [35:0] _GEN_315; // @[L2.scala 44:7]
-  wire [35:0] _GEN_319; // @[L2.scala 44:7]
-  wire [35:0] _GEN_439; // @[L2.scala 442:24]
-  wire [35:0] _GEN_603; // @[L2.scala 572:43]
-  wire [35:0] _GEN_708; // @[L2.scala 546:36]
-  wire [35:0] _GEN_786; // @[L2.scala 44:7]
-  wire [1:0] _GEN_1518; // @[L2.scala 44:7]
-  wire [35:0] _GEN_790; // @[L2.scala 44:7]
-  wire [35:0] _GEN_794; // @[L2.scala 44:7]
-  wire [35:0] _GEN_922; // @[L2.scala 700:55]
-  wire [35:0] _GEN_959; // @[L2.scala 661:29]
-  wire [35:0] _GEN_1075; // @[Conditional.scala 39:67]
-  wire [35:0] _GEN_1107; // @[Conditional.scala 39:67]
-  wire [35:0] _GEN_1145; // @[Conditional.scala 39:67]
-  wire [35:0] _GEN_1198; // @[Conditional.scala 39:67]
-  wire  _GEN_310; // @[L2.scala 44:7]
-  wire  _GEN_314; // @[L2.scala 44:7]
-  wire  _GEN_318; // @[L2.scala 44:7]
-  wire  _GEN_440; // @[L2.scala 442:24]
-  wire  _GEN_1108; // @[Conditional.scala 39:67]
-  wire  _GEN_1146; // @[Conditional.scala 39:67]
-  wire  _GEN_1199; // @[Conditional.scala 39:67]
-  wire  _GEN_309; // @[L2.scala 44:7]
-  wire  _GEN_313; // @[L2.scala 44:7]
-  wire  _GEN_317; // @[L2.scala 44:7]
-  wire  _GEN_441; // @[L2.scala 442:24]
-  wire  _GEN_784; // @[L2.scala 44:7]
-  wire  _GEN_788; // @[L2.scala 44:7]
-  wire  _GEN_792; // @[L2.scala 44:7]
-  wire  _GEN_1077; // @[Conditional.scala 39:67]
-  wire  _GEN_1109; // @[Conditional.scala 39:67]
-  wire  _GEN_1147; // @[Conditional.scala 39:67]
-  wire  _GEN_1200; // @[Conditional.scala 39:67]
-  wire  mask_3_1; // @[L2.scala 176:16]
-  wire  _GEN_327; // @[L2.scala 457:20]
-  wire  _GEN_390; // @[L2.scala 469:49]
-  wire  _GEN_425; // @[L2.scala 467:29]
-  wire  _GEN_443; // @[L2.scala 442:24]
-  wire  _GEN_485; // @[L2.scala 528:20]
-  wire  _GEN_551; // @[L2.scala 576:29]
-  wire  _GEN_607; // @[L2.scala 572:43]
-  wire  _GEN_648; // @[L2.scala 562:31]
-  wire  _GEN_688; // @[L2.scala 552:24]
-  wire  _GEN_712; // @[L2.scala 546:36]
-  wire  _GEN_811; // @[L2.scala 629:67]
-  wire  _GEN_831; // @[L2.scala 624:22]
-  wire  _GEN_963; // @[L2.scala 661:29]
-  wire  _GEN_1000; // @[L2.scala 660:22]
-  wire  _GEN_1039; // @[Conditional.scala 39:67]
-  wire  _GEN_1079; // @[Conditional.scala 39:67]
-  wire  _GEN_1111; // @[Conditional.scala 39:67]
-  wire  _GEN_1149; // @[Conditional.scala 39:67]
-  wire  _GEN_1202; // @[Conditional.scala 39:67]
-  wire  mask_3_2; // @[L2.scala 176:16]
-  wire  _GEN_328; // @[L2.scala 457:20]
-  wire  _GEN_391; // @[L2.scala 469:49]
-  wire  _GEN_426; // @[L2.scala 467:29]
-  wire  _GEN_444; // @[L2.scala 442:24]
-  wire  _GEN_486; // @[L2.scala 528:20]
-  wire  _GEN_552; // @[L2.scala 576:29]
-  wire  _GEN_608; // @[L2.scala 572:43]
-  wire  _GEN_649; // @[L2.scala 562:31]
-  wire  _GEN_689; // @[L2.scala 552:24]
-  wire  _GEN_713; // @[L2.scala 546:36]
-  wire  _GEN_812; // @[L2.scala 629:67]
-  wire  _GEN_832; // @[L2.scala 624:22]
-  wire  _GEN_964; // @[L2.scala 661:29]
-  wire  _GEN_1001; // @[L2.scala 660:22]
-  wire  _GEN_1040; // @[Conditional.scala 39:67]
-  wire  _GEN_1080; // @[Conditional.scala 39:67]
-  wire  _GEN_1112; // @[Conditional.scala 39:67]
-  wire  _GEN_1150; // @[Conditional.scala 39:67]
-  wire  _GEN_1203; // @[Conditional.scala 39:67]
-  wire  mask_3_3; // @[L2.scala 176:16]
-  wire  _GEN_329; // @[L2.scala 457:20]
-  wire  _GEN_392; // @[L2.scala 469:49]
-  wire  _GEN_427; // @[L2.scala 467:29]
-  wire  _GEN_445; // @[L2.scala 442:24]
-  wire  _GEN_487; // @[L2.scala 528:20]
-  wire  _GEN_553; // @[L2.scala 576:29]
-  wire  _GEN_609; // @[L2.scala 572:43]
-  wire  _GEN_650; // @[L2.scala 562:31]
-  wire  _GEN_690; // @[L2.scala 552:24]
-  wire  _GEN_714; // @[L2.scala 546:36]
-  wire  _GEN_813; // @[L2.scala 629:67]
-  wire  _GEN_833; // @[L2.scala 624:22]
-  wire  _GEN_965; // @[L2.scala 661:29]
-  wire  _GEN_1002; // @[L2.scala 660:22]
-  wire  _GEN_1041; // @[Conditional.scala 39:67]
-  wire  _GEN_1081; // @[Conditional.scala 39:67]
-  wire  _GEN_1113; // @[Conditional.scala 39:67]
-  wire  _GEN_1151; // @[Conditional.scala 39:67]
-  wire  _GEN_1204; // @[Conditional.scala 39:67]
-  wire  _T_8; // @[L2.scala 217:38]
-  wire  _T_9; // @[L2.scala 217:38]
-  wire  _T_11; // @[L2.scala 219:25]
-  reg  misses_0; // @[L2.scala 224:23]
-  reg [31:0] _RAND_48;
-  reg  misses_1; // @[L2.scala 224:23]
-  reg [31:0] _RAND_49;
-  reg [47:0] missesAddr_0; // @[L2.scala 225:27]
-  reg [63:0] _RAND_50;
-  reg [47:0] missesAddr_1; // @[L2.scala 225:27]
-  reg [63:0] _RAND_51;
-  reg  collided_0; // @[L2.scala 226:25]
-  reg [31:0] _RAND_52;
-  reg  collided_1; // @[L2.scala 226:25]
-  reg [31:0] _RAND_53;
-  reg  refilled_0; // @[L2.scala 227:25]
-  reg [31:0] _RAND_54;
-  reg  refilled_1; // @[L2.scala 227:25]
-  reg [31:0] _RAND_55;
-  reg  sent_0; // @[L2.scala 228:21]
-  reg [31:0] _RAND_56;
-  reg  sent_1; // @[L2.scala 228:21]
-  reg [31:0] _RAND_57;
-  reg  ucSent_0; // @[L2.scala 229:23]
-  reg [31:0] _RAND_58;
-  wire  _T_21; // @[L2.scala 234:51]
-  wire  _T_22; // @[L2.scala 234:48]
-  wire  _T_23; // @[L2.scala 234:45]
-  wire  _T_24; // @[L2.scala 234:45]
-  wire  _T_25; // @[L2.scala 234:45]
-  wire  _T_26; // @[L2.scala 234:51]
-  wire  _T_27; // @[L2.scala 234:48]
-  wire  _T_29; // @[L2.scala 234:45]
-  wire  _T_30; // @[L2.scala 234:45]
-  wire  _T_31; // @[L2.scala 235:50]
-  wire  _T_32; // @[L2.scala 235:46]
-  wire  _T_34; // @[L2.scala 235:45]
-  wire  _T_35; // @[L2.scala 235:45]
-  wire  _T_36; // @[L2.scala 235:50]
-  wire  _T_37; // @[L2.scala 235:46]
-  wire  _T_39; // @[L2.scala 235:45]
-  wire  _T_40; // @[L2.scala 235:45]
-  reg [43:0] wbFifo_0_lineaddr; // @[L2.scala 238:23]
-  reg [63:0] _RAND_59;
-  reg [127:0] wbFifo_0_data; // @[L2.scala 238:23]
-  reg [127:0] _RAND_60;
-  reg  wbFifo_0_valid; // @[L2.scala 238:23]
-  reg [31:0] _RAND_61;
-  reg [43:0] wbFifo_1_lineaddr; // @[L2.scala 238:23]
-  reg [63:0] _RAND_62;
-  reg [127:0] wbFifo_1_data; // @[L2.scala 238:23]
-  reg [127:0] _RAND_63;
-  reg  wbFifo_1_valid; // @[L2.scala 238:23]
-  reg [31:0] _RAND_64;
-  reg [43:0] wbFifo_2_lineaddr; // @[L2.scala 238:23]
-  reg [63:0] _RAND_65;
-  reg [127:0] wbFifo_2_data; // @[L2.scala 238:23]
-  reg [127:0] _RAND_66;
-  reg  wbFifo_2_valid; // @[L2.scala 238:23]
-  reg [31:0] _RAND_67;
-  reg [43:0] wbFifo_3_lineaddr; // @[L2.scala 238:23]
-  reg [63:0] _RAND_68;
-  reg [127:0] wbFifo_3_data; // @[L2.scala 238:23]
-  reg [127:0] _RAND_69;
-  reg  wbFifo_3_valid; // @[L2.scala 238:23]
-  reg [31:0] _RAND_70;
-  wire  wbFifoEmpty; // @[L2.scala 241:32]
-  reg [1:0] wbState; // @[L2.scala 244:24]
-  reg [31:0] _RAND_71;
-  reg [7:0] rstCnt; // @[L2.scala 249:23]
-  reg [31:0] _RAND_72;
-  wire [7:0] targetIndex; // @[L2.scala 261:31]
-  reg [47:0] pipeTargetAddr; // @[L2.scala 262:31]
-  reg [63:0] _RAND_73;
-  wire  _T_48; // @[L2.scala 265:52]
-  wire  _T_49; // @[L2.scala 265:38]
-  wire  _T_51; // @[L2.scala 265:52]
-  wire  _T_52; // @[L2.scala 265:38]
-  wire  sameAddrRefilling; // @[L2.scala 265:23]
-  reg [35:0] pipeLookups_0_tag; // @[L2.scala 271:28]
-  reg [63:0] _RAND_74;
-  reg [35:0] pipeLookups_1_tag; // @[L2.scala 271:28]
-  reg [63:0] _RAND_75;
-  reg [35:0] pipeLookups_2_tag; // @[L2.scala 271:28]
-  reg [63:0] _RAND_76;
-  reg [35:0] pipeLookups_3_tag; // @[L2.scala 271:28]
-  reg [63:0] _RAND_77;
-  wire  _T_60; // @[L2.scala 272:55]
-  wire  _T_64; // @[L2.scala 272:55]
-  wire  hit; // @[L2.scala 272:55]
-  wire [3:0] _T_72; // @[L2.scala 274:79]
-  wire [2:0] _T_73; // @[L2.scala 274:79]
-  wire [2:0] _GEN_1522; // @[L2.scala 274:79]
-  wire [2:0] _T_79; // @[L2.scala 274:79]
-  wire [2:0] _GEN_1523; // @[L2.scala 274:79]
-  wire [2:0] _T_85; // @[L2.scala 274:79]
-  wire [2:0] _GEN_1524; // @[L2.scala 274:79]
-  wire [2:0] hitCount; // @[L2.scala 274:79]
-  wire  _T_91; // @[L2.scala 275:19]
-  wire  _T_93; // @[L2.scala 275:9]
-  wire  _T_94; // @[L2.scala 275:9]
-  wire [43:0] _T_110; // @[L2.scala 283:67]
-  wire  _T_111; // @[L2.scala 283:52]
-  wire  _T_112; // @[L2.scala 283:36]
-  wire  _T_115; // @[L2.scala 283:52]
-  wire  _T_116; // @[L2.scala 283:36]
-  wire  _T_117; // @[L2.scala 283:23]
-  wire  _T_119; // @[L2.scala 283:52]
-  wire  _T_120; // @[L2.scala 283:36]
-  wire  _T_121; // @[L2.scala 283:23]
-  wire  _T_123; // @[L2.scala 283:52]
-  wire  _T_124; // @[L2.scala 283:36]
-  wire  fifoHit; // @[L2.scala 283:23]
-  wire [127:0] _T_127; // @[L2.scala 286:28]
-  wire [127:0] _T_131; // @[L2.scala 286:28]
-  wire [127:0] _T_132; // @[L2.scala 286:23]
-  wire [127:0] _T_135; // @[L2.scala 286:28]
-  wire [127:0] _T_136; // @[L2.scala 286:23]
-  wire [127:0] _T_139; // @[L2.scala 286:28]
-  wire [127:0] fifoHitData; // @[L2.scala 286:23]
-  wire [7:0] rand_; // @[PRNG.scala 86:17]
-  wire [11:0] _T_148; // @[L2.scala 303:60]
-  wire [35:0] _GEN_37; // @[L2.scala 303:43]
-  wire [35:0] _GEN_41; // @[L2.scala 303:43]
-  wire [35:0] _GEN_45; // @[L2.scala 303:43]
-  wire [47:0] _T_149; // @[L2.scala 303:43]
-  wire  _T_152; // @[L2.scala 319:62]
-  wire  _T_154; // @[L2.scala 319:76]
-  wire  p; // @[L2.scala 319:16]
-  wire  _GEN_49; // @[L2.scala 322:8]
-  wire  _T_155; // @[L2.scala 322:8]
-  wire  _GEN_51; // @[L2.scala 322:19]
-  wire  _T_156; // @[L2.scala 322:19]
-  wire [1:0] _GEN_53; // @[L2.scala 322:45]
-  wire  _T_157; // @[L2.scala 322:45]
-  wire  _T_158; // @[L2.scala 322:35]
-  wire  nextEventful; // @[Mux.scala 87:16]
-  wire [47:0] _T_164; // @[L2.scala 333:47]
-  wire [7:0] _T_165; // @[L2.scala 190:27]
-  wire [7:0] _T_167; // @[L2.scala 335:24]
-  wire  _T_168; // @[L2.scala 337:19]
-  wire  _GEN_58; // @[L2.scala 353:32]
-  wire  _GEN_60; // @[L2.scala 354:36]
-  wire [1:0] _T_182; // @[L2.scala 355:29]
-  wire [1:0] _GEN_62; // @[L2.scala 354:36]
-  wire  _GEN_65; // @[L2.scala 363:40]
-  wire  _T_183; // @[L2.scala 367:30]
-  wire  _T_184; // @[L2.scala 367:20]
-  wire  _T_186; // @[L2.scala 367:19]
-  wire  _T_187; // @[L2.scala 367:19]
-  wire [63:0] _T_190; // @[L2.scala 374:51]
-  wire [63:0] _T_191; // @[L2.scala 374:51]
-  wire  _GEN_1525; // @[L2.scala 375:30]
-  wire  _GEN_70; // @[L2.scala 375:30]
-  wire  _GEN_71; // @[L2.scala 375:30]
-  wire  _GEN_74; // @[L2.scala 377:32]
-  wire  _GEN_75; // @[L2.scala 377:32]
-  wire  _GEN_76; // @[L2.scala 380:32]
-  wire  _GEN_77; // @[L2.scala 380:32]
-  wire  _GEN_82; // @[L2.scala 384:28]
-  wire  _GEN_83; // @[L2.scala 384:28]
-  wire  _GEN_90; // @[L2.scala 379:43]
-  wire  _GEN_91; // @[L2.scala 379:43]
-  wire  _GEN_100; // @[L2.scala 372:27]
-  wire  _GEN_101; // @[L2.scala 372:27]
-  wire  _GEN_105; // @[L2.scala 372:27]
-  wire  _GEN_106; // @[L2.scala 372:27]
-  wire  _GEN_107; // @[L2.scala 386:30]
-  wire  _GEN_108; // @[L2.scala 386:30]
-  wire  _GEN_119; // @[L2.scala 363:40]
-  wire  _GEN_120; // @[L2.scala 363:40]
-  wire  _GEN_123; // @[L2.scala 363:40]
-  wire  _GEN_124; // @[L2.scala 363:40]
-  wire [1:0] _GEN_125; // @[L2.scala 361:27]
-  wire  _GEN_135; // @[L2.scala 361:27]
-  wire  _GEN_136; // @[L2.scala 361:27]
-  wire  _GEN_139; // @[L2.scala 361:27]
-  wire  _GEN_140; // @[L2.scala 361:27]
-  wire [1:0] _GEN_142; // @[L2.scala 353:32]
-  wire  _GEN_152; // @[L2.scala 353:32]
-  wire  _GEN_153; // @[L2.scala 353:32]
-  wire  _GEN_156; // @[L2.scala 353:32]
-  wire  _GEN_157; // @[L2.scala 353:32]
-  wire  _GEN_162; // @[L2.scala 40:85]
-  wire [35:0] _GEN_164; // @[L2.scala 40:85]
-  wire [1:0] _GEN_165; // @[L2.scala 40:85]
-  wire  _GEN_166; // @[L2.scala 40:85]
-  wire [35:0] _GEN_168; // @[L2.scala 40:85]
-  wire [1:0] _GEN_169; // @[L2.scala 40:85]
-  wire  _GEN_170; // @[L2.scala 40:85]
-  wire [35:0] _GEN_172; // @[L2.scala 40:85]
-  wire [1:0] _GEN_173; // @[L2.scala 40:85]
-  wire  _T_196; // @[L2.scala 40:85]
-  wire  _T_197; // @[L2.scala 40:37]
-  wire  _T_199; // @[L2.scala 394:17]
-  wire  _T_200; // @[L2.scala 394:17]
-  wire  _T_202; // @[L2.scala 397:51]
-  wire  _T_204; // @[L2.scala 397:21]
-  wire  _T_205; // @[L2.scala 397:21]
-  wire  _T_206; // @[L2.scala 399:51]
-  wire  _T_208; // @[L2.scala 399:21]
-  wire  _T_209; // @[L2.scala 399:21]
-  wire  _GEN_174; // @[L2.scala 421:26]
-  wire  _GEN_175; // @[L2.scala 421:26]
-  wire  _GEN_191; // @[Conditional.scala 39:67]
-  wire  _GEN_192; // @[Conditional.scala 39:67]
-  wire  _GEN_205; // @[Conditional.scala 39:67]
-  wire  _GEN_206; // @[Conditional.scala 39:67]
-  wire  _GEN_209; // @[Conditional.scala 39:67]
-  wire  _GEN_210; // @[Conditional.scala 39:67]
-  wire  _GEN_226; // @[Conditional.scala 39:67]
-  wire  _GEN_227; // @[Conditional.scala 39:67]
-  wire  _GEN_239; // @[Conditional.scala 40:58]
-  wire  _GEN_240; // @[Conditional.scala 40:58]
-  wire  _GEN_243; // @[Conditional.scala 40:58]
-  wire  _GEN_244; // @[Conditional.scala 40:58]
-  wire  _GEN_260; // @[Conditional.scala 40:58]
-  wire  _GEN_261; // @[Conditional.scala 40:58]
-  wire  _T_240; // @[L2.scala 443:16]
-  wire  _T_242; // @[L2.scala 443:15]
-  wire  _T_243; // @[L2.scala 443:15]
-  wire [127:0] _GEN_296; // @[L2.scala 445:24]
-  wire [127:0] _GEN_297; // @[L2.scala 445:24]
-  wire [127:0] _GEN_298; // @[L2.scala 445:24]
-  wire [127:0] _GEN_299; // @[L2.scala 445:24]
-  wire  _T_271; // @[L2.scala 490:35]
-  wire  _GEN_380; // @[L2.scala 469:49]
-  wire  _GEN_381; // @[L2.scala 469:49]
-  wire  _GEN_394; // @[L2.scala 469:49]
-  wire  _T_276; // @[L2.scala 500:33]
-  wire  _GEN_415; // @[L2.scala 467:29]
-  wire  _GEN_416; // @[L2.scala 467:29]
-  wire  _GEN_429; // @[L2.scala 467:29]
-  wire  _GEN_433; // @[L2.scala 442:24]
-  wire  _GEN_434; // @[L2.scala 442:24]
-  wire [7:0] _GEN_437; // @[L2.scala 442:24]
-  wire [35:0] _GEN_456; // @[L2.scala 546:12]
-  wire [35:0] _GEN_460; // @[L2.scala 546:12]
-  wire [35:0] _GEN_464; // @[L2.scala 546:12]
-  wire  _T_283; // @[L2.scala 513:15]
-  wire  _T_284; // @[L2.scala 513:15]
-  wire  _T_286; // @[L2.scala 514:15]
-  wire  _T_287; // @[L2.scala 514:15]
-  wire  _GEN_474; // @[L2.scala 518:24]
-  wire  _GEN_475; // @[L2.scala 518:24]
-  wire  _GEN_476; // @[L2.scala 519:26]
-  wire  _GEN_477; // @[L2.scala 519:26]
-  wire [43:0] _T_309; // @[L2.scala 577:64]
-  wire [127:0] _GEN_499; // @[L2.scala 579:37]
-  wire [127:0] _GEN_500; // @[L2.scala 579:37]
-  wire [127:0] _GEN_501; // @[L2.scala 579:37]
-  wire  _GEN_1529; // @[L2.scala 580:38]
-  wire  _GEN_502; // @[L2.scala 580:38]
-  wire  _GEN_1530; // @[L2.scala 580:38]
-  wire  _GEN_503; // @[L2.scala 580:38]
-  wire  _GEN_1531; // @[L2.scala 580:38]
-  wire  _GEN_504; // @[L2.scala 580:38]
-  wire  _GEN_1532; // @[L2.scala 580:38]
-  wire  _GEN_505; // @[L2.scala 580:38]
-  wire  _GEN_532; // @[L2.scala 576:29]
-  wire  _GEN_533; // @[L2.scala 576:29]
-  wire  _GEN_534; // @[L2.scala 576:29]
-  wire  _GEN_535; // @[L2.scala 576:29]
-  wire  _GEN_539; // @[L2.scala 576:29]
-  wire  _GEN_540; // @[L2.scala 576:29]
-  wire  _GEN_543; // @[L2.scala 576:29]
-  wire  _GEN_544; // @[L2.scala 576:29]
-  wire  _GEN_588; // @[L2.scala 572:43]
-  wire  _GEN_589; // @[L2.scala 572:43]
-  wire  _GEN_590; // @[L2.scala 572:43]
-  wire  _GEN_591; // @[L2.scala 572:43]
-  wire  _GEN_595; // @[L2.scala 572:43]
-  wire  _GEN_596; // @[L2.scala 572:43]
-  wire  _GEN_599; // @[L2.scala 572:43]
-  wire  _GEN_600; // @[L2.scala 572:43]
-  wire [7:0] _GEN_601; // @[L2.scala 572:43]
-  wire  _GEN_618; // @[L2.scala 562:31]
-  wire  _GEN_629; // @[L2.scala 562:31]
-  wire  _GEN_630; // @[L2.scala 562:31]
-  wire  _GEN_631; // @[L2.scala 562:31]
-  wire  _GEN_632; // @[L2.scala 562:31]
-  wire  _GEN_636; // @[L2.scala 562:31]
-  wire  _GEN_637; // @[L2.scala 562:31]
-  wire  _GEN_640; // @[L2.scala 562:31]
-  wire  _GEN_641; // @[L2.scala 562:31]
-  wire  _GEN_658; // @[L2.scala 552:24]
-  wire  _GEN_669; // @[L2.scala 552:24]
-  wire  _GEN_670; // @[L2.scala 552:24]
-  wire  _GEN_671; // @[L2.scala 552:24]
-  wire  _GEN_672; // @[L2.scala 552:24]
-  wire  _GEN_676; // @[L2.scala 552:24]
-  wire  _GEN_677; // @[L2.scala 552:24]
-  wire  _GEN_680; // @[L2.scala 552:24]
-  wire  _GEN_681; // @[L2.scala 552:24]
-  wire  _GEN_700; // @[L2.scala 546:36]
-  wire  _GEN_701; // @[L2.scala 546:36]
-  wire  _GEN_704; // @[L2.scala 546:36]
-  wire  _GEN_705; // @[L2.scala 546:36]
-  wire [7:0] _GEN_706; // @[L2.scala 546:36]
-  wire  _GEN_733; // @[L2.scala 546:36]
-  wire  _GEN_734; // @[L2.scala 546:36]
-  wire  _GEN_735; // @[L2.scala 546:36]
-  wire  _GEN_736; // @[L2.scala 546:36]
-  wire [1:0] ent_states_0; // @[L2.scala 597:27]
-  wire [35:0] ent_tag; // @[L2.scala 597:27]
-  wire [11:0] _T_361; // @[L2.scala 605:46]
-  wire [47:0] writtenAddr; // @[L2.scala 605:33]
-  wire [7:0] _T_369; // @[L2.scala 168:28]
-  reg  _T_371; // @[L2.scala 627:23]
-  reg [31:0] _RAND_78;
-  wire  _T_373; // @[L2.scala 627:15]
-  wire  _T_374; // @[L2.scala 627:15]
-  wire  _T_387; // @[L2.scala 643:20]
-  wire  _GEN_799; // @[L2.scala 629:67]
-  wire  _GEN_800; // @[L2.scala 629:67]
-  wire  _GEN_803; // @[L2.scala 629:67]
-  wire  _GEN_804; // @[L2.scala 629:67]
-  wire  _GEN_819; // @[L2.scala 624:22]
-  wire  _GEN_820; // @[L2.scala 624:22]
-  wire  _GEN_823; // @[L2.scala 624:22]
-  wire  _GEN_824; // @[L2.scala 624:22]
-  wire  _GEN_915; // @[L2.scala 700:55]
-  wire  _GEN_916; // @[L2.scala 700:55]
-  wire  _GEN_917; // @[L2.scala 700:55]
-  wire  _GEN_918; // @[L2.scala 700:55]
-  wire [7:0] _GEN_920; // @[L2.scala 700:55]
-  wire  _GEN_937; // @[L2.scala 700:55]
-  wire  _GEN_938; // @[L2.scala 700:55]
-  wire  _GEN_941; // @[L2.scala 700:55]
-  wire  _GEN_942; // @[L2.scala 700:55]
-  wire  _T_438; // @[L2.scala 713:28]
-  wire  _T_440; // @[L2.scala 713:17]
-  wire  _T_441; // @[L2.scala 713:17]
-  wire  _GEN_952; // @[L2.scala 661:29]
-  wire  _GEN_953; // @[L2.scala 661:29]
-  wire  _GEN_954; // @[L2.scala 661:29]
-  wire  _GEN_955; // @[L2.scala 661:29]
-  wire [7:0] _GEN_957; // @[L2.scala 661:29]
-  wire  _GEN_974; // @[L2.scala 661:29]
-  wire  _GEN_975; // @[L2.scala 661:29]
-  wire  _GEN_978; // @[L2.scala 661:29]
-  wire  _GEN_979; // @[L2.scala 661:29]
-  wire  _GEN_989; // @[L2.scala 660:22]
-  wire  _GEN_990; // @[L2.scala 660:22]
-  wire  _GEN_991; // @[L2.scala 660:22]
-  wire  _GEN_992; // @[L2.scala 660:22]
-  wire  _GEN_1011; // @[L2.scala 660:22]
-  wire  _GEN_1012; // @[L2.scala 660:22]
-  wire  _GEN_1015; // @[L2.scala 660:22]
-  wire  _GEN_1016; // @[L2.scala 660:22]
-  wire  _GEN_1028; // @[Conditional.scala 39:67]
-  wire  _GEN_1029; // @[Conditional.scala 39:67]
-  wire  _GEN_1030; // @[Conditional.scala 39:67]
-  wire  _GEN_1031; // @[Conditional.scala 39:67]
-  wire  _GEN_1050; // @[Conditional.scala 39:67]
-  wire  _GEN_1051; // @[Conditional.scala 39:67]
-  wire  _GEN_1054; // @[Conditional.scala 39:67]
-  wire  _GEN_1055; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1059; // @[Conditional.scala 39:67]
-  wire [127:0] _GEN_1065; // @[Conditional.scala 39:67]
-  wire  _GEN_1067; // @[Conditional.scala 39:67]
-  wire  _GEN_1068; // @[Conditional.scala 39:67]
-  wire  _GEN_1071; // @[Conditional.scala 39:67]
-  wire  _GEN_1072; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1073; // @[Conditional.scala 39:67]
-  wire  _GEN_1092; // @[Conditional.scala 39:67]
-  wire  _GEN_1093; // @[Conditional.scala 39:67]
-  wire  _GEN_1094; // @[Conditional.scala 39:67]
-  wire  _GEN_1095; // @[Conditional.scala 39:67]
-  wire [127:0] _GEN_1097; // @[Conditional.scala 39:67]
-  wire  _GEN_1099; // @[Conditional.scala 39:67]
-  wire  _GEN_1100; // @[Conditional.scala 39:67]
-  wire  _GEN_1103; // @[Conditional.scala 39:67]
-  wire  _GEN_1104; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1105; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1114; // @[Conditional.scala 39:67]
-  wire  _GEN_1132; // @[Conditional.scala 39:67]
-  wire  _GEN_1133; // @[Conditional.scala 39:67]
-  wire  _GEN_1134; // @[Conditional.scala 39:67]
-  wire  _GEN_1135; // @[Conditional.scala 39:67]
-  wire  _GEN_1139; // @[Conditional.scala 39:67]
-  wire  _GEN_1140; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1143; // @[Conditional.scala 39:67]
-  wire  _GEN_1158; // @[Conditional.scala 39:67]
-  wire  _GEN_1159; // @[Conditional.scala 39:67]
-  wire  _GEN_1174; // @[Conditional.scala 39:67]
-  wire  _GEN_1175; // @[Conditional.scala 39:67]
-  wire  _GEN_1176; // @[Conditional.scala 39:67]
-  wire  _GEN_1177; // @[Conditional.scala 39:67]
-  wire  _GEN_1190; // @[Conditional.scala 39:67]
-  wire  _GEN_1191; // @[Conditional.scala 39:67]
-  wire  _GEN_1194; // @[Conditional.scala 39:67]
-  wire  _GEN_1195; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1196; // @[Conditional.scala 39:67]
-  wire  _GEN_1211; // @[Conditional.scala 39:67]
-  wire  _GEN_1212; // @[Conditional.scala 39:67]
-  wire  _GEN_1225; // @[Conditional.scala 39:67]
-  wire  _GEN_1226; // @[Conditional.scala 39:67]
-  wire  _GEN_1227; // @[Conditional.scala 39:67]
-  wire  _GEN_1228; // @[Conditional.scala 39:67]
-  wire  _GEN_1251; // @[Conditional.scala 40:58]
-  wire  _GEN_1252; // @[Conditional.scala 40:58]
-  wire  _GEN_1255; // @[Conditional.scala 40:58]
-  wire  _GEN_1256; // @[Conditional.scala 40:58]
-  wire  _GEN_1277; // @[Conditional.scala 40:58]
-  wire  _GEN_1278; // @[Conditional.scala 40:58]
-  wire  _GEN_1279; // @[Conditional.scala 40:58]
-  wire  _GEN_1280; // @[Conditional.scala 40:58]
-  reg [1:0] reqTarget; // @[L2.scala 733:26]
-  reg [31:0] _RAND_79;
-  wire  _T_451;
-  wire [47:0] _GEN_1283; // @[L2.scala 736:27]
-  wire [43:0] _T_452; // @[L2.scala 736:27]
-  wire [47:0] reqAddr; // @[L2.scala 736:62]
-  wire  _T_453; // @[L2.scala 739:18]
-  wire  _GEN_1285; // @[L2.scala 740:26]
-  wire  _GEN_1287; // @[L2.scala 740:26]
-  wire  _T_456; // @[L2.scala 740:26]
-  wire [47:0] _GEN_1291; // @[L2.scala 742:27]
-  wire  _T_459; // @[L2.scala 742:27]
-  wire  _T_461; // @[L2.scala 742:15]
-  wire  _T_462; // @[L2.scala 742:15]
-  wire  _GEN_1541; // @[L2.scala 761:27]
-  wire  _GEN_1292; // @[L2.scala 761:27]
-  wire  _GEN_1293; // @[L2.scala 761:27]
-  wire  _T_464; // @[L2.scala 310:14]
-  wire [1:0] _T_466; // @[L2.scala 313:18]
-  wire [1:0] _GEN_1294; // @[L2.scala 310:47]
-  wire [47:0] _GEN_1301; // @[L2.scala 741:31]
-  wire [1:0] _GEN_1302; // @[L2.scala 741:31]
-  wire [3:0] _GEN_1303; // @[L2.scala 741:31]
-  wire [7:0] _GEN_1304; // @[L2.scala 741:31]
-  wire [2:0] _GEN_1305; // @[L2.scala 741:31]
-  wire [47:0] _GEN_1311; // @[L2.scala 740:49]
-  wire [1:0] _GEN_1312; // @[L2.scala 740:49]
-  wire [3:0] _GEN_1313; // @[L2.scala 740:49]
-  wire [7:0] _GEN_1314; // @[L2.scala 740:49]
-  wire [2:0] _GEN_1315; // @[L2.scala 740:49]
-  wire  _GEN_1316; // @[L2.scala 740:49]
-  wire  _T_475; // @[L2.scala 774:30]
-  wire  _T_476; // @[L2.scala 774:27]
-  wire  _GEN_1321; // @[L2.scala 784:25]
-  wire [47:0] _GEN_1324; // @[L2.scala 774:50]
-  wire [1:0] _GEN_1325; // @[L2.scala 774:50]
-  wire [3:0] _GEN_1326; // @[L2.scala 774:50]
-  wire [2:0] _GEN_1328; // @[L2.scala 774:50]
-  wire  _GEN_1330; // @[L2.scala 774:50]
-  wire  _GEN_1341; // @[L2.scala 739:45]
-  reg  bufptrs_0; // @[L2.scala 794:24]
-  reg [31:0] _RAND_80;
-  reg  bufptrs_1; // @[L2.scala 794:24]
-  reg [31:0] _RAND_81;
-  wire  _T_484; // @[L2.scala 802:18]
-  wire  _T_485;
-  wire  _GEN_1343; // @[L2.scala 804:27]
-  wire  _GEN_1345; // @[L2.scala 806:13]
-  wire  ptr; // @[L2.scala 804:27]
-  wire  _GEN_1542; // @[L2.scala 812:26]
-  wire  _GEN_1543; // @[L2.scala 812:26]
-  wire  _T_492; // @[L2.scala 813:31]
-  wire  _GEN_1353; // @[L2.scala 816:27]
-  wire  _GEN_1354; // @[L2.scala 816:27]
-  wire  _T_495; // @[L2.scala 819:13]
-  wire  _T_496; // @[L2.scala 819:13]
-  wire  _GEN_1366; // @[L2.scala 802:45]
-  wire  _GEN_1367; // @[L2.scala 802:45]
-  wire  _GEN_1378; // @[L2.scala 798:20]
-  reg  wbPtr; // @[L2.scala 828:22]
-  reg [31:0] _RAND_82;
-  wire [43:0] _GEN_1383;
-  wire [127:0] _GEN_1384;
-  wire [43:0] _GEN_1386;
-  wire [127:0] _GEN_1387;
-  wire [43:0] _GEN_1389;
-  wire [127:0] _GEN_1390;
-  wire [63:0] wbDataView_0; // @[L2.scala 829:52]
-  wire [63:0] wbDataView_1; // @[L2.scala 829:52]
-  reg  ucWalkPtr; // @[L2.scala 831:26]
-  reg [31:0] _RAND_83;
-  reg [1:0] ucSendStage; // @[L2.scala 832:28]
-  reg [31:0] _RAND_84;
-  wire [1:0] _T_502; // @[Conditional.scala 37:39]
-  wire  _T_503; // @[Conditional.scala 37:30]
-  wire  _T_504; // @[L2.scala 835:12]
-  wire [47:0] _T_505; // @[L2.scala 837:51]
-  wire [47:0] _GEN_1397; // @[L2.scala 835:26]
-  wire [1:0] _GEN_1398; // @[L2.scala 835:26]
-  wire [7:0] _GEN_1399; // @[L2.scala 835:26]
-  wire [2:0] _GEN_1400; // @[L2.scala 835:26]
-  wire  _T_510; // @[Conditional.scala 37:30]
-  wire [63:0] _GEN_1407; // @[L2.scala 859:17]
-  wire  _T_512; // @[L2.scala 867:24]
-  wire  _T_515; // @[Conditional.scala 37:30]
-  wire [1:0] _T_517; // @[L2.scala 880:34]
-  wire  _T_520; // @[Conditional.scala 37:30]
-  wire [2:0] _T_521; // @[L2.scala 889:26]
-  wire  _T_522; // @[L2.scala 889:57]
-  wire  _T_524; // @[L2.scala 889:15]
-  wire  _T_525; // @[L2.scala 889:15]
-  wire  _T_526; // @[L2.scala 893:36]
-  wire  _T_527; // @[L2.scala 894:26]
-  wire  _T_528; // @[L2.scala 901:35]
-  wire  _T_529; // @[L2.scala 902:25]
-  wire  _T_530; // @[L2.scala 906:35]
-  wire  _T_531; // @[L2.scala 909:26]
-  wire  _T_533; // @[L2.scala 912:36]
-  wire  _GEN_1428; // @[L2.scala 907:26]
-  wire [47:0] _GEN_1431; // @[L2.scala 887:38]
-  wire [1:0] _GEN_1432; // @[L2.scala 887:38]
-  wire [2:0] _GEN_1434; // @[L2.scala 887:38]
-  wire  _GEN_1435; // @[L2.scala 887:38]
-  wire [63:0] _GEN_1437; // @[L2.scala 887:38]
-  wire [7:0] _GEN_1438; // @[L2.scala 887:38]
-  wire  _GEN_1440; // @[L2.scala 887:38]
-  wire  _GEN_1441; // @[L2.scala 887:38]
-  wire  _GEN_1444; // @[L2.scala 887:38]
-  wire [47:0] _GEN_1445; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1446; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_1448; // @[Conditional.scala 39:67]
-  wire  _GEN_1449; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_1451; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1452; // @[Conditional.scala 39:67]
-  wire  _GEN_1453; // @[Conditional.scala 39:67]
-  wire  _GEN_1454; // @[Conditional.scala 39:67]
-  wire  _GEN_1455; // @[Conditional.scala 39:67]
-  wire  _GEN_1458; // @[Conditional.scala 39:67]
-  wire  _GEN_1459; // @[Conditional.scala 39:67]
-  wire [47:0] _GEN_1466; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1467; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_1469; // @[Conditional.scala 39:67]
-  wire  _GEN_1470; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_1472; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1473; // @[Conditional.scala 39:67]
-  wire  _GEN_1474; // @[Conditional.scala 39:67]
-  wire  _GEN_1475; // @[Conditional.scala 39:67]
-  wire  _GEN_1477; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_1478; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_1479; // @[Conditional.scala 39:67]
-  wire  _GEN_1480; // @[Conditional.scala 39:67]
-  wire  _GEN_1481; // @[Conditional.scala 39:67]
-  wire  _GEN_1484; // @[Conditional.scala 39:67]
-  wire [47:0] _GEN_1490; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_1491; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_1493; // @[Conditional.scala 39:67]
-  wire  _GEN_1494; // @[Conditional.scala 39:67]
-  wire  _GEN_1497; // @[Conditional.scala 39:67]
-  wire  _GEN_1547; // @[L2.scala 367:19]
-  wire  _GEN_1548; // @[L2.scala 367:19]
-  wire  _GEN_1549; // @[L2.scala 367:19]
-  wire  _GEN_1550; // @[L2.scala 367:19]
-  wire  _GEN_1551; // @[L2.scala 367:19]
-  wire  _GEN_1553; // @[L2.scala 367:19]
-  wire  _GEN_1554; // @[L2.scala 367:19]
-  wire  _GEN_1555; // @[L2.scala 367:19]
-  wire  _GEN_1556; // @[L2.scala 367:19]
-  wire  _GEN_1557; // @[L2.scala 367:19]
-  wire  _GEN_1573; // @[L2.scala 394:17]
-  wire  _GEN_1574; // @[L2.scala 394:17]
-  wire  _GEN_1575; // @[L2.scala 394:17]
-  wire  _GEN_1590; // @[L2.scala 397:21]
-  wire  _GEN_1606; // @[L2.scala 399:21]
-  wire  _GEN_1607; // @[L2.scala 399:21]
-  wire  _GEN_1618; // @[L2.scala 443:15]
-  wire  _GEN_1619; // @[L2.scala 443:15]
-  wire  _GEN_1620; // @[L2.scala 443:15]
-  wire  _GEN_1621; // @[L2.scala 443:15]
-  wire  _GEN_1631; // @[L2.scala 470:17]
-  wire  _GEN_1632; // @[L2.scala 470:17]
-  wire  _GEN_1633; // @[L2.scala 470:17]
-  wire  _GEN_1634; // @[L2.scala 470:17]
-  wire  _GEN_1646; // @[L2.scala 513:15]
-  wire  _GEN_1647; // @[L2.scala 513:15]
-  wire  _GEN_1648; // @[L2.scala 513:15]
-  wire  _GEN_1649; // @[L2.scala 513:15]
-  wire  _GEN_1677; // @[L2.scala 513:15]
-  wire  _GEN_1678; // @[L2.scala 513:15]
-  wire  _GEN_1679; // @[L2.scala 513:15]
-  wire  _GEN_1680; // @[L2.scala 513:15]
-  wire  _GEN_1681; // @[L2.scala 513:15]
-  wire  _GEN_1682; // @[L2.scala 513:15]
-  wire  _GEN_1683; // @[L2.scala 513:15]
-  wire  _GEN_1684; // @[L2.scala 513:15]
-  wire  _GEN_1739; // @[L2.scala 513:15]
-  wire  _GEN_1740; // @[L2.scala 513:15]
-  wire  _GEN_1788; // @[L2.scala 627:15]
-  wire  _GEN_1789; // @[L2.scala 627:15]
-  wire  _GEN_1790; // @[L2.scala 627:15]
-  wire  _GEN_1791; // @[L2.scala 627:15]
-  wire  _GEN_1808; // @[L2.scala 713:17]
-  wire  _GEN_1809; // @[L2.scala 713:17]
-  wire  _GEN_1810; // @[L2.scala 713:17]
-  wire  _GEN_1811; // @[L2.scala 713:17]
-  wire  _GEN_1813; // @[L2.scala 713:17]
-  wire  _GEN_1827; // @[L2.scala 742:15]
-  wire  _GEN_1828; // @[L2.scala 742:15]
-  wire  _GEN_1831; // @[L2.scala 819:13]
-  wire  _GEN_1832; // @[L2.scala 819:13]
-  wire  _GEN_1835; // @[L2.scala 889:15]
-  wire  _GEN_1836; // @[L2.scala 889:15]
-  wire  _GEN_1837; // @[L2.scala 889:15]
-  wire  _GEN_1838; // @[L2.scala 889:15]
-  wire  _GEN_1839; // @[L2.scala 889:15]
-  wire  _GEN_1840; // @[L2.scala 889:15]
-  wire  _GEN_1841; // @[L2.scala 889:15]
-  MaxPeriodFibonacciLFSR MaxPeriodFibonacciLFSR ( // @[PRNG.scala 82:22]
-    .clock(MaxPeriodFibonacciLFSR_clock),
-    .reset(MaxPeriodFibonacciLFSR_reset),
-    .io_out_0(MaxPeriodFibonacciLFSR_io_out_0),
-    .io_out_1(MaxPeriodFibonacciLFSR_io_out_1),
-    .io_out_2(MaxPeriodFibonacciLFSR_io_out_2),
-    .io_out_3(MaxPeriodFibonacciLFSR_io_out_3),
-    .io_out_4(MaxPeriodFibonacciLFSR_io_out_4),
-    .io_out_5(MaxPeriodFibonacciLFSR_io_out_5),
-    .io_out_6(MaxPeriodFibonacciLFSR_io_out_6),
-    .io_out_7(MaxPeriodFibonacciLFSR_io_out_7)
-  );
-  assign directories_0_valid_lookups_addr = _GEN_30[11:4];
-  assign directories_0_valid_lookups_data = directories_0_valid[directories_0_valid_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_0_valid__T_6_data = _T_162 ? 1'h0 : _GEN_1200;
-  assign directories_0_valid__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_0_valid__T_6_mask = _T_162 | _GEN_1201;
-  assign directories_0_valid__T_6_en = 1'h1;
-  assign directories_0_dirty_lookups_addr = _GEN_30[11:4];
-  assign directories_0_dirty_lookups_data = directories_0_dirty[directories_0_dirty_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_0_dirty__T_6_data = _T_162 ? 1'h0 : _GEN_1199;
-  assign directories_0_dirty__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_0_dirty__T_6_mask = _T_162 | _GEN_1201;
-  assign directories_0_dirty__T_6_en = 1'h1;
-  assign directories_0_tag_lookups_addr = _GEN_30[11:4];
-  assign directories_0_tag_lookups_data = directories_0_tag[directories_0_tag_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_0_tag__T_6_data = _T_162 ? 36'h0 : _GEN_1198;
-  assign directories_0_tag__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_0_tag__T_6_mask = _T_162 | _GEN_1201;
-  assign directories_0_tag__T_6_en = 1'h1;
-  assign directories_0_states_0_lookups_addr = _GEN_30[11:4];
-  assign directories_0_states_0_lookups_data = directories_0_states_0[directories_0_states_0_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_0_states_0__T_6_data = _T_162 ? 2'h0 : _GEN_1197;
-  assign directories_0_states_0__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_0_states_0__T_6_mask = _T_162 | _GEN_1201;
-  assign directories_0_states_0__T_6_en = 1'h1;
-  assign directories_1_valid_lookups_addr = _GEN_30[11:4];
-  assign directories_1_valid_lookups_data = directories_1_valid[directories_1_valid_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_1_valid__T_6_data = _T_162 ? 1'h0 : _GEN_1200;
-  assign directories_1_valid__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_1_valid__T_6_mask = _T_162 | _GEN_1202;
-  assign directories_1_valid__T_6_en = 1'h1;
-  assign directories_1_dirty_lookups_addr = _GEN_30[11:4];
-  assign directories_1_dirty_lookups_data = directories_1_dirty[directories_1_dirty_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_1_dirty__T_6_data = _T_162 ? 1'h0 : _GEN_1199;
-  assign directories_1_dirty__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_1_dirty__T_6_mask = _T_162 | _GEN_1202;
-  assign directories_1_dirty__T_6_en = 1'h1;
-  assign directories_1_tag_lookups_addr = _GEN_30[11:4];
-  assign directories_1_tag_lookups_data = directories_1_tag[directories_1_tag_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_1_tag__T_6_data = _T_162 ? 36'h0 : _GEN_1198;
-  assign directories_1_tag__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_1_tag__T_6_mask = _T_162 | _GEN_1202;
-  assign directories_1_tag__T_6_en = 1'h1;
-  assign directories_1_states_0_lookups_addr = _GEN_30[11:4];
-  assign directories_1_states_0_lookups_data = directories_1_states_0[directories_1_states_0_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_1_states_0__T_6_data = _T_162 ? 2'h0 : _GEN_1197;
-  assign directories_1_states_0__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_1_states_0__T_6_mask = _T_162 | _GEN_1202;
-  assign directories_1_states_0__T_6_en = 1'h1;
-  assign directories_2_valid_lookups_addr = _GEN_30[11:4];
-  assign directories_2_valid_lookups_data = directories_2_valid[directories_2_valid_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_2_valid__T_6_data = _T_162 ? 1'h0 : _GEN_1200;
-  assign directories_2_valid__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_2_valid__T_6_mask = _T_162 | _GEN_1203;
-  assign directories_2_valid__T_6_en = 1'h1;
-  assign directories_2_dirty_lookups_addr = _GEN_30[11:4];
-  assign directories_2_dirty_lookups_data = directories_2_dirty[directories_2_dirty_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_2_dirty__T_6_data = _T_162 ? 1'h0 : _GEN_1199;
-  assign directories_2_dirty__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_2_dirty__T_6_mask = _T_162 | _GEN_1203;
-  assign directories_2_dirty__T_6_en = 1'h1;
-  assign directories_2_tag_lookups_addr = _GEN_30[11:4];
-  assign directories_2_tag_lookups_data = directories_2_tag[directories_2_tag_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_2_tag__T_6_data = _T_162 ? 36'h0 : _GEN_1198;
-  assign directories_2_tag__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_2_tag__T_6_mask = _T_162 | _GEN_1203;
-  assign directories_2_tag__T_6_en = 1'h1;
-  assign directories_2_states_0_lookups_addr = _GEN_30[11:4];
-  assign directories_2_states_0_lookups_data = directories_2_states_0[directories_2_states_0_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_2_states_0__T_6_data = _T_162 ? 2'h0 : _GEN_1197;
-  assign directories_2_states_0__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_2_states_0__T_6_mask = _T_162 | _GEN_1203;
-  assign directories_2_states_0__T_6_en = 1'h1;
-  assign directories_3_valid_lookups_addr = _GEN_30[11:4];
-  assign directories_3_valid_lookups_data = directories_3_valid[directories_3_valid_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_3_valid__T_6_data = _T_162 ? 1'h0 : _GEN_1200;
-  assign directories_3_valid__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_3_valid__T_6_mask = _T_162 | _GEN_1204;
-  assign directories_3_valid__T_6_en = 1'h1;
-  assign directories_3_dirty_lookups_addr = _GEN_30[11:4];
-  assign directories_3_dirty_lookups_data = directories_3_dirty[directories_3_dirty_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_3_dirty__T_6_data = _T_162 ? 1'h0 : _GEN_1199;
-  assign directories_3_dirty__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_3_dirty__T_6_mask = _T_162 | _GEN_1204;
-  assign directories_3_dirty__T_6_en = 1'h1;
-  assign directories_3_tag_lookups_addr = _GEN_30[11:4];
-  assign directories_3_tag_lookups_data = directories_3_tag[directories_3_tag_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_3_tag__T_6_data = _T_162 ? 36'h0 : _GEN_1198;
-  assign directories_3_tag__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_3_tag__T_6_mask = _T_162 | _GEN_1204;
-  assign directories_3_tag__T_6_en = 1'h1;
-  assign directories_3_states_0_lookups_addr = _GEN_30[11:4];
-  assign directories_3_states_0_lookups_data = directories_3_states_0[directories_3_states_0_lookups_addr]; // @[L2.scala 137:24]
-  assign directories_3_states_0__T_6_data = _T_162 ? 2'h0 : _GEN_1197;
-  assign directories_3_states_0__T_6_addr = _T_162 ? _T_165 : _GEN_1196;
-  assign directories_3_states_0__T_6_mask = _T_162 | _GEN_1204;
-  assign directories_3_states_0__T_6_en = 1'h1;
-  assign stores_0_datas_addr = stores_0_datas_addr_pipe_0;
-  assign stores_0_datas_data = stores_0[stores_0_datas_addr]; // @[L2.scala 138:27]
-  assign stores_0__T_4_data = _T_171 ? dc_0_wdata : _GEN_1115;
-  assign stores_0__T_4_addr = _T_171 ? targetIndex : _GEN_1114;
-  assign stores_0__T_4_mask = _T_162 ? 1'h0 : _GEN_1207;
-  assign stores_0__T_4_en = 1'h1;
-  assign stores_1_datas_addr = stores_1_datas_addr_pipe_0;
-  assign stores_1_datas_data = stores_1[stores_1_datas_addr]; // @[L2.scala 138:27]
-  assign stores_1__T_4_data = _T_171 ? dc_0_wdata : _GEN_1115;
-  assign stores_1__T_4_addr = _T_171 ? targetIndex : _GEN_1114;
-  assign stores_1__T_4_mask = _T_162 ? 1'h0 : _GEN_1208;
-  assign stores_1__T_4_en = 1'h1;
-  assign stores_2_datas_addr = stores_2_datas_addr_pipe_0;
-  assign stores_2_datas_data = stores_2[stores_2_datas_addr]; // @[L2.scala 138:27]
-  assign stores_2__T_4_data = _T_171 ? dc_0_wdata : _GEN_1115;
-  assign stores_2__T_4_addr = _T_171 ? targetIndex : _GEN_1114;
-  assign stores_2__T_4_mask = _T_162 ? 1'h0 : _GEN_1209;
-  assign stores_2__T_4_en = 1'h1;
-  assign stores_3_datas_addr = stores_3_datas_addr_pipe_0;
-  assign stores_3_datas_data = stores_3[stores_3_datas_addr]; // @[L2.scala 138:27]
-  assign stores_3__T_4_data = _T_171 ? dc_0_wdata : _GEN_1115;
-  assign stores_3__T_4_addr = _T_171 ? targetIndex : _GEN_1114;
-  assign stores_3__T_4_mask = _T_162 ? 1'h0 : _GEN_1210;
-  assign stores_3__T_4_en = 1'h1;
-  assign _T_161 = $unsigned(state); // @[Conditional.scala 37:39]
-  assign _T_162 = 3'h0 == _T_161; // @[Conditional.scala 37:30]
-  assign _T_171 = 3'h1 == _T_161; // @[Conditional.scala 37:30]
-  assign ops_1 = {{1'd0}, ic_0_read}; // @[L1Defs.scala 49:22 L1Defs.scala 51:14 L1Defs.scala 53:14]
-  assign _GEN_56 = target ? ops_1 : dc_0_l1req; // @[Conditional.scala 37:39]
-  assign _T_173 = $unsigned(_GEN_56); // @[Conditional.scala 37:39]
-  assign _T_174 = 2'h0 == _T_173; // @[Conditional.scala 37:30]
-  assign _T_177 = 2'h1 == _T_173; // @[Conditional.scala 37:30]
-  assign _T_180 = 2'h2 == _T_173; // @[Conditional.scala 37:30]
-  assign _T_181 = _T_177 | _T_180; // @[Conditional.scala 37:55]
-  assign _T_194 = 2'h3 == _T_173; // @[Conditional.scala 37:30]
-  assign _GEN_30 = target ? ic_0_addr : dc_0_l1addr; // @[L2.scala 261:31]
-  assign _T_107 = _GEN_30[47:12]; // @[L2.scala 40:44]
-  assign _T_108 = _T_107 == directories_3_tag_lookups_data; // @[L2.scala 40:85]
-  assign _T_109 = directories_3_valid_lookups_data & _T_108; // @[L2.scala 40:37]
-  assign _T_104 = _T_107 == directories_2_tag_lookups_data; // @[L2.scala 40:85]
-  assign _T_105 = directories_2_valid_lookups_data & _T_104; // @[L2.scala 40:37]
-  assign _T_100 = _T_107 == directories_1_tag_lookups_data; // @[L2.scala 40:85]
-  assign _T_101 = directories_1_valid_lookups_data & _T_100; // @[L2.scala 40:37]
-  assign _T_96 = _T_107 == directories_0_tag_lookups_data; // @[L2.scala 40:85]
-  assign _T_97 = directories_0_valid_lookups_data & _T_96; // @[L2.scala 40:37]
-  assign _T_102 = _T_101 ? 2'h1 : 2'h0; // @[L2.scala 277:20]
-  assign _T_106 = _T_105 ? 2'h2 : _T_102; // @[L2.scala 277:20]
-  assign hitIdx = _T_109 ? 2'h3 : _T_106; // @[L2.scala 277:20]
-  assign mask_2_0 = 2'h0 == hitIdx; // @[L2.scala 165:16]
-  assign _GEN_187 = _T_194 & mask_2_0; // @[Conditional.scala 39:67]
-  assign _GEN_222 = _T_181 ? 1'h0 : _GEN_187; // @[Conditional.scala 39:67]
-  assign _GEN_256 = _T_174 ? 1'h0 : _GEN_222; // @[Conditional.scala 40:58]
-  assign _T_226 = 3'h2 == _T_161; // @[Conditional.scala 37:30]
-  assign _T_279 = 3'h3 == _T_161; // @[Conditional.scala 37:30]
-  assign _GEN_450 = directories_0_valid_lookups_data; // @[L2.scala 546:12]
-  assign _GEN_454 = 2'h1 == victim ? directories_1_valid_lookups_data : _GEN_450; // @[L2.scala 546:12]
-  assign _GEN_458 = 2'h2 == victim ? directories_2_valid_lookups_data : _GEN_454; // @[L2.scala 546:12]
-  assign _GEN_462 = 2'h3 == victim ? directories_3_valid_lookups_data : _GEN_458; // @[L2.scala 546:12]
-  assign _T_280 = _GEN_462 == 1'h0; // @[L2.scala 546:12]
-  assign mask_6_0 = 2'h0 == victim; // @[L2.scala 165:16]
-  assign _GEN_453 = directories_0_states_0_lookups_data; // @[L2.scala 546:12]
-  assign _GEN_457 = 2'h1 == victim ? directories_1_states_0_lookups_data : _GEN_453; // @[L2.scala 546:12]
-  assign _GEN_461 = 2'h2 == victim ? directories_2_states_0_lookups_data : _GEN_457; // @[L2.scala 546:12]
-  assign _GEN_465 = 2'h3 == victim ? directories_3_states_0_lookups_data : _GEN_461; // @[L2.scala 546:12]
-  assign hasDirty_1 = _GEN_465 == 2'h2; // @[L2.scala 549:86]
-  assign hasShared_1 = _GEN_465 != 2'h0; // @[L2.scala 550:87]
-  assign _GEN_451 = directories_0_dirty_lookups_data; // @[L2.scala 546:12]
-  assign _GEN_455 = 2'h1 == victim ? directories_1_dirty_lookups_data : _GEN_451; // @[L2.scala 546:12]
-  assign _GEN_459 = 2'h2 == victim ? directories_2_dirty_lookups_data : _GEN_455; // @[L2.scala 546:12]
-  assign _GEN_463 = 2'h3 == victim ? directories_3_dirty_lookups_data : _GEN_459; // @[L2.scala 546:12]
-  assign _T_47 = wbFifoTail + 2'h1; // @[L2.scala 242:46]
-  assign wbFifoFull = wbFifoHead == _T_47; // @[L2.scala 242:31]
-  assign _T_307 = wbFifoFull == 1'h0; // @[L2.scala 576:16]
-  assign _GEN_556 = _T_307 & mask_6_0; // @[L2.scala 576:29]
-  assign _GEN_612 = _GEN_463 ? _GEN_556 : mask_6_0; // @[L2.scala 572:43]
-  assign _GEN_653 = hasShared_1 ? 1'h0 : _GEN_612; // @[L2.scala 562:31]
-  assign _GEN_693 = hasDirty_1 ? 1'h0 : _GEN_653; // @[L2.scala 552:24]
-  assign _GEN_717 = _T_280 ? mask_6_0 : _GEN_693; // @[L2.scala 546:36]
-  assign _T_358 = 3'h4 == _T_161; // @[Conditional.scala 37:30]
-  assign _T_362 = pendings_0 != 2'h0; // @[L2.scala 612:16]
-  assign _T_363 = dc_0_l2stall == 1'h0; // @[L2.scala 612:43]
-  assign commit = _T_362 & _T_363; // @[L2.scala 612:40]
-  assign writtenTowards = pendingVictim ? victim : pipeHitIdx; // @[L2.scala 597:27]
-  assign mask_11_0 = 2'h0 == writtenTowards; // @[L2.scala 165:16]
-  assign _GEN_764 = commit & mask_11_0; // @[L2.scala 620:20]
-  assign _T_390 = 3'h5 == _T_161; // @[Conditional.scala 37:30]
-  assign _T_394 = _T_362 == 1'h0; // @[L2.scala 660:12]
-  assign _GEN_36 = 2'h1 == victim ? pipeLookups_1_dirty : pipeLookups_0_dirty; // @[L2.scala 303:43]
-  assign _GEN_40 = 2'h2 == victim ? pipeLookups_2_dirty : _GEN_36; // @[L2.scala 303:43]
-  assign _GEN_44 = 2'h3 == victim ? pipeLookups_3_dirty : _GEN_40; // @[L2.scala 303:43]
-  assign _GEN_38 = 2'h1 == victim ? pipeLookups_1_states_0 : pipeLookups_0_states_0; // @[L2.scala 303:43]
-  assign _GEN_42 = 2'h2 == victim ? pipeLookups_2_states_0 : _GEN_38; // @[L2.scala 303:43]
-  assign _GEN_46 = 2'h3 == victim ? pipeLookups_3_states_0 : _GEN_42; // @[L2.scala 303:43]
-  assign hasDirty_2 = _GEN_46 == 2'h2; // @[L2.scala 663:92]
-  assign _T_396 = _GEN_44 | hasDirty_2; // @[L2.scala 700:42]
-  assign _GEN_931 = _T_396 ? _GEN_556 : mask_6_0; // @[L2.scala 700:55]
-  assign _GEN_968 = pendingVictim & _GEN_931; // @[L2.scala 661:29]
-  assign _GEN_1005 = _T_394 & _GEN_968; // @[L2.scala 660:22]
-  assign _GEN_1044 = _T_390 & _GEN_1005; // @[Conditional.scala 39:67]
-  assign _GEN_1061 = _T_358 ? _GEN_764 : _GEN_1044; // @[Conditional.scala 39:67]
-  assign _GEN_1116 = _T_279 ? _GEN_717 : _GEN_1061; // @[Conditional.scala 39:67]
-  assign _GEN_1162 = _T_226 ? 1'h0 : _GEN_1116; // @[Conditional.scala 39:67]
-  assign _GEN_1207 = _T_171 ? _GEN_256 : _GEN_1162; // @[Conditional.scala 39:67]
-  assign _GEN_469 = target ? bufs_1_1 : bufs_0_1; // @[L2.scala 511:42]
-  assign _GEN_468 = target ? bufs_1_0 : bufs_0_0; // @[L2.scala 511:42]
-  assign rdata = {_GEN_469,_GEN_468}; // @[L2.scala 511:42]
-  assign _GEN_611 = _GEN_463 ? rdata : rdata; // @[L2.scala 572:43]
-  assign _GEN_716 = _T_280 ? rdata : _GEN_611; // @[L2.scala 546:36]
-  assign _GEN_930 = _T_396 ? rdata : rdata; // @[L2.scala 700:55]
-  assign _GEN_1060 = _T_358 ? dc_0_wdata : _GEN_930; // @[Conditional.scala 39:67]
-  assign _GEN_1115 = _T_279 ? _GEN_716 : _GEN_1060; // @[Conditional.scala 39:67]
-  assign mask_2_1 = 2'h1 == hitIdx; // @[L2.scala 165:16]
-  assign _GEN_188 = _T_194 & mask_2_1; // @[Conditional.scala 39:67]
-  assign _GEN_223 = _T_181 ? 1'h0 : _GEN_188; // @[Conditional.scala 39:67]
-  assign _GEN_257 = _T_174 ? 1'h0 : _GEN_223; // @[Conditional.scala 40:58]
-  assign mask_6_1 = 2'h1 == victim; // @[L2.scala 165:16]
-  assign _GEN_557 = _T_307 & mask_6_1; // @[L2.scala 576:29]
-  assign _GEN_613 = _GEN_463 ? _GEN_557 : mask_6_1; // @[L2.scala 572:43]
-  assign _GEN_654 = hasShared_1 ? 1'h0 : _GEN_613; // @[L2.scala 562:31]
-  assign _GEN_694 = hasDirty_1 ? 1'h0 : _GEN_654; // @[L2.scala 552:24]
-  assign _GEN_718 = _T_280 ? mask_6_1 : _GEN_694; // @[L2.scala 546:36]
-  assign mask_11_1 = 2'h1 == writtenTowards; // @[L2.scala 165:16]
-  assign _GEN_765 = commit & mask_11_1; // @[L2.scala 620:20]
-  assign _GEN_932 = _T_396 ? _GEN_557 : mask_6_1; // @[L2.scala 700:55]
-  assign _GEN_969 = pendingVictim & _GEN_932; // @[L2.scala 661:29]
-  assign _GEN_1006 = _T_394 & _GEN_969; // @[L2.scala 660:22]
-  assign _GEN_1045 = _T_390 & _GEN_1006; // @[Conditional.scala 39:67]
-  assign _GEN_1062 = _T_358 ? _GEN_765 : _GEN_1045; // @[Conditional.scala 39:67]
-  assign _GEN_1117 = _T_279 ? _GEN_718 : _GEN_1062; // @[Conditional.scala 39:67]
-  assign _GEN_1163 = _T_226 ? 1'h0 : _GEN_1117; // @[Conditional.scala 39:67]
-  assign _GEN_1208 = _T_171 ? _GEN_257 : _GEN_1163; // @[Conditional.scala 39:67]
-  assign mask_2_2 = 2'h2 == hitIdx; // @[L2.scala 165:16]
-  assign _GEN_189 = _T_194 & mask_2_2; // @[Conditional.scala 39:67]
-  assign _GEN_224 = _T_181 ? 1'h0 : _GEN_189; // @[Conditional.scala 39:67]
-  assign _GEN_258 = _T_174 ? 1'h0 : _GEN_224; // @[Conditional.scala 40:58]
-  assign mask_6_2 = 2'h2 == victim; // @[L2.scala 165:16]
-  assign _GEN_558 = _T_307 & mask_6_2; // @[L2.scala 576:29]
-  assign _GEN_614 = _GEN_463 ? _GEN_558 : mask_6_2; // @[L2.scala 572:43]
-  assign _GEN_655 = hasShared_1 ? 1'h0 : _GEN_614; // @[L2.scala 562:31]
-  assign _GEN_695 = hasDirty_1 ? 1'h0 : _GEN_655; // @[L2.scala 552:24]
-  assign _GEN_719 = _T_280 ? mask_6_2 : _GEN_695; // @[L2.scala 546:36]
-  assign mask_11_2 = 2'h2 == writtenTowards; // @[L2.scala 165:16]
-  assign _GEN_766 = commit & mask_11_2; // @[L2.scala 620:20]
-  assign _GEN_933 = _T_396 ? _GEN_558 : mask_6_2; // @[L2.scala 700:55]
-  assign _GEN_970 = pendingVictim & _GEN_933; // @[L2.scala 661:29]
-  assign _GEN_1007 = _T_394 & _GEN_970; // @[L2.scala 660:22]
-  assign _GEN_1046 = _T_390 & _GEN_1007; // @[Conditional.scala 39:67]
-  assign _GEN_1063 = _T_358 ? _GEN_766 : _GEN_1046; // @[Conditional.scala 39:67]
-  assign _GEN_1118 = _T_279 ? _GEN_719 : _GEN_1063; // @[Conditional.scala 39:67]
-  assign _GEN_1164 = _T_226 ? 1'h0 : _GEN_1118; // @[Conditional.scala 39:67]
-  assign _GEN_1209 = _T_171 ? _GEN_258 : _GEN_1164; // @[Conditional.scala 39:67]
-  assign mask_2_3 = 2'h3 == hitIdx; // @[L2.scala 165:16]
-  assign _GEN_190 = _T_194 & mask_2_3; // @[Conditional.scala 39:67]
-  assign _GEN_225 = _T_181 ? 1'h0 : _GEN_190; // @[Conditional.scala 39:67]
-  assign _GEN_259 = _T_174 ? 1'h0 : _GEN_225; // @[Conditional.scala 40:58]
-  assign mask_6_3 = 2'h3 == victim; // @[L2.scala 165:16]
-  assign _GEN_559 = _T_307 & mask_6_3; // @[L2.scala 576:29]
-  assign _GEN_615 = _GEN_463 ? _GEN_559 : mask_6_3; // @[L2.scala 572:43]
-  assign _GEN_656 = hasShared_1 ? 1'h0 : _GEN_615; // @[L2.scala 562:31]
-  assign _GEN_696 = hasDirty_1 ? 1'h0 : _GEN_656; // @[L2.scala 552:24]
-  assign _GEN_720 = _T_280 ? mask_6_3 : _GEN_696; // @[L2.scala 546:36]
-  assign mask_11_3 = 2'h3 == writtenTowards; // @[L2.scala 165:16]
-  assign _GEN_767 = commit & mask_11_3; // @[L2.scala 620:20]
-  assign _GEN_934 = _T_396 ? _GEN_559 : mask_6_3; // @[L2.scala 700:55]
-  assign _GEN_971 = pendingVictim & _GEN_934; // @[L2.scala 661:29]
-  assign _GEN_1008 = _T_394 & _GEN_971; // @[L2.scala 660:22]
-  assign _GEN_1047 = _T_390 & _GEN_1008; // @[Conditional.scala 39:67]
-  assign _GEN_1064 = _T_358 ? _GEN_767 : _GEN_1047; // @[Conditional.scala 39:67]
-  assign _GEN_1119 = _T_279 ? _GEN_720 : _GEN_1064; // @[Conditional.scala 39:67]
-  assign _GEN_1165 = _T_226 ? 1'h0 : _GEN_1119; // @[Conditional.scala 39:67]
-  assign _GEN_1210 = _T_171 ? _GEN_259 : _GEN_1165; // @[Conditional.scala 39:67]
-  assign _GEN_285 = 2'h1 == pipeHitIdx ? directories_1_states_0_lookups_data : _GEN_453; // @[L2.scala 439:33]
-  assign _GEN_289 = 2'h2 == pipeHitIdx ? directories_2_states_0_lookups_data : _GEN_285; // @[L2.scala 439:33]
-  assign _GEN_293 = 2'h3 == pipeHitIdx ? directories_3_states_0_lookups_data : _GEN_289; // @[L2.scala 439:33]
-  assign _T_236 = _GEN_293 != 2'h0; // @[L2.scala 439:33]
-  assign hasShared = _T_236 & target; // @[L2.scala 439:55]
-  assign _T_239 = hasShared == 1'h0; // @[L2.scala 442:12]
-  assign isDC = target < 1'h1; // @[L2.scala 433:25]
-  assign mask_3_0 = 2'h0 == pipeHitIdx; // @[L2.scala 176:16]
-  assign _GEN_326 = isDC & mask_3_0; // @[L2.scala 457:20]
-  assign _T_231 = _GEN_293 == 2'h2; // @[L2.scala 436:33]
-  assign hasDirty = _T_231 & target; // @[L2.scala 436:57]
-  assign _T_253 = hasDirty == 1'h0; // @[L2.scala 467:18]
-  assign _T_254 = _GEN_56 == 2'h1; // @[L2.scala 469:24]
-  assign _GEN_389 = _T_254 & _GEN_326; // @[L2.scala 469:49]
-  assign _GEN_424 = _T_253 & _GEN_389; // @[L2.scala 467:29]
-  assign _GEN_442 = _T_239 ? _GEN_326 : _GEN_424; // @[L2.scala 442:24]
-  assign _GEN_484 = isDC & mask_6_0; // @[L2.scala 528:20]
-  assign _GEN_550 = _T_307 & _GEN_484; // @[L2.scala 576:29]
-  assign _GEN_606 = _GEN_463 ? _GEN_550 : _GEN_484; // @[L2.scala 572:43]
-  assign _GEN_647 = hasShared_1 ? 1'h0 : _GEN_606; // @[L2.scala 562:31]
-  assign _GEN_687 = hasDirty_1 ? 1'h0 : _GEN_647; // @[L2.scala 552:24]
-  assign _GEN_711 = _T_280 ? _GEN_484 : _GEN_687; // @[L2.scala 546:36]
-  assign _T_375 = pendingVictim == 1'h0; // @[L2.scala 629:14]
-  assign _T_377 = _T_375 & _T_254; // @[L2.scala 629:29]
-  assign _GEN_810 = _T_377 & mask_3_0; // @[L2.scala 629:67]
-  assign _GEN_830 = _T_394 & _GEN_810; // @[L2.scala 624:22]
-  assign _GEN_962 = pendingVictim ? _GEN_931 : mask_3_0; // @[L2.scala 661:29]
-  assign _GEN_999 = _T_394 & _GEN_962; // @[L2.scala 660:22]
-  assign _GEN_1038 = _T_390 & _GEN_999; // @[Conditional.scala 39:67]
-  assign _GEN_1078 = _T_358 ? _GEN_830 : _GEN_1038; // @[Conditional.scala 39:67]
-  assign _GEN_1110 = _T_279 ? _GEN_711 : _GEN_1078; // @[Conditional.scala 39:67]
-  assign _GEN_1148 = _T_226 ? _GEN_442 : _GEN_1110; // @[Conditional.scala 39:67]
-  assign _GEN_1201 = _T_171 ? _GEN_256 : _GEN_1148; // @[Conditional.scala 39:67]
-  assign newState = _T_254 ? 2'h1 : 2'h2; // @[L2.scala 451:49]
-  assign _GEN_438 = _T_239 ? newState : 2'h1; // @[L2.scala 442:24]
-  assign _GEN_602 = _GEN_463 ? newState : newState; // @[L2.scala 572:43]
-  assign _GEN_707 = _T_280 ? newState : _GEN_602; // @[L2.scala 546:36]
-  assign _T_403 = isDC == 1'h0; // @[L2.scala 672:18]
-  assign sinit = _T_403 ? 2'h0 : newState; // @[L2.scala 672:25]
-  assign _GEN_921 = _T_396 ? sinit : sinit; // @[L2.scala 700:55]
-  assign _GEN_958 = pendingVictim ? _GEN_921 : 2'h2; // @[L2.scala 661:29]
-  assign _GEN_1074 = _T_358 ? 2'h1 : _GEN_958; // @[Conditional.scala 39:67]
-  assign _GEN_1106 = _T_279 ? _GEN_707 : _GEN_1074; // @[Conditional.scala 39:67]
-  assign _GEN_1144 = _T_226 ? _GEN_438 : _GEN_1106; // @[Conditional.scala 39:67]
-  assign _GEN_1197 = _T_171 ? 2'h0 : _GEN_1144; // @[Conditional.scala 39:67]
-  assign writtenDir_tag = _GEN_30[47:12]; // @[L2.scala 73:19]
-  assign _GEN_307 = directories_0_tag_lookups_data; // @[L2.scala 44:7]
-  assign _GEN_311 = 2'h1 == pipeHitIdx ? directories_1_tag_lookups_data : _GEN_307; // @[L2.scala 44:7]
-  assign _GEN_315 = 2'h2 == pipeHitIdx ? directories_2_tag_lookups_data : _GEN_311; // @[L2.scala 44:7]
-  assign _GEN_319 = 2'h3 == pipeHitIdx ? directories_3_tag_lookups_data : _GEN_315; // @[L2.scala 44:7]
-  assign _GEN_439 = _T_239 ? _GEN_319 : _GEN_319; // @[L2.scala 442:24]
-  assign _GEN_603 = _GEN_463 ? writtenDir_tag : writtenDir_tag; // @[L2.scala 572:43]
-  assign _GEN_708 = _T_280 ? writtenDir_tag : _GEN_603; // @[L2.scala 546:36]
-  assign _GEN_786 = target ? directories_1_tag_lookups_data : _GEN_307; // @[L2.scala 44:7]
-  assign _GEN_1518 = {{1'd0}, target}; // @[L2.scala 44:7]
-  assign _GEN_790 = 2'h2 == _GEN_1518 ? directories_2_tag_lookups_data : _GEN_786; // @[L2.scala 44:7]
-  assign _GEN_794 = 2'h3 == _GEN_1518 ? directories_3_tag_lookups_data : _GEN_790; // @[L2.scala 44:7]
-  assign _GEN_922 = _T_396 ? writtenDir_tag : writtenDir_tag; // @[L2.scala 700:55]
-  assign _GEN_959 = pendingVictim ? _GEN_922 : writtenDir_tag; // @[L2.scala 661:29]
-  assign _GEN_1075 = _T_358 ? _GEN_794 : _GEN_959; // @[Conditional.scala 39:67]
-  assign _GEN_1107 = _T_279 ? _GEN_708 : _GEN_1075; // @[Conditional.scala 39:67]
-  assign _GEN_1145 = _T_226 ? _GEN_439 : _GEN_1107; // @[Conditional.scala 39:67]
-  assign _GEN_1198 = _T_171 ? writtenDir_tag : _GEN_1145; // @[Conditional.scala 39:67]
-  assign _GEN_310 = 2'h1 == pipeHitIdx ? directories_1_dirty_lookups_data : _GEN_451; // @[L2.scala 44:7]
-  assign _GEN_314 = 2'h2 == pipeHitIdx ? directories_2_dirty_lookups_data : _GEN_310; // @[L2.scala 44:7]
-  assign _GEN_318 = 2'h3 == pipeHitIdx ? directories_3_dirty_lookups_data : _GEN_314; // @[L2.scala 44:7]
-  assign _GEN_440 = _T_239 ? _GEN_318 : _GEN_318; // @[L2.scala 442:24]
-  assign _GEN_1108 = _T_279 ? 1'h0 : _T_358; // @[Conditional.scala 39:67]
-  assign _GEN_1146 = _T_226 ? _GEN_440 : _GEN_1108; // @[Conditional.scala 39:67]
-  assign _GEN_1199 = _T_171 | _GEN_1146; // @[Conditional.scala 39:67]
-  assign _GEN_309 = 2'h1 == pipeHitIdx ? directories_1_valid_lookups_data : _GEN_450; // @[L2.scala 44:7]
-  assign _GEN_313 = 2'h2 == pipeHitIdx ? directories_2_valid_lookups_data : _GEN_309; // @[L2.scala 44:7]
-  assign _GEN_317 = 2'h3 == pipeHitIdx ? directories_3_valid_lookups_data : _GEN_313; // @[L2.scala 44:7]
-  assign _GEN_441 = _T_239 ? _GEN_317 : _GEN_317; // @[L2.scala 442:24]
-  assign _GEN_784 = target ? directories_1_valid_lookups_data : _GEN_450; // @[L2.scala 44:7]
-  assign _GEN_788 = 2'h2 == _GEN_1518 ? directories_2_valid_lookups_data : _GEN_784; // @[L2.scala 44:7]
-  assign _GEN_792 = 2'h3 == _GEN_1518 ? directories_3_valid_lookups_data : _GEN_788; // @[L2.scala 44:7]
-  assign _GEN_1077 = _T_358 ? _GEN_792 : 1'h1; // @[Conditional.scala 39:67]
-  assign _GEN_1109 = _T_279 | _GEN_1077; // @[Conditional.scala 39:67]
-  assign _GEN_1147 = _T_226 ? _GEN_441 : _GEN_1109; // @[Conditional.scala 39:67]
-  assign _GEN_1200 = _T_171 | _GEN_1147; // @[Conditional.scala 39:67]
-  assign mask_3_1 = 2'h1 == pipeHitIdx; // @[L2.scala 176:16]
-  assign _GEN_327 = isDC & mask_3_1; // @[L2.scala 457:20]
-  assign _GEN_390 = _T_254 & _GEN_327; // @[L2.scala 469:49]
-  assign _GEN_425 = _T_253 & _GEN_390; // @[L2.scala 467:29]
-  assign _GEN_443 = _T_239 ? _GEN_327 : _GEN_425; // @[L2.scala 442:24]
-  assign _GEN_485 = isDC & mask_6_1; // @[L2.scala 528:20]
-  assign _GEN_551 = _T_307 & _GEN_485; // @[L2.scala 576:29]
-  assign _GEN_607 = _GEN_463 ? _GEN_551 : _GEN_485; // @[L2.scala 572:43]
-  assign _GEN_648 = hasShared_1 ? 1'h0 : _GEN_607; // @[L2.scala 562:31]
-  assign _GEN_688 = hasDirty_1 ? 1'h0 : _GEN_648; // @[L2.scala 552:24]
-  assign _GEN_712 = _T_280 ? _GEN_485 : _GEN_688; // @[L2.scala 546:36]
-  assign _GEN_811 = _T_377 & mask_3_1; // @[L2.scala 629:67]
-  assign _GEN_831 = _T_394 & _GEN_811; // @[L2.scala 624:22]
-  assign _GEN_963 = pendingVictim ? _GEN_932 : mask_3_1; // @[L2.scala 661:29]
-  assign _GEN_1000 = _T_394 & _GEN_963; // @[L2.scala 660:22]
-  assign _GEN_1039 = _T_390 & _GEN_1000; // @[Conditional.scala 39:67]
-  assign _GEN_1079 = _T_358 ? _GEN_831 : _GEN_1039; // @[Conditional.scala 39:67]
-  assign _GEN_1111 = _T_279 ? _GEN_712 : _GEN_1079; // @[Conditional.scala 39:67]
-  assign _GEN_1149 = _T_226 ? _GEN_443 : _GEN_1111; // @[Conditional.scala 39:67]
-  assign _GEN_1202 = _T_171 ? _GEN_257 : _GEN_1149; // @[Conditional.scala 39:67]
-  assign mask_3_2 = 2'h2 == pipeHitIdx; // @[L2.scala 176:16]
-  assign _GEN_328 = isDC & mask_3_2; // @[L2.scala 457:20]
-  assign _GEN_391 = _T_254 & _GEN_328; // @[L2.scala 469:49]
-  assign _GEN_426 = _T_253 & _GEN_391; // @[L2.scala 467:29]
-  assign _GEN_444 = _T_239 ? _GEN_328 : _GEN_426; // @[L2.scala 442:24]
-  assign _GEN_486 = isDC & mask_6_2; // @[L2.scala 528:20]
-  assign _GEN_552 = _T_307 & _GEN_486; // @[L2.scala 576:29]
-  assign _GEN_608 = _GEN_463 ? _GEN_552 : _GEN_486; // @[L2.scala 572:43]
-  assign _GEN_649 = hasShared_1 ? 1'h0 : _GEN_608; // @[L2.scala 562:31]
-  assign _GEN_689 = hasDirty_1 ? 1'h0 : _GEN_649; // @[L2.scala 552:24]
-  assign _GEN_713 = _T_280 ? _GEN_486 : _GEN_689; // @[L2.scala 546:36]
-  assign _GEN_812 = _T_377 & mask_3_2; // @[L2.scala 629:67]
-  assign _GEN_832 = _T_394 & _GEN_812; // @[L2.scala 624:22]
-  assign _GEN_964 = pendingVictim ? _GEN_933 : mask_3_2; // @[L2.scala 661:29]
-  assign _GEN_1001 = _T_394 & _GEN_964; // @[L2.scala 660:22]
-  assign _GEN_1040 = _T_390 & _GEN_1001; // @[Conditional.scala 39:67]
-  assign _GEN_1080 = _T_358 ? _GEN_832 : _GEN_1040; // @[Conditional.scala 39:67]
-  assign _GEN_1112 = _T_279 ? _GEN_713 : _GEN_1080; // @[Conditional.scala 39:67]
-  assign _GEN_1150 = _T_226 ? _GEN_444 : _GEN_1112; // @[Conditional.scala 39:67]
-  assign _GEN_1203 = _T_171 ? _GEN_258 : _GEN_1150; // @[Conditional.scala 39:67]
-  assign mask_3_3 = 2'h3 == pipeHitIdx; // @[L2.scala 176:16]
-  assign _GEN_329 = isDC & mask_3_3; // @[L2.scala 457:20]
-  assign _GEN_392 = _T_254 & _GEN_329; // @[L2.scala 469:49]
-  assign _GEN_427 = _T_253 & _GEN_392; // @[L2.scala 467:29]
-  assign _GEN_445 = _T_239 ? _GEN_329 : _GEN_427; // @[L2.scala 442:24]
-  assign _GEN_487 = isDC & mask_6_3; // @[L2.scala 528:20]
-  assign _GEN_553 = _T_307 & _GEN_487; // @[L2.scala 576:29]
-  assign _GEN_609 = _GEN_463 ? _GEN_553 : _GEN_487; // @[L2.scala 572:43]
-  assign _GEN_650 = hasShared_1 ? 1'h0 : _GEN_609; // @[L2.scala 562:31]
-  assign _GEN_690 = hasDirty_1 ? 1'h0 : _GEN_650; // @[L2.scala 552:24]
-  assign _GEN_714 = _T_280 ? _GEN_487 : _GEN_690; // @[L2.scala 546:36]
-  assign _GEN_813 = _T_377 & mask_3_3; // @[L2.scala 629:67]
-  assign _GEN_833 = _T_394 & _GEN_813; // @[L2.scala 624:22]
-  assign _GEN_965 = pendingVictim ? _GEN_934 : mask_3_3; // @[L2.scala 661:29]
-  assign _GEN_1002 = _T_394 & _GEN_965; // @[L2.scala 660:22]
-  assign _GEN_1041 = _T_390 & _GEN_1002; // @[Conditional.scala 39:67]
-  assign _GEN_1081 = _T_358 ? _GEN_833 : _GEN_1041; // @[Conditional.scala 39:67]
-  assign _GEN_1113 = _T_279 ? _GEN_714 : _GEN_1081; // @[Conditional.scala 39:67]
-  assign _GEN_1151 = _T_226 ? _GEN_445 : _GEN_1113; // @[Conditional.scala 39:67]
-  assign _GEN_1204 = _T_171 ? _GEN_259 : _GEN_1151; // @[Conditional.scala 39:67]
-  assign _T_8 = dc_0_l1req != 2'h0; // @[L2.scala 217:38]
-  assign _T_9 = ops_1 != 2'h0; // @[L2.scala 217:38]
-  assign _T_11 = directs_0_read | directs_0_write; // @[L2.scala 219:25]
-  assign _T_21 = refilled_0 == 1'h0; // @[L2.scala 234:51]
-  assign _T_22 = misses_0 | _T_21; // @[L2.scala 234:48]
-  assign _T_23 = $unsigned(reset); // @[L2.scala 234:45]
-  assign _T_24 = _T_22 | _T_23; // @[L2.scala 234:45]
-  assign _T_25 = _T_24 == 1'h0; // @[L2.scala 234:45]
-  assign _T_26 = refilled_1 == 1'h0; // @[L2.scala 234:51]
-  assign _T_27 = misses_1 | _T_26; // @[L2.scala 234:48]
-  assign _T_29 = _T_27 | _T_23; // @[L2.scala 234:45]
-  assign _T_30 = _T_29 == 1'h0; // @[L2.scala 234:45]
-  assign _T_31 = misses_0 & collided_0; // @[L2.scala 235:50]
-  assign _T_32 = _T_31 == 1'h0; // @[L2.scala 235:46]
-  assign _T_34 = _T_32 | _T_23; // @[L2.scala 235:45]
-  assign _T_35 = _T_34 == 1'h0; // @[L2.scala 235:45]
-  assign _T_36 = misses_1 & collided_1; // @[L2.scala 235:50]
-  assign _T_37 = _T_36 == 1'h0; // @[L2.scala 235:46]
-  assign _T_39 = _T_37 | _T_23; // @[L2.scala 235:45]
-  assign _T_40 = _T_39 == 1'h0; // @[L2.scala 235:45]
-  assign wbFifoEmpty = wbFifoHead == wbFifoTail; // @[L2.scala 241:32]
-  assign targetIndex = _GEN_30[11:4]; // @[L2.scala 261:31]
-  assign _T_48 = dc_0_l1addr == _GEN_30; // @[L2.scala 265:52]
-  assign _T_49 = misses_0 & _T_48; // @[L2.scala 265:38]
-  assign _T_51 = ic_0_addr == _GEN_30; // @[L2.scala 265:52]
-  assign _T_52 = misses_1 & _T_51; // @[L2.scala 265:38]
-  assign sameAddrRefilling = _T_49 | _T_52; // @[L2.scala 265:23]
-  assign _T_60 = _T_97 | _T_101; // @[L2.scala 272:55]
-  assign _T_64 = _T_60 | _T_105; // @[L2.scala 272:55]
-  assign hit = _T_64 | _T_109; // @[L2.scala 272:55]
-  assign _T_72 = {{3'd0}, _T_97}; // @[L2.scala 274:79]
-  assign _T_73 = _T_72[2:0]; // @[L2.scala 274:79]
-  assign _GEN_1522 = {{2'd0}, _T_101}; // @[L2.scala 274:79]
-  assign _T_79 = _T_73 + _GEN_1522; // @[L2.scala 274:79]
-  assign _GEN_1523 = {{2'd0}, _T_105}; // @[L2.scala 274:79]
-  assign _T_85 = _T_79 + _GEN_1523; // @[L2.scala 274:79]
-  assign _GEN_1524 = {{2'd0}, _T_109}; // @[L2.scala 274:79]
-  assign hitCount = _T_85 + _GEN_1524; // @[L2.scala 274:79]
-  assign _T_91 = hitCount <= 3'h1; // @[L2.scala 275:19]
-  assign _T_93 = _T_91 | _T_23; // @[L2.scala 275:9]
-  assign _T_94 = _T_93 == 1'h0; // @[L2.scala 275:9]
-  assign _T_110 = _GEN_30[47:4]; // @[L2.scala 283:67]
-  assign _T_111 = wbFifo_0_lineaddr == _T_110; // @[L2.scala 283:52]
-  assign _T_112 = wbFifo_0_valid & _T_111; // @[L2.scala 283:36]
-  assign _T_115 = wbFifo_1_lineaddr == _T_110; // @[L2.scala 283:52]
-  assign _T_116 = wbFifo_1_valid & _T_115; // @[L2.scala 283:36]
-  assign _T_117 = _T_112 | _T_116; // @[L2.scala 283:23]
-  assign _T_119 = wbFifo_2_lineaddr == _T_110; // @[L2.scala 283:52]
-  assign _T_120 = wbFifo_2_valid & _T_119; // @[L2.scala 283:36]
-  assign _T_121 = _T_117 | _T_120; // @[L2.scala 283:23]
-  assign _T_123 = wbFifo_3_lineaddr == _T_110; // @[L2.scala 283:52]
-  assign _T_124 = wbFifo_3_valid & _T_123; // @[L2.scala 283:36]
-  assign fifoHit = _T_121 | _T_124; // @[L2.scala 283:23]
-  assign _T_127 = _T_111 ? wbFifo_0_data : 128'h0; // @[L2.scala 286:28]
-  assign _T_131 = _T_115 ? wbFifo_1_data : 128'h0; // @[L2.scala 286:28]
-  assign _T_132 = _T_127 | _T_131; // @[L2.scala 286:23]
-  assign _T_135 = _T_119 ? wbFifo_2_data : 128'h0; // @[L2.scala 286:28]
-  assign _T_136 = _T_132 | _T_135; // @[L2.scala 286:23]
-  assign _T_139 = _T_123 ? wbFifo_3_data : 128'h0; // @[L2.scala 286:28]
-  assign fifoHitData = _T_136 | _T_139; // @[L2.scala 286:23]
-  assign rand_ = {MaxPeriodFibonacciLFSR_io_out_7,MaxPeriodFibonacciLFSR_io_out_6,MaxPeriodFibonacciLFSR_io_out_5,MaxPeriodFibonacciLFSR_io_out_4,MaxPeriodFibonacciLFSR_io_out_3,MaxPeriodFibonacciLFSR_io_out_2,MaxPeriodFibonacciLFSR_io_out_1,MaxPeriodFibonacciLFSR_io_out_0}; // @[PRNG.scala 86:17]
-  assign _T_148 = pipeTargetAddr[11:0]; // @[L2.scala 303:60]
-  assign _GEN_37 = 2'h1 == victim ? pipeLookups_1_tag : pipeLookups_0_tag; // @[L2.scala 303:43]
-  assign _GEN_41 = 2'h2 == victim ? pipeLookups_2_tag : _GEN_37; // @[L2.scala 303:43]
-  assign _GEN_45 = 2'h3 == victim ? pipeLookups_3_tag : _GEN_41; // @[L2.scala 303:43]
-  assign _T_149 = {_GEN_45,_T_148}; // @[L2.scala 303:43]
-  assign _T_152 = target + 1'h1; // @[L2.scala 319:62]
-  assign _T_154 = target - 1'h1; // @[L2.scala 319:76]
-  assign p = isDC ? _T_152 : _T_154; // @[L2.scala 319:16]
-  assign _GEN_49 = p ? misses_1 : misses_0; // @[L2.scala 322:8]
-  assign _T_155 = _GEN_49 == 1'h0; // @[L2.scala 322:8]
-  assign _GEN_51 = p ? refilled_1 : refilled_0; // @[L2.scala 322:19]
-  assign _T_156 = _T_155 | _GEN_51; // @[L2.scala 322:19]
-  assign _GEN_53 = p ? ops_1 : dc_0_l1req; // @[L2.scala 322:45]
-  assign _T_157 = _GEN_53 != 2'h0; // @[L2.scala 322:45]
-  assign _T_158 = _T_156 & _T_157; // @[L2.scala 322:35]
-  assign nextEventful = _T_158 ? p : target; // @[Mux.scala 87:16]
-  assign _T_164 = {36'h0,rstCnt,4'h0}; // @[L2.scala 333:47]
-  assign _T_165 = _T_164[11:4]; // @[L2.scala 190:27]
-  assign _T_167 = rstCnt + 8'h1; // @[L2.scala 335:24]
-  assign _T_168 = rstCnt == 8'hff; // @[L2.scala 337:19]
-  assign _GEN_58 = target ? misses_1 : misses_0; // @[L2.scala 353:32]
-  assign _GEN_60 = target ? refilled_1 : refilled_0; // @[L2.scala 354:36]
-  assign _T_182 = rand_[1:0]; // @[L2.scala 355:29]
-  assign _GEN_62 = _GEN_60 ? 2'h3 : 2'h1; // @[L2.scala 354:36]
-  assign _GEN_65 = target ? collided_1 : collided_0; // @[L2.scala 363:40]
-  assign _T_183 = fifoHit & sameAddrRefilling; // @[L2.scala 367:30]
-  assign _T_184 = _T_183 == 1'h0; // @[L2.scala 367:20]
-  assign _T_186 = _T_184 | _T_23; // @[L2.scala 367:19]
-  assign _T_187 = _T_186 == 1'h0; // @[L2.scala 367:19]
-  assign _T_190 = fifoHitData[63:0]; // @[L2.scala 374:51]
-  assign _T_191 = fifoHitData[127:64]; // @[L2.scala 374:51]
-  assign _GEN_1525 = 1'h0 == target; // @[L2.scala 375:30]
-  assign _GEN_70 = _GEN_1525 | misses_0; // @[L2.scala 375:30]
-  assign _GEN_71 = target | misses_1; // @[L2.scala 375:30]
-  assign _GEN_74 = _GEN_1525 | refilled_0; // @[L2.scala 377:32]
-  assign _GEN_75 = target | refilled_1; // @[L2.scala 377:32]
-  assign _GEN_76 = _GEN_1525 | collided_0; // @[L2.scala 380:32]
-  assign _GEN_77 = target | collided_1; // @[L2.scala 380:32]
-  assign _GEN_82 = 1'h0 == target ? 1'h0 : sent_0; // @[L2.scala 384:28]
-  assign _GEN_83 = target ? 1'h0 : sent_1; // @[L2.scala 384:28]
-  assign _GEN_90 = sameAddrRefilling ? sent_0 : _GEN_82; // @[L2.scala 379:43]
-  assign _GEN_91 = sameAddrRefilling ? sent_1 : _GEN_83; // @[L2.scala 379:43]
-  assign _GEN_100 = fifoHit ? _GEN_74 : refilled_0; // @[L2.scala 372:27]
-  assign _GEN_101 = fifoHit ? _GEN_75 : refilled_1; // @[L2.scala 372:27]
-  assign _GEN_105 = fifoHit ? sent_0 : _GEN_90; // @[L2.scala 372:27]
-  assign _GEN_106 = fifoHit ? sent_1 : _GEN_91; // @[L2.scala 372:27]
-  assign _GEN_107 = 1'h0 == target ? 1'h0 : _GEN_100; // @[L2.scala 386:30]
-  assign _GEN_108 = target ? 1'h0 : _GEN_101; // @[L2.scala 386:30]
-  assign _GEN_119 = _GEN_65 ? refilled_0 : _GEN_107; // @[L2.scala 363:40]
-  assign _GEN_120 = _GEN_65 ? refilled_1 : _GEN_108; // @[L2.scala 363:40]
-  assign _GEN_123 = _GEN_65 ? sent_0 : _GEN_105; // @[L2.scala 363:40]
-  assign _GEN_124 = _GEN_65 ? sent_1 : _GEN_106; // @[L2.scala 363:40]
-  assign _GEN_125 = hit ? 2'h2 : 2'h1; // @[L2.scala 361:27]
-  assign _GEN_135 = hit ? refilled_0 : _GEN_119; // @[L2.scala 361:27]
-  assign _GEN_136 = hit ? refilled_1 : _GEN_120; // @[L2.scala 361:27]
-  assign _GEN_139 = hit ? sent_0 : _GEN_123; // @[L2.scala 361:27]
-  assign _GEN_140 = hit ? sent_1 : _GEN_124; // @[L2.scala 361:27]
-  assign _GEN_142 = _GEN_58 ? _GEN_62 : _GEN_125; // @[L2.scala 353:32]
-  assign _GEN_152 = _GEN_58 ? refilled_0 : _GEN_135; // @[L2.scala 353:32]
-  assign _GEN_153 = _GEN_58 ? refilled_1 : _GEN_136; // @[L2.scala 353:32]
-  assign _GEN_156 = _GEN_58 ? sent_0 : _GEN_139; // @[L2.scala 353:32]
-  assign _GEN_157 = _GEN_58 ? sent_1 : _GEN_140; // @[L2.scala 353:32]
-  assign _GEN_162 = 2'h1 == hitIdx ? directories_1_valid_lookups_data : _GEN_450; // @[L2.scala 40:85]
-  assign _GEN_164 = 2'h1 == hitIdx ? directories_1_tag_lookups_data : _GEN_307; // @[L2.scala 40:85]
-  assign _GEN_165 = 2'h1 == hitIdx ? directories_1_states_0_lookups_data : _GEN_453; // @[L2.scala 40:85]
-  assign _GEN_166 = 2'h2 == hitIdx ? directories_2_valid_lookups_data : _GEN_162; // @[L2.scala 40:85]
-  assign _GEN_168 = 2'h2 == hitIdx ? directories_2_tag_lookups_data : _GEN_164; // @[L2.scala 40:85]
-  assign _GEN_169 = 2'h2 == hitIdx ? directories_2_states_0_lookups_data : _GEN_165; // @[L2.scala 40:85]
-  assign _GEN_170 = 2'h3 == hitIdx ? directories_3_valid_lookups_data : _GEN_166; // @[L2.scala 40:85]
-  assign _GEN_172 = 2'h3 == hitIdx ? directories_3_tag_lookups_data : _GEN_168; // @[L2.scala 40:85]
-  assign _GEN_173 = 2'h3 == hitIdx ? directories_3_states_0_lookups_data : _GEN_169; // @[L2.scala 40:85]
-  assign _T_196 = _T_107 == _GEN_172; // @[L2.scala 40:85]
-  assign _T_197 = _GEN_170 & _T_196; // @[L2.scala 40:37]
-  assign _T_199 = _T_197 | _T_23; // @[L2.scala 394:17]
-  assign _T_200 = _T_199 == 1'h0; // @[L2.scala 394:17]
-  assign _T_202 = _GEN_173 == 2'h2; // @[L2.scala 397:51]
-  assign _T_204 = _T_202 | _T_23; // @[L2.scala 397:21]
-  assign _T_205 = _T_204 == 1'h0; // @[L2.scala 397:21]
-  assign _T_206 = _GEN_173 == 2'h0; // @[L2.scala 399:51]
-  assign _T_208 = _T_206 | _T_23; // @[L2.scala 399:21]
-  assign _T_209 = _T_208 == 1'h0; // @[L2.scala 399:21]
-  assign _GEN_174 = 1'h0 == target ? 1'h0 : _T_8; // @[L2.scala 421:26]
-  assign _GEN_175 = target ? 1'h0 : _T_9; // @[L2.scala 421:26]
-  assign _GEN_191 = _T_194 ? _GEN_174 : _T_8; // @[Conditional.scala 39:67]
-  assign _GEN_192 = _T_194 ? _GEN_175 : _T_9; // @[Conditional.scala 39:67]
-  assign _GEN_205 = _T_181 ? _GEN_152 : refilled_0; // @[Conditional.scala 39:67]
-  assign _GEN_206 = _T_181 ? _GEN_153 : refilled_1; // @[Conditional.scala 39:67]
-  assign _GEN_209 = _T_181 ? _GEN_156 : sent_0; // @[Conditional.scala 39:67]
-  assign _GEN_210 = _T_181 ? _GEN_157 : sent_1; // @[Conditional.scala 39:67]
-  assign _GEN_226 = _T_181 ? _T_8 : _GEN_191; // @[Conditional.scala 39:67]
-  assign _GEN_227 = _T_181 ? _T_9 : _GEN_192; // @[Conditional.scala 39:67]
-  assign _GEN_239 = _T_174 ? refilled_0 : _GEN_205; // @[Conditional.scala 40:58]
-  assign _GEN_240 = _T_174 ? refilled_1 : _GEN_206; // @[Conditional.scala 40:58]
-  assign _GEN_243 = _T_174 ? sent_0 : _GEN_209; // @[Conditional.scala 40:58]
-  assign _GEN_244 = _T_174 ? sent_1 : _GEN_210; // @[Conditional.scala 40:58]
-  assign _GEN_260 = _T_174 ? _T_8 : _GEN_226; // @[Conditional.scala 40:58]
-  assign _GEN_261 = _T_174 ? _T_9 : _GEN_227; // @[Conditional.scala 40:58]
-  assign _T_240 = _GEN_58 == 1'h0; // @[L2.scala 443:16]
-  assign _T_242 = _T_240 | _T_23; // @[L2.scala 443:15]
-  assign _T_243 = _T_242 == 1'h0; // @[L2.scala 443:15]
-  assign _GEN_296 = stores_0_datas_data; // @[L2.scala 445:24]
-  assign _GEN_297 = 2'h1 == pipeHitIdx ? stores_1_datas_data : _GEN_296; // @[L2.scala 445:24]
-  assign _GEN_298 = 2'h2 == pipeHitIdx ? stores_2_datas_data : _GEN_297; // @[L2.scala 445:24]
-  assign _GEN_299 = 2'h3 == pipeHitIdx ? stores_3_datas_data : _GEN_298; // @[L2.scala 445:24]
-  assign _T_271 = target & _T_236; // @[L2.scala 490:35]
-  assign _GEN_380 = _T_254 ? _GEN_174 : _T_8; // @[L2.scala 469:49]
-  assign _GEN_381 = _T_254 ? _GEN_175 : _T_9; // @[L2.scala 469:49]
-  assign _GEN_394 = _T_254 & pendingVictim; // @[L2.scala 469:49]
-  assign _T_276 = target & _T_231; // @[L2.scala 500:33]
-  assign _GEN_415 = _T_253 ? _GEN_380 : _T_8; // @[L2.scala 467:29]
-  assign _GEN_416 = _T_253 ? _GEN_381 : _T_9; // @[L2.scala 467:29]
-  assign _GEN_429 = _T_253 & _GEN_394; // @[L2.scala 467:29]
-  assign _GEN_433 = _T_239 ? _GEN_174 : _GEN_415; // @[L2.scala 442:24]
-  assign _GEN_434 = _T_239 ? _GEN_175 : _GEN_416; // @[L2.scala 442:24]
-  assign _GEN_437 = _T_239 ? targetIndex : targetIndex; // @[L2.scala 442:24]
-  assign _GEN_456 = 2'h1 == victim ? directories_1_tag_lookups_data : _GEN_307; // @[L2.scala 546:12]
-  assign _GEN_460 = 2'h2 == victim ? directories_2_tag_lookups_data : _GEN_456; // @[L2.scala 546:12]
-  assign _GEN_464 = 2'h3 == victim ? directories_3_tag_lookups_data : _GEN_460; // @[L2.scala 546:12]
-  assign _T_283 = _GEN_58 | _T_23; // @[L2.scala 513:15]
-  assign _T_284 = _T_283 == 1'h0; // @[L2.scala 513:15]
-  assign _T_286 = _GEN_60 | _T_23; // @[L2.scala 514:15]
-  assign _T_287 = _T_286 == 1'h0; // @[L2.scala 514:15]
-  assign _GEN_474 = 1'h0 == target ? 1'h0 : misses_0; // @[L2.scala 518:24]
-  assign _GEN_475 = target ? 1'h0 : misses_1; // @[L2.scala 518:24]
-  assign _GEN_476 = 1'h0 == target ? 1'h0 : refilled_0; // @[L2.scala 519:26]
-  assign _GEN_477 = target ? 1'h0 : refilled_1; // @[L2.scala 519:26]
-  assign _T_309 = {_GEN_464,targetIndex}; // @[L2.scala 577:64]
-  assign _GEN_499 = 2'h1 == victim ? stores_1_datas_data : _GEN_296; // @[L2.scala 579:37]
-  assign _GEN_500 = 2'h2 == victim ? stores_2_datas_data : _GEN_499; // @[L2.scala 579:37]
-  assign _GEN_501 = 2'h3 == victim ? stores_3_datas_data : _GEN_500; // @[L2.scala 579:37]
-  assign _GEN_1529 = 2'h0 == wbFifoTail; // @[L2.scala 580:38]
-  assign _GEN_502 = _GEN_1529 | wbFifo_0_valid; // @[L2.scala 580:38]
-  assign _GEN_1530 = 2'h1 == wbFifoTail; // @[L2.scala 580:38]
-  assign _GEN_503 = _GEN_1530 | wbFifo_1_valid; // @[L2.scala 580:38]
-  assign _GEN_1531 = 2'h2 == wbFifoTail; // @[L2.scala 580:38]
-  assign _GEN_504 = _GEN_1531 | wbFifo_2_valid; // @[L2.scala 580:38]
-  assign _GEN_1532 = 2'h3 == wbFifoTail; // @[L2.scala 580:38]
-  assign _GEN_505 = _GEN_1532 | wbFifo_3_valid; // @[L2.scala 580:38]
-  assign _GEN_532 = _T_307 ? _GEN_502 : wbFifo_0_valid; // @[L2.scala 576:29]
-  assign _GEN_533 = _T_307 ? _GEN_503 : wbFifo_1_valid; // @[L2.scala 576:29]
-  assign _GEN_534 = _T_307 ? _GEN_504 : wbFifo_2_valid; // @[L2.scala 576:29]
-  assign _GEN_535 = _T_307 ? _GEN_505 : wbFifo_3_valid; // @[L2.scala 576:29]
-  assign _GEN_539 = _T_307 ? _GEN_174 : _T_8; // @[L2.scala 576:29]
-  assign _GEN_540 = _T_307 ? _GEN_175 : _T_9; // @[L2.scala 576:29]
-  assign _GEN_543 = _T_307 ? _GEN_476 : refilled_0; // @[L2.scala 576:29]
-  assign _GEN_544 = _T_307 ? _GEN_477 : refilled_1; // @[L2.scala 576:29]
-  assign _GEN_588 = _GEN_463 ? _GEN_532 : wbFifo_0_valid; // @[L2.scala 572:43]
-  assign _GEN_589 = _GEN_463 ? _GEN_533 : wbFifo_1_valid; // @[L2.scala 572:43]
-  assign _GEN_590 = _GEN_463 ? _GEN_534 : wbFifo_2_valid; // @[L2.scala 572:43]
-  assign _GEN_591 = _GEN_463 ? _GEN_535 : wbFifo_3_valid; // @[L2.scala 572:43]
-  assign _GEN_595 = _GEN_463 ? _GEN_539 : _GEN_174; // @[L2.scala 572:43]
-  assign _GEN_596 = _GEN_463 ? _GEN_540 : _GEN_175; // @[L2.scala 572:43]
-  assign _GEN_599 = _GEN_463 ? _GEN_543 : _GEN_476; // @[L2.scala 572:43]
-  assign _GEN_600 = _GEN_463 ? _GEN_544 : _GEN_477; // @[L2.scala 572:43]
-  assign _GEN_601 = _GEN_463 ? targetIndex : targetIndex; // @[L2.scala 572:43]
-  assign _GEN_618 = hasShared_1 | pendingVictim; // @[L2.scala 562:31]
-  assign _GEN_629 = hasShared_1 ? wbFifo_0_valid : _GEN_588; // @[L2.scala 562:31]
-  assign _GEN_630 = hasShared_1 ? wbFifo_1_valid : _GEN_589; // @[L2.scala 562:31]
-  assign _GEN_631 = hasShared_1 ? wbFifo_2_valid : _GEN_590; // @[L2.scala 562:31]
-  assign _GEN_632 = hasShared_1 ? wbFifo_3_valid : _GEN_591; // @[L2.scala 562:31]
-  assign _GEN_636 = hasShared_1 ? _T_8 : _GEN_595; // @[L2.scala 562:31]
-  assign _GEN_637 = hasShared_1 ? _T_9 : _GEN_596; // @[L2.scala 562:31]
-  assign _GEN_640 = hasShared_1 ? refilled_0 : _GEN_599; // @[L2.scala 562:31]
-  assign _GEN_641 = hasShared_1 ? refilled_1 : _GEN_600; // @[L2.scala 562:31]
-  assign _GEN_658 = hasDirty_1 | _GEN_618; // @[L2.scala 552:24]
-  assign _GEN_669 = hasDirty_1 ? wbFifo_0_valid : _GEN_629; // @[L2.scala 552:24]
-  assign _GEN_670 = hasDirty_1 ? wbFifo_1_valid : _GEN_630; // @[L2.scala 552:24]
-  assign _GEN_671 = hasDirty_1 ? wbFifo_2_valid : _GEN_631; // @[L2.scala 552:24]
-  assign _GEN_672 = hasDirty_1 ? wbFifo_3_valid : _GEN_632; // @[L2.scala 552:24]
-  assign _GEN_676 = hasDirty_1 ? _T_8 : _GEN_636; // @[L2.scala 552:24]
-  assign _GEN_677 = hasDirty_1 ? _T_9 : _GEN_637; // @[L2.scala 552:24]
-  assign _GEN_680 = hasDirty_1 ? refilled_0 : _GEN_640; // @[L2.scala 552:24]
-  assign _GEN_681 = hasDirty_1 ? refilled_1 : _GEN_641; // @[L2.scala 552:24]
-  assign _GEN_700 = _T_280 ? _GEN_174 : _GEN_676; // @[L2.scala 546:36]
-  assign _GEN_701 = _T_280 ? _GEN_175 : _GEN_677; // @[L2.scala 546:36]
-  assign _GEN_704 = _T_280 ? _GEN_476 : _GEN_680; // @[L2.scala 546:36]
-  assign _GEN_705 = _T_280 ? _GEN_477 : _GEN_681; // @[L2.scala 546:36]
-  assign _GEN_706 = _T_280 ? targetIndex : _GEN_601; // @[L2.scala 546:36]
-  assign _GEN_733 = _T_280 ? wbFifo_0_valid : _GEN_669; // @[L2.scala 546:36]
-  assign _GEN_734 = _T_280 ? wbFifo_1_valid : _GEN_670; // @[L2.scala 546:36]
-  assign _GEN_735 = _T_280 ? wbFifo_2_valid : _GEN_671; // @[L2.scala 546:36]
-  assign _GEN_736 = _T_280 ? wbFifo_3_valid : _GEN_672; // @[L2.scala 546:36]
-  assign ent_states_0 = pendingVictim ? _GEN_46 : _GEN_293; // @[L2.scala 597:27]
-  assign ent_tag = pendingVictim ? _GEN_45 : _GEN_319; // @[L2.scala 597:27]
-  assign _T_361 = _GEN_30[11:0]; // @[L2.scala 605:46]
-  assign writtenAddr = {ent_tag,_T_361}; // @[L2.scala 605:33]
-  assign _T_369 = writtenAddr[11:4]; // @[L2.scala 168:28]
-  assign _T_373 = _T_371 | _T_23; // @[L2.scala 627:15]
-  assign _T_374 = _T_373 == 1'h0; // @[L2.scala 627:15]
-  assign _T_387 = ent_states_0 != 2'h0; // @[L2.scala 643:20]
-  assign _GEN_799 = _T_377 ? _GEN_174 : _T_8; // @[L2.scala 629:67]
-  assign _GEN_800 = _T_377 ? _GEN_175 : _T_9; // @[L2.scala 629:67]
-  assign _GEN_803 = _T_377 ? _GEN_476 : refilled_0; // @[L2.scala 629:67]
-  assign _GEN_804 = _T_377 ? _GEN_477 : refilled_1; // @[L2.scala 629:67]
-  assign _GEN_819 = _T_394 ? _GEN_799 : _T_8; // @[L2.scala 624:22]
-  assign _GEN_820 = _T_394 ? _GEN_800 : _T_9; // @[L2.scala 624:22]
-  assign _GEN_823 = _T_394 ? _GEN_803 : refilled_0; // @[L2.scala 624:22]
-  assign _GEN_824 = _T_394 ? _GEN_804 : refilled_1; // @[L2.scala 624:22]
-  assign _GEN_915 = _T_396 ? _GEN_532 : wbFifo_0_valid; // @[L2.scala 700:55]
-  assign _GEN_916 = _T_396 ? _GEN_533 : wbFifo_1_valid; // @[L2.scala 700:55]
-  assign _GEN_917 = _T_396 ? _GEN_534 : wbFifo_2_valid; // @[L2.scala 700:55]
-  assign _GEN_918 = _T_396 ? _GEN_535 : wbFifo_3_valid; // @[L2.scala 700:55]
-  assign _GEN_920 = _T_396 ? targetIndex : targetIndex; // @[L2.scala 700:55]
-  assign _GEN_937 = _T_396 ? _GEN_539 : _GEN_174; // @[L2.scala 700:55]
-  assign _GEN_938 = _T_396 ? _GEN_540 : _GEN_175; // @[L2.scala 700:55]
-  assign _GEN_941 = _T_396 ? _GEN_543 : _GEN_476; // @[L2.scala 700:55]
-  assign _GEN_942 = _T_396 ? _GEN_544 : _GEN_477; // @[L2.scala 700:55]
-  assign _T_438 = _GEN_56 == 2'h2; // @[L2.scala 713:28]
-  assign _T_440 = _T_438 | _T_23; // @[L2.scala 713:17]
-  assign _T_441 = _T_440 == 1'h0; // @[L2.scala 713:17]
-  assign _GEN_952 = pendingVictim ? _GEN_915 : wbFifo_0_valid; // @[L2.scala 661:29]
-  assign _GEN_953 = pendingVictim ? _GEN_916 : wbFifo_1_valid; // @[L2.scala 661:29]
-  assign _GEN_954 = pendingVictim ? _GEN_917 : wbFifo_2_valid; // @[L2.scala 661:29]
-  assign _GEN_955 = pendingVictim ? _GEN_918 : wbFifo_3_valid; // @[L2.scala 661:29]
-  assign _GEN_957 = pendingVictim ? _GEN_920 : targetIndex; // @[L2.scala 661:29]
-  assign _GEN_974 = pendingVictim ? _GEN_937 : _T_8; // @[L2.scala 661:29]
-  assign _GEN_975 = pendingVictim ? _GEN_938 : _T_9; // @[L2.scala 661:29]
-  assign _GEN_978 = pendingVictim ? _GEN_941 : refilled_0; // @[L2.scala 661:29]
-  assign _GEN_979 = pendingVictim ? _GEN_942 : refilled_1; // @[L2.scala 661:29]
-  assign _GEN_989 = _T_394 ? _GEN_952 : wbFifo_0_valid; // @[L2.scala 660:22]
-  assign _GEN_990 = _T_394 ? _GEN_953 : wbFifo_1_valid; // @[L2.scala 660:22]
-  assign _GEN_991 = _T_394 ? _GEN_954 : wbFifo_2_valid; // @[L2.scala 660:22]
-  assign _GEN_992 = _T_394 ? _GEN_955 : wbFifo_3_valid; // @[L2.scala 660:22]
-  assign _GEN_1011 = _T_394 ? _GEN_974 : _T_8; // @[L2.scala 660:22]
-  assign _GEN_1012 = _T_394 ? _GEN_975 : _T_9; // @[L2.scala 660:22]
-  assign _GEN_1015 = _T_394 ? _GEN_978 : refilled_0; // @[L2.scala 660:22]
-  assign _GEN_1016 = _T_394 ? _GEN_979 : refilled_1; // @[L2.scala 660:22]
-  assign _GEN_1028 = _T_390 ? _GEN_989 : wbFifo_0_valid; // @[Conditional.scala 39:67]
-  assign _GEN_1029 = _T_390 ? _GEN_990 : wbFifo_1_valid; // @[Conditional.scala 39:67]
-  assign _GEN_1030 = _T_390 ? _GEN_991 : wbFifo_2_valid; // @[Conditional.scala 39:67]
-  assign _GEN_1031 = _T_390 ? _GEN_992 : wbFifo_3_valid; // @[Conditional.scala 39:67]
-  assign _GEN_1050 = _T_390 ? _GEN_1011 : _T_8; // @[Conditional.scala 39:67]
-  assign _GEN_1051 = _T_390 ? _GEN_1012 : _T_9; // @[Conditional.scala 39:67]
-  assign _GEN_1054 = _T_390 ? _GEN_1015 : refilled_0; // @[Conditional.scala 39:67]
-  assign _GEN_1055 = _T_390 ? _GEN_1016 : refilled_1; // @[Conditional.scala 39:67]
-  assign _GEN_1059 = _T_358 ? _T_369 : _GEN_920; // @[Conditional.scala 39:67]
-  assign _GEN_1065 = _T_358 ? _GEN_299 : _GEN_930; // @[Conditional.scala 39:67]
-  assign _GEN_1067 = _T_358 ? _GEN_819 : _GEN_1050; // @[Conditional.scala 39:67]
-  assign _GEN_1068 = _T_358 ? _GEN_820 : _GEN_1051; // @[Conditional.scala 39:67]
-  assign _GEN_1071 = _T_358 ? _GEN_823 : _GEN_1054; // @[Conditional.scala 39:67]
-  assign _GEN_1072 = _T_358 ? _GEN_824 : _GEN_1055; // @[Conditional.scala 39:67]
-  assign _GEN_1073 = _T_358 ? targetIndex : _GEN_957; // @[Conditional.scala 39:67]
-  assign _GEN_1092 = _T_358 ? wbFifo_0_valid : _GEN_1028; // @[Conditional.scala 39:67]
-  assign _GEN_1093 = _T_358 ? wbFifo_1_valid : _GEN_1029; // @[Conditional.scala 39:67]
-  assign _GEN_1094 = _T_358 ? wbFifo_2_valid : _GEN_1030; // @[Conditional.scala 39:67]
-  assign _GEN_1095 = _T_358 ? wbFifo_3_valid : _GEN_1031; // @[Conditional.scala 39:67]
-  assign _GEN_1097 = _T_279 ? _GEN_716 : _GEN_1065; // @[Conditional.scala 39:67]
-  assign _GEN_1099 = _T_279 ? _GEN_700 : _GEN_1067; // @[Conditional.scala 39:67]
-  assign _GEN_1100 = _T_279 ? _GEN_701 : _GEN_1068; // @[Conditional.scala 39:67]
-  assign _GEN_1103 = _T_279 ? _GEN_704 : _GEN_1071; // @[Conditional.scala 39:67]
-  assign _GEN_1104 = _T_279 ? _GEN_705 : _GEN_1072; // @[Conditional.scala 39:67]
-  assign _GEN_1105 = _T_279 ? _GEN_706 : _GEN_1073; // @[Conditional.scala 39:67]
-  assign _GEN_1114 = _T_279 ? _GEN_706 : _GEN_1059; // @[Conditional.scala 39:67]
-  assign _GEN_1132 = _T_279 ? _GEN_733 : _GEN_1092; // @[Conditional.scala 39:67]
-  assign _GEN_1133 = _T_279 ? _GEN_734 : _GEN_1093; // @[Conditional.scala 39:67]
-  assign _GEN_1134 = _T_279 ? _GEN_735 : _GEN_1094; // @[Conditional.scala 39:67]
-  assign _GEN_1135 = _T_279 ? _GEN_736 : _GEN_1095; // @[Conditional.scala 39:67]
-  assign _GEN_1139 = _T_226 ? _GEN_433 : _GEN_1099; // @[Conditional.scala 39:67]
-  assign _GEN_1140 = _T_226 ? _GEN_434 : _GEN_1100; // @[Conditional.scala 39:67]
-  assign _GEN_1143 = _T_226 ? _GEN_437 : _GEN_1105; // @[Conditional.scala 39:67]
-  assign _GEN_1158 = _T_226 ? refilled_0 : _GEN_1103; // @[Conditional.scala 39:67]
-  assign _GEN_1159 = _T_226 ? refilled_1 : _GEN_1104; // @[Conditional.scala 39:67]
-  assign _GEN_1174 = _T_226 ? wbFifo_0_valid : _GEN_1132; // @[Conditional.scala 39:67]
-  assign _GEN_1175 = _T_226 ? wbFifo_1_valid : _GEN_1133; // @[Conditional.scala 39:67]
-  assign _GEN_1176 = _T_226 ? wbFifo_2_valid : _GEN_1134; // @[Conditional.scala 39:67]
-  assign _GEN_1177 = _T_226 ? wbFifo_3_valid : _GEN_1135; // @[Conditional.scala 39:67]
-  assign _GEN_1190 = _T_171 ? _GEN_239 : _GEN_1158; // @[Conditional.scala 39:67]
-  assign _GEN_1191 = _T_171 ? _GEN_240 : _GEN_1159; // @[Conditional.scala 39:67]
-  assign _GEN_1194 = _T_171 ? _GEN_243 : sent_0; // @[Conditional.scala 39:67]
-  assign _GEN_1195 = _T_171 ? _GEN_244 : sent_1; // @[Conditional.scala 39:67]
-  assign _GEN_1196 = _T_171 ? targetIndex : _GEN_1143; // @[Conditional.scala 39:67]
-  assign _GEN_1211 = _T_171 ? _GEN_260 : _GEN_1139; // @[Conditional.scala 39:67]
-  assign _GEN_1212 = _T_171 ? _GEN_261 : _GEN_1140; // @[Conditional.scala 39:67]
-  assign _GEN_1225 = _T_171 ? wbFifo_0_valid : _GEN_1174; // @[Conditional.scala 39:67]
-  assign _GEN_1226 = _T_171 ? wbFifo_1_valid : _GEN_1175; // @[Conditional.scala 39:67]
-  assign _GEN_1227 = _T_171 ? wbFifo_2_valid : _GEN_1176; // @[Conditional.scala 39:67]
-  assign _GEN_1228 = _T_171 ? wbFifo_3_valid : _GEN_1177; // @[Conditional.scala 39:67]
-  assign _GEN_1251 = _T_162 ? refilled_0 : _GEN_1190; // @[Conditional.scala 40:58]
-  assign _GEN_1252 = _T_162 ? refilled_1 : _GEN_1191; // @[Conditional.scala 40:58]
-  assign _GEN_1255 = _T_162 ? sent_0 : _GEN_1194; // @[Conditional.scala 40:58]
-  assign _GEN_1256 = _T_162 ? sent_1 : _GEN_1195; // @[Conditional.scala 40:58]
-  assign _GEN_1277 = _T_162 ? wbFifo_0_valid : _GEN_1225; // @[Conditional.scala 40:58]
-  assign _GEN_1278 = _T_162 ? wbFifo_1_valid : _GEN_1226; // @[Conditional.scala 40:58]
-  assign _GEN_1279 = _T_162 ? wbFifo_2_valid : _GEN_1227; // @[Conditional.scala 40:58]
-  assign _GEN_1280 = _T_162 ? wbFifo_3_valid : _GEN_1228; // @[Conditional.scala 40:58]
-  assign _T_451 = reqTarget[0];
-  assign _GEN_1283 = _T_451 ? missesAddr_1 : missesAddr_0; // @[L2.scala 736:27]
-  assign _T_452 = _GEN_1283[47:4]; // @[L2.scala 736:27]
-  assign reqAddr = {_T_452,4'h0}; // @[L2.scala 736:62]
-  assign _T_453 = reqTarget < 2'h2; // @[L2.scala 739:18]
-  assign _GEN_1285 = _T_451 ? sent_1 : sent_0; // @[L2.scala 740:26]
-  assign _GEN_1287 = _T_451 ? misses_1 : misses_0; // @[L2.scala 740:26]
-  assign _T_456 = _GEN_1285 != _GEN_1287; // @[L2.scala 740:26]
-  assign _GEN_1291 = _T_451 ? ic_0_addr : dc_0_l1addr; // @[L2.scala 742:27]
-  assign _T_459 = _GEN_1283 == _GEN_1291; // @[L2.scala 742:27]
-  assign _T_461 = _T_459 | _T_23; // @[L2.scala 742:15]
-  assign _T_462 = _T_461 == 1'h0; // @[L2.scala 742:15]
-  assign _GEN_1541 = 1'h0 == _T_451; // @[L2.scala 761:27]
-  assign _GEN_1292 = _GEN_1541 | _GEN_1255; // @[L2.scala 761:27]
-  assign _GEN_1293 = _T_451 | _GEN_1256; // @[L2.scala 761:27]
-  assign _T_464 = reqTarget == 2'h2; // @[L2.scala 310:14]
-  assign _T_466 = reqTarget + 2'h1; // @[L2.scala 313:18]
-  assign _GEN_1294 = _T_464 ? 2'h0 : _T_466; // @[L2.scala 310:47]
-  assign _GEN_1301 = _GEN_1287 ? reqAddr : 48'h0; // @[L2.scala 741:31]
-  assign _GEN_1302 = _GEN_1287 ? 2'h1 : 2'h0; // @[L2.scala 741:31]
-  assign _GEN_1303 = _GEN_1287 ? {{2'd0}, reqTarget} : 4'h0; // @[L2.scala 741:31]
-  assign _GEN_1304 = _GEN_1287 ? 8'h1 : 8'h0; // @[L2.scala 741:31]
-  assign _GEN_1305 = _GEN_1287 ? 3'h3 : 3'h0; // @[L2.scala 741:31]
-  assign _GEN_1311 = _T_456 ? _GEN_1301 : 48'h0; // @[L2.scala 740:49]
-  assign _GEN_1312 = _T_456 ? _GEN_1302 : 2'h0; // @[L2.scala 740:49]
-  assign _GEN_1313 = _T_456 ? _GEN_1303 : 4'h0; // @[L2.scala 740:49]
-  assign _GEN_1314 = _T_456 ? _GEN_1304 : 8'h0; // @[L2.scala 740:49]
-  assign _GEN_1315 = _T_456 ? _GEN_1305 : 3'h0; // @[L2.scala 740:49]
-  assign _GEN_1316 = _T_456 & _GEN_1287; // @[L2.scala 740:49]
-  assign _T_475 = ucSent_0 == 1'h0; // @[L2.scala 774:30]
-  assign _T_476 = directs_0_read & _T_475; // @[L2.scala 774:27]
-  assign _GEN_1321 = axi_ARREADY | ucSent_0; // @[L2.scala 784:25]
-  assign _GEN_1324 = _T_476 ? directs_0_addr : 48'h0; // @[L2.scala 774:50]
-  assign _GEN_1325 = _T_476 ? 2'h1 : 2'h0; // @[L2.scala 774:50]
-  assign _GEN_1326 = _T_476 ? {{2'd0}, reqTarget} : 4'h0; // @[L2.scala 774:50]
-  assign _GEN_1328 = _T_476 ? 3'h3 : 3'h0; // @[L2.scala 774:50]
-  assign _GEN_1330 = _T_476 ? _GEN_1321 : ucSent_0; // @[L2.scala 774:50]
-  assign _GEN_1341 = _T_453 ? ucSent_0 : _GEN_1330; // @[L2.scala 739:45]
-  assign _T_484 = axi_RID < 4'h2; // @[L2.scala 802:18]
-  assign _T_485 = axi_RID[0];
-  assign _GEN_1343 = _T_485 ? sent_1 : sent_0; // @[L2.scala 804:27]
-  assign _GEN_1345 = _T_485 ? bufptrs_1 : bufptrs_0; // @[L2.scala 806:13]
-  assign ptr = _GEN_1343 & _GEN_1345; // @[L2.scala 804:27]
-  assign _GEN_1542 = 1'h0 == _T_485; // @[L2.scala 812:26]
-  assign _GEN_1543 = 1'h0 == ptr; // @[L2.scala 812:26]
-  assign _T_492 = ptr + 1'h1; // @[L2.scala 813:31]
-  assign _GEN_1353 = _GEN_1542 | _GEN_1251; // @[L2.scala 816:27]
-  assign _GEN_1354 = _T_485 | _GEN_1252; // @[L2.scala 816:27]
-  assign _T_495 = axi_RLAST | _T_23; // @[L2.scala 819:13]
-  assign _T_496 = _T_495 == 1'h0; // @[L2.scala 819:13]
-  assign _GEN_1366 = _T_484 & _T_11; // @[L2.scala 802:45]
-  assign _GEN_1367 = _T_484 & _GEN_1341; // @[L2.scala 802:45]
-  assign _GEN_1378 = axi_RVALID ? _GEN_1366 : _T_11; // @[L2.scala 798:20]
-  assign _GEN_1383 = 2'h1 == wbFifoHead ? wbFifo_1_lineaddr : wbFifo_0_lineaddr;
-  assign _GEN_1384 = 2'h1 == wbFifoHead ? wbFifo_1_data : wbFifo_0_data;
-  assign _GEN_1386 = 2'h2 == wbFifoHead ? wbFifo_2_lineaddr : _GEN_1383;
-  assign _GEN_1387 = 2'h2 == wbFifoHead ? wbFifo_2_data : _GEN_1384;
-  assign _GEN_1389 = 2'h3 == wbFifoHead ? wbFifo_3_lineaddr : _GEN_1386;
-  assign _GEN_1390 = 2'h3 == wbFifoHead ? wbFifo_3_data : _GEN_1387;
-  assign wbDataView_0 = _GEN_1390[63:0]; // @[L2.scala 829:52]
-  assign wbDataView_1 = _GEN_1390[127:64]; // @[L2.scala 829:52]
-  assign _T_502 = $unsigned(wbState); // @[Conditional.scala 37:39]
-  assign _T_503 = 2'h0 == _T_502; // @[Conditional.scala 37:30]
-  assign _T_504 = wbFifoEmpty == 1'h0; // @[L2.scala 835:12]
-  assign _T_505 = {_GEN_1389,4'h0}; // @[L2.scala 837:51]
-  assign _GEN_1397 = _T_504 ? _T_505 : 48'h0; // @[L2.scala 835:26]
-  assign _GEN_1398 = _T_504 ? 2'h1 : 2'h0; // @[L2.scala 835:26]
-  assign _GEN_1399 = _T_504 ? 8'h1 : 8'h0; // @[L2.scala 835:26]
-  assign _GEN_1400 = _T_504 ? 3'h3 : 3'h0; // @[L2.scala 835:26]
-  assign _T_510 = 2'h1 == _T_502; // @[Conditional.scala 37:30]
-  assign _GEN_1407 = wbPtr ? wbDataView_1 : wbDataView_0; // @[L2.scala 859:17]
-  assign _T_512 = wbPtr + 1'h1; // @[L2.scala 867:24]
-  assign _T_515 = 2'h2 == _T_502; // @[Conditional.scala 37:30]
-  assign _T_517 = wbFifoHead + 2'h1; // @[L2.scala 880:34]
-  assign _T_520 = 2'h3 == _T_502; // @[Conditional.scala 37:30]
-  assign _T_521 = axi_AWADDR[2:0]; // @[L2.scala 889:26]
-  assign _T_522 = _T_521 == 3'h0; // @[L2.scala 889:57]
-  assign _T_524 = _T_522 | _T_23; // @[L2.scala 889:15]
-  assign _T_525 = _T_524 == 1'h0; // @[L2.scala 889:15]
-  assign _T_526 = ucSendStage == 2'h0; // @[L2.scala 893:36]
-  assign _T_527 = axi_AWVALID & axi_AWREADY; // @[L2.scala 894:26]
-  assign _T_528 = ucSendStage == 2'h1; // @[L2.scala 901:35]
-  assign _T_529 = axi_WVALID & axi_WREADY; // @[L2.scala 902:25]
-  assign _T_530 = ucSendStage == 2'h2; // @[L2.scala 906:35]
-  assign _T_531 = ucWalkPtr == 1'h0; // @[L2.scala 909:26]
-  assign _T_533 = ucWalkPtr + 1'h1; // @[L2.scala 912:36]
-  assign _GEN_1428 = axi_BVALID ? 1'h0 : _GEN_1378; // @[L2.scala 907:26]
-  assign _GEN_1431 = directs_0_write ? directs_0_addr : 48'h0; // @[L2.scala 887:38]
-  assign _GEN_1432 = directs_0_write ? 2'h1 : 2'h0; // @[L2.scala 887:38]
-  assign _GEN_1434 = directs_0_write ? 3'h3 : 3'h0; // @[L2.scala 887:38]
-  assign _GEN_1435 = directs_0_write & _T_526; // @[L2.scala 887:38]
-  assign _GEN_1437 = directs_0_write ? directs_0_wdata : 64'h0; // @[L2.scala 887:38]
-  assign _GEN_1438 = directs_0_write ? directs_0_wstrb : 8'h0; // @[L2.scala 887:38]
-  assign _GEN_1440 = directs_0_write & _T_528; // @[L2.scala 887:38]
-  assign _GEN_1441 = directs_0_write & _T_530; // @[L2.scala 887:38]
-  assign _GEN_1444 = directs_0_write ? _GEN_1428 : _GEN_1378; // @[L2.scala 887:38]
-  assign _GEN_1445 = _T_520 ? _GEN_1431 : 48'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1446 = _T_520 ? _GEN_1432 : 2'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1448 = _T_520 ? _GEN_1434 : 3'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1449 = _T_520 & _GEN_1435; // @[Conditional.scala 39:67]
-  assign _GEN_1451 = _T_520 ? _GEN_1437 : 64'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1452 = _T_520 ? _GEN_1438 : 8'h0; // @[Conditional.scala 39:67]
-  assign _GEN_1453 = _T_520 & directs_0_write; // @[Conditional.scala 39:67]
-  assign _GEN_1454 = _T_520 & _GEN_1440; // @[Conditional.scala 39:67]
-  assign _GEN_1455 = _T_520 & _GEN_1441; // @[Conditional.scala 39:67]
-  assign _GEN_1458 = _T_520 ? _GEN_1444 : _GEN_1378; // @[Conditional.scala 39:67]
-  assign _GEN_1459 = _T_515 | _GEN_1455; // @[Conditional.scala 39:67]
-  assign _GEN_1466 = _T_515 ? 48'h0 : _GEN_1445; // @[Conditional.scala 39:67]
-  assign _GEN_1467 = _T_515 ? 2'h0 : _GEN_1446; // @[Conditional.scala 39:67]
-  assign _GEN_1469 = _T_515 ? 3'h0 : _GEN_1448; // @[Conditional.scala 39:67]
-  assign _GEN_1470 = _T_515 ? 1'h0 : _GEN_1449; // @[Conditional.scala 39:67]
-  assign _GEN_1472 = _T_515 ? 64'h0 : _GEN_1451; // @[Conditional.scala 39:67]
-  assign _GEN_1473 = _T_515 ? 8'h0 : _GEN_1452; // @[Conditional.scala 39:67]
-  assign _GEN_1474 = _T_515 ? 1'h0 : _GEN_1453; // @[Conditional.scala 39:67]
-  assign _GEN_1475 = _T_515 ? 1'h0 : _GEN_1454; // @[Conditional.scala 39:67]
-  assign _GEN_1477 = _T_515 ? _GEN_1378 : _GEN_1458; // @[Conditional.scala 39:67]
-  assign _GEN_1478 = _T_510 ? _GEN_1407 : _GEN_1472; // @[Conditional.scala 39:67]
-  assign _GEN_1479 = _T_510 ? 8'hff : _GEN_1473; // @[Conditional.scala 39:67]
-  assign _GEN_1480 = _T_510 | _GEN_1475; // @[Conditional.scala 39:67]
-  assign _GEN_1481 = _T_510 ? wbPtr : _GEN_1474; // @[Conditional.scala 39:67]
-  assign _GEN_1484 = _T_510 ? 1'h0 : _GEN_1459; // @[Conditional.scala 39:67]
-  assign _GEN_1490 = _T_510 ? 48'h0 : _GEN_1466; // @[Conditional.scala 39:67]
-  assign _GEN_1491 = _T_510 ? 2'h0 : _GEN_1467; // @[Conditional.scala 39:67]
-  assign _GEN_1493 = _T_510 ? 3'h0 : _GEN_1469; // @[Conditional.scala 39:67]
-  assign _GEN_1494 = _T_510 ? 1'h0 : _GEN_1470; // @[Conditional.scala 39:67]
-  assign _GEN_1497 = _T_510 ? _GEN_1378 : _GEN_1477; // @[Conditional.scala 39:67]
-  assign ic_0_stall = _T_162 ? _T_9 : _GEN_1212; // @[L2.scala 213:16]
-  assign ic_0_data = _T_226 ? _GEN_299 : _GEN_1097; // @[L2.scala 209:16]
-  assign dc_0_l1stall = _T_162 ? _T_8 : _GEN_1211; // @[L2.scala 213:16]
-  assign dc_0_l2req = pendings_0; // @[L2.scala 300:13]
-  assign dc_0_l2addr = pendingVictim ? _T_149 : pipeTargetAddr; // @[L2.scala 303:16 L2.scala 305:16]
-  assign dc_0_rdata = _T_226 ? _GEN_299 : _GEN_1097; // @[L2.scala 209:16]
-  assign directs_0_stall = _T_503 ? _GEN_1378 : _GEN_1497; // @[L2.scala 219:14 L2.scala 822:25 L2.scala 915:36]
-  assign directs_0_rdata = axi_RDATA; // @[L2.scala 821:25]
-  assign axi_AWADDR = _T_503 ? _GEN_1397 : _GEN_1490; // @[L2.scala 134:7 L2.scala 837:20 L2.scala 888:20]
-  assign axi_AWLEN = _T_503 ? _GEN_1399 : 8'h0; // @[L2.scala 134:7 L2.scala 840:19 L2.scala 891:19]
-  assign axi_AWSIZE = _T_503 ? _GEN_1400 : _GEN_1493; // @[L2.scala 134:7 L2.scala 844:20 L2.scala 892:20]
-  assign axi_AWBURST = _T_503 ? _GEN_1398 : _GEN_1491; // @[L2.scala 134:7 L2.scala 838:21 L2.scala 890:21]
-  assign axi_AWVALID = _T_503 ? _T_504 : _GEN_1494; // @[L2.scala 134:7 L2.scala 845:21 L2.scala 893:21]
-  assign axi_WDATA = _T_503 ? 64'h0 : _GEN_1478; // @[L2.scala 134:7 L2.scala 859:17 L2.scala 898:19]
-  assign axi_WSTRB = _T_503 ? 8'h0 : _GEN_1479; // @[L2.scala 134:7 L2.scala 860:17 L2.scala 899:19]
-  assign axi_WLAST = _T_503 ? 1'h0 : _GEN_1481; // @[L2.scala 134:7 L2.scala 864:17 L2.scala 900:19]
-  assign axi_WVALID = _T_503 ? 1'h0 : _GEN_1480; // @[L2.scala 134:7 L2.scala 861:18 L2.scala 901:20]
-  assign axi_BREADY = _T_503 ? 1'h0 : _GEN_1484; // @[L2.scala 134:7 L2.scala 878:18 L2.scala 906:20]
-  assign axi_ARID = _T_453 ? _GEN_1313 : _GEN_1326; // @[L2.scala 134:7 L2.scala 748:18 L2.scala 777:16]
-  assign axi_ARADDR = _T_453 ? _GEN_1311 : _GEN_1324; // @[L2.scala 134:7 L2.scala 744:20 L2.scala 775:18]
-  assign axi_ARLEN = _T_453 ? _GEN_1314 : 8'h0; // @[L2.scala 134:7 L2.scala 753:19 L2.scala 778:17]
-  assign axi_ARSIZE = _T_453 ? _GEN_1315 : _GEN_1328; // @[L2.scala 134:7 L2.scala 757:20 L2.scala 779:18]
-  assign axi_ARBURST = _T_453 ? _GEN_1312 : _GEN_1325; // @[L2.scala 134:7 L2.scala 745:21 L2.scala 776:19]
-  assign axi_ARVALID = _T_453 ? _GEN_1316 : _T_476; // @[L2.scala 134:7 L2.scala 759:21 L2.scala 783:19]
-  assign axi_RREADY = axi_RVALID; // @[L2.scala 134:7 L2.scala 800:16]
-  assign MaxPeriodFibonacciLFSR_clock = clock;
-  assign MaxPeriodFibonacciLFSR_reset = reset;
-  assign _GEN_1547 = _T_162 == 1'h0; // @[L2.scala 367:19]
-  assign _GEN_1548 = _GEN_1547 & _T_171; // @[L2.scala 367:19]
-  assign _GEN_1549 = _T_174 == 1'h0; // @[L2.scala 367:19]
-  assign _GEN_1550 = _GEN_1548 & _GEN_1549; // @[L2.scala 367:19]
-  assign _GEN_1551 = _GEN_1550 & _T_181; // @[L2.scala 367:19]
-  assign _GEN_1553 = _GEN_1551 & _T_240; // @[L2.scala 367:19]
-  assign _GEN_1554 = hit == 1'h0; // @[L2.scala 367:19]
-  assign _GEN_1555 = _GEN_1553 & _GEN_1554; // @[L2.scala 367:19]
-  assign _GEN_1556 = _GEN_65 == 1'h0; // @[L2.scala 367:19]
-  assign _GEN_1557 = _GEN_1555 & _GEN_1556; // @[L2.scala 367:19]
-  assign _GEN_1573 = _T_181 == 1'h0; // @[L2.scala 394:17]
-  assign _GEN_1574 = _GEN_1550 & _GEN_1573; // @[L2.scala 394:17]
-  assign _GEN_1575 = _GEN_1574 & _T_194; // @[L2.scala 394:17]
-  assign _GEN_1590 = _GEN_1575 & _GEN_1525; // @[L2.scala 397:21]
-  assign _GEN_1606 = _GEN_1525 == 1'h0; // @[L2.scala 399:21]
-  assign _GEN_1607 = _GEN_1575 & _GEN_1606; // @[L2.scala 399:21]
-  assign _GEN_1618 = _T_171 == 1'h0; // @[L2.scala 443:15]
-  assign _GEN_1619 = _GEN_1547 & _GEN_1618; // @[L2.scala 443:15]
-  assign _GEN_1620 = _GEN_1619 & _T_226; // @[L2.scala 443:15]
-  assign _GEN_1621 = _GEN_1620 & _T_239; // @[L2.scala 443:15]
-  assign _GEN_1631 = _T_239 == 1'h0; // @[L2.scala 470:17]
-  assign _GEN_1632 = _GEN_1620 & _GEN_1631; // @[L2.scala 470:17]
-  assign _GEN_1633 = _GEN_1632 & _T_253; // @[L2.scala 470:17]
-  assign _GEN_1634 = _GEN_1633 & _T_254; // @[L2.scala 470:17]
-  assign _GEN_1646 = _T_226 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1647 = _GEN_1619 & _GEN_1646; // @[L2.scala 513:15]
-  assign _GEN_1648 = _GEN_1647 & _T_279; // @[L2.scala 513:15]
-  assign _GEN_1649 = _GEN_1648 & _T_280; // @[L2.scala 513:15]
-  assign _GEN_1677 = _T_280 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1678 = _GEN_1648 & _GEN_1677; // @[L2.scala 513:15]
-  assign _GEN_1679 = hasDirty_1 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1680 = _GEN_1678 & _GEN_1679; // @[L2.scala 513:15]
-  assign _GEN_1681 = hasShared_1 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1682 = _GEN_1680 & _GEN_1681; // @[L2.scala 513:15]
-  assign _GEN_1683 = _GEN_1682 & _GEN_463; // @[L2.scala 513:15]
-  assign _GEN_1684 = _GEN_1683 & _T_307; // @[L2.scala 513:15]
-  assign _GEN_1739 = _GEN_463 == 1'h0; // @[L2.scala 513:15]
-  assign _GEN_1740 = _GEN_1682 & _GEN_1739; // @[L2.scala 513:15]
-  assign _GEN_1788 = _T_279 == 1'h0; // @[L2.scala 627:15]
-  assign _GEN_1789 = _GEN_1647 & _GEN_1788; // @[L2.scala 627:15]
-  assign _GEN_1790 = _GEN_1789 & _T_358; // @[L2.scala 627:15]
-  assign _GEN_1791 = _GEN_1790 & _T_394; // @[L2.scala 627:15]
-  assign _GEN_1808 = _T_358 == 1'h0; // @[L2.scala 713:17]
-  assign _GEN_1809 = _GEN_1789 & _GEN_1808; // @[L2.scala 713:17]
-  assign _GEN_1810 = _GEN_1809 & _T_390; // @[L2.scala 713:17]
-  assign _GEN_1811 = _GEN_1810 & _T_394; // @[L2.scala 713:17]
-  assign _GEN_1813 = _GEN_1811 & _T_375; // @[L2.scala 713:17]
-  assign _GEN_1827 = _T_453 & _T_456; // @[L2.scala 742:15]
-  assign _GEN_1828 = _GEN_1827 & _GEN_1287; // @[L2.scala 742:15]
-  assign _GEN_1831 = _T_484 == 1'h0; // @[L2.scala 819:13]
-  assign _GEN_1832 = axi_RVALID & _GEN_1831; // @[L2.scala 819:13]
-  assign _GEN_1835 = _T_503 == 1'h0; // @[L2.scala 889:15]
-  assign _GEN_1836 = _T_510 == 1'h0; // @[L2.scala 889:15]
-  assign _GEN_1837 = _GEN_1835 & _GEN_1836; // @[L2.scala 889:15]
-  assign _GEN_1838 = _T_515 == 1'h0; // @[L2.scala 889:15]
-  assign _GEN_1839 = _GEN_1837 & _GEN_1838; // @[L2.scala 889:15]
-  assign _GEN_1840 = _GEN_1839 & _T_520; // @[L2.scala 889:15]
-  assign _GEN_1841 = _GEN_1840 & directs_0_write; // @[L2.scala 889:15]
-`ifdef RANDOMIZE_GARBAGE_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_INVALID_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_REG_INIT
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-`define RANDOMIZE
-`endif
-`ifndef RANDOM
-`define RANDOM $random
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-  integer initvar;
-`endif
-`ifndef SYNTHESIS
-initial begin
-  `ifdef RANDOMIZE
-    `ifdef INIT_RANDOM
-      `INIT_RANDOM
-    `endif
-    `ifndef VERILATOR
-      `ifdef RANDOMIZE_DELAY
-        #`RANDOMIZE_DELAY begin end
-      `else
-        #0.002 begin end
-      `endif
-    `endif
-  _RAND_0 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_0_valid[initvar] = _RAND_0[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_1 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_0_dirty[initvar] = _RAND_1[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_2 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_0_tag[initvar] = _RAND_2[35:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_3 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_0_states_0[initvar] = _RAND_3[1:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_4 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_1_valid[initvar] = _RAND_4[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_5 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_1_dirty[initvar] = _RAND_5[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_6 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_1_tag[initvar] = _RAND_6[35:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_7 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_1_states_0[initvar] = _RAND_7[1:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_8 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_2_valid[initvar] = _RAND_8[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_9 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_2_dirty[initvar] = _RAND_9[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_10 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_2_tag[initvar] = _RAND_10[35:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_11 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_2_states_0[initvar] = _RAND_11[1:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_12 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_3_valid[initvar] = _RAND_12[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_13 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_3_dirty[initvar] = _RAND_13[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_14 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_3_tag[initvar] = _RAND_14[35:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_15 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    directories_3_states_0[initvar] = _RAND_15[1:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_16 = {4{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    stores_0[initvar] = _RAND_16[127:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_17 = {1{`RANDOM}};
-  stores_0_datas_en_pipe_0 = _RAND_17[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_18 = {1{`RANDOM}};
-  stores_0_datas_addr_pipe_0 = _RAND_18[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_19 = {4{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    stores_1[initvar] = _RAND_19[127:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_20 = {1{`RANDOM}};
-  stores_1_datas_en_pipe_0 = _RAND_20[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_21 = {1{`RANDOM}};
-  stores_1_datas_addr_pipe_0 = _RAND_21[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_22 = {4{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    stores_2[initvar] = _RAND_22[127:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_23 = {1{`RANDOM}};
-  stores_2_datas_en_pipe_0 = _RAND_23[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_24 = {1{`RANDOM}};
-  stores_2_datas_addr_pipe_0 = _RAND_24[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_25 = {4{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 256; initvar = initvar+1)
-    stores_3[initvar] = _RAND_25[127:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_26 = {1{`RANDOM}};
-  stores_3_datas_en_pipe_0 = _RAND_26[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_27 = {1{`RANDOM}};
-  stores_3_datas_addr_pipe_0 = _RAND_27[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_28 = {1{`RANDOM}};
-  state = _RAND_28[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_29 = {1{`RANDOM}};
-  target = _RAND_29[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_30 = {1{`RANDOM}};
-  victim = _RAND_30[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_31 = {1{`RANDOM}};
-  wbFifoHead = _RAND_31[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_32 = {1{`RANDOM}};
-  wbFifoTail = _RAND_32[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_33 = {1{`RANDOM}};
-  pendings_0 = _RAND_33[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_34 = {1{`RANDOM}};
-  pendingVictim = _RAND_34[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_35 = {1{`RANDOM}};
-  pipeHitIdx = _RAND_35[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_36 = {1{`RANDOM}};
-  pipeLookups_3_dirty = _RAND_36[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_37 = {1{`RANDOM}};
-  pipeLookups_2_dirty = _RAND_37[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_38 = {1{`RANDOM}};
-  pipeLookups_1_dirty = _RAND_38[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_39 = {1{`RANDOM}};
-  pipeLookups_0_dirty = _RAND_39[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_40 = {1{`RANDOM}};
-  pipeLookups_3_states_0 = _RAND_40[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_41 = {1{`RANDOM}};
-  pipeLookups_2_states_0 = _RAND_41[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_42 = {1{`RANDOM}};
-  pipeLookups_1_states_0 = _RAND_42[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_43 = {1{`RANDOM}};
-  pipeLookups_0_states_0 = _RAND_43[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_44 = {2{`RANDOM}};
-  bufs_1_1 = _RAND_44[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_45 = {2{`RANDOM}};
-  bufs_0_1 = _RAND_45[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_46 = {2{`RANDOM}};
-  bufs_1_0 = _RAND_46[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_47 = {2{`RANDOM}};
-  bufs_0_0 = _RAND_47[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_48 = {1{`RANDOM}};
-  misses_0 = _RAND_48[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_49 = {1{`RANDOM}};
-  misses_1 = _RAND_49[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_50 = {2{`RANDOM}};
-  missesAddr_0 = _RAND_50[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_51 = {2{`RANDOM}};
-  missesAddr_1 = _RAND_51[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_52 = {1{`RANDOM}};
-  collided_0 = _RAND_52[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_53 = {1{`RANDOM}};
-  collided_1 = _RAND_53[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_54 = {1{`RANDOM}};
-  refilled_0 = _RAND_54[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_55 = {1{`RANDOM}};
-  refilled_1 = _RAND_55[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_56 = {1{`RANDOM}};
-  sent_0 = _RAND_56[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_57 = {1{`RANDOM}};
-  sent_1 = _RAND_57[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_58 = {1{`RANDOM}};
-  ucSent_0 = _RAND_58[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_59 = {2{`RANDOM}};
-  wbFifo_0_lineaddr = _RAND_59[43:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_60 = {4{`RANDOM}};
-  wbFifo_0_data = _RAND_60[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_61 = {1{`RANDOM}};
-  wbFifo_0_valid = _RAND_61[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_62 = {2{`RANDOM}};
-  wbFifo_1_lineaddr = _RAND_62[43:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_63 = {4{`RANDOM}};
-  wbFifo_1_data = _RAND_63[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_64 = {1{`RANDOM}};
-  wbFifo_1_valid = _RAND_64[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_65 = {2{`RANDOM}};
-  wbFifo_2_lineaddr = _RAND_65[43:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_66 = {4{`RANDOM}};
-  wbFifo_2_data = _RAND_66[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_67 = {1{`RANDOM}};
-  wbFifo_2_valid = _RAND_67[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_68 = {2{`RANDOM}};
-  wbFifo_3_lineaddr = _RAND_68[43:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_69 = {4{`RANDOM}};
-  wbFifo_3_data = _RAND_69[127:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_70 = {1{`RANDOM}};
-  wbFifo_3_valid = _RAND_70[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_71 = {1{`RANDOM}};
-  wbState = _RAND_71[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_72 = {1{`RANDOM}};
-  rstCnt = _RAND_72[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_73 = {2{`RANDOM}};
-  pipeTargetAddr = _RAND_73[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_74 = {2{`RANDOM}};
-  pipeLookups_0_tag = _RAND_74[35:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_75 = {2{`RANDOM}};
-  pipeLookups_1_tag = _RAND_75[35:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_76 = {2{`RANDOM}};
-  pipeLookups_2_tag = _RAND_76[35:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_77 = {2{`RANDOM}};
-  pipeLookups_3_tag = _RAND_77[35:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_78 = {1{`RANDOM}};
-  _T_371 = _RAND_78[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_79 = {1{`RANDOM}};
-  reqTarget = _RAND_79[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_80 = {1{`RANDOM}};
-  bufptrs_0 = _RAND_80[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_81 = {1{`RANDOM}};
-  bufptrs_1 = _RAND_81[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_82 = {1{`RANDOM}};
-  wbPtr = _RAND_82[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_83 = {1{`RANDOM}};
-  ucWalkPtr = _RAND_83[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_84 = {1{`RANDOM}};
-  ucSendStage = _RAND_84[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `endif // RANDOMIZE
-end // initial
-`endif // SYNTHESIS
-  always @(posedge clock) begin
-    if(directories_0_valid__T_6_en & directories_0_valid__T_6_mask) begin
-      directories_0_valid[directories_0_valid__T_6_addr] <= directories_0_valid__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_0_dirty__T_6_en & directories_0_dirty__T_6_mask) begin
-      directories_0_dirty[directories_0_dirty__T_6_addr] <= directories_0_dirty__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_0_tag__T_6_en & directories_0_tag__T_6_mask) begin
-      directories_0_tag[directories_0_tag__T_6_addr] <= directories_0_tag__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_0_states_0__T_6_en & directories_0_states_0__T_6_mask) begin
-      directories_0_states_0[directories_0_states_0__T_6_addr] <= directories_0_states_0__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_1_valid__T_6_en & directories_1_valid__T_6_mask) begin
-      directories_1_valid[directories_1_valid__T_6_addr] <= directories_1_valid__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_1_dirty__T_6_en & directories_1_dirty__T_6_mask) begin
-      directories_1_dirty[directories_1_dirty__T_6_addr] <= directories_1_dirty__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_1_tag__T_6_en & directories_1_tag__T_6_mask) begin
-      directories_1_tag[directories_1_tag__T_6_addr] <= directories_1_tag__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_1_states_0__T_6_en & directories_1_states_0__T_6_mask) begin
-      directories_1_states_0[directories_1_states_0__T_6_addr] <= directories_1_states_0__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_2_valid__T_6_en & directories_2_valid__T_6_mask) begin
-      directories_2_valid[directories_2_valid__T_6_addr] <= directories_2_valid__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_2_dirty__T_6_en & directories_2_dirty__T_6_mask) begin
-      directories_2_dirty[directories_2_dirty__T_6_addr] <= directories_2_dirty__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_2_tag__T_6_en & directories_2_tag__T_6_mask) begin
-      directories_2_tag[directories_2_tag__T_6_addr] <= directories_2_tag__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_2_states_0__T_6_en & directories_2_states_0__T_6_mask) begin
-      directories_2_states_0[directories_2_states_0__T_6_addr] <= directories_2_states_0__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_3_valid__T_6_en & directories_3_valid__T_6_mask) begin
-      directories_3_valid[directories_3_valid__T_6_addr] <= directories_3_valid__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_3_dirty__T_6_en & directories_3_dirty__T_6_mask) begin
-      directories_3_dirty[directories_3_dirty__T_6_addr] <= directories_3_dirty__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_3_tag__T_6_en & directories_3_tag__T_6_mask) begin
-      directories_3_tag[directories_3_tag__T_6_addr] <= directories_3_tag__T_6_data; // @[L2.scala 137:24]
-    end
-    if(directories_3_states_0__T_6_en & directories_3_states_0__T_6_mask) begin
-      directories_3_states_0[directories_3_states_0__T_6_addr] <= directories_3_states_0__T_6_data; // @[L2.scala 137:24]
-    end
-    if(stores_0__T_4_en & stores_0__T_4_mask) begin
-      stores_0[stores_0__T_4_addr] <= stores_0__T_4_data; // @[L2.scala 138:27]
-    end
-    stores_0_datas_en_pipe_0 <= 1'h1;
-    stores_0_datas_addr_pipe_0 <= _GEN_30[11:4];
-    if(stores_1__T_4_en & stores_1__T_4_mask) begin
-      stores_1[stores_1__T_4_addr] <= stores_1__T_4_data; // @[L2.scala 138:27]
-    end
-    stores_1_datas_en_pipe_0 <= 1'h1;
-    stores_1_datas_addr_pipe_0 <= _GEN_30[11:4];
-    if(stores_2__T_4_en & stores_2__T_4_mask) begin
-      stores_2[stores_2__T_4_addr] <= stores_2__T_4_data; // @[L2.scala 138:27]
-    end
-    stores_2_datas_en_pipe_0 <= 1'h1;
-    stores_2_datas_addr_pipe_0 <= _GEN_30[11:4];
-    if(stores_3__T_4_en & stores_3__T_4_mask) begin
-      stores_3[stores_3__T_4_addr] <= stores_3__T_4_data; // @[L2.scala 138:27]
-    end
-    stores_3_datas_en_pipe_0 <= 1'h1;
-    stores_3_datas_addr_pipe_0 <= _GEN_30[11:4];
-    if (reset) begin
-      state <= 3'h0;
-    end else if (_T_162) begin
-      if (_T_168) begin
-        state <= 3'h1;
-      end
-    end else if (_T_171) begin
-      if (_T_174) begin
-        state <= 3'h1;
-      end else if (_T_181) begin
-        state <= {{1'd0}, _GEN_142};
-      end else if (_T_194) begin
-        state <= 3'h1;
-      end
-    end else if (_T_226) begin
-      if (_T_239) begin
-        state <= 3'h1;
-      end else if (_T_253) begin
-        if (_T_254) begin
-          state <= 3'h1;
-        end else begin
-          state <= 3'h5;
-        end
-      end else begin
-        state <= 3'h4;
-      end
-    end else if (_T_279) begin
-      if (_T_280) begin
-        state <= 3'h1;
-      end else if (hasDirty_1) begin
-        state <= 3'h4;
-      end else if (hasShared_1) begin
-        state <= 3'h5;
-      end else if (_GEN_463) begin
-        if (_T_307) begin
-          state <= 3'h1;
-        end
-      end else begin
-        state <= 3'h1;
-      end
-    end else if (_T_358) begin
-      if (_T_394) begin
-        if (_T_377) begin
-          state <= 3'h1;
-        end else begin
-          state <= 3'h5;
-        end
-      end
-    end else if (_T_390) begin
-      if (_T_394) begin
-        state <= 3'h1;
-      end
-    end
-    if (reset) begin
-      target <= 1'h0;
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (_T_174) begin
-          if (_T_158) begin
-            if (isDC) begin
-              target <= _T_152;
-            end else begin
-              target <= _T_154;
-            end
-          end
-        end else if (_T_181) begin
-          if (_GEN_58) begin
-            if (!(_GEN_60)) begin
-              if (_T_158) begin
-                if (isDC) begin
-                  target <= _T_152;
-                end else begin
-                  target <= _T_154;
-                end
-              end
-            end
-          end else if (!(hit)) begin
-            if (_T_158) begin
-              if (isDC) begin
-                target <= _T_152;
-              end else begin
-                target <= _T_154;
-              end
-            end
-          end
-        end
-      end else if (_T_226) begin
-        if (_T_239) begin
-          if (_T_158) begin
-            if (isDC) begin
-              target <= _T_152;
-            end else begin
-              target <= _T_154;
-            end
-          end
-        end
-      end else if (_T_279) begin
-        if (_T_280) begin
-          target <= nextEventful;
-        end else if (!(hasDirty_1)) begin
-          if (!(hasShared_1)) begin
-            if (_GEN_463) begin
-              if (_T_307) begin
-                target <= nextEventful;
-              end
-            end else begin
-              target <= nextEventful;
-            end
-          end
-        end
-      end else if (_T_358) begin
-        if (_T_394) begin
-          if (_T_377) begin
-            target <= nextEventful;
-          end
-        end
-      end else if (_T_390) begin
-        if (_T_394) begin
-          target <= nextEventful;
-        end
-      end
-    end
-    if (reset) begin
-      victim <= 2'h0;
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (_GEN_58) begin
-              if (_GEN_60) begin
-                victim <= _T_182;
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      wbFifoHead <= 2'h0;
-    end else if (!(_T_503)) begin
-      if (!(_T_510)) begin
-        if (_T_515) begin
-          if (axi_BVALID) begin
-            wbFifoHead <= _T_517;
-          end
-        end
-      end
-    end
-    if (reset) begin
-      wbFifoTail <= 2'h0;
-    end else if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      wbFifoTail <= _T_47;
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      wbFifoTail <= _T_47;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      pendings_0 <= 2'h0;
-    end else if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (_T_226) begin
-          if (!(_T_239)) begin
-            if (_T_253) begin
-              if (!(_T_254)) begin
-                if (_T_271) begin
-                  pendings_0 <= 2'h2;
-                end
-              end
-            end else if (_T_276) begin
-              pendings_0 <= 2'h1;
-            end
-          end
-        end else if (_T_279) begin
-          if (!(_T_280)) begin
-            if (hasDirty_1) begin
-              if (hasDirty_1) begin
-                pendings_0 <= 2'h1;
-              end
-            end else if (hasShared_1) begin
-              if (hasDirty_1) begin
-                pendings_0 <= 2'h2;
-              end
-            end
-          end
-        end else if (_T_358) begin
-          if (_T_394) begin
-            if (_T_377) begin
-              if (commit) begin
-                pendings_0 <= 2'h0;
-              end
-            end else if (_T_387) begin
-              pendings_0 <= 2'h2;
-            end else if (commit) begin
-              pendings_0 <= 2'h0;
-            end
-          end else if (commit) begin
-            pendings_0 <= 2'h0;
-          end
-        end else if (_T_390) begin
-          if (commit) begin
-            pendings_0 <= 2'h0;
-          end
-        end
-      end
-    end
-    if (reset) begin
-      pendingVictim <= 1'h0;
-    end else if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (_T_226) begin
-          if (!(_T_239)) begin
-            pendingVictim <= _GEN_429;
-          end
-        end else if (_T_279) begin
-          if (!(_T_280)) begin
-            pendingVictim <= _GEN_658;
-          end
-        end
-      end
-    end
-    if (_T_109) begin
-      pipeHitIdx <= 2'h3;
-    end else if (_T_105) begin
-      pipeHitIdx <= 2'h2;
-    end else if (_T_101) begin
-      pipeHitIdx <= 2'h1;
-    end else begin
-      pipeHitIdx <= 2'h0;
-    end
-    pipeLookups_3_dirty <= directories_3_dirty_lookups_data;
-    pipeLookups_2_dirty <= directories_2_dirty_lookups_data;
-    pipeLookups_1_dirty <= directories_1_dirty_lookups_data;
-    pipeLookups_0_dirty <= directories_0_dirty_lookups_data;
-    pipeLookups_3_states_0 <= directories_3_states_0_lookups_data;
-    pipeLookups_2_states_0 <= directories_2_states_0_lookups_data;
-    pipeLookups_1_states_0 <= directories_1_states_0_lookups_data;
-    pipeLookups_0_states_0 <= directories_0_states_0_lookups_data;
-    if (reset) begin
-      bufs_1_1 <= 64'h0;
-    end else if (axi_RVALID) begin
-      if (_T_484) begin
-        if (_T_485 & ptr) begin
-          bufs_1_1 <= axi_RDATA;
-        end else if (!(_T_162)) begin
-          if (_T_171) begin
-            if (!(_T_174)) begin
-              if (_T_181) begin
-                if (!(_GEN_58)) begin
-                  if (!(hit)) begin
-                    if (!(_GEN_65)) begin
-                      if (fifoHit) begin
-                        if (target) begin
-                          bufs_1_1 <= _T_191;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (_T_171) begin
-          if (!(_T_174)) begin
-            if (_T_181) begin
-              if (!(_GEN_58)) begin
-                if (!(hit)) begin
-                  if (!(_GEN_65)) begin
-                    if (fifoHit) begin
-                      if (target) begin
-                        bufs_1_1 <= _T_191;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (fifoHit) begin
-                    if (target) begin
-                      bufs_1_1 <= _T_191;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      bufs_0_1 <= 64'h0;
-    end else if (axi_RVALID) begin
-      if (_T_484) begin
-        if (_GEN_1542 & ptr) begin
-          bufs_0_1 <= axi_RDATA;
-        end else if (!(_T_162)) begin
-          if (_T_171) begin
-            if (!(_T_174)) begin
-              if (_T_181) begin
-                if (!(_GEN_58)) begin
-                  if (!(hit)) begin
-                    if (!(_GEN_65)) begin
-                      if (fifoHit) begin
-                        if (1'h0 == target) begin
-                          bufs_0_1 <= _T_191;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (_T_171) begin
-          if (!(_T_174)) begin
-            if (_T_181) begin
-              if (!(_GEN_58)) begin
-                if (!(hit)) begin
-                  if (!(_GEN_65)) begin
-                    if (fifoHit) begin
-                      if (1'h0 == target) begin
-                        bufs_0_1 <= _T_191;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (fifoHit) begin
-                    if (1'h0 == target) begin
-                      bufs_0_1 <= _T_191;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      bufs_1_0 <= 64'h0;
-    end else if (axi_RVALID) begin
-      if (_T_484) begin
-        if (_T_485 & _GEN_1543) begin
-          bufs_1_0 <= axi_RDATA;
-        end else if (!(_T_162)) begin
-          if (_T_171) begin
-            if (!(_T_174)) begin
-              if (_T_181) begin
-                if (!(_GEN_58)) begin
-                  if (!(hit)) begin
-                    if (!(_GEN_65)) begin
-                      if (fifoHit) begin
-                        if (target) begin
-                          bufs_1_0 <= _T_190;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (_T_171) begin
-          if (!(_T_174)) begin
-            if (_T_181) begin
-              if (!(_GEN_58)) begin
-                if (!(hit)) begin
-                  if (!(_GEN_65)) begin
-                    if (fifoHit) begin
-                      if (target) begin
-                        bufs_1_0 <= _T_190;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (fifoHit) begin
-                    if (target) begin
-                      bufs_1_0 <= _T_190;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      bufs_0_0 <= 64'h0;
-    end else if (axi_RVALID) begin
-      if (_T_484) begin
-        if (_GEN_1542 & _GEN_1543) begin
-          bufs_0_0 <= axi_RDATA;
-        end else if (!(_T_162)) begin
-          if (_T_171) begin
-            if (!(_T_174)) begin
-              if (_T_181) begin
-                if (!(_GEN_58)) begin
-                  if (!(hit)) begin
-                    if (!(_GEN_65)) begin
-                      if (fifoHit) begin
-                        if (1'h0 == target) begin
-                          bufs_0_0 <= _T_190;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (_T_171) begin
-          if (!(_T_174)) begin
-            if (_T_181) begin
-              if (!(_GEN_58)) begin
-                if (!(hit)) begin
-                  if (!(_GEN_65)) begin
-                    if (fifoHit) begin
-                      if (1'h0 == target) begin
-                        bufs_0_0 <= _T_190;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (fifoHit) begin
-                    if (1'h0 == target) begin
-                      bufs_0_0 <= _T_190;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      misses_0 <= 1'h0;
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (fifoHit) begin
-                    misses_0 <= _GEN_70;
-                  end else if (!(sameAddrRefilling)) begin
-                    misses_0 <= _GEN_70;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_226)) begin
-        if (_T_279) begin
-          if (_T_280) begin
-            if (1'h0 == target) begin
-              misses_0 <= 1'h0;
-            end
-          end else if (!(hasDirty_1)) begin
-            if (!(hasShared_1)) begin
-              if (_GEN_463) begin
-                if (_T_307) begin
-                  if (1'h0 == target) begin
-                    misses_0 <= 1'h0;
-                  end
-                end
-              end else if (1'h0 == target) begin
-                misses_0 <= 1'h0;
-              end
-            end
-          end
-        end else if (_T_358) begin
-          if (_T_394) begin
-            if (_T_377) begin
-              if (1'h0 == target) begin
-                misses_0 <= 1'h0;
-              end
-            end
-          end
-        end else if (_T_390) begin
-          if (_T_394) begin
-            if (pendingVictim) begin
-              if (_T_396) begin
-                if (_T_307) begin
-                  misses_0 <= _GEN_474;
-                end
-              end else begin
-                misses_0 <= _GEN_474;
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      misses_1 <= 1'h0;
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (fifoHit) begin
-                    misses_1 <= _GEN_71;
-                  end else if (!(sameAddrRefilling)) begin
-                    misses_1 <= _GEN_71;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_226)) begin
-        if (_T_279) begin
-          if (_T_280) begin
-            if (target) begin
-              misses_1 <= 1'h0;
-            end
-          end else if (!(hasDirty_1)) begin
-            if (!(hasShared_1)) begin
-              if (_GEN_463) begin
-                if (_T_307) begin
-                  if (target) begin
-                    misses_1 <= 1'h0;
-                  end
-                end
-              end else if (target) begin
-                misses_1 <= 1'h0;
-              end
-            end
-          end
-        end else if (_T_358) begin
-          if (_T_394) begin
-            if (_T_377) begin
-              if (target) begin
-                misses_1 <= 1'h0;
-              end
-            end
-          end
-        end else if (_T_390) begin
-          if (_T_394) begin
-            if (pendingVictim) begin
-              if (_T_396) begin
-                if (_T_307) begin
-                  misses_1 <= _GEN_475;
-                end
-              end else begin
-                misses_1 <= _GEN_475;
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      missesAddr_0 <= 48'h0;
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (fifoHit) begin
-                    if (1'h0 == target) begin
-                      if (target) begin
-                        missesAddr_0 <= ic_0_addr;
-                      end else begin
-                        missesAddr_0 <= dc_0_l1addr;
-                      end
-                    end
-                  end else if (!(sameAddrRefilling)) begin
-                    if (1'h0 == target) begin
-                      if (target) begin
-                        missesAddr_0 <= ic_0_addr;
-                      end else begin
-                        missesAddr_0 <= dc_0_l1addr;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      missesAddr_1 <= 48'h0;
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (fifoHit) begin
-                    if (target) begin
-                      if (target) begin
-                        missesAddr_1 <= ic_0_addr;
-                      end else begin
-                        missesAddr_1 <= dc_0_l1addr;
-                      end
-                    end
-                  end else if (!(sameAddrRefilling)) begin
-                    if (target) begin
-                      if (target) begin
-                        missesAddr_1 <= ic_0_addr;
-                      end else begin
-                        missesAddr_1 <= dc_0_l1addr;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      collided_0 <= 1'h0;
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (!(fifoHit)) begin
-                    if (sameAddrRefilling) begin
-                      collided_0 <= _GEN_76;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (_T_226) begin
-        if (_T_239) begin
-          if (1'h0 == target) begin
-            collided_0 <= 1'h0;
-          end
-        end else if (_T_253) begin
-          if (_T_254) begin
-            if (1'h0 == target) begin
-              collided_0 <= 1'h0;
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      collided_1 <= 1'h0;
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (!(fifoHit)) begin
-                    if (sameAddrRefilling) begin
-                      collided_1 <= _GEN_77;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (_T_226) begin
-        if (_T_239) begin
-          if (target) begin
-            collided_1 <= 1'h0;
-          end
-        end else if (_T_253) begin
-          if (_T_254) begin
-            if (target) begin
-              collided_1 <= 1'h0;
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      refilled_0 <= 1'h0;
-    end else if (axi_RVALID) begin
-      if (_T_484) begin
-        if (axi_RLAST) begin
-          refilled_0 <= _GEN_1353;
-        end else if (!(_T_162)) begin
-          if (_T_171) begin
-            if (!(_T_174)) begin
-              if (_T_181) begin
-                if (!(_GEN_58)) begin
-                  if (!(hit)) begin
-                    if (!(_GEN_65)) begin
-                      if (1'h0 == target) begin
-                        refilled_0 <= 1'h0;
-                      end else if (fifoHit) begin
-                        refilled_0 <= _GEN_74;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (_T_279) begin
-              if (_T_280) begin
-                if (1'h0 == target) begin
-                  refilled_0 <= 1'h0;
-                end
-              end else if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (1'h0 == target) begin
-                        refilled_0 <= 1'h0;
-                      end
-                    end
-                  end else if (1'h0 == target) begin
-                    refilled_0 <= 1'h0;
-                  end
-                end
-              end
-            end else if (_T_358) begin
-              if (_T_394) begin
-                if (_T_377) begin
-                  if (1'h0 == target) begin
-                    refilled_0 <= 1'h0;
-                  end
-                end
-              end
-            end else if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      refilled_0 <= _GEN_476;
-                    end
-                  end else begin
-                    refilled_0 <= _GEN_476;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (_T_171) begin
-          if (!(_T_174)) begin
-            if (_T_181) begin
-              if (!(_GEN_58)) begin
-                if (!(hit)) begin
-                  if (!(_GEN_65)) begin
-                    if (1'h0 == target) begin
-                      refilled_0 <= 1'h0;
-                    end else if (fifoHit) begin
-                      refilled_0 <= _GEN_74;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end else if (!(_T_226)) begin
-          if (_T_279) begin
-            if (_T_280) begin
-              refilled_0 <= _GEN_476;
-            end else if (!(hasDirty_1)) begin
-              if (!(hasShared_1)) begin
-                if (_GEN_463) begin
-                  if (_T_307) begin
-                    refilled_0 <= _GEN_476;
-                  end
-                end else begin
-                  refilled_0 <= _GEN_476;
-                end
-              end
-            end
-          end else if (_T_358) begin
-            if (_T_394) begin
-              if (_T_377) begin
-                refilled_0 <= _GEN_476;
-              end
-            end
-          end else if (_T_390) begin
-            if (_T_394) begin
-              if (pendingVictim) begin
-                if (_T_396) begin
-                  if (_T_307) begin
-                    refilled_0 <= _GEN_476;
-                  end
-                end else begin
-                  refilled_0 <= _GEN_476;
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (1'h0 == target) begin
-                    refilled_0 <= 1'h0;
-                  end else if (fifoHit) begin
-                    refilled_0 <= _GEN_74;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_226)) begin
-        if (_T_279) begin
-          if (_T_280) begin
-            refilled_0 <= _GEN_476;
-          end else if (!(hasDirty_1)) begin
-            if (!(hasShared_1)) begin
-              if (_GEN_463) begin
-                refilled_0 <= _GEN_543;
-              end else begin
-                refilled_0 <= _GEN_476;
-              end
-            end
-          end
-        end else if (_T_358) begin
-          if (_T_394) begin
-            if (_T_377) begin
-              refilled_0 <= _GEN_476;
-            end
-          end
-        end else if (_T_390) begin
-          if (_T_394) begin
-            if (pendingVictim) begin
-              if (_T_396) begin
-                refilled_0 <= _GEN_543;
-              end else begin
-                refilled_0 <= _GEN_476;
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      refilled_1 <= 1'h0;
-    end else if (axi_RVALID) begin
-      if (_T_484) begin
-        if (axi_RLAST) begin
-          refilled_1 <= _GEN_1354;
-        end else if (!(_T_162)) begin
-          if (_T_171) begin
-            if (!(_T_174)) begin
-              if (_T_181) begin
-                if (!(_GEN_58)) begin
-                  if (!(hit)) begin
-                    if (!(_GEN_65)) begin
-                      if (target) begin
-                        refilled_1 <= 1'h0;
-                      end else if (fifoHit) begin
-                        refilled_1 <= _GEN_75;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (_T_279) begin
-              if (_T_280) begin
-                if (target) begin
-                  refilled_1 <= 1'h0;
-                end
-              end else if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (target) begin
-                        refilled_1 <= 1'h0;
-                      end
-                    end
-                  end else if (target) begin
-                    refilled_1 <= 1'h0;
-                  end
-                end
-              end
-            end else if (_T_358) begin
-              if (_T_394) begin
-                if (_T_377) begin
-                  if (target) begin
-                    refilled_1 <= 1'h0;
-                  end
-                end
-              end
-            end else if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      refilled_1 <= _GEN_477;
-                    end
-                  end else begin
-                    refilled_1 <= _GEN_477;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (_T_171) begin
-          if (!(_T_174)) begin
-            if (_T_181) begin
-              if (!(_GEN_58)) begin
-                if (!(hit)) begin
-                  if (!(_GEN_65)) begin
-                    if (target) begin
-                      refilled_1 <= 1'h0;
-                    end else if (fifoHit) begin
-                      refilled_1 <= _GEN_75;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end else if (!(_T_226)) begin
-          if (_T_279) begin
-            if (_T_280) begin
-              refilled_1 <= _GEN_477;
-            end else if (!(hasDirty_1)) begin
-              if (!(hasShared_1)) begin
-                if (_GEN_463) begin
-                  if (_T_307) begin
-                    refilled_1 <= _GEN_477;
-                  end
-                end else begin
-                  refilled_1 <= _GEN_477;
-                end
-              end
-            end
-          end else if (_T_358) begin
-            if (_T_394) begin
-              if (_T_377) begin
-                refilled_1 <= _GEN_477;
-              end
-            end
-          end else if (_T_390) begin
-            if (_T_394) begin
-              if (pendingVictim) begin
-                if (_T_396) begin
-                  if (_T_307) begin
-                    refilled_1 <= _GEN_477;
-                  end
-                end else begin
-                  refilled_1 <= _GEN_477;
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (target) begin
-                    refilled_1 <= 1'h0;
-                  end else if (fifoHit) begin
-                    refilled_1 <= _GEN_75;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_226)) begin
-        if (_T_279) begin
-          if (_T_280) begin
-            refilled_1 <= _GEN_477;
-          end else if (!(hasDirty_1)) begin
-            if (!(hasShared_1)) begin
-              if (_GEN_463) begin
-                refilled_1 <= _GEN_544;
-              end else begin
-                refilled_1 <= _GEN_477;
-              end
-            end
-          end
-        end else if (_T_358) begin
-          if (_T_394) begin
-            if (_T_377) begin
-              refilled_1 <= _GEN_477;
-            end
-          end
-        end else if (_T_390) begin
-          if (_T_394) begin
-            if (pendingVictim) begin
-              if (_T_396) begin
-                refilled_1 <= _GEN_544;
-              end else begin
-                refilled_1 <= _GEN_477;
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      sent_0 <= 1'h0;
-    end else if (_T_453) begin
-      if (_T_456) begin
-        if (_GEN_1287) begin
-          if (axi_ARREADY) begin
-            sent_0 <= _GEN_1292;
-          end else if (!(_T_162)) begin
-            if (_T_171) begin
-              if (!(_T_174)) begin
-                if (_T_181) begin
-                  if (!(_GEN_58)) begin
-                    if (!(hit)) begin
-                      if (!(_GEN_65)) begin
-                        if (!(fifoHit)) begin
-                          if (!(sameAddrRefilling)) begin
-                            if (1'h0 == target) begin
-                              sent_0 <= 1'h0;
-                            end
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end else if (1'h0 == _T_451) begin
-          sent_0 <= 1'h0;
-        end else if (!(_T_162)) begin
-          if (_T_171) begin
-            if (!(_T_174)) begin
-              if (_T_181) begin
-                if (!(_GEN_58)) begin
-                  if (!(hit)) begin
-                    if (!(_GEN_65)) begin
-                      if (!(fifoHit)) begin
-                        if (!(sameAddrRefilling)) begin
-                          if (1'h0 == target) begin
-                            sent_0 <= 1'h0;
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (_T_171) begin
-          if (!(_T_174)) begin
-            if (_T_181) begin
-              if (!(_GEN_58)) begin
-                if (!(hit)) begin
-                  if (!(_GEN_65)) begin
-                    if (!(fifoHit)) begin
-                      if (!(sameAddrRefilling)) begin
-                        if (1'h0 == target) begin
-                          sent_0 <= 1'h0;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (!(fifoHit)) begin
-                    if (!(sameAddrRefilling)) begin
-                      if (1'h0 == target) begin
-                        sent_0 <= 1'h0;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      sent_1 <= 1'h0;
-    end else if (_T_453) begin
-      if (_T_456) begin
-        if (_GEN_1287) begin
-          if (axi_ARREADY) begin
-            sent_1 <= _GEN_1293;
-          end else if (!(_T_162)) begin
-            if (_T_171) begin
-              if (!(_T_174)) begin
-                if (_T_181) begin
-                  if (!(_GEN_58)) begin
-                    if (!(hit)) begin
-                      if (!(_GEN_65)) begin
-                        if (!(fifoHit)) begin
-                          if (!(sameAddrRefilling)) begin
-                            if (target) begin
-                              sent_1 <= 1'h0;
-                            end
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end else if (_T_451) begin
-          sent_1 <= 1'h0;
-        end else if (!(_T_162)) begin
-          if (_T_171) begin
-            if (!(_T_174)) begin
-              if (_T_181) begin
-                if (!(_GEN_58)) begin
-                  if (!(hit)) begin
-                    if (!(_GEN_65)) begin
-                      if (!(fifoHit)) begin
-                        if (!(sameAddrRefilling)) begin
-                          if (target) begin
-                            sent_1 <= 1'h0;
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (_T_171) begin
-          if (!(_T_174)) begin
-            if (_T_181) begin
-              if (!(_GEN_58)) begin
-                if (!(hit)) begin
-                  if (!(_GEN_65)) begin
-                    if (!(fifoHit)) begin
-                      if (!(sameAddrRefilling)) begin
-                        if (target) begin
-                          sent_1 <= 1'h0;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (!(_T_162)) begin
-      if (_T_171) begin
-        if (!(_T_174)) begin
-          if (_T_181) begin
-            if (!(_GEN_58)) begin
-              if (!(hit)) begin
-                if (!(_GEN_65)) begin
-                  if (!(fifoHit)) begin
-                    if (!(sameAddrRefilling)) begin
-                      if (target) begin
-                        sent_1 <= 1'h0;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      ucSent_0 <= 1'h0;
-    end else if (axi_RVALID) begin
-      ucSent_0 <= _GEN_1367;
-    end else if (!(_T_453)) begin
-      if (_T_476) begin
-        ucSent_0 <= _GEN_1321;
-      end
-    end
-    if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (2'h0 == wbFifoTail) begin
-                        wbFifo_0_lineaddr <= _T_309;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      if (2'h0 == wbFifoTail) begin
-                        wbFifo_0_lineaddr <= _T_309;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (2'h0 == wbFifoTail) begin
-                        if (2'h3 == victim) begin
-                          wbFifo_0_data <= stores_3_datas_data;
-                        end else if (2'h2 == victim) begin
-                          wbFifo_0_data <= stores_2_datas_data;
-                        end else if (2'h1 == victim) begin
-                          wbFifo_0_data <= stores_1_datas_data;
-                        end else begin
-                          wbFifo_0_data <= _GEN_296;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      if (2'h0 == wbFifoTail) begin
-                        if (2'h3 == victim) begin
-                          wbFifo_0_data <= stores_3_datas_data;
-                        end else if (2'h2 == victim) begin
-                          wbFifo_0_data <= stores_2_datas_data;
-                        end else if (2'h1 == victim) begin
-                          wbFifo_0_data <= stores_1_datas_data;
-                        end else begin
-                          wbFifo_0_data <= _GEN_296;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      wbFifo_0_valid <= 1'h0;
-    end else if (_T_503) begin
-      if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      if (_T_307) begin
-                        wbFifo_0_valid <= _GEN_502;
-                      end
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      if (_T_307) begin
-                        wbFifo_0_valid <= _GEN_502;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_510) begin
-      if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      if (_T_307) begin
-                        wbFifo_0_valid <= _GEN_502;
-                      end
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      if (_T_307) begin
-                        wbFifo_0_valid <= _GEN_502;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_515) begin
-      if (axi_BVALID) begin
-        if (2'h0 == wbFifoHead) begin
-          wbFifo_0_valid <= 1'h0;
-        end else if (!(_T_162)) begin
-          if (!(_T_171)) begin
-            if (!(_T_226)) begin
-              if (_T_279) begin
-                if (!(_T_280)) begin
-                  if (!(hasDirty_1)) begin
-                    if (!(hasShared_1)) begin
-                      if (_GEN_463) begin
-                        wbFifo_0_valid <= _GEN_532;
-                      end
-                    end
-                  end
-                end
-              end else if (!(_T_358)) begin
-                if (_T_390) begin
-                  if (_T_394) begin
-                    if (pendingVictim) begin
-                      if (_T_396) begin
-                        wbFifo_0_valid <= _GEN_532;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      wbFifo_0_valid <= _GEN_532;
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      wbFifo_0_valid <= _GEN_532;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else begin
-      wbFifo_0_valid <= _GEN_1277;
-    end
-    if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (2'h1 == wbFifoTail) begin
-                        wbFifo_1_lineaddr <= _T_309;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      if (2'h1 == wbFifoTail) begin
-                        wbFifo_1_lineaddr <= _T_309;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (2'h1 == wbFifoTail) begin
-                        if (2'h3 == victim) begin
-                          wbFifo_1_data <= stores_3_datas_data;
-                        end else if (2'h2 == victim) begin
-                          wbFifo_1_data <= stores_2_datas_data;
-                        end else if (2'h1 == victim) begin
-                          wbFifo_1_data <= stores_1_datas_data;
-                        end else begin
-                          wbFifo_1_data <= _GEN_296;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      if (2'h1 == wbFifoTail) begin
-                        if (2'h3 == victim) begin
-                          wbFifo_1_data <= stores_3_datas_data;
-                        end else if (2'h2 == victim) begin
-                          wbFifo_1_data <= stores_2_datas_data;
-                        end else if (2'h1 == victim) begin
-                          wbFifo_1_data <= stores_1_datas_data;
-                        end else begin
-                          wbFifo_1_data <= _GEN_296;
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      wbFifo_1_valid <= 1'h0;
-    end else if (_T_503) begin
-      if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      if (_T_307) begin
-                        wbFifo_1_valid <= _GEN_503;
-                      end
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      if (_T_307) begin
-                        wbFifo_1_valid <= _GEN_503;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_510) begin
-      if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      if (_T_307) begin
-                        wbFifo_1_valid <= _GEN_503;
-                      end
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      if (_T_307) begin
-                        wbFifo_1_valid <= _GEN_503;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_515) begin
-      if (axi_BVALID) begin
-        if (2'h1 == wbFifoHead) begin
-          wbFifo_1_valid <= 1'h0;
-        end else if (!(_T_162)) begin
-          if (!(_T_171)) begin
-            if (!(_T_226)) begin
-              if (_T_279) begin
-                if (!(_T_280)) begin
-                  if (!(hasDirty_1)) begin
-                    if (!(hasShared_1)) begin
-                      if (_GEN_463) begin
-                        wbFifo_1_valid <= _GEN_533;
-                      end
-                    end
-                  end
-                end
-              end else if (!(_T_358)) begin
-                if (_T_390) begin
-                  if (_T_394) begin
-                    if (pendingVictim) begin
-                      if (_T_396) begin
-                        wbFifo_1_valid <= _GEN_533;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      wbFifo_1_valid <= _GEN_533;
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      wbFifo_1_valid <= _GEN_533;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else begin
-      wbFifo_1_valid <= _GEN_1278;
-    end
-    if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (2'h2 == wbFifoTail) begin
-                        wbFifo_2_lineaddr <= _T_309;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      if (2'h2 == wbFifoTail) begin
-                        wbFifo_2_lineaddr <= _T_309;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (2'h2 == wbFifoTail) begin
-                        wbFifo_2_data <= _GEN_501;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      if (2'h2 == wbFifoTail) begin
-                        wbFifo_2_data <= _GEN_501;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      wbFifo_2_valid <= 1'h0;
-    end else if (_T_503) begin
-      if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      if (_T_307) begin
-                        wbFifo_2_valid <= _GEN_504;
-                      end
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      if (_T_307) begin
-                        wbFifo_2_valid <= _GEN_504;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_510) begin
-      if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      if (_T_307) begin
-                        wbFifo_2_valid <= _GEN_504;
-                      end
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      if (_T_307) begin
-                        wbFifo_2_valid <= _GEN_504;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_515) begin
-      if (axi_BVALID) begin
-        if (2'h2 == wbFifoHead) begin
-          wbFifo_2_valid <= 1'h0;
-        end else if (!(_T_162)) begin
-          if (!(_T_171)) begin
-            if (!(_T_226)) begin
-              if (_T_279) begin
-                if (!(_T_280)) begin
-                  if (!(hasDirty_1)) begin
-                    if (!(hasShared_1)) begin
-                      if (_GEN_463) begin
-                        wbFifo_2_valid <= _GEN_534;
-                      end
-                    end
-                  end
-                end
-              end else if (!(_T_358)) begin
-                if (_T_390) begin
-                  if (_T_394) begin
-                    if (pendingVictim) begin
-                      if (_T_396) begin
-                        wbFifo_2_valid <= _GEN_534;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      wbFifo_2_valid <= _GEN_534;
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      wbFifo_2_valid <= _GEN_534;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else begin
-      wbFifo_2_valid <= _GEN_1279;
-    end
-    if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (2'h3 == wbFifoTail) begin
-                        wbFifo_3_lineaddr <= _T_309;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      if (2'h3 == wbFifoTail) begin
-                        wbFifo_3_lineaddr <= _T_309;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_162)) begin
-      if (!(_T_171)) begin
-        if (!(_T_226)) begin
-          if (_T_279) begin
-            if (!(_T_280)) begin
-              if (!(hasDirty_1)) begin
-                if (!(hasShared_1)) begin
-                  if (_GEN_463) begin
-                    if (_T_307) begin
-                      if (2'h3 == wbFifoTail) begin
-                        wbFifo_3_data <= _GEN_501;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end else if (!(_T_358)) begin
-            if (_T_390) begin
-              if (_T_394) begin
-                if (pendingVictim) begin
-                  if (_T_396) begin
-                    if (_T_307) begin
-                      if (2'h3 == wbFifoTail) begin
-                        wbFifo_3_data <= _GEN_501;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      wbFifo_3_valid <= 1'h0;
-    end else if (_T_503) begin
-      if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      if (_T_307) begin
-                        wbFifo_3_valid <= _GEN_505;
-                      end
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      if (_T_307) begin
-                        wbFifo_3_valid <= _GEN_505;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_510) begin
-      if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      if (_T_307) begin
-                        wbFifo_3_valid <= _GEN_505;
-                      end
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      if (_T_307) begin
-                        wbFifo_3_valid <= _GEN_505;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_515) begin
-      if (axi_BVALID) begin
-        if (2'h3 == wbFifoHead) begin
-          wbFifo_3_valid <= 1'h0;
-        end else if (!(_T_162)) begin
-          if (!(_T_171)) begin
-            if (!(_T_226)) begin
-              if (_T_279) begin
-                if (!(_T_280)) begin
-                  if (!(hasDirty_1)) begin
-                    if (!(hasShared_1)) begin
-                      if (_GEN_463) begin
-                        wbFifo_3_valid <= _GEN_535;
-                      end
-                    end
-                  end
-                end
-              end else if (!(_T_358)) begin
-                if (_T_390) begin
-                  if (_T_394) begin
-                    if (pendingVictim) begin
-                      if (_T_396) begin
-                        wbFifo_3_valid <= _GEN_535;
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end else if (!(_T_162)) begin
-        if (!(_T_171)) begin
-          if (!(_T_226)) begin
-            if (_T_279) begin
-              if (!(_T_280)) begin
-                if (!(hasDirty_1)) begin
-                  if (!(hasShared_1)) begin
-                    if (_GEN_463) begin
-                      wbFifo_3_valid <= _GEN_535;
-                    end
-                  end
-                end
-              end
-            end else if (!(_T_358)) begin
-              if (_T_390) begin
-                if (_T_394) begin
-                  if (pendingVictim) begin
-                    if (_T_396) begin
-                      wbFifo_3_valid <= _GEN_535;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else begin
-      wbFifo_3_valid <= _GEN_1280;
-    end
-    if (reset) begin
-      wbState <= 2'h0;
-    end else if (_T_503) begin
-      if (_T_504) begin
-        if (axi_AWREADY) begin
-          wbState <= 2'h1;
-        end
-      end else if (directs_0_write) begin
-        wbState <= 2'h3;
-      end
-    end else if (_T_510) begin
-      if (axi_WREADY) begin
-        if (wbPtr) begin
-          wbState <= 2'h2;
-        end
-      end
-    end else if (_T_515) begin
-      if (axi_BVALID) begin
-        wbState <= 2'h0;
-      end
-    end else if (_T_520) begin
-      if (directs_0_write) begin
-        if (axi_BVALID) begin
-          if (_T_531) begin
-            wbState <= 2'h0;
-          end
-        end
-      end else if (_T_531) begin
-        wbState <= 2'h0;
-      end
-    end
-    if (reset) begin
-      rstCnt <= 8'h0;
-    end else if (_T_162) begin
-      rstCnt <= _T_167;
-    end
-    if (target) begin
-      pipeTargetAddr <= ic_0_addr;
-    end else begin
-      pipeTargetAddr <= dc_0_l1addr;
-    end
-    pipeLookups_0_tag <= directories_0_tag_lookups_data;
-    pipeLookups_1_tag <= directories_1_tag_lookups_data;
-    pipeLookups_2_tag <= directories_2_tag_lookups_data;
-    pipeLookups_3_tag <= directories_3_tag_lookups_data;
-    _T_371 <= _T_362 & _T_363;
-    if (reset) begin
-      reqTarget <= 2'h0;
-    end else if (_T_453) begin
-      if (_T_456) begin
-        if (_GEN_1287) begin
-          if (axi_ARREADY) begin
-            if (_T_464) begin
-              reqTarget <= 2'h0;
-            end else begin
-              reqTarget <= _T_466;
-            end
-          end
-        end else if (_T_464) begin
-          reqTarget <= 2'h0;
-        end else begin
-          reqTarget <= _T_466;
-        end
-      end else if (_T_464) begin
-        reqTarget <= 2'h0;
-      end else begin
-        reqTarget <= _T_466;
-      end
-    end else if (_T_476) begin
-      if (axi_ARREADY) begin
-        if (_T_464) begin
-          reqTarget <= 2'h0;
-        end else begin
-          reqTarget <= _T_466;
-        end
-      end
-    end else begin
-      reqTarget <= _GEN_1294;
-    end
-    if (reset) begin
-      bufptrs_0 <= 1'h0;
-    end else if (axi_RVALID) begin
-      if (_T_484) begin
-        if (1'h0 == _T_485) begin
-          bufptrs_0 <= _T_492;
-        end
-      end
-    end
-    if (reset) begin
-      bufptrs_1 <= 1'h0;
-    end else if (axi_RVALID) begin
-      if (_T_484) begin
-        if (_T_485) begin
-          bufptrs_1 <= _T_492;
-        end
-      end
-    end
-    if (reset) begin
-      wbPtr <= 1'h0;
-    end else if (_T_503) begin
-      if (_T_504) begin
-        if (axi_AWREADY) begin
-          wbPtr <= 1'h0;
-        end
-      end
-    end else if (_T_510) begin
-      if (axi_WREADY) begin
-        wbPtr <= _T_512;
-      end
-    end
-    if (reset) begin
-      ucWalkPtr <= 1'h0;
-    end else if (_T_503) begin
-      if (!(_T_504)) begin
-        if (directs_0_write) begin
-          ucWalkPtr <= 1'h0;
-        end
-      end
-    end else if (!(_T_510)) begin
-      if (!(_T_515)) begin
-        if (_T_520) begin
-          if (directs_0_write) begin
-            if (axi_BVALID) begin
-              if (!(_T_531)) begin
-                ucWalkPtr <= _T_533;
-              end
-            end
-          end else if (!(_T_531)) begin
-            ucWalkPtr <= _T_533;
-          end
-        end
-      end
-    end
-    if (reset) begin
-      ucSendStage <= 2'h0;
-    end else if (_T_503) begin
-      if (!(_T_504)) begin
-        if (directs_0_write) begin
-          ucSendStage <= 2'h0;
-        end
-      end
-    end else if (!(_T_510)) begin
-      if (!(_T_515)) begin
-        if (_T_520) begin
-          if (directs_0_write) begin
-            if (axi_BVALID) begin
-              ucSendStage <= 2'h0;
-            end else if (_T_529) begin
-              ucSendStage <= 2'h2;
-            end else if (_T_527) begin
-              ucSendStage <= 2'h1;
-            end
-          end else begin
-            ucSendStage <= 2'h0;
-          end
-        end
-      end
-    end
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_25) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:234 for((m, r) <- misses.zip(refilled)) assert(m || !r) // refilled implies miss\n"); // @[L2.scala 234:45]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_25) begin
-          $fatal; // @[L2.scala 234:45]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_30) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:234 for((m, r) <- misses.zip(refilled)) assert(m || !r) // refilled implies miss\n"); // @[L2.scala 234:45]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_30) begin
-          $fatal; // @[L2.scala 234:45]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_35) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:235 for((m, c) <- misses.zip(collided)) assert(!(m && c)) // miss and collided is never true at the same time\n"); // @[L2.scala 235:45]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_35) begin
-          $fatal; // @[L2.scala 235:45]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_40) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:235 for((m, c) <- misses.zip(collided)) assert(!(m && c)) // miss and collided is never true at the same time\n"); // @[L2.scala 235:45]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_40) begin
-          $fatal; // @[L2.scala 235:45]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_94) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:275 assert(hitCount <= 1.U)\n"); // @[L2.scala 275:9]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_94) begin
-          $fatal; // @[L2.scala 275:9]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1557 & _T_187) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:367 assert(!(fifoHit && sameAddrRefilling)) // FIFO inhabitance and AXI refilling are mutually exclusive\n"); // @[L2.scala 367:19]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1557 & _T_187) begin
-          $fatal; // @[L2.scala 367:19]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1575 & _T_200) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:394 assert(lookups(hitIdx).hit(targetAddr))\n"); // @[L2.scala 394:17]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1575 & _T_200) begin
-          $fatal; // @[L2.scala 394:17]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1590 & _T_205) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:397 assert(lookups(hitIdx).states(core) === L2DirState.modified)\n"); // @[L2.scala 397:21]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1590 & _T_205) begin
-          $fatal; // @[L2.scala 397:21]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1607 & _T_209) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:399 assert(lookups(hitIdx).states(core) === L2DirState.vacant)\n"); // @[L2.scala 399:21]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1607 & _T_209) begin
-          $fatal; // @[L2.scala 399:21]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1621 & _T_243) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:443 assert(!misses(target))\n"); // @[L2.scala 443:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1621 & _T_243) begin
-          $fatal; // @[L2.scala 443:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1634 & _T_243) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:470 assert(!misses(target))\n"); // @[L2.scala 470:17]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1634 & _T_243) begin
-          $fatal; // @[L2.scala 470:17]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1649 & _T_284) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:513 assert(misses(target))\n"); // @[L2.scala 513:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1649 & _T_284) begin
-          $fatal; // @[L2.scala 513:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1649 & _T_287) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:514 assert(refilled(target))\n"); // @[L2.scala 514:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1649 & _T_287) begin
-          $fatal; // @[L2.scala 514:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1684 & _T_284) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:513 assert(misses(target))\n"); // @[L2.scala 513:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1684 & _T_284) begin
-          $fatal; // @[L2.scala 513:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1684 & _T_287) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:514 assert(refilled(target))\n"); // @[L2.scala 514:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1684 & _T_287) begin
-          $fatal; // @[L2.scala 514:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1740 & _T_284) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:513 assert(misses(target))\n"); // @[L2.scala 513:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1740 & _T_284) begin
-          $fatal; // @[L2.scala 513:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1740 & _T_287) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:514 assert(refilled(target))\n"); // @[L2.scala 514:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1740 & _T_287) begin
-          $fatal; // @[L2.scala 514:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1791 & _T_374) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:627 assert(RegNext(commit))\n"); // @[L2.scala 627:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1791 & _T_374) begin
-          $fatal; // @[L2.scala 627:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1813 & _T_441) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:713 assert(targetOps === L1DCPort.L1Req.modify)\n"); // @[L2.scala 713:17]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1813 & _T_441) begin
-          $fatal; // @[L2.scala 713:17]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1828 & _T_462) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:742 assert(rawReqAddr === addrs(reqTarget))\n"); // @[L2.scala 742:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1828 & _T_462) begin
-          $fatal; // @[L2.scala 742:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1832 & _T_496) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:819 assert(axi.RLAST)\n"); // @[L2.scala 819:13]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1832 & _T_496) begin
-          $fatal; // @[L2.scala 819:13]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_1841 & _T_525) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L2.scala:889 assert(axi.AWADDR(log2Ceil(opts.XLEN / 8)-1, 0) === 0.U)\n"); // @[L2.scala 889:15]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_1841 & _T_525) begin
-          $fatal; // @[L2.scala 889:15]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-  end
-endmodule
-module L1IC(
-  input          clock,
-  input          reset,
-  input  [47:0]  toCPU_addr,
-  input          toCPU_read,
-  output         toCPU_stall,
-  input          toCPU_rst,
-  output [31:0]  toCPU_data,
-  output         toCPU_vacant,
-  output         toL2_read,
-  output [47:0]  toL2_addr,
-  input          toL2_stall,
-  input  [127:0] toL2_data
-);
-  reg [36:0] directories_0_tag [0:63]; // @[L1IC.scala 68:24]
-  reg [63:0] _RAND_0;
-  wire [36:0] directories_0_tag_readouts_data; // @[L1IC.scala 68:24]
-  wire [5:0] directories_0_tag_readouts_addr; // @[L1IC.scala 68:24]
-  wire [36:0] directories_0_tag__T_1_data; // @[L1IC.scala 68:24]
-  wire [5:0] directories_0_tag__T_1_addr; // @[L1IC.scala 68:24]
-  wire  directories_0_tag__T_1_mask; // @[L1IC.scala 68:24]
-  wire  directories_0_tag__T_1_en; // @[L1IC.scala 68:24]
-  reg  directories_0_valid [0:63]; // @[L1IC.scala 68:24]
-  reg [31:0] _RAND_1;
-  wire  directories_0_valid_readouts_data; // @[L1IC.scala 68:24]
-  wire [5:0] directories_0_valid_readouts_addr; // @[L1IC.scala 68:24]
-  wire  directories_0_valid__T_1_data; // @[L1IC.scala 68:24]
-  wire [5:0] directories_0_valid__T_1_addr; // @[L1IC.scala 68:24]
-  wire  directories_0_valid__T_1_mask; // @[L1IC.scala 68:24]
-  wire  directories_0_valid__T_1_en; // @[L1IC.scala 68:24]
-  reg [36:0] directories_1_tag [0:63]; // @[L1IC.scala 68:24]
-  reg [63:0] _RAND_2;
-  wire [36:0] directories_1_tag_readouts_data; // @[L1IC.scala 68:24]
-  wire [5:0] directories_1_tag_readouts_addr; // @[L1IC.scala 68:24]
-  wire [36:0] directories_1_tag__T_1_data; // @[L1IC.scala 68:24]
-  wire [5:0] directories_1_tag__T_1_addr; // @[L1IC.scala 68:24]
-  wire  directories_1_tag__T_1_mask; // @[L1IC.scala 68:24]
-  wire  directories_1_tag__T_1_en; // @[L1IC.scala 68:24]
-  reg  directories_1_valid [0:63]; // @[L1IC.scala 68:24]
-  reg [31:0] _RAND_3;
-  wire  directories_1_valid_readouts_data; // @[L1IC.scala 68:24]
-  wire [5:0] directories_1_valid_readouts_addr; // @[L1IC.scala 68:24]
-  wire  directories_1_valid__T_1_data; // @[L1IC.scala 68:24]
-  wire [5:0] directories_1_valid__T_1_addr; // @[L1IC.scala 68:24]
-  wire  directories_1_valid__T_1_mask; // @[L1IC.scala 68:24]
-  wire  directories_1_valid__T_1_en; // @[L1IC.scala 68:24]
-  reg [31:0] stores_0_0 [0:63]; // @[L1IC.scala 69:27]
-  reg [31:0] _RAND_4;
-  wire [31:0] stores_0_0_dataReadouts_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_0_0_dataReadouts_addr; // @[L1IC.scala 69:27]
-  wire [31:0] stores_0_0__T_3_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_0_0__T_3_addr; // @[L1IC.scala 69:27]
-  wire  stores_0_0__T_3_mask; // @[L1IC.scala 69:27]
-  wire  stores_0_0__T_3_en; // @[L1IC.scala 69:27]
-  reg  stores_0_0_dataReadouts_en_pipe_0;
-  reg [31:0] _RAND_5;
-  reg [5:0] stores_0_0_dataReadouts_addr_pipe_0;
-  reg [31:0] _RAND_6;
-  reg [31:0] stores_0_1 [0:63]; // @[L1IC.scala 69:27]
-  reg [31:0] _RAND_7;
-  wire [31:0] stores_0_1_dataReadouts_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_0_1_dataReadouts_addr; // @[L1IC.scala 69:27]
-  wire [31:0] stores_0_1__T_3_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_0_1__T_3_addr; // @[L1IC.scala 69:27]
-  wire  stores_0_1__T_3_mask; // @[L1IC.scala 69:27]
-  wire  stores_0_1__T_3_en; // @[L1IC.scala 69:27]
-  reg  stores_0_1_dataReadouts_en_pipe_0;
-  reg [31:0] _RAND_8;
-  reg [5:0] stores_0_1_dataReadouts_addr_pipe_0;
-  reg [31:0] _RAND_9;
-  reg [31:0] stores_0_2 [0:63]; // @[L1IC.scala 69:27]
-  reg [31:0] _RAND_10;
-  wire [31:0] stores_0_2_dataReadouts_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_0_2_dataReadouts_addr; // @[L1IC.scala 69:27]
-  wire [31:0] stores_0_2__T_3_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_0_2__T_3_addr; // @[L1IC.scala 69:27]
-  wire  stores_0_2__T_3_mask; // @[L1IC.scala 69:27]
-  wire  stores_0_2__T_3_en; // @[L1IC.scala 69:27]
-  reg  stores_0_2_dataReadouts_en_pipe_0;
-  reg [31:0] _RAND_11;
-  reg [5:0] stores_0_2_dataReadouts_addr_pipe_0;
-  reg [31:0] _RAND_12;
-  reg [31:0] stores_0_3 [0:63]; // @[L1IC.scala 69:27]
-  reg [31:0] _RAND_13;
-  wire [31:0] stores_0_3_dataReadouts_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_0_3_dataReadouts_addr; // @[L1IC.scala 69:27]
-  wire [31:0] stores_0_3__T_3_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_0_3__T_3_addr; // @[L1IC.scala 69:27]
-  wire  stores_0_3__T_3_mask; // @[L1IC.scala 69:27]
-  wire  stores_0_3__T_3_en; // @[L1IC.scala 69:27]
-  reg  stores_0_3_dataReadouts_en_pipe_0;
-  reg [31:0] _RAND_14;
-  reg [5:0] stores_0_3_dataReadouts_addr_pipe_0;
-  reg [31:0] _RAND_15;
-  reg [31:0] stores_1_0 [0:63]; // @[L1IC.scala 69:27]
-  reg [31:0] _RAND_16;
-  wire [31:0] stores_1_0_dataReadouts_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_1_0_dataReadouts_addr; // @[L1IC.scala 69:27]
-  wire [31:0] stores_1_0__T_3_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_1_0__T_3_addr; // @[L1IC.scala 69:27]
-  wire  stores_1_0__T_3_mask; // @[L1IC.scala 69:27]
-  wire  stores_1_0__T_3_en; // @[L1IC.scala 69:27]
-  reg  stores_1_0_dataReadouts_en_pipe_0;
-  reg [31:0] _RAND_17;
-  reg [5:0] stores_1_0_dataReadouts_addr_pipe_0;
-  reg [31:0] _RAND_18;
-  reg [31:0] stores_1_1 [0:63]; // @[L1IC.scala 69:27]
-  reg [31:0] _RAND_19;
-  wire [31:0] stores_1_1_dataReadouts_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_1_1_dataReadouts_addr; // @[L1IC.scala 69:27]
-  wire [31:0] stores_1_1__T_3_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_1_1__T_3_addr; // @[L1IC.scala 69:27]
-  wire  stores_1_1__T_3_mask; // @[L1IC.scala 69:27]
-  wire  stores_1_1__T_3_en; // @[L1IC.scala 69:27]
-  reg  stores_1_1_dataReadouts_en_pipe_0;
-  reg [31:0] _RAND_20;
-  reg [5:0] stores_1_1_dataReadouts_addr_pipe_0;
-  reg [31:0] _RAND_21;
-  reg [31:0] stores_1_2 [0:63]; // @[L1IC.scala 69:27]
-  reg [31:0] _RAND_22;
-  wire [31:0] stores_1_2_dataReadouts_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_1_2_dataReadouts_addr; // @[L1IC.scala 69:27]
-  wire [31:0] stores_1_2__T_3_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_1_2__T_3_addr; // @[L1IC.scala 69:27]
-  wire  stores_1_2__T_3_mask; // @[L1IC.scala 69:27]
-  wire  stores_1_2__T_3_en; // @[L1IC.scala 69:27]
-  reg  stores_1_2_dataReadouts_en_pipe_0;
-  reg [31:0] _RAND_23;
-  reg [5:0] stores_1_2_dataReadouts_addr_pipe_0;
-  reg [31:0] _RAND_24;
-  reg [31:0] stores_1_3 [0:63]; // @[L1IC.scala 69:27]
-  reg [31:0] _RAND_25;
-  wire [31:0] stores_1_3_dataReadouts_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_1_3_dataReadouts_addr; // @[L1IC.scala 69:27]
-  wire [31:0] stores_1_3__T_3_data; // @[L1IC.scala 69:27]
-  wire [5:0] stores_1_3__T_3_addr; // @[L1IC.scala 69:27]
-  wire  stores_1_3__T_3_mask; // @[L1IC.scala 69:27]
-  wire  stores_1_3__T_3_en; // @[L1IC.scala 69:27]
-  reg  stores_1_3_dataReadouts_en_pipe_0;
-  reg [31:0] _RAND_26;
-  reg [5:0] stores_1_3_dataReadouts_addr_pipe_0;
-  reg [31:0] _RAND_27;
-  wire  MaxPeriodFibonacciLFSR_clock; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_reset; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_0; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_1; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_2; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_3; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_4; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_5; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_6; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_7; // @[PRNG.scala 82:22]
-  reg [1:0] state; // @[L1IC.scala 106:22]
-  reg [31:0] _RAND_28;
-  wire  _T_20; // @[L1IC.scala 139:14]
-  wire [1:0] _T_27; // @[Conditional.scala 37:39]
-  wire  _T_28; // @[Conditional.scala 37:30]
-  wire  _T_51; // @[Conditional.scala 37:30]
-  wire  _T_56; // @[L1IC.scala 182:14]
-  wire [7:0] rand_; // @[PRNG.scala 86:17]
-  wire  victim_1; // @[L1IC.scala 187:28]
-  wire  mask_0; // @[L1IC.scala 188:51]
-  wire  _GEN_49; // @[L1IC.scala 182:27]
-  wire  _GEN_69; // @[Conditional.scala 39:67]
-  wire  _GEN_92; // @[Conditional.scala 40:58]
-  wire  _GEN_114; // @[L1IC.scala 151:25]
-  reg [47:0] pipeAddr; // @[L1IC.scala 91:25]
-  reg [63:0] _RAND_29;
-  wire [37:0] _T_57; // @[L1IC.scala 86:32]
-  wire [36:0] written_tag; // @[L1IC.scala 183:29 L1IC.scala 184:23]
-  wire  _GEN_50; // @[L1IC.scala 182:27]
-  wire  _GEN_70; // @[Conditional.scala 39:67]
-  wire  _GEN_93; // @[Conditional.scala 40:58]
-  wire  _GEN_115; // @[L1IC.scala 151:25]
-  wire [31:0] dataView_0; // @[L1IC.scala 190:44]
-  wire [31:0] dataView_1; // @[L1IC.scala 190:44]
-  wire [31:0] dataView_2; // @[L1IC.scala 190:44]
-  wire [31:0] dataView_3; // @[L1IC.scala 190:44]
-  reg  pipeRead; // @[L1IC.scala 90:25]
-  reg [31:0] _RAND_30;
-  wire [47:0] readingAddr; // @[L1IC.scala 94:21]
-  wire [37:0] _T_7; // @[L1IC.scala 86:32]
-  wire [37:0] _GEN_148; // @[L1IC.scala 101:59]
-  wire  _T_8; // @[L1IC.scala 101:59]
-  wire [37:0] _GEN_149; // @[L1IC.scala 101:59]
-  wire  _T_11; // @[L1IC.scala 101:59]
-  reg [36:0] pipeReadouts_0_tag; // @[L1IC.scala 102:29]
-  reg [63:0] _RAND_31;
-  reg  pipeReadouts_0_valid; // @[L1IC.scala 102:29]
-  reg [31:0] _RAND_32;
-  reg [36:0] pipeReadouts_1_tag; // @[L1IC.scala 102:29]
-  reg [63:0] _RAND_33;
-  reg  pipeReadouts_1_valid; // @[L1IC.scala 102:29]
-  reg [31:0] _RAND_34;
-  reg  pipeHitMap_0; // @[L1IC.scala 103:27]
-  reg [31:0] _RAND_35;
-  reg  pipeHitMap_1; // @[L1IC.scala 103:27]
-  reg [31:0] _RAND_36;
-  reg  sameLineRAW; // @[L1IC.scala 110:28]
-  reg [31:0] _RAND_37;
-  reg  justVictimized; // @[L1IC.scala 111:31]
-  reg [31:0] _RAND_38;
-  reg [31:0] savedLine_0; // @[L1IC.scala 112:22]
-  reg [31:0] _RAND_39;
-  reg [31:0] savedLine_1; // @[L1IC.scala 112:22]
-  reg [31:0] _RAND_40;
-  reg [31:0] savedLine_2; // @[L1IC.scala 112:22]
-  reg [31:0] _RAND_41;
-  reg [31:0] savedLine_3; // @[L1IC.scala 112:22]
-  reg [31:0] _RAND_42;
-  reg [5:0] rstCnt; // @[L1IC.scala 117:23]
-  reg [31:0] _RAND_43;
-  wire  _T_25; // @[L1IC.scala 146:21]
-  wire [1:0] _GEN_20; // @[L1IC.scala 146:25]
-  wire  _T_44; // @[L1IC.scala 166:22]
-  wire [1:0] _T_45; // @[L1IC.scala 166:58]
-  wire  _T_46; // @[L1IC.scala 166:61]
-  wire  _T_47; // @[L1IC.scala 166:38]
-  wire [1:0] _GEN_31; // @[L1IC.scala 166:66]
-  wire [1:0] _GEN_34; // @[L1IC.scala 163:29]
-  wire [1:0] _GEN_37; // @[L1IC.scala 162:24]
-  wire [1:0] _GEN_63; // @[L1IC.scala 182:27]
-  wire [1:0] _GEN_83; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_86; // @[Conditional.scala 40:58]
-  wire [1:0] _GEN_104; // @[L1IC.scala 151:25]
-  wire [1:0] nstate; // @[L1IC.scala 139:31]
-  wire  _T_19; // @[L1IC.scala 129:8]
-  wire  _GEN_17; // @[L1IC.scala 129:22]
-  wire  _GEN_18; // @[L1IC.scala 129:22]
-  wire [5:0] _T_22; // @[L1IC.scala 140:22]
-  wire [127:0] _T_31; // @[Mux.scala 27:72]
-  wire [127:0] _T_32; // @[Mux.scala 27:72]
-  wire [127:0] _T_35; // @[Mux.scala 27:72]
-  wire [127:0] _T_36; // @[Mux.scala 27:72]
-  wire [127:0] _T_37; // @[Mux.scala 27:72]
-  wire [31:0] rdata_0; // @[Mux.scala 27:72]
-  wire [31:0] rdata_1; // @[Mux.scala 27:72]
-  wire [31:0] rdata_2; // @[Mux.scala 27:72]
-  wire [31:0] rdata_3; // @[Mux.scala 27:72]
-  wire [1:0] _T_43; // @[L1IC.scala 84:43]
-  wire [31:0] _GEN_22; // @[L1IC.scala 165:24]
-  wire [31:0] _GEN_23; // @[L1IC.scala 165:24]
-  wire [31:0] _GEN_24; // @[L1IC.scala 165:24]
-  wire [31:0] _GEN_26; // @[L1IC.scala 168:24]
-  wire [31:0] _GEN_27; // @[L1IC.scala 168:24]
-  wire [31:0] _GEN_28; // @[L1IC.scala 168:24]
-  wire  _GEN_29; // @[L1IC.scala 166:66]
-  wire  _GEN_32; // @[L1IC.scala 163:29]
-  wire [31:0] _GEN_33; // @[L1IC.scala 163:29]
-  wire  _GEN_35; // @[L1IC.scala 162:24]
-  wire [5:0] _T_53; // @[L1IC.scala 85:34]
-  wire [43:0] _T_54; // @[L1IC.scala 87:44]
-  wire [37:0] _T_64; // @[L1IC.scala 86:32]
-  wire [5:0] _T_65; // @[L1IC.scala 85:34]
-  wire [43:0] _T_66; // @[L1IC.scala 198:46]
-  wire  _T_70; // @[L1IC.scala 198:71]
-  wire [36:0] _GEN_40; // @[L1IC.scala 199:134]
-  wire  _GEN_41; // @[L1IC.scala 199:134]
-  wire [42:0] _T_75; // @[L1IC.scala 199:134]
-  wire [43:0] _GEN_150; // @[L1IC.scala 199:104]
-  wire  _T_76; // @[L1IC.scala 199:104]
-  wire  _T_77; // @[L1IC.scala 199:56]
-  wire [31:0] _GEN_43; // @[L1IC.scala 201:22]
-  wire [31:0] _GEN_44; // @[L1IC.scala 201:22]
-  wire [31:0] _GEN_45; // @[L1IC.scala 201:22]
-  wire  _GEN_62; // @[L1IC.scala 182:27]
-  wire  _GEN_82; // @[Conditional.scala 39:67]
-  wire  _GEN_84; // @[Conditional.scala 40:58]
-  wire  _GEN_88; // @[Conditional.scala 40:58]
-  wire  _GEN_107; // @[L1IC.scala 151:25]
-  wire  _GEN_110; // @[L1IC.scala 151:25]
-  MaxPeriodFibonacciLFSR MaxPeriodFibonacciLFSR ( // @[PRNG.scala 82:22]
-    .clock(MaxPeriodFibonacciLFSR_clock),
-    .reset(MaxPeriodFibonacciLFSR_reset),
-    .io_out_0(MaxPeriodFibonacciLFSR_io_out_0),
-    .io_out_1(MaxPeriodFibonacciLFSR_io_out_1),
-    .io_out_2(MaxPeriodFibonacciLFSR_io_out_2),
-    .io_out_3(MaxPeriodFibonacciLFSR_io_out_3),
-    .io_out_4(MaxPeriodFibonacciLFSR_io_out_4),
-    .io_out_5(MaxPeriodFibonacciLFSR_io_out_5),
-    .io_out_6(MaxPeriodFibonacciLFSR_io_out_6),
-    .io_out_7(MaxPeriodFibonacciLFSR_io_out_7)
-  );
-  assign directories_0_tag_readouts_addr = readingAddr[9:4];
-  assign directories_0_tag_readouts_data = directories_0_tag[directories_0_tag_readouts_addr]; // @[L1IC.scala 68:24]
-  assign directories_0_tag__T_1_data = _T_20 ? 37'h0 : written_tag;
-  assign directories_0_tag__T_1_addr = _T_20 ? rstCnt : _T_53;
-  assign directories_0_tag__T_1_mask = _T_20 | _GEN_114;
-  assign directories_0_tag__T_1_en = 1'h1;
-  assign directories_0_valid_readouts_addr = readingAddr[9:4];
-  assign directories_0_valid_readouts_data = directories_0_valid[directories_0_valid_readouts_addr]; // @[L1IC.scala 68:24]
-  assign directories_0_valid__T_1_data = _T_20 ? 1'h0 : 1'h1;
-  assign directories_0_valid__T_1_addr = _T_20 ? rstCnt : _T_53;
-  assign directories_0_valid__T_1_mask = _T_20 | _GEN_114;
-  assign directories_0_valid__T_1_en = 1'h1;
-  assign directories_1_tag_readouts_addr = readingAddr[9:4];
-  assign directories_1_tag_readouts_data = directories_1_tag[directories_1_tag_readouts_addr]; // @[L1IC.scala 68:24]
-  assign directories_1_tag__T_1_data = _T_20 ? 37'h0 : written_tag;
-  assign directories_1_tag__T_1_addr = _T_20 ? rstCnt : _T_53;
-  assign directories_1_tag__T_1_mask = _T_20 | _GEN_115;
-  assign directories_1_tag__T_1_en = 1'h1;
-  assign directories_1_valid_readouts_addr = readingAddr[9:4];
-  assign directories_1_valid_readouts_data = directories_1_valid[directories_1_valid_readouts_addr]; // @[L1IC.scala 68:24]
-  assign directories_1_valid__T_1_data = _T_20 ? 1'h0 : 1'h1;
-  assign directories_1_valid__T_1_addr = _T_20 ? rstCnt : _T_53;
-  assign directories_1_valid__T_1_mask = _T_20 | _GEN_115;
-  assign directories_1_valid__T_1_en = 1'h1;
-  assign stores_0_0_dataReadouts_addr = stores_0_0_dataReadouts_addr_pipe_0;
-  assign stores_0_0_dataReadouts_data = stores_0_0[stores_0_0_dataReadouts_addr]; // @[L1IC.scala 69:27]
-  assign stores_0_0__T_3_data = toL2_data[31:0];
-  assign stores_0_0__T_3_addr = _T_20 ? rstCnt : _T_53;
-  assign stores_0_0__T_3_mask = _T_20 | _GEN_114;
-  assign stores_0_0__T_3_en = 1'h1;
-  assign stores_0_1_dataReadouts_addr = stores_0_1_dataReadouts_addr_pipe_0;
-  assign stores_0_1_dataReadouts_data = stores_0_1[stores_0_1_dataReadouts_addr]; // @[L1IC.scala 69:27]
-  assign stores_0_1__T_3_data = toL2_data[63:32];
-  assign stores_0_1__T_3_addr = _T_20 ? rstCnt : _T_53;
-  assign stores_0_1__T_3_mask = _T_20 | _GEN_114;
-  assign stores_0_1__T_3_en = 1'h1;
-  assign stores_0_2_dataReadouts_addr = stores_0_2_dataReadouts_addr_pipe_0;
-  assign stores_0_2_dataReadouts_data = stores_0_2[stores_0_2_dataReadouts_addr]; // @[L1IC.scala 69:27]
-  assign stores_0_2__T_3_data = toL2_data[95:64];
-  assign stores_0_2__T_3_addr = _T_20 ? rstCnt : _T_53;
-  assign stores_0_2__T_3_mask = _T_20 | _GEN_114;
-  assign stores_0_2__T_3_en = 1'h1;
-  assign stores_0_3_dataReadouts_addr = stores_0_3_dataReadouts_addr_pipe_0;
-  assign stores_0_3_dataReadouts_data = stores_0_3[stores_0_3_dataReadouts_addr]; // @[L1IC.scala 69:27]
-  assign stores_0_3__T_3_data = toL2_data[127:96];
-  assign stores_0_3__T_3_addr = _T_20 ? rstCnt : _T_53;
-  assign stores_0_3__T_3_mask = _T_20 | _GEN_114;
-  assign stores_0_3__T_3_en = 1'h1;
-  assign stores_1_0_dataReadouts_addr = stores_1_0_dataReadouts_addr_pipe_0;
-  assign stores_1_0_dataReadouts_data = stores_1_0[stores_1_0_dataReadouts_addr]; // @[L1IC.scala 69:27]
-  assign stores_1_0__T_3_data = toL2_data[31:0];
-  assign stores_1_0__T_3_addr = _T_20 ? rstCnt : _T_53;
-  assign stores_1_0__T_3_mask = _T_20 | _GEN_115;
-  assign stores_1_0__T_3_en = 1'h1;
-  assign stores_1_1_dataReadouts_addr = stores_1_1_dataReadouts_addr_pipe_0;
-  assign stores_1_1_dataReadouts_data = stores_1_1[stores_1_1_dataReadouts_addr]; // @[L1IC.scala 69:27]
-  assign stores_1_1__T_3_data = toL2_data[63:32];
-  assign stores_1_1__T_3_addr = _T_20 ? rstCnt : _T_53;
-  assign stores_1_1__T_3_mask = _T_20 | _GEN_115;
-  assign stores_1_1__T_3_en = 1'h1;
-  assign stores_1_2_dataReadouts_addr = stores_1_2_dataReadouts_addr_pipe_0;
-  assign stores_1_2_dataReadouts_data = stores_1_2[stores_1_2_dataReadouts_addr]; // @[L1IC.scala 69:27]
-  assign stores_1_2__T_3_data = toL2_data[95:64];
-  assign stores_1_2__T_3_addr = _T_20 ? rstCnt : _T_53;
-  assign stores_1_2__T_3_mask = _T_20 | _GEN_115;
-  assign stores_1_2__T_3_en = 1'h1;
-  assign stores_1_3_dataReadouts_addr = stores_1_3_dataReadouts_addr_pipe_0;
-  assign stores_1_3_dataReadouts_data = stores_1_3[stores_1_3_dataReadouts_addr]; // @[L1IC.scala 69:27]
-  assign stores_1_3__T_3_data = toL2_data[127:96];
-  assign stores_1_3__T_3_addr = _T_20 ? rstCnt : _T_53;
-  assign stores_1_3__T_3_mask = _T_20 | _GEN_115;
-  assign stores_1_3__T_3_en = 1'h1;
-  assign _T_20 = state == 2'h0; // @[L1IC.scala 139:14]
-  assign _T_27 = $unsigned(state); // @[Conditional.scala 37:39]
-  assign _T_28 = 2'h1 == _T_27; // @[Conditional.scala 37:30]
-  assign _T_51 = 2'h2 == _T_27; // @[Conditional.scala 37:30]
-  assign _T_56 = toL2_stall == 1'h0; // @[L1IC.scala 182:14]
-  assign rand_ = {MaxPeriodFibonacciLFSR_io_out_7,MaxPeriodFibonacciLFSR_io_out_6,MaxPeriodFibonacciLFSR_io_out_5,MaxPeriodFibonacciLFSR_io_out_4,MaxPeriodFibonacciLFSR_io_out_3,MaxPeriodFibonacciLFSR_io_out_2,MaxPeriodFibonacciLFSR_io_out_1,MaxPeriodFibonacciLFSR_io_out_0}; // @[PRNG.scala 86:17]
-  assign victim_1 = rand_[0]; // @[L1IC.scala 187:28]
-  assign mask_0 = 1'h0 == victim_1; // @[L1IC.scala 188:51]
-  assign _GEN_49 = _T_56 & mask_0; // @[L1IC.scala 182:27]
-  assign _GEN_69 = _T_51 & _GEN_49; // @[Conditional.scala 39:67]
-  assign _GEN_92 = _T_28 ? 1'h0 : _GEN_69; // @[Conditional.scala 40:58]
-  assign _GEN_114 = toCPU_rst ? 1'h0 : _GEN_92; // @[L1IC.scala 151:25]
-  assign _T_57 = pipeAddr[47:10]; // @[L1IC.scala 86:32]
-  assign written_tag = _T_57[36:0]; // @[L1IC.scala 183:29 L1IC.scala 184:23]
-  assign _GEN_50 = _T_56 & victim_1; // @[L1IC.scala 182:27]
-  assign _GEN_70 = _T_51 & _GEN_50; // @[Conditional.scala 39:67]
-  assign _GEN_93 = _T_28 ? 1'h0 : _GEN_70; // @[Conditional.scala 40:58]
-  assign _GEN_115 = toCPU_rst ? 1'h0 : _GEN_93; // @[L1IC.scala 151:25]
-  assign dataView_0 = toL2_data[31:0]; // @[L1IC.scala 190:44]
-  assign dataView_1 = toL2_data[63:32]; // @[L1IC.scala 190:44]
-  assign dataView_2 = toL2_data[95:64]; // @[L1IC.scala 190:44]
-  assign dataView_3 = toL2_data[127:96]; // @[L1IC.scala 190:44]
-  assign readingAddr = toCPU_stall ? pipeAddr : toCPU_addr; // @[L1IC.scala 94:21]
-  assign _T_7 = readingAddr[47:10]; // @[L1IC.scala 86:32]
-  assign _GEN_148 = {{1'd0}, directories_0_tag_readouts_data}; // @[L1IC.scala 101:59]
-  assign _T_8 = _GEN_148 == _T_7; // @[L1IC.scala 101:59]
-  assign _GEN_149 = {{1'd0}, directories_1_tag_readouts_data}; // @[L1IC.scala 101:59]
-  assign _T_11 = _GEN_149 == _T_7; // @[L1IC.scala 101:59]
-  assign _T_25 = rstCnt == 6'h3f; // @[L1IC.scala 146:21]
-  assign _GEN_20 = _T_25 ? 2'h1 : state; // @[L1IC.scala 146:25]
-  assign _T_44 = justVictimized == 1'h0; // @[L1IC.scala 166:22]
-  assign _T_45 = {pipeHitMap_1,pipeHitMap_0}; // @[L1IC.scala 166:58]
-  assign _T_46 = _T_45 != 2'h0; // @[L1IC.scala 166:61]
-  assign _T_47 = _T_44 & _T_46; // @[L1IC.scala 166:38]
-  assign _GEN_31 = _T_47 ? state : 2'h2; // @[L1IC.scala 166:66]
-  assign _GEN_34 = sameLineRAW ? state : _GEN_31; // @[L1IC.scala 163:29]
-  assign _GEN_37 = pipeRead ? _GEN_34 : 2'h1; // @[L1IC.scala 162:24]
-  assign _GEN_63 = _T_56 ? 2'h1 : state; // @[L1IC.scala 182:27]
-  assign _GEN_83 = _T_51 ? _GEN_63 : state; // @[Conditional.scala 39:67]
-  assign _GEN_86 = _T_28 ? _GEN_37 : _GEN_83; // @[Conditional.scala 40:58]
-  assign _GEN_104 = toCPU_rst ? 2'h0 : _GEN_86; // @[L1IC.scala 151:25]
-  assign nstate = _T_20 ? _GEN_20 : _GEN_104; // @[L1IC.scala 139:31]
-  assign _T_19 = toCPU_stall == 1'h0; // @[L1IC.scala 129:8]
-  assign _GEN_17 = _T_19 ? 1'h0 : sameLineRAW; // @[L1IC.scala 129:22]
-  assign _GEN_18 = _T_19 ? 1'h0 : justVictimized; // @[L1IC.scala 129:22]
-  assign _T_22 = rstCnt + 6'h1; // @[L1IC.scala 140:22]
-  assign _T_31 = {stores_0_3_dataReadouts_data,stores_0_2_dataReadouts_data,stores_0_1_dataReadouts_data,stores_0_0_dataReadouts_data}; // @[Mux.scala 27:72]
-  assign _T_32 = pipeHitMap_0 ? _T_31 : 128'h0; // @[Mux.scala 27:72]
-  assign _T_35 = {stores_1_3_dataReadouts_data,stores_1_2_dataReadouts_data,stores_1_1_dataReadouts_data,stores_1_0_dataReadouts_data}; // @[Mux.scala 27:72]
-  assign _T_36 = pipeHitMap_1 ? _T_35 : 128'h0; // @[Mux.scala 27:72]
-  assign _T_37 = _T_32 | _T_36; // @[Mux.scala 27:72]
-  assign rdata_0 = _T_37[31:0]; // @[Mux.scala 27:72]
-  assign rdata_1 = _T_37[63:32]; // @[Mux.scala 27:72]
-  assign rdata_2 = _T_37[95:64]; // @[Mux.scala 27:72]
-  assign rdata_3 = _T_37[127:96]; // @[Mux.scala 27:72]
-  assign _T_43 = pipeAddr[3:2]; // @[L1IC.scala 84:43]
-  assign _GEN_22 = 2'h1 == _T_43 ? savedLine_1 : savedLine_0; // @[L1IC.scala 165:24]
-  assign _GEN_23 = 2'h2 == _T_43 ? savedLine_2 : _GEN_22; // @[L1IC.scala 165:24]
-  assign _GEN_24 = 2'h3 == _T_43 ? savedLine_3 : _GEN_23; // @[L1IC.scala 165:24]
-  assign _GEN_26 = 2'h1 == _T_43 ? rdata_1 : rdata_0; // @[L1IC.scala 168:24]
-  assign _GEN_27 = 2'h2 == _T_43 ? rdata_2 : _GEN_26; // @[L1IC.scala 168:24]
-  assign _GEN_28 = 2'h3 == _T_43 ? rdata_3 : _GEN_27; // @[L1IC.scala 168:24]
-  assign _GEN_29 = _T_47 ? 1'h0 : 1'h1; // @[L1IC.scala 166:66]
-  assign _GEN_32 = sameLineRAW ? 1'h0 : _GEN_29; // @[L1IC.scala 163:29]
-  assign _GEN_33 = sameLineRAW ? _GEN_24 : _GEN_28; // @[L1IC.scala 163:29]
-  assign _GEN_35 = pipeRead ? _GEN_32 : 1'h1; // @[L1IC.scala 162:24]
-  assign _T_53 = pipeAddr[9:4]; // @[L1IC.scala 85:34]
-  assign _T_54 = {_T_57,_T_53}; // @[L1IC.scala 87:44]
-  assign _T_64 = toCPU_addr[47:10]; // @[L1IC.scala 86:32]
-  assign _T_65 = toCPU_addr[9:4]; // @[L1IC.scala 85:34]
-  assign _T_66 = {_T_64,_T_65}; // @[L1IC.scala 198:46]
-  assign _T_70 = _T_66 == _T_54; // @[L1IC.scala 198:71]
-  assign _GEN_40 = victim_1 ? pipeReadouts_1_tag : pipeReadouts_0_tag; // @[L1IC.scala 199:134]
-  assign _GEN_41 = victim_1 ? pipeReadouts_1_valid : pipeReadouts_0_valid; // @[L1IC.scala 199:134]
-  assign _T_75 = {_GEN_40,_T_53}; // @[L1IC.scala 199:134]
-  assign _GEN_150 = {{1'd0}, _T_75}; // @[L1IC.scala 199:104]
-  assign _T_76 = _T_66 == _GEN_150; // @[L1IC.scala 199:104]
-  assign _T_77 = _GEN_41 & _T_76; // @[L1IC.scala 199:56]
-  assign _GEN_43 = 2'h1 == _T_43 ? dataView_1 : dataView_0; // @[L1IC.scala 201:22]
-  assign _GEN_44 = 2'h2 == _T_43 ? dataView_2 : _GEN_43; // @[L1IC.scala 201:22]
-  assign _GEN_45 = 2'h3 == _T_43 ? dataView_3 : _GEN_44; // @[L1IC.scala 201:22]
-  assign _GEN_62 = _T_56 ? 1'h0 : 1'h1; // @[L1IC.scala 182:27]
-  assign _GEN_82 = _T_51 ? _GEN_62 : 1'h1; // @[Conditional.scala 39:67]
-  assign _GEN_84 = _T_28 ? _GEN_35 : _GEN_82; // @[Conditional.scala 40:58]
-  assign _GEN_88 = _T_28 ? 1'h0 : _T_51; // @[Conditional.scala 40:58]
-  assign _GEN_107 = toCPU_rst | _GEN_84; // @[L1IC.scala 151:25]
-  assign _GEN_110 = toCPU_rst ? 1'h0 : _GEN_88; // @[L1IC.scala 151:25]
-  assign toCPU_stall = nstate != 2'h1; // @[L1IC.scala 126:15]
-  assign toCPU_data = _T_28 ? _GEN_33 : _GEN_45; // @[L1IC.scala 165:24 L1IC.scala 168:24 L1IC.scala 201:22]
-  assign toCPU_vacant = _T_20 | _GEN_107; // @[L1IC.scala 127:16 L1IC.scala 148:20 L1IC.scala 164:26 L1IC.scala 167:26 L1IC.scala 173:24 L1IC.scala 202:24]
-  assign toL2_read = _T_20 ? 1'h0 : _GEN_110; // @[L1IC.scala 52:13 L1IC.scala 180:19]
-  assign toL2_addr = {_T_54,4'h0}; // @[L1IC.scala 179:19]
-  assign MaxPeriodFibonacciLFSR_clock = clock;
-  assign MaxPeriodFibonacciLFSR_reset = reset;
-`ifdef RANDOMIZE_GARBAGE_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_INVALID_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_REG_INIT
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-`define RANDOMIZE
-`endif
-`ifndef RANDOM
-`define RANDOM $random
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-  integer initvar;
-`endif
-`ifndef SYNTHESIS
-initial begin
-  `ifdef RANDOMIZE
-    `ifdef INIT_RANDOM
-      `INIT_RANDOM
-    `endif
-    `ifndef VERILATOR
-      `ifdef RANDOMIZE_DELAY
-        #`RANDOMIZE_DELAY begin end
-      `else
-        #0.002 begin end
-      `endif
-    `endif
-  _RAND_0 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    directories_0_tag[initvar] = _RAND_0[36:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_1 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    directories_0_valid[initvar] = _RAND_1[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_2 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    directories_1_tag[initvar] = _RAND_2[36:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_3 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    directories_1_valid[initvar] = _RAND_3[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  _RAND_4 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_0[initvar] = _RAND_4[31:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_5 = {1{`RANDOM}};
-  stores_0_0_dataReadouts_en_pipe_0 = _RAND_5[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_6 = {1{`RANDOM}};
-  stores_0_0_dataReadouts_addr_pipe_0 = _RAND_6[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_7 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_1[initvar] = _RAND_7[31:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_8 = {1{`RANDOM}};
-  stores_0_1_dataReadouts_en_pipe_0 = _RAND_8[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_9 = {1{`RANDOM}};
-  stores_0_1_dataReadouts_addr_pipe_0 = _RAND_9[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_10 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_2[initvar] = _RAND_10[31:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_11 = {1{`RANDOM}};
-  stores_0_2_dataReadouts_en_pipe_0 = _RAND_11[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_12 = {1{`RANDOM}};
-  stores_0_2_dataReadouts_addr_pipe_0 = _RAND_12[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_13 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_3[initvar] = _RAND_13[31:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_14 = {1{`RANDOM}};
-  stores_0_3_dataReadouts_en_pipe_0 = _RAND_14[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_15 = {1{`RANDOM}};
-  stores_0_3_dataReadouts_addr_pipe_0 = _RAND_15[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_16 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_0[initvar] = _RAND_16[31:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_17 = {1{`RANDOM}};
-  stores_1_0_dataReadouts_en_pipe_0 = _RAND_17[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_18 = {1{`RANDOM}};
-  stores_1_0_dataReadouts_addr_pipe_0 = _RAND_18[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_19 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_1[initvar] = _RAND_19[31:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_20 = {1{`RANDOM}};
-  stores_1_1_dataReadouts_en_pipe_0 = _RAND_20[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_21 = {1{`RANDOM}};
-  stores_1_1_dataReadouts_addr_pipe_0 = _RAND_21[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_22 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_2[initvar] = _RAND_22[31:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_23 = {1{`RANDOM}};
-  stores_1_2_dataReadouts_en_pipe_0 = _RAND_23[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_24 = {1{`RANDOM}};
-  stores_1_2_dataReadouts_addr_pipe_0 = _RAND_24[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_25 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_3[initvar] = _RAND_25[31:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_26 = {1{`RANDOM}};
-  stores_1_3_dataReadouts_en_pipe_0 = _RAND_26[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_27 = {1{`RANDOM}};
-  stores_1_3_dataReadouts_addr_pipe_0 = _RAND_27[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_28 = {1{`RANDOM}};
-  state = _RAND_28[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_29 = {2{`RANDOM}};
-  pipeAddr = _RAND_29[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_30 = {1{`RANDOM}};
-  pipeRead = _RAND_30[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_31 = {2{`RANDOM}};
-  pipeReadouts_0_tag = _RAND_31[36:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_32 = {1{`RANDOM}};
-  pipeReadouts_0_valid = _RAND_32[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_33 = {2{`RANDOM}};
-  pipeReadouts_1_tag = _RAND_33[36:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_34 = {1{`RANDOM}};
-  pipeReadouts_1_valid = _RAND_34[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_35 = {1{`RANDOM}};
-  pipeHitMap_0 = _RAND_35[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_36 = {1{`RANDOM}};
-  pipeHitMap_1 = _RAND_36[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_37 = {1{`RANDOM}};
-  sameLineRAW = _RAND_37[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_38 = {1{`RANDOM}};
-  justVictimized = _RAND_38[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_39 = {1{`RANDOM}};
-  savedLine_0 = _RAND_39[31:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_40 = {1{`RANDOM}};
-  savedLine_1 = _RAND_40[31:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_41 = {1{`RANDOM}};
-  savedLine_2 = _RAND_41[31:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_42 = {1{`RANDOM}};
-  savedLine_3 = _RAND_42[31:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_43 = {1{`RANDOM}};
-  rstCnt = _RAND_43[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `endif // RANDOMIZE
-end // initial
-`endif // SYNTHESIS
-  always @(posedge clock) begin
-    if(directories_0_tag__T_1_en & directories_0_tag__T_1_mask) begin
-      directories_0_tag[directories_0_tag__T_1_addr] <= directories_0_tag__T_1_data; // @[L1IC.scala 68:24]
-    end
-    if(directories_0_valid__T_1_en & directories_0_valid__T_1_mask) begin
-      directories_0_valid[directories_0_valid__T_1_addr] <= directories_0_valid__T_1_data; // @[L1IC.scala 68:24]
-    end
-    if(directories_1_tag__T_1_en & directories_1_tag__T_1_mask) begin
-      directories_1_tag[directories_1_tag__T_1_addr] <= directories_1_tag__T_1_data; // @[L1IC.scala 68:24]
-    end
-    if(directories_1_valid__T_1_en & directories_1_valid__T_1_mask) begin
-      directories_1_valid[directories_1_valid__T_1_addr] <= directories_1_valid__T_1_data; // @[L1IC.scala 68:24]
-    end
-    if(stores_0_0__T_3_en & stores_0_0__T_3_mask) begin
-      stores_0_0[stores_0_0__T_3_addr] <= stores_0_0__T_3_data; // @[L1IC.scala 69:27]
-    end
-    stores_0_0_dataReadouts_en_pipe_0 <= 1'h1;
-    stores_0_0_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
-    if(stores_0_1__T_3_en & stores_0_1__T_3_mask) begin
-      stores_0_1[stores_0_1__T_3_addr] <= stores_0_1__T_3_data; // @[L1IC.scala 69:27]
-    end
-    stores_0_1_dataReadouts_en_pipe_0 <= 1'h1;
-    stores_0_1_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
-    if(stores_0_2__T_3_en & stores_0_2__T_3_mask) begin
-      stores_0_2[stores_0_2__T_3_addr] <= stores_0_2__T_3_data; // @[L1IC.scala 69:27]
-    end
-    stores_0_2_dataReadouts_en_pipe_0 <= 1'h1;
-    stores_0_2_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
-    if(stores_0_3__T_3_en & stores_0_3__T_3_mask) begin
-      stores_0_3[stores_0_3__T_3_addr] <= stores_0_3__T_3_data; // @[L1IC.scala 69:27]
-    end
-    stores_0_3_dataReadouts_en_pipe_0 <= 1'h1;
-    stores_0_3_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
-    if(stores_1_0__T_3_en & stores_1_0__T_3_mask) begin
-      stores_1_0[stores_1_0__T_3_addr] <= stores_1_0__T_3_data; // @[L1IC.scala 69:27]
-    end
-    stores_1_0_dataReadouts_en_pipe_0 <= 1'h1;
-    stores_1_0_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
-    if(stores_1_1__T_3_en & stores_1_1__T_3_mask) begin
-      stores_1_1[stores_1_1__T_3_addr] <= stores_1_1__T_3_data; // @[L1IC.scala 69:27]
-    end
-    stores_1_1_dataReadouts_en_pipe_0 <= 1'h1;
-    stores_1_1_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
-    if(stores_1_2__T_3_en & stores_1_2__T_3_mask) begin
-      stores_1_2[stores_1_2__T_3_addr] <= stores_1_2__T_3_data; // @[L1IC.scala 69:27]
-    end
-    stores_1_2_dataReadouts_en_pipe_0 <= 1'h1;
-    stores_1_2_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
-    if(stores_1_3__T_3_en & stores_1_3__T_3_mask) begin
-      stores_1_3[stores_1_3__T_3_addr] <= stores_1_3__T_3_data; // @[L1IC.scala 69:27]
-    end
-    stores_1_3_dataReadouts_en_pipe_0 <= 1'h1;
-    stores_1_3_dataReadouts_addr_pipe_0 <= readingAddr[9:4];
-    if (reset) begin
-      state <= 2'h0;
-    end else if (_T_20) begin
-      if (_T_25) begin
-        state <= 2'h1;
-      end
-    end else if (toCPU_rst) begin
-      state <= 2'h0;
-    end else if (_T_28) begin
-      if (pipeRead) begin
-        if (!(sameLineRAW)) begin
-          if (!(_T_47)) begin
-            state <= 2'h2;
-          end
-        end
-      end else begin
-        state <= 2'h1;
-      end
-    end else if (_T_51) begin
-      if (_T_56) begin
-        state <= 2'h1;
-      end
-    end
-    if (reset) begin
-      pipeAddr <= 48'h0;
-    end else if (_T_19) begin
+      pipeRead <= 1'h0;
+    end else if (_T_1) begin
+      pipeRead <= _T_3;
+    end
+    if (_T_1) begin
       pipeAddr <= toCPU_addr;
     end
     if (reset) begin
-      pipeRead <= 1'h0;
-    end else if (_T_20) begin
-      if (_T_19) begin
-        pipeRead <= toCPU_read;
+      rstate <= 2'h0;
+    end else if (_T_12) begin
+      if (pipeRead) begin
+        rstate <= 2'h1;
       end
-    end else if (toCPU_rst) begin
-      pipeRead <= 1'h0;
-    end else if (_T_19) begin
-      pipeRead <= toCPU_read;
-    end
-    pipeReadouts_0_tag <= directories_0_tag_readouts_data;
-    pipeReadouts_0_valid <= directories_0_valid_readouts_data;
-    pipeReadouts_1_tag <= directories_1_tag_readouts_data;
-    pipeReadouts_1_valid <= directories_1_valid_readouts_data;
-    pipeHitMap_0 <= directories_0_valid_readouts_data & _T_8;
-    pipeHitMap_1 <= directories_1_valid_readouts_data & _T_11;
-    if (reset) begin
-      sameLineRAW <= 1'h0;
-    end else if (_T_20) begin
-      if (_T_19) begin
-        sameLineRAW <= 1'h0;
+    end else if (_T_15) begin
+      if (axi_ARREADY) begin
+        rstate <= 2'h2;
       end
-    end else if (toCPU_rst) begin
-      if (_T_19) begin
-        sameLineRAW <= 1'h0;
+    end else if (_T_18) begin
+      if (axi_RVALID) begin
+        rstate <= 2'h0;
       end
-    end else if (_T_28) begin
-      if (_T_19) begin
-        sameLineRAW <= 1'h0;
-      end
-    end else if (_T_51) begin
-      if (_T_56) begin
-        sameLineRAW <= _T_70;
-      end else if (_T_19) begin
-        sameLineRAW <= 1'h0;
-      end
-    end else begin
-      sameLineRAW <= _GEN_17;
-    end
-    if (reset) begin
-      justVictimized <= 1'h0;
-    end else if (_T_20) begin
-      if (_T_19) begin
-        justVictimized <= 1'h0;
-      end
-    end else if (toCPU_rst) begin
-      if (_T_19) begin
-        justVictimized <= 1'h0;
-      end
-    end else if (_T_28) begin
-      if (_T_19) begin
-        justVictimized <= 1'h0;
-      end
-    end else if (_T_51) begin
-      if (_T_56) begin
-        justVictimized <= _T_77;
-      end else if (_T_19) begin
-        justVictimized <= 1'h0;
-      end
-    end else begin
-      justVictimized <= _GEN_18;
-    end
-    if (!(_T_20)) begin
-      if (!(toCPU_rst)) begin
-        if (!(_T_28)) begin
-          if (_T_51) begin
-            if (_T_56) begin
-              savedLine_0 <= dataView_0;
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_20)) begin
-      if (!(toCPU_rst)) begin
-        if (!(_T_28)) begin
-          if (_T_51) begin
-            if (_T_56) begin
-              savedLine_1 <= dataView_1;
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_20)) begin
-      if (!(toCPU_rst)) begin
-        if (!(_T_28)) begin
-          if (_T_51) begin
-            if (_T_56) begin
-              savedLine_2 <= dataView_2;
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_20)) begin
-      if (!(toCPU_rst)) begin
-        if (!(_T_28)) begin
-          if (_T_51) begin
-            if (_T_56) begin
-              savedLine_3 <= dataView_3;
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      rstCnt <= 6'h0;
-    end else if (_T_20) begin
-      rstCnt <= _T_22;
-    end else if (toCPU_rst) begin
-      rstCnt <= 6'h0;
     end
   end
 endmodule
-module L1DC(
-  input          clock,
-  input          reset,
-  input  [47:0]  r_addr,
-  input          r_read,
-  output [63:0]  r_data,
-  output         r_stall,
-  input  [47:0]  w_addr,
-  input          w_write,
-  input  [63:0]  w_data,
-  input  [7:0]   w_be,
-  output         w_stall,
-  output         fs_wbufClear,
-  output [1:0]   toL2_l1req,
-  output [47:0]  toL2_l1addr,
-  input          toL2_l1stall,
-  input  [1:0]   toL2_l2req,
-  input  [47:0]  toL2_l2addr,
-  output         toL2_l2stall,
-  output [127:0] toL2_wdata,
-  input  [127:0] toL2_rdata
+module L1DCPass(
+  input         clock,
+  input         reset,
+  input  [47:0] r_addr,
+  input         r_read,
+  output [63:0] r_data,
+  output        r_stall,
+  input  [47:0] w_addr,
+  input         w_write,
+  input  [63:0] w_data,
+  input  [7:0]  w_be,
+  output        w_stall,
+  output [47:0] axi_AWADDR,
+  output [2:0]  axi_AWSIZE,
+  output [1:0]  axi_AWBURST,
+  output        axi_AWVALID,
+  input         axi_AWREADY,
+  output [63:0] axi_WDATA,
+  output [7:0]  axi_WSTRB,
+  output        axi_WLAST,
+  output        axi_WVALID,
+  input         axi_BVALID,
+  output        axi_BREADY,
+  output [47:0] axi_ARADDR,
+  output [2:0]  axi_ARSIZE,
+  output [1:0]  axi_ARBURST,
+  output        axi_ARVALID,
+  input         axi_ARREADY,
+  input  [63:0] axi_RDATA,
+  input         axi_RVALID,
+  output        axi_RREADY
 );
-  reg [37:0] stores_0_tag [0:63]; // @[L1DC.scala 80:27]
-  reg [63:0] _RAND_0;
-  wire [37:0] stores_0_tag_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_tag_lookups_addr; // @[L1DC.scala 80:27]
-  wire [37:0] stores_0_tag_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_tag_wlookups_addr; // @[L1DC.scala 80:27]
-  wire [37:0] stores_0_tag__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_tag__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_tag__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_0_tag__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_0_tag_lookups_en_pipe_0;
-  reg [31:0] _RAND_1;
-  reg [5:0] stores_0_tag_lookups_addr_pipe_0;
+  reg  pipeRead; // @[L1DCPass.scala 30:25]
+  reg [31:0] _RAND_0;
+  reg [47:0] pipeAddr; // @[L1DCPass.scala 31:21]
+  reg [63:0] _RAND_1;
+  wire  _T_1; // @[L1DCPass.scala 33:8]
+  reg [1:0] rstate; // @[L1DCPass.scala 38:23]
   reg [31:0] _RAND_2;
-  reg  stores_0_tag_wlookups_en_pipe_0;
+  wire [1:0] _T_4; // @[Conditional.scala 37:39]
+  wire  _T_5; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_2; // @[L1DCPass.scala 48:22]
+  wire  _T_8; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_3; // @[L1DCPass.scala 60:25]
+  wire  _T_11; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_4; // @[L1DCPass.scala 67:24]
+  wire [1:0] _GEN_6; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_12; // @[Conditional.scala 39:67]
+  wire [1:0] nrstate; // @[Conditional.scala 40:58]
+  wire [47:0] _GEN_7; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_9; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_11; // @[Conditional.scala 39:67]
+  wire  _GEN_13; // @[Conditional.scala 39:67]
+  reg [1:0] wstate; // @[L1DCPass.scala 78:23]
   reg [31:0] _RAND_3;
-  reg [5:0] stores_0_tag_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_4;
-  reg  stores_0_valid [0:63]; // @[L1DC.scala 80:27]
-  reg [31:0] _RAND_5;
-  wire  stores_0_valid_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_valid_lookups_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_valid_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_valid_wlookups_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_valid__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_valid__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_valid__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_0_valid__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_0_valid_lookups_en_pipe_0;
-  reg [31:0] _RAND_6;
-  reg [5:0] stores_0_valid_lookups_addr_pipe_0;
-  reg [31:0] _RAND_7;
-  reg  stores_0_valid_wlookups_en_pipe_0;
-  reg [31:0] _RAND_8;
-  reg [5:0] stores_0_valid_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_9;
-  reg  stores_0_dirty [0:63]; // @[L1DC.scala 80:27]
-  reg [31:0] _RAND_10;
-  wire  stores_0_dirty_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_dirty_lookups_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_dirty_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_dirty_wlookups_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_dirty__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_dirty__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_dirty__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_0_dirty__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_0_dirty_lookups_en_pipe_0;
-  reg [31:0] _RAND_11;
-  reg [5:0] stores_0_dirty_lookups_addr_pipe_0;
-  reg [31:0] _RAND_12;
-  reg  stores_0_dirty_wlookups_en_pipe_0;
-  reg [31:0] _RAND_13;
-  reg [5:0] stores_0_dirty_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_14;
-  reg [63:0] stores_0_data_0 [0:63]; // @[L1DC.scala 80:27]
-  reg [63:0] _RAND_15;
-  wire [63:0] stores_0_data_0_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_data_0_lookups_addr; // @[L1DC.scala 80:27]
-  wire [63:0] stores_0_data_0_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_data_0_wlookups_addr; // @[L1DC.scala 80:27]
-  wire [63:0] stores_0_data_0__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_data_0__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_data_0__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_0_data_0__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_0_data_0_lookups_en_pipe_0;
-  reg [31:0] _RAND_16;
-  reg [5:0] stores_0_data_0_lookups_addr_pipe_0;
-  reg [31:0] _RAND_17;
-  reg  stores_0_data_0_wlookups_en_pipe_0;
-  reg [31:0] _RAND_18;
-  reg [5:0] stores_0_data_0_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_19;
-  reg [63:0] stores_0_data_1 [0:63]; // @[L1DC.scala 80:27]
-  reg [63:0] _RAND_20;
-  wire [63:0] stores_0_data_1_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_data_1_lookups_addr; // @[L1DC.scala 80:27]
-  wire [63:0] stores_0_data_1_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_data_1_wlookups_addr; // @[L1DC.scala 80:27]
-  wire [63:0] stores_0_data_1__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_0_data_1__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_0_data_1__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_0_data_1__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_0_data_1_lookups_en_pipe_0;
-  reg [31:0] _RAND_21;
-  reg [5:0] stores_0_data_1_lookups_addr_pipe_0;
-  reg [31:0] _RAND_22;
-  reg  stores_0_data_1_wlookups_en_pipe_0;
-  reg [31:0] _RAND_23;
-  reg [5:0] stores_0_data_1_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_24;
-  reg [37:0] stores_1_tag [0:63]; // @[L1DC.scala 80:27]
-  reg [63:0] _RAND_25;
-  wire [37:0] stores_1_tag_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_tag_lookups_addr; // @[L1DC.scala 80:27]
-  wire [37:0] stores_1_tag_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_tag_wlookups_addr; // @[L1DC.scala 80:27]
-  wire [37:0] stores_1_tag__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_tag__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_tag__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_1_tag__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_1_tag_lookups_en_pipe_0;
-  reg [31:0] _RAND_26;
-  reg [5:0] stores_1_tag_lookups_addr_pipe_0;
-  reg [31:0] _RAND_27;
-  reg  stores_1_tag_wlookups_en_pipe_0;
-  reg [31:0] _RAND_28;
-  reg [5:0] stores_1_tag_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_29;
-  reg  stores_1_valid [0:63]; // @[L1DC.scala 80:27]
-  reg [31:0] _RAND_30;
-  wire  stores_1_valid_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_valid_lookups_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_valid_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_valid_wlookups_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_valid__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_valid__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_valid__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_1_valid__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_1_valid_lookups_en_pipe_0;
-  reg [31:0] _RAND_31;
-  reg [5:0] stores_1_valid_lookups_addr_pipe_0;
-  reg [31:0] _RAND_32;
-  reg  stores_1_valid_wlookups_en_pipe_0;
-  reg [31:0] _RAND_33;
-  reg [5:0] stores_1_valid_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_34;
-  reg  stores_1_dirty [0:63]; // @[L1DC.scala 80:27]
-  reg [31:0] _RAND_35;
-  wire  stores_1_dirty_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_dirty_lookups_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_dirty_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_dirty_wlookups_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_dirty__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_dirty__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_dirty__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_1_dirty__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_1_dirty_lookups_en_pipe_0;
-  reg [31:0] _RAND_36;
-  reg [5:0] stores_1_dirty_lookups_addr_pipe_0;
-  reg [31:0] _RAND_37;
-  reg  stores_1_dirty_wlookups_en_pipe_0;
-  reg [31:0] _RAND_38;
-  reg [5:0] stores_1_dirty_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_39;
-  reg [63:0] stores_1_data_0 [0:63]; // @[L1DC.scala 80:27]
-  reg [63:0] _RAND_40;
-  wire [63:0] stores_1_data_0_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_data_0_lookups_addr; // @[L1DC.scala 80:27]
-  wire [63:0] stores_1_data_0_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_data_0_wlookups_addr; // @[L1DC.scala 80:27]
-  wire [63:0] stores_1_data_0__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_data_0__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_data_0__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_1_data_0__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_1_data_0_lookups_en_pipe_0;
-  reg [31:0] _RAND_41;
-  reg [5:0] stores_1_data_0_lookups_addr_pipe_0;
-  reg [31:0] _RAND_42;
-  reg  stores_1_data_0_wlookups_en_pipe_0;
-  reg [31:0] _RAND_43;
-  reg [5:0] stores_1_data_0_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_44;
-  reg [63:0] stores_1_data_1 [0:63]; // @[L1DC.scala 80:27]
-  reg [63:0] _RAND_45;
-  wire [63:0] stores_1_data_1_lookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_data_1_lookups_addr; // @[L1DC.scala 80:27]
-  wire [63:0] stores_1_data_1_wlookups_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_data_1_wlookups_addr; // @[L1DC.scala 80:27]
-  wire [63:0] stores_1_data_1__T_76_data; // @[L1DC.scala 80:27]
-  wire [5:0] stores_1_data_1__T_76_addr; // @[L1DC.scala 80:27]
-  wire  stores_1_data_1__T_76_mask; // @[L1DC.scala 80:27]
-  wire  stores_1_data_1__T_76_en; // @[L1DC.scala 80:27]
-  reg  stores_1_data_1_lookups_en_pipe_0;
-  reg [31:0] _RAND_46;
-  reg [5:0] stores_1_data_1_lookups_addr_pipe_0;
-  reg [31:0] _RAND_47;
-  reg  stores_1_data_1_wlookups_en_pipe_0;
-  reg [31:0] _RAND_48;
-  reg [5:0] stores_1_data_1_wlookups_addr_pipe_0;
-  reg [31:0] _RAND_49;
-  wire  MaxPeriodFibonacciLFSR_clock; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_reset; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_0; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_1; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_2; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_3; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_4; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_5; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_6; // @[PRNG.scala 82:22]
-  wire  MaxPeriodFibonacciLFSR_io_out_7; // @[PRNG.scala 82:22]
-  wire [2:0] _T; // @[L1DC.scala 88:16]
-  wire  _T_1; // @[L1DC.scala 88:37]
-  wire  _T_2; // @[L1DC.scala 88:9]
-  wire  _T_3; // @[L1DC.scala 88:9]
-  wire  _T_4; // @[L1DC.scala 88:9]
-  wire [2:0] _T_5; // @[L1DC.scala 89:16]
-  wire  _T_6; // @[L1DC.scala 89:37]
-  wire  _T_8; // @[L1DC.scala 89:9]
-  wire  _T_9; // @[L1DC.scala 89:9]
-  reg  pipeRead; // @[L1DC.scala 96:25]
-  reg [31:0] _RAND_50;
-  reg [47:0] pipeAddr; // @[L1DC.scala 97:25]
-  reg [63:0] _RAND_51;
-  wire  _T_652; // @[L1DC.scala 472:19]
-  wire  _T_638; // @[L1DC.scala 439:8]
-  wire [47:0] _GEN_407; // @[L1DC.scala 439:18]
-  wire [47:0] queryAddr; // @[L1DC.scala 472:35]
-  reg [47:0] wbuf_0_addr; // @[L1DC.scala 123:21]
-  reg [63:0] _RAND_52;
-  reg [7:0] wbuf_0_be; // @[L1DC.scala 123:21]
-  reg [31:0] _RAND_53;
-  reg [63:0] wbuf_0_wdata; // @[L1DC.scala 123:21]
-  reg [63:0] _RAND_54;
-  reg  wbuf_0_valid; // @[L1DC.scala 123:21]
-  reg [31:0] _RAND_55;
-  reg [47:0] wbuf_1_addr; // @[L1DC.scala 123:21]
-  reg [63:0] _RAND_56;
-  reg [7:0] wbuf_1_be; // @[L1DC.scala 123:21]
-  reg [31:0] _RAND_57;
-  reg [63:0] wbuf_1_wdata; // @[L1DC.scala 123:21]
-  reg [63:0] _RAND_58;
-  reg  wbuf_1_valid; // @[L1DC.scala 123:21]
-  reg [31:0] _RAND_59;
-  reg [47:0] wbuf_2_addr; // @[L1DC.scala 123:21]
-  reg [63:0] _RAND_60;
-  reg [7:0] wbuf_2_be; // @[L1DC.scala 123:21]
-  reg [31:0] _RAND_61;
-  reg [63:0] wbuf_2_wdata; // @[L1DC.scala 123:21]
-  reg [63:0] _RAND_62;
-  reg  wbuf_2_valid; // @[L1DC.scala 123:21]
-  reg [31:0] _RAND_63;
-  reg [47:0] wbuf_3_addr; // @[L1DC.scala 123:21]
-  reg [63:0] _RAND_64;
-  reg [7:0] wbuf_3_be; // @[L1DC.scala 123:21]
-  reg [31:0] _RAND_65;
-  reg [63:0] wbuf_3_wdata; // @[L1DC.scala 123:21]
-  reg [63:0] _RAND_66;
-  reg  wbuf_3_valid; // @[L1DC.scala 123:21]
-  reg [31:0] _RAND_67;
-  reg [1:0] wbufHead; // @[L1DC.scala 125:25]
-  reg [31:0] _RAND_68;
-  reg [1:0] wbufTail; // @[L1DC.scala 126:25]
-  reg [31:0] _RAND_69;
-  reg [2:0] state; // @[L1DC.scala 140:22]
-  reg [31:0] _RAND_70;
-  wire [1:0] _T_14; // @[L1DC.scala 149:30]
-  wire [47:0] _GEN_4; // @[L1DC.scala 150:15]
-  wire [7:0] _GEN_5; // @[L1DC.scala 150:15]
-  wire [63:0] _GEN_6; // @[L1DC.scala 150:15]
-  wire  _GEN_7; // @[L1DC.scala 150:15]
-  wire [47:0] _GEN_8; // @[L1DC.scala 150:15]
-  wire [7:0] _GEN_9; // @[L1DC.scala 150:15]
-  wire [63:0] _GEN_10; // @[L1DC.scala 150:15]
-  wire  _GEN_11; // @[L1DC.scala 150:15]
-  wire [47:0] _GEN_12; // @[L1DC.scala 150:15]
-  wire [7:0] _GEN_13; // @[L1DC.scala 150:15]
-  wire [63:0] _GEN_14; // @[L1DC.scala 150:15]
-  wire  _GEN_15; // @[L1DC.scala 150:15]
-  wire [2:0] _T_15; // @[L1DC.scala 150:15]
-  wire  _T_16; // @[L1DC.scala 150:36]
-  wire  _T_18; // @[L1DC.scala 150:9]
-  wire  _T_19; // @[L1DC.scala 150:9]
-  wire  _T_20; // @[L1DC.scala 153:14]
-  wire [2:0] _T_81; // @[Conditional.scala 37:39]
-  wire  _T_82; // @[Conditional.scala 37:30]
-  reg [5:0] rstCnt; // @[L1DC.scala 198:23]
-  reg [31:0] _RAND_71;
-  wire  _T_87; // @[L1DC.scala 215:19]
-  wire [2:0] _GEN_29; // @[L1DC.scala 215:45]
-  wire  _T_90; // @[Conditional.scala 37:30]
-  reg [1:0] _T_639; // @[L1DC.scala 451:15]
-  reg [31:0] _RAND_72;
-  wire  _T_640; // @[L1DC.scala 451:28]
-  wire  _T_641; // @[L1DC.scala 454:15]
-  wire [37:0] _T_542; // @[L1DC.scala 63:33]
-  wire  _T_543; // @[L1DC.scala 422:85]
-  wire  _T_544; // @[L1DC.scala 422:73]
-  wire  _T_547; // @[L1DC.scala 422:85]
-  wire  _T_548; // @[L1DC.scala 422:73]
-  wire  hit; // @[L1DC.scala 422:58]
-  wire  _T_642; // @[L1DC.scala 454:26]
-  wire  _GEN_408; // @[L1DC.scala 454:34]
-  wire  pendingRead; // @[L1DC.scala 451:44]
-  wire  _T_91; // @[L1DC.scala 225:27]
-  wire [2:0] _GEN_30; // @[L1DC.scala 225:41]
-  wire [2:0] _GEN_31; // @[L1DC.scala 223:25]
-  wire  _T_94; // @[Conditional.scala 37:30]
-  reg [1:0] _T_103; // @[L1DC.scala 263:16]
-  reg [31:0] _RAND_73;
-  wire  _T_104; // @[L1DC.scala 263:29]
-  reg [5:0] _T_106; // @[L1DC.scala 263:54]
-  reg [31:0] _RAND_74;
-  wire [5:0] _T_107; // @[L1DC.scala 64:34]
-  wire  _T_108; // @[L1DC.scala 263:78]
-  wire  _T_109; // @[L1DC.scala 263:44]
-  wire [37:0] _T_49; // @[L1DC.scala 63:33]
-  wire  _T_50; // @[L1DC.scala 177:92]
-  wire  _T_51; // @[L1DC.scala 177:80]
-  wire  _T_52; // @[L1DC.scala 177:110]
-  wire  _T_55; // @[L1DC.scala 177:92]
-  wire  _T_56; // @[L1DC.scala 177:80]
-  wire  _T_57; // @[L1DC.scala 177:110]
-  wire  wdirtyHit; // @[L1DC.scala 177:65]
-  wire  whit; // @[L1DC.scala 176:60]
-  wire  _T_166; // @[L1DC.scala 274:14]
-  wire [2:0] _GEN_61; // @[L1DC.scala 274:29]
-  wire [2:0] _GEN_76; // @[L1DC.scala 270:24]
-  wire [2:0] _GEN_91; // @[L1DC.scala 267:29]
-  wire [2:0] _GEN_94; // @[L1DC.scala 264:9]
-  wire  _T_226; // @[Conditional.scala 37:30]
-  reg  victim; // @[L1DC.scala 180:23]
-  reg [31:0] _RAND_75;
-  wire  _GEN_111; // @[L1DC.scala 286:12]
-  wire  _GEN_116; // @[L1DC.scala 286:12]
-  wire  _T_227; // @[L1DC.scala 286:12]
-  wire  _GEN_112; // @[L1DC.scala 286:12]
-  wire  _GEN_117; // @[L1DC.scala 286:12]
-  wire  _T_228; // @[L1DC.scala 286:39]
-  wire  _T_229; // @[L1DC.scala 286:36]
-  wire [2:0] _GEN_130; // @[L1DC.scala 297:29]
-  wire [2:0] _GEN_131; // @[L1DC.scala 286:64]
-  wire  _T_238; // @[Conditional.scala 37:30]
-  wire [2:0] _GEN_153; // @[L1DC.scala 320:29]
-  wire [2:0] _GEN_154; // @[L1DC.scala 309:64]
-  wire  _T_250; // @[Conditional.scala 37:30]
-  wire  _T_253; // @[Conditional.scala 37:30]
-  wire  _T_254; // @[Conditional.scala 37:55]
-  wire  _T_321; // @[L1DC.scala 357:20]
-  wire [2:0] _GEN_178; // @[L1DC.scala 357:49]
-  wire [2:0] _GEN_192; // @[L1DC.scala 352:27]
-  wire  _T_326; // @[Conditional.scala 37:30]
-  wire  _T_327; // @[L1DC.scala 370:12]
-  wire [2:0] _GEN_198; // @[L1DC.scala 370:26]
-  wire [2:0] _GEN_199; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_210; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_216; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_233; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_251; // @[Conditional.scala 39:67]
-  wire [2:0] _GEN_268; // @[Conditional.scala 39:67]
-  wire [2:0] nstate; // @[Conditional.scala 40:58]
-  wire [2:0] _T_21; // @[L1DC.scala 155:14]
-  wire  _T_25; // @[Mux.scala 68:19]
-  wire [47:0] _T_26; // @[Mux.scala 68:16]
-  wire  _T_27; // @[Mux.scala 68:19]
-  wire [47:0] _T_28; // @[Mux.scala 68:16]
-  wire  _T_29; // @[Mux.scala 68:19]
-  wire [47:0] _T_30; // @[Mux.scala 68:16]
-  wire [47:0] _T_36; // @[Mux.scala 68:16]
-  wire [47:0] _T_38; // @[Mux.scala 68:16]
-  wire [47:0] _T_40; // @[Mux.scala 68:16]
-  wire [47:0] wlookupAddr; // @[L1DC.scala 153:34]
-  wire [7:0] rand_; // @[PRNG.scala 86:17]
-  wire  _T_64; // @[L1DC.scala 183:18]
-  wire  _T_65; // @[L1DC.scala 183:50]
-  wire  _T_66; // @[L1DC.scala 183:40]
-  wire  _T_68; // @[L1DC.scala 183:73]
-  wire  _T_69; // @[L1DC.scala 183:111]
-  wire  _T_70; // @[L1DC.scala 183:101]
-  wire  _T_72; // @[L1DC.scala 183:9]
-  wire  _T_73; // @[L1DC.scala 183:9]
-  reg  lookupReady; // @[L1DC.scala 465:28]
-  reg [31:0] _RAND_76;
-  wire  _GEN_49; // @[L1DC.scala 274:29]
-  wire  _GEN_64; // @[L1DC.scala 270:24]
-  wire  _GEN_79; // @[L1DC.scala 267:29]
-  wire  _GEN_96; // @[L1DC.scala 264:9]
-  wire  _GEN_123; // @[L1DC.scala 297:29]
-  wire  _GEN_136; // @[L1DC.scala 286:64]
-  wire  _GEN_203; // @[Conditional.scala 39:67]
-  wire  _GEN_221; // @[Conditional.scala 39:67]
-  wire  _GEN_238; // @[Conditional.scala 39:67]
-  wire  _GEN_253; // @[Conditional.scala 39:67]
-  wire  _GEN_271; // @[Conditional.scala 39:67]
-  wire  l1writing_1; // @[Conditional.scala 40:58]
-  wire  _GEN_48; // @[L1DC.scala 274:29]
-  wire  _GEN_63; // @[L1DC.scala 270:24]
-  wire  _GEN_78; // @[L1DC.scala 267:29]
-  wire  _GEN_95; // @[L1DC.scala 264:9]
-  wire  _GEN_120; // @[L1DC.scala 299:29]
-  wire  _GEN_122; // @[L1DC.scala 297:29]
-  wire  _GEN_135; // @[L1DC.scala 286:64]
-  wire  _GEN_202; // @[Conditional.scala 39:67]
-  wire  _GEN_220; // @[Conditional.scala 39:67]
-  wire  _GEN_237; // @[Conditional.scala 39:67]
-  wire  _GEN_252; // @[Conditional.scala 39:67]
-  wire  _GEN_270; // @[Conditional.scala 39:67]
-  wire  l1writing_0; // @[Conditional.scala 40:58]
-  wire [1:0] _T_659; // @[L1DC.scala 501:29]
-  wire  _T_660; // @[L1DC.scala 501:32]
-  wire  _T_661; // @[L1DC.scala 501:12]
-  wire [37:0] _T_662; // @[L1DC.scala 63:33]
-  wire  _T_663; // @[L1DC.scala 503:80]
-  wire  hitmask_0; // @[L1DC.scala 503:66]
-  wire  _GEN_412; // @[L1DC.scala 501:37]
-  wire  _GEN_422; // @[L1DC.scala 479:23]
-  wire [127:0] _T_646; // @[L1DC.scala 469:21]
-  wire  _T_648; // @[L1DC.scala 468:28]
-  wire  _T_649; // @[L1DC.scala 468:16]
-  wire [127:0] _T_650; // @[L1DC.scala 469:21]
-  wire [127:0] _T_651; // @[Mux.scala 87:16]
-  wire [127:0] l2Rdata; // @[Mux.scala 87:16]
-  wire [63:0] written_3_data_0; // @[L1DC.scala 486:39]
-  wire  _T_118; // @[L1DC.scala 65:39]
-  wire  _T_127; // @[L1DC.scala 73:40]
-  wire [7:0] _T_137; // @[L1DC.scala 73:58]
-  wire [63:0] _T_117_data_1; // @[Mux.scala 87:16]
-  wire [63:0] lookup_data_1; // @[Mux.scala 87:16]
-  wire [63:0] _T_117_data_0; // @[Mux.scala 87:16]
-  wire [63:0] lookup_data_0; // @[Mux.scala 87:16]
-  wire [63:0] _GEN_33;
-  wire [7:0] _T_147; // @[L1DC.scala 73:81]
-  wire [7:0] ret_4_7; // @[L1DC.scala 74:15]
-  wire  _T_126; // @[L1DC.scala 73:40]
-  wire [7:0] _T_136; // @[L1DC.scala 73:58]
-  wire [7:0] _T_146; // @[L1DC.scala 73:81]
-  wire [7:0] ret_4_6; // @[L1DC.scala 74:15]
-  wire  _T_125; // @[L1DC.scala 73:40]
-  wire [7:0] _T_135; // @[L1DC.scala 73:58]
-  wire [7:0] _T_145; // @[L1DC.scala 73:81]
-  wire [7:0] ret_4_5; // @[L1DC.scala 74:15]
-  wire  _T_124; // @[L1DC.scala 73:40]
-  wire [7:0] _T_134; // @[L1DC.scala 73:58]
-  wire [7:0] _T_144; // @[L1DC.scala 73:81]
-  wire [7:0] ret_4_4; // @[L1DC.scala 74:15]
-  wire  _T_123; // @[L1DC.scala 73:40]
-  wire [7:0] _T_133; // @[L1DC.scala 73:58]
-  wire [7:0] _T_143; // @[L1DC.scala 73:81]
-  wire [7:0] ret_4_3; // @[L1DC.scala 74:15]
-  wire  _T_122; // @[L1DC.scala 73:40]
-  wire [7:0] _T_132; // @[L1DC.scala 73:58]
-  wire [7:0] _T_142; // @[L1DC.scala 73:81]
-  wire [7:0] ret_4_2; // @[L1DC.scala 74:15]
-  wire  _T_121; // @[L1DC.scala 73:40]
-  wire [7:0] _T_131; // @[L1DC.scala 73:58]
-  wire [7:0] _T_141; // @[L1DC.scala 73:81]
-  wire [7:0] ret_4_1; // @[L1DC.scala 74:15]
-  wire  _T_120; // @[L1DC.scala 73:40]
-  wire [7:0] _T_130; // @[L1DC.scala 73:58]
-  wire [7:0] _T_140; // @[L1DC.scala 73:81]
-  wire [7:0] ret_4_0; // @[L1DC.scala 74:15]
-  wire [63:0] _T_162; // @[L1DC.scala 77:9]
-  wire [63:0] written_data_0; // @[L1DC.scala 244:44]
-  wire [63:0] _GEN_81; // @[L1DC.scala 267:29]
-  wire  _T_269; // @[L1DC.scala 344:18]
-  wire [63:0] _T_274; // @[L1DC.scala 348:30]
-  wire [63:0] _T_273; // @[L1DC.scala 348:30]
-  wire [63:0] _GEN_167;
-  wire [7:0] _T_303; // @[L1DC.scala 73:81]
-  wire [7:0] ret_6_7; // @[L1DC.scala 74:15]
-  wire [7:0] _T_302; // @[L1DC.scala 73:81]
-  wire [7:0] ret_6_6; // @[L1DC.scala 74:15]
-  wire [7:0] _T_301; // @[L1DC.scala 73:81]
-  wire [7:0] ret_6_5; // @[L1DC.scala 74:15]
-  wire [7:0] _T_300; // @[L1DC.scala 73:81]
-  wire [7:0] ret_6_4; // @[L1DC.scala 74:15]
-  wire [7:0] _T_299; // @[L1DC.scala 73:81]
-  wire [7:0] ret_6_3; // @[L1DC.scala 74:15]
-  wire [7:0] _T_298; // @[L1DC.scala 73:81]
-  wire [7:0] ret_6_2; // @[L1DC.scala 74:15]
-  wire [7:0] _T_297; // @[L1DC.scala 73:81]
-  wire [7:0] ret_6_1; // @[L1DC.scala 74:15]
-  wire [7:0] _T_296; // @[L1DC.scala 73:81]
-  wire [7:0] ret_6_0; // @[L1DC.scala 74:15]
-  wire [63:0] _T_318; // @[L1DC.scala 77:9]
-  wire [63:0] _GEN_168; // @[L1DC.scala 345:44]
-  wire [63:0] written_2_data_0; // @[L1DC.scala 344:46]
-  wire [63:0] _GEN_223; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_240; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_255; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_289; // @[Conditional.scala 40:58]
-  wire [63:0] _GEN_414; // @[L1DC.scala 501:37]
-  wire [63:0] _GEN_424; // @[L1DC.scala 479:23]
-  wire [63:0] written_3_data_1; // @[L1DC.scala 486:39]
-  wire [63:0] written_data_1; // @[L1DC.scala 244:44]
-  wire [63:0] _GEN_82; // @[L1DC.scala 267:29]
-  wire [63:0] _GEN_169; // @[L1DC.scala 345:44]
-  wire [63:0] written_2_data_1; // @[L1DC.scala 344:46]
-  wire [63:0] _GEN_224; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_241; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_256; // @[Conditional.scala 39:67]
-  wire [63:0] _GEN_290; // @[Conditional.scala 40:58]
-  wire [63:0] _GEN_415; // @[L1DC.scala 501:37]
-  wire [63:0] _GEN_425; // @[L1DC.scala 479:23]
-  wire  _GEN_225; // @[Conditional.scala 39:67]
-  wire  _GEN_242; // @[Conditional.scala 39:67]
-  wire  _GEN_257; // @[Conditional.scala 39:67]
-  wire  _GEN_291; // @[Conditional.scala 40:58]
-  wire  _GEN_416; // @[L1DC.scala 501:37]
-  wire  _GEN_426; // @[L1DC.scala 479:23]
-  wire  written_3_valid; // @[L1DC.scala 489:35]
-  wire  _T_117_valid; // @[Mux.scala 87:16]
-  wire  lookup_valid; // @[Mux.scala 87:16]
-  wire  _GEN_84; // @[L1DC.scala 267:29]
-  wire  _GEN_226; // @[Conditional.scala 39:67]
-  wire  _GEN_243; // @[Conditional.scala 39:67]
-  wire  _GEN_258; // @[Conditional.scala 39:67]
-  wire  _GEN_292; // @[Conditional.scala 40:58]
-  wire  _GEN_417; // @[L1DC.scala 501:37]
-  wire  _GEN_427; // @[L1DC.scala 479:23]
-  wire [37:0] _T_117_tag; // @[Mux.scala 87:16]
-  wire [37:0] lookup_tag; // @[Mux.scala 87:16]
-  wire [37:0] _GEN_85; // @[L1DC.scala 267:29]
-  wire [47:0] writtenAddr; // @[L1DC.scala 336:28]
-  wire [37:0] written_2_tag; // @[L1DC.scala 63:33]
-  wire [37:0] _GEN_227; // @[Conditional.scala 39:67]
-  wire [37:0] _GEN_244; // @[Conditional.scala 39:67]
-  wire [37:0] _GEN_259; // @[Conditional.scala 39:67]
-  wire [37:0] _GEN_293; // @[Conditional.scala 40:58]
-  wire [37:0] _GEN_418; // @[L1DC.scala 501:37]
-  wire [37:0] _GEN_428; // @[L1DC.scala 479:23]
-  wire  _GEN_413; // @[L1DC.scala 501:37]
-  wire  _GEN_423; // @[L1DC.scala 479:23]
-  wire [5:0] pipeAddrIdx; // @[L1DC.scala 64:34]
-  wire [5:0] _T_86; // @[L1DC.scala 213:24]
-  wire [47:0] _T_98; // @[L1DC.scala 231:55]
-  wire  _T_101; // @[L1DC.scala 233:13]
-  wire  _T_102; // @[L1DC.scala 233:13]
-  wire [5:0] _T_105; // @[L1DC.scala 64:34]
-  wire  _GEN_36; // @[L1DC.scala 256:30]
-  wire  _GEN_37; // @[L1DC.scala 256:30]
-  wire  _GEN_38; // @[L1DC.scala 256:30]
-  wire  _GEN_39; // @[L1DC.scala 256:30]
-  wire  _GEN_56; // @[L1DC.scala 274:29]
-  wire  _GEN_57; // @[L1DC.scala 274:29]
-  wire  _GEN_58; // @[L1DC.scala 274:29]
-  wire  _GEN_59; // @[L1DC.scala 274:29]
-  wire  _T_223; // @[L1DC.scala 281:23]
-  wire [1:0] _GEN_62; // @[L1DC.scala 270:24]
-  wire  _GEN_71; // @[L1DC.scala 270:24]
-  wire  _GEN_72; // @[L1DC.scala 270:24]
-  wire  _GEN_73; // @[L1DC.scala 270:24]
-  wire  _GEN_74; // @[L1DC.scala 270:24]
-  wire [5:0] _GEN_80; // @[L1DC.scala 267:29]
-  wire  _GEN_86; // @[L1DC.scala 267:29]
-  wire  _GEN_87; // @[L1DC.scala 267:29]
-  wire  _GEN_88; // @[L1DC.scala 267:29]
-  wire  _GEN_89; // @[L1DC.scala 267:29]
-  wire [1:0] _GEN_92; // @[L1DC.scala 267:29]
-  wire  _GEN_103; // @[L1DC.scala 264:9]
-  wire  _GEN_104; // @[L1DC.scala 264:9]
-  wire  _GEN_105; // @[L1DC.scala 264:9]
-  wire  _GEN_106; // @[L1DC.scala 264:9]
-  wire [1:0] _GEN_108; // @[L1DC.scala 264:9]
-  wire [37:0] _GEN_110; // @[L1DC.scala 286:12]
-  wire [63:0] _GEN_113; // @[L1DC.scala 286:12]
-  wire [63:0] _GEN_114; // @[L1DC.scala 286:12]
-  wire [37:0] _GEN_115; // @[L1DC.scala 286:12]
-  wire [63:0] _GEN_118; // @[L1DC.scala 286:12]
-  wire [63:0] _GEN_119; // @[L1DC.scala 286:12]
-  wire [47:0] _T_232; // @[L1DC.scala 289:67]
-  wire [127:0] _T_233; // @[L1DC.scala 291:51]
-  wire [1:0] _GEN_133; // @[L1DC.scala 286:64]
-  wire [47:0] _T_244; // @[L1DC.scala 312:64]
-  wire [1:0] _T_256; // @[L1DC.scala 332:24]
-  wire [5:0] _T_259; // @[L1DC.scala 64:34]
-  wire [47:0] _T_261; // @[L1DC.scala 334:57]
-  wire  _GEN_179; // @[L1DC.scala 357:49]
-  wire  _GEN_180; // @[L1DC.scala 357:49]
-  wire  _GEN_181; // @[L1DC.scala 357:49]
-  wire  _GEN_182; // @[L1DC.scala 357:49]
-  wire  _GEN_193; // @[L1DC.scala 352:27]
-  wire  _GEN_194; // @[L1DC.scala 352:27]
-  wire  _GEN_195; // @[L1DC.scala 352:27]
-  wire  _GEN_196; // @[L1DC.scala 352:27]
-  wire [1:0] _GEN_200; // @[Conditional.scala 39:67]
-  wire  _GEN_211; // @[Conditional.scala 39:67]
-  wire  _GEN_212; // @[Conditional.scala 39:67]
-  wire  _GEN_213; // @[Conditional.scala 39:67]
-  wire  _GEN_214; // @[Conditional.scala 39:67]
-  wire [47:0] _GEN_217; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_218; // @[Conditional.scala 39:67]
-  wire [5:0] _GEN_222; // @[Conditional.scala 39:67]
-  wire  _GEN_228; // @[Conditional.scala 39:67]
-  wire  _GEN_229; // @[Conditional.scala 39:67]
-  wire  _GEN_230; // @[Conditional.scala 39:67]
-  wire  _GEN_231; // @[Conditional.scala 39:67]
-  wire [47:0] _GEN_234; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_235; // @[Conditional.scala 39:67]
-  wire [127:0] _GEN_236; // @[Conditional.scala 39:67]
-  wire [5:0] _GEN_239; // @[Conditional.scala 39:67]
-  wire  _GEN_245; // @[Conditional.scala 39:67]
-  wire  _GEN_246; // @[Conditional.scala 39:67]
-  wire  _GEN_247; // @[Conditional.scala 39:67]
-  wire  _GEN_248; // @[Conditional.scala 39:67]
-  wire [5:0] _GEN_254; // @[Conditional.scala 39:67]
-  wire  _GEN_260; // @[Conditional.scala 39:67]
-  wire  _GEN_261; // @[Conditional.scala 39:67]
-  wire  _GEN_262; // @[Conditional.scala 39:67]
-  wire  _GEN_263; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_265; // @[Conditional.scala 39:67]
-  wire  _GEN_278; // @[Conditional.scala 39:67]
-  wire  _GEN_279; // @[Conditional.scala 39:67]
-  wire  _GEN_280; // @[Conditional.scala 39:67]
-  wire  _GEN_281; // @[Conditional.scala 39:67]
-  wire [1:0] _GEN_283; // @[Conditional.scala 39:67]
-  wire [5:0] _GEN_288; // @[Conditional.scala 40:58]
-  wire  _GEN_297; // @[Conditional.scala 40:58]
-  wire  _GEN_298; // @[Conditional.scala 40:58]
-  wire  _GEN_299; // @[Conditional.scala 40:58]
-  wire  _GEN_300; // @[Conditional.scala 40:58]
-  wire  _T_328; // @[L1DC.scala 379:38]
-  wire  _T_329; // @[L1DC.scala 379:27]
-  wire  _T_330; // @[L1DC.scala 379:38]
-  wire  _T_331; // @[L1DC.scala 379:27]
-  wire  _T_332; // @[L1DC.scala 379:38]
-  wire  _T_333; // @[L1DC.scala 379:27]
-  wire  _T_334; // @[L1DC.scala 379:38]
-  wire  wmHit; // @[L1DC.scala 379:27]
-  wire  _T_335; // @[L1DC.scala 381:63]
-  wire  wmHitHead; // @[L1DC.scala 381:40]
-  wire  _T_336; // @[L1DC.scala 383:8]
-  wire  _T_339; // @[L1DC.scala 73:40]
-  wire  _T_340; // @[L1DC.scala 73:40]
-  wire  _T_341; // @[L1DC.scala 73:40]
-  wire  _T_342; // @[L1DC.scala 73:40]
-  wire  _T_343; // @[L1DC.scala 73:40]
-  wire  _T_344; // @[L1DC.scala 73:40]
-  wire  _T_345; // @[L1DC.scala 73:40]
-  wire  _T_346; // @[L1DC.scala 73:40]
-  wire [7:0] _T_349; // @[L1DC.scala 73:58]
-  wire [7:0] _T_350; // @[L1DC.scala 73:58]
-  wire [7:0] _T_351; // @[L1DC.scala 73:58]
-  wire [7:0] _T_352; // @[L1DC.scala 73:58]
-  wire [7:0] _T_353; // @[L1DC.scala 73:58]
-  wire [7:0] _T_354; // @[L1DC.scala 73:58]
-  wire [7:0] _T_355; // @[L1DC.scala 73:58]
-  wire [7:0] _T_356; // @[L1DC.scala 73:58]
-  wire [7:0] _T_359; // @[L1DC.scala 73:81]
-  wire [7:0] _T_360; // @[L1DC.scala 73:81]
-  wire [7:0] _T_361; // @[L1DC.scala 73:81]
-  wire [7:0] _T_362; // @[L1DC.scala 73:81]
-  wire [7:0] _T_363; // @[L1DC.scala 73:81]
-  wire [7:0] _T_364; // @[L1DC.scala 73:81]
-  wire [7:0] _T_365; // @[L1DC.scala 73:81]
-  wire [7:0] _T_366; // @[L1DC.scala 73:81]
-  wire [7:0] ret_7_0; // @[L1DC.scala 74:15]
-  wire [7:0] ret_7_1; // @[L1DC.scala 74:15]
-  wire [7:0] ret_7_2; // @[L1DC.scala 74:15]
-  wire [7:0] ret_7_3; // @[L1DC.scala 74:15]
-  wire [7:0] ret_7_4; // @[L1DC.scala 74:15]
-  wire [7:0] ret_7_5; // @[L1DC.scala 74:15]
-  wire [7:0] ret_7_6; // @[L1DC.scala 74:15]
-  wire [7:0] ret_7_7; // @[L1DC.scala 74:15]
-  wire [63:0] _T_381; // @[L1DC.scala 77:9]
-  wire [7:0] _T_382; // @[L1DC.scala 393:26]
-  wire [7:0] _T_405; // @[L1DC.scala 73:81]
-  wire [7:0] _T_406; // @[L1DC.scala 73:81]
-  wire [7:0] _T_407; // @[L1DC.scala 73:81]
-  wire [7:0] _T_408; // @[L1DC.scala 73:81]
-  wire [7:0] _T_409; // @[L1DC.scala 73:81]
-  wire [7:0] _T_410; // @[L1DC.scala 73:81]
-  wire [7:0] _T_411; // @[L1DC.scala 73:81]
-  wire [7:0] _T_412; // @[L1DC.scala 73:81]
-  wire [7:0] ret_8_0; // @[L1DC.scala 74:15]
-  wire [7:0] ret_8_1; // @[L1DC.scala 74:15]
-  wire [7:0] ret_8_2; // @[L1DC.scala 74:15]
-  wire [7:0] ret_8_3; // @[L1DC.scala 74:15]
-  wire [7:0] ret_8_4; // @[L1DC.scala 74:15]
-  wire [7:0] ret_8_5; // @[L1DC.scala 74:15]
-  wire [7:0] ret_8_6; // @[L1DC.scala 74:15]
-  wire [7:0] ret_8_7; // @[L1DC.scala 74:15]
-  wire [63:0] _T_427; // @[L1DC.scala 77:9]
-  wire [7:0] _T_428; // @[L1DC.scala 393:26]
-  wire [7:0] _T_451; // @[L1DC.scala 73:81]
-  wire [7:0] _T_452; // @[L1DC.scala 73:81]
-  wire [7:0] _T_453; // @[L1DC.scala 73:81]
-  wire [7:0] _T_454; // @[L1DC.scala 73:81]
-  wire [7:0] _T_455; // @[L1DC.scala 73:81]
-  wire [7:0] _T_456; // @[L1DC.scala 73:81]
-  wire [7:0] _T_457; // @[L1DC.scala 73:81]
-  wire [7:0] _T_458; // @[L1DC.scala 73:81]
-  wire [7:0] ret_9_0; // @[L1DC.scala 74:15]
-  wire [7:0] ret_9_1; // @[L1DC.scala 74:15]
-  wire [7:0] ret_9_2; // @[L1DC.scala 74:15]
-  wire [7:0] ret_9_3; // @[L1DC.scala 74:15]
-  wire [7:0] ret_9_4; // @[L1DC.scala 74:15]
-  wire [7:0] ret_9_5; // @[L1DC.scala 74:15]
-  wire [7:0] ret_9_6; // @[L1DC.scala 74:15]
-  wire [7:0] ret_9_7; // @[L1DC.scala 74:15]
-  wire [63:0] _T_473; // @[L1DC.scala 77:9]
-  wire [7:0] _T_474; // @[L1DC.scala 393:26]
-  wire [7:0] _T_497; // @[L1DC.scala 73:81]
-  wire [7:0] _T_498; // @[L1DC.scala 73:81]
-  wire [7:0] _T_499; // @[L1DC.scala 73:81]
-  wire [7:0] _T_500; // @[L1DC.scala 73:81]
-  wire [7:0] _T_501; // @[L1DC.scala 73:81]
-  wire [7:0] _T_502; // @[L1DC.scala 73:81]
-  wire [7:0] _T_503; // @[L1DC.scala 73:81]
-  wire [7:0] _T_504; // @[L1DC.scala 73:81]
-  wire [7:0] ret_10_0; // @[L1DC.scala 74:15]
-  wire [7:0] ret_10_1; // @[L1DC.scala 74:15]
-  wire [7:0] ret_10_2; // @[L1DC.scala 74:15]
-  wire [7:0] ret_10_3; // @[L1DC.scala 74:15]
-  wire [7:0] ret_10_4; // @[L1DC.scala 74:15]
-  wire [7:0] ret_10_5; // @[L1DC.scala 74:15]
-  wire [7:0] ret_10_6; // @[L1DC.scala 74:15]
-  wire [7:0] ret_10_7; // @[L1DC.scala 74:15]
-  wire [63:0] _T_519; // @[L1DC.scala 77:9]
-  wire [7:0] _T_520; // @[L1DC.scala 393:26]
-  wire [1:0] _T_522; // @[L1DC.scala 400:25]
-  wire  _T_523; // @[L1DC.scala 400:32]
-  wire  _GEN_441; // @[L1DC.scala 406:28]
-  wire  _GEN_325; // @[L1DC.scala 406:28]
-  wire  _GEN_442; // @[L1DC.scala 406:28]
-  wire  _GEN_326; // @[L1DC.scala 406:28]
-  wire  _GEN_443; // @[L1DC.scala 406:28]
-  wire  _GEN_327; // @[L1DC.scala 406:28]
-  wire  _GEN_444; // @[L1DC.scala 406:28]
-  wire  _GEN_328; // @[L1DC.scala 406:28]
-  wire  _GEN_346; // @[L1DC.scala 400:46]
-  wire  _GEN_347; // @[L1DC.scala 397:17]
-  wire  _GEN_365; // @[L1DC.scala 386:25]
-  wire [1:0] hitCount; // @[Bitwise.scala 47:55]
-  wire  _T_538; // @[L1DC.scala 420:19]
-  wire  _T_540; // @[L1DC.scala 420:9]
-  wire  _T_541; // @[L1DC.scala 420:9]
-  wire  _T_552; // @[L1DC.scala 65:39]
-  wire [63:0] _GEN_401; // @[Mux.scala 87:16]
-  wire [63:0] _GEN_402; // @[Mux.scala 87:16]
-  wire [63:0] _T_557; // @[Mux.scala 87:16]
-  wire [63:0] _GEN_403; // @[Mux.scala 87:16]
-  wire [63:0] _GEN_404; // @[Mux.scala 87:16]
-  wire [63:0] lookupRdata; // @[Mux.scala 87:16]
-  wire [44:0] _T_558; // @[L1DC.scala 62:37]
-  wire [47:0] _T_559; // @[L1DC.scala 62:72]
-  wire  _T_560; // @[L1DC.scala 429:27]
-  wire  _T_561; // @[L1DC.scala 429:15]
-  wire  _T_564; // @[L1DC.scala 429:27]
-  wire  _T_565; // @[L1DC.scala 429:15]
-  wire  _T_568; // @[L1DC.scala 429:27]
-  wire  _T_569; // @[L1DC.scala 429:15]
-  wire  _T_572; // @[L1DC.scala 429:27]
-  wire  _T_573; // @[L1DC.scala 429:15]
-  wire [63:0] _T_574; // @[Mux.scala 87:16]
-  wire [63:0] _T_575; // @[Mux.scala 87:16]
-  wire [63:0] _T_576; // @[Mux.scala 87:16]
-  wire [63:0] pendingWdata; // @[Mux.scala 87:16]
-  wire [7:0] _T_593; // @[Mux.scala 87:16]
-  wire [7:0] _T_594; // @[Mux.scala 87:16]
-  wire [7:0] _T_595; // @[Mux.scala 87:16]
-  wire [7:0] pendingBe; // @[Mux.scala 87:16]
-  wire  _T_596; // @[L1DC.scala 73:40]
-  wire  _T_597; // @[L1DC.scala 73:40]
-  wire  _T_598; // @[L1DC.scala 73:40]
-  wire  _T_599; // @[L1DC.scala 73:40]
-  wire  _T_600; // @[L1DC.scala 73:40]
-  wire  _T_601; // @[L1DC.scala 73:40]
-  wire  _T_602; // @[L1DC.scala 73:40]
-  wire  _T_603; // @[L1DC.scala 73:40]
-  wire [7:0] _T_606; // @[L1DC.scala 73:58]
-  wire [7:0] _T_607; // @[L1DC.scala 73:58]
-  wire [7:0] _T_608; // @[L1DC.scala 73:58]
-  wire [7:0] _T_609; // @[L1DC.scala 73:58]
-  wire [7:0] _T_610; // @[L1DC.scala 73:58]
-  wire [7:0] _T_611; // @[L1DC.scala 73:58]
-  wire [7:0] _T_612; // @[L1DC.scala 73:58]
-  wire [7:0] _T_613; // @[L1DC.scala 73:58]
-  wire [7:0] _T_616; // @[L1DC.scala 73:81]
-  wire [7:0] _T_617; // @[L1DC.scala 73:81]
-  wire [7:0] _T_618; // @[L1DC.scala 73:81]
-  wire [7:0] _T_619; // @[L1DC.scala 73:81]
-  wire [7:0] _T_620; // @[L1DC.scala 73:81]
-  wire [7:0] _T_621; // @[L1DC.scala 73:81]
-  wire [7:0] _T_622; // @[L1DC.scala 73:81]
-  wire [7:0] _T_623; // @[L1DC.scala 73:81]
-  wire [7:0] rdata_ret_0; // @[L1DC.scala 74:15]
-  wire [7:0] rdata_ret_1; // @[L1DC.scala 74:15]
-  wire [7:0] rdata_ret_2; // @[L1DC.scala 74:15]
-  wire [7:0] rdata_ret_3; // @[L1DC.scala 74:15]
-  wire [7:0] rdata_ret_4; // @[L1DC.scala 74:15]
-  wire [7:0] rdata_ret_5; // @[L1DC.scala 74:15]
-  wire [7:0] rdata_ret_6; // @[L1DC.scala 74:15]
-  wire [7:0] rdata_ret_7; // @[L1DC.scala 74:15]
-  wire [31:0] _T_634; // @[L1DC.scala 77:9]
-  wire [31:0] _T_637; // @[L1DC.scala 77:9]
-  wire  _GEN_411; // @[L1DC.scala 501:37]
-  wire [5:0] _GEN_419; // @[L1DC.scala 501:37]
-  wire [127:0] _GEN_420; // @[L1DC.scala 479:23]
-  wire  _GEN_421; // @[L1DC.scala 479:23]
-  wire [5:0] _GEN_429; // @[L1DC.scala 479:23]
-  wire  _GEN_445; // @[L1DC.scala 233:13]
-  wire  _GEN_446; // @[L1DC.scala 233:13]
-  wire  _GEN_447; // @[L1DC.scala 233:13]
-  wire  _GEN_448; // @[L1DC.scala 233:13]
-  wire  _GEN_453; // @[L1DC.scala 402:13]
-  wire  _GEN_454; // @[L1DC.scala 402:13]
-  wire  _GEN_455; // @[L1DC.scala 402:13]
-  wire  _GEN_456; // @[L1DC.scala 402:13]
-  wire  _GEN_457; // @[L1DC.scala 402:13]
-  wire  _GEN_458; // @[L1DC.scala 402:13]
-  MaxPeriodFibonacciLFSR MaxPeriodFibonacciLFSR ( // @[PRNG.scala 82:22]
-    .clock(MaxPeriodFibonacciLFSR_clock),
-    .reset(MaxPeriodFibonacciLFSR_reset),
-    .io_out_0(MaxPeriodFibonacciLFSR_io_out_0),
-    .io_out_1(MaxPeriodFibonacciLFSR_io_out_1),
-    .io_out_2(MaxPeriodFibonacciLFSR_io_out_2),
-    .io_out_3(MaxPeriodFibonacciLFSR_io_out_3),
-    .io_out_4(MaxPeriodFibonacciLFSR_io_out_4),
-    .io_out_5(MaxPeriodFibonacciLFSR_io_out_5),
-    .io_out_6(MaxPeriodFibonacciLFSR_io_out_6),
-    .io_out_7(MaxPeriodFibonacciLFSR_io_out_7)
-  );
-  assign stores_0_tag_lookups_addr = stores_0_tag_lookups_addr_pipe_0;
-  assign stores_0_tag_lookups_data = stores_0_tag[stores_0_tag_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_tag_wlookups_addr = stores_0_tag_wlookups_addr_pipe_0;
-  assign stores_0_tag_wlookups_data = stores_0_tag[stores_0_tag_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_tag__T_76_data = _T_652 ? _GEN_428 : _GEN_293;
-  assign stores_0_tag__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_0_tag__T_76_mask = _T_652 ? _GEN_422 : l1writing_0;
-  assign stores_0_tag__T_76_en = 1'h1;
-  assign stores_0_valid_lookups_addr = stores_0_valid_lookups_addr_pipe_0;
-  assign stores_0_valid_lookups_data = stores_0_valid[stores_0_valid_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_valid_wlookups_addr = stores_0_valid_wlookups_addr_pipe_0;
-  assign stores_0_valid_wlookups_data = stores_0_valid[stores_0_valid_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_valid__T_76_data = _T_652 ? _GEN_427 : _GEN_292;
-  assign stores_0_valid__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_0_valid__T_76_mask = _T_652 ? _GEN_422 : l1writing_0;
-  assign stores_0_valid__T_76_en = 1'h1;
-  assign stores_0_dirty_lookups_addr = stores_0_dirty_lookups_addr_pipe_0;
-  assign stores_0_dirty_lookups_data = stores_0_dirty[stores_0_dirty_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_dirty_wlookups_addr = stores_0_dirty_wlookups_addr_pipe_0;
-  assign stores_0_dirty_wlookups_data = stores_0_dirty[stores_0_dirty_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_dirty__T_76_data = _T_652 ? _GEN_426 : _GEN_291;
-  assign stores_0_dirty__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_0_dirty__T_76_mask = _T_652 ? _GEN_422 : l1writing_0;
-  assign stores_0_dirty__T_76_en = 1'h1;
-  assign stores_0_data_0_lookups_addr = stores_0_data_0_lookups_addr_pipe_0;
-  assign stores_0_data_0_lookups_data = stores_0_data_0[stores_0_data_0_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_data_0_wlookups_addr = stores_0_data_0_wlookups_addr_pipe_0;
-  assign stores_0_data_0_wlookups_data = stores_0_data_0[stores_0_data_0_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_data_0__T_76_data = _T_652 ? _GEN_424 : _GEN_289;
-  assign stores_0_data_0__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_0_data_0__T_76_mask = _T_652 ? _GEN_422 : l1writing_0;
-  assign stores_0_data_0__T_76_en = 1'h1;
-  assign stores_0_data_1_lookups_addr = stores_0_data_1_lookups_addr_pipe_0;
-  assign stores_0_data_1_lookups_data = stores_0_data_1[stores_0_data_1_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_data_1_wlookups_addr = stores_0_data_1_wlookups_addr_pipe_0;
-  assign stores_0_data_1_wlookups_data = stores_0_data_1[stores_0_data_1_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_0_data_1__T_76_data = _T_652 ? _GEN_425 : _GEN_290;
-  assign stores_0_data_1__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_0_data_1__T_76_mask = _T_652 ? _GEN_422 : l1writing_0;
-  assign stores_0_data_1__T_76_en = 1'h1;
-  assign stores_1_tag_lookups_addr = stores_1_tag_lookups_addr_pipe_0;
-  assign stores_1_tag_lookups_data = stores_1_tag[stores_1_tag_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_tag_wlookups_addr = stores_1_tag_wlookups_addr_pipe_0;
-  assign stores_1_tag_wlookups_data = stores_1_tag[stores_1_tag_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_tag__T_76_data = _T_652 ? _GEN_428 : _GEN_293;
-  assign stores_1_tag__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_1_tag__T_76_mask = _T_652 ? _GEN_423 : l1writing_1;
-  assign stores_1_tag__T_76_en = 1'h1;
-  assign stores_1_valid_lookups_addr = stores_1_valid_lookups_addr_pipe_0;
-  assign stores_1_valid_lookups_data = stores_1_valid[stores_1_valid_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_valid_wlookups_addr = stores_1_valid_wlookups_addr_pipe_0;
-  assign stores_1_valid_wlookups_data = stores_1_valid[stores_1_valid_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_valid__T_76_data = _T_652 ? _GEN_427 : _GEN_292;
-  assign stores_1_valid__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_1_valid__T_76_mask = _T_652 ? _GEN_423 : l1writing_1;
-  assign stores_1_valid__T_76_en = 1'h1;
-  assign stores_1_dirty_lookups_addr = stores_1_dirty_lookups_addr_pipe_0;
-  assign stores_1_dirty_lookups_data = stores_1_dirty[stores_1_dirty_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_dirty_wlookups_addr = stores_1_dirty_wlookups_addr_pipe_0;
-  assign stores_1_dirty_wlookups_data = stores_1_dirty[stores_1_dirty_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_dirty__T_76_data = _T_652 ? _GEN_426 : _GEN_291;
-  assign stores_1_dirty__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_1_dirty__T_76_mask = _T_652 ? _GEN_423 : l1writing_1;
-  assign stores_1_dirty__T_76_en = 1'h1;
-  assign stores_1_data_0_lookups_addr = stores_1_data_0_lookups_addr_pipe_0;
-  assign stores_1_data_0_lookups_data = stores_1_data_0[stores_1_data_0_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_data_0_wlookups_addr = stores_1_data_0_wlookups_addr_pipe_0;
-  assign stores_1_data_0_wlookups_data = stores_1_data_0[stores_1_data_0_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_data_0__T_76_data = _T_652 ? _GEN_424 : _GEN_289;
-  assign stores_1_data_0__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_1_data_0__T_76_mask = _T_652 ? _GEN_423 : l1writing_1;
-  assign stores_1_data_0__T_76_en = 1'h1;
-  assign stores_1_data_1_lookups_addr = stores_1_data_1_lookups_addr_pipe_0;
-  assign stores_1_data_1_lookups_data = stores_1_data_1[stores_1_data_1_lookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_data_1_wlookups_addr = stores_1_data_1_wlookups_addr_pipe_0;
-  assign stores_1_data_1_wlookups_data = stores_1_data_1[stores_1_data_1_wlookups_addr]; // @[L1DC.scala 80:27]
-  assign stores_1_data_1__T_76_data = _T_652 ? _GEN_425 : _GEN_290;
-  assign stores_1_data_1__T_76_addr = _T_652 ? _GEN_429 : _GEN_288;
-  assign stores_1_data_1__T_76_mask = _T_652 ? _GEN_423 : l1writing_1;
-  assign stores_1_data_1__T_76_en = 1'h1;
-  assign _T = r_addr[2:0]; // @[L1DC.scala 88:16]
-  assign _T_1 = _T == 3'h0; // @[L1DC.scala 88:37]
-  assign _T_2 = $unsigned(reset); // @[L1DC.scala 88:9]
-  assign _T_3 = _T_1 | _T_2; // @[L1DC.scala 88:9]
-  assign _T_4 = _T_3 == 1'h0; // @[L1DC.scala 88:9]
-  assign _T_5 = w_addr[2:0]; // @[L1DC.scala 89:16]
-  assign _T_6 = _T_5 == 3'h0; // @[L1DC.scala 89:37]
-  assign _T_8 = _T_6 | _T_2; // @[L1DC.scala 89:9]
-  assign _T_9 = _T_8 == 1'h0; // @[L1DC.scala 89:9]
-  assign _T_652 = toL2_l2req != 2'h0; // @[L1DC.scala 472:19]
-  assign _T_638 = r_stall == 1'h0; // @[L1DC.scala 439:8]
-  assign _GEN_407 = _T_638 ? r_addr : pipeAddr; // @[L1DC.scala 439:18]
-  assign queryAddr = _T_652 ? toL2_l2addr : _GEN_407; // @[L1DC.scala 472:35]
-  assign _T_14 = wbufHead + 2'h1; // @[L1DC.scala 149:30]
-  assign _GEN_4 = 2'h1 == wbufHead ? wbuf_1_addr : wbuf_0_addr; // @[L1DC.scala 150:15]
-  assign _GEN_5 = 2'h1 == wbufHead ? wbuf_1_be : wbuf_0_be; // @[L1DC.scala 150:15]
-  assign _GEN_6 = 2'h1 == wbufHead ? wbuf_1_wdata : wbuf_0_wdata; // @[L1DC.scala 150:15]
-  assign _GEN_7 = 2'h1 == wbufHead ? wbuf_1_valid : wbuf_0_valid; // @[L1DC.scala 150:15]
-  assign _GEN_8 = 2'h2 == wbufHead ? wbuf_2_addr : _GEN_4; // @[L1DC.scala 150:15]
-  assign _GEN_9 = 2'h2 == wbufHead ? wbuf_2_be : _GEN_5; // @[L1DC.scala 150:15]
-  assign _GEN_10 = 2'h2 == wbufHead ? wbuf_2_wdata : _GEN_6; // @[L1DC.scala 150:15]
-  assign _GEN_11 = 2'h2 == wbufHead ? wbuf_2_valid : _GEN_7; // @[L1DC.scala 150:15]
-  assign _GEN_12 = 2'h3 == wbufHead ? wbuf_3_addr : _GEN_8; // @[L1DC.scala 150:15]
-  assign _GEN_13 = 2'h3 == wbufHead ? wbuf_3_be : _GEN_9; // @[L1DC.scala 150:15]
-  assign _GEN_14 = 2'h3 == wbufHead ? wbuf_3_wdata : _GEN_10; // @[L1DC.scala 150:15]
-  assign _GEN_15 = 2'h3 == wbufHead ? wbuf_3_valid : _GEN_11; // @[L1DC.scala 150:15]
-  assign _T_15 = _GEN_12[2:0]; // @[L1DC.scala 150:15]
-  assign _T_16 = _T_15 == 3'h0; // @[L1DC.scala 150:36]
-  assign _T_18 = _T_16 | _T_2; // @[L1DC.scala 150:9]
-  assign _T_19 = _T_18 == 1'h0; // @[L1DC.scala 150:9]
-  assign _T_20 = state == 3'h6; // @[L1DC.scala 153:14]
-  assign _T_81 = $unsigned(state); // @[Conditional.scala 37:39]
-  assign _T_82 = 3'h7 == _T_81; // @[Conditional.scala 37:30]
-  assign _T_87 = rstCnt == 6'h3f; // @[L1DC.scala 215:19]
-  assign _GEN_29 = _T_87 ? 3'h6 : state; // @[L1DC.scala 215:45]
-  assign _T_90 = 3'h6 == _T_81; // @[Conditional.scala 37:30]
-  assign _T_640 = _T_639 != 2'h0; // @[L1DC.scala 451:28]
-  assign _T_641 = pipeRead == 1'h0; // @[L1DC.scala 454:15]
-  assign _T_542 = pipeAddr[47:10]; // @[L1DC.scala 63:33]
-  assign _T_543 = stores_0_tag_lookups_data == _T_542; // @[L1DC.scala 422:85]
-  assign _T_544 = stores_0_valid_lookups_data & _T_543; // @[L1DC.scala 422:73]
-  assign _T_547 = stores_1_tag_lookups_data == _T_542; // @[L1DC.scala 422:85]
-  assign _T_548 = stores_1_valid_lookups_data & _T_547; // @[L1DC.scala 422:73]
-  assign hit = _T_544 | _T_548; // @[L1DC.scala 422:58]
-  assign _T_642 = _T_641 | hit; // @[L1DC.scala 454:26]
-  assign _GEN_408 = _T_642 ? 1'h0 : 1'h1; // @[L1DC.scala 454:34]
-  assign pendingRead = _T_640 ? 1'h0 : _GEN_408; // @[L1DC.scala 451:44]
-  assign _T_91 = wbufHead != wbufTail; // @[L1DC.scala 225:27]
-  assign _GEN_30 = _T_91 ? 3'h0 : state; // @[L1DC.scala 225:41]
-  assign _GEN_31 = pendingRead ? 3'h1 : _GEN_30; // @[L1DC.scala 223:25]
-  assign _T_94 = 3'h0 == _T_81; // @[Conditional.scala 37:30]
-  assign _T_104 = _T_103 != 2'h0; // @[L1DC.scala 263:29]
-  assign _T_107 = _GEN_12[9:4]; // @[L1DC.scala 64:34]
-  assign _T_108 = _T_106 == _T_107; // @[L1DC.scala 263:78]
-  assign _T_109 = _T_104 & _T_108; // @[L1DC.scala 263:44]
-  assign _T_49 = _GEN_12[47:10]; // @[L1DC.scala 63:33]
-  assign _T_50 = stores_0_tag_wlookups_data == _T_49; // @[L1DC.scala 177:92]
-  assign _T_51 = stores_0_valid_wlookups_data & _T_50; // @[L1DC.scala 177:80]
-  assign _T_52 = _T_51 & stores_0_dirty_wlookups_data; // @[L1DC.scala 177:110]
-  assign _T_55 = stores_1_tag_wlookups_data == _T_49; // @[L1DC.scala 177:92]
-  assign _T_56 = stores_1_valid_wlookups_data & _T_55; // @[L1DC.scala 177:80]
-  assign _T_57 = _T_56 & stores_1_dirty_wlookups_data; // @[L1DC.scala 177:110]
-  assign wdirtyHit = _T_52 | _T_57; // @[L1DC.scala 177:65]
-  assign whit = _T_51 | _T_56; // @[L1DC.scala 176:60]
-  assign _T_166 = toL2_l1stall == 1'h0; // @[L1DC.scala 274:14]
-  assign _GEN_61 = _T_166 ? 3'h6 : state; // @[L1DC.scala 274:29]
-  assign _GEN_76 = whit ? _GEN_61 : 3'h2; // @[L1DC.scala 270:24]
-  assign _GEN_91 = wdirtyHit ? 3'h6 : _GEN_76; // @[L1DC.scala 267:29]
-  assign _GEN_94 = _T_109 ? 3'h0 : _GEN_91; // @[L1DC.scala 264:9]
-  assign _T_226 = 3'h1 == _T_81; // @[Conditional.scala 37:30]
-  assign _GEN_111 = stores_0_valid_wlookups_data; // @[L1DC.scala 286:12]
-  assign _GEN_116 = victim ? stores_1_valid_wlookups_data : _GEN_111; // @[L1DC.scala 286:12]
-  assign _T_227 = _GEN_116 == 1'h0; // @[L1DC.scala 286:12]
-  assign _GEN_112 = stores_0_dirty_wlookups_data; // @[L1DC.scala 286:12]
-  assign _GEN_117 = victim ? stores_1_dirty_wlookups_data : _GEN_112; // @[L1DC.scala 286:12]
-  assign _T_228 = _GEN_117 == 1'h0; // @[L1DC.scala 286:39]
-  assign _T_229 = _T_227 | _T_228; // @[L1DC.scala 286:36]
-  assign _GEN_130 = _T_166 ? 3'h3 : state; // @[L1DC.scala 297:29]
-  assign _GEN_131 = _T_229 ? 3'h3 : _GEN_130; // @[L1DC.scala 286:64]
-  assign _T_238 = 3'h2 == _T_81; // @[Conditional.scala 37:30]
-  assign _GEN_153 = _T_166 ? 3'h4 : state; // @[L1DC.scala 320:29]
-  assign _GEN_154 = _T_229 ? 3'h4 : _GEN_153; // @[L1DC.scala 309:64]
-  assign _T_250 = 3'h4 == _T_81; // @[Conditional.scala 37:30]
-  assign _T_253 = 3'h3 == _T_81; // @[Conditional.scala 37:30]
-  assign _T_254 = _T_250 | _T_253; // @[Conditional.scala 37:55]
-  assign _T_321 = state == 3'h3; // @[L1DC.scala 357:20]
-  assign _GEN_178 = _T_321 ? 3'h5 : 3'h6; // @[L1DC.scala 357:49]
-  assign _GEN_192 = _T_166 ? _GEN_178 : state; // @[L1DC.scala 352:27]
-  assign _T_326 = 3'h5 == _T_81; // @[Conditional.scala 37:30]
-  assign _T_327 = pendingRead == 1'h0; // @[L1DC.scala 370:12]
-  assign _GEN_198 = _T_327 ? 3'h6 : state; // @[L1DC.scala 370:26]
-  assign _GEN_199 = _T_326 ? _GEN_198 : state; // @[Conditional.scala 39:67]
-  assign _GEN_210 = _T_254 ? _GEN_192 : _GEN_199; // @[Conditional.scala 39:67]
-  assign _GEN_216 = _T_238 ? _GEN_154 : _GEN_210; // @[Conditional.scala 39:67]
-  assign _GEN_233 = _T_226 ? _GEN_131 : _GEN_216; // @[Conditional.scala 39:67]
-  assign _GEN_251 = _T_94 ? _GEN_94 : _GEN_233; // @[Conditional.scala 39:67]
-  assign _GEN_268 = _T_90 ? _GEN_31 : _GEN_251; // @[Conditional.scala 39:67]
-  assign nstate = _T_82 ? _GEN_29 : _GEN_268; // @[Conditional.scala 40:58]
-  assign _T_21 = $unsigned(nstate); // @[L1DC.scala 155:14]
-  assign _T_25 = 3'h5 == _T_21; // @[Mux.scala 68:19]
-  assign _T_26 = _T_25 ? pipeAddr : _GEN_12; // @[Mux.scala 68:16]
-  assign _T_27 = 3'h3 == _T_21; // @[Mux.scala 68:19]
-  assign _T_28 = _T_27 ? pipeAddr : _T_26; // @[Mux.scala 68:16]
-  assign _T_29 = 3'h1 == _T_21; // @[Mux.scala 68:19]
-  assign _T_30 = _T_29 ? pipeAddr : _T_28; // @[Mux.scala 68:16]
-  assign _T_36 = _T_326 ? pipeAddr : _GEN_12; // @[Mux.scala 68:16]
-  assign _T_38 = _T_253 ? pipeAddr : _T_36; // @[Mux.scala 68:16]
-  assign _T_40 = _T_226 ? pipeAddr : _T_38; // @[Mux.scala 68:16]
-  assign wlookupAddr = _T_20 ? _T_30 : _T_40; // @[L1DC.scala 153:34]
-  assign rand_ = {MaxPeriodFibonacciLFSR_io_out_7,MaxPeriodFibonacciLFSR_io_out_6,MaxPeriodFibonacciLFSR_io_out_5,MaxPeriodFibonacciLFSR_io_out_4,MaxPeriodFibonacciLFSR_io_out_3,MaxPeriodFibonacciLFSR_io_out_2,MaxPeriodFibonacciLFSR_io_out_1,MaxPeriodFibonacciLFSR_io_out_0}; // @[PRNG.scala 86:17]
-  assign _T_64 = nstate != 3'h0; // @[L1DC.scala 183:18]
-  assign _T_65 = nstate != 3'h1; // @[L1DC.scala 183:50]
-  assign _T_66 = _T_64 & _T_65; // @[L1DC.scala 183:40]
-  assign _T_68 = _T_66 | _T_20; // @[L1DC.scala 183:73]
-  assign _T_69 = nstate == state; // @[L1DC.scala 183:111]
-  assign _T_70 = _T_68 | _T_69; // @[L1DC.scala 183:101]
-  assign _T_72 = _T_70 | _T_2; // @[L1DC.scala 183:9]
-  assign _T_73 = _T_72 == 1'h0; // @[L1DC.scala 183:9]
-  assign _GEN_49 = _T_166 & _T_56; // @[L1DC.scala 274:29]
-  assign _GEN_64 = whit & _GEN_49; // @[L1DC.scala 270:24]
-  assign _GEN_79 = wdirtyHit ? _T_56 : _GEN_64; // @[L1DC.scala 267:29]
-  assign _GEN_96 = _T_109 ? 1'h0 : _GEN_79; // @[L1DC.scala 264:9]
-  assign _GEN_123 = _T_166 & victim; // @[L1DC.scala 297:29]
-  assign _GEN_136 = _T_229 ? 1'h0 : _GEN_123; // @[L1DC.scala 286:64]
-  assign _GEN_203 = _T_254 & _GEN_123; // @[Conditional.scala 39:67]
-  assign _GEN_221 = _T_238 ? _GEN_136 : _GEN_203; // @[Conditional.scala 39:67]
-  assign _GEN_238 = _T_226 ? _GEN_136 : _GEN_221; // @[Conditional.scala 39:67]
-  assign _GEN_253 = _T_94 ? _GEN_96 : _GEN_238; // @[Conditional.scala 39:67]
-  assign _GEN_271 = _T_90 ? 1'h0 : _GEN_253; // @[Conditional.scala 39:67]
-  assign l1writing_1 = _T_82 | _GEN_271; // @[Conditional.scala 40:58]
-  assign _GEN_48 = _T_166 & _T_51; // @[L1DC.scala 274:29]
-  assign _GEN_63 = whit & _GEN_48; // @[L1DC.scala 270:24]
-  assign _GEN_78 = wdirtyHit ? _T_51 : _GEN_63; // @[L1DC.scala 267:29]
-  assign _GEN_95 = _T_109 ? 1'h0 : _GEN_78; // @[L1DC.scala 264:9]
-  assign _GEN_120 = 1'h0 == victim; // @[L1DC.scala 299:29]
-  assign _GEN_122 = _T_166 & _GEN_120; // @[L1DC.scala 297:29]
-  assign _GEN_135 = _T_229 ? 1'h0 : _GEN_122; // @[L1DC.scala 286:64]
-  assign _GEN_202 = _T_254 & _GEN_122; // @[Conditional.scala 39:67]
-  assign _GEN_220 = _T_238 ? _GEN_135 : _GEN_202; // @[Conditional.scala 39:67]
-  assign _GEN_237 = _T_226 ? _GEN_135 : _GEN_220; // @[Conditional.scala 39:67]
-  assign _GEN_252 = _T_94 ? _GEN_95 : _GEN_237; // @[Conditional.scala 39:67]
-  assign _GEN_270 = _T_90 ? 1'h0 : _GEN_252; // @[Conditional.scala 39:67]
-  assign l1writing_0 = _T_82 | _GEN_270; // @[Conditional.scala 40:58]
-  assign _T_659 = {l1writing_1,l1writing_0}; // @[L1DC.scala 501:29]
-  assign _T_660 = _T_659 != 2'h0; // @[L1DC.scala 501:32]
-  assign _T_661 = _T_660 == 1'h0; // @[L1DC.scala 501:12]
-  assign _T_662 = toL2_l2addr[47:10]; // @[L1DC.scala 63:33]
-  assign _T_663 = stores_0_tag_lookups_data == _T_662; // @[L1DC.scala 503:80]
-  assign hitmask_0 = stores_0_valid_lookups_data & _T_663; // @[L1DC.scala 503:66]
-  assign _GEN_412 = _T_661 ? hitmask_0 : l1writing_0; // @[L1DC.scala 501:37]
-  assign _GEN_422 = lookupReady ? _GEN_412 : l1writing_0; // @[L1DC.scala 479:23]
-  assign _T_646 = {stores_0_data_1_lookups_data,stores_0_data_0_lookups_data}; // @[L1DC.scala 469:21]
-  assign _T_648 = stores_1_tag_lookups_data == _T_662; // @[L1DC.scala 468:28]
-  assign _T_649 = stores_1_valid_lookups_data & _T_648; // @[L1DC.scala 468:16]
-  assign _T_650 = {stores_1_data_1_lookups_data,stores_1_data_0_lookups_data}; // @[L1DC.scala 469:21]
-  assign _T_651 = _T_649 ? _T_650 : 128'h0; // @[Mux.scala 87:16]
-  assign l2Rdata = hitmask_0 ? _T_646 : _T_651; // @[Mux.scala 87:16]
-  assign written_3_data_0 = l2Rdata[63:0]; // @[L1DC.scala 486:39]
-  assign _T_118 = _GEN_12[3]; // @[L1DC.scala 65:39]
-  assign _T_127 = _GEN_13[7]; // @[L1DC.scala 73:40]
-  assign _T_137 = _GEN_14[63:56]; // @[L1DC.scala 73:58]
-  assign _T_117_data_1 = _T_56 ? stores_1_data_1_wlookups_data : 64'h0; // @[Mux.scala 87:16]
-  assign lookup_data_1 = _T_51 ? stores_0_data_1_wlookups_data : _T_117_data_1; // @[Mux.scala 87:16]
-  assign _T_117_data_0 = _T_56 ? stores_1_data_0_wlookups_data : 64'h0; // @[Mux.scala 87:16]
-  assign lookup_data_0 = _T_51 ? stores_0_data_0_wlookups_data : _T_117_data_0; // @[Mux.scala 87:16]
-  assign _GEN_33 = _T_118 ? lookup_data_1 : lookup_data_0;
-  assign _T_147 = _GEN_33[63:56]; // @[L1DC.scala 73:81]
-  assign ret_4_7 = _T_127 ? _T_137 : _T_147; // @[L1DC.scala 74:15]
-  assign _T_126 = _GEN_13[6]; // @[L1DC.scala 73:40]
-  assign _T_136 = _GEN_14[55:48]; // @[L1DC.scala 73:58]
-  assign _T_146 = _GEN_33[55:48]; // @[L1DC.scala 73:81]
-  assign ret_4_6 = _T_126 ? _T_136 : _T_146; // @[L1DC.scala 74:15]
-  assign _T_125 = _GEN_13[5]; // @[L1DC.scala 73:40]
-  assign _T_135 = _GEN_14[47:40]; // @[L1DC.scala 73:58]
-  assign _T_145 = _GEN_33[47:40]; // @[L1DC.scala 73:81]
-  assign ret_4_5 = _T_125 ? _T_135 : _T_145; // @[L1DC.scala 74:15]
-  assign _T_124 = _GEN_13[4]; // @[L1DC.scala 73:40]
-  assign _T_134 = _GEN_14[39:32]; // @[L1DC.scala 73:58]
-  assign _T_144 = _GEN_33[39:32]; // @[L1DC.scala 73:81]
-  assign ret_4_4 = _T_124 ? _T_134 : _T_144; // @[L1DC.scala 74:15]
-  assign _T_123 = _GEN_13[3]; // @[L1DC.scala 73:40]
-  assign _T_133 = _GEN_14[31:24]; // @[L1DC.scala 73:58]
-  assign _T_143 = _GEN_33[31:24]; // @[L1DC.scala 73:81]
-  assign ret_4_3 = _T_123 ? _T_133 : _T_143; // @[L1DC.scala 74:15]
-  assign _T_122 = _GEN_13[2]; // @[L1DC.scala 73:40]
-  assign _T_132 = _GEN_14[23:16]; // @[L1DC.scala 73:58]
-  assign _T_142 = _GEN_33[23:16]; // @[L1DC.scala 73:81]
-  assign ret_4_2 = _T_122 ? _T_132 : _T_142; // @[L1DC.scala 74:15]
-  assign _T_121 = _GEN_13[1]; // @[L1DC.scala 73:40]
-  assign _T_131 = _GEN_14[15:8]; // @[L1DC.scala 73:58]
-  assign _T_141 = _GEN_33[15:8]; // @[L1DC.scala 73:81]
-  assign ret_4_1 = _T_121 ? _T_131 : _T_141; // @[L1DC.scala 74:15]
-  assign _T_120 = _GEN_13[0]; // @[L1DC.scala 73:40]
-  assign _T_130 = _GEN_14[7:0]; // @[L1DC.scala 73:58]
-  assign _T_140 = _GEN_33[7:0]; // @[L1DC.scala 73:81]
-  assign ret_4_0 = _T_120 ? _T_130 : _T_140; // @[L1DC.scala 74:15]
-  assign _T_162 = {ret_4_7,ret_4_6,ret_4_5,ret_4_4,ret_4_3,ret_4_2,ret_4_1,ret_4_0}; // @[L1DC.scala 77:9]
-  assign written_data_0 = 1'h0 == _T_118 ? _T_162 : lookup_data_0; // @[L1DC.scala 244:44]
-  assign _GEN_81 = wdirtyHit ? written_data_0 : written_data_0; // @[L1DC.scala 267:29]
-  assign _T_269 = state == 3'h4; // @[L1DC.scala 344:18]
-  assign _T_274 = toL2_rdata[127:64]; // @[L1DC.scala 348:30]
-  assign _T_273 = toL2_rdata[63:0]; // @[L1DC.scala 348:30]
-  assign _GEN_167 = _T_118 ? _T_274 : _T_273;
-  assign _T_303 = _GEN_167[63:56]; // @[L1DC.scala 73:81]
-  assign ret_6_7 = _T_127 ? _T_137 : _T_303; // @[L1DC.scala 74:15]
-  assign _T_302 = _GEN_167[55:48]; // @[L1DC.scala 73:81]
-  assign ret_6_6 = _T_126 ? _T_136 : _T_302; // @[L1DC.scala 74:15]
-  assign _T_301 = _GEN_167[47:40]; // @[L1DC.scala 73:81]
-  assign ret_6_5 = _T_125 ? _T_135 : _T_301; // @[L1DC.scala 74:15]
-  assign _T_300 = _GEN_167[39:32]; // @[L1DC.scala 73:81]
-  assign ret_6_4 = _T_124 ? _T_134 : _T_300; // @[L1DC.scala 74:15]
-  assign _T_299 = _GEN_167[31:24]; // @[L1DC.scala 73:81]
-  assign ret_6_3 = _T_123 ? _T_133 : _T_299; // @[L1DC.scala 74:15]
-  assign _T_298 = _GEN_167[23:16]; // @[L1DC.scala 73:81]
-  assign ret_6_2 = _T_122 ? _T_132 : _T_298; // @[L1DC.scala 74:15]
-  assign _T_297 = _GEN_167[15:8]; // @[L1DC.scala 73:81]
-  assign ret_6_1 = _T_121 ? _T_131 : _T_297; // @[L1DC.scala 74:15]
-  assign _T_296 = _GEN_167[7:0]; // @[L1DC.scala 73:81]
-  assign ret_6_0 = _T_120 ? _T_130 : _T_296; // @[L1DC.scala 74:15]
-  assign _T_318 = {ret_6_7,ret_6_6,ret_6_5,ret_6_4,ret_6_3,ret_6_2,ret_6_1,ret_6_0}; // @[L1DC.scala 77:9]
-  assign _GEN_168 = 1'h0 == _T_118 ? _T_318 : _T_273; // @[L1DC.scala 345:44]
-  assign written_2_data_0 = _T_269 ? _GEN_168 : _T_273; // @[L1DC.scala 344:46]
-  assign _GEN_223 = _T_238 ? 64'h0 : written_2_data_0; // @[Conditional.scala 39:67]
-  assign _GEN_240 = _T_226 ? 64'h0 : _GEN_223; // @[Conditional.scala 39:67]
-  assign _GEN_255 = _T_94 ? _GEN_81 : _GEN_240; // @[Conditional.scala 39:67]
-  assign _GEN_289 = _T_82 ? 64'h0 : _GEN_255; // @[Conditional.scala 40:58]
-  assign _GEN_414 = _T_661 ? written_3_data_0 : _GEN_289; // @[L1DC.scala 501:37]
-  assign _GEN_424 = lookupReady ? _GEN_414 : _GEN_289; // @[L1DC.scala 479:23]
-  assign written_3_data_1 = l2Rdata[127:64]; // @[L1DC.scala 486:39]
-  assign written_data_1 = _T_118 ? _T_162 : lookup_data_1; // @[L1DC.scala 244:44]
-  assign _GEN_82 = wdirtyHit ? written_data_1 : written_data_1; // @[L1DC.scala 267:29]
-  assign _GEN_169 = _T_118 ? _T_318 : _T_274; // @[L1DC.scala 345:44]
-  assign written_2_data_1 = _T_269 ? _GEN_169 : _T_274; // @[L1DC.scala 344:46]
-  assign _GEN_224 = _T_238 ? 64'h0 : written_2_data_1; // @[Conditional.scala 39:67]
-  assign _GEN_241 = _T_226 ? 64'h0 : _GEN_224; // @[Conditional.scala 39:67]
-  assign _GEN_256 = _T_94 ? _GEN_82 : _GEN_241; // @[Conditional.scala 39:67]
-  assign _GEN_290 = _T_82 ? 64'h0 : _GEN_256; // @[Conditional.scala 40:58]
-  assign _GEN_415 = _T_661 ? written_3_data_1 : _GEN_290; // @[L1DC.scala 501:37]
-  assign _GEN_425 = lookupReady ? _GEN_415 : _GEN_290; // @[L1DC.scala 479:23]
-  assign _GEN_225 = _T_238 ? 1'h0 : _T_269; // @[Conditional.scala 39:67]
-  assign _GEN_242 = _T_226 ? 1'h0 : _GEN_225; // @[Conditional.scala 39:67]
-  assign _GEN_257 = _T_94 | _GEN_242; // @[Conditional.scala 39:67]
-  assign _GEN_291 = _T_82 ? 1'h0 : _GEN_257; // @[Conditional.scala 40:58]
-  assign _GEN_416 = _T_661 ? 1'h0 : _GEN_291; // @[L1DC.scala 501:37]
-  assign _GEN_426 = lookupReady ? _GEN_416 : _GEN_291; // @[L1DC.scala 479:23]
-  assign written_3_valid = toL2_l2req != 2'h2; // @[L1DC.scala 489:35]
-  assign _T_117_valid = _T_56 & stores_1_valid_wlookups_data; // @[Mux.scala 87:16]
-  assign lookup_valid = _T_51 ? stores_0_valid_wlookups_data : _T_117_valid; // @[Mux.scala 87:16]
-  assign _GEN_84 = wdirtyHit ? lookup_valid : lookup_valid; // @[L1DC.scala 267:29]
-  assign _GEN_226 = _T_238 ? 1'h0 : 1'h1; // @[Conditional.scala 39:67]
-  assign _GEN_243 = _T_226 ? 1'h0 : _GEN_226; // @[Conditional.scala 39:67]
-  assign _GEN_258 = _T_94 ? _GEN_84 : _GEN_243; // @[Conditional.scala 39:67]
-  assign _GEN_292 = _T_82 ? 1'h0 : _GEN_258; // @[Conditional.scala 40:58]
-  assign _GEN_417 = _T_661 ? written_3_valid : _GEN_292; // @[L1DC.scala 501:37]
-  assign _GEN_427 = lookupReady ? _GEN_417 : _GEN_292; // @[L1DC.scala 479:23]
-  assign _T_117_tag = _T_56 ? stores_1_tag_wlookups_data : 38'h0; // @[Mux.scala 87:16]
-  assign lookup_tag = _T_51 ? stores_0_tag_wlookups_data : _T_117_tag; // @[Mux.scala 87:16]
-  assign _GEN_85 = wdirtyHit ? lookup_tag : lookup_tag; // @[L1DC.scala 267:29]
-  assign writtenAddr = _T_321 ? pipeAddr : _GEN_12; // @[L1DC.scala 336:28]
-  assign written_2_tag = writtenAddr[47:10]; // @[L1DC.scala 63:33]
-  assign _GEN_227 = _T_238 ? 38'h0 : written_2_tag; // @[Conditional.scala 39:67]
-  assign _GEN_244 = _T_226 ? 38'h0 : _GEN_227; // @[Conditional.scala 39:67]
-  assign _GEN_259 = _T_94 ? _GEN_85 : _GEN_244; // @[Conditional.scala 39:67]
-  assign _GEN_293 = _T_82 ? 38'h0 : _GEN_259; // @[Conditional.scala 40:58]
-  assign _GEN_418 = _T_661 ? _T_662 : _GEN_293; // @[L1DC.scala 501:37]
-  assign _GEN_428 = lookupReady ? _GEN_418 : _GEN_293; // @[L1DC.scala 479:23]
-  assign _GEN_413 = _T_661 ? _T_649 : l1writing_1; // @[L1DC.scala 501:37]
-  assign _GEN_423 = lookupReady ? _GEN_413 : l1writing_1; // @[L1DC.scala 479:23]
-  assign pipeAddrIdx = pipeAddr[9:4]; // @[L1DC.scala 64:34]
-  assign _T_86 = rstCnt + 6'h1; // @[L1DC.scala 213:24]
-  assign _T_98 = {_T_49,_T_107,4'h0}; // @[L1DC.scala 231:55]
-  assign _T_101 = _T_91 | _T_2; // @[L1DC.scala 233:13]
-  assign _T_102 = _T_101 == 1'h0; // @[L1DC.scala 233:13]
-  assign _T_105 = toL2_l2addr[9:4]; // @[L1DC.scala 64:34]
-  assign _GEN_36 = 2'h0 == wbufHead ? 1'h0 : wbuf_0_valid; // @[L1DC.scala 256:30]
-  assign _GEN_37 = 2'h1 == wbufHead ? 1'h0 : wbuf_1_valid; // @[L1DC.scala 256:30]
-  assign _GEN_38 = 2'h2 == wbufHead ? 1'h0 : wbuf_2_valid; // @[L1DC.scala 256:30]
-  assign _GEN_39 = 2'h3 == wbufHead ? 1'h0 : wbuf_3_valid; // @[L1DC.scala 256:30]
-  assign _GEN_56 = _T_166 ? _GEN_36 : wbuf_0_valid; // @[L1DC.scala 274:29]
-  assign _GEN_57 = _T_166 ? _GEN_37 : wbuf_1_valid; // @[L1DC.scala 274:29]
-  assign _GEN_58 = _T_166 ? _GEN_38 : wbuf_2_valid; // @[L1DC.scala 274:29]
-  assign _GEN_59 = _T_166 ? _GEN_39 : wbuf_3_valid; // @[L1DC.scala 274:29]
-  assign _T_223 = rand_[0]; // @[L1DC.scala 281:23]
-  assign _GEN_62 = whit ? 2'h2 : 2'h0; // @[L1DC.scala 270:24]
-  assign _GEN_71 = whit ? _GEN_56 : wbuf_0_valid; // @[L1DC.scala 270:24]
-  assign _GEN_72 = whit ? _GEN_57 : wbuf_1_valid; // @[L1DC.scala 270:24]
-  assign _GEN_73 = whit ? _GEN_58 : wbuf_2_valid; // @[L1DC.scala 270:24]
-  assign _GEN_74 = whit ? _GEN_59 : wbuf_3_valid; // @[L1DC.scala 270:24]
-  assign _GEN_80 = wdirtyHit ? _T_107 : _T_107; // @[L1DC.scala 267:29]
-  assign _GEN_86 = wdirtyHit ? _GEN_36 : _GEN_71; // @[L1DC.scala 267:29]
-  assign _GEN_87 = wdirtyHit ? _GEN_37 : _GEN_72; // @[L1DC.scala 267:29]
-  assign _GEN_88 = wdirtyHit ? _GEN_38 : _GEN_73; // @[L1DC.scala 267:29]
-  assign _GEN_89 = wdirtyHit ? _GEN_39 : _GEN_74; // @[L1DC.scala 267:29]
-  assign _GEN_92 = wdirtyHit ? 2'h0 : _GEN_62; // @[L1DC.scala 267:29]
-  assign _GEN_103 = _T_109 ? wbuf_0_valid : _GEN_86; // @[L1DC.scala 264:9]
-  assign _GEN_104 = _T_109 ? wbuf_1_valid : _GEN_87; // @[L1DC.scala 264:9]
-  assign _GEN_105 = _T_109 ? wbuf_2_valid : _GEN_88; // @[L1DC.scala 264:9]
-  assign _GEN_106 = _T_109 ? wbuf_3_valid : _GEN_89; // @[L1DC.scala 264:9]
-  assign _GEN_108 = _T_109 ? 2'h0 : _GEN_92; // @[L1DC.scala 264:9]
-  assign _GEN_110 = stores_0_tag_wlookups_data; // @[L1DC.scala 286:12]
-  assign _GEN_113 = stores_0_data_0_wlookups_data; // @[L1DC.scala 286:12]
-  assign _GEN_114 = stores_0_data_1_wlookups_data; // @[L1DC.scala 286:12]
-  assign _GEN_115 = victim ? stores_1_tag_wlookups_data : _GEN_110; // @[L1DC.scala 286:12]
-  assign _GEN_118 = victim ? stores_1_data_0_wlookups_data : _GEN_113; // @[L1DC.scala 286:12]
-  assign _GEN_119 = victim ? stores_1_data_1_wlookups_data : _GEN_114; // @[L1DC.scala 286:12]
-  assign _T_232 = {_GEN_115,pipeAddrIdx,4'h0}; // @[L1DC.scala 289:67]
-  assign _T_233 = {_GEN_119,_GEN_118}; // @[L1DC.scala 291:51]
-  assign _GEN_133 = _T_229 ? 2'h0 : 2'h3; // @[L1DC.scala 286:64]
-  assign _T_244 = {_GEN_115,_T_107,4'h0}; // @[L1DC.scala 312:64]
-  assign _T_256 = _T_321 ? 2'h1 : 2'h2; // @[L1DC.scala 332:24]
-  assign _T_259 = writtenAddr[9:4]; // @[L1DC.scala 64:34]
-  assign _T_261 = {written_2_tag,_T_259,4'h0}; // @[L1DC.scala 334:57]
-  assign _GEN_179 = _T_321 ? wbuf_0_valid : _GEN_36; // @[L1DC.scala 357:49]
-  assign _GEN_180 = _T_321 ? wbuf_1_valid : _GEN_37; // @[L1DC.scala 357:49]
-  assign _GEN_181 = _T_321 ? wbuf_2_valid : _GEN_38; // @[L1DC.scala 357:49]
-  assign _GEN_182 = _T_321 ? wbuf_3_valid : _GEN_39; // @[L1DC.scala 357:49]
-  assign _GEN_193 = _T_166 ? _GEN_179 : wbuf_0_valid; // @[L1DC.scala 352:27]
-  assign _GEN_194 = _T_166 ? _GEN_180 : wbuf_1_valid; // @[L1DC.scala 352:27]
-  assign _GEN_195 = _T_166 ? _GEN_181 : wbuf_2_valid; // @[L1DC.scala 352:27]
-  assign _GEN_196 = _T_166 ? _GEN_182 : wbuf_3_valid; // @[L1DC.scala 352:27]
-  assign _GEN_200 = _T_254 ? _T_256 : 2'h0; // @[Conditional.scala 39:67]
-  assign _GEN_211 = _T_254 ? _GEN_193 : wbuf_0_valid; // @[Conditional.scala 39:67]
-  assign _GEN_212 = _T_254 ? _GEN_194 : wbuf_1_valid; // @[Conditional.scala 39:67]
-  assign _GEN_213 = _T_254 ? _GEN_195 : wbuf_2_valid; // @[Conditional.scala 39:67]
-  assign _GEN_214 = _T_254 ? _GEN_196 : wbuf_3_valid; // @[Conditional.scala 39:67]
-  assign _GEN_217 = _T_238 ? _T_244 : _T_261; // @[Conditional.scala 39:67]
-  assign _GEN_218 = _T_238 ? _GEN_133 : _GEN_200; // @[Conditional.scala 39:67]
-  assign _GEN_222 = _T_238 ? _T_107 : _T_259; // @[Conditional.scala 39:67]
-  assign _GEN_228 = _T_238 ? wbuf_0_valid : _GEN_211; // @[Conditional.scala 39:67]
-  assign _GEN_229 = _T_238 ? wbuf_1_valid : _GEN_212; // @[Conditional.scala 39:67]
-  assign _GEN_230 = _T_238 ? wbuf_2_valid : _GEN_213; // @[Conditional.scala 39:67]
-  assign _GEN_231 = _T_238 ? wbuf_3_valid : _GEN_214; // @[Conditional.scala 39:67]
-  assign _GEN_234 = _T_226 ? _T_232 : _GEN_217; // @[Conditional.scala 39:67]
-  assign _GEN_235 = _T_226 ? _GEN_133 : _GEN_218; // @[Conditional.scala 39:67]
-  assign _GEN_236 = _T_226 ? _T_233 : _T_233; // @[Conditional.scala 39:67]
-  assign _GEN_239 = _T_226 ? pipeAddrIdx : _GEN_222; // @[Conditional.scala 39:67]
-  assign _GEN_245 = _T_226 ? wbuf_0_valid : _GEN_228; // @[Conditional.scala 39:67]
-  assign _GEN_246 = _T_226 ? wbuf_1_valid : _GEN_229; // @[Conditional.scala 39:67]
-  assign _GEN_247 = _T_226 ? wbuf_2_valid : _GEN_230; // @[Conditional.scala 39:67]
-  assign _GEN_248 = _T_226 ? wbuf_3_valid : _GEN_231; // @[Conditional.scala 39:67]
-  assign _GEN_254 = _T_94 ? _GEN_80 : _GEN_239; // @[Conditional.scala 39:67]
-  assign _GEN_260 = _T_94 ? _GEN_103 : _GEN_245; // @[Conditional.scala 39:67]
-  assign _GEN_261 = _T_94 ? _GEN_104 : _GEN_246; // @[Conditional.scala 39:67]
-  assign _GEN_262 = _T_94 ? _GEN_105 : _GEN_247; // @[Conditional.scala 39:67]
-  assign _GEN_263 = _T_94 ? _GEN_106 : _GEN_248; // @[Conditional.scala 39:67]
-  assign _GEN_265 = _T_94 ? _GEN_108 : _GEN_235; // @[Conditional.scala 39:67]
-  assign _GEN_278 = _T_90 ? wbuf_0_valid : _GEN_260; // @[Conditional.scala 39:67]
-  assign _GEN_279 = _T_90 ? wbuf_1_valid : _GEN_261; // @[Conditional.scala 39:67]
-  assign _GEN_280 = _T_90 ? wbuf_2_valid : _GEN_262; // @[Conditional.scala 39:67]
-  assign _GEN_281 = _T_90 ? wbuf_3_valid : _GEN_263; // @[Conditional.scala 39:67]
-  assign _GEN_283 = _T_90 ? 2'h0 : _GEN_265; // @[Conditional.scala 39:67]
-  assign _GEN_288 = _T_82 ? rstCnt : _GEN_254; // @[Conditional.scala 40:58]
-  assign _GEN_297 = _T_82 ? wbuf_0_valid : _GEN_278; // @[Conditional.scala 40:58]
-  assign _GEN_298 = _T_82 ? wbuf_1_valid : _GEN_279; // @[Conditional.scala 40:58]
-  assign _GEN_299 = _T_82 ? wbuf_2_valid : _GEN_280; // @[Conditional.scala 40:58]
-  assign _GEN_300 = _T_82 ? wbuf_3_valid : _GEN_281; // @[Conditional.scala 40:58]
-  assign _T_328 = wbuf_0_addr == w_addr; // @[L1DC.scala 379:38]
-  assign _T_329 = wbuf_0_valid & _T_328; // @[L1DC.scala 379:27]
-  assign _T_330 = wbuf_1_addr == w_addr; // @[L1DC.scala 379:38]
-  assign _T_331 = wbuf_1_valid & _T_330; // @[L1DC.scala 379:27]
-  assign _T_332 = wbuf_2_addr == w_addr; // @[L1DC.scala 379:38]
-  assign _T_333 = wbuf_2_valid & _T_332; // @[L1DC.scala 379:27]
-  assign _T_334 = wbuf_3_addr == w_addr; // @[L1DC.scala 379:38]
-  assign wmHit = wbuf_3_valid & _T_334; // @[L1DC.scala 379:27]
-  assign _T_335 = _GEN_12 == w_addr; // @[L1DC.scala 381:63]
-  assign wmHitHead = _GEN_15 & _T_335; // @[L1DC.scala 381:40]
-  assign _T_336 = w_write == 1'h0; // @[L1DC.scala 383:8]
-  assign _T_339 = w_be[0]; // @[L1DC.scala 73:40]
-  assign _T_340 = w_be[1]; // @[L1DC.scala 73:40]
-  assign _T_341 = w_be[2]; // @[L1DC.scala 73:40]
-  assign _T_342 = w_be[3]; // @[L1DC.scala 73:40]
-  assign _T_343 = w_be[4]; // @[L1DC.scala 73:40]
-  assign _T_344 = w_be[5]; // @[L1DC.scala 73:40]
-  assign _T_345 = w_be[6]; // @[L1DC.scala 73:40]
-  assign _T_346 = w_be[7]; // @[L1DC.scala 73:40]
-  assign _T_349 = w_data[7:0]; // @[L1DC.scala 73:58]
-  assign _T_350 = w_data[15:8]; // @[L1DC.scala 73:58]
-  assign _T_351 = w_data[23:16]; // @[L1DC.scala 73:58]
-  assign _T_352 = w_data[31:24]; // @[L1DC.scala 73:58]
-  assign _T_353 = w_data[39:32]; // @[L1DC.scala 73:58]
-  assign _T_354 = w_data[47:40]; // @[L1DC.scala 73:58]
-  assign _T_355 = w_data[55:48]; // @[L1DC.scala 73:58]
-  assign _T_356 = w_data[63:56]; // @[L1DC.scala 73:58]
-  assign _T_359 = wbuf_0_wdata[7:0]; // @[L1DC.scala 73:81]
-  assign _T_360 = wbuf_0_wdata[15:8]; // @[L1DC.scala 73:81]
-  assign _T_361 = wbuf_0_wdata[23:16]; // @[L1DC.scala 73:81]
-  assign _T_362 = wbuf_0_wdata[31:24]; // @[L1DC.scala 73:81]
-  assign _T_363 = wbuf_0_wdata[39:32]; // @[L1DC.scala 73:81]
-  assign _T_364 = wbuf_0_wdata[47:40]; // @[L1DC.scala 73:81]
-  assign _T_365 = wbuf_0_wdata[55:48]; // @[L1DC.scala 73:81]
-  assign _T_366 = wbuf_0_wdata[63:56]; // @[L1DC.scala 73:81]
-  assign ret_7_0 = _T_339 ? _T_349 : _T_359; // @[L1DC.scala 74:15]
-  assign ret_7_1 = _T_340 ? _T_350 : _T_360; // @[L1DC.scala 74:15]
-  assign ret_7_2 = _T_341 ? _T_351 : _T_361; // @[L1DC.scala 74:15]
-  assign ret_7_3 = _T_342 ? _T_352 : _T_362; // @[L1DC.scala 74:15]
-  assign ret_7_4 = _T_343 ? _T_353 : _T_363; // @[L1DC.scala 74:15]
-  assign ret_7_5 = _T_344 ? _T_354 : _T_364; // @[L1DC.scala 74:15]
-  assign ret_7_6 = _T_345 ? _T_355 : _T_365; // @[L1DC.scala 74:15]
-  assign ret_7_7 = _T_346 ? _T_356 : _T_366; // @[L1DC.scala 74:15]
-  assign _T_381 = {ret_7_7,ret_7_6,ret_7_5,ret_7_4,ret_7_3,ret_7_2,ret_7_1,ret_7_0}; // @[L1DC.scala 77:9]
-  assign _T_382 = wbuf_0_be | w_be; // @[L1DC.scala 393:26]
-  assign _T_405 = wbuf_1_wdata[7:0]; // @[L1DC.scala 73:81]
-  assign _T_406 = wbuf_1_wdata[15:8]; // @[L1DC.scala 73:81]
-  assign _T_407 = wbuf_1_wdata[23:16]; // @[L1DC.scala 73:81]
-  assign _T_408 = wbuf_1_wdata[31:24]; // @[L1DC.scala 73:81]
-  assign _T_409 = wbuf_1_wdata[39:32]; // @[L1DC.scala 73:81]
-  assign _T_410 = wbuf_1_wdata[47:40]; // @[L1DC.scala 73:81]
-  assign _T_411 = wbuf_1_wdata[55:48]; // @[L1DC.scala 73:81]
-  assign _T_412 = wbuf_1_wdata[63:56]; // @[L1DC.scala 73:81]
-  assign ret_8_0 = _T_339 ? _T_349 : _T_405; // @[L1DC.scala 74:15]
-  assign ret_8_1 = _T_340 ? _T_350 : _T_406; // @[L1DC.scala 74:15]
-  assign ret_8_2 = _T_341 ? _T_351 : _T_407; // @[L1DC.scala 74:15]
-  assign ret_8_3 = _T_342 ? _T_352 : _T_408; // @[L1DC.scala 74:15]
-  assign ret_8_4 = _T_343 ? _T_353 : _T_409; // @[L1DC.scala 74:15]
-  assign ret_8_5 = _T_344 ? _T_354 : _T_410; // @[L1DC.scala 74:15]
-  assign ret_8_6 = _T_345 ? _T_355 : _T_411; // @[L1DC.scala 74:15]
-  assign ret_8_7 = _T_346 ? _T_356 : _T_412; // @[L1DC.scala 74:15]
-  assign _T_427 = {ret_8_7,ret_8_6,ret_8_5,ret_8_4,ret_8_3,ret_8_2,ret_8_1,ret_8_0}; // @[L1DC.scala 77:9]
-  assign _T_428 = wbuf_1_be | w_be; // @[L1DC.scala 393:26]
-  assign _T_451 = wbuf_2_wdata[7:0]; // @[L1DC.scala 73:81]
-  assign _T_452 = wbuf_2_wdata[15:8]; // @[L1DC.scala 73:81]
-  assign _T_453 = wbuf_2_wdata[23:16]; // @[L1DC.scala 73:81]
-  assign _T_454 = wbuf_2_wdata[31:24]; // @[L1DC.scala 73:81]
-  assign _T_455 = wbuf_2_wdata[39:32]; // @[L1DC.scala 73:81]
-  assign _T_456 = wbuf_2_wdata[47:40]; // @[L1DC.scala 73:81]
-  assign _T_457 = wbuf_2_wdata[55:48]; // @[L1DC.scala 73:81]
-  assign _T_458 = wbuf_2_wdata[63:56]; // @[L1DC.scala 73:81]
-  assign ret_9_0 = _T_339 ? _T_349 : _T_451; // @[L1DC.scala 74:15]
-  assign ret_9_1 = _T_340 ? _T_350 : _T_452; // @[L1DC.scala 74:15]
-  assign ret_9_2 = _T_341 ? _T_351 : _T_453; // @[L1DC.scala 74:15]
-  assign ret_9_3 = _T_342 ? _T_352 : _T_454; // @[L1DC.scala 74:15]
-  assign ret_9_4 = _T_343 ? _T_353 : _T_455; // @[L1DC.scala 74:15]
-  assign ret_9_5 = _T_344 ? _T_354 : _T_456; // @[L1DC.scala 74:15]
-  assign ret_9_6 = _T_345 ? _T_355 : _T_457; // @[L1DC.scala 74:15]
-  assign ret_9_7 = _T_346 ? _T_356 : _T_458; // @[L1DC.scala 74:15]
-  assign _T_473 = {ret_9_7,ret_9_6,ret_9_5,ret_9_4,ret_9_3,ret_9_2,ret_9_1,ret_9_0}; // @[L1DC.scala 77:9]
-  assign _T_474 = wbuf_2_be | w_be; // @[L1DC.scala 393:26]
-  assign _T_497 = wbuf_3_wdata[7:0]; // @[L1DC.scala 73:81]
-  assign _T_498 = wbuf_3_wdata[15:8]; // @[L1DC.scala 73:81]
-  assign _T_499 = wbuf_3_wdata[23:16]; // @[L1DC.scala 73:81]
-  assign _T_500 = wbuf_3_wdata[31:24]; // @[L1DC.scala 73:81]
-  assign _T_501 = wbuf_3_wdata[39:32]; // @[L1DC.scala 73:81]
-  assign _T_502 = wbuf_3_wdata[47:40]; // @[L1DC.scala 73:81]
-  assign _T_503 = wbuf_3_wdata[55:48]; // @[L1DC.scala 73:81]
-  assign _T_504 = wbuf_3_wdata[63:56]; // @[L1DC.scala 73:81]
-  assign ret_10_0 = _T_339 ? _T_349 : _T_497; // @[L1DC.scala 74:15]
-  assign ret_10_1 = _T_340 ? _T_350 : _T_498; // @[L1DC.scala 74:15]
-  assign ret_10_2 = _T_341 ? _T_351 : _T_499; // @[L1DC.scala 74:15]
-  assign ret_10_3 = _T_342 ? _T_352 : _T_500; // @[L1DC.scala 74:15]
-  assign ret_10_4 = _T_343 ? _T_353 : _T_501; // @[L1DC.scala 74:15]
-  assign ret_10_5 = _T_344 ? _T_354 : _T_502; // @[L1DC.scala 74:15]
-  assign ret_10_6 = _T_345 ? _T_355 : _T_503; // @[L1DC.scala 74:15]
-  assign ret_10_7 = _T_346 ? _T_356 : _T_504; // @[L1DC.scala 74:15]
-  assign _T_519 = {ret_10_7,ret_10_6,ret_10_5,ret_10_4,ret_10_3,ret_10_2,ret_10_1,ret_10_0}; // @[L1DC.scala 77:9]
-  assign _T_520 = wbuf_3_be | w_be; // @[L1DC.scala 393:26]
-  assign _T_522 = wbufTail + 2'h1; // @[L1DC.scala 400:25]
-  assign _T_523 = _T_522 != wbufHead; // @[L1DC.scala 400:32]
-  assign _GEN_441 = 2'h0 == wbufTail; // @[L1DC.scala 406:28]
-  assign _GEN_325 = _GEN_441 | _GEN_297; // @[L1DC.scala 406:28]
-  assign _GEN_442 = 2'h1 == wbufTail; // @[L1DC.scala 406:28]
-  assign _GEN_326 = _GEN_442 | _GEN_298; // @[L1DC.scala 406:28]
-  assign _GEN_443 = 2'h2 == wbufTail; // @[L1DC.scala 406:28]
-  assign _GEN_327 = _GEN_443 | _GEN_299; // @[L1DC.scala 406:28]
-  assign _GEN_444 = 2'h3 == wbufTail; // @[L1DC.scala 406:28]
-  assign _GEN_328 = _GEN_444 | _GEN_300; // @[L1DC.scala 406:28]
-  assign _GEN_346 = _T_523 ? 1'h0 : 1'h1; // @[L1DC.scala 400:46]
-  assign _GEN_347 = wmHit ? 1'h0 : _GEN_346; // @[L1DC.scala 397:17]
-  assign _GEN_365 = wmHitHead | _GEN_347; // @[L1DC.scala 386:25]
-  assign hitCount = _T_544 + _T_548; // @[Bitwise.scala 47:55]
-  assign _T_538 = hitCount <= 2'h1; // @[L1DC.scala 420:19]
-  assign _T_540 = _T_538 | _T_2; // @[L1DC.scala 420:9]
-  assign _T_541 = _T_540 == 1'h0; // @[L1DC.scala 420:9]
-  assign _T_552 = pipeAddr[3]; // @[L1DC.scala 65:39]
-  assign _GEN_401 = stores_1_data_0_lookups_data; // @[Mux.scala 87:16]
-  assign _GEN_402 = _T_552 ? stores_1_data_1_lookups_data : _GEN_401; // @[Mux.scala 87:16]
-  assign _T_557 = _T_548 ? _GEN_402 : 64'h0; // @[Mux.scala 87:16]
-  assign _GEN_403 = stores_0_data_0_lookups_data; // @[Mux.scala 87:16]
-  assign _GEN_404 = _T_552 ? stores_0_data_1_lookups_data : _GEN_403; // @[Mux.scala 87:16]
-  assign lookupRdata = _T_544 ? _GEN_404 : _T_557; // @[Mux.scala 87:16]
-  assign _T_558 = pipeAddr[47:3]; // @[L1DC.scala 62:37]
-  assign _T_559 = {_T_558,3'h0}; // @[L1DC.scala 62:72]
-  assign _T_560 = wbuf_0_addr == _T_559; // @[L1DC.scala 429:27]
-  assign _T_561 = wbuf_0_valid & _T_560; // @[L1DC.scala 429:15]
-  assign _T_564 = wbuf_1_addr == _T_559; // @[L1DC.scala 429:27]
-  assign _T_565 = wbuf_1_valid & _T_564; // @[L1DC.scala 429:15]
-  assign _T_568 = wbuf_2_addr == _T_559; // @[L1DC.scala 429:27]
-  assign _T_569 = wbuf_2_valid & _T_568; // @[L1DC.scala 429:15]
-  assign _T_572 = wbuf_3_addr == _T_559; // @[L1DC.scala 429:27]
-  assign _T_573 = wbuf_3_valid & _T_572; // @[L1DC.scala 429:15]
-  assign _T_574 = _T_573 ? wbuf_3_wdata : 64'h0; // @[Mux.scala 87:16]
-  assign _T_575 = _T_569 ? wbuf_2_wdata : _T_574; // @[Mux.scala 87:16]
-  assign _T_576 = _T_565 ? wbuf_1_wdata : _T_575; // @[Mux.scala 87:16]
-  assign pendingWdata = _T_561 ? wbuf_0_wdata : _T_576; // @[Mux.scala 87:16]
-  assign _T_593 = _T_573 ? wbuf_3_be : 8'h0; // @[Mux.scala 87:16]
-  assign _T_594 = _T_569 ? wbuf_2_be : _T_593; // @[Mux.scala 87:16]
-  assign _T_595 = _T_565 ? wbuf_1_be : _T_594; // @[Mux.scala 87:16]
-  assign pendingBe = _T_561 ? wbuf_0_be : _T_595; // @[Mux.scala 87:16]
-  assign _T_596 = pendingBe[0]; // @[L1DC.scala 73:40]
-  assign _T_597 = pendingBe[1]; // @[L1DC.scala 73:40]
-  assign _T_598 = pendingBe[2]; // @[L1DC.scala 73:40]
-  assign _T_599 = pendingBe[3]; // @[L1DC.scala 73:40]
-  assign _T_600 = pendingBe[4]; // @[L1DC.scala 73:40]
-  assign _T_601 = pendingBe[5]; // @[L1DC.scala 73:40]
-  assign _T_602 = pendingBe[6]; // @[L1DC.scala 73:40]
-  assign _T_603 = pendingBe[7]; // @[L1DC.scala 73:40]
-  assign _T_606 = pendingWdata[7:0]; // @[L1DC.scala 73:58]
-  assign _T_607 = pendingWdata[15:8]; // @[L1DC.scala 73:58]
-  assign _T_608 = pendingWdata[23:16]; // @[L1DC.scala 73:58]
-  assign _T_609 = pendingWdata[31:24]; // @[L1DC.scala 73:58]
-  assign _T_610 = pendingWdata[39:32]; // @[L1DC.scala 73:58]
-  assign _T_611 = pendingWdata[47:40]; // @[L1DC.scala 73:58]
-  assign _T_612 = pendingWdata[55:48]; // @[L1DC.scala 73:58]
-  assign _T_613 = pendingWdata[63:56]; // @[L1DC.scala 73:58]
-  assign _T_616 = lookupRdata[7:0]; // @[L1DC.scala 73:81]
-  assign _T_617 = lookupRdata[15:8]; // @[L1DC.scala 73:81]
-  assign _T_618 = lookupRdata[23:16]; // @[L1DC.scala 73:81]
-  assign _T_619 = lookupRdata[31:24]; // @[L1DC.scala 73:81]
-  assign _T_620 = lookupRdata[39:32]; // @[L1DC.scala 73:81]
-  assign _T_621 = lookupRdata[47:40]; // @[L1DC.scala 73:81]
-  assign _T_622 = lookupRdata[55:48]; // @[L1DC.scala 73:81]
-  assign _T_623 = lookupRdata[63:56]; // @[L1DC.scala 73:81]
-  assign rdata_ret_0 = _T_596 ? _T_606 : _T_616; // @[L1DC.scala 74:15]
-  assign rdata_ret_1 = _T_597 ? _T_607 : _T_617; // @[L1DC.scala 74:15]
-  assign rdata_ret_2 = _T_598 ? _T_608 : _T_618; // @[L1DC.scala 74:15]
-  assign rdata_ret_3 = _T_599 ? _T_609 : _T_619; // @[L1DC.scala 74:15]
-  assign rdata_ret_4 = _T_600 ? _T_610 : _T_620; // @[L1DC.scala 74:15]
-  assign rdata_ret_5 = _T_601 ? _T_611 : _T_621; // @[L1DC.scala 74:15]
-  assign rdata_ret_6 = _T_602 ? _T_612 : _T_622; // @[L1DC.scala 74:15]
-  assign rdata_ret_7 = _T_603 ? _T_613 : _T_623; // @[L1DC.scala 74:15]
-  assign _T_634 = {rdata_ret_3,rdata_ret_2,rdata_ret_1,rdata_ret_0}; // @[L1DC.scala 77:9]
-  assign _T_637 = {rdata_ret_7,rdata_ret_6,rdata_ret_5,rdata_ret_4}; // @[L1DC.scala 77:9]
-  assign _GEN_411 = _T_661 ? 1'h0 : 1'h1; // @[L1DC.scala 501:37]
-  assign _GEN_419 = _T_661 ? _T_105 : _GEN_288; // @[L1DC.scala 501:37]
-  assign _GEN_420 = lookupReady ? l2Rdata : _GEN_236; // @[L1DC.scala 479:23]
-  assign _GEN_421 = lookupReady ? _GEN_411 : 1'h1; // @[L1DC.scala 479:23]
-  assign _GEN_429 = lookupReady ? _GEN_419 : _GEN_288; // @[L1DC.scala 479:23]
-  assign r_data = {_T_637,_T_634}; // @[L1DC.scala 461:10]
-  assign r_stall = _T_640 | _GEN_408; // @[L1DC.scala 453:13 L1DC.scala 455:13 L1DC.scala 457:13]
-  assign w_stall = _T_336 ? 1'h0 : _GEN_365; // @[L1DC.scala 385:13 L1DC.scala 388:13 L1DC.scala 399:15 L1DC.scala 410:15 L1DC.scala 413:15]
-  assign fs_wbufClear = wbufHead == wbufTail; // @[L1DC.scala 128:16]
-  assign toL2_l1req = _T_82 ? 2'h0 : _GEN_283; // @[L1DC.scala 93:14 L1DC.scala 272:20 L1DC.scala 290:20 L1DC.scala 313:20 L1DC.scala 332:18]
-  assign toL2_l1addr = _T_94 ? _T_98 : _GEN_234; // @[L1DC.scala 231:19 L1DC.scala 289:21 L1DC.scala 312:21 L1DC.scala 334:19]
-  assign toL2_l2stall = _T_652 & _GEN_421; // @[L1DC.scala 464:16 L1DC.scala 477:18 L1DC.scala 502:22]
-  assign toL2_wdata = _T_652 ? _GEN_420 : _GEN_236; // @[L1DC.scala 291:20 L1DC.scala 314:20 L1DC.scala 483:18]
-  assign MaxPeriodFibonacciLFSR_clock = clock;
-  assign MaxPeriodFibonacciLFSR_reset = reset;
-  assign _GEN_445 = _T_82 == 1'h0; // @[L1DC.scala 233:13]
-  assign _GEN_446 = _T_90 == 1'h0; // @[L1DC.scala 233:13]
-  assign _GEN_447 = _GEN_445 & _GEN_446; // @[L1DC.scala 233:13]
-  assign _GEN_448 = _GEN_447 & _T_94; // @[L1DC.scala 233:13]
-  assign _GEN_453 = _T_336 == 1'h0; // @[L1DC.scala 402:13]
-  assign _GEN_454 = wmHitHead == 1'h0; // @[L1DC.scala 402:13]
-  assign _GEN_455 = _GEN_453 & _GEN_454; // @[L1DC.scala 402:13]
-  assign _GEN_456 = wmHit == 1'h0; // @[L1DC.scala 402:13]
-  assign _GEN_457 = _GEN_455 & _GEN_456; // @[L1DC.scala 402:13]
-  assign _GEN_458 = _GEN_457 & _T_523; // @[L1DC.scala 402:13]
+  wire [1:0] _T_14; // @[Conditional.scala 37:39]
+  wire  _T_15; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_21; // @[L1DCPass.scala 86:21]
+  wire  _T_18; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_22; // @[L1DCPass.scala 98:25]
+  wire  _T_21; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_23; // @[L1DCPass.scala 108:24]
+  wire  _T_24; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_24; // @[L1DCPass.scala 115:24]
+  wire [1:0] _GEN_26; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_31; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_38; // @[Conditional.scala 39:67]
+  wire [1:0] nwstate; // @[Conditional.scala 40:58]
+  wire [63:0] _GEN_27; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_28; // @[Conditional.scala 39:67]
+  wire  _GEN_32; // @[Conditional.scala 39:67]
+  wire [47:0] _GEN_33; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_35; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_37; // @[Conditional.scala 39:67]
+  wire [63:0] _GEN_39; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_40; // @[Conditional.scala 39:67]
+  wire  _GEN_41; // @[Conditional.scala 39:67]
+  wire  _GEN_43; // @[Conditional.scala 39:67]
+  assign _T_1 = r_stall == 1'h0; // @[L1DCPass.scala 33:8]
+  assign _T_4 = $unsigned(rstate); // @[Conditional.scala 37:39]
+  assign _T_5 = 2'h0 == _T_4; // @[Conditional.scala 37:30]
+  assign _GEN_2 = pipeRead ? 2'h1 : rstate; // @[L1DCPass.scala 48:22]
+  assign _T_8 = 2'h1 == _T_4; // @[Conditional.scala 37:30]
+  assign _GEN_3 = axi_ARREADY ? 2'h2 : rstate; // @[L1DCPass.scala 60:25]
+  assign _T_11 = 2'h2 == _T_4; // @[Conditional.scala 37:30]
+  assign _GEN_4 = axi_RVALID ? 2'h0 : rstate; // @[L1DCPass.scala 67:24]
+  assign _GEN_6 = _T_11 ? _GEN_4 : rstate; // @[Conditional.scala 39:67]
+  assign _GEN_12 = _T_8 ? _GEN_3 : _GEN_6; // @[Conditional.scala 39:67]
+  assign nrstate = _T_5 ? _GEN_2 : _GEN_12; // @[Conditional.scala 40:58]
+  assign _GEN_7 = _T_8 ? pipeAddr : 48'h0; // @[Conditional.scala 39:67]
+  assign _GEN_9 = _T_8 ? 3'h3 : 3'h0; // @[Conditional.scala 39:67]
+  assign _GEN_11 = _T_8 ? 2'h1 : 2'h0; // @[Conditional.scala 39:67]
+  assign _GEN_13 = _T_8 ? 1'h0 : _T_11; // @[Conditional.scala 39:67]
+  assign _T_14 = $unsigned(wstate); // @[Conditional.scala 37:39]
+  assign _T_15 = 2'h0 == _T_14; // @[Conditional.scala 37:30]
+  assign _GEN_21 = w_write ? 2'h1 : wstate; // @[L1DCPass.scala 86:21]
+  assign _T_18 = 2'h1 == _T_14; // @[Conditional.scala 37:30]
+  assign _GEN_22 = axi_AWREADY ? 2'h2 : wstate; // @[L1DCPass.scala 98:25]
+  assign _T_21 = 2'h2 == _T_14; // @[Conditional.scala 37:30]
+  assign _GEN_23 = axi_WVALID ? 2'h3 : wstate; // @[L1DCPass.scala 108:24]
+  assign _T_24 = 2'h3 == _T_14; // @[Conditional.scala 37:30]
+  assign _GEN_24 = axi_BVALID ? 2'h0 : wstate; // @[L1DCPass.scala 115:24]
+  assign _GEN_26 = _T_24 ? _GEN_24 : wstate; // @[Conditional.scala 39:67]
+  assign _GEN_31 = _T_21 ? _GEN_23 : _GEN_26; // @[Conditional.scala 39:67]
+  assign _GEN_38 = _T_18 ? _GEN_22 : _GEN_31; // @[Conditional.scala 39:67]
+  assign nwstate = _T_15 ? _GEN_21 : _GEN_38; // @[Conditional.scala 40:58]
+  assign _GEN_27 = _T_21 ? w_data : 64'h0; // @[Conditional.scala 39:67]
+  assign _GEN_28 = _T_21 ? w_be : 8'h0; // @[Conditional.scala 39:67]
+  assign _GEN_32 = _T_21 ? 1'h0 : _T_24; // @[Conditional.scala 39:67]
+  assign _GEN_33 = _T_18 ? w_addr : 48'h0; // @[Conditional.scala 39:67]
+  assign _GEN_35 = _T_18 ? 3'h3 : 3'h0; // @[Conditional.scala 39:67]
+  assign _GEN_37 = _T_18 ? 2'h1 : 2'h0; // @[Conditional.scala 39:67]
+  assign _GEN_39 = _T_18 ? 64'h0 : _GEN_27; // @[Conditional.scala 39:67]
+  assign _GEN_40 = _T_18 ? 8'h0 : _GEN_28; // @[Conditional.scala 39:67]
+  assign _GEN_41 = _T_18 ? 1'h0 : _T_21; // @[Conditional.scala 39:67]
+  assign _GEN_43 = _T_18 ? 1'h0 : _GEN_32; // @[Conditional.scala 39:67]
+  assign r_data = axi_RDATA; // @[L1DCPass.scala 44:10]
+  assign r_stall = nrstate != 2'h0; // @[L1DCPass.scala 42:11]
+  assign w_stall = nwstate != 2'h0; // @[L1DCPass.scala 82:11]
+  assign axi_AWADDR = _T_15 ? 48'h0 : _GEN_33; // @[L1DCPass.scala 21:7 L1DCPass.scala 92:18]
+  assign axi_AWSIZE = _T_15 ? 3'h0 : _GEN_35; // @[L1DCPass.scala 21:7 L1DCPass.scala 94:18]
+  assign axi_AWBURST = _T_15 ? 2'h0 : _GEN_37; // @[L1DCPass.scala 21:7 L1DCPass.scala 96:19]
+  assign axi_AWVALID = _T_15 ? 1'h0 : _T_18; // @[L1DCPass.scala 21:7 L1DCPass.scala 93:19]
+  assign axi_WDATA = _T_15 ? 64'h0 : _GEN_39; // @[L1DCPass.scala 21:7 L1DCPass.scala 104:17]
+  assign axi_WSTRB = _T_15 ? 8'h0 : _GEN_40; // @[L1DCPass.scala 21:7 L1DCPass.scala 105:17]
+  assign axi_WLAST = _T_15 ? 1'h0 : _GEN_41; // @[L1DCPass.scala 21:7 L1DCPass.scala 106:17]
+  assign axi_WVALID = _T_15 ? 1'h0 : _GEN_41; // @[L1DCPass.scala 21:7 L1DCPass.scala 107:18]
+  assign axi_BREADY = _T_15 ? 1'h0 : _GEN_43; // @[L1DCPass.scala 21:7 L1DCPass.scala 114:18]
+  assign axi_ARADDR = _T_5 ? 48'h0 : _GEN_7; // @[L1DCPass.scala 21:7 L1DCPass.scala 54:18]
+  assign axi_ARSIZE = _T_5 ? 3'h0 : _GEN_9; // @[L1DCPass.scala 21:7 L1DCPass.scala 56:18]
+  assign axi_ARBURST = _T_5 ? 2'h0 : _GEN_11; // @[L1DCPass.scala 21:7 L1DCPass.scala 58:19]
+  assign axi_ARVALID = _T_5 ? 1'h0 : _T_8; // @[L1DCPass.scala 21:7 L1DCPass.scala 55:19]
+  assign axi_RREADY = _T_5 ? 1'h0 : _GEN_13; // @[L1DCPass.scala 21:7 L1DCPass.scala 66:18]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -8266,1313 +705,275 @@ initial begin
         #0.002 begin end
       `endif
     `endif
-  _RAND_0 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_tag[initvar] = _RAND_0[37:0];
-  `endif // RANDOMIZE_MEM_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_1 = {1{`RANDOM}};
-  stores_0_tag_lookups_en_pipe_0 = _RAND_1[0:0];
+  _RAND_0 = {1{`RANDOM}};
+  pipeRead = _RAND_0[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_1 = {2{`RANDOM}};
+  pipeAddr = _RAND_1[47:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_2 = {1{`RANDOM}};
-  stores_0_tag_lookups_addr_pipe_0 = _RAND_2[5:0];
+  rstate = _RAND_2[1:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_3 = {1{`RANDOM}};
-  stores_0_tag_wlookups_en_pipe_0 = _RAND_3[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_4 = {1{`RANDOM}};
-  stores_0_tag_wlookups_addr_pipe_0 = _RAND_4[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_5 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_valid[initvar] = _RAND_5[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_6 = {1{`RANDOM}};
-  stores_0_valid_lookups_en_pipe_0 = _RAND_6[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_7 = {1{`RANDOM}};
-  stores_0_valid_lookups_addr_pipe_0 = _RAND_7[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_8 = {1{`RANDOM}};
-  stores_0_valid_wlookups_en_pipe_0 = _RAND_8[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_9 = {1{`RANDOM}};
-  stores_0_valid_wlookups_addr_pipe_0 = _RAND_9[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_10 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_dirty[initvar] = _RAND_10[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_11 = {1{`RANDOM}};
-  stores_0_dirty_lookups_en_pipe_0 = _RAND_11[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_12 = {1{`RANDOM}};
-  stores_0_dirty_lookups_addr_pipe_0 = _RAND_12[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_13 = {1{`RANDOM}};
-  stores_0_dirty_wlookups_en_pipe_0 = _RAND_13[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_14 = {1{`RANDOM}};
-  stores_0_dirty_wlookups_addr_pipe_0 = _RAND_14[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_15 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_data_0[initvar] = _RAND_15[63:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_16 = {1{`RANDOM}};
-  stores_0_data_0_lookups_en_pipe_0 = _RAND_16[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_17 = {1{`RANDOM}};
-  stores_0_data_0_lookups_addr_pipe_0 = _RAND_17[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_18 = {1{`RANDOM}};
-  stores_0_data_0_wlookups_en_pipe_0 = _RAND_18[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_19 = {1{`RANDOM}};
-  stores_0_data_0_wlookups_addr_pipe_0 = _RAND_19[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_20 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_0_data_1[initvar] = _RAND_20[63:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_21 = {1{`RANDOM}};
-  stores_0_data_1_lookups_en_pipe_0 = _RAND_21[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_22 = {1{`RANDOM}};
-  stores_0_data_1_lookups_addr_pipe_0 = _RAND_22[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_23 = {1{`RANDOM}};
-  stores_0_data_1_wlookups_en_pipe_0 = _RAND_23[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_24 = {1{`RANDOM}};
-  stores_0_data_1_wlookups_addr_pipe_0 = _RAND_24[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_25 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_tag[initvar] = _RAND_25[37:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_26 = {1{`RANDOM}};
-  stores_1_tag_lookups_en_pipe_0 = _RAND_26[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_27 = {1{`RANDOM}};
-  stores_1_tag_lookups_addr_pipe_0 = _RAND_27[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_28 = {1{`RANDOM}};
-  stores_1_tag_wlookups_en_pipe_0 = _RAND_28[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_29 = {1{`RANDOM}};
-  stores_1_tag_wlookups_addr_pipe_0 = _RAND_29[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_30 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_valid[initvar] = _RAND_30[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_31 = {1{`RANDOM}};
-  stores_1_valid_lookups_en_pipe_0 = _RAND_31[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_32 = {1{`RANDOM}};
-  stores_1_valid_lookups_addr_pipe_0 = _RAND_32[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_33 = {1{`RANDOM}};
-  stores_1_valid_wlookups_en_pipe_0 = _RAND_33[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_34 = {1{`RANDOM}};
-  stores_1_valid_wlookups_addr_pipe_0 = _RAND_34[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_35 = {1{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_dirty[initvar] = _RAND_35[0:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_36 = {1{`RANDOM}};
-  stores_1_dirty_lookups_en_pipe_0 = _RAND_36[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_37 = {1{`RANDOM}};
-  stores_1_dirty_lookups_addr_pipe_0 = _RAND_37[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_38 = {1{`RANDOM}};
-  stores_1_dirty_wlookups_en_pipe_0 = _RAND_38[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_39 = {1{`RANDOM}};
-  stores_1_dirty_wlookups_addr_pipe_0 = _RAND_39[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_40 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_data_0[initvar] = _RAND_40[63:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_41 = {1{`RANDOM}};
-  stores_1_data_0_lookups_en_pipe_0 = _RAND_41[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_42 = {1{`RANDOM}};
-  stores_1_data_0_lookups_addr_pipe_0 = _RAND_42[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_43 = {1{`RANDOM}};
-  stores_1_data_0_wlookups_en_pipe_0 = _RAND_43[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_44 = {1{`RANDOM}};
-  stores_1_data_0_wlookups_addr_pipe_0 = _RAND_44[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  _RAND_45 = {2{`RANDOM}};
-  `ifdef RANDOMIZE_MEM_INIT
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    stores_1_data_1[initvar] = _RAND_45[63:0];
-  `endif // RANDOMIZE_MEM_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_46 = {1{`RANDOM}};
-  stores_1_data_1_lookups_en_pipe_0 = _RAND_46[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_47 = {1{`RANDOM}};
-  stores_1_data_1_lookups_addr_pipe_0 = _RAND_47[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_48 = {1{`RANDOM}};
-  stores_1_data_1_wlookups_en_pipe_0 = _RAND_48[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_49 = {1{`RANDOM}};
-  stores_1_data_1_wlookups_addr_pipe_0 = _RAND_49[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_50 = {1{`RANDOM}};
-  pipeRead = _RAND_50[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_51 = {2{`RANDOM}};
-  pipeAddr = _RAND_51[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_52 = {2{`RANDOM}};
-  wbuf_0_addr = _RAND_52[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_53 = {1{`RANDOM}};
-  wbuf_0_be = _RAND_53[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_54 = {2{`RANDOM}};
-  wbuf_0_wdata = _RAND_54[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_55 = {1{`RANDOM}};
-  wbuf_0_valid = _RAND_55[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_56 = {2{`RANDOM}};
-  wbuf_1_addr = _RAND_56[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_57 = {1{`RANDOM}};
-  wbuf_1_be = _RAND_57[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_58 = {2{`RANDOM}};
-  wbuf_1_wdata = _RAND_58[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_59 = {1{`RANDOM}};
-  wbuf_1_valid = _RAND_59[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_60 = {2{`RANDOM}};
-  wbuf_2_addr = _RAND_60[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_61 = {1{`RANDOM}};
-  wbuf_2_be = _RAND_61[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_62 = {2{`RANDOM}};
-  wbuf_2_wdata = _RAND_62[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_63 = {1{`RANDOM}};
-  wbuf_2_valid = _RAND_63[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_64 = {2{`RANDOM}};
-  wbuf_3_addr = _RAND_64[47:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_65 = {1{`RANDOM}};
-  wbuf_3_be = _RAND_65[7:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_66 = {2{`RANDOM}};
-  wbuf_3_wdata = _RAND_66[63:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_67 = {1{`RANDOM}};
-  wbuf_3_valid = _RAND_67[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_68 = {1{`RANDOM}};
-  wbufHead = _RAND_68[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_69 = {1{`RANDOM}};
-  wbufTail = _RAND_69[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_70 = {1{`RANDOM}};
-  state = _RAND_70[2:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_71 = {1{`RANDOM}};
-  rstCnt = _RAND_71[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_72 = {1{`RANDOM}};
-  _T_639 = _RAND_72[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_73 = {1{`RANDOM}};
-  _T_103 = _RAND_73[1:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_74 = {1{`RANDOM}};
-  _T_106 = _RAND_74[5:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_75 = {1{`RANDOM}};
-  victim = _RAND_75[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_76 = {1{`RANDOM}};
-  lookupReady = _RAND_76[0:0];
+  wstate = _RAND_3[1:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
-    if(stores_0_tag__T_76_en & stores_0_tag__T_76_mask) begin
-      stores_0_tag[stores_0_tag__T_76_addr] <= stores_0_tag__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_0_tag_lookups_en_pipe_0 <= 1'h1;
-    stores_0_tag_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_0_tag_wlookups_en_pipe_0 <= 1'h1;
-    stores_0_tag_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_0_valid__T_76_en & stores_0_valid__T_76_mask) begin
-      stores_0_valid[stores_0_valid__T_76_addr] <= stores_0_valid__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_0_valid_lookups_en_pipe_0 <= 1'h1;
-    stores_0_valid_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_0_valid_wlookups_en_pipe_0 <= 1'h1;
-    stores_0_valid_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_0_dirty__T_76_en & stores_0_dirty__T_76_mask) begin
-      stores_0_dirty[stores_0_dirty__T_76_addr] <= stores_0_dirty__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_0_dirty_lookups_en_pipe_0 <= 1'h1;
-    stores_0_dirty_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_0_dirty_wlookups_en_pipe_0 <= 1'h1;
-    stores_0_dirty_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_0_data_0__T_76_en & stores_0_data_0__T_76_mask) begin
-      stores_0_data_0[stores_0_data_0__T_76_addr] <= stores_0_data_0__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_0_data_0_lookups_en_pipe_0 <= 1'h1;
-    stores_0_data_0_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_0_data_0_wlookups_en_pipe_0 <= 1'h1;
-    stores_0_data_0_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_0_data_1__T_76_en & stores_0_data_1__T_76_mask) begin
-      stores_0_data_1[stores_0_data_1__T_76_addr] <= stores_0_data_1__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_0_data_1_lookups_en_pipe_0 <= 1'h1;
-    stores_0_data_1_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_0_data_1_wlookups_en_pipe_0 <= 1'h1;
-    stores_0_data_1_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_1_tag__T_76_en & stores_1_tag__T_76_mask) begin
-      stores_1_tag[stores_1_tag__T_76_addr] <= stores_1_tag__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_1_tag_lookups_en_pipe_0 <= 1'h1;
-    stores_1_tag_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_1_tag_wlookups_en_pipe_0 <= 1'h1;
-    stores_1_tag_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_1_valid__T_76_en & stores_1_valid__T_76_mask) begin
-      stores_1_valid[stores_1_valid__T_76_addr] <= stores_1_valid__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_1_valid_lookups_en_pipe_0 <= 1'h1;
-    stores_1_valid_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_1_valid_wlookups_en_pipe_0 <= 1'h1;
-    stores_1_valid_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_1_dirty__T_76_en & stores_1_dirty__T_76_mask) begin
-      stores_1_dirty[stores_1_dirty__T_76_addr] <= stores_1_dirty__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_1_dirty_lookups_en_pipe_0 <= 1'h1;
-    stores_1_dirty_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_1_dirty_wlookups_en_pipe_0 <= 1'h1;
-    stores_1_dirty_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_1_data_0__T_76_en & stores_1_data_0__T_76_mask) begin
-      stores_1_data_0[stores_1_data_0__T_76_addr] <= stores_1_data_0__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_1_data_0_lookups_en_pipe_0 <= 1'h1;
-    stores_1_data_0_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_1_data_0_wlookups_en_pipe_0 <= 1'h1;
-    stores_1_data_0_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
-    if(stores_1_data_1__T_76_en & stores_1_data_1__T_76_mask) begin
-      stores_1_data_1[stores_1_data_1__T_76_addr] <= stores_1_data_1__T_76_data; // @[L1DC.scala 80:27]
-    end
-    stores_1_data_1_lookups_en_pipe_0 <= 1'h1;
-    stores_1_data_1_lookups_addr_pipe_0 <= queryAddr[9:4];
-    stores_1_data_1_wlookups_en_pipe_0 <= 1'h1;
-    stores_1_data_1_wlookups_addr_pipe_0 <= wlookupAddr[9:4];
     if (reset) begin
       pipeRead <= 1'h0;
-    end else if (_T_638) begin
+    end else if (_T_1) begin
       pipeRead <= r_read;
     end
-    if (reset) begin
-      pipeAddr <= 48'h0;
-    end else if (_T_638) begin
+    if (_T_1) begin
       pipeAddr <= r_addr;
     end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (!(wmHit)) begin
-          if (_T_523) begin
-            if (2'h0 == wbufTail) begin
-              wbuf_0_addr <= w_addr;
-            end
-          end
-        end
+    if (reset) begin
+      rstate <= 2'h0;
+    end else if (_T_5) begin
+      if (pipeRead) begin
+        rstate <= 2'h1;
       end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (wmHit) begin
-          if (_T_329) begin
-            wbuf_0_be <= _T_382;
-          end
-        end else if (_T_523) begin
-          if (2'h0 == wbufTail) begin
-            wbuf_0_be <= w_be;
-          end else if (_T_329) begin
-            wbuf_0_be <= _T_382;
-          end
-        end else if (_T_329) begin
-          wbuf_0_be <= _T_382;
-        end
+    end else if (_T_8) begin
+      if (axi_ARREADY) begin
+        rstate <= 2'h2;
       end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (wmHit) begin
-          if (_T_329) begin
-            wbuf_0_wdata <= _T_381;
-          end
-        end else if (_T_523) begin
-          if (2'h0 == wbufTail) begin
-            wbuf_0_wdata <= w_data;
-          end else if (_T_329) begin
-            wbuf_0_wdata <= _T_381;
-          end
-        end else if (_T_329) begin
-          wbuf_0_wdata <= _T_381;
-        end
+    end else if (_T_11) begin
+      if (axi_RVALID) begin
+        rstate <= 2'h0;
       end
     end
     if (reset) begin
-      wbuf_0_valid <= 1'h0;
-    end else if (_T_336) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                if (2'h0 == wbufHead) begin
-                  wbuf_0_valid <= 1'h0;
-                end
-              end else if (whit) begin
-                if (_T_166) begin
-                  if (2'h0 == wbufHead) begin
-                    wbuf_0_valid <= 1'h0;
-                  end
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    if (2'h0 == wbufHead) begin
-                      wbuf_0_valid <= 1'h0;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
+      wstate <= 2'h0;
+    end else if (_T_15) begin
+      if (w_write) begin
+        wstate <= 2'h1;
       end
-    end else if (wmHitHead) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                if (2'h0 == wbufHead) begin
-                  wbuf_0_valid <= 1'h0;
-                end
-              end else if (whit) begin
-                if (_T_166) begin
-                  wbuf_0_valid <= _GEN_36;
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    wbuf_0_valid <= _GEN_36;
-                  end
-                end
-              end
-            end
-          end
-        end
+    end else if (_T_18) begin
+      if (axi_AWREADY) begin
+        wstate <= 2'h2;
       end
-    end else if (wmHit) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                wbuf_0_valid <= _GEN_36;
-              end else if (whit) begin
-                if (_T_166) begin
-                  wbuf_0_valid <= _GEN_36;
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    wbuf_0_valid <= _GEN_36;
-                  end
-                end
-              end
-            end
-          end
-        end
+    end else if (_T_21) begin
+      if (axi_WVALID) begin
+        wstate <= 2'h3;
       end
-    end else if (_T_523) begin
-      wbuf_0_valid <= _GEN_325;
-    end else if (!(_T_82)) begin
-      if (!(_T_90)) begin
-        if (_T_94) begin
-          if (!(_T_109)) begin
-            if (wdirtyHit) begin
-              wbuf_0_valid <= _GEN_36;
-            end else if (whit) begin
-              if (_T_166) begin
-                wbuf_0_valid <= _GEN_36;
-              end
-            end
-          end
-        end else if (!(_T_226)) begin
-          if (!(_T_238)) begin
-            if (_T_254) begin
-              if (_T_166) begin
-                if (!(_T_321)) begin
-                  wbuf_0_valid <= _GEN_36;
-                end
-              end
-            end
-          end
-        end
+    end else if (_T_24) begin
+      if (axi_BVALID) begin
+        wstate <= 2'h0;
       end
     end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (!(wmHit)) begin
-          if (_T_523) begin
-            if (2'h1 == wbufTail) begin
-              wbuf_1_addr <= w_addr;
-            end
-          end
-        end
+  end
+endmodule
+module UCPass(
+  input         clock,
+  input         reset,
+  input         toCPU_read,
+  input         toCPU_write,
+  input  [47:0] toCPU_addr,
+  input  [7:0]  toCPU_wstrb,
+  output        toCPU_stall,
+  input  [63:0] toCPU_wdata,
+  output [63:0] toCPU_rdata,
+  output [47:0] axi_AWADDR,
+  output [2:0]  axi_AWSIZE,
+  output [1:0]  axi_AWBURST,
+  output        axi_AWVALID,
+  input         axi_AWREADY,
+  output [63:0] axi_WDATA,
+  output [7:0]  axi_WSTRB,
+  output        axi_WLAST,
+  output        axi_WVALID,
+  input         axi_BVALID,
+  output        axi_BREADY,
+  output [47:0] axi_ARADDR,
+  output [2:0]  axi_ARSIZE,
+  output [1:0]  axi_ARBURST,
+  output        axi_ARVALID,
+  input         axi_ARREADY,
+  input  [63:0] axi_RDATA,
+  input         axi_RVALID,
+  output        axi_RREADY
+);
+  reg [1:0] rstate; // @[UCPass.scala 26:23]
+  reg [31:0] _RAND_0;
+  wire [1:0] _T_2; // @[Conditional.scala 37:39]
+  wire  _T_3; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_0; // @[UCPass.scala 36:24]
+  wire  _T_6; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_1; // @[UCPass.scala 48:25]
+  wire  _T_9; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_2; // @[UCPass.scala 55:24]
+  wire [1:0] _GEN_4; // @[Conditional.scala 39:67]
+  wire [47:0] _GEN_5; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_7; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_9; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_10; // @[Conditional.scala 39:67]
+  wire  _GEN_11; // @[Conditional.scala 39:67]
+  wire [1:0] nrstate; // @[Conditional.scala 40:58]
+  reg [1:0] wstate; // @[UCPass.scala 66:23]
+  reg [31:0] _RAND_1;
+  wire [1:0] _T_11; // @[Conditional.scala 37:39]
+  wire  _T_12; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_19; // @[UCPass.scala 73:25]
+  wire  _T_15; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_20; // @[UCPass.scala 85:25]
+  wire  _T_18; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_21; // @[UCPass.scala 95:24]
+  wire  _T_21; // @[Conditional.scala 37:30]
+  wire [1:0] _GEN_22; // @[UCPass.scala 102:24]
+  wire [1:0] _GEN_24; // @[Conditional.scala 39:67]
+  wire [63:0] _GEN_25; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_26; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_29; // @[Conditional.scala 39:67]
+  wire  _GEN_30; // @[Conditional.scala 39:67]
+  wire [47:0] _GEN_31; // @[Conditional.scala 39:67]
+  wire [2:0] _GEN_33; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_35; // @[Conditional.scala 39:67]
+  wire [1:0] _GEN_36; // @[Conditional.scala 39:67]
+  wire [63:0] _GEN_37; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_38; // @[Conditional.scala 39:67]
+  wire  _GEN_39; // @[Conditional.scala 39:67]
+  wire  _GEN_41; // @[Conditional.scala 39:67]
+  wire [1:0] nwstate; // @[Conditional.scala 40:58]
+  wire  _T_22; // @[UCPass.scala 108:26]
+  wire  _T_23; // @[UCPass.scala 108:53]
+  assign _T_2 = $unsigned(rstate); // @[Conditional.scala 37:39]
+  assign _T_3 = 2'h0 == _T_2; // @[Conditional.scala 37:30]
+  assign _GEN_0 = toCPU_read ? 2'h1 : rstate; // @[UCPass.scala 36:24]
+  assign _T_6 = 2'h1 == _T_2; // @[Conditional.scala 37:30]
+  assign _GEN_1 = axi_ARREADY ? 2'h2 : rstate; // @[UCPass.scala 48:25]
+  assign _T_9 = 2'h2 == _T_2; // @[Conditional.scala 37:30]
+  assign _GEN_2 = axi_RVALID ? 2'h0 : rstate; // @[UCPass.scala 55:24]
+  assign _GEN_4 = _T_9 ? _GEN_2 : rstate; // @[Conditional.scala 39:67]
+  assign _GEN_5 = _T_6 ? toCPU_addr : 48'h0; // @[Conditional.scala 39:67]
+  assign _GEN_7 = _T_6 ? 3'h3 : 3'h0; // @[Conditional.scala 39:67]
+  assign _GEN_9 = _T_6 ? 2'h1 : 2'h0; // @[Conditional.scala 39:67]
+  assign _GEN_10 = _T_6 ? _GEN_1 : _GEN_4; // @[Conditional.scala 39:67]
+  assign _GEN_11 = _T_6 ? 1'h0 : _T_9; // @[Conditional.scala 39:67]
+  assign nrstate = _T_3 ? _GEN_0 : _GEN_10; // @[Conditional.scala 40:58]
+  assign _T_11 = $unsigned(wstate); // @[Conditional.scala 37:39]
+  assign _T_12 = 2'h0 == _T_11; // @[Conditional.scala 37:30]
+  assign _GEN_19 = toCPU_write ? 2'h1 : wstate; // @[UCPass.scala 73:25]
+  assign _T_15 = 2'h1 == _T_11; // @[Conditional.scala 37:30]
+  assign _GEN_20 = axi_AWREADY ? 2'h2 : wstate; // @[UCPass.scala 85:25]
+  assign _T_18 = 2'h2 == _T_11; // @[Conditional.scala 37:30]
+  assign _GEN_21 = axi_WVALID ? 2'h3 : wstate; // @[UCPass.scala 95:24]
+  assign _T_21 = 2'h3 == _T_11; // @[Conditional.scala 37:30]
+  assign _GEN_22 = axi_BVALID ? 2'h0 : wstate; // @[UCPass.scala 102:24]
+  assign _GEN_24 = _T_21 ? _GEN_22 : wstate; // @[Conditional.scala 39:67]
+  assign _GEN_25 = _T_18 ? toCPU_wdata : 64'h0; // @[Conditional.scala 39:67]
+  assign _GEN_26 = _T_18 ? toCPU_wstrb : 8'h0; // @[Conditional.scala 39:67]
+  assign _GEN_29 = _T_18 ? _GEN_21 : _GEN_24; // @[Conditional.scala 39:67]
+  assign _GEN_30 = _T_18 ? 1'h0 : _T_21; // @[Conditional.scala 39:67]
+  assign _GEN_31 = _T_15 ? toCPU_addr : 48'h0; // @[Conditional.scala 39:67]
+  assign _GEN_33 = _T_15 ? 3'h3 : 3'h0; // @[Conditional.scala 39:67]
+  assign _GEN_35 = _T_15 ? 2'h1 : 2'h0; // @[Conditional.scala 39:67]
+  assign _GEN_36 = _T_15 ? _GEN_20 : _GEN_29; // @[Conditional.scala 39:67]
+  assign _GEN_37 = _T_15 ? 64'h0 : _GEN_25; // @[Conditional.scala 39:67]
+  assign _GEN_38 = _T_15 ? 8'h0 : _GEN_26; // @[Conditional.scala 39:67]
+  assign _GEN_39 = _T_15 ? 1'h0 : _T_18; // @[Conditional.scala 39:67]
+  assign _GEN_41 = _T_15 ? 1'h0 : _GEN_30; // @[Conditional.scala 39:67]
+  assign nwstate = _T_12 ? _GEN_19 : _GEN_36; // @[Conditional.scala 40:58]
+  assign _T_22 = nrstate != 2'h0; // @[UCPass.scala 108:26]
+  assign _T_23 = nwstate != 2'h0; // @[UCPass.scala 108:53]
+  assign toCPU_stall = _T_22 | _T_23; // @[UCPass.scala 108:15]
+  assign toCPU_rdata = axi_RDATA; // @[UCPass.scala 32:15]
+  assign axi_AWADDR = _T_12 ? 48'h0 : _GEN_31; // @[UCPass.scala 19:7 UCPass.scala 79:18]
+  assign axi_AWSIZE = _T_12 ? 3'h0 : _GEN_33; // @[UCPass.scala 19:7 UCPass.scala 81:18]
+  assign axi_AWBURST = _T_12 ? 2'h0 : _GEN_35; // @[UCPass.scala 19:7 UCPass.scala 83:19]
+  assign axi_AWVALID = _T_12 ? 1'h0 : _T_15; // @[UCPass.scala 19:7 UCPass.scala 80:19]
+  assign axi_WDATA = _T_12 ? 64'h0 : _GEN_37; // @[UCPass.scala 19:7 UCPass.scala 91:17]
+  assign axi_WSTRB = _T_12 ? 8'h0 : _GEN_38; // @[UCPass.scala 19:7 UCPass.scala 92:17]
+  assign axi_WLAST = _T_12 ? 1'h0 : _GEN_39; // @[UCPass.scala 19:7 UCPass.scala 93:17]
+  assign axi_WVALID = _T_12 ? 1'h0 : _GEN_39; // @[UCPass.scala 19:7 UCPass.scala 94:18]
+  assign axi_BREADY = _T_12 ? 1'h0 : _GEN_41; // @[UCPass.scala 19:7 UCPass.scala 101:18]
+  assign axi_ARADDR = _T_3 ? 48'h0 : _GEN_5; // @[UCPass.scala 19:7 UCPass.scala 42:18]
+  assign axi_ARSIZE = _T_3 ? 3'h0 : _GEN_7; // @[UCPass.scala 19:7 UCPass.scala 44:18]
+  assign axi_ARBURST = _T_3 ? 2'h0 : _GEN_9; // @[UCPass.scala 19:7 UCPass.scala 46:19]
+  assign axi_ARVALID = _T_3 ? 1'h0 : _T_6; // @[UCPass.scala 19:7 UCPass.scala 43:19]
+  assign axi_RREADY = _T_3 ? 1'h0 : _GEN_11; // @[UCPass.scala 19:7 UCPass.scala 54:18]
+`ifdef RANDOMIZE_GARBAGE_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_INVALID_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_REG_INIT
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+`define RANDOMIZE
+`endif
+`ifndef RANDOM
+`define RANDOM $random
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+  integer initvar;
+`endif
+`ifndef SYNTHESIS
+initial begin
+  `ifdef RANDOMIZE
+    `ifdef INIT_RANDOM
+      `INIT_RANDOM
+    `endif
+    `ifndef VERILATOR
+      `ifdef RANDOMIZE_DELAY
+        #`RANDOMIZE_DELAY begin end
+      `else
+        #0.002 begin end
+      `endif
+    `endif
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_0 = {1{`RANDOM}};
+  rstate = _RAND_0[1:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_1 = {1{`RANDOM}};
+  wstate = _RAND_1[1:0];
+  `endif // RANDOMIZE_REG_INIT
+  `endif // RANDOMIZE
+end // initial
+`endif // SYNTHESIS
+  always @(posedge clock) begin
+    if (reset) begin
+      rstate <= 2'h0;
+    end else if (_T_3) begin
+      if (toCPU_read) begin
+        rstate <= 2'h1;
       end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (wmHit) begin
-          if (_T_331) begin
-            wbuf_1_be <= _T_428;
-          end
-        end else if (_T_523) begin
-          if (2'h1 == wbufTail) begin
-            wbuf_1_be <= w_be;
-          end else if (_T_331) begin
-            wbuf_1_be <= _T_428;
-          end
-        end else if (_T_331) begin
-          wbuf_1_be <= _T_428;
-        end
+    end else if (_T_6) begin
+      if (axi_ARREADY) begin
+        rstate <= 2'h2;
       end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (wmHit) begin
-          if (_T_331) begin
-            wbuf_1_wdata <= _T_427;
-          end
-        end else if (_T_523) begin
-          if (2'h1 == wbufTail) begin
-            wbuf_1_wdata <= w_data;
-          end else if (_T_331) begin
-            wbuf_1_wdata <= _T_427;
-          end
-        end else if (_T_331) begin
-          wbuf_1_wdata <= _T_427;
-        end
+    end else if (_T_9) begin
+      if (axi_RVALID) begin
+        rstate <= 2'h0;
       end
     end
     if (reset) begin
-      wbuf_1_valid <= 1'h0;
-    end else if (_T_336) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                if (2'h1 == wbufHead) begin
-                  wbuf_1_valid <= 1'h0;
-                end
-              end else if (whit) begin
-                if (_T_166) begin
-                  if (2'h1 == wbufHead) begin
-                    wbuf_1_valid <= 1'h0;
-                  end
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    if (2'h1 == wbufHead) begin
-                      wbuf_1_valid <= 1'h0;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
+      wstate <= 2'h0;
+    end else if (_T_12) begin
+      if (toCPU_write) begin
+        wstate <= 2'h1;
       end
-    end else if (wmHitHead) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                if (2'h1 == wbufHead) begin
-                  wbuf_1_valid <= 1'h0;
-                end
-              end else if (whit) begin
-                if (_T_166) begin
-                  wbuf_1_valid <= _GEN_37;
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    wbuf_1_valid <= _GEN_37;
-                  end
-                end
-              end
-            end
-          end
-        end
+    end else if (_T_15) begin
+      if (axi_AWREADY) begin
+        wstate <= 2'h2;
       end
-    end else if (wmHit) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                wbuf_1_valid <= _GEN_37;
-              end else if (whit) begin
-                if (_T_166) begin
-                  wbuf_1_valid <= _GEN_37;
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    wbuf_1_valid <= _GEN_37;
-                  end
-                end
-              end
-            end
-          end
-        end
+    end else if (_T_18) begin
+      if (axi_WVALID) begin
+        wstate <= 2'h3;
       end
-    end else if (_T_523) begin
-      wbuf_1_valid <= _GEN_326;
-    end else if (!(_T_82)) begin
-      if (!(_T_90)) begin
-        if (_T_94) begin
-          if (!(_T_109)) begin
-            if (wdirtyHit) begin
-              wbuf_1_valid <= _GEN_37;
-            end else if (whit) begin
-              if (_T_166) begin
-                wbuf_1_valid <= _GEN_37;
-              end
-            end
-          end
-        end else if (!(_T_226)) begin
-          if (!(_T_238)) begin
-            if (_T_254) begin
-              if (_T_166) begin
-                if (!(_T_321)) begin
-                  wbuf_1_valid <= _GEN_37;
-                end
-              end
-            end
-          end
-        end
+    end else if (_T_21) begin
+      if (axi_BVALID) begin
+        wstate <= 2'h0;
       end
     end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (!(wmHit)) begin
-          if (_T_523) begin
-            if (2'h2 == wbufTail) begin
-              wbuf_2_addr <= w_addr;
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (wmHit) begin
-          if (_T_333) begin
-            wbuf_2_be <= _T_474;
-          end
-        end else if (_T_523) begin
-          if (2'h2 == wbufTail) begin
-            wbuf_2_be <= w_be;
-          end else if (_T_333) begin
-            wbuf_2_be <= _T_474;
-          end
-        end else if (_T_333) begin
-          wbuf_2_be <= _T_474;
-        end
-      end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (wmHit) begin
-          if (_T_333) begin
-            wbuf_2_wdata <= _T_473;
-          end
-        end else if (_T_523) begin
-          if (2'h2 == wbufTail) begin
-            wbuf_2_wdata <= w_data;
-          end else if (_T_333) begin
-            wbuf_2_wdata <= _T_473;
-          end
-        end else if (_T_333) begin
-          wbuf_2_wdata <= _T_473;
-        end
-      end
-    end
-    if (reset) begin
-      wbuf_2_valid <= 1'h0;
-    end else if (_T_336) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                if (2'h2 == wbufHead) begin
-                  wbuf_2_valid <= 1'h0;
-                end
-              end else if (whit) begin
-                if (_T_166) begin
-                  if (2'h2 == wbufHead) begin
-                    wbuf_2_valid <= 1'h0;
-                  end
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    if (2'h2 == wbufHead) begin
-                      wbuf_2_valid <= 1'h0;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (wmHitHead) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                if (2'h2 == wbufHead) begin
-                  wbuf_2_valid <= 1'h0;
-                end
-              end else if (whit) begin
-                if (_T_166) begin
-                  wbuf_2_valid <= _GEN_38;
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    wbuf_2_valid <= _GEN_38;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (wmHit) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                wbuf_2_valid <= _GEN_38;
-              end else if (whit) begin
-                if (_T_166) begin
-                  wbuf_2_valid <= _GEN_38;
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    wbuf_2_valid <= _GEN_38;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_523) begin
-      wbuf_2_valid <= _GEN_327;
-    end else if (!(_T_82)) begin
-      if (!(_T_90)) begin
-        if (_T_94) begin
-          if (!(_T_109)) begin
-            if (wdirtyHit) begin
-              wbuf_2_valid <= _GEN_38;
-            end else if (whit) begin
-              if (_T_166) begin
-                wbuf_2_valid <= _GEN_38;
-              end
-            end
-          end
-        end else if (!(_T_226)) begin
-          if (!(_T_238)) begin
-            if (_T_254) begin
-              if (_T_166) begin
-                if (!(_T_321)) begin
-                  wbuf_2_valid <= _GEN_38;
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (!(wmHit)) begin
-          if (_T_523) begin
-            if (2'h3 == wbufTail) begin
-              wbuf_3_addr <= w_addr;
-            end
-          end
-        end
-      end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (wmHit) begin
-          if (wmHit) begin
-            wbuf_3_be <= _T_520;
-          end
-        end else if (_T_523) begin
-          if (2'h3 == wbufTail) begin
-            wbuf_3_be <= w_be;
-          end else if (wmHit) begin
-            wbuf_3_be <= _T_520;
-          end
-        end else if (wmHit) begin
-          wbuf_3_be <= _T_520;
-        end
-      end
-    end
-    if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (wmHit) begin
-          if (wmHit) begin
-            wbuf_3_wdata <= _T_519;
-          end
-        end else if (_T_523) begin
-          if (2'h3 == wbufTail) begin
-            wbuf_3_wdata <= w_data;
-          end else if (wmHit) begin
-            wbuf_3_wdata <= _T_519;
-          end
-        end else if (wmHit) begin
-          wbuf_3_wdata <= _T_519;
-        end
-      end
-    end
-    if (reset) begin
-      wbuf_3_valid <= 1'h0;
-    end else if (_T_336) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                if (2'h3 == wbufHead) begin
-                  wbuf_3_valid <= 1'h0;
-                end
-              end else if (whit) begin
-                if (_T_166) begin
-                  if (2'h3 == wbufHead) begin
-                    wbuf_3_valid <= 1'h0;
-                  end
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    if (2'h3 == wbufHead) begin
-                      wbuf_3_valid <= 1'h0;
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (wmHitHead) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                if (2'h3 == wbufHead) begin
-                  wbuf_3_valid <= 1'h0;
-                end
-              end else if (whit) begin
-                if (_T_166) begin
-                  wbuf_3_valid <= _GEN_39;
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    wbuf_3_valid <= _GEN_39;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (wmHit) begin
-      if (!(_T_82)) begin
-        if (!(_T_90)) begin
-          if (_T_94) begin
-            if (!(_T_109)) begin
-              if (wdirtyHit) begin
-                wbuf_3_valid <= _GEN_39;
-              end else if (whit) begin
-                if (_T_166) begin
-                  wbuf_3_valid <= _GEN_39;
-                end
-              end
-            end
-          end else if (!(_T_226)) begin
-            if (!(_T_238)) begin
-              if (_T_254) begin
-                if (_T_166) begin
-                  if (!(_T_321)) begin
-                    wbuf_3_valid <= _GEN_39;
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-    end else if (_T_523) begin
-      wbuf_3_valid <= _GEN_328;
-    end else if (!(_T_82)) begin
-      if (!(_T_90)) begin
-        if (_T_94) begin
-          if (!(_T_109)) begin
-            if (wdirtyHit) begin
-              wbuf_3_valid <= _GEN_39;
-            end else if (whit) begin
-              if (_T_166) begin
-                wbuf_3_valid <= _GEN_39;
-              end
-            end
-          end
-        end else if (!(_T_226)) begin
-          if (!(_T_238)) begin
-            if (_T_254) begin
-              if (_T_166) begin
-                if (!(_T_321)) begin
-                  wbuf_3_valid <= _GEN_39;
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      wbufHead <= 2'h0;
-    end else if (!(_T_82)) begin
-      if (!(_T_90)) begin
-        if (_T_94) begin
-          if (!(_T_109)) begin
-            if (wdirtyHit) begin
-              wbufHead <= _T_14;
-            end else if (whit) begin
-              if (_T_166) begin
-                wbufHead <= _T_14;
-              end
-            end
-          end
-        end else if (!(_T_226)) begin
-          if (!(_T_238)) begin
-            if (_T_254) begin
-              if (_T_166) begin
-                if (!(_T_321)) begin
-                  wbufHead <= _T_14;
-                end
-              end
-            end
-          end
-        end
-      end
-    end
-    if (reset) begin
-      wbufTail <= 2'h0;
-    end else if (!(_T_336)) begin
-      if (!(wmHitHead)) begin
-        if (!(wmHit)) begin
-          if (_T_523) begin
-            wbufTail <= _T_522;
-          end
-        end
-      end
-    end
-    if (reset) begin
-      state <= 3'h7;
-    end else if (_T_82) begin
-      if (_T_87) begin
-        state <= 3'h6;
-      end
-    end else if (_T_90) begin
-      if (pendingRead) begin
-        state <= 3'h1;
-      end else if (_T_91) begin
-        state <= 3'h0;
-      end
-    end else if (_T_94) begin
-      if (_T_109) begin
-        state <= 3'h0;
-      end else if (wdirtyHit) begin
-        state <= 3'h6;
-      end else if (whit) begin
-        if (_T_166) begin
-          state <= 3'h6;
-        end
-      end else begin
-        state <= 3'h2;
-      end
-    end else if (_T_226) begin
-      if (_T_229) begin
-        state <= 3'h3;
-      end else if (_T_166) begin
-        state <= 3'h3;
-      end
-    end else if (_T_238) begin
-      if (_T_229) begin
-        state <= 3'h4;
-      end else if (_T_166) begin
-        state <= 3'h4;
-      end
-    end else if (_T_254) begin
-      if (_T_166) begin
-        if (_T_321) begin
-          state <= 3'h5;
-        end else begin
-          state <= 3'h6;
-        end
-      end
-    end else if (_T_326) begin
-      if (_T_327) begin
-        state <= 3'h6;
-      end
-    end
-    if (reset) begin
-      rstCnt <= 6'h0;
-    end else if (_T_82) begin
-      rstCnt <= _T_86;
-    end
-    _T_639 <= toL2_l2req;
-    _T_103 <= toL2_l2req;
-    _T_106 <= toL2_l2addr[9:4];
-    if (reset) begin
-      victim <= 1'h0;
-    end else if (!(_T_82)) begin
-      if (!(_T_90)) begin
-        if (_T_94) begin
-          if (!(_T_109)) begin
-            if (!(wdirtyHit)) begin
-              if (!(whit)) begin
-                victim <= _T_223;
-              end
-            end
-          end
-        end
-      end
-    end
-    lookupReady <= toL2_l2stall;
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_4) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L1DC.scala:88 assert(r.addr(IGNORED_WIDTH-1, 0) === 0.U)\n"); // @[L1DC.scala 88:9]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_4) begin
-          $fatal; // @[L1DC.scala 88:9]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_9) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L1DC.scala:89 assert(w.addr(IGNORED_WIDTH-1, 0) === 0.U)\n"); // @[L1DC.scala 89:9]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_9) begin
-          $fatal; // @[L1DC.scala 89:9]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_19) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L1DC.scala:150 assert(waddr(IGNORED_WIDTH-1, 0) === 0.U)\n"); // @[L1DC.scala 150:9]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_19) begin
-          $fatal; // @[L1DC.scala 150:9]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_73) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L1DC.scala:183 assert((nstate =/= MainState.writing && nstate =/= MainState.reading) || state === MainState.idle || nstate === state)\n"); // @[L1DC.scala 183:9]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_73) begin
-          $fatal; // @[L1DC.scala 183:9]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_448 & _T_102) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L1DC.scala:233 assert(wbufHead =/= wbufTail)\n"); // @[L1DC.scala 233:13]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_448 & _T_102) begin
-          $fatal; // @[L1DC.scala 233:13]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_GEN_458 & _T_19) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L1DC.scala:402 assert(waddr(IGNORED_WIDTH-1, 0) === 0.U)\n"); // @[L1DC.scala 402:13]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_GEN_458 & _T_19) begin
-          $fatal; // @[L1DC.scala 402:13]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_541) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at L1DC.scala:420 assert(hitCount <= 1.U)\n"); // @[L1DC.scala 420:9]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_541) begin
-          $fatal; // @[L1DC.scala 420:9]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
   end
 endmodule
 module InstrFetch(
@@ -29502,7 +20903,7 @@ module LSU(
   reg  current_0_ext_sUnaligned; // @[Common.scala 283:12]
   reg [31:0] _RAND_19;
   wire [63:0] _T_4; // @[LSU.scala 34:29]
-  wire [63:0] _GEN_183; // @[LSU.scala 34:36]
+  wire [63:0] _GEN_184; // @[LSU.scala 34:36]
   wire [63:0] _T_6; // @[LSU.scala 34:36]
   wire [63:0] _T_7; // @[LSU.scala 34:36]
   wire [63:0] _T_8; // @[LSU.scala 34:60]
@@ -29537,7 +20938,7 @@ module LSU(
   wire  _T_38; // @[Conditional.scala 37:30]
   wire  _T_39; // @[Conditional.scala 37:30]
   wire [5:0] _T_41; // @[LSU.scala 88:40]
-  wire [126:0] _GEN_184; // @[LSU.scala 88:29]
+  wire [126:0] _GEN_185; // @[LSU.scala 88:29]
   wire [126:0] _T_42; // @[LSU.scala 88:29]
   wire  _T_43; // @[LSU.scala 97:32]
   wire  _T_44; // @[LSU.scala 98:33]
@@ -29548,7 +20949,7 @@ module LSU(
   wire  _T_47; // @[Common.scala 293:12]
   wire  _GEN_27; // @[Common.scala 293:36]
   wire [63:0] _T_53; // @[LSU.scala 34:29]
-  wire [63:0] _GEN_185; // @[LSU.scala 34:36]
+  wire [63:0] _GEN_186; // @[LSU.scala 34:36]
   wire [63:0] _T_55; // @[LSU.scala 34:36]
   wire [63:0] _T_56; // @[LSU.scala 34:36]
   wire [63:0] _T_57; // @[LSU.scala 34:60]
@@ -29625,23 +21026,97 @@ module LSU(
   wire  _T_112; // @[LSU.scala 176:34]
   wire  _T_113; // @[LSU.scala 176:7]
   wire [63:0] _T_115; // @[LSU.scala 178:42]
-  wire [1:0] _GEN_137; // @[LSU.scala 189:32]
-  wire  _GEN_139; // @[LSU.scala 186:32]
-  wire [2:0] _GEN_140; // @[LSU.scala 186:32]
-  wire [1:0] _GEN_145; // @[LSU.scala 186:32]
-  wire  _GEN_147; // @[LSU.scala 183:32]
-  wire [2:0] _GEN_148; // @[LSU.scala 183:32]
-  wire [1:0] _GEN_153; // @[LSU.scala 183:32]
-  wire  _GEN_155; // @[LSU.scala 180:32]
-  wire [2:0] _GEN_156; // @[LSU.scala 180:32]
-  wire [1:0] _GEN_161; // @[LSU.scala 180:32]
-  wire  _GEN_164; // @[LSU.scala 177:7]
-  wire [1:0] _GEN_170; // @[LSU.scala 177:7]
+  wire  _T_116; // @[LSU.scala 196:24]
+  wire  _T_117; // @[LSU.scala 196:47]
+  wire  _T_118; // @[LSU.scala 197:37]
+  wire  _T_119; // @[LSU.scala 197:37]
+  wire  _T_120; // @[LSU.scala 197:37]
+  wire  _T_121; // @[LSU.scala 197:37]
+  wire  _T_122; // @[LSU.scala 197:37]
+  wire  _T_123; // @[LSU.scala 197:37]
+  wire  _T_124; // @[LSU.scala 197:37]
+  wire  _T_125; // @[LSU.scala 197:37]
+  wire  _T_126; // @[LSU.scala 197:37]
+  wire  _T_127; // @[LSU.scala 197:37]
+  wire  _T_128; // @[LSU.scala 197:37]
+  wire  _T_129; // @[LSU.scala 197:37]
+  wire  _T_130; // @[LSU.scala 197:37]
+  wire  _T_131; // @[LSU.scala 197:37]
+  wire  _T_132; // @[LSU.scala 197:37]
+  wire  _T_133; // @[LSU.scala 197:37]
+  wire  _T_134; // @[LSU.scala 197:37]
+  wire  _T_135; // @[LSU.scala 197:37]
+  wire  _T_136; // @[LSU.scala 197:37]
+  wire  _T_137; // @[LSU.scala 197:37]
+  wire  _T_138; // @[LSU.scala 197:37]
+  wire  _T_139; // @[LSU.scala 197:37]
+  wire  _T_140; // @[LSU.scala 197:37]
+  wire  _T_141; // @[LSU.scala 197:37]
+  wire  _T_142; // @[LSU.scala 197:37]
+  wire  _T_143; // @[LSU.scala 197:37]
+  wire  _T_144; // @[LSU.scala 197:37]
+  wire  _T_145; // @[LSU.scala 197:37]
+  wire  _T_146; // @[LSU.scala 197:37]
+  wire  _T_147; // @[LSU.scala 197:37]
+  wire  _T_148; // @[LSU.scala 197:37]
+  wire  _T_149; // @[LSU.scala 197:37]
+  wire  _T_150; // @[LSU.scala 197:37]
+  wire  _T_151; // @[LSU.scala 197:37]
+  wire  _T_152; // @[LSU.scala 197:37]
+  wire  _T_153; // @[LSU.scala 197:37]
+  wire  _T_154; // @[LSU.scala 197:37]
+  wire  _T_155; // @[LSU.scala 197:37]
+  wire  _T_156; // @[LSU.scala 197:37]
+  wire  _T_157; // @[LSU.scala 197:37]
+  wire  _T_158; // @[LSU.scala 197:37]
+  wire  _T_159; // @[LSU.scala 197:37]
+  wire  _T_160; // @[LSU.scala 197:37]
+  wire  _T_161; // @[LSU.scala 197:37]
+  wire  _T_162; // @[LSU.scala 197:37]
+  wire  _T_163; // @[LSU.scala 197:37]
+  wire  _T_166; // @[LSU.scala 197:37]
+  wire  _T_167; // @[LSU.scala 197:37]
+  wire  _T_168; // @[LSU.scala 197:37]
+  wire  _T_169; // @[LSU.scala 197:37]
+  wire  _T_170; // @[LSU.scala 197:37]
+  wire  _T_171; // @[LSU.scala 197:37]
+  wire  _T_172; // @[LSU.scala 197:37]
+  wire  _T_173; // @[LSU.scala 197:37]
+  wire  _T_174; // @[LSU.scala 197:37]
+  wire  _T_175; // @[LSU.scala 197:37]
+  wire  _T_176; // @[LSU.scala 197:37]
+  wire  _T_177; // @[LSU.scala 197:37]
+  wire  _T_178; // @[LSU.scala 197:37]
+  wire  _T_179; // @[LSU.scala 197:37]
+  wire  _T_180; // @[LSU.scala 197:37]
+  wire  _T_181; // @[LSU.scala 197:37]
+  wire [7:0] _T_189; // @[LSU.scala 201:39]
+  wire [15:0] _T_197; // @[LSU.scala 201:39]
+  wire [7:0] _T_204; // @[LSU.scala 201:39]
+  wire [31:0] _T_213; // @[LSU.scala 201:39]
+  wire [7:0] _T_220; // @[LSU.scala 201:39]
+  wire [15:0] _T_228; // @[LSU.scala 201:39]
+  wire [7:0] _T_235; // @[LSU.scala 201:39]
+  wire [31:0] _T_244; // @[LSU.scala 201:39]
+  wire [63:0] _T_245; // @[LSU.scala 201:39]
+  wire [63:0] _GEN_130; // @[LSU.scala 196:60]
+  wire [1:0] _GEN_138; // @[LSU.scala 189:32]
+  wire  _GEN_140; // @[LSU.scala 186:32]
+  wire [2:0] _GEN_141; // @[LSU.scala 186:32]
+  wire [1:0] _GEN_146; // @[LSU.scala 186:32]
+  wire  _GEN_148; // @[LSU.scala 183:32]
+  wire [2:0] _GEN_149; // @[LSU.scala 183:32]
+  wire [1:0] _GEN_154; // @[LSU.scala 183:32]
+  wire  _GEN_156; // @[LSU.scala 180:32]
+  wire [2:0] _GEN_157; // @[LSU.scala 180:32]
+  wire [1:0] _GEN_162; // @[LSU.scala 180:32]
+  wire  _GEN_165; // @[LSU.scala 177:7]
+  wire [1:0] _GEN_171; // @[LSU.scala 177:7]
   wire [3:0] _T_109_branch_extype; // @[LSU.scala 169:20 Common.scala 59:12 Common.scala 59:12 Common.scala 59:12 Common.scala 59:12]
   wire [1:0] _T_109_branch_ex; // @[LSU.scala 169:20 Common.scala 49:8 Common.scala 58:8 Common.scala 58:8 Common.scala 58:8 Common.scala 58:8 Common.scala 31:8]
   assign _T_4 = $signed(io_next_rs1val); // @[LSU.scala 34:29]
-  assign _GEN_183 = {{32{io_next_instr_instr_imm[31]}},io_next_instr_instr_imm}; // @[LSU.scala 34:36]
-  assign _T_6 = $signed(_T_4) + $signed(_GEN_183); // @[LSU.scala 34:36]
+  assign _GEN_184 = {{32{io_next_instr_instr_imm[31]}},io_next_instr_instr_imm}; // @[LSU.scala 34:36]
+  assign _T_6 = $signed(_T_4) + $signed(_GEN_184); // @[LSU.scala 34:36]
   assign _T_7 = $signed(_T_6); // @[LSU.scala 34:36]
   assign _T_8 = $unsigned(_T_7); // @[LSU.scala 34:60]
   assign _T_9 = _T_8[47:3]; // @[LSU.scala 35:23]
@@ -29675,8 +21150,8 @@ module LSU(
   assign _T_38 = 3'h1 == io_next_instr_instr_funct3; // @[Conditional.scala 37:30]
   assign _T_39 = 3'h2 == io_next_instr_instr_funct3; // @[Conditional.scala 37:30]
   assign _T_41 = {_T_11, 3'h0}; // @[LSU.scala 88:40]
-  assign _GEN_184 = {{63'd0}, io_next_rs2val}; // @[LSU.scala 88:29]
-  assign _T_42 = _GEN_184 << _T_41; // @[LSU.scala 88:29]
+  assign _GEN_185 = {{63'd0}, io_next_rs2val}; // @[LSU.scala 88:29]
+  assign _T_42 = _GEN_185 << _T_41; // @[LSU.scala 88:29]
   assign _T_43 = _T_13 & _T_22; // @[LSU.scala 97:32]
   assign _T_44 = _T_14 & _T_22; // @[LSU.scala 98:33]
   assign _T_45 = _T_13 & _GEN_2; // @[LSU.scala 99:32]
@@ -29686,8 +21161,8 @@ module LSU(
   assign _T_47 = io_stall == 1'h0; // @[Common.scala 293:12]
   assign _GEN_27 = _T_47 ? io_next_instr_vacant : current_0_pipe_instr_vacant; // @[Common.scala 293:36]
   assign _T_53 = $signed(current_0_pipe_rs1val); // @[LSU.scala 34:29]
-  assign _GEN_185 = {{32{current_0_pipe_instr_instr_imm[31]}},current_0_pipe_instr_instr_imm}; // @[LSU.scala 34:36]
-  assign _T_55 = $signed(_T_53) + $signed(_GEN_185); // @[LSU.scala 34:36]
+  assign _GEN_186 = {{32{current_0_pipe_instr_instr_imm[31]}},current_0_pipe_instr_instr_imm}; // @[LSU.scala 34:36]
+  assign _T_55 = $signed(_T_53) + $signed(_GEN_186); // @[LSU.scala 34:36]
   assign _T_56 = $signed(_T_55); // @[LSU.scala 34:36]
   assign _T_57 = $unsigned(_T_56); // @[LSU.scala 34:60]
   assign _T_60 = _T_57[2:0]; // @[LSU.scala 36:22]
@@ -29763,20 +21238,94 @@ module LSU(
   assign _T_112 = current_0_pipe_instr_instr_funct3 == 3'h1; // @[LSU.scala 176:34]
   assign _T_113 = _T_111 & _T_112; // @[LSU.scala 176:7]
   assign _T_115 = current_0_pipe_instr_addr + 64'h4; // @[LSU.scala 178:42]
-  assign _GEN_137 = current_0_ext_sUnaligned ? 2'h0 : _GEN_80; // @[LSU.scala 189:32]
-  assign _GEN_139 = current_0_ext_lUnaligned | current_0_ext_sUnaligned; // @[LSU.scala 186:32]
-  assign _GEN_140 = current_0_ext_lUnaligned ? 3'h4 : 3'h6; // @[LSU.scala 186:32]
-  assign _GEN_145 = current_0_ext_lUnaligned ? 2'h0 : _GEN_137; // @[LSU.scala 186:32]
-  assign _GEN_147 = current_0_ext_sInvalAddr | _GEN_139; // @[LSU.scala 183:32]
-  assign _GEN_148 = current_0_ext_sInvalAddr ? 3'h5 : _GEN_140; // @[LSU.scala 183:32]
-  assign _GEN_153 = current_0_ext_sInvalAddr ? 2'h0 : _GEN_145; // @[LSU.scala 183:32]
-  assign _GEN_155 = current_0_ext_lInvalAddr | _GEN_147; // @[LSU.scala 180:32]
-  assign _GEN_156 = current_0_ext_lInvalAddr ? 3'h5 : _GEN_148; // @[LSU.scala 180:32]
-  assign _GEN_161 = current_0_ext_lInvalAddr ? 2'h0 : _GEN_153; // @[LSU.scala 180:32]
-  assign _GEN_164 = _T_113 ? 1'h0 : _GEN_155; // @[LSU.scala 177:7]
-  assign _GEN_170 = _T_113 ? 2'h0 : _GEN_161; // @[LSU.scala 177:7]
-  assign _T_109_branch_extype = {{1'd0}, _GEN_156}; // @[LSU.scala 169:20 Common.scala 59:12 Common.scala 59:12 Common.scala 59:12 Common.scala 59:12]
-  assign _T_109_branch_ex = {{1'd0}, _GEN_164}; // @[LSU.scala 169:20 Common.scala 49:8 Common.scala 58:8 Common.scala 58:8 Common.scala 58:8 Common.scala 58:8 Common.scala 31:8]
+  assign _T_116 = current_0_ext_mem_addr[46]; // @[LSU.scala 196:24]
+  assign _T_117 = _T_116 == 1'h0; // @[LSU.scala 196:47]
+  assign _T_118 = current_0_ext_mem_addr[0]; // @[LSU.scala 197:37]
+  assign _T_119 = current_0_ext_mem_addr[1]; // @[LSU.scala 197:37]
+  assign _T_120 = current_0_ext_mem_addr[2]; // @[LSU.scala 197:37]
+  assign _T_121 = current_0_ext_mem_addr[3]; // @[LSU.scala 197:37]
+  assign _T_122 = current_0_ext_mem_addr[4]; // @[LSU.scala 197:37]
+  assign _T_123 = current_0_ext_mem_addr[5]; // @[LSU.scala 197:37]
+  assign _T_124 = current_0_ext_mem_addr[6]; // @[LSU.scala 197:37]
+  assign _T_125 = current_0_ext_mem_addr[7]; // @[LSU.scala 197:37]
+  assign _T_126 = current_0_ext_mem_addr[8]; // @[LSU.scala 197:37]
+  assign _T_127 = current_0_ext_mem_addr[9]; // @[LSU.scala 197:37]
+  assign _T_128 = current_0_ext_mem_addr[10]; // @[LSU.scala 197:37]
+  assign _T_129 = current_0_ext_mem_addr[11]; // @[LSU.scala 197:37]
+  assign _T_130 = current_0_ext_mem_addr[12]; // @[LSU.scala 197:37]
+  assign _T_131 = current_0_ext_mem_addr[13]; // @[LSU.scala 197:37]
+  assign _T_132 = current_0_ext_mem_addr[14]; // @[LSU.scala 197:37]
+  assign _T_133 = current_0_ext_mem_addr[15]; // @[LSU.scala 197:37]
+  assign _T_134 = current_0_ext_mem_addr[16]; // @[LSU.scala 197:37]
+  assign _T_135 = current_0_ext_mem_addr[17]; // @[LSU.scala 197:37]
+  assign _T_136 = current_0_ext_mem_addr[18]; // @[LSU.scala 197:37]
+  assign _T_137 = current_0_ext_mem_addr[19]; // @[LSU.scala 197:37]
+  assign _T_138 = current_0_ext_mem_addr[20]; // @[LSU.scala 197:37]
+  assign _T_139 = current_0_ext_mem_addr[21]; // @[LSU.scala 197:37]
+  assign _T_140 = current_0_ext_mem_addr[22]; // @[LSU.scala 197:37]
+  assign _T_141 = current_0_ext_mem_addr[23]; // @[LSU.scala 197:37]
+  assign _T_142 = current_0_ext_mem_addr[24]; // @[LSU.scala 197:37]
+  assign _T_143 = current_0_ext_mem_addr[25]; // @[LSU.scala 197:37]
+  assign _T_144 = current_0_ext_mem_addr[26]; // @[LSU.scala 197:37]
+  assign _T_145 = current_0_ext_mem_addr[27]; // @[LSU.scala 197:37]
+  assign _T_146 = current_0_ext_mem_addr[28]; // @[LSU.scala 197:37]
+  assign _T_147 = current_0_ext_mem_addr[29]; // @[LSU.scala 197:37]
+  assign _T_148 = current_0_ext_mem_addr[30]; // @[LSU.scala 197:37]
+  assign _T_149 = current_0_ext_mem_addr[31]; // @[LSU.scala 197:37]
+  assign _T_150 = current_0_ext_mem_addr[32]; // @[LSU.scala 197:37]
+  assign _T_151 = current_0_ext_mem_addr[33]; // @[LSU.scala 197:37]
+  assign _T_152 = current_0_ext_mem_addr[34]; // @[LSU.scala 197:37]
+  assign _T_153 = current_0_ext_mem_addr[35]; // @[LSU.scala 197:37]
+  assign _T_154 = current_0_ext_mem_addr[36]; // @[LSU.scala 197:37]
+  assign _T_155 = current_0_ext_mem_addr[37]; // @[LSU.scala 197:37]
+  assign _T_156 = current_0_ext_mem_addr[38]; // @[LSU.scala 197:37]
+  assign _T_157 = current_0_ext_mem_addr[39]; // @[LSU.scala 197:37]
+  assign _T_158 = current_0_ext_mem_addr[40]; // @[LSU.scala 197:37]
+  assign _T_159 = current_0_ext_mem_addr[41]; // @[LSU.scala 197:37]
+  assign _T_160 = current_0_ext_mem_addr[42]; // @[LSU.scala 197:37]
+  assign _T_161 = current_0_ext_mem_addr[43]; // @[LSU.scala 197:37]
+  assign _T_162 = current_0_ext_mem_addr[44]; // @[LSU.scala 197:37]
+  assign _T_163 = current_0_ext_mem_addr[45]; // @[LSU.scala 197:37]
+  assign _T_166 = current_0_ext_mem_addr[48]; // @[LSU.scala 197:37]
+  assign _T_167 = current_0_ext_mem_addr[49]; // @[LSU.scala 197:37]
+  assign _T_168 = current_0_ext_mem_addr[50]; // @[LSU.scala 197:37]
+  assign _T_169 = current_0_ext_mem_addr[51]; // @[LSU.scala 197:37]
+  assign _T_170 = current_0_ext_mem_addr[52]; // @[LSU.scala 197:37]
+  assign _T_171 = current_0_ext_mem_addr[53]; // @[LSU.scala 197:37]
+  assign _T_172 = current_0_ext_mem_addr[54]; // @[LSU.scala 197:37]
+  assign _T_173 = current_0_ext_mem_addr[55]; // @[LSU.scala 197:37]
+  assign _T_174 = current_0_ext_mem_addr[56]; // @[LSU.scala 197:37]
+  assign _T_175 = current_0_ext_mem_addr[57]; // @[LSU.scala 197:37]
+  assign _T_176 = current_0_ext_mem_addr[58]; // @[LSU.scala 197:37]
+  assign _T_177 = current_0_ext_mem_addr[59]; // @[LSU.scala 197:37]
+  assign _T_178 = current_0_ext_mem_addr[60]; // @[LSU.scala 197:37]
+  assign _T_179 = current_0_ext_mem_addr[61]; // @[LSU.scala 197:37]
+  assign _T_180 = current_0_ext_mem_addr[62]; // @[LSU.scala 197:37]
+  assign _T_181 = current_0_ext_mem_addr[63]; // @[LSU.scala 197:37]
+  assign _T_189 = {_T_125,_T_124,_T_123,_T_122,_T_121,_T_120,_T_119,_T_118}; // @[LSU.scala 201:39]
+  assign _T_197 = {_T_133,_T_132,_T_131,_T_130,_T_129,_T_128,_T_127,_T_126,_T_189}; // @[LSU.scala 201:39]
+  assign _T_204 = {_T_141,_T_140,_T_139,_T_138,_T_137,_T_136,_T_135,_T_134}; // @[LSU.scala 201:39]
+  assign _T_213 = {_T_149,_T_148,_T_147,_T_146,_T_145,_T_144,_T_143,_T_142,_T_204,_T_197}; // @[LSU.scala 201:39]
+  assign _T_220 = {_T_157,_T_156,_T_155,_T_154,_T_153,_T_152,_T_151,_T_150}; // @[LSU.scala 201:39]
+  assign _T_228 = {1'h0,_T_116,_T_163,_T_162,_T_161,_T_160,_T_159,_T_158,_T_220}; // @[LSU.scala 201:39]
+  assign _T_235 = {_T_173,_T_172,_T_171,_T_170,_T_169,_T_168,_T_167,_T_166}; // @[LSU.scala 201:39]
+  assign _T_244 = {_T_181,_T_180,_T_179,_T_178,_T_177,_T_176,_T_175,_T_174,_T_235,_T_228}; // @[LSU.scala 201:39]
+  assign _T_245 = {_T_244,_T_213}; // @[LSU.scala 201:39]
+  assign _GEN_130 = _T_117 ? _T_245 : current_0_ext_mem_addr; // @[LSU.scala 196:60]
+  assign _GEN_138 = current_0_ext_sUnaligned ? 2'h0 : _GEN_80; // @[LSU.scala 189:32]
+  assign _GEN_140 = current_0_ext_lUnaligned | current_0_ext_sUnaligned; // @[LSU.scala 186:32]
+  assign _GEN_141 = current_0_ext_lUnaligned ? 3'h4 : 3'h6; // @[LSU.scala 186:32]
+  assign _GEN_146 = current_0_ext_lUnaligned ? 2'h0 : _GEN_138; // @[LSU.scala 186:32]
+  assign _GEN_148 = current_0_ext_sInvalAddr | _GEN_140; // @[LSU.scala 183:32]
+  assign _GEN_149 = current_0_ext_sInvalAddr ? 3'h5 : _GEN_141; // @[LSU.scala 183:32]
+  assign _GEN_154 = current_0_ext_sInvalAddr ? 2'h0 : _GEN_146; // @[LSU.scala 183:32]
+  assign _GEN_156 = current_0_ext_lInvalAddr | _GEN_148; // @[LSU.scala 180:32]
+  assign _GEN_157 = current_0_ext_lInvalAddr ? 3'h5 : _GEN_149; // @[LSU.scala 180:32]
+  assign _GEN_162 = current_0_ext_lInvalAddr ? 2'h0 : _GEN_154; // @[LSU.scala 180:32]
+  assign _GEN_165 = _T_113 ? 1'h0 : _GEN_156; // @[LSU.scala 177:7]
+  assign _GEN_171 = _T_113 ? 2'h0 : _GEN_162; // @[LSU.scala 177:7]
+  assign _T_109_branch_extype = {{1'd0}, _GEN_157}; // @[LSU.scala 169:20 Common.scala 59:12 Common.scala 59:12 Common.scala 59:12 Common.scala 59:12]
+  assign _T_109_branch_ex = {{1'd0}, _GEN_165}; // @[LSU.scala 169:20 Common.scala 49:8 Common.scala 58:8 Common.scala 58:8 Common.scala 58:8 Common.scala 58:8 Common.scala 31:8]
   assign io_stall = current_0_pipe_instr_vacant ? 1'h0 : reader_stall; // @[Common.scala 331:16]
   assign io_retirement_wb = io_retired_instr_vacant ? 64'h0 : _GEN_83; // @[Common.scala 327:23 Common.scala 329:23]
   assign io_retirement_branch_branch = io_retired_instr_vacant ? 1'h0 : _T_113; // @[Common.scala 327:23 Common.scala 329:23]
@@ -29784,8 +21333,8 @@ module LSU(
   assign io_retirement_branch_target = io_retired_instr_vacant ? 64'h0 : _T_115; // @[Common.scala 327:23 Common.scala 329:23]
   assign io_retirement_branch_ex = io_retired_instr_vacant ? 2'h0 : _T_109_branch_ex; // @[Common.scala 327:23 Common.scala 329:23]
   assign io_retirement_branch_extype = io_retired_instr_vacant ? 4'h0 : _T_109_branch_extype; // @[Common.scala 327:23 Common.scala 329:23]
-  assign io_retirement_mem_op = io_retired_instr_vacant ? 2'h0 : _GEN_170; // @[Common.scala 327:23 Common.scala 329:23]
-  assign io_retirement_mem_addr = io_retired_instr_vacant ? 64'h0 : current_0_ext_mem_addr; // @[Common.scala 327:23 Common.scala 329:23]
+  assign io_retirement_mem_op = io_retired_instr_vacant ? 2'h0 : _GEN_171; // @[Common.scala 327:23 Common.scala 329:23]
+  assign io_retirement_mem_addr = io_retired_instr_vacant ? 64'h0 : _GEN_130; // @[Common.scala 327:23 Common.scala 329:23]
   assign io_retirement_mem_offset = io_retired_instr_vacant ? 3'h0 : current_0_ext_mem_offset; // @[Common.scala 327:23 Common.scala 329:23]
   assign io_retirement_mem_len = io_retired_instr_vacant ? 2'h0 : _GEN_82; // @[Common.scala 327:23 Common.scala 329:23]
   assign io_retirement_mem_sext = io_retired_instr_vacant ? 1'h0 : _GEN_81; // @[Common.scala 327:23 Common.scala 329:23]
@@ -34204,7 +25753,6 @@ module LSBuf(
   output [2:0]  exgress_instr_tag,
   output        exgress_valid,
   input         exgress_pop,
-  input         fs_wbufClear,
   input         cdb_entries_0_valid,
   input  [2:0]  cdb_entries_0_name,
   input  [63:0] cdb_entries_0_data,
@@ -34300,8 +25848,6 @@ module LSBuf(
   wire  headIsFence; // @[ResStation.scala 185:48]
   wire  _T_5; // @[ResStation.scala 187:43]
   wire  loadBlocked; // @[ResStation.scala 187:26]
-  wire  _T_8; // @[ResStation.scala 188:55]
-  wire  fenceBlocked; // @[ResStation.scala 188:52]
   wire  _T_9; // @[ResStation.scala 189:25]
   wire  _T_10; // @[Common.scala 212:51]
   wire  _T_11; // @[Common.scala 212:31]
@@ -34310,8 +25856,6 @@ module LSBuf(
   wire  instrReady; // @[ResStation.scala 189:34]
   wire  _T_14; // @[ResStation.scala 191:36]
   wire  _T_15; // @[ResStation.scala 191:33]
-  wire  _T_16; // @[ResStation.scala 193:36]
-  wire  _T_17; // @[ResStation.scala 193:33]
   wire  _GEN_38; // @[ResStation.scala 192:26]
   wire  _T_19; // @[ResStation.scala 200:18]
   wire  _T_20; // @[ResStation.scala 207:21]
@@ -34436,19 +25980,15 @@ module LSBuf(
   assign headIsFence = _GEN_20 == 5'h3; // @[ResStation.scala 185:48]
   assign _T_5 = pendingMemAcc != 3'h0; // @[ResStation.scala 187:43]
   assign loadBlocked = saUp | _T_5; // @[ResStation.scala 187:26]
-  assign _T_8 = fs_wbufClear == 1'h0; // @[ResStation.scala 188:55]
-  assign fenceBlocked = loadBlocked | _T_8; // @[ResStation.scala 188:52]
   assign _T_9 = head != tail; // @[ResStation.scala 189:25]
   assign _T_10 = _GEN_21 == 3'h0; // @[Common.scala 212:51]
   assign _T_11 = _GEN_29 | _T_10; // @[Common.scala 212:31]
   assign _T_12 = _GEN_36 & _GEN_37; // @[Common.scala 214:34]
   assign _T_13 = _T_11 | _T_12; // @[Common.scala 214:22]
   assign instrReady = _T_9 & _T_13; // @[ResStation.scala 189:34]
-  assign _T_14 = fenceBlocked == 1'h0; // @[ResStation.scala 191:36]
+  assign _T_14 = loadBlocked == 1'h0; // @[ResStation.scala 191:36]
   assign _T_15 = instrReady & _T_14; // @[ResStation.scala 191:33]
-  assign _T_16 = loadBlocked == 1'h0; // @[ResStation.scala 193:36]
-  assign _T_17 = instrReady & _T_16; // @[ResStation.scala 193:33]
-  assign _GEN_38 = headIsLoad ? _T_17 : instrReady; // @[ResStation.scala 192:26]
+  assign _GEN_38 = headIsLoad ? _T_15 : instrReady; // @[ResStation.scala 192:26]
   assign _T_19 = head + 1'h1; // @[ResStation.scala 200:18]
   assign _T_20 = cdb_entries_0_name != 3'h0; // @[ResStation.scala 207:21]
   assign _T_21 = cdb_entries_0_name == store_0_rs1name; // @[ResStation.scala 207:41]
@@ -35395,7 +26935,6 @@ module Exec(
   output [63:0] toDC_w_data,
   output [7:0]  toDC_w_be,
   input         toDC_w_stall,
-  input         toDC_fs_wbufClear,
   output        toDC_u_read,
   output        toDC_u_write,
   output [47:0] toDC_u_addr,
@@ -35725,7 +27264,6 @@ module Exec(
   wire [2:0] LSBuf_exgress_instr_tag; // @[Exec.scala 157:23]
   wire  LSBuf_exgress_valid; // @[Exec.scala 157:23]
   wire  LSBuf_exgress_pop; // @[Exec.scala 157:23]
-  wire  LSBuf_fs_wbufClear; // @[Exec.scala 157:23]
   wire  LSBuf_cdb_entries_0_valid; // @[Exec.scala 157:23]
   wire [2:0] LSBuf_cdb_entries_0_name; // @[Exec.scala 157:23]
   wire [63:0] LSBuf_cdb_entries_0_data; // @[Exec.scala 157:23]
@@ -37070,7 +28608,6 @@ module Exec(
     .exgress_instr_tag(LSBuf_exgress_instr_tag),
     .exgress_valid(LSBuf_exgress_valid),
     .exgress_pop(LSBuf_exgress_pop),
-    .fs_wbufClear(LSBuf_fs_wbufClear),
     .cdb_entries_0_valid(LSBuf_cdb_entries_0_valid),
     .cdb_entries_0_name(LSBuf_cdb_entries_0_name),
     .cdb_entries_0_data(LSBuf_cdb_entries_0_data),
@@ -38021,7 +29558,6 @@ module Exec(
   assign LSBuf_ingress_instr_rs2ready = canIssue_1 ? _GEN_191 : instr_rs2ready; // @[Exec.scala 284:27 Exec.scala 284:27]
   assign LSBuf_ingress_push = canIssue_1 ? _GEN_190 : _GEN_115; // @[Exec.scala 175:20 Exec.scala 283:26 Exec.scala 283:26]
   assign LSBuf_exgress_pop = units_2_rs_pop; // @[Exec.scala 164:16]
-  assign LSBuf_fs_wbufClear = toDC_fs_wbufClear; // @[Exec.scala 160:14]
   assign LSBuf_cdb_entries_0_valid = _T_152 & _T_155; // @[Exec.scala 163:12 Exec.scala 170:11]
   assign LSBuf_cdb_entries_0_name = _T_152 ? _GEN_271 : 3'h0; // @[Exec.scala 163:12 Exec.scala 170:11]
   assign LSBuf_cdb_entries_0_data = units_0_retire_info_wb; // @[Exec.scala 163:12 Exec.scala 170:11]
@@ -43958,290 +35494,359 @@ endmodule
 module Core(
   input         clock,
   input         reset,
-  output [3:0]  io_axi_AWID,
-  output [47:0] io_axi_AWADDR,
-  output [7:0]  io_axi_AWLEN,
-  output [2:0]  io_axi_AWSIZE,
-  output [1:0]  io_axi_AWBURST,
-  output [3:0]  io_axi_AWCACHE,
-  output [2:0]  io_axi_AWPROT,
-  output [2:0]  io_axi_AWQOS,
-  output [3:0]  io_axi_AWREGION,
-  output        io_axi_AWVALID,
-  input         io_axi_AWREADY,
-  output [63:0] io_axi_WDATA,
-  output [7:0]  io_axi_WSTRB,
-  output        io_axi_WLAST,
-  output        io_axi_WVALID,
-  input         io_axi_WREADY,
-  input  [3:0]  io_axi_BID,
-  input  [1:0]  io_axi_BRESP,
-  input         io_axi_BVALID,
-  output        io_axi_BREADY,
-  output [3:0]  io_axi_ARID,
-  output [47:0] io_axi_ARADDR,
-  output [7:0]  io_axi_ARLEN,
-  output [2:0]  io_axi_ARSIZE,
-  output [1:0]  io_axi_ARBURST,
-  output [3:0]  io_axi_ARCACHE,
-  output [2:0]  io_axi_ARPROT,
-  output [2:0]  io_axi_ARQOS,
-  output [3:0]  io_axi_ARREGION,
-  output        io_axi_ARVALID,
-  input         io_axi_ARREADY,
-  input  [3:0]  io_axi_RID,
-  input  [63:0] io_axi_RDATA,
-  input  [1:0]  io_axi_RRESP,
-  input         io_axi_RLAST,
-  input         io_axi_RVALID,
-  output        io_axi_RREADY,
+  output [3:0]  io_iaxi_AWID,
+  output [47:0] io_iaxi_AWADDR,
+  output [7:0]  io_iaxi_AWLEN,
+  output [2:0]  io_iaxi_AWSIZE,
+  output [1:0]  io_iaxi_AWBURST,
+  output [3:0]  io_iaxi_AWCACHE,
+  output [2:0]  io_iaxi_AWPROT,
+  output [2:0]  io_iaxi_AWQOS,
+  output [3:0]  io_iaxi_AWREGION,
+  output        io_iaxi_AWVALID,
+  input         io_iaxi_AWREADY,
+  output [63:0] io_iaxi_WDATA,
+  output [7:0]  io_iaxi_WSTRB,
+  output        io_iaxi_WLAST,
+  output        io_iaxi_WVALID,
+  input         io_iaxi_WREADY,
+  input  [3:0]  io_iaxi_BID,
+  input  [1:0]  io_iaxi_BRESP,
+  input         io_iaxi_BVALID,
+  output        io_iaxi_BREADY,
+  output [3:0]  io_iaxi_ARID,
+  output [47:0] io_iaxi_ARADDR,
+  output [7:0]  io_iaxi_ARLEN,
+  output [2:0]  io_iaxi_ARSIZE,
+  output [1:0]  io_iaxi_ARBURST,
+  output [3:0]  io_iaxi_ARCACHE,
+  output [2:0]  io_iaxi_ARPROT,
+  output [2:0]  io_iaxi_ARQOS,
+  output [3:0]  io_iaxi_ARREGION,
+  output        io_iaxi_ARVALID,
+  input         io_iaxi_ARREADY,
+  input  [3:0]  io_iaxi_RID,
+  input  [63:0] io_iaxi_RDATA,
+  input  [1:0]  io_iaxi_RRESP,
+  input         io_iaxi_RLAST,
+  input         io_iaxi_RVALID,
+  output        io_iaxi_RREADY,
+  output [3:0]  io_daxi_AWID,
+  output [47:0] io_daxi_AWADDR,
+  output [7:0]  io_daxi_AWLEN,
+  output [2:0]  io_daxi_AWSIZE,
+  output [1:0]  io_daxi_AWBURST,
+  output [3:0]  io_daxi_AWCACHE,
+  output [2:0]  io_daxi_AWPROT,
+  output [2:0]  io_daxi_AWQOS,
+  output [3:0]  io_daxi_AWREGION,
+  output        io_daxi_AWVALID,
+  input         io_daxi_AWREADY,
+  output [63:0] io_daxi_WDATA,
+  output [7:0]  io_daxi_WSTRB,
+  output        io_daxi_WLAST,
+  output        io_daxi_WVALID,
+  input         io_daxi_WREADY,
+  input  [3:0]  io_daxi_BID,
+  input  [1:0]  io_daxi_BRESP,
+  input         io_daxi_BVALID,
+  output        io_daxi_BREADY,
+  output [3:0]  io_daxi_ARID,
+  output [47:0] io_daxi_ARADDR,
+  output [7:0]  io_daxi_ARLEN,
+  output [2:0]  io_daxi_ARSIZE,
+  output [1:0]  io_daxi_ARBURST,
+  output [3:0]  io_daxi_ARCACHE,
+  output [2:0]  io_daxi_ARPROT,
+  output [2:0]  io_daxi_ARQOS,
+  output [3:0]  io_daxi_ARREGION,
+  output        io_daxi_ARVALID,
+  input         io_daxi_ARREADY,
+  input  [3:0]  io_daxi_RID,
+  input  [63:0] io_daxi_RDATA,
+  input  [1:0]  io_daxi_RRESP,
+  input         io_daxi_RLAST,
+  input         io_daxi_RVALID,
+  output        io_daxi_RREADY,
+  output [3:0]  io_uaxi_AWID,
+  output [47:0] io_uaxi_AWADDR,
+  output [7:0]  io_uaxi_AWLEN,
+  output [2:0]  io_uaxi_AWSIZE,
+  output [1:0]  io_uaxi_AWBURST,
+  output [3:0]  io_uaxi_AWCACHE,
+  output [2:0]  io_uaxi_AWPROT,
+  output [2:0]  io_uaxi_AWQOS,
+  output [3:0]  io_uaxi_AWREGION,
+  output        io_uaxi_AWVALID,
+  input         io_uaxi_AWREADY,
+  output [63:0] io_uaxi_WDATA,
+  output [7:0]  io_uaxi_WSTRB,
+  output        io_uaxi_WLAST,
+  output        io_uaxi_WVALID,
+  input         io_uaxi_WREADY,
+  input  [3:0]  io_uaxi_BID,
+  input  [1:0]  io_uaxi_BRESP,
+  input         io_uaxi_BVALID,
+  output        io_uaxi_BREADY,
+  output [3:0]  io_uaxi_ARID,
+  output [47:0] io_uaxi_ARADDR,
+  output [7:0]  io_uaxi_ARLEN,
+  output [2:0]  io_uaxi_ARSIZE,
+  output [1:0]  io_uaxi_ARBURST,
+  output [3:0]  io_uaxi_ARCACHE,
+  output [2:0]  io_uaxi_ARPROT,
+  output [2:0]  io_uaxi_ARQOS,
+  output [3:0]  io_uaxi_ARREGION,
+  output        io_uaxi_ARVALID,
+  input         io_uaxi_ARREADY,
+  input  [3:0]  io_uaxi_RID,
+  input  [63:0] io_uaxi_RDATA,
+  input  [1:0]  io_uaxi_RRESP,
+  input         io_uaxi_RLAST,
+  input         io_uaxi_RVALID,
+  output        io_uaxi_RREADY,
   input         io_eint,
   output [47:0] io_pc
 );
-  wire  ctrl_clock; // @[Core.scala 21:20]
-  wire  ctrl_reset; // @[Core.scala 21:20]
-  wire [63:0] ctrl_io_pc; // @[Core.scala 21:20]
-  wire  ctrl_io_skip; // @[Core.scala 21:20]
-  wire  ctrl_io_irst; // @[Core.scala 21:20]
-  wire  ctrl_io_fetch_stall; // @[Core.scala 21:20]
-  wire  ctrl_io_fetch_flush; // @[Core.scala 21:20]
-  wire  ctrl_io_exec_flush; // @[Core.scala 21:20]
-  wire  ctrl_br_req_branch; // @[Core.scala 21:20]
-  wire  ctrl_br_req_irst; // @[Core.scala 21:20]
-  wire [63:0] ctrl_br_req_target; // @[Core.scala 21:20]
-  wire [1:0] ctrl_br_req_ex; // @[Core.scala 21:20]
-  wire [3:0] ctrl_br_req_extype; // @[Core.scala 21:20]
-  wire [63:0] ctrl_br_tval; // @[Core.scala 21:20]
-  wire [1:0] ctrl_toExec_retCnt; // @[Core.scala 21:20]
-  wire [63:0] ctrl_toExec_nepc; // @[Core.scala 21:20]
-  wire  ctrl_toExec_int; // @[Core.scala 21:20]
-  wire  ctrl_toExec_intAck; // @[Core.scala 21:20]
-  wire  ctrl_eint; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mcycle_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mcycle_wdata; // @[Core.scala 21:20]
-  wire  ctrl_csr_mcycle_write; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mstatus_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mstatus_wdata; // @[Core.scala 21:20]
-  wire  ctrl_csr_mstatus_write; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mtvec_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mtvec_wdata; // @[Core.scala 21:20]
-  wire  ctrl_csr_mtvec_write; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mie_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mie_wdata; // @[Core.scala 21:20]
-  wire  ctrl_csr_mie_write; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mip_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mepc_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mepc_wdata; // @[Core.scala 21:20]
-  wire  ctrl_csr_mepc_write; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mcause_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mcause_wdata; // @[Core.scala 21:20]
-  wire  ctrl_csr_mcause_write; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mtval_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mtval_wdata; // @[Core.scala 21:20]
-  wire  ctrl_csr_mtval_write; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mcountinhibit_rdata; // @[Core.scala 21:20]
-  wire [63:0] ctrl_csr_mcountinhibit_wdata; // @[Core.scala 21:20]
-  wire  ctrl_csr_mcountinhibit_write; // @[Core.scala 21:20]
-  wire  l2_clock; // @[Core.scala 24:18]
-  wire  l2_reset; // @[Core.scala 24:18]
-  wire  l2_ic_0_read; // @[Core.scala 24:18]
-  wire [47:0] l2_ic_0_addr; // @[Core.scala 24:18]
-  wire  l2_ic_0_stall; // @[Core.scala 24:18]
-  wire [127:0] l2_ic_0_data; // @[Core.scala 24:18]
-  wire [1:0] l2_dc_0_l1req; // @[Core.scala 24:18]
-  wire [47:0] l2_dc_0_l1addr; // @[Core.scala 24:18]
-  wire  l2_dc_0_l1stall; // @[Core.scala 24:18]
-  wire [1:0] l2_dc_0_l2req; // @[Core.scala 24:18]
-  wire [47:0] l2_dc_0_l2addr; // @[Core.scala 24:18]
-  wire  l2_dc_0_l2stall; // @[Core.scala 24:18]
-  wire [127:0] l2_dc_0_wdata; // @[Core.scala 24:18]
-  wire [127:0] l2_dc_0_rdata; // @[Core.scala 24:18]
-  wire  l2_directs_0_read; // @[Core.scala 24:18]
-  wire  l2_directs_0_write; // @[Core.scala 24:18]
-  wire [47:0] l2_directs_0_addr; // @[Core.scala 24:18]
-  wire [7:0] l2_directs_0_wstrb; // @[Core.scala 24:18]
-  wire  l2_directs_0_stall; // @[Core.scala 24:18]
-  wire [63:0] l2_directs_0_wdata; // @[Core.scala 24:18]
-  wire [63:0] l2_directs_0_rdata; // @[Core.scala 24:18]
-  wire [47:0] l2_axi_AWADDR; // @[Core.scala 24:18]
-  wire [7:0] l2_axi_AWLEN; // @[Core.scala 24:18]
-  wire [2:0] l2_axi_AWSIZE; // @[Core.scala 24:18]
-  wire [1:0] l2_axi_AWBURST; // @[Core.scala 24:18]
-  wire  l2_axi_AWVALID; // @[Core.scala 24:18]
-  wire  l2_axi_AWREADY; // @[Core.scala 24:18]
-  wire [63:0] l2_axi_WDATA; // @[Core.scala 24:18]
-  wire [7:0] l2_axi_WSTRB; // @[Core.scala 24:18]
-  wire  l2_axi_WLAST; // @[Core.scala 24:18]
-  wire  l2_axi_WVALID; // @[Core.scala 24:18]
-  wire  l2_axi_WREADY; // @[Core.scala 24:18]
-  wire  l2_axi_BVALID; // @[Core.scala 24:18]
-  wire  l2_axi_BREADY; // @[Core.scala 24:18]
-  wire [3:0] l2_axi_ARID; // @[Core.scala 24:18]
-  wire [47:0] l2_axi_ARADDR; // @[Core.scala 24:18]
-  wire [7:0] l2_axi_ARLEN; // @[Core.scala 24:18]
-  wire [2:0] l2_axi_ARSIZE; // @[Core.scala 24:18]
-  wire [1:0] l2_axi_ARBURST; // @[Core.scala 24:18]
-  wire  l2_axi_ARVALID; // @[Core.scala 24:18]
-  wire  l2_axi_ARREADY; // @[Core.scala 24:18]
-  wire [3:0] l2_axi_RID; // @[Core.scala 24:18]
-  wire [63:0] l2_axi_RDATA; // @[Core.scala 24:18]
-  wire  l2_axi_RLAST; // @[Core.scala 24:18]
-  wire  l2_axi_RVALID; // @[Core.scala 24:18]
-  wire  l2_axi_RREADY; // @[Core.scala 24:18]
-  wire  l1i_clock; // @[Core.scala 25:19]
-  wire  l1i_reset; // @[Core.scala 25:19]
-  wire [47:0] l1i_toCPU_addr; // @[Core.scala 25:19]
-  wire  l1i_toCPU_read; // @[Core.scala 25:19]
-  wire  l1i_toCPU_stall; // @[Core.scala 25:19]
-  wire  l1i_toCPU_rst; // @[Core.scala 25:19]
-  wire [31:0] l1i_toCPU_data; // @[Core.scala 25:19]
-  wire  l1i_toCPU_vacant; // @[Core.scala 25:19]
-  wire  l1i_toL2_read; // @[Core.scala 25:19]
-  wire [47:0] l1i_toL2_addr; // @[Core.scala 25:19]
-  wire  l1i_toL2_stall; // @[Core.scala 25:19]
-  wire [127:0] l1i_toL2_data; // @[Core.scala 25:19]
-  wire  l1d_clock; // @[Core.scala 26:19]
-  wire  l1d_reset; // @[Core.scala 26:19]
-  wire [47:0] l1d_r_addr; // @[Core.scala 26:19]
-  wire  l1d_r_read; // @[Core.scala 26:19]
-  wire [63:0] l1d_r_data; // @[Core.scala 26:19]
-  wire  l1d_r_stall; // @[Core.scala 26:19]
-  wire [47:0] l1d_w_addr; // @[Core.scala 26:19]
-  wire  l1d_w_write; // @[Core.scala 26:19]
-  wire [63:0] l1d_w_data; // @[Core.scala 26:19]
-  wire [7:0] l1d_w_be; // @[Core.scala 26:19]
-  wire  l1d_w_stall; // @[Core.scala 26:19]
-  wire  l1d_fs_wbufClear; // @[Core.scala 26:19]
-  wire [1:0] l1d_toL2_l1req; // @[Core.scala 26:19]
-  wire [47:0] l1d_toL2_l1addr; // @[Core.scala 26:19]
-  wire  l1d_toL2_l1stall; // @[Core.scala 26:19]
-  wire [1:0] l1d_toL2_l2req; // @[Core.scala 26:19]
-  wire [47:0] l1d_toL2_l2addr; // @[Core.scala 26:19]
-  wire  l1d_toL2_l2stall; // @[Core.scala 26:19]
-  wire [127:0] l1d_toL2_wdata; // @[Core.scala 26:19]
-  wire [127:0] l1d_toL2_rdata; // @[Core.scala 26:19]
-  wire  fetch_clock; // @[Core.scala 32:21]
-  wire  fetch_reset; // @[Core.scala 32:21]
-  wire [63:0] fetch_toCtrl_pc; // @[Core.scala 32:21]
-  wire  fetch_toCtrl_skip; // @[Core.scala 32:21]
-  wire  fetch_toCtrl_ctrl_stall; // @[Core.scala 32:21]
-  wire  fetch_toCtrl_ctrl_flush; // @[Core.scala 32:21]
-  wire  fetch_toCtrl_irst; // @[Core.scala 32:21]
-  wire [47:0] fetch_toIC_addr; // @[Core.scala 32:21]
-  wire  fetch_toIC_read; // @[Core.scala 32:21]
-  wire  fetch_toIC_stall; // @[Core.scala 32:21]
-  wire  fetch_toIC_rst; // @[Core.scala 32:21]
-  wire [31:0] fetch_toIC_data; // @[Core.scala 32:21]
-  wire  fetch_toIC_vacant; // @[Core.scala 32:21]
-  wire [63:0] fetch_toExec_view_0_addr; // @[Core.scala 32:21]
-  wire [4:0] fetch_toExec_view_0_instr_op; // @[Core.scala 32:21]
-  wire [2:0] fetch_toExec_view_0_instr_base; // @[Core.scala 32:21]
-  wire [31:0] fetch_toExec_view_0_instr_imm; // @[Core.scala 32:21]
-  wire [4:0] fetch_toExec_view_0_instr_rs1; // @[Core.scala 32:21]
-  wire [4:0] fetch_toExec_view_0_instr_rs2; // @[Core.scala 32:21]
-  wire [4:0] fetch_toExec_view_0_instr_rd; // @[Core.scala 32:21]
-  wire [6:0] fetch_toExec_view_0_instr_funct7; // @[Core.scala 32:21]
-  wire [2:0] fetch_toExec_view_0_instr_funct3; // @[Core.scala 32:21]
-  wire  fetch_toExec_view_0_vacant; // @[Core.scala 32:21]
-  wire  fetch_toExec_view_0_invalAddr; // @[Core.scala 32:21]
-  wire [63:0] fetch_toExec_view_1_addr; // @[Core.scala 32:21]
-  wire [4:0] fetch_toExec_view_1_instr_op; // @[Core.scala 32:21]
-  wire [2:0] fetch_toExec_view_1_instr_base; // @[Core.scala 32:21]
-  wire [31:0] fetch_toExec_view_1_instr_imm; // @[Core.scala 32:21]
-  wire [4:0] fetch_toExec_view_1_instr_rs1; // @[Core.scala 32:21]
-  wire [4:0] fetch_toExec_view_1_instr_rs2; // @[Core.scala 32:21]
-  wire [4:0] fetch_toExec_view_1_instr_rd; // @[Core.scala 32:21]
-  wire [6:0] fetch_toExec_view_1_instr_funct7; // @[Core.scala 32:21]
-  wire [2:0] fetch_toExec_view_1_instr_funct3; // @[Core.scala 32:21]
-  wire  fetch_toExec_view_1_vacant; // @[Core.scala 32:21]
-  wire  fetch_toExec_view_1_invalAddr; // @[Core.scala 32:21]
-  wire [1:0] fetch_toExec_cnt; // @[Core.scala 32:21]
-  wire [1:0] fetch_toExec_pop; // @[Core.scala 32:21]
-  wire  exec_clock; // @[Core.scala 33:20]
-  wire  exec_reset; // @[Core.scala 33:20]
-  wire  exec_toCtrl_ctrl_flush; // @[Core.scala 33:20]
-  wire [1:0] exec_toCtrl_retCnt; // @[Core.scala 33:20]
-  wire [63:0] exec_toCtrl_nepc; // @[Core.scala 33:20]
-  wire  exec_toCtrl_branch_branch; // @[Core.scala 33:20]
-  wire  exec_toCtrl_branch_irst; // @[Core.scala 33:20]
-  wire [63:0] exec_toCtrl_branch_target; // @[Core.scala 33:20]
-  wire [1:0] exec_toCtrl_branch_ex; // @[Core.scala 33:20]
-  wire [3:0] exec_toCtrl_branch_extype; // @[Core.scala 33:20]
-  wire [63:0] exec_toCtrl_tval; // @[Core.scala 33:20]
-  wire  exec_toCtrl_int; // @[Core.scala 33:20]
-  wire  exec_toCtrl_intAck; // @[Core.scala 33:20]
-  wire [11:0] exec_csrWriter_addr; // @[Core.scala 33:20]
-  wire [1:0] exec_csrWriter_op; // @[Core.scala 33:20]
-  wire [63:0] exec_csrWriter_rdata; // @[Core.scala 33:20]
-  wire [63:0] exec_csrWriter_wdata; // @[Core.scala 33:20]
-  wire [4:0] exec_rr_0_addr; // @[Core.scala 33:20]
-  wire [63:0] exec_rr_0_data; // @[Core.scala 33:20]
-  wire [4:0] exec_rr_1_addr; // @[Core.scala 33:20]
-  wire [63:0] exec_rr_1_data; // @[Core.scala 33:20]
-  wire [4:0] exec_rr_2_addr; // @[Core.scala 33:20]
-  wire [63:0] exec_rr_2_data; // @[Core.scala 33:20]
-  wire [4:0] exec_rr_3_addr; // @[Core.scala 33:20]
-  wire [63:0] exec_rr_3_data; // @[Core.scala 33:20]
-  wire [4:0] exec_rw_0_addr; // @[Core.scala 33:20]
-  wire [63:0] exec_rw_0_data; // @[Core.scala 33:20]
-  wire [4:0] exec_rw_1_addr; // @[Core.scala 33:20]
-  wire [63:0] exec_rw_1_data; // @[Core.scala 33:20]
-  wire [63:0] exec_toIF_view_0_addr; // @[Core.scala 33:20]
-  wire [4:0] exec_toIF_view_0_instr_op; // @[Core.scala 33:20]
-  wire [2:0] exec_toIF_view_0_instr_base; // @[Core.scala 33:20]
-  wire [31:0] exec_toIF_view_0_instr_imm; // @[Core.scala 33:20]
-  wire [4:0] exec_toIF_view_0_instr_rs1; // @[Core.scala 33:20]
-  wire [4:0] exec_toIF_view_0_instr_rs2; // @[Core.scala 33:20]
-  wire [4:0] exec_toIF_view_0_instr_rd; // @[Core.scala 33:20]
-  wire [6:0] exec_toIF_view_0_instr_funct7; // @[Core.scala 33:20]
-  wire [2:0] exec_toIF_view_0_instr_funct3; // @[Core.scala 33:20]
-  wire  exec_toIF_view_0_vacant; // @[Core.scala 33:20]
-  wire  exec_toIF_view_0_invalAddr; // @[Core.scala 33:20]
-  wire [63:0] exec_toIF_view_1_addr; // @[Core.scala 33:20]
-  wire [4:0] exec_toIF_view_1_instr_op; // @[Core.scala 33:20]
-  wire [2:0] exec_toIF_view_1_instr_base; // @[Core.scala 33:20]
-  wire [31:0] exec_toIF_view_1_instr_imm; // @[Core.scala 33:20]
-  wire [4:0] exec_toIF_view_1_instr_rs1; // @[Core.scala 33:20]
-  wire [4:0] exec_toIF_view_1_instr_rs2; // @[Core.scala 33:20]
-  wire [4:0] exec_toIF_view_1_instr_rd; // @[Core.scala 33:20]
-  wire [6:0] exec_toIF_view_1_instr_funct7; // @[Core.scala 33:20]
-  wire [2:0] exec_toIF_view_1_instr_funct3; // @[Core.scala 33:20]
-  wire  exec_toIF_view_1_vacant; // @[Core.scala 33:20]
-  wire  exec_toIF_view_1_invalAddr; // @[Core.scala 33:20]
-  wire [1:0] exec_toIF_cnt; // @[Core.scala 33:20]
-  wire [1:0] exec_toIF_pop; // @[Core.scala 33:20]
-  wire [47:0] exec_toDC_r_addr; // @[Core.scala 33:20]
-  wire  exec_toDC_r_read; // @[Core.scala 33:20]
-  wire [63:0] exec_toDC_r_data; // @[Core.scala 33:20]
-  wire  exec_toDC_r_stall; // @[Core.scala 33:20]
-  wire [47:0] exec_toDC_w_addr; // @[Core.scala 33:20]
-  wire  exec_toDC_w_write; // @[Core.scala 33:20]
-  wire [63:0] exec_toDC_w_data; // @[Core.scala 33:20]
-  wire [7:0] exec_toDC_w_be; // @[Core.scala 33:20]
-  wire  exec_toDC_w_stall; // @[Core.scala 33:20]
-  wire  exec_toDC_fs_wbufClear; // @[Core.scala 33:20]
-  wire  exec_toDC_u_read; // @[Core.scala 33:20]
-  wire  exec_toDC_u_write; // @[Core.scala 33:20]
-  wire [47:0] exec_toDC_u_addr; // @[Core.scala 33:20]
-  wire [7:0] exec_toDC_u_wstrb; // @[Core.scala 33:20]
-  wire  exec_toDC_u_stall; // @[Core.scala 33:20]
-  wire [63:0] exec_toDC_u_wdata; // @[Core.scala 33:20]
-  wire [63:0] exec_toDC_u_rdata; // @[Core.scala 33:20]
-  wire  reg__clock; // @[Core.scala 34:19]
-  wire  reg__reset; // @[Core.scala 34:19]
-  wire [4:0] reg__io_reads_0_addr; // @[Core.scala 34:19]
-  wire [63:0] reg__io_reads_0_data; // @[Core.scala 34:19]
-  wire [4:0] reg__io_reads_1_addr; // @[Core.scala 34:19]
-  wire [63:0] reg__io_reads_1_data; // @[Core.scala 34:19]
-  wire [4:0] reg__io_reads_2_addr; // @[Core.scala 34:19]
-  wire [63:0] reg__io_reads_2_data; // @[Core.scala 34:19]
-  wire [4:0] reg__io_reads_3_addr; // @[Core.scala 34:19]
-  wire [63:0] reg__io_reads_3_data; // @[Core.scala 34:19]
-  wire [4:0] reg__io_writes_0_addr; // @[Core.scala 34:19]
-  wire [63:0] reg__io_writes_0_data; // @[Core.scala 34:19]
-  wire [4:0] reg__io_writes_1_addr; // @[Core.scala 34:19]
-  wire [63:0] reg__io_writes_1_data; // @[Core.scala 34:19]
-  wire [11:0] csrWriter_addr; // @[CSR.scala 131:24 Core.scala 49:18]
+  wire  ctrl_clock; // @[Core.scala 24:20]
+  wire  ctrl_reset; // @[Core.scala 24:20]
+  wire [63:0] ctrl_io_pc; // @[Core.scala 24:20]
+  wire  ctrl_io_skip; // @[Core.scala 24:20]
+  wire  ctrl_io_irst; // @[Core.scala 24:20]
+  wire  ctrl_io_fetch_stall; // @[Core.scala 24:20]
+  wire  ctrl_io_fetch_flush; // @[Core.scala 24:20]
+  wire  ctrl_io_exec_flush; // @[Core.scala 24:20]
+  wire  ctrl_br_req_branch; // @[Core.scala 24:20]
+  wire  ctrl_br_req_irst; // @[Core.scala 24:20]
+  wire [63:0] ctrl_br_req_target; // @[Core.scala 24:20]
+  wire [1:0] ctrl_br_req_ex; // @[Core.scala 24:20]
+  wire [3:0] ctrl_br_req_extype; // @[Core.scala 24:20]
+  wire [63:0] ctrl_br_tval; // @[Core.scala 24:20]
+  wire [1:0] ctrl_toExec_retCnt; // @[Core.scala 24:20]
+  wire [63:0] ctrl_toExec_nepc; // @[Core.scala 24:20]
+  wire  ctrl_toExec_int; // @[Core.scala 24:20]
+  wire  ctrl_toExec_intAck; // @[Core.scala 24:20]
+  wire  ctrl_eint; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mcycle_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mcycle_wdata; // @[Core.scala 24:20]
+  wire  ctrl_csr_mcycle_write; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mstatus_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mstatus_wdata; // @[Core.scala 24:20]
+  wire  ctrl_csr_mstatus_write; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mtvec_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mtvec_wdata; // @[Core.scala 24:20]
+  wire  ctrl_csr_mtvec_write; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mie_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mie_wdata; // @[Core.scala 24:20]
+  wire  ctrl_csr_mie_write; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mip_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mepc_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mepc_wdata; // @[Core.scala 24:20]
+  wire  ctrl_csr_mepc_write; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mcause_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mcause_wdata; // @[Core.scala 24:20]
+  wire  ctrl_csr_mcause_write; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mtval_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mtval_wdata; // @[Core.scala 24:20]
+  wire  ctrl_csr_mtval_write; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mcountinhibit_rdata; // @[Core.scala 24:20]
+  wire [63:0] ctrl_csr_mcountinhibit_wdata; // @[Core.scala 24:20]
+  wire  ctrl_csr_mcountinhibit_write; // @[Core.scala 24:20]
+  wire  icpass_clock; // @[Core.scala 27:22]
+  wire  icpass_reset; // @[Core.scala 27:22]
+  wire [47:0] icpass_toCPU_addr; // @[Core.scala 27:22]
+  wire  icpass_toCPU_read; // @[Core.scala 27:22]
+  wire  icpass_toCPU_stall; // @[Core.scala 27:22]
+  wire  icpass_toCPU_rst; // @[Core.scala 27:22]
+  wire [31:0] icpass_toCPU_data; // @[Core.scala 27:22]
+  wire  icpass_toCPU_vacant; // @[Core.scala 27:22]
+  wire [47:0] icpass_axi_ARADDR; // @[Core.scala 27:22]
+  wire [2:0] icpass_axi_ARSIZE; // @[Core.scala 27:22]
+  wire [1:0] icpass_axi_ARBURST; // @[Core.scala 27:22]
+  wire  icpass_axi_ARVALID; // @[Core.scala 27:22]
+  wire  icpass_axi_ARREADY; // @[Core.scala 27:22]
+  wire [63:0] icpass_axi_RDATA; // @[Core.scala 27:22]
+  wire  icpass_axi_RVALID; // @[Core.scala 27:22]
+  wire  icpass_axi_RREADY; // @[Core.scala 27:22]
+  wire  dcpass_clock; // @[Core.scala 28:22]
+  wire  dcpass_reset; // @[Core.scala 28:22]
+  wire [47:0] dcpass_r_addr; // @[Core.scala 28:22]
+  wire  dcpass_r_read; // @[Core.scala 28:22]
+  wire [63:0] dcpass_r_data; // @[Core.scala 28:22]
+  wire  dcpass_r_stall; // @[Core.scala 28:22]
+  wire [47:0] dcpass_w_addr; // @[Core.scala 28:22]
+  wire  dcpass_w_write; // @[Core.scala 28:22]
+  wire [63:0] dcpass_w_data; // @[Core.scala 28:22]
+  wire [7:0] dcpass_w_be; // @[Core.scala 28:22]
+  wire  dcpass_w_stall; // @[Core.scala 28:22]
+  wire [47:0] dcpass_axi_AWADDR; // @[Core.scala 28:22]
+  wire [2:0] dcpass_axi_AWSIZE; // @[Core.scala 28:22]
+  wire [1:0] dcpass_axi_AWBURST; // @[Core.scala 28:22]
+  wire  dcpass_axi_AWVALID; // @[Core.scala 28:22]
+  wire  dcpass_axi_AWREADY; // @[Core.scala 28:22]
+  wire [63:0] dcpass_axi_WDATA; // @[Core.scala 28:22]
+  wire [7:0] dcpass_axi_WSTRB; // @[Core.scala 28:22]
+  wire  dcpass_axi_WLAST; // @[Core.scala 28:22]
+  wire  dcpass_axi_WVALID; // @[Core.scala 28:22]
+  wire  dcpass_axi_BVALID; // @[Core.scala 28:22]
+  wire  dcpass_axi_BREADY; // @[Core.scala 28:22]
+  wire [47:0] dcpass_axi_ARADDR; // @[Core.scala 28:22]
+  wire [2:0] dcpass_axi_ARSIZE; // @[Core.scala 28:22]
+  wire [1:0] dcpass_axi_ARBURST; // @[Core.scala 28:22]
+  wire  dcpass_axi_ARVALID; // @[Core.scala 28:22]
+  wire  dcpass_axi_ARREADY; // @[Core.scala 28:22]
+  wire [63:0] dcpass_axi_RDATA; // @[Core.scala 28:22]
+  wire  dcpass_axi_RVALID; // @[Core.scala 28:22]
+  wire  dcpass_axi_RREADY; // @[Core.scala 28:22]
+  wire  ucpass_clock; // @[Core.scala 29:22]
+  wire  ucpass_reset; // @[Core.scala 29:22]
+  wire  ucpass_toCPU_read; // @[Core.scala 29:22]
+  wire  ucpass_toCPU_write; // @[Core.scala 29:22]
+  wire [47:0] ucpass_toCPU_addr; // @[Core.scala 29:22]
+  wire [7:0] ucpass_toCPU_wstrb; // @[Core.scala 29:22]
+  wire  ucpass_toCPU_stall; // @[Core.scala 29:22]
+  wire [63:0] ucpass_toCPU_wdata; // @[Core.scala 29:22]
+  wire [63:0] ucpass_toCPU_rdata; // @[Core.scala 29:22]
+  wire [47:0] ucpass_axi_AWADDR; // @[Core.scala 29:22]
+  wire [2:0] ucpass_axi_AWSIZE; // @[Core.scala 29:22]
+  wire [1:0] ucpass_axi_AWBURST; // @[Core.scala 29:22]
+  wire  ucpass_axi_AWVALID; // @[Core.scala 29:22]
+  wire  ucpass_axi_AWREADY; // @[Core.scala 29:22]
+  wire [63:0] ucpass_axi_WDATA; // @[Core.scala 29:22]
+  wire [7:0] ucpass_axi_WSTRB; // @[Core.scala 29:22]
+  wire  ucpass_axi_WLAST; // @[Core.scala 29:22]
+  wire  ucpass_axi_WVALID; // @[Core.scala 29:22]
+  wire  ucpass_axi_BVALID; // @[Core.scala 29:22]
+  wire  ucpass_axi_BREADY; // @[Core.scala 29:22]
+  wire [47:0] ucpass_axi_ARADDR; // @[Core.scala 29:22]
+  wire [2:0] ucpass_axi_ARSIZE; // @[Core.scala 29:22]
+  wire [1:0] ucpass_axi_ARBURST; // @[Core.scala 29:22]
+  wire  ucpass_axi_ARVALID; // @[Core.scala 29:22]
+  wire  ucpass_axi_ARREADY; // @[Core.scala 29:22]
+  wire [63:0] ucpass_axi_RDATA; // @[Core.scala 29:22]
+  wire  ucpass_axi_RVALID; // @[Core.scala 29:22]
+  wire  ucpass_axi_RREADY; // @[Core.scala 29:22]
+  wire  fetch_clock; // @[Core.scala 35:21]
+  wire  fetch_reset; // @[Core.scala 35:21]
+  wire [63:0] fetch_toCtrl_pc; // @[Core.scala 35:21]
+  wire  fetch_toCtrl_skip; // @[Core.scala 35:21]
+  wire  fetch_toCtrl_ctrl_stall; // @[Core.scala 35:21]
+  wire  fetch_toCtrl_ctrl_flush; // @[Core.scala 35:21]
+  wire  fetch_toCtrl_irst; // @[Core.scala 35:21]
+  wire [47:0] fetch_toIC_addr; // @[Core.scala 35:21]
+  wire  fetch_toIC_read; // @[Core.scala 35:21]
+  wire  fetch_toIC_stall; // @[Core.scala 35:21]
+  wire  fetch_toIC_rst; // @[Core.scala 35:21]
+  wire [31:0] fetch_toIC_data; // @[Core.scala 35:21]
+  wire  fetch_toIC_vacant; // @[Core.scala 35:21]
+  wire [63:0] fetch_toExec_view_0_addr; // @[Core.scala 35:21]
+  wire [4:0] fetch_toExec_view_0_instr_op; // @[Core.scala 35:21]
+  wire [2:0] fetch_toExec_view_0_instr_base; // @[Core.scala 35:21]
+  wire [31:0] fetch_toExec_view_0_instr_imm; // @[Core.scala 35:21]
+  wire [4:0] fetch_toExec_view_0_instr_rs1; // @[Core.scala 35:21]
+  wire [4:0] fetch_toExec_view_0_instr_rs2; // @[Core.scala 35:21]
+  wire [4:0] fetch_toExec_view_0_instr_rd; // @[Core.scala 35:21]
+  wire [6:0] fetch_toExec_view_0_instr_funct7; // @[Core.scala 35:21]
+  wire [2:0] fetch_toExec_view_0_instr_funct3; // @[Core.scala 35:21]
+  wire  fetch_toExec_view_0_vacant; // @[Core.scala 35:21]
+  wire  fetch_toExec_view_0_invalAddr; // @[Core.scala 35:21]
+  wire [63:0] fetch_toExec_view_1_addr; // @[Core.scala 35:21]
+  wire [4:0] fetch_toExec_view_1_instr_op; // @[Core.scala 35:21]
+  wire [2:0] fetch_toExec_view_1_instr_base; // @[Core.scala 35:21]
+  wire [31:0] fetch_toExec_view_1_instr_imm; // @[Core.scala 35:21]
+  wire [4:0] fetch_toExec_view_1_instr_rs1; // @[Core.scala 35:21]
+  wire [4:0] fetch_toExec_view_1_instr_rs2; // @[Core.scala 35:21]
+  wire [4:0] fetch_toExec_view_1_instr_rd; // @[Core.scala 35:21]
+  wire [6:0] fetch_toExec_view_1_instr_funct7; // @[Core.scala 35:21]
+  wire [2:0] fetch_toExec_view_1_instr_funct3; // @[Core.scala 35:21]
+  wire  fetch_toExec_view_1_vacant; // @[Core.scala 35:21]
+  wire  fetch_toExec_view_1_invalAddr; // @[Core.scala 35:21]
+  wire [1:0] fetch_toExec_cnt; // @[Core.scala 35:21]
+  wire [1:0] fetch_toExec_pop; // @[Core.scala 35:21]
+  wire  exec_clock; // @[Core.scala 36:20]
+  wire  exec_reset; // @[Core.scala 36:20]
+  wire  exec_toCtrl_ctrl_flush; // @[Core.scala 36:20]
+  wire [1:0] exec_toCtrl_retCnt; // @[Core.scala 36:20]
+  wire [63:0] exec_toCtrl_nepc; // @[Core.scala 36:20]
+  wire  exec_toCtrl_branch_branch; // @[Core.scala 36:20]
+  wire  exec_toCtrl_branch_irst; // @[Core.scala 36:20]
+  wire [63:0] exec_toCtrl_branch_target; // @[Core.scala 36:20]
+  wire [1:0] exec_toCtrl_branch_ex; // @[Core.scala 36:20]
+  wire [3:0] exec_toCtrl_branch_extype; // @[Core.scala 36:20]
+  wire [63:0] exec_toCtrl_tval; // @[Core.scala 36:20]
+  wire  exec_toCtrl_int; // @[Core.scala 36:20]
+  wire  exec_toCtrl_intAck; // @[Core.scala 36:20]
+  wire [11:0] exec_csrWriter_addr; // @[Core.scala 36:20]
+  wire [1:0] exec_csrWriter_op; // @[Core.scala 36:20]
+  wire [63:0] exec_csrWriter_rdata; // @[Core.scala 36:20]
+  wire [63:0] exec_csrWriter_wdata; // @[Core.scala 36:20]
+  wire [4:0] exec_rr_0_addr; // @[Core.scala 36:20]
+  wire [63:0] exec_rr_0_data; // @[Core.scala 36:20]
+  wire [4:0] exec_rr_1_addr; // @[Core.scala 36:20]
+  wire [63:0] exec_rr_1_data; // @[Core.scala 36:20]
+  wire [4:0] exec_rr_2_addr; // @[Core.scala 36:20]
+  wire [63:0] exec_rr_2_data; // @[Core.scala 36:20]
+  wire [4:0] exec_rr_3_addr; // @[Core.scala 36:20]
+  wire [63:0] exec_rr_3_data; // @[Core.scala 36:20]
+  wire [4:0] exec_rw_0_addr; // @[Core.scala 36:20]
+  wire [63:0] exec_rw_0_data; // @[Core.scala 36:20]
+  wire [4:0] exec_rw_1_addr; // @[Core.scala 36:20]
+  wire [63:0] exec_rw_1_data; // @[Core.scala 36:20]
+  wire [63:0] exec_toIF_view_0_addr; // @[Core.scala 36:20]
+  wire [4:0] exec_toIF_view_0_instr_op; // @[Core.scala 36:20]
+  wire [2:0] exec_toIF_view_0_instr_base; // @[Core.scala 36:20]
+  wire [31:0] exec_toIF_view_0_instr_imm; // @[Core.scala 36:20]
+  wire [4:0] exec_toIF_view_0_instr_rs1; // @[Core.scala 36:20]
+  wire [4:0] exec_toIF_view_0_instr_rs2; // @[Core.scala 36:20]
+  wire [4:0] exec_toIF_view_0_instr_rd; // @[Core.scala 36:20]
+  wire [6:0] exec_toIF_view_0_instr_funct7; // @[Core.scala 36:20]
+  wire [2:0] exec_toIF_view_0_instr_funct3; // @[Core.scala 36:20]
+  wire  exec_toIF_view_0_vacant; // @[Core.scala 36:20]
+  wire  exec_toIF_view_0_invalAddr; // @[Core.scala 36:20]
+  wire [63:0] exec_toIF_view_1_addr; // @[Core.scala 36:20]
+  wire [4:0] exec_toIF_view_1_instr_op; // @[Core.scala 36:20]
+  wire [2:0] exec_toIF_view_1_instr_base; // @[Core.scala 36:20]
+  wire [31:0] exec_toIF_view_1_instr_imm; // @[Core.scala 36:20]
+  wire [4:0] exec_toIF_view_1_instr_rs1; // @[Core.scala 36:20]
+  wire [4:0] exec_toIF_view_1_instr_rs2; // @[Core.scala 36:20]
+  wire [4:0] exec_toIF_view_1_instr_rd; // @[Core.scala 36:20]
+  wire [6:0] exec_toIF_view_1_instr_funct7; // @[Core.scala 36:20]
+  wire [2:0] exec_toIF_view_1_instr_funct3; // @[Core.scala 36:20]
+  wire  exec_toIF_view_1_vacant; // @[Core.scala 36:20]
+  wire  exec_toIF_view_1_invalAddr; // @[Core.scala 36:20]
+  wire [1:0] exec_toIF_cnt; // @[Core.scala 36:20]
+  wire [1:0] exec_toIF_pop; // @[Core.scala 36:20]
+  wire [47:0] exec_toDC_r_addr; // @[Core.scala 36:20]
+  wire  exec_toDC_r_read; // @[Core.scala 36:20]
+  wire [63:0] exec_toDC_r_data; // @[Core.scala 36:20]
+  wire  exec_toDC_r_stall; // @[Core.scala 36:20]
+  wire [47:0] exec_toDC_w_addr; // @[Core.scala 36:20]
+  wire  exec_toDC_w_write; // @[Core.scala 36:20]
+  wire [63:0] exec_toDC_w_data; // @[Core.scala 36:20]
+  wire [7:0] exec_toDC_w_be; // @[Core.scala 36:20]
+  wire  exec_toDC_w_stall; // @[Core.scala 36:20]
+  wire  exec_toDC_u_read; // @[Core.scala 36:20]
+  wire  exec_toDC_u_write; // @[Core.scala 36:20]
+  wire [47:0] exec_toDC_u_addr; // @[Core.scala 36:20]
+  wire [7:0] exec_toDC_u_wstrb; // @[Core.scala 36:20]
+  wire  exec_toDC_u_stall; // @[Core.scala 36:20]
+  wire [63:0] exec_toDC_u_wdata; // @[Core.scala 36:20]
+  wire [63:0] exec_toDC_u_rdata; // @[Core.scala 36:20]
+  wire  reg__clock; // @[Core.scala 37:19]
+  wire  reg__reset; // @[Core.scala 37:19]
+  wire [4:0] reg__io_reads_0_addr; // @[Core.scala 37:19]
+  wire [63:0] reg__io_reads_0_data; // @[Core.scala 37:19]
+  wire [4:0] reg__io_reads_1_addr; // @[Core.scala 37:19]
+  wire [63:0] reg__io_reads_1_data; // @[Core.scala 37:19]
+  wire [4:0] reg__io_reads_2_addr; // @[Core.scala 37:19]
+  wire [63:0] reg__io_reads_2_data; // @[Core.scala 37:19]
+  wire [4:0] reg__io_reads_3_addr; // @[Core.scala 37:19]
+  wire [63:0] reg__io_reads_3_data; // @[Core.scala 37:19]
+  wire [4:0] reg__io_writes_0_addr; // @[Core.scala 37:19]
+  wire [63:0] reg__io_writes_0_data; // @[Core.scala 37:19]
+  wire [4:0] reg__io_writes_1_addr; // @[Core.scala 37:19]
+  wire [63:0] reg__io_writes_1_data; // @[Core.scala 37:19]
+  wire [11:0] csrWriter_addr; // @[CSR.scala 131:24 Core.scala 52:18]
   wire  _T_42; // @[Mux.scala 68:19]
   wire [63:0] _T_110_rdata; // @[CSR.scala 72:20 CSR.scala 36:16]
   wire [63:0] _T_43; // @[Mux.scala 68:16]
@@ -44254,13 +35859,13 @@ module Core(
   wire [63:0] _T_114_rdata; // @[CSR.scala 72:20 CSR.scala 36:16]
   wire [63:0] _T_49; // @[Mux.scala 68:16]
   wire  _T_50; // @[Mux.scala 68:19]
-  reg [63:0] mscratch; // @[Core.scala 86:25]
+  reg [63:0] mscratch; // @[Core.scala 90:25]
   reg [63:0] _RAND_0;
   wire [63:0] _T_51; // @[Mux.scala 68:16]
   wire  _T_52; // @[Mux.scala 68:19]
   wire [63:0] _T_53; // @[Mux.scala 68:16]
   wire  _T_54; // @[Mux.scala 68:19]
-  reg [63:0] mideleg; // @[Core.scala 83:24]
+  reg [63:0] mideleg; // @[Core.scala 87:24]
   reg [63:0] _RAND_1;
   wire [63:0] _T_55; // @[Mux.scala 68:16]
   wire  _T_56; // @[Mux.scala 68:19]
@@ -44288,16 +35893,16 @@ module Core(
   wire [63:0] _T_109_rdata; // @[CSR.scala 72:20 CSR.scala 36:16]
   wire [63:0] _T_73; // @[Mux.scala 68:16]
   wire  _T_74; // @[Mux.scala 68:19]
-  reg [63:0] medeleg; // @[Core.scala 81:24]
+  reg [63:0] medeleg; // @[Core.scala 85:24]
   reg [63:0] _RAND_2;
   wire [63:0] _T_75; // @[Mux.scala 68:16]
   wire  _T_76; // @[Mux.scala 68:19]
   wire [63:0] csrWriter_rdata; // @[Mux.scala 68:16]
-  wire [1:0] csrWriter_op; // @[CSR.scala 131:24 Core.scala 49:18]
+  wire [1:0] csrWriter_op; // @[CSR.scala 131:24 Core.scala 52:18]
   wire [1:0] _T_81; // @[Conditional.scala 37:39]
   wire  _T_82; // @[Conditional.scala 37:30]
   wire  _T_85; // @[Conditional.scala 37:30]
-  wire [63:0] csrWriter_wdata; // @[CSR.scala 131:24 Core.scala 49:18]
+  wire [63:0] csrWriter_wdata; // @[CSR.scala 131:24 Core.scala 52:18]
   wire [63:0] _T_86; // @[CSR.scala 154:23]
   wire  _T_89; // @[Conditional.scala 37:30]
   wire [63:0] _T_90; // @[CSR.scala 159:26]
@@ -44308,7 +35913,7 @@ module Core(
   wire  _GEN_31; // @[CSR.scala 169:19]
   wire  _GEN_45; // @[CSR.scala 169:19]
   wire  _GEN_47; // @[CSR.scala 169:19]
-  PipeCtrl ctrl ( // @[Core.scala 21:20]
+  PipeCtrl ctrl ( // @[Core.scala 24:20]
     .clock(ctrl_clock),
     .reset(ctrl_reset),
     .io_pc(ctrl_io_pc),
@@ -44354,91 +35959,87 @@ module Core(
     .csr_mcountinhibit_wdata(ctrl_csr_mcountinhibit_wdata),
     .csr_mcountinhibit_write(ctrl_csr_mcountinhibit_write)
   );
-  L2Cache l2 ( // @[Core.scala 24:18]
-    .clock(l2_clock),
-    .reset(l2_reset),
-    .ic_0_read(l2_ic_0_read),
-    .ic_0_addr(l2_ic_0_addr),
-    .ic_0_stall(l2_ic_0_stall),
-    .ic_0_data(l2_ic_0_data),
-    .dc_0_l1req(l2_dc_0_l1req),
-    .dc_0_l1addr(l2_dc_0_l1addr),
-    .dc_0_l1stall(l2_dc_0_l1stall),
-    .dc_0_l2req(l2_dc_0_l2req),
-    .dc_0_l2addr(l2_dc_0_l2addr),
-    .dc_0_l2stall(l2_dc_0_l2stall),
-    .dc_0_wdata(l2_dc_0_wdata),
-    .dc_0_rdata(l2_dc_0_rdata),
-    .directs_0_read(l2_directs_0_read),
-    .directs_0_write(l2_directs_0_write),
-    .directs_0_addr(l2_directs_0_addr),
-    .directs_0_wstrb(l2_directs_0_wstrb),
-    .directs_0_stall(l2_directs_0_stall),
-    .directs_0_wdata(l2_directs_0_wdata),
-    .directs_0_rdata(l2_directs_0_rdata),
-    .axi_AWADDR(l2_axi_AWADDR),
-    .axi_AWLEN(l2_axi_AWLEN),
-    .axi_AWSIZE(l2_axi_AWSIZE),
-    .axi_AWBURST(l2_axi_AWBURST),
-    .axi_AWVALID(l2_axi_AWVALID),
-    .axi_AWREADY(l2_axi_AWREADY),
-    .axi_WDATA(l2_axi_WDATA),
-    .axi_WSTRB(l2_axi_WSTRB),
-    .axi_WLAST(l2_axi_WLAST),
-    .axi_WVALID(l2_axi_WVALID),
-    .axi_WREADY(l2_axi_WREADY),
-    .axi_BVALID(l2_axi_BVALID),
-    .axi_BREADY(l2_axi_BREADY),
-    .axi_ARID(l2_axi_ARID),
-    .axi_ARADDR(l2_axi_ARADDR),
-    .axi_ARLEN(l2_axi_ARLEN),
-    .axi_ARSIZE(l2_axi_ARSIZE),
-    .axi_ARBURST(l2_axi_ARBURST),
-    .axi_ARVALID(l2_axi_ARVALID),
-    .axi_ARREADY(l2_axi_ARREADY),
-    .axi_RID(l2_axi_RID),
-    .axi_RDATA(l2_axi_RDATA),
-    .axi_RLAST(l2_axi_RLAST),
-    .axi_RVALID(l2_axi_RVALID),
-    .axi_RREADY(l2_axi_RREADY)
+  L1ICPass icpass ( // @[Core.scala 27:22]
+    .clock(icpass_clock),
+    .reset(icpass_reset),
+    .toCPU_addr(icpass_toCPU_addr),
+    .toCPU_read(icpass_toCPU_read),
+    .toCPU_stall(icpass_toCPU_stall),
+    .toCPU_rst(icpass_toCPU_rst),
+    .toCPU_data(icpass_toCPU_data),
+    .toCPU_vacant(icpass_toCPU_vacant),
+    .axi_ARADDR(icpass_axi_ARADDR),
+    .axi_ARSIZE(icpass_axi_ARSIZE),
+    .axi_ARBURST(icpass_axi_ARBURST),
+    .axi_ARVALID(icpass_axi_ARVALID),
+    .axi_ARREADY(icpass_axi_ARREADY),
+    .axi_RDATA(icpass_axi_RDATA),
+    .axi_RVALID(icpass_axi_RVALID),
+    .axi_RREADY(icpass_axi_RREADY)
   );
-  L1IC l1i ( // @[Core.scala 25:19]
-    .clock(l1i_clock),
-    .reset(l1i_reset),
-    .toCPU_addr(l1i_toCPU_addr),
-    .toCPU_read(l1i_toCPU_read),
-    .toCPU_stall(l1i_toCPU_stall),
-    .toCPU_rst(l1i_toCPU_rst),
-    .toCPU_data(l1i_toCPU_data),
-    .toCPU_vacant(l1i_toCPU_vacant),
-    .toL2_read(l1i_toL2_read),
-    .toL2_addr(l1i_toL2_addr),
-    .toL2_stall(l1i_toL2_stall),
-    .toL2_data(l1i_toL2_data)
+  L1DCPass dcpass ( // @[Core.scala 28:22]
+    .clock(dcpass_clock),
+    .reset(dcpass_reset),
+    .r_addr(dcpass_r_addr),
+    .r_read(dcpass_r_read),
+    .r_data(dcpass_r_data),
+    .r_stall(dcpass_r_stall),
+    .w_addr(dcpass_w_addr),
+    .w_write(dcpass_w_write),
+    .w_data(dcpass_w_data),
+    .w_be(dcpass_w_be),
+    .w_stall(dcpass_w_stall),
+    .axi_AWADDR(dcpass_axi_AWADDR),
+    .axi_AWSIZE(dcpass_axi_AWSIZE),
+    .axi_AWBURST(dcpass_axi_AWBURST),
+    .axi_AWVALID(dcpass_axi_AWVALID),
+    .axi_AWREADY(dcpass_axi_AWREADY),
+    .axi_WDATA(dcpass_axi_WDATA),
+    .axi_WSTRB(dcpass_axi_WSTRB),
+    .axi_WLAST(dcpass_axi_WLAST),
+    .axi_WVALID(dcpass_axi_WVALID),
+    .axi_BVALID(dcpass_axi_BVALID),
+    .axi_BREADY(dcpass_axi_BREADY),
+    .axi_ARADDR(dcpass_axi_ARADDR),
+    .axi_ARSIZE(dcpass_axi_ARSIZE),
+    .axi_ARBURST(dcpass_axi_ARBURST),
+    .axi_ARVALID(dcpass_axi_ARVALID),
+    .axi_ARREADY(dcpass_axi_ARREADY),
+    .axi_RDATA(dcpass_axi_RDATA),
+    .axi_RVALID(dcpass_axi_RVALID),
+    .axi_RREADY(dcpass_axi_RREADY)
   );
-  L1DC l1d ( // @[Core.scala 26:19]
-    .clock(l1d_clock),
-    .reset(l1d_reset),
-    .r_addr(l1d_r_addr),
-    .r_read(l1d_r_read),
-    .r_data(l1d_r_data),
-    .r_stall(l1d_r_stall),
-    .w_addr(l1d_w_addr),
-    .w_write(l1d_w_write),
-    .w_data(l1d_w_data),
-    .w_be(l1d_w_be),
-    .w_stall(l1d_w_stall),
-    .fs_wbufClear(l1d_fs_wbufClear),
-    .toL2_l1req(l1d_toL2_l1req),
-    .toL2_l1addr(l1d_toL2_l1addr),
-    .toL2_l1stall(l1d_toL2_l1stall),
-    .toL2_l2req(l1d_toL2_l2req),
-    .toL2_l2addr(l1d_toL2_l2addr),
-    .toL2_l2stall(l1d_toL2_l2stall),
-    .toL2_wdata(l1d_toL2_wdata),
-    .toL2_rdata(l1d_toL2_rdata)
+  UCPass ucpass ( // @[Core.scala 29:22]
+    .clock(ucpass_clock),
+    .reset(ucpass_reset),
+    .toCPU_read(ucpass_toCPU_read),
+    .toCPU_write(ucpass_toCPU_write),
+    .toCPU_addr(ucpass_toCPU_addr),
+    .toCPU_wstrb(ucpass_toCPU_wstrb),
+    .toCPU_stall(ucpass_toCPU_stall),
+    .toCPU_wdata(ucpass_toCPU_wdata),
+    .toCPU_rdata(ucpass_toCPU_rdata),
+    .axi_AWADDR(ucpass_axi_AWADDR),
+    .axi_AWSIZE(ucpass_axi_AWSIZE),
+    .axi_AWBURST(ucpass_axi_AWBURST),
+    .axi_AWVALID(ucpass_axi_AWVALID),
+    .axi_AWREADY(ucpass_axi_AWREADY),
+    .axi_WDATA(ucpass_axi_WDATA),
+    .axi_WSTRB(ucpass_axi_WSTRB),
+    .axi_WLAST(ucpass_axi_WLAST),
+    .axi_WVALID(ucpass_axi_WVALID),
+    .axi_BVALID(ucpass_axi_BVALID),
+    .axi_BREADY(ucpass_axi_BREADY),
+    .axi_ARADDR(ucpass_axi_ARADDR),
+    .axi_ARSIZE(ucpass_axi_ARSIZE),
+    .axi_ARBURST(ucpass_axi_ARBURST),
+    .axi_ARVALID(ucpass_axi_ARVALID),
+    .axi_ARREADY(ucpass_axi_ARREADY),
+    .axi_RDATA(ucpass_axi_RDATA),
+    .axi_RVALID(ucpass_axi_RVALID),
+    .axi_RREADY(ucpass_axi_RREADY)
   );
-  InstrFetch fetch ( // @[Core.scala 32:21]
+  InstrFetch fetch ( // @[Core.scala 35:21]
     .clock(fetch_clock),
     .reset(fetch_reset),
     .toCtrl_pc(fetch_toCtrl_pc),
@@ -44477,7 +36078,7 @@ module Core(
     .toExec_cnt(fetch_toExec_cnt),
     .toExec_pop(fetch_toExec_pop)
   );
-  Exec exec ( // @[Core.scala 33:20]
+  Exec exec ( // @[Core.scala 36:20]
     .clock(exec_clock),
     .reset(exec_reset),
     .toCtrl_ctrl_flush(exec_toCtrl_ctrl_flush),
@@ -44540,7 +36141,6 @@ module Core(
     .toDC_w_data(exec_toDC_w_data),
     .toDC_w_be(exec_toDC_w_be),
     .toDC_w_stall(exec_toDC_w_stall),
-    .toDC_fs_wbufClear(exec_toDC_fs_wbufClear),
     .toDC_u_read(exec_toDC_u_read),
     .toDC_u_write(exec_toDC_u_write),
     .toDC_u_addr(exec_toDC_u_addr),
@@ -44549,7 +36149,7 @@ module Core(
     .toDC_u_wdata(exec_toDC_u_wdata),
     .toDC_u_rdata(exec_toDC_u_rdata)
   );
-  RegFile reg_ ( // @[Core.scala 34:19]
+  RegFile reg_ ( // @[Core.scala 37:19]
     .clock(reg__clock),
     .reset(reg__reset),
     .io_reads_0_addr(reg__io_reads_0_addr),
@@ -44565,7 +36165,7 @@ module Core(
     .io_writes_1_addr(reg__io_writes_1_addr),
     .io_writes_1_data(reg__io_writes_1_data)
   );
-  assign csrWriter_addr = exec_csrWriter_addr; // @[CSR.scala 131:24 Core.scala 49:18]
+  assign csrWriter_addr = exec_csrWriter_addr; // @[CSR.scala 131:24 Core.scala 52:18]
   assign _T_42 = 12'h343 == csrWriter_addr; // @[Mux.scala 68:19]
   assign _T_110_rdata = ctrl_csr_mtval_rdata; // @[CSR.scala 72:20 CSR.scala 36:16]
   assign _T_43 = _T_42 ? _T_110_rdata : 64'h0; // @[Mux.scala 68:16]
@@ -44611,11 +36211,11 @@ module Core(
   assign _T_75 = _T_74 ? medeleg : _T_73; // @[Mux.scala 68:16]
   assign _T_76 = 12'hf12 == csrWriter_addr; // @[Mux.scala 68:19]
   assign csrWriter_rdata = _T_76 ? 64'h0 : _T_75; // @[Mux.scala 68:16]
-  assign csrWriter_op = exec_csrWriter_op; // @[CSR.scala 131:24 Core.scala 49:18]
+  assign csrWriter_op = exec_csrWriter_op; // @[CSR.scala 131:24 Core.scala 52:18]
   assign _T_81 = $unsigned(csrWriter_op); // @[Conditional.scala 37:39]
   assign _T_82 = 2'h0 == _T_81; // @[Conditional.scala 37:30]
   assign _T_85 = 2'h1 == _T_81; // @[Conditional.scala 37:30]
-  assign csrWriter_wdata = exec_csrWriter_wdata; // @[CSR.scala 131:24 Core.scala 49:18]
+  assign csrWriter_wdata = exec_csrWriter_wdata; // @[CSR.scala 131:24 Core.scala 52:18]
   assign _T_86 = csrWriter_rdata | csrWriter_wdata; // @[CSR.scala 154:23]
   assign _T_89 = 2'h2 == _T_81; // @[Conditional.scala 37:30]
   assign _T_90 = ~ csrWriter_wdata; // @[CSR.scala 159:26]
@@ -44626,46 +36226,98 @@ module Core(
   assign _GEN_31 = _GEN_5 & _T_74; // @[CSR.scala 169:19]
   assign _GEN_45 = _GEN_5 & _T_54; // @[CSR.scala 169:19]
   assign _GEN_47 = _GEN_5 & _T_50; // @[CSR.scala 169:19]
-  assign io_axi_AWID = 4'h0; // @[Core.scala 28:10]
-  assign io_axi_AWADDR = l2_axi_AWADDR; // @[Core.scala 28:10]
-  assign io_axi_AWLEN = l2_axi_AWLEN; // @[Core.scala 28:10]
-  assign io_axi_AWSIZE = l2_axi_AWSIZE; // @[Core.scala 28:10]
-  assign io_axi_AWBURST = l2_axi_AWBURST; // @[Core.scala 28:10]
-  assign io_axi_AWCACHE = 4'h0; // @[Core.scala 28:10]
-  assign io_axi_AWPROT = 3'h0; // @[Core.scala 28:10]
-  assign io_axi_AWQOS = 3'h0; // @[Core.scala 28:10]
-  assign io_axi_AWREGION = 4'h0; // @[Core.scala 28:10]
-  assign io_axi_AWVALID = l2_axi_AWVALID; // @[Core.scala 28:10]
-  assign io_axi_WDATA = l2_axi_WDATA; // @[Core.scala 28:10]
-  assign io_axi_WSTRB = l2_axi_WSTRB; // @[Core.scala 28:10]
-  assign io_axi_WLAST = l2_axi_WLAST; // @[Core.scala 28:10]
-  assign io_axi_WVALID = l2_axi_WVALID; // @[Core.scala 28:10]
-  assign io_axi_BREADY = l2_axi_BREADY; // @[Core.scala 28:10]
-  assign io_axi_ARID = l2_axi_ARID; // @[Core.scala 28:10]
-  assign io_axi_ARADDR = l2_axi_ARADDR; // @[Core.scala 28:10]
-  assign io_axi_ARLEN = l2_axi_ARLEN; // @[Core.scala 28:10]
-  assign io_axi_ARSIZE = l2_axi_ARSIZE; // @[Core.scala 28:10]
-  assign io_axi_ARBURST = l2_axi_ARBURST; // @[Core.scala 28:10]
-  assign io_axi_ARCACHE = 4'h0; // @[Core.scala 28:10]
-  assign io_axi_ARPROT = 3'h0; // @[Core.scala 28:10]
-  assign io_axi_ARQOS = 3'h0; // @[Core.scala 28:10]
-  assign io_axi_ARREGION = 4'h0; // @[Core.scala 28:10]
-  assign io_axi_ARVALID = l2_axi_ARVALID; // @[Core.scala 28:10]
-  assign io_axi_RREADY = l2_axi_RREADY; // @[Core.scala 28:10]
-  assign io_pc = ctrl_io_pc[47:0]; // @[Core.scala 66:9]
+  assign io_iaxi_AWID = 4'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWADDR = 48'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWLEN = 8'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWSIZE = 3'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWBURST = 2'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWCACHE = 4'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWPROT = 3'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWQOS = 3'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWREGION = 4'h0; // @[Core.scala 31:14]
+  assign io_iaxi_AWVALID = 1'h0; // @[Core.scala 31:14]
+  assign io_iaxi_WDATA = 64'h0; // @[Core.scala 31:14]
+  assign io_iaxi_WSTRB = 8'h0; // @[Core.scala 31:14]
+  assign io_iaxi_WLAST = 1'h0; // @[Core.scala 31:14]
+  assign io_iaxi_WVALID = 1'h0; // @[Core.scala 31:14]
+  assign io_iaxi_BREADY = 1'h0; // @[Core.scala 31:14]
+  assign io_iaxi_ARID = 4'h0; // @[Core.scala 31:14]
+  assign io_iaxi_ARADDR = icpass_axi_ARADDR; // @[Core.scala 31:14]
+  assign io_iaxi_ARLEN = 8'h0; // @[Core.scala 31:14]
+  assign io_iaxi_ARSIZE = icpass_axi_ARSIZE; // @[Core.scala 31:14]
+  assign io_iaxi_ARBURST = icpass_axi_ARBURST; // @[Core.scala 31:14]
+  assign io_iaxi_ARCACHE = 4'h0; // @[Core.scala 31:14]
+  assign io_iaxi_ARPROT = 3'h0; // @[Core.scala 31:14]
+  assign io_iaxi_ARQOS = 3'h0; // @[Core.scala 31:14]
+  assign io_iaxi_ARREGION = 4'h0; // @[Core.scala 31:14]
+  assign io_iaxi_ARVALID = icpass_axi_ARVALID; // @[Core.scala 31:14]
+  assign io_iaxi_RREADY = icpass_axi_RREADY; // @[Core.scala 31:14]
+  assign io_daxi_AWID = 4'h0; // @[Core.scala 32:14]
+  assign io_daxi_AWADDR = dcpass_axi_AWADDR; // @[Core.scala 32:14]
+  assign io_daxi_AWLEN = 8'h0; // @[Core.scala 32:14]
+  assign io_daxi_AWSIZE = dcpass_axi_AWSIZE; // @[Core.scala 32:14]
+  assign io_daxi_AWBURST = dcpass_axi_AWBURST; // @[Core.scala 32:14]
+  assign io_daxi_AWCACHE = 4'h0; // @[Core.scala 32:14]
+  assign io_daxi_AWPROT = 3'h0; // @[Core.scala 32:14]
+  assign io_daxi_AWQOS = 3'h0; // @[Core.scala 32:14]
+  assign io_daxi_AWREGION = 4'h0; // @[Core.scala 32:14]
+  assign io_daxi_AWVALID = dcpass_axi_AWVALID; // @[Core.scala 32:14]
+  assign io_daxi_WDATA = dcpass_axi_WDATA; // @[Core.scala 32:14]
+  assign io_daxi_WSTRB = dcpass_axi_WSTRB; // @[Core.scala 32:14]
+  assign io_daxi_WLAST = dcpass_axi_WLAST; // @[Core.scala 32:14]
+  assign io_daxi_WVALID = dcpass_axi_WVALID; // @[Core.scala 32:14]
+  assign io_daxi_BREADY = dcpass_axi_BREADY; // @[Core.scala 32:14]
+  assign io_daxi_ARID = 4'h0; // @[Core.scala 32:14]
+  assign io_daxi_ARADDR = dcpass_axi_ARADDR; // @[Core.scala 32:14]
+  assign io_daxi_ARLEN = 8'h0; // @[Core.scala 32:14]
+  assign io_daxi_ARSIZE = dcpass_axi_ARSIZE; // @[Core.scala 32:14]
+  assign io_daxi_ARBURST = dcpass_axi_ARBURST; // @[Core.scala 32:14]
+  assign io_daxi_ARCACHE = 4'h0; // @[Core.scala 32:14]
+  assign io_daxi_ARPROT = 3'h0; // @[Core.scala 32:14]
+  assign io_daxi_ARQOS = 3'h0; // @[Core.scala 32:14]
+  assign io_daxi_ARREGION = 4'h0; // @[Core.scala 32:14]
+  assign io_daxi_ARVALID = dcpass_axi_ARVALID; // @[Core.scala 32:14]
+  assign io_daxi_RREADY = dcpass_axi_RREADY; // @[Core.scala 32:14]
+  assign io_uaxi_AWID = 4'h0; // @[Core.scala 33:14]
+  assign io_uaxi_AWADDR = ucpass_axi_AWADDR; // @[Core.scala 33:14]
+  assign io_uaxi_AWLEN = 8'h0; // @[Core.scala 33:14]
+  assign io_uaxi_AWSIZE = ucpass_axi_AWSIZE; // @[Core.scala 33:14]
+  assign io_uaxi_AWBURST = ucpass_axi_AWBURST; // @[Core.scala 33:14]
+  assign io_uaxi_AWCACHE = 4'h0; // @[Core.scala 33:14]
+  assign io_uaxi_AWPROT = 3'h0; // @[Core.scala 33:14]
+  assign io_uaxi_AWQOS = 3'h0; // @[Core.scala 33:14]
+  assign io_uaxi_AWREGION = 4'h0; // @[Core.scala 33:14]
+  assign io_uaxi_AWVALID = ucpass_axi_AWVALID; // @[Core.scala 33:14]
+  assign io_uaxi_WDATA = ucpass_axi_WDATA; // @[Core.scala 33:14]
+  assign io_uaxi_WSTRB = ucpass_axi_WSTRB; // @[Core.scala 33:14]
+  assign io_uaxi_WLAST = ucpass_axi_WLAST; // @[Core.scala 33:14]
+  assign io_uaxi_WVALID = ucpass_axi_WVALID; // @[Core.scala 33:14]
+  assign io_uaxi_BREADY = ucpass_axi_BREADY; // @[Core.scala 33:14]
+  assign io_uaxi_ARID = 4'h0; // @[Core.scala 33:14]
+  assign io_uaxi_ARADDR = ucpass_axi_ARADDR; // @[Core.scala 33:14]
+  assign io_uaxi_ARLEN = 8'h0; // @[Core.scala 33:14]
+  assign io_uaxi_ARSIZE = ucpass_axi_ARSIZE; // @[Core.scala 33:14]
+  assign io_uaxi_ARBURST = ucpass_axi_ARBURST; // @[Core.scala 33:14]
+  assign io_uaxi_ARCACHE = 4'h0; // @[Core.scala 33:14]
+  assign io_uaxi_ARPROT = 3'h0; // @[Core.scala 33:14]
+  assign io_uaxi_ARQOS = 3'h0; // @[Core.scala 33:14]
+  assign io_uaxi_ARREGION = 4'h0; // @[Core.scala 33:14]
+  assign io_uaxi_ARVALID = ucpass_axi_ARVALID; // @[Core.scala 33:14]
+  assign io_uaxi_RREADY = ucpass_axi_RREADY; // @[Core.scala 33:14]
+  assign io_pc = ctrl_io_pc[47:0]; // @[Core.scala 70:9]
   assign ctrl_clock = clock;
   assign ctrl_reset = reset;
-  assign ctrl_io_fetch_stall = fetch_toCtrl_ctrl_stall; // @[Core.scala 42:21]
-  assign ctrl_br_req_branch = exec_toCtrl_branch_branch; // @[Core.scala 56:15]
-  assign ctrl_br_req_irst = exec_toCtrl_branch_irst; // @[Core.scala 56:15]
-  assign ctrl_br_req_target = exec_toCtrl_branch_target; // @[Core.scala 56:15]
-  assign ctrl_br_req_ex = exec_toCtrl_branch_ex; // @[Core.scala 56:15]
-  assign ctrl_br_req_extype = exec_toCtrl_branch_extype; // @[Core.scala 56:15]
-  assign ctrl_br_tval = exec_toCtrl_tval; // @[Core.scala 57:16]
-  assign ctrl_toExec_retCnt = exec_toCtrl_retCnt; // @[Core.scala 59:22]
-  assign ctrl_toExec_nepc = exec_toCtrl_nepc; // @[Core.scala 60:20]
-  assign ctrl_toExec_intAck = exec_toCtrl_intAck; // @[Core.scala 62:22]
-  assign ctrl_eint = io_eint; // @[Core.scala 64:13]
+  assign ctrl_io_fetch_stall = fetch_toCtrl_ctrl_stall; // @[Core.scala 45:21]
+  assign ctrl_br_req_branch = exec_toCtrl_branch_branch; // @[Core.scala 60:15]
+  assign ctrl_br_req_irst = exec_toCtrl_branch_irst; // @[Core.scala 60:15]
+  assign ctrl_br_req_target = exec_toCtrl_branch_target; // @[Core.scala 60:15]
+  assign ctrl_br_req_ex = exec_toCtrl_branch_ex; // @[Core.scala 60:15]
+  assign ctrl_br_req_extype = exec_toCtrl_branch_extype; // @[Core.scala 60:15]
+  assign ctrl_br_tval = exec_toCtrl_tval; // @[Core.scala 61:16]
+  assign ctrl_toExec_retCnt = exec_toCtrl_retCnt; // @[Core.scala 63:22]
+  assign ctrl_toExec_nepc = exec_toCtrl_nepc; // @[Core.scala 64:20]
+  assign ctrl_toExec_intAck = exec_toCtrl_intAck; // @[Core.scala 66:22]
+  assign ctrl_eint = io_eint; // @[Core.scala 68:13]
   assign ctrl_csr_mcycle_wdata = _T_82 ? csrWriter_wdata : _GEN_2; // @[CSR.scala 37:15]
   assign ctrl_csr_mcycle_write = _GEN_5 & _T_58; // @[CSR.scala 38:15]
   assign ctrl_csr_mstatus_wdata = _T_82 ? csrWriter_wdata : _GEN_2; // @[CSR.scala 37:15]
@@ -44682,104 +36334,96 @@ module Core(
   assign ctrl_csr_mtval_write = _GEN_5 & _T_42; // @[CSR.scala 38:15]
   assign ctrl_csr_mcountinhibit_wdata = _T_82 ? csrWriter_wdata : _GEN_2; // @[CSR.scala 37:15]
   assign ctrl_csr_mcountinhibit_write = _GEN_5 & _T_48; // @[CSR.scala 38:15]
-  assign l2_clock = clock;
-  assign l2_reset = reset;
-  assign l2_ic_0_read = l1i_toL2_read; // @[Core.scala 29:12]
-  assign l2_ic_0_addr = l1i_toL2_addr; // @[Core.scala 29:12]
-  assign l2_dc_0_l1req = l1d_toL2_l1req; // @[Core.scala 30:12]
-  assign l2_dc_0_l1addr = l1d_toL2_l1addr; // @[Core.scala 30:12]
-  assign l2_dc_0_l2stall = l1d_toL2_l2stall; // @[Core.scala 30:12]
-  assign l2_dc_0_wdata = l1d_toL2_wdata; // @[Core.scala 30:12]
-  assign l2_directs_0_read = exec_toDC_u_read; // @[Core.scala 54:15]
-  assign l2_directs_0_write = exec_toDC_u_write; // @[Core.scala 54:15]
-  assign l2_directs_0_addr = exec_toDC_u_addr; // @[Core.scala 54:15]
-  assign l2_directs_0_wstrb = exec_toDC_u_wstrb; // @[Core.scala 54:15]
-  assign l2_directs_0_wdata = exec_toDC_u_wdata; // @[Core.scala 54:15]
-  assign l2_axi_AWREADY = io_axi_AWREADY; // @[Core.scala 28:10]
-  assign l2_axi_WREADY = io_axi_WREADY; // @[Core.scala 28:10]
-  assign l2_axi_BVALID = io_axi_BVALID; // @[Core.scala 28:10]
-  assign l2_axi_ARREADY = io_axi_ARREADY; // @[Core.scala 28:10]
-  assign l2_axi_RID = io_axi_RID; // @[Core.scala 28:10]
-  assign l2_axi_RDATA = io_axi_RDATA; // @[Core.scala 28:10]
-  assign l2_axi_RLAST = io_axi_RLAST; // @[Core.scala 28:10]
-  assign l2_axi_RVALID = io_axi_RVALID; // @[Core.scala 28:10]
-  assign l1i_clock = clock;
-  assign l1i_reset = reset;
-  assign l1i_toCPU_addr = fetch_toIC_addr; // @[Core.scala 39:14]
-  assign l1i_toCPU_read = fetch_toIC_read; // @[Core.scala 39:14]
-  assign l1i_toCPU_rst = fetch_toIC_rst; // @[Core.scala 39:14]
-  assign l1i_toL2_stall = l2_ic_0_stall; // @[Core.scala 29:12]
-  assign l1i_toL2_data = l2_ic_0_data; // @[Core.scala 29:12]
-  assign l1d_clock = clock;
-  assign l1d_reset = reset;
-  assign l1d_r_addr = exec_toDC_r_addr; // @[Core.scala 51:15]
-  assign l1d_r_read = exec_toDC_r_read; // @[Core.scala 51:15]
-  assign l1d_w_addr = exec_toDC_w_addr; // @[Core.scala 52:15]
-  assign l1d_w_write = exec_toDC_w_write; // @[Core.scala 52:15]
-  assign l1d_w_data = exec_toDC_w_data; // @[Core.scala 52:15]
-  assign l1d_w_be = exec_toDC_w_be; // @[Core.scala 52:15]
-  assign l1d_toL2_l1stall = l2_dc_0_l1stall; // @[Core.scala 30:12]
-  assign l1d_toL2_l2req = l2_dc_0_l2req; // @[Core.scala 30:12]
-  assign l1d_toL2_l2addr = l2_dc_0_l2addr; // @[Core.scala 30:12]
-  assign l1d_toL2_rdata = l2_dc_0_rdata; // @[Core.scala 30:12]
+  assign icpass_clock = clock;
+  assign icpass_reset = reset;
+  assign icpass_toCPU_addr = fetch_toIC_addr; // @[Core.scala 42:14]
+  assign icpass_toCPU_read = fetch_toIC_read; // @[Core.scala 42:14]
+  assign icpass_toCPU_rst = fetch_toIC_rst; // @[Core.scala 42:14]
+  assign icpass_axi_ARREADY = io_iaxi_ARREADY; // @[Core.scala 31:14]
+  assign icpass_axi_RDATA = io_iaxi_RDATA; // @[Core.scala 31:14]
+  assign icpass_axi_RVALID = io_iaxi_RVALID; // @[Core.scala 31:14]
+  assign dcpass_clock = clock;
+  assign dcpass_reset = reset;
+  assign dcpass_r_addr = exec_toDC_r_addr; // @[Core.scala 54:15]
+  assign dcpass_r_read = exec_toDC_r_read; // @[Core.scala 54:15]
+  assign dcpass_w_addr = exec_toDC_w_addr; // @[Core.scala 55:15]
+  assign dcpass_w_write = exec_toDC_w_write; // @[Core.scala 55:15]
+  assign dcpass_w_data = exec_toDC_w_data; // @[Core.scala 55:15]
+  assign dcpass_w_be = exec_toDC_w_be; // @[Core.scala 55:15]
+  assign dcpass_axi_AWREADY = io_daxi_AWREADY; // @[Core.scala 32:14]
+  assign dcpass_axi_BVALID = io_daxi_BVALID; // @[Core.scala 32:14]
+  assign dcpass_axi_ARREADY = io_daxi_ARREADY; // @[Core.scala 32:14]
+  assign dcpass_axi_RDATA = io_daxi_RDATA; // @[Core.scala 32:14]
+  assign dcpass_axi_RVALID = io_daxi_RVALID; // @[Core.scala 32:14]
+  assign ucpass_clock = clock;
+  assign ucpass_reset = reset;
+  assign ucpass_toCPU_read = exec_toDC_u_read; // @[Core.scala 58:15]
+  assign ucpass_toCPU_write = exec_toDC_u_write; // @[Core.scala 58:15]
+  assign ucpass_toCPU_addr = exec_toDC_u_addr; // @[Core.scala 58:15]
+  assign ucpass_toCPU_wstrb = exec_toDC_u_wstrb; // @[Core.scala 58:15]
+  assign ucpass_toCPU_wdata = exec_toDC_u_wdata; // @[Core.scala 58:15]
+  assign ucpass_axi_AWREADY = io_uaxi_AWREADY; // @[Core.scala 33:14]
+  assign ucpass_axi_BVALID = io_uaxi_BVALID; // @[Core.scala 33:14]
+  assign ucpass_axi_ARREADY = io_uaxi_ARREADY; // @[Core.scala 33:14]
+  assign ucpass_axi_RDATA = io_uaxi_RDATA; // @[Core.scala 33:14]
+  assign ucpass_axi_RVALID = io_uaxi_RVALID; // @[Core.scala 33:14]
   assign fetch_clock = clock;
   assign fetch_reset = reset;
-  assign fetch_toCtrl_pc = ctrl_io_pc; // @[Core.scala 40:19]
-  assign fetch_toCtrl_skip = ctrl_io_skip; // @[Core.scala 41:21]
-  assign fetch_toCtrl_ctrl_flush = ctrl_io_fetch_flush; // @[Core.scala 42:21]
-  assign fetch_toCtrl_irst = ctrl_io_irst; // @[Core.scala 38:21 Core.scala 43:21]
-  assign fetch_toIC_stall = l1i_toCPU_stall; // @[Core.scala 39:14]
-  assign fetch_toIC_data = l1i_toCPU_data; // @[Core.scala 39:14]
-  assign fetch_toIC_vacant = l1i_toCPU_vacant; // @[Core.scala 39:14]
-  assign fetch_toExec_pop = exec_toIF_pop; // @[Core.scala 45:13]
+  assign fetch_toCtrl_pc = ctrl_io_pc; // @[Core.scala 43:19]
+  assign fetch_toCtrl_skip = ctrl_io_skip; // @[Core.scala 44:21]
+  assign fetch_toCtrl_ctrl_flush = ctrl_io_fetch_flush; // @[Core.scala 45:21]
+  assign fetch_toCtrl_irst = ctrl_io_irst; // @[Core.scala 41:21 Core.scala 46:21]
+  assign fetch_toIC_stall = icpass_toCPU_stall; // @[Core.scala 42:14]
+  assign fetch_toIC_data = icpass_toCPU_data; // @[Core.scala 42:14]
+  assign fetch_toIC_vacant = icpass_toCPU_vacant; // @[Core.scala 42:14]
+  assign fetch_toExec_pop = exec_toIF_pop; // @[Core.scala 48:13]
   assign exec_clock = clock;
   assign exec_reset = reset;
-  assign exec_toCtrl_ctrl_flush = ctrl_io_exec_flush; // @[Core.scala 48:20]
-  assign exec_toCtrl_int = ctrl_toExec_int; // @[Core.scala 61:19]
-  assign exec_csrWriter_rdata = _T_76 ? 64'h0 : _T_75; // @[Core.scala 49:18]
-  assign exec_rr_0_data = reg__io_reads_0_data; // @[Core.scala 46:11]
-  assign exec_rr_1_data = reg__io_reads_1_data; // @[Core.scala 46:11]
-  assign exec_rr_2_data = reg__io_reads_2_data; // @[Core.scala 46:11]
-  assign exec_rr_3_data = reg__io_reads_3_data; // @[Core.scala 46:11]
-  assign exec_toIF_view_0_addr = fetch_toExec_view_0_addr; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_instr_op = fetch_toExec_view_0_instr_op; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_instr_base = fetch_toExec_view_0_instr_base; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_instr_imm = fetch_toExec_view_0_instr_imm; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_instr_rs1 = fetch_toExec_view_0_instr_rs1; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_instr_rs2 = fetch_toExec_view_0_instr_rs2; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_instr_rd = fetch_toExec_view_0_instr_rd; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_instr_funct7 = fetch_toExec_view_0_instr_funct7; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_instr_funct3 = fetch_toExec_view_0_instr_funct3; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_vacant = fetch_toExec_view_0_vacant; // @[Core.scala 45:13]
-  assign exec_toIF_view_0_invalAddr = fetch_toExec_view_0_invalAddr; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_addr = fetch_toExec_view_1_addr; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_instr_op = fetch_toExec_view_1_instr_op; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_instr_base = fetch_toExec_view_1_instr_base; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_instr_imm = fetch_toExec_view_1_instr_imm; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_instr_rs1 = fetch_toExec_view_1_instr_rs1; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_instr_rs2 = fetch_toExec_view_1_instr_rs2; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_instr_rd = fetch_toExec_view_1_instr_rd; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_instr_funct7 = fetch_toExec_view_1_instr_funct7; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_instr_funct3 = fetch_toExec_view_1_instr_funct3; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_vacant = fetch_toExec_view_1_vacant; // @[Core.scala 45:13]
-  assign exec_toIF_view_1_invalAddr = fetch_toExec_view_1_invalAddr; // @[Core.scala 45:13]
-  assign exec_toIF_cnt = fetch_toExec_cnt; // @[Core.scala 45:13]
-  assign exec_toDC_r_data = l1d_r_data; // @[Core.scala 51:15]
-  assign exec_toDC_r_stall = l1d_r_stall; // @[Core.scala 51:15]
-  assign exec_toDC_w_stall = l1d_w_stall; // @[Core.scala 52:15]
-  assign exec_toDC_fs_wbufClear = l1d_fs_wbufClear; // @[Core.scala 53:16]
-  assign exec_toDC_u_stall = l2_directs_0_stall; // @[Core.scala 54:15]
-  assign exec_toDC_u_rdata = l2_directs_0_rdata; // @[Core.scala 54:15]
+  assign exec_toCtrl_ctrl_flush = ctrl_io_exec_flush; // @[Core.scala 51:20]
+  assign exec_toCtrl_int = ctrl_toExec_int; // @[Core.scala 65:19]
+  assign exec_csrWriter_rdata = _T_76 ? 64'h0 : _T_75; // @[Core.scala 52:18]
+  assign exec_rr_0_data = reg__io_reads_0_data; // @[Core.scala 49:11]
+  assign exec_rr_1_data = reg__io_reads_1_data; // @[Core.scala 49:11]
+  assign exec_rr_2_data = reg__io_reads_2_data; // @[Core.scala 49:11]
+  assign exec_rr_3_data = reg__io_reads_3_data; // @[Core.scala 49:11]
+  assign exec_toIF_view_0_addr = fetch_toExec_view_0_addr; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_instr_op = fetch_toExec_view_0_instr_op; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_instr_base = fetch_toExec_view_0_instr_base; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_instr_imm = fetch_toExec_view_0_instr_imm; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_instr_rs1 = fetch_toExec_view_0_instr_rs1; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_instr_rs2 = fetch_toExec_view_0_instr_rs2; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_instr_rd = fetch_toExec_view_0_instr_rd; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_instr_funct7 = fetch_toExec_view_0_instr_funct7; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_instr_funct3 = fetch_toExec_view_0_instr_funct3; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_vacant = fetch_toExec_view_0_vacant; // @[Core.scala 48:13]
+  assign exec_toIF_view_0_invalAddr = fetch_toExec_view_0_invalAddr; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_addr = fetch_toExec_view_1_addr; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_instr_op = fetch_toExec_view_1_instr_op; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_instr_base = fetch_toExec_view_1_instr_base; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_instr_imm = fetch_toExec_view_1_instr_imm; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_instr_rs1 = fetch_toExec_view_1_instr_rs1; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_instr_rs2 = fetch_toExec_view_1_instr_rs2; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_instr_rd = fetch_toExec_view_1_instr_rd; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_instr_funct7 = fetch_toExec_view_1_instr_funct7; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_instr_funct3 = fetch_toExec_view_1_instr_funct3; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_vacant = fetch_toExec_view_1_vacant; // @[Core.scala 48:13]
+  assign exec_toIF_view_1_invalAddr = fetch_toExec_view_1_invalAddr; // @[Core.scala 48:13]
+  assign exec_toIF_cnt = fetch_toExec_cnt; // @[Core.scala 48:13]
+  assign exec_toDC_r_data = dcpass_r_data; // @[Core.scala 54:15]
+  assign exec_toDC_r_stall = dcpass_r_stall; // @[Core.scala 54:15]
+  assign exec_toDC_w_stall = dcpass_w_stall; // @[Core.scala 55:15]
+  assign exec_toDC_u_stall = ucpass_toCPU_stall; // @[Core.scala 58:15]
+  assign exec_toDC_u_rdata = ucpass_toCPU_rdata; // @[Core.scala 58:15]
   assign reg__clock = clock;
   assign reg__reset = reset;
-  assign reg__io_reads_0_addr = exec_rr_0_addr; // @[Core.scala 46:11]
-  assign reg__io_reads_1_addr = exec_rr_1_addr; // @[Core.scala 46:11]
-  assign reg__io_reads_2_addr = exec_rr_2_addr; // @[Core.scala 46:11]
-  assign reg__io_reads_3_addr = exec_rr_3_addr; // @[Core.scala 46:11]
-  assign reg__io_writes_0_addr = exec_rw_0_addr; // @[Core.scala 47:11]
-  assign reg__io_writes_0_data = exec_rw_0_data; // @[Core.scala 47:11]
-  assign reg__io_writes_1_addr = exec_rw_1_addr; // @[Core.scala 47:11]
-  assign reg__io_writes_1_data = exec_rw_1_data; // @[Core.scala 47:11]
+  assign reg__io_reads_0_addr = exec_rr_0_addr; // @[Core.scala 49:11]
+  assign reg__io_reads_1_addr = exec_rr_1_addr; // @[Core.scala 49:11]
+  assign reg__io_reads_2_addr = exec_rr_2_addr; // @[Core.scala 49:11]
+  assign reg__io_reads_3_addr = exec_rr_3_addr; // @[Core.scala 49:11]
+  assign reg__io_writes_0_addr = exec_rw_0_addr; // @[Core.scala 50:11]
+  assign reg__io_writes_0_data = exec_rw_0_data; // @[Core.scala 50:11]
+  assign reg__io_writes_1_addr = exec_rw_1_addr; // @[Core.scala 50:11]
+  assign reg__io_writes_1_data = exec_rw_1_data; // @[Core.scala 50:11]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif

@@ -355,7 +355,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>ID_WIDTH</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI.ID_WIDTH">0</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI.ID_WIDTH">6</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1453,11 +1453,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 13:34:43 UTC 2019</spirit:value>
+            <spirit:value>Sat Dec 21 19:03:05 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:884a954d</spirit:value>
+            <spirit:value>9:cda7c854</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1471,11 +1471,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 13:34:43 UTC 2019</spirit:value>
+            <spirit:value>Sat Dec 21 19:03:06 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:884a954d</spirit:value>
+            <spirit:value>9:cda7c854</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1491,11 +1491,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 13:34:43 UTC 2019</spirit:value>
+            <spirit:value>Sat Dec 21 19:03:06 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:884a954d</spirit:value>
+            <spirit:value>9:cda7c854</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1535,11 +1535,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 13:34:43 UTC 2019</spirit:value>
+            <spirit:value>Sat Dec 21 19:03:06 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aa0c4116</spirit:value>
+            <spirit:value>9:30a8a784</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1555,11 +1555,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 13:34:43 UTC 2019</spirit:value>
+            <spirit:value>Sat Dec 21 19:03:06 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:aa0c4116</spirit:value>
+            <spirit:value>9:30a8a784</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1574,11 +1574,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 13:34:43 UTC 2019</spirit:value>
+            <spirit:value>Sat Dec 21 19:03:06 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:884a954d</spirit:value>
+            <spirit:value>9:cda7c854</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1592,11 +1592,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Dec 20 13:34:45 UTC 2019</spirit:value>
+            <spirit:value>Sat Dec 21 19:03:12 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:884a954d</spirit:value>
+            <spirit:value>9:cda7c854</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1639,7 +1639,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;)) - 1)">0</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;)) - 1)">5</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -1650,13 +1650,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;))){0}}" spirit:bitStringLength="1">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;))){0}}" spirit:bitStringLength="1">0x00</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_awid" xilinx:dependency="( ( (spirit:decode(id(&apos;PARAM_VALUE.PROTOCOL&apos;)) != &quot;AXI4LITE&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_SUPPORTS_WRITE&apos;)) = 1) ) and (spirit:decode(id(&apos;PARAM_VALUE.SI_ID_WIDTH&apos;)) != 0) )">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_awid" xilinx:dependency="( ( (spirit:decode(id(&apos;PARAM_VALUE.PROTOCOL&apos;)) != &quot;AXI4LITE&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_SUPPORTS_WRITE&apos;)) = 1) ) and (spirit:decode(id(&apos;PARAM_VALUE.SI_ID_WIDTH&apos;)) != 0) )">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -2072,7 +2072,7 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;)) - 1)">0</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;)) - 1)">5</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -2086,7 +2086,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_bid" xilinx:dependency="( ( (spirit:decode(id(&apos;PARAM_VALUE.PROTOCOL&apos;)) != &quot;AXI4LITE&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_SUPPORTS_WRITE&apos;)) = 1) ) and (spirit:decode(id(&apos;PARAM_VALUE.SI_ID_WIDTH&apos;)) != 0) )">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_bid" xilinx:dependency="( ( (spirit:decode(id(&apos;PARAM_VALUE.PROTOCOL&apos;)) != &quot;AXI4LITE&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_SUPPORTS_WRITE&apos;)) = 1) ) and (spirit:decode(id(&apos;PARAM_VALUE.SI_ID_WIDTH&apos;)) != 0) )">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -2163,7 +2163,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;)) - 1)">0</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;)) - 1)">5</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -2174,13 +2174,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;))){0}}" spirit:bitStringLength="1">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="{(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;))){0}}" spirit:bitStringLength="1">0x00</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_arid" xilinx:dependency="( ( (spirit:decode(id(&apos;PARAM_VALUE.PROTOCOL&apos;)) != &quot;AXI4LITE&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_SUPPORTS_READ&apos;)) = 1) ) and (spirit:decode(id(&apos;PARAM_VALUE.SI_ID_WIDTH&apos;)) != 0) )">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_arid" xilinx:dependency="( ( (spirit:decode(id(&apos;PARAM_VALUE.PROTOCOL&apos;)) != &quot;AXI4LITE&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_SUPPORTS_READ&apos;)) = 1) ) and (spirit:decode(id(&apos;PARAM_VALUE.SI_ID_WIDTH&apos;)) != 0) )">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -2476,7 +2476,7 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;)) - 1)">0</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ID_WIDTH&apos;)) - 1)">5</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -2490,7 +2490,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_rid" xilinx:dependency="( ( (spirit:decode(id(&apos;PARAM_VALUE.PROTOCOL&apos;)) != &quot;AXI4LITE&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_SUPPORTS_READ&apos;)) = 1) ) and (spirit:decode(id(&apos;PARAM_VALUE.SI_ID_WIDTH&apos;)) != 0) )">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.s_axi_rid" xilinx:dependency="( ( (spirit:decode(id(&apos;PARAM_VALUE.PROTOCOL&apos;)) != &quot;AXI4LITE&quot;) and (spirit:decode(id(&apos;MODELPARAM_VALUE.C_AXI_SUPPORTS_READ&apos;)) = 1) ) and (spirit:decode(id(&apos;PARAM_VALUE.SI_ID_WIDTH&apos;)) != 0) )">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -3483,11 +3483,11 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_S_AXI_ID_WIDTH</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXI_ID_WIDTH">1</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXI_ID_WIDTH">6</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_SUPPORTS_ID</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_SUPPORTS_ID">0</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_SUPPORTS_ID">1</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_AXI_ADDR_WIDTH</spirit:name>
@@ -3966,15 +3966,10 @@
     <spirit:fileSet>
       <spirit:name>xilinx_externalfiles_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>meowrouter_auto_ds_1_stub.vhdl</spirit:name>
-        <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
-        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>meowrouter_auto_ds_1_stub.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
+        <spirit:name>meowrouter_auto_ds_1.dcp</spirit:name>
+        <spirit:userFileType>dcp</spirit:userFileType>
+        <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
+        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
         <spirit:logicalName>xil_defaultlib</spirit:logicalName>
       </spirit:file>
       <spirit:file>
@@ -3992,10 +3987,15 @@
         <spirit:logicalName>xil_defaultlib</spirit:logicalName>
       </spirit:file>
       <spirit:file>
-        <spirit:name>meowrouter_auto_ds_1.dcp</spirit:name>
-        <spirit:userFileType>dcp</spirit:userFileType>
-        <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
-        <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
+        <spirit:name>meowrouter_auto_ds_1_stub.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
+        <spirit:logicalName>xil_defaultlib</spirit:logicalName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>meowrouter_auto_ds_1_stub.vhdl</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:userFileType>USED_IN_synth_blackbox_stub</spirit:userFileType>
         <spirit:logicalName>xil_defaultlib</spirit:logicalName>
       </spirit:file>
     </spirit:fileSet>
@@ -4035,7 +4035,7 @@
     <spirit:parameter>
       <spirit:name>SI_ID_WIDTH</spirit:name>
       <spirit:displayName>SI ID Width</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.SI_ID_WIDTH" spirit:order="8" spirit:minimum="0" spirit:maximum="32" spirit:rangeType="long">0</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.SI_ID_WIDTH" spirit:order="8" spirit:minimum="0" spirit:maximum="32" spirit:rangeType="long">6</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>MAX_SPLIT_BEATS</spirit:name>
@@ -4123,7 +4123,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI.HAS_REGION" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI.HAS_RRESP" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI.HAS_WSTRB" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI.ID_WIDTH" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI.ID_WIDTH" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI.MAX_BURST_LENGTH" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI.NUM_READ_OUTSTANDING" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI.NUM_WRITE_OUTSTANDING" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>

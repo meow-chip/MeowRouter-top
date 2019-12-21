@@ -50,10 +50,10 @@
 // IP VLNV: xilinx.com:ip:axi_protocol_converter:2.1
 // IP Revision: 18
 
-(* X_CORE_INFO = "axi_protocol_converter_v2_1_18_axi_protocol_converter,Vivado 2018.3" *)
+(* X_CORE_INFO = "axi_protocol_converter_v2_1_18_axi_protocol_converter,Vivado 2018.3_AR71898" *)
 (* CHECK_LICENSE_TYPE = "meowrouter_auto_pc_0,axi_protocol_converter_v2_1_18_axi_protocol_converter,{}" *)
-(* CORE_GENERATION_INFO = "meowrouter_auto_pc_0,axi_protocol_converter_v2_1_18_axi_protocol_converter,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_protocol_converter,x_ipVersion=2.1,x_ipCoreRevision=18,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=artix7,C_M_AXI_PROTOCOL=2,C_S_AXI_PROTOCOL=0,C_IGNORE_ID=1,C_AXI_ID_WIDTH=1,C_AXI_ADDR_WIDTH=48,C_AXI_DATA_WIDTH=32,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_AXI_SUPPORTS_USER_SIGNALS=0,C_AXI_AWUSER_WIDTH=1,C_AXI_ARUSER_WIDTH=1,C_AXI_WU\
-SER_WIDTH=1,C_AXI_RUSER_WIDTH=1,C_AXI_BUSER_WIDTH=1,C_TRANSLATION_MODE=2}" *)
+(* CORE_GENERATION_INFO = "meowrouter_auto_pc_0,axi_protocol_converter_v2_1_18_axi_protocol_converter,{x_ipProduct=Vivado 2018.3_AR71898,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_protocol_converter,x_ipVersion=2.1,x_ipCoreRevision=18,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=artix7,C_M_AXI_PROTOCOL=2,C_S_AXI_PROTOCOL=0,C_IGNORE_ID=1,C_AXI_ID_WIDTH=1,C_AXI_ADDR_WIDTH=48,C_AXI_DATA_WIDTH=32,C_AXI_SUPPORTS_WRITE=1,C_AXI_SUPPORTS_READ=1,C_AXI_SUPPORTS_USER_SIGNALS=0,C_AXI_AWUSER_WIDTH=1,C_AXI_ARUSER_WIDTH=1,\
+C_AXI_WUSER_WIDTH=1,C_AXI_RUSER_WIDTH=1,C_AXI_BUSER_WIDTH=1,C_TRANSLATION_MODE=2}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module meowrouter_auto_pc_0 (
   aclk,

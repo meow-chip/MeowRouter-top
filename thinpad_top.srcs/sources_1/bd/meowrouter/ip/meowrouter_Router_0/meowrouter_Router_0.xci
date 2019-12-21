@@ -79,7 +79,7 @@
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.OUTPUTDIR">.</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SELECTEDSIMMODEL"/>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SHAREDDIR">../../ipshared</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SWVERSION">2018.3</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SWVERSION">2018.3_AR71898</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="RUNTIME_PARAM.SYNTHESISFLOW">OOC_HIERARCHICAL</spirit:configurableElementValue>
       </spirit:configurableElementValues>
       <spirit:vendorExtensions>
@@ -113,7 +113,7 @@
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.IO_TX.TUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd_and_user"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.IO_TX_CLK.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd_and_user"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.IO_TX_CLK.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd_and_user"/>
-            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RESET.POLARITY" xilinx:valueSource="user_prop" xilinx:valuePermission="bd_and_user"/>
+            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RESET.POLARITY" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd_and_user"/>
           </xilinx:configElementInfos>
         </xilinx:componentInstanceExtensions>
       </spirit:vendorExtensions>

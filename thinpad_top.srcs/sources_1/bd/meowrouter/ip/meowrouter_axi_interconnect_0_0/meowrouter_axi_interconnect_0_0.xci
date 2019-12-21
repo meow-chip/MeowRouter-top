@@ -269,7 +269,7 @@
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.M63_ISSUANCE">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.M63_SECURE">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.NUM_MI">7</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.NUM_SI">1</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.NUM_SI">3</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.PCHK_MAX_RD_BURSTS">2</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.PCHK_MAX_WR_BURSTS">2</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.PCHK_WAITS">0</spirit:configurableElementValue>
@@ -280,7 +280,7 @@
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S01_HAS_DATA_FIFO">2</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S01_HAS_REGSLICE">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S02_ARB_PRIORITY">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S02_HAS_DATA_FIFO">0</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S02_HAS_DATA_FIFO">2</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S02_HAS_REGSLICE">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S03_ARB_PRIORITY">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S03_HAS_DATA_FIFO">0</spirit:configurableElementValue>
@@ -321,7 +321,7 @@
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S15_ARB_PRIORITY">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S15_HAS_DATA_FIFO">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.S15_HAS_REGSLICE">0</spirit:configurableElementValue>
-        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.STRATEGY">1</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.STRATEGY">2</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.SYNCHRONIZATION_STAGES">3</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.XBAR_DATA_WIDTH">64</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="PROJECT_PARAM.ARCHITECTURE">artix7</spirit:configurableElementValue>
@@ -354,6 +354,7 @@
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.NUM_SI" xilinx:valueSource="user"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.S00_HAS_DATA_FIFO" xilinx:valueSource="user"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.S01_HAS_DATA_FIFO" xilinx:valueSource="user"/>
+            <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.S02_HAS_DATA_FIFO" xilinx:valueSource="user"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.STRATEGY" xilinx:valueSource="user"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.XBAR_DATA_WIDTH" xilinx:valueSource="propagated" xilinx:valuePermission="bd_and_user"/>
           </xilinx:configElementInfos>

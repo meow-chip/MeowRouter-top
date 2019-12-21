@@ -50,9 +50,9 @@
 // IP VLNV: xilinx.com:module_ref:Top:1.0
 // IP Revision: 1
 
-(* X_CORE_INFO = "Top,Vivado 2018.3" *)
+(* X_CORE_INFO = "Top,Vivado 2018.3_AR71898" *)
 (* CHECK_LICENSE_TYPE = "meowrouter_Router_0,Top,{}" *)
-(* CORE_GENERATION_INFO = "meowrouter_Router_0,Top,{x_ipProduct=Vivado 2018.3,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=Top,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
+(* CORE_GENERATION_INFO = "meowrouter_Router_0,Top,{x_ipProduct=Vivado 2018.3_AR71898,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=Top,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module meowrouter_Router_0 (

@@ -1251,7 +1251,8 @@ module LLFT(
   output [15:0] io_output_packet_ip_chksum,
   output [31:0] io_output_packet_ip_src,
   output [31:0] io_output_packet_ip_dest,
-  output [2:0]  io_output_lookup_status,
+  output [1:0]  io_output_lookup_status,
+  output [31:0] io_output_lookup_nextHop,
   output [1:0]  io_outputStatus,
   input  [31:0] ips_0,
   input  [31:0] ips_1,
@@ -1297,14 +1298,16 @@ module LLFT(
   reg [31:0] _RAND_17;
   reg [31:0] working_ip_dest; // @[linear.scala 59:20]
   reg [31:0] _RAND_18;
-  reg [2:0] lookup_status; // @[linear.scala 60:19]
+  reg [1:0] lookup_status; // @[linear.scala 60:19]
   reg [31:0] _RAND_19;
-  reg [31:0] addr; // @[linear.scala 61:17]
+  reg [31:0] lookup_nextHop; // @[linear.scala 60:19]
   reg [31:0] _RAND_20;
-  reg [1:0] status; // @[linear.scala 62:23]
+  reg [31:0] addr; // @[linear.scala 61:17]
   reg [31:0] _RAND_21;
-  reg  state; // @[linear.scala 69:22]
+  reg [1:0] status; // @[linear.scala 62:23]
   reg [31:0] _RAND_22;
+  reg  state; // @[linear.scala 69:22]
+  reg [31:0] _RAND_23;
   wire  _T_33; // @[Conditional.scala 37:30]
   wire  _T_34; // @[linear.scala 75:12]
   wire  _T_35; // @[linear.scala 78:24]
@@ -1366,6 +1369,7 @@ module LLFT(
   assign io_output_packet_ip_src = working_ip_src; // @[linear.scala 64:20]
   assign io_output_packet_ip_dest = working_ip_dest; // @[linear.scala 64:20]
   assign io_output_lookup_status = lookup_status; // @[linear.scala 65:20]
+  assign io_output_lookup_nextHop = lookup_nextHop; // @[linear.scala 65:20]
   assign io_outputStatus = status; // @[linear.scala 66:19]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
@@ -1476,19 +1480,23 @@ initial begin
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_19 = {1{`RANDOM}};
-  lookup_status = _RAND_19[2:0];
+  lookup_status = _RAND_19[1:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_20 = {1{`RANDOM}};
-  addr = _RAND_20[31:0];
+  lookup_nextHop = _RAND_20[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_21 = {1{`RANDOM}};
-  status = _RAND_21[1:0];
+  addr = _RAND_21[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_22 = {1{`RANDOM}};
-  state = _RAND_22[0:0];
+  status = _RAND_22[1:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_23 = {1{`RANDOM}};
+  state = _RAND_23[0:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -1620,19 +1628,38 @@ end // initial
         if (_T_35) begin
           if (_T_36) begin
             if (_T_39) begin
-              lookup_status <= 3'h0;
+              lookup_status <= 2'h0;
             end
           end else begin
-            lookup_status <= 3'h0;
+            lookup_status <= 2'h0;
           end
         end
       end
     end else if (state) begin
       if (_T_41) begin
-        lookup_status <= 3'h1;
+        lookup_status <= 2'h1;
       end else if (!(_T_43)) begin
         if (_T_48) begin
-          lookup_status <= 3'h2;
+          lookup_status <= 2'h2;
+        end
+      end
+    end
+    if (!(_T_33)) begin
+      if (state) begin
+        if (!(_T_41)) begin
+          if (!(_T_43)) begin
+            if (_T_48) begin
+              if (2'h3 == _T_42) begin
+                lookup_nextHop <= 32'ha000402;
+              end else if (2'h2 == _T_42) begin
+                lookup_nextHop <= 32'ha000302;
+              end else if (2'h1 == _T_42) begin
+                lookup_nextHop <= 32'ha000202;
+              end else begin
+                lookup_nextHop <= 32'ha000102;
+              end
+            end
+          end
         end
       end
     end
@@ -1715,10 +1742,12 @@ module ARPTable(
   input  [15:0] io_input_packet_ip_chksum,
   input  [31:0] io_input_packet_ip_src,
   input  [31:0] io_input_packet_ip_dest,
-  input  [2:0]  io_input_lookup_status,
+  input  [1:0]  io_input_lookup_status,
+  input  [31:0] io_input_lookup_nextHop,
   input  [1:0]  io_status,
   input         io_pause,
-  output [2:0]  io_output_forward_status,
+  output        io_output_arp_found,
+  output [1:0]  io_output_forward_status,
   output [47:0] io_output_packet_eth_dest,
   output [47:0] io_output_packet_eth_sender,
   output [1:0]  io_output_packet_eth_pactype,
@@ -1737,50 +1766,396 @@ module ARPTable(
   output [31:0] io_output_packet_ip_src,
   output [31:0] io_output_packet_ip_dest,
   output [1:0]  io_outputStatus,
-  input  [47:0] macs_0
+  input  [47:0] macs_0,
+  input  [47:0] macs_1,
+  input  [47:0] macs_2,
+  input  [47:0] macs_3,
+  input  [47:0] macs_4,
+  input  [47:0] cmd_data,
+  input  [7:0]  cmd_idx,
+  input  [7:0]  cmd_op
 );
-  reg [2:0] pipe_forward_status; // @[arp.scala 53:17]
+  reg [31:0] store_0_ip; // @[arp.scala 42:22]
   reg [31:0] _RAND_0;
-  reg [47:0] pipe_packet_eth_dest; // @[arp.scala 53:17]
-  reg [63:0] _RAND_1;
-  reg [47:0] pipe_packet_eth_sender; // @[arp.scala 53:17]
+  reg  store_0_valid; // @[arp.scala 42:22]
+  reg [31:0] _RAND_1;
+  reg [47:0] store_0_mac; // @[arp.scala 42:22]
   reg [63:0] _RAND_2;
-  reg [1:0] pipe_packet_eth_pactype; // @[arp.scala 53:17]
+  reg [2:0] store_0_at; // @[arp.scala 42:22]
   reg [31:0] _RAND_3;
-  reg [2:0] pipe_packet_eth_vlan; // @[arp.scala 53:17]
+  reg [31:0] store_1_ip; // @[arp.scala 42:22]
   reg [31:0] _RAND_4;
-  reg [3:0] pipe_packet_ip_version; // @[arp.scala 53:17]
+  reg  store_1_valid; // @[arp.scala 42:22]
   reg [31:0] _RAND_5;
-  reg [3:0] pipe_packet_ip_ihl; // @[arp.scala 53:17]
-  reg [31:0] _RAND_6;
-  reg [5:0] pipe_packet_ip_dscp; // @[arp.scala 53:17]
+  reg [47:0] store_1_mac; // @[arp.scala 42:22]
+  reg [63:0] _RAND_6;
+  reg [2:0] store_1_at; // @[arp.scala 42:22]
   reg [31:0] _RAND_7;
-  reg [1:0] pipe_packet_ip_ecn; // @[arp.scala 53:17]
+  reg [31:0] store_2_ip; // @[arp.scala 42:22]
   reg [31:0] _RAND_8;
-  reg [15:0] pipe_packet_ip_len; // @[arp.scala 53:17]
+  reg  store_2_valid; // @[arp.scala 42:22]
   reg [31:0] _RAND_9;
-  reg [15:0] pipe_packet_ip_id; // @[arp.scala 53:17]
-  reg [31:0] _RAND_10;
-  reg [2:0] pipe_packet_ip_flags; // @[arp.scala 53:17]
+  reg [47:0] store_2_mac; // @[arp.scala 42:22]
+  reg [63:0] _RAND_10;
+  reg [2:0] store_2_at; // @[arp.scala 42:22]
   reg [31:0] _RAND_11;
-  reg [12:0] pipe_packet_ip_foff; // @[arp.scala 53:17]
+  reg [31:0] store_3_ip; // @[arp.scala 42:22]
   reg [31:0] _RAND_12;
-  reg [7:0] pipe_packet_ip_ttl; // @[arp.scala 53:17]
+  reg  store_3_valid; // @[arp.scala 42:22]
   reg [31:0] _RAND_13;
-  reg [7:0] pipe_packet_ip_proto; // @[arp.scala 53:17]
-  reg [31:0] _RAND_14;
-  reg [15:0] pipe_packet_ip_chksum; // @[arp.scala 53:17]
+  reg [47:0] store_3_mac; // @[arp.scala 42:22]
+  reg [63:0] _RAND_14;
+  reg [2:0] store_3_at; // @[arp.scala 42:22]
   reg [31:0] _RAND_15;
-  reg [31:0] pipe_packet_ip_src; // @[arp.scala 53:17]
+  reg [31:0] store_4_ip; // @[arp.scala 42:22]
   reg [31:0] _RAND_16;
-  reg [31:0] pipe_packet_ip_dest; // @[arp.scala 53:17]
+  reg  store_4_valid; // @[arp.scala 42:22]
   reg [31:0] _RAND_17;
+  reg [47:0] store_4_mac; // @[arp.scala 42:22]
+  reg [63:0] _RAND_18;
+  reg [2:0] store_4_at; // @[arp.scala 42:22]
+  reg [31:0] _RAND_19;
+  reg [31:0] store_5_ip; // @[arp.scala 42:22]
+  reg [31:0] _RAND_20;
+  reg  store_5_valid; // @[arp.scala 42:22]
+  reg [31:0] _RAND_21;
+  reg [47:0] store_5_mac; // @[arp.scala 42:22]
+  reg [63:0] _RAND_22;
+  reg [2:0] store_5_at; // @[arp.scala 42:22]
+  reg [31:0] _RAND_23;
+  reg [31:0] store_6_ip; // @[arp.scala 42:22]
+  reg [31:0] _RAND_24;
+  reg  store_6_valid; // @[arp.scala 42:22]
+  reg [31:0] _RAND_25;
+  reg [47:0] store_6_mac; // @[arp.scala 42:22]
+  reg [63:0] _RAND_26;
+  reg [2:0] store_6_at; // @[arp.scala 42:22]
+  reg [31:0] _RAND_27;
+  reg [31:0] store_7_ip; // @[arp.scala 42:22]
+  reg [31:0] _RAND_28;
+  reg  store_7_valid; // @[arp.scala 42:22]
+  reg [31:0] _RAND_29;
+  reg [47:0] store_7_mac; // @[arp.scala 42:22]
+  reg [63:0] _RAND_30;
+  reg [2:0] store_7_at; // @[arp.scala 42:22]
+  reg [31:0] _RAND_31;
+  wire  _T_2; // @[arp.scala 46:37]
+  wire  _T_3; // @[arp.scala 46:27]
+  wire [31:0] _T_6_ip; // @[arp.scala 48:26]
+  wire  _T_6_valid; // @[arp.scala 48:26]
+  wire [47:0] _T_6_mac; // @[arp.scala 48:26]
+  wire [2:0] _T_6_at; // @[arp.scala 48:26]
+  wire [83:0] _T_9; // @[arp.scala 19:52]
+  wire [2:0] _T_16; // @[arp.scala 19:80]
+  wire [47:0] _T_17; // @[arp.scala 19:80]
+  wire  _T_18; // @[arp.scala 19:80]
+  wire [31:0] _T_19; // @[arp.scala 19:80]
+  wire  _T_20; // @[arp.scala 46:37]
+  wire  _T_21; // @[arp.scala 46:27]
+  wire  _T_22; // @[arp.scala 48:12]
+  wire [31:0] _T_24_ip; // @[arp.scala 48:26]
+  wire  _T_24_valid; // @[arp.scala 48:26]
+  wire [47:0] _T_24_mac; // @[arp.scala 48:26]
+  wire [2:0] _T_24_at; // @[arp.scala 48:26]
+  wire [83:0] _T_27; // @[arp.scala 19:52]
+  wire [83:0] _T_30; // @[arp.scala 19:68]
+  wire [83:0] _T_31; // @[arp.scala 19:55]
+  wire [2:0] _T_34; // @[arp.scala 19:80]
+  wire [47:0] _T_35; // @[arp.scala 19:80]
+  wire  _T_36; // @[arp.scala 19:80]
+  wire [31:0] _T_37; // @[arp.scala 19:80]
+  wire  _T_38; // @[arp.scala 46:37]
+  wire  _T_39; // @[arp.scala 46:27]
+  wire  _T_40; // @[arp.scala 48:12]
+  wire [31:0] _T_42_ip; // @[arp.scala 48:26]
+  wire  _T_42_valid; // @[arp.scala 48:26]
+  wire [47:0] _T_42_mac; // @[arp.scala 48:26]
+  wire [2:0] _T_42_at; // @[arp.scala 48:26]
+  wire [83:0] _T_45; // @[arp.scala 19:52]
+  wire [83:0] _T_48; // @[arp.scala 19:68]
+  wire [83:0] _T_49; // @[arp.scala 19:55]
+  wire [2:0] _T_52; // @[arp.scala 19:80]
+  wire [47:0] _T_53; // @[arp.scala 19:80]
+  wire  _T_54; // @[arp.scala 19:80]
+  wire [31:0] _T_55; // @[arp.scala 19:80]
+  wire  _T_56; // @[arp.scala 46:37]
+  wire  _T_57; // @[arp.scala 46:27]
+  wire  _T_58; // @[arp.scala 48:12]
+  wire [31:0] _T_60_ip; // @[arp.scala 48:26]
+  wire  _T_60_valid; // @[arp.scala 48:26]
+  wire [47:0] _T_60_mac; // @[arp.scala 48:26]
+  wire [2:0] _T_60_at; // @[arp.scala 48:26]
+  wire [83:0] _T_63; // @[arp.scala 19:52]
+  wire [83:0] _T_66; // @[arp.scala 19:68]
+  wire [83:0] _T_67; // @[arp.scala 19:55]
+  wire [2:0] _T_70; // @[arp.scala 19:80]
+  wire [47:0] _T_71; // @[arp.scala 19:80]
+  wire  _T_72; // @[arp.scala 19:80]
+  wire [31:0] _T_73; // @[arp.scala 19:80]
+  wire  _T_74; // @[arp.scala 46:37]
+  wire  _T_75; // @[arp.scala 46:27]
+  wire  _T_76; // @[arp.scala 48:12]
+  wire [31:0] _T_78_ip; // @[arp.scala 48:26]
+  wire  _T_78_valid; // @[arp.scala 48:26]
+  wire [47:0] _T_78_mac; // @[arp.scala 48:26]
+  wire [2:0] _T_78_at; // @[arp.scala 48:26]
+  wire [83:0] _T_81; // @[arp.scala 19:52]
+  wire [83:0] _T_84; // @[arp.scala 19:68]
+  wire [83:0] _T_85; // @[arp.scala 19:55]
+  wire [2:0] _T_88; // @[arp.scala 19:80]
+  wire [47:0] _T_89; // @[arp.scala 19:80]
+  wire  _T_90; // @[arp.scala 19:80]
+  wire [31:0] _T_91; // @[arp.scala 19:80]
+  wire  _T_92; // @[arp.scala 46:37]
+  wire  _T_93; // @[arp.scala 46:27]
+  wire  _T_94; // @[arp.scala 48:12]
+  wire [31:0] _T_96_ip; // @[arp.scala 48:26]
+  wire  _T_96_valid; // @[arp.scala 48:26]
+  wire [47:0] _T_96_mac; // @[arp.scala 48:26]
+  wire [2:0] _T_96_at; // @[arp.scala 48:26]
+  wire [83:0] _T_99; // @[arp.scala 19:52]
+  wire [83:0] _T_102; // @[arp.scala 19:68]
+  wire [83:0] _T_103; // @[arp.scala 19:55]
+  wire [2:0] _T_106; // @[arp.scala 19:80]
+  wire [47:0] _T_107; // @[arp.scala 19:80]
+  wire  _T_108; // @[arp.scala 19:80]
+  wire [31:0] _T_109; // @[arp.scala 19:80]
+  wire  _T_110; // @[arp.scala 46:37]
+  wire  _T_111; // @[arp.scala 46:27]
+  wire  _T_112; // @[arp.scala 48:12]
+  wire [31:0] _T_114_ip; // @[arp.scala 48:26]
+  wire  _T_114_valid; // @[arp.scala 48:26]
+  wire [47:0] _T_114_mac; // @[arp.scala 48:26]
+  wire [2:0] _T_114_at; // @[arp.scala 48:26]
+  wire [83:0] _T_117; // @[arp.scala 19:52]
+  wire [83:0] _T_120; // @[arp.scala 19:68]
+  wire [83:0] _T_121; // @[arp.scala 19:55]
+  wire [2:0] _T_124; // @[arp.scala 19:80]
+  wire [47:0] _T_125; // @[arp.scala 19:80]
+  wire  _T_126; // @[arp.scala 19:80]
+  wire [31:0] _T_127; // @[arp.scala 19:80]
+  wire  _T_128; // @[arp.scala 46:37]
+  wire  _T_129; // @[arp.scala 46:27]
+  wire  found; // @[arp.scala 48:12]
+  wire [31:0] _T_131_ip; // @[arp.scala 48:26]
+  wire  _T_131_valid; // @[arp.scala 48:26]
+  wire [47:0] _T_131_mac; // @[arp.scala 48:26]
+  wire [2:0] _T_131_at; // @[arp.scala 48:26]
+  wire [83:0] _T_134; // @[arp.scala 19:52]
+  wire [83:0] _T_137; // @[arp.scala 19:68]
+  wire [83:0] _T_138; // @[arp.scala 19:55]
+  wire [2:0] entry_at; // @[arp.scala 19:80]
+  wire [47:0] entry_mac; // @[arp.scala 19:80]
+  reg  pipe_arp_found; // @[arp.scala 53:17]
+  reg [31:0] _RAND_32;
+  reg [1:0] pipe_forward_status; // @[arp.scala 53:17]
+  reg [31:0] _RAND_33;
+  reg [47:0] pipe_packet_eth_dest; // @[arp.scala 53:17]
+  reg [63:0] _RAND_34;
+  reg [47:0] pipe_packet_eth_sender; // @[arp.scala 53:17]
+  reg [63:0] _RAND_35;
+  reg [1:0] pipe_packet_eth_pactype; // @[arp.scala 53:17]
+  reg [31:0] _RAND_36;
+  reg [2:0] pipe_packet_eth_vlan; // @[arp.scala 53:17]
+  reg [31:0] _RAND_37;
+  reg [3:0] pipe_packet_ip_version; // @[arp.scala 53:17]
+  reg [31:0] _RAND_38;
+  reg [3:0] pipe_packet_ip_ihl; // @[arp.scala 53:17]
+  reg [31:0] _RAND_39;
+  reg [5:0] pipe_packet_ip_dscp; // @[arp.scala 53:17]
+  reg [31:0] _RAND_40;
+  reg [1:0] pipe_packet_ip_ecn; // @[arp.scala 53:17]
+  reg [31:0] _RAND_41;
+  reg [15:0] pipe_packet_ip_len; // @[arp.scala 53:17]
+  reg [31:0] _RAND_42;
+  reg [15:0] pipe_packet_ip_id; // @[arp.scala 53:17]
+  reg [31:0] _RAND_43;
+  reg [2:0] pipe_packet_ip_flags; // @[arp.scala 53:17]
+  reg [31:0] _RAND_44;
+  reg [12:0] pipe_packet_ip_foff; // @[arp.scala 53:17]
+  reg [31:0] _RAND_45;
+  reg [7:0] pipe_packet_ip_ttl; // @[arp.scala 53:17]
+  reg [31:0] _RAND_46;
+  reg [7:0] pipe_packet_ip_proto; // @[arp.scala 53:17]
+  reg [31:0] _RAND_47;
+  reg [15:0] pipe_packet_ip_chksum; // @[arp.scala 53:17]
+  reg [31:0] _RAND_48;
+  reg [31:0] pipe_packet_ip_src; // @[arp.scala 53:17]
+  reg [31:0] _RAND_49;
+  reg [31:0] pipe_packet_ip_dest; // @[arp.scala 53:17]
+  reg [31:0] _RAND_50;
   reg [1:0] pipeStatus; // @[arp.scala 54:27]
-  reg [31:0] _RAND_18;
+  reg [31:0] _RAND_51;
   wire  _T_144; // @[arp.scala 56:8]
   wire  _T_145; // @[arp.scala 62:20]
+  reg [7:0] _T_146; // @[ctrl.scala 34:24]
+  reg [31:0] _RAND_52;
+  wire  _T_147; // @[ctrl.scala 34:29]
+  wire  _T_148; // @[ctrl.scala 34:46]
+  wire  _T_149; // @[ctrl.scala 34:40]
+  wire [7:0] _T_151; // @[Conditional.scala 37:39]
+  wire  _T_152; // @[Conditional.scala 37:30]
+  wire [2:0] _T_153;
+  wire [31:0] _store_T_153_ip; // @[arp.scala 81:27 arp.scala 81:27]
+  wire  _T_156; // @[Conditional.scala 37:30]
+  wire  _T_160; // @[Conditional.scala 37:30]
+  wire [2:0] _store_T_161_at; // @[arp.scala 89:27 arp.scala 89:27]
+  wire  _T_164; // @[Conditional.scala 37:30]
+  wire  _T_168; // @[Conditional.scala 37:30]
+  wire  _GEN_194; // @[arp.scala 97:30]
+  wire  _GEN_66; // @[arp.scala 97:30]
+  wire  _GEN_195; // @[arp.scala 97:30]
+  wire  _GEN_67; // @[arp.scala 97:30]
+  wire  _GEN_196; // @[arp.scala 97:30]
+  wire  _GEN_68; // @[arp.scala 97:30]
+  wire  _GEN_197; // @[arp.scala 97:30]
+  wire  _GEN_69; // @[arp.scala 97:30]
+  wire  _GEN_198; // @[arp.scala 97:30]
+  wire  _GEN_70; // @[arp.scala 97:30]
+  wire  _GEN_199; // @[arp.scala 97:30]
+  wire  _GEN_71; // @[arp.scala 97:30]
+  wire  _GEN_200; // @[arp.scala 97:30]
+  wire  _GEN_72; // @[arp.scala 97:30]
+  wire  _GEN_201; // @[arp.scala 97:30]
+  wire  _GEN_73; // @[arp.scala 97:30]
+  assign _T_2 = store_0_ip == io_input_lookup_nextHop; // @[arp.scala 46:37]
+  assign _T_3 = store_0_valid & _T_2; // @[arp.scala 46:27]
+  assign _T_6_ip = _T_3 ? store_0_ip : 32'h0; // @[arp.scala 48:26]
+  assign _T_6_valid = _T_3 & store_0_valid; // @[arp.scala 48:26]
+  assign _T_6_mac = _T_3 ? store_0_mac : 48'h0; // @[arp.scala 48:26]
+  assign _T_6_at = _T_3 ? store_0_at : 3'h0; // @[arp.scala 48:26]
+  assign _T_9 = {_T_6_ip,_T_6_valid,_T_6_mac,_T_6_at}; // @[arp.scala 19:52]
+  assign _T_16 = _T_9[2:0]; // @[arp.scala 19:80]
+  assign _T_17 = _T_9[50:3]; // @[arp.scala 19:80]
+  assign _T_18 = _T_9[51]; // @[arp.scala 19:80]
+  assign _T_19 = _T_9[83:52]; // @[arp.scala 19:80]
+  assign _T_20 = store_1_ip == io_input_lookup_nextHop; // @[arp.scala 46:37]
+  assign _T_21 = store_1_valid & _T_20; // @[arp.scala 46:27]
+  assign _T_22 = _T_21 | _T_3; // @[arp.scala 48:12]
+  assign _T_24_ip = _T_21 ? store_1_ip : 32'h0; // @[arp.scala 48:26]
+  assign _T_24_valid = _T_21 & store_1_valid; // @[arp.scala 48:26]
+  assign _T_24_mac = _T_21 ? store_1_mac : 48'h0; // @[arp.scala 48:26]
+  assign _T_24_at = _T_21 ? store_1_at : 3'h0; // @[arp.scala 48:26]
+  assign _T_27 = {_T_24_ip,_T_24_valid,_T_24_mac,_T_24_at}; // @[arp.scala 19:52]
+  assign _T_30 = {_T_19,_T_18,_T_17,_T_16}; // @[arp.scala 19:68]
+  assign _T_31 = _T_27 | _T_30; // @[arp.scala 19:55]
+  assign _T_34 = _T_31[2:0]; // @[arp.scala 19:80]
+  assign _T_35 = _T_31[50:3]; // @[arp.scala 19:80]
+  assign _T_36 = _T_31[51]; // @[arp.scala 19:80]
+  assign _T_37 = _T_31[83:52]; // @[arp.scala 19:80]
+  assign _T_38 = store_2_ip == io_input_lookup_nextHop; // @[arp.scala 46:37]
+  assign _T_39 = store_2_valid & _T_38; // @[arp.scala 46:27]
+  assign _T_40 = _T_39 | _T_22; // @[arp.scala 48:12]
+  assign _T_42_ip = _T_39 ? store_2_ip : 32'h0; // @[arp.scala 48:26]
+  assign _T_42_valid = _T_39 & store_2_valid; // @[arp.scala 48:26]
+  assign _T_42_mac = _T_39 ? store_2_mac : 48'h0; // @[arp.scala 48:26]
+  assign _T_42_at = _T_39 ? store_2_at : 3'h0; // @[arp.scala 48:26]
+  assign _T_45 = {_T_42_ip,_T_42_valid,_T_42_mac,_T_42_at}; // @[arp.scala 19:52]
+  assign _T_48 = {_T_37,_T_36,_T_35,_T_34}; // @[arp.scala 19:68]
+  assign _T_49 = _T_45 | _T_48; // @[arp.scala 19:55]
+  assign _T_52 = _T_49[2:0]; // @[arp.scala 19:80]
+  assign _T_53 = _T_49[50:3]; // @[arp.scala 19:80]
+  assign _T_54 = _T_49[51]; // @[arp.scala 19:80]
+  assign _T_55 = _T_49[83:52]; // @[arp.scala 19:80]
+  assign _T_56 = store_3_ip == io_input_lookup_nextHop; // @[arp.scala 46:37]
+  assign _T_57 = store_3_valid & _T_56; // @[arp.scala 46:27]
+  assign _T_58 = _T_57 | _T_40; // @[arp.scala 48:12]
+  assign _T_60_ip = _T_57 ? store_3_ip : 32'h0; // @[arp.scala 48:26]
+  assign _T_60_valid = _T_57 & store_3_valid; // @[arp.scala 48:26]
+  assign _T_60_mac = _T_57 ? store_3_mac : 48'h0; // @[arp.scala 48:26]
+  assign _T_60_at = _T_57 ? store_3_at : 3'h0; // @[arp.scala 48:26]
+  assign _T_63 = {_T_60_ip,_T_60_valid,_T_60_mac,_T_60_at}; // @[arp.scala 19:52]
+  assign _T_66 = {_T_55,_T_54,_T_53,_T_52}; // @[arp.scala 19:68]
+  assign _T_67 = _T_63 | _T_66; // @[arp.scala 19:55]
+  assign _T_70 = _T_67[2:0]; // @[arp.scala 19:80]
+  assign _T_71 = _T_67[50:3]; // @[arp.scala 19:80]
+  assign _T_72 = _T_67[51]; // @[arp.scala 19:80]
+  assign _T_73 = _T_67[83:52]; // @[arp.scala 19:80]
+  assign _T_74 = store_4_ip == io_input_lookup_nextHop; // @[arp.scala 46:37]
+  assign _T_75 = store_4_valid & _T_74; // @[arp.scala 46:27]
+  assign _T_76 = _T_75 | _T_58; // @[arp.scala 48:12]
+  assign _T_78_ip = _T_75 ? store_4_ip : 32'h0; // @[arp.scala 48:26]
+  assign _T_78_valid = _T_75 & store_4_valid; // @[arp.scala 48:26]
+  assign _T_78_mac = _T_75 ? store_4_mac : 48'h0; // @[arp.scala 48:26]
+  assign _T_78_at = _T_75 ? store_4_at : 3'h0; // @[arp.scala 48:26]
+  assign _T_81 = {_T_78_ip,_T_78_valid,_T_78_mac,_T_78_at}; // @[arp.scala 19:52]
+  assign _T_84 = {_T_73,_T_72,_T_71,_T_70}; // @[arp.scala 19:68]
+  assign _T_85 = _T_81 | _T_84; // @[arp.scala 19:55]
+  assign _T_88 = _T_85[2:0]; // @[arp.scala 19:80]
+  assign _T_89 = _T_85[50:3]; // @[arp.scala 19:80]
+  assign _T_90 = _T_85[51]; // @[arp.scala 19:80]
+  assign _T_91 = _T_85[83:52]; // @[arp.scala 19:80]
+  assign _T_92 = store_5_ip == io_input_lookup_nextHop; // @[arp.scala 46:37]
+  assign _T_93 = store_5_valid & _T_92; // @[arp.scala 46:27]
+  assign _T_94 = _T_93 | _T_76; // @[arp.scala 48:12]
+  assign _T_96_ip = _T_93 ? store_5_ip : 32'h0; // @[arp.scala 48:26]
+  assign _T_96_valid = _T_93 & store_5_valid; // @[arp.scala 48:26]
+  assign _T_96_mac = _T_93 ? store_5_mac : 48'h0; // @[arp.scala 48:26]
+  assign _T_96_at = _T_93 ? store_5_at : 3'h0; // @[arp.scala 48:26]
+  assign _T_99 = {_T_96_ip,_T_96_valid,_T_96_mac,_T_96_at}; // @[arp.scala 19:52]
+  assign _T_102 = {_T_91,_T_90,_T_89,_T_88}; // @[arp.scala 19:68]
+  assign _T_103 = _T_99 | _T_102; // @[arp.scala 19:55]
+  assign _T_106 = _T_103[2:0]; // @[arp.scala 19:80]
+  assign _T_107 = _T_103[50:3]; // @[arp.scala 19:80]
+  assign _T_108 = _T_103[51]; // @[arp.scala 19:80]
+  assign _T_109 = _T_103[83:52]; // @[arp.scala 19:80]
+  assign _T_110 = store_6_ip == io_input_lookup_nextHop; // @[arp.scala 46:37]
+  assign _T_111 = store_6_valid & _T_110; // @[arp.scala 46:27]
+  assign _T_112 = _T_111 | _T_94; // @[arp.scala 48:12]
+  assign _T_114_ip = _T_111 ? store_6_ip : 32'h0; // @[arp.scala 48:26]
+  assign _T_114_valid = _T_111 & store_6_valid; // @[arp.scala 48:26]
+  assign _T_114_mac = _T_111 ? store_6_mac : 48'h0; // @[arp.scala 48:26]
+  assign _T_114_at = _T_111 ? store_6_at : 3'h0; // @[arp.scala 48:26]
+  assign _T_117 = {_T_114_ip,_T_114_valid,_T_114_mac,_T_114_at}; // @[arp.scala 19:52]
+  assign _T_120 = {_T_109,_T_108,_T_107,_T_106}; // @[arp.scala 19:68]
+  assign _T_121 = _T_117 | _T_120; // @[arp.scala 19:55]
+  assign _T_124 = _T_121[2:0]; // @[arp.scala 19:80]
+  assign _T_125 = _T_121[50:3]; // @[arp.scala 19:80]
+  assign _T_126 = _T_121[51]; // @[arp.scala 19:80]
+  assign _T_127 = _T_121[83:52]; // @[arp.scala 19:80]
+  assign _T_128 = store_7_ip == io_input_lookup_nextHop; // @[arp.scala 46:37]
+  assign _T_129 = store_7_valid & _T_128; // @[arp.scala 46:27]
+  assign found = _T_129 | _T_112; // @[arp.scala 48:12]
+  assign _T_131_ip = _T_129 ? store_7_ip : 32'h0; // @[arp.scala 48:26]
+  assign _T_131_valid = _T_129 & store_7_valid; // @[arp.scala 48:26]
+  assign _T_131_mac = _T_129 ? store_7_mac : 48'h0; // @[arp.scala 48:26]
+  assign _T_131_at = _T_129 ? store_7_at : 3'h0; // @[arp.scala 48:26]
+  assign _T_134 = {_T_131_ip,_T_131_valid,_T_131_mac,_T_131_at}; // @[arp.scala 19:52]
+  assign _T_137 = {_T_127,_T_126,_T_125,_T_124}; // @[arp.scala 19:68]
+  assign _T_138 = _T_134 | _T_137; // @[arp.scala 19:55]
+  assign entry_at = _T_138[2:0]; // @[arp.scala 19:80]
+  assign entry_mac = _T_138[50:3]; // @[arp.scala 19:80]
   assign _T_144 = io_pause == 1'h0; // @[arp.scala 56:8]
   assign _T_145 = io_status == 2'h1; // @[arp.scala 62:20]
+  assign _T_147 = _T_146 == 8'h0; // @[ctrl.scala 34:29]
+  assign _T_148 = cmd_op != 8'h0; // @[ctrl.scala 34:46]
+  assign _T_149 = _T_147 & _T_148; // @[ctrl.scala 34:40]
+  assign _T_151 = $unsigned(cmd_op); // @[Conditional.scala 37:39]
+  assign _T_152 = 8'h3 == _T_151; // @[Conditional.scala 37:30]
+  assign _T_153 = cmd_idx[2:0];
+  assign _store_T_153_ip = cmd_data[31:0]; // @[arp.scala 81:27 arp.scala 81:27]
+  assign _T_156 = 8'h4 == _T_151; // @[Conditional.scala 37:30]
+  assign _T_160 = 8'h5 == _T_151; // @[Conditional.scala 37:30]
+  assign _store_T_161_at = cmd_data[2:0]; // @[arp.scala 89:27 arp.scala 89:27]
+  assign _T_164 = 8'h7 == _T_151; // @[Conditional.scala 37:30]
+  assign _T_168 = 8'h6 == _T_151; // @[Conditional.scala 37:30]
+  assign _GEN_194 = 3'h0 == _T_153; // @[arp.scala 97:30]
+  assign _GEN_66 = _GEN_194 | store_0_valid; // @[arp.scala 97:30]
+  assign _GEN_195 = 3'h1 == _T_153; // @[arp.scala 97:30]
+  assign _GEN_67 = _GEN_195 | store_1_valid; // @[arp.scala 97:30]
+  assign _GEN_196 = 3'h2 == _T_153; // @[arp.scala 97:30]
+  assign _GEN_68 = _GEN_196 | store_2_valid; // @[arp.scala 97:30]
+  assign _GEN_197 = 3'h3 == _T_153; // @[arp.scala 97:30]
+  assign _GEN_69 = _GEN_197 | store_3_valid; // @[arp.scala 97:30]
+  assign _GEN_198 = 3'h4 == _T_153; // @[arp.scala 97:30]
+  assign _GEN_70 = _GEN_198 | store_4_valid; // @[arp.scala 97:30]
+  assign _GEN_199 = 3'h5 == _T_153; // @[arp.scala 97:30]
+  assign _GEN_71 = _GEN_199 | store_5_valid; // @[arp.scala 97:30]
+  assign _GEN_200 = 3'h6 == _T_153; // @[arp.scala 97:30]
+  assign _GEN_72 = _GEN_200 | store_6_valid; // @[arp.scala 97:30]
+  assign _GEN_201 = 3'h7 == _T_153; // @[arp.scala 97:30]
+  assign _GEN_73 = _GEN_201 | store_7_valid; // @[arp.scala 97:30]
+  assign io_output_arp_found = pipe_arp_found; // @[arp.scala 73:13]
   assign io_output_forward_status = pipe_forward_status; // @[arp.scala 73:13]
   assign io_output_packet_eth_dest = pipe_packet_eth_dest; // @[arp.scala 73:13]
   assign io_output_packet_eth_sender = pipe_packet_eth_sender; // @[arp.scala 73:13]
@@ -1833,97 +2208,646 @@ initial begin
     `endif
   `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
-  pipe_forward_status = _RAND_0[2:0];
+  store_0_ip = _RAND_0[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_1 = {2{`RANDOM}};
-  pipe_packet_eth_dest = _RAND_1[47:0];
+  _RAND_1 = {1{`RANDOM}};
+  store_0_valid = _RAND_1[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_2 = {2{`RANDOM}};
-  pipe_packet_eth_sender = _RAND_2[47:0];
+  store_0_mac = _RAND_2[47:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_3 = {1{`RANDOM}};
-  pipe_packet_eth_pactype = _RAND_3[1:0];
+  store_0_at = _RAND_3[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_4 = {1{`RANDOM}};
-  pipe_packet_eth_vlan = _RAND_4[2:0];
+  store_1_ip = _RAND_4[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_5 = {1{`RANDOM}};
-  pipe_packet_ip_version = _RAND_5[3:0];
+  store_1_valid = _RAND_5[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_6 = {1{`RANDOM}};
-  pipe_packet_ip_ihl = _RAND_6[3:0];
+  _RAND_6 = {2{`RANDOM}};
+  store_1_mac = _RAND_6[47:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_7 = {1{`RANDOM}};
-  pipe_packet_ip_dscp = _RAND_7[5:0];
+  store_1_at = _RAND_7[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_8 = {1{`RANDOM}};
-  pipe_packet_ip_ecn = _RAND_8[1:0];
+  store_2_ip = _RAND_8[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_9 = {1{`RANDOM}};
-  pipe_packet_ip_len = _RAND_9[15:0];
+  store_2_valid = _RAND_9[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_10 = {1{`RANDOM}};
-  pipe_packet_ip_id = _RAND_10[15:0];
+  _RAND_10 = {2{`RANDOM}};
+  store_2_mac = _RAND_10[47:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_11 = {1{`RANDOM}};
-  pipe_packet_ip_flags = _RAND_11[2:0];
+  store_2_at = _RAND_11[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_12 = {1{`RANDOM}};
-  pipe_packet_ip_foff = _RAND_12[12:0];
+  store_3_ip = _RAND_12[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_13 = {1{`RANDOM}};
-  pipe_packet_ip_ttl = _RAND_13[7:0];
+  store_3_valid = _RAND_13[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_14 = {1{`RANDOM}};
-  pipe_packet_ip_proto = _RAND_14[7:0];
+  _RAND_14 = {2{`RANDOM}};
+  store_3_mac = _RAND_14[47:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_15 = {1{`RANDOM}};
-  pipe_packet_ip_chksum = _RAND_15[15:0];
+  store_3_at = _RAND_15[2:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_16 = {1{`RANDOM}};
-  pipe_packet_ip_src = _RAND_16[31:0];
+  store_4_ip = _RAND_16[31:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_17 = {1{`RANDOM}};
-  pipe_packet_ip_dest = _RAND_17[31:0];
+  store_4_valid = _RAND_17[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_18 = {1{`RANDOM}};
-  pipeStatus = _RAND_18[1:0];
+  _RAND_18 = {2{`RANDOM}};
+  store_4_mac = _RAND_18[47:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_19 = {1{`RANDOM}};
+  store_4_at = _RAND_19[2:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_20 = {1{`RANDOM}};
+  store_5_ip = _RAND_20[31:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_21 = {1{`RANDOM}};
+  store_5_valid = _RAND_21[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_22 = {2{`RANDOM}};
+  store_5_mac = _RAND_22[47:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_23 = {1{`RANDOM}};
+  store_5_at = _RAND_23[2:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_24 = {1{`RANDOM}};
+  store_6_ip = _RAND_24[31:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_25 = {1{`RANDOM}};
+  store_6_valid = _RAND_25[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_26 = {2{`RANDOM}};
+  store_6_mac = _RAND_26[47:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_27 = {1{`RANDOM}};
+  store_6_at = _RAND_27[2:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_28 = {1{`RANDOM}};
+  store_7_ip = _RAND_28[31:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_29 = {1{`RANDOM}};
+  store_7_valid = _RAND_29[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_30 = {2{`RANDOM}};
+  store_7_mac = _RAND_30[47:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_31 = {1{`RANDOM}};
+  store_7_at = _RAND_31[2:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_32 = {1{`RANDOM}};
+  pipe_arp_found = _RAND_32[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_33 = {1{`RANDOM}};
+  pipe_forward_status = _RAND_33[1:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_34 = {2{`RANDOM}};
+  pipe_packet_eth_dest = _RAND_34[47:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_35 = {2{`RANDOM}};
+  pipe_packet_eth_sender = _RAND_35[47:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_36 = {1{`RANDOM}};
+  pipe_packet_eth_pactype = _RAND_36[1:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_37 = {1{`RANDOM}};
+  pipe_packet_eth_vlan = _RAND_37[2:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_38 = {1{`RANDOM}};
+  pipe_packet_ip_version = _RAND_38[3:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_39 = {1{`RANDOM}};
+  pipe_packet_ip_ihl = _RAND_39[3:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_40 = {1{`RANDOM}};
+  pipe_packet_ip_dscp = _RAND_40[5:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_41 = {1{`RANDOM}};
+  pipe_packet_ip_ecn = _RAND_41[1:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_42 = {1{`RANDOM}};
+  pipe_packet_ip_len = _RAND_42[15:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_43 = {1{`RANDOM}};
+  pipe_packet_ip_id = _RAND_43[15:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_44 = {1{`RANDOM}};
+  pipe_packet_ip_flags = _RAND_44[2:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_45 = {1{`RANDOM}};
+  pipe_packet_ip_foff = _RAND_45[12:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_46 = {1{`RANDOM}};
+  pipe_packet_ip_ttl = _RAND_46[7:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_47 = {1{`RANDOM}};
+  pipe_packet_ip_proto = _RAND_47[7:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_48 = {1{`RANDOM}};
+  pipe_packet_ip_chksum = _RAND_48[15:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_49 = {1{`RANDOM}};
+  pipe_packet_ip_src = _RAND_49[31:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_50 = {1{`RANDOM}};
+  pipe_packet_ip_dest = _RAND_50[31:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_51 = {1{`RANDOM}};
+  pipeStatus = _RAND_51[1:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_52 = {1{`RANDOM}};
+  _T_146 = _RAND_52[7:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
+    if (reset) begin
+      store_0_ip <= 32'h0;
+    end else if (_T_149) begin
+      if (_T_152) begin
+        if (3'h0 == _T_153) begin
+          store_0_ip <= _store_T_153_ip;
+        end
+      end
+    end
+    if (reset) begin
+      store_0_valid <= 1'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (!(_T_160)) begin
+            if (_T_164) begin
+              if (3'h0 == _T_153) begin
+                store_0_valid <= 1'h0;
+              end
+            end else if (_T_168) begin
+              store_0_valid <= _GEN_66;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_0_mac <= 48'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (_T_156) begin
+          if (3'h0 == _T_153) begin
+            store_0_mac <= cmd_data;
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_0_at <= 3'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (_T_160) begin
+            if (3'h0 == _T_153) begin
+              store_0_at <= _store_T_161_at;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_1_ip <= 32'h0;
+    end else if (_T_149) begin
+      if (_T_152) begin
+        if (3'h1 == _T_153) begin
+          store_1_ip <= _store_T_153_ip;
+        end
+      end
+    end
+    if (reset) begin
+      store_1_valid <= 1'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (!(_T_160)) begin
+            if (_T_164) begin
+              if (3'h1 == _T_153) begin
+                store_1_valid <= 1'h0;
+              end
+            end else if (_T_168) begin
+              store_1_valid <= _GEN_67;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_1_mac <= 48'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (_T_156) begin
+          if (3'h1 == _T_153) begin
+            store_1_mac <= cmd_data;
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_1_at <= 3'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (_T_160) begin
+            if (3'h1 == _T_153) begin
+              store_1_at <= _store_T_161_at;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_2_ip <= 32'h0;
+    end else if (_T_149) begin
+      if (_T_152) begin
+        if (3'h2 == _T_153) begin
+          store_2_ip <= _store_T_153_ip;
+        end
+      end
+    end
+    if (reset) begin
+      store_2_valid <= 1'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (!(_T_160)) begin
+            if (_T_164) begin
+              if (3'h2 == _T_153) begin
+                store_2_valid <= 1'h0;
+              end
+            end else if (_T_168) begin
+              store_2_valid <= _GEN_68;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_2_mac <= 48'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (_T_156) begin
+          if (3'h2 == _T_153) begin
+            store_2_mac <= cmd_data;
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_2_at <= 3'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (_T_160) begin
+            if (3'h2 == _T_153) begin
+              store_2_at <= _store_T_161_at;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_3_ip <= 32'h0;
+    end else if (_T_149) begin
+      if (_T_152) begin
+        if (3'h3 == _T_153) begin
+          store_3_ip <= _store_T_153_ip;
+        end
+      end
+    end
+    if (reset) begin
+      store_3_valid <= 1'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (!(_T_160)) begin
+            if (_T_164) begin
+              if (3'h3 == _T_153) begin
+                store_3_valid <= 1'h0;
+              end
+            end else if (_T_168) begin
+              store_3_valid <= _GEN_69;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_3_mac <= 48'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (_T_156) begin
+          if (3'h3 == _T_153) begin
+            store_3_mac <= cmd_data;
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_3_at <= 3'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (_T_160) begin
+            if (3'h3 == _T_153) begin
+              store_3_at <= _store_T_161_at;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_4_ip <= 32'h0;
+    end else if (_T_149) begin
+      if (_T_152) begin
+        if (3'h4 == _T_153) begin
+          store_4_ip <= _store_T_153_ip;
+        end
+      end
+    end
+    if (reset) begin
+      store_4_valid <= 1'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (!(_T_160)) begin
+            if (_T_164) begin
+              if (3'h4 == _T_153) begin
+                store_4_valid <= 1'h0;
+              end
+            end else if (_T_168) begin
+              store_4_valid <= _GEN_70;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_4_mac <= 48'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (_T_156) begin
+          if (3'h4 == _T_153) begin
+            store_4_mac <= cmd_data;
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_4_at <= 3'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (_T_160) begin
+            if (3'h4 == _T_153) begin
+              store_4_at <= _store_T_161_at;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_5_ip <= 32'h0;
+    end else if (_T_149) begin
+      if (_T_152) begin
+        if (3'h5 == _T_153) begin
+          store_5_ip <= _store_T_153_ip;
+        end
+      end
+    end
+    if (reset) begin
+      store_5_valid <= 1'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (!(_T_160)) begin
+            if (_T_164) begin
+              if (3'h5 == _T_153) begin
+                store_5_valid <= 1'h0;
+              end
+            end else if (_T_168) begin
+              store_5_valid <= _GEN_71;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_5_mac <= 48'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (_T_156) begin
+          if (3'h5 == _T_153) begin
+            store_5_mac <= cmd_data;
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_5_at <= 3'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (_T_160) begin
+            if (3'h5 == _T_153) begin
+              store_5_at <= _store_T_161_at;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_6_ip <= 32'h0;
+    end else if (_T_149) begin
+      if (_T_152) begin
+        if (3'h6 == _T_153) begin
+          store_6_ip <= _store_T_153_ip;
+        end
+      end
+    end
+    if (reset) begin
+      store_6_valid <= 1'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (!(_T_160)) begin
+            if (_T_164) begin
+              if (3'h6 == _T_153) begin
+                store_6_valid <= 1'h0;
+              end
+            end else if (_T_168) begin
+              store_6_valid <= _GEN_72;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_6_mac <= 48'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (_T_156) begin
+          if (3'h6 == _T_153) begin
+            store_6_mac <= cmd_data;
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_6_at <= 3'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (_T_160) begin
+            if (3'h6 == _T_153) begin
+              store_6_at <= _store_T_161_at;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_7_ip <= 32'h0;
+    end else if (_T_149) begin
+      if (_T_152) begin
+        if (3'h7 == _T_153) begin
+          store_7_ip <= _store_T_153_ip;
+        end
+      end
+    end
+    if (reset) begin
+      store_7_valid <= 1'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (!(_T_160)) begin
+            if (_T_164) begin
+              if (3'h7 == _T_153) begin
+                store_7_valid <= 1'h0;
+              end
+            end else if (_T_168) begin
+              store_7_valid <= _GEN_73;
+            end
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_7_mac <= 48'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (_T_156) begin
+          if (3'h7 == _T_153) begin
+            store_7_mac <= cmd_data;
+          end
+        end
+      end
+    end
+    if (reset) begin
+      store_7_at <= 3'h0;
+    end else if (_T_149) begin
+      if (!(_T_152)) begin
+        if (!(_T_156)) begin
+          if (_T_160) begin
+            if (3'h7 == _T_153) begin
+              store_7_at <= _store_T_161_at;
+            end
+          end
+        end
+      end
+    end
+    if (_T_144) begin
+      pipe_arp_found <= found;
+    end
     if (_T_144) begin
       pipe_forward_status <= io_input_lookup_status;
     end
     if (_T_144) begin
       if (_T_145) begin
-        pipe_packet_eth_dest <= 48'h0;
+        pipe_packet_eth_dest <= entry_mac;
       end else begin
         pipe_packet_eth_dest <= io_input_packet_eth_dest;
       end
     end
     if (_T_144) begin
       if (_T_145) begin
-        pipe_packet_eth_sender <= macs_0;
+        if (3'h4 == entry_at) begin
+          pipe_packet_eth_sender <= macs_4;
+        end else if (3'h3 == entry_at) begin
+          pipe_packet_eth_sender <= macs_3;
+        end else if (3'h2 == entry_at) begin
+          pipe_packet_eth_sender <= macs_2;
+        end else if (3'h1 == entry_at) begin
+          pipe_packet_eth_sender <= macs_1;
+        end else begin
+          pipe_packet_eth_sender <= macs_0;
+        end
       end else begin
         pipe_packet_eth_sender <= io_input_packet_eth_sender;
       end
@@ -1933,7 +2857,7 @@ end // initial
     end
     if (_T_144) begin
       if (_T_145) begin
-        pipe_packet_eth_vlan <= 3'h0;
+        pipe_packet_eth_vlan <= entry_at;
       end else begin
         pipe_packet_eth_vlan <= io_input_packet_eth_vlan;
       end
@@ -1982,12 +2906,14 @@ end // initial
     end else if (_T_144) begin
       pipeStatus <= io_status;
     end
+    _T_146 <= cmd_op;
   end
 endmodule
 module Encoder(
   input         clock,
   input         reset,
-  input  [2:0]  io_input_forward_status,
+  input         io_input_arp_found,
+  input  [1:0]  io_input_forward_status,
   input  [47:0] io_input_packet_eth_dest,
   input  [47:0] io_input_packet_eth_sender,
   input  [1:0]  io_input_packet_eth_pactype,
@@ -2117,12 +3043,18 @@ module Encoder(
   wire [3:0] _T_62; // @[Conditional.scala 37:39]
   wire  _T_63; // @[Conditional.scala 37:30]
   wire  _T_64; // @[encoder.scala 81:9]
+  wire  _T_65; // @[encoder.scala 82:22]
+  wire  _T_66; // @[encoder.scala 82:9]
+  wire  _T_67; // @[encoder.scala 83:9]
+  wire  _T_68; // @[encoder.scala 84:36]
+  wire  _T_69; // @[encoder.scala 84:9]
   wire  _T_71; // @[encoder.scala 89:42]
   wire  _T_72; // @[encoder.scala 89:74]
   wire  _T_73; // @[encoder.scala 89:61]
   wire  _T_74; // @[encoder.scala 89:28]
   wire  _T_75; // @[encoder.scala 94:24]
   wire  _T_76; // @[encoder.scala 96:44]
+  wire  _T_77; // @[encoder.scala 98:20]
   wire  _T_80; // @[Conditional.scala 37:30]
   wire [7:0] _GEN_81; // @[encoder.scala 108:27]
   wire [7:0] _GEN_82; // @[encoder.scala 108:27]
@@ -2282,12 +3214,18 @@ module Encoder(
   assign _T_62 = $unsigned(state); // @[Conditional.scala 37:39]
   assign _T_63 = 4'h0 == _T_62; // @[Conditional.scala 37:30]
   assign _T_64 = io_pause == 1'h0; // @[encoder.scala 81:9]
+  assign _T_65 = io_status == 2'h1; // @[encoder.scala 82:22]
+  assign _T_66 = _T_64 & _T_65; // @[encoder.scala 82:9]
+  assign _T_67 = _T_66 & io_input_arp_found; // @[encoder.scala 83:9]
+  assign _T_68 = io_input_forward_status == 2'h2; // @[encoder.scala 84:36]
+  assign _T_69 = _T_67 & _T_68; // @[encoder.scala 84:9]
   assign _T_71 = io_status != 2'h3; // @[encoder.scala 89:42]
   assign _T_72 = io_status != 2'h0; // @[encoder.scala 89:74]
   assign _T_73 = _T_71 & _T_72; // @[encoder.scala 89:61]
   assign _T_74 = _T_64 & _T_73; // @[encoder.scala 89:28]
   assign _T_75 = io_status == 2'h2; // @[encoder.scala 94:24]
-  assign _T_76 = io_input_forward_status == 3'h1; // @[encoder.scala 96:44]
+  assign _T_76 = io_input_forward_status == 2'h1; // @[encoder.scala 96:44]
+  assign _T_77 = io_input_arp_found == 1'h0; // @[encoder.scala 98:20]
   assign _T_80 = 4'h1 == _T_62; // @[Conditional.scala 37:30]
   assign _GEN_81 = 5'h1 == cnt ? headerView_1 : headerView_0; // @[encoder.scala 108:27]
   assign _GEN_82 = 5'h2 == cnt ? headerView_2 : _GEN_81; // @[encoder.scala 108:27]
@@ -2529,7 +3467,9 @@ end // initial
       cnt <= 5'h0;
     end else if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          cnt <= 5'h11;
+        end else if (_T_74) begin
           cnt <= 5'h11;
         end
       end
@@ -2567,6 +3507,8 @@ end // initial
     end else if (_T_63) begin
       if (fromAdapter_writer_en) begin
         state <= 4'h8;
+      end else if (_T_69) begin
+        state <= 4'h0;
       end else if (_T_74) begin
         state <= 4'h5;
       end
@@ -2613,132 +3555,170 @@ end // initial
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_eth_dest <= io_input_packet_eth_dest;
+        end else if (_T_74) begin
           sending_packet_eth_dest <= io_input_packet_eth_dest;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_eth_sender <= io_input_packet_eth_sender;
+        end else if (_T_74) begin
           sending_packet_eth_sender <= io_input_packet_eth_sender;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_eth_pactype <= io_input_packet_eth_pactype;
+        end else if (_T_74) begin
           sending_packet_eth_pactype <= io_input_packet_eth_pactype;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_eth_vlan <= io_input_packet_eth_vlan;
+        end else if (_T_74) begin
           sending_packet_eth_vlan <= io_input_packet_eth_vlan;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_version <= io_input_packet_ip_version;
+        end else if (_T_74) begin
           sending_packet_ip_version <= io_input_packet_ip_version;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_ihl <= io_input_packet_ip_ihl;
+        end else if (_T_74) begin
           sending_packet_ip_ihl <= io_input_packet_ip_ihl;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_dscp <= io_input_packet_ip_dscp;
+        end else if (_T_74) begin
           sending_packet_ip_dscp <= io_input_packet_ip_dscp;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_ecn <= io_input_packet_ip_ecn;
+        end else if (_T_74) begin
           sending_packet_ip_ecn <= io_input_packet_ip_ecn;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_len <= io_input_packet_ip_len;
+        end else if (_T_74) begin
           sending_packet_ip_len <= io_input_packet_ip_len;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_id <= io_input_packet_ip_id;
+        end else if (_T_74) begin
           sending_packet_ip_id <= io_input_packet_ip_id;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_flags <= io_input_packet_ip_flags;
+        end else if (_T_74) begin
           sending_packet_ip_flags <= io_input_packet_ip_flags;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_foff <= io_input_packet_ip_foff;
+        end else if (_T_74) begin
           sending_packet_ip_foff <= io_input_packet_ip_foff;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_ttl <= io_input_packet_ip_ttl;
+        end else if (_T_74) begin
           sending_packet_ip_ttl <= io_input_packet_ip_ttl;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_proto <= io_input_packet_ip_proto;
+        end else if (_T_74) begin
           sending_packet_ip_proto <= io_input_packet_ip_proto;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_chksum <= io_input_packet_ip_chksum;
+        end else if (_T_74) begin
           sending_packet_ip_chksum <= io_input_packet_ip_chksum;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_src <= io_input_packet_ip_src;
+        end else if (_T_74) begin
           sending_packet_ip_src <= io_input_packet_ip_src;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
+        if (_T_69) begin
+          sending_packet_ip_dest <= io_input_packet_ip_dest;
+        end else if (_T_74) begin
           sending_packet_ip_dest <= io_input_packet_ip_dest;
         end
       end
     end
     if (_T_63) begin
       if (!(fromAdapter_writer_en)) begin
-        if (_T_74) begin
-          if (_T_75) begin
-            localReq <= 2'h0;
-          end else if (_T_76) begin
-            localReq <= 2'h2;
-          end else begin
-            localReq <= 2'h1;
+        if (!(_T_69)) begin
+          if (_T_74) begin
+            if (_T_75) begin
+              localReq <= 2'h0;
+            end else if (_T_76) begin
+              localReq <= 2'h2;
+            end else if (_T_77) begin
+              localReq <= 2'h1;
+            end else begin
+              localReq <= 2'h3;
+            end
           end
         end
       end
@@ -3542,7 +4522,8 @@ module Router(
   wire [15:0] forward_io_output_packet_ip_chksum; // @[router.scala 61:23]
   wire [31:0] forward_io_output_packet_ip_src; // @[router.scala 61:23]
   wire [31:0] forward_io_output_packet_ip_dest; // @[router.scala 61:23]
-  wire [2:0] forward_io_output_lookup_status; // @[router.scala 61:23]
+  wire [1:0] forward_io_output_lookup_status; // @[router.scala 61:23]
+  wire [31:0] forward_io_output_lookup_nextHop; // @[router.scala 61:23]
   wire [1:0] forward_io_outputStatus; // @[router.scala 61:23]
   wire [31:0] forward_ips_0; // @[router.scala 61:23]
   wire [31:0] forward_ips_1; // @[router.scala 61:23]
@@ -3568,10 +4549,12 @@ module Router(
   wire [15:0] arp_io_input_packet_ip_chksum; // @[router.scala 68:19]
   wire [31:0] arp_io_input_packet_ip_src; // @[router.scala 68:19]
   wire [31:0] arp_io_input_packet_ip_dest; // @[router.scala 68:19]
-  wire [2:0] arp_io_input_lookup_status; // @[router.scala 68:19]
+  wire [1:0] arp_io_input_lookup_status; // @[router.scala 68:19]
+  wire [31:0] arp_io_input_lookup_nextHop; // @[router.scala 68:19]
   wire [1:0] arp_io_status; // @[router.scala 68:19]
   wire  arp_io_pause; // @[router.scala 68:19]
-  wire [2:0] arp_io_output_forward_status; // @[router.scala 68:19]
+  wire  arp_io_output_arp_found; // @[router.scala 68:19]
+  wire [1:0] arp_io_output_forward_status; // @[router.scala 68:19]
   wire [47:0] arp_io_output_packet_eth_dest; // @[router.scala 68:19]
   wire [47:0] arp_io_output_packet_eth_sender; // @[router.scala 68:19]
   wire [1:0] arp_io_output_packet_eth_pactype; // @[router.scala 68:19]
@@ -3591,9 +4574,17 @@ module Router(
   wire [31:0] arp_io_output_packet_ip_dest; // @[router.scala 68:19]
   wire [1:0] arp_io_outputStatus; // @[router.scala 68:19]
   wire [47:0] arp_macs_0; // @[router.scala 68:19]
+  wire [47:0] arp_macs_1; // @[router.scala 68:19]
+  wire [47:0] arp_macs_2; // @[router.scala 68:19]
+  wire [47:0] arp_macs_3; // @[router.scala 68:19]
+  wire [47:0] arp_macs_4; // @[router.scala 68:19]
+  wire [47:0] arp_cmd_data; // @[router.scala 68:19]
+  wire [7:0] arp_cmd_idx; // @[router.scala 68:19]
+  wire [7:0] arp_cmd_op; // @[router.scala 68:19]
   wire  encoder_clock; // @[router.scala 77:23]
   wire  encoder_reset; // @[router.scala 77:23]
-  wire [2:0] encoder_io_input_forward_status; // @[router.scala 77:23]
+  wire  encoder_io_input_arp_found; // @[router.scala 77:23]
+  wire [1:0] encoder_io_input_forward_status; // @[router.scala 77:23]
   wire [47:0] encoder_io_input_packet_eth_dest; // @[router.scala 77:23]
   wire [47:0] encoder_io_input_packet_eth_sender; // @[router.scala 77:23]
   wire [1:0] encoder_io_input_packet_eth_pactype; // @[router.scala 77:23]
@@ -3850,6 +4841,7 @@ module Router(
     .io_output_packet_ip_src(forward_io_output_packet_ip_src),
     .io_output_packet_ip_dest(forward_io_output_packet_ip_dest),
     .io_output_lookup_status(forward_io_output_lookup_status),
+    .io_output_lookup_nextHop(forward_io_output_lookup_nextHop),
     .io_outputStatus(forward_io_outputStatus),
     .ips_0(forward_ips_0),
     .ips_1(forward_ips_1),
@@ -3878,8 +4870,10 @@ module Router(
     .io_input_packet_ip_src(arp_io_input_packet_ip_src),
     .io_input_packet_ip_dest(arp_io_input_packet_ip_dest),
     .io_input_lookup_status(arp_io_input_lookup_status),
+    .io_input_lookup_nextHop(arp_io_input_lookup_nextHop),
     .io_status(arp_io_status),
     .io_pause(arp_io_pause),
+    .io_output_arp_found(arp_io_output_arp_found),
     .io_output_forward_status(arp_io_output_forward_status),
     .io_output_packet_eth_dest(arp_io_output_packet_eth_dest),
     .io_output_packet_eth_sender(arp_io_output_packet_eth_sender),
@@ -3899,11 +4893,19 @@ module Router(
     .io_output_packet_ip_src(arp_io_output_packet_ip_src),
     .io_output_packet_ip_dest(arp_io_output_packet_ip_dest),
     .io_outputStatus(arp_io_outputStatus),
-    .macs_0(arp_macs_0)
+    .macs_0(arp_macs_0),
+    .macs_1(arp_macs_1),
+    .macs_2(arp_macs_2),
+    .macs_3(arp_macs_3),
+    .macs_4(arp_macs_4),
+    .cmd_data(arp_cmd_data),
+    .cmd_idx(arp_cmd_idx),
+    .cmd_op(arp_cmd_op)
   );
   Encoder encoder ( // @[router.scala 77:23]
     .clock(encoder_clock),
     .reset(encoder_reset),
+    .io_input_arp_found(encoder_io_input_arp_found),
     .io_input_forward_status(encoder_io_input_forward_status),
     .io_input_packet_eth_dest(encoder_io_input_packet_eth_dest),
     .io_input_packet_eth_sender(encoder_io_input_packet_eth_sender),
@@ -4084,11 +5086,20 @@ module Router(
   assign arp_io_input_packet_ip_src = forward_io_output_packet_ip_src; // @[router.scala 74:21]
   assign arp_io_input_packet_ip_dest = forward_io_output_packet_ip_dest; // @[router.scala 74:21]
   assign arp_io_input_lookup_status = forward_io_output_lookup_status; // @[router.scala 74:21]
+  assign arp_io_input_lookup_nextHop = forward_io_output_lookup_nextHop; // @[router.scala 74:21]
   assign arp_io_status = forward_io_outputStatus; // @[router.scala 75:27]
   assign arp_io_pause = ctrl_io_arp_pause; // @[router.scala 73:21]
   assign arp_macs_0 = ctrl_macs_0; // @[router.scala 70:12]
+  assign arp_macs_1 = ctrl_macs_1; // @[router.scala 70:12]
+  assign arp_macs_2 = ctrl_macs_2; // @[router.scala 70:12]
+  assign arp_macs_3 = ctrl_macs_3; // @[router.scala 70:12]
+  assign arp_macs_4 = ctrl_macs_4; // @[router.scala 70:12]
+  assign arp_cmd_data = io_cmd_data; // @[router.scala 71:11]
+  assign arp_cmd_idx = io_cmd_idx; // @[router.scala 71:11]
+  assign arp_cmd_op = io_cmd_op; // @[router.scala 71:11]
   assign encoder_clock = clock;
   assign encoder_reset = reset;
+  assign encoder_io_input_arp_found = arp_io_output_arp_found; // @[router.scala 83:20]
   assign encoder_io_input_forward_status = arp_io_output_forward_status; // @[router.scala 83:20]
   assign encoder_io_input_packet_eth_dest = arp_io_output_packet_eth_dest; // @[router.scala 83:20]
   assign encoder_io_input_packet_eth_sender = arp_io_output_packet_eth_sender; // @[router.scala 83:20]

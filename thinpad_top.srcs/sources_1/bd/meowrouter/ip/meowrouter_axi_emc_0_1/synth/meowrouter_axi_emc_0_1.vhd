@@ -61,6 +61,7 @@ ENTITY meowrouter_axi_emc_0_1 IS
     s_axi_aclk : IN STD_LOGIC;
     s_axi_aresetn : IN STD_LOGIC;
     rdclk : IN STD_LOGIC;
+    s_axi_mem_awid : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
     s_axi_mem_awaddr : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     s_axi_mem_awlen : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
     s_axi_mem_awsize : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -75,9 +76,11 @@ ENTITY meowrouter_axi_emc_0_1 IS
     s_axi_mem_wlast : IN STD_LOGIC;
     s_axi_mem_wvalid : IN STD_LOGIC;
     s_axi_mem_wready : OUT STD_LOGIC;
+    s_axi_mem_bid : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
     s_axi_mem_bresp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
     s_axi_mem_bvalid : OUT STD_LOGIC;
     s_axi_mem_bready : IN STD_LOGIC;
+    s_axi_mem_arid : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
     s_axi_mem_araddr : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     s_axi_mem_arlen : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
     s_axi_mem_arsize : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -87,6 +90,7 @@ ENTITY meowrouter_axi_emc_0_1 IS
     s_axi_mem_arprot : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
     s_axi_mem_arvalid : IN STD_LOGIC;
     s_axi_mem_arready : OUT STD_LOGIC;
+    s_axi_mem_rid : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
     s_axi_mem_rdata : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
     s_axi_mem_rresp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
     s_axi_mem_rlast : OUT STD_LOGIC;
@@ -226,7 +230,7 @@ ARCHITECTURE meowrouter_axi_emc_0_1_arch OF meowrouter_axi_emc_0_1 IS
       s_axi_reg_rresp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
       s_axi_reg_rvalid : OUT STD_LOGIC;
       s_axi_reg_rready : IN STD_LOGIC;
-      s_axi_mem_awid : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+      s_axi_mem_awid : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
       s_axi_mem_awaddr : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
       s_axi_mem_awlen : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
       s_axi_mem_awsize : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -241,11 +245,11 @@ ARCHITECTURE meowrouter_axi_emc_0_1_arch OF meowrouter_axi_emc_0_1 IS
       s_axi_mem_wlast : IN STD_LOGIC;
       s_axi_mem_wvalid : IN STD_LOGIC;
       s_axi_mem_wready : OUT STD_LOGIC;
-      s_axi_mem_bid : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
+      s_axi_mem_bid : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
       s_axi_mem_bresp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
       s_axi_mem_bvalid : OUT STD_LOGIC;
       s_axi_mem_bready : IN STD_LOGIC;
-      s_axi_mem_arid : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+      s_axi_mem_arid : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
       s_axi_mem_araddr : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
       s_axi_mem_arlen : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
       s_axi_mem_arsize : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -255,7 +259,7 @@ ARCHITECTURE meowrouter_axi_emc_0_1_arch OF meowrouter_axi_emc_0_1 IS
       s_axi_mem_arprot : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
       s_axi_mem_arvalid : IN STD_LOGIC;
       s_axi_mem_arready : OUT STD_LOGIC;
-      s_axi_mem_rid : OUT STD_LOGIC_VECTOR(0 DOWNTO 0);
+      s_axi_mem_rid : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
       s_axi_mem_rdata : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
       s_axi_mem_rresp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
       s_axi_mem_rlast : OUT STD_LOGIC;
@@ -297,7 +301,7 @@ ARCHITECTURE meowrouter_axi_emc_0_1_arch OF meowrouter_axi_emc_0_1 IS
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF meowrouter_axi_emc_0_1_arch : ARCHITECTURE IS "meowrouter_axi_emc_0_1,axi_emc,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF meowrouter_axi_emc_0_1_arch: ARCHITECTURE IS "meowrouter_axi_emc_0_1,axi_emc,{x_ipProduct=Vivado 2018.3_AR71898,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_emc,x_ipVersion=3.0,x_ipCoreRevision=18,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=artix7,C_INSTANCE=axi_emc_inst,C_AXI_CLK_PERIOD_PS=14285,C_LFLASH_PERIOD_PS=14285,C_LINEAR_FLASH_SYNC_BURST=0,C_USE_STARTUP=0,C_PORT_DIFF=0,C_S_AXI_REG_ADDR_WIDTH=5,C_S_AXI_REG_DATA_WIDTH=32,C_S_AXI_EN_REG=0,C_S_AXI_MEM_ADDR_WIDTH=32,C_S_AXI_MEM_DATA_WIDTH=64,C_S_AXI_MEM_ID_WIDTH=1,C_S_AXI_M" & 
+  ATTRIBUTE CORE_GENERATION_INFO OF meowrouter_axi_emc_0_1_arch: ARCHITECTURE IS "meowrouter_axi_emc_0_1,axi_emc,{x_ipProduct=Vivado 2018.3_AR71898,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_emc,x_ipVersion=3.0,x_ipCoreRevision=18,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=artix7,C_INSTANCE=axi_emc_inst,C_AXI_CLK_PERIOD_PS=14285,C_LFLASH_PERIOD_PS=14285,C_LINEAR_FLASH_SYNC_BURST=0,C_USE_STARTUP=0,C_PORT_DIFF=0,C_S_AXI_REG_ADDR_WIDTH=5,C_S_AXI_REG_DATA_WIDTH=32,C_S_AXI_EN_REG=0,C_S_AXI_MEM_ADDR_WIDTH=32,C_S_AXI_MEM_DATA_WIDTH=64,C_S_AXI_MEM_ID_WIDTH=6,C_S_AXI_M" & 
 "EM0_BASEADDR=0x00000000,C_S_AXI_MEM0_HIGHADDR=0x007FFFFF,C_S_AXI_MEM1_BASEADDR=0x00400000,C_S_AXI_MEM1_HIGHADDR=0x007FFFFF,C_S_AXI_MEM2_BASEADDR=0xC0000000,C_S_AXI_MEM2_HIGHADDR=0xCFFFFFFF,C_S_AXI_MEM3_BASEADDR=0xD0000000,C_S_AXI_MEM3_HIGHADDR=0xDFFFFFFF,C_INCLUDE_NEGEDGE_IOREGS=0,C_NUM_BANKS_MEM=1,C_MEM0_TYPE=1,C_MEM1_TYPE=0,C_MEM2_TYPE=0,C_MEM3_TYPE=0,C_MEM0_WIDTH=64,C_MEM1_WIDTH=16,C_MEM2_WIDTH=16,C_MEM3_WIDTH=16,C_MAX_MEM_WIDTH=64,C_PAGE_SIZE=16,C_MEM_A_MSB=31,C_MEM_A_LSB=0,C_PARITY_TYPE_MEM" & 
 "_0=0,C_PARITY_TYPE_MEM_1=0,C_PARITY_TYPE_MEM_2=0,C_PARITY_TYPE_MEM_3=0,C_INCLUDE_DATAWIDTH_MATCHING_0=0,C_INCLUDE_DATAWIDTH_MATCHING_1=1,C_INCLUDE_DATAWIDTH_MATCHING_2=1,C_INCLUDE_DATAWIDTH_MATCHING_3=1,C_SYNCH_PIPEDELAY_0=1,C_TCEDV_PS_MEM_0=15000,C_TAVDV_PS_MEM_0=15000,C_TPACC_PS_FLASH_0=25000,C_THZCE_PS_MEM_0=7000,C_THZOE_PS_MEM_0=7000,C_TWC_PS_MEM_0=15000,C_TWP_PS_MEM_0=12000,C_TWPH_PS_MEM_0=12000,C_TLZWE_PS_MEM_0=0,C_WR_REC_TIME_MEM_0=27000,C_SYNCH_PIPEDELAY_1=1,C_TCEDV_PS_MEM_1=15000,C_TAVD" & 
 "V_PS_MEM_1=15000,C_TPACC_PS_FLASH_1=25000,C_THZCE_PS_MEM_1=7000,C_THZOE_PS_MEM_1=7000,C_TWC_PS_MEM_1=15000,C_TWP_PS_MEM_1=12000,C_TWPH_PS_MEM_1=12000,C_TLZWE_PS_MEM_1=0,C_WR_REC_TIME_MEM_1=27000,C_SYNCH_PIPEDELAY_2=1,C_TCEDV_PS_MEM_2=15000,C_TAVDV_PS_MEM_2=15000,C_TPACC_PS_FLASH_2=25000,C_THZCE_PS_MEM_2=7000,C_THZOE_PS_MEM_2=7000,C_TWC_PS_MEM_2=15000,C_TWP_PS_MEM_2=12000,C_TWPH_PS_MEM_2=12000,C_TLZWE_PS_MEM_2=0,C_WR_REC_TIME_MEM_2=27000,C_SYNCH_PIPEDELAY_3=1,C_TCEDV_PS_MEM_3=15000,C_TAVDV_PS_MEM" & 
@@ -327,6 +331,7 @@ ARCHITECTURE meowrouter_axi_emc_0_1_arch OF meowrouter_axi_emc_0_1 IS
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_rlast: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM RLAST";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_rresp: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM RRESP";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_rdata: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM RDATA";
+  ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_rid: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM RID";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_arready: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARREADY";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_arvalid: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARVALID";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_arprot: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARPROT";
@@ -336,9 +341,11 @@ ARCHITECTURE meowrouter_axi_emc_0_1_arch OF meowrouter_axi_emc_0_1 IS
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_arsize: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARSIZE";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_arlen: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARLEN";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_araddr: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARADDR";
+  ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_arid: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARID";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_bready: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM BREADY";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_bvalid: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM BVALID";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_bresp: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM BRESP";
+  ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_bid: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM BID";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_wready: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM WREADY";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_wvalid: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM WVALID";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_wlast: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM WLAST";
@@ -352,9 +359,10 @@ ARCHITECTURE meowrouter_axi_emc_0_1_arch OF meowrouter_axi_emc_0_1 IS
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_awburst: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWBURST";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_awsize: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWSIZE";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_awlen: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWLEN";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF s_axi_mem_awaddr: SIGNAL IS "XIL_INTERFACENAME S_AXI_MEM, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS" & 
-" 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_awaddr: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWADDR";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF s_axi_mem_awid: SIGNAL IS "XIL_INTERFACENAME S_AXI_MEM, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 6, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS" & 
+" 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  ATTRIBUTE X_INTERFACE_INFO OF s_axi_mem_awid: SIGNAL IS "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWID";
   ATTRIBUTE X_INTERFACE_PARAMETER OF rdclk: SIGNAL IS "XIL_INTERFACENAME rdclk, ASSOCIATED_BUSIF EMC_INTF, FREQ_HZ 70000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF rdclk: SIGNAL IS "xilinx.com:signal:clock:1.0 rdclk CLK";
   ATTRIBUTE X_INTERFACE_PARAMETER OF s_axi_aresetn: SIGNAL IS "XIL_INTERFACENAME aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0";
@@ -376,7 +384,7 @@ BEGIN
       C_S_AXI_EN_REG => 0,
       C_S_AXI_MEM_ADDR_WIDTH => 32,
       C_S_AXI_MEM_DATA_WIDTH => 64,
-      C_S_AXI_MEM_ID_WIDTH => 1,
+      C_S_AXI_MEM_ID_WIDTH => 6,
       C_S_AXI_MEM0_BASEADDR => X"00000000",
       C_S_AXI_MEM0_HIGHADDR => X"007FFFFF",
       C_S_AXI_MEM1_BASEADDR => X"00400000",
@@ -465,7 +473,7 @@ BEGIN
       s_axi_reg_araddr => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 5)),
       s_axi_reg_arvalid => '0',
       s_axi_reg_rready => '0',
-      s_axi_mem_awid => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 1)),
+      s_axi_mem_awid => s_axi_mem_awid,
       s_axi_mem_awaddr => s_axi_mem_awaddr,
       s_axi_mem_awlen => s_axi_mem_awlen,
       s_axi_mem_awsize => s_axi_mem_awsize,
@@ -480,10 +488,11 @@ BEGIN
       s_axi_mem_wlast => s_axi_mem_wlast,
       s_axi_mem_wvalid => s_axi_mem_wvalid,
       s_axi_mem_wready => s_axi_mem_wready,
+      s_axi_mem_bid => s_axi_mem_bid,
       s_axi_mem_bresp => s_axi_mem_bresp,
       s_axi_mem_bvalid => s_axi_mem_bvalid,
       s_axi_mem_bready => s_axi_mem_bready,
-      s_axi_mem_arid => STD_LOGIC_VECTOR(TO_UNSIGNED(0, 1)),
+      s_axi_mem_arid => s_axi_mem_arid,
       s_axi_mem_araddr => s_axi_mem_araddr,
       s_axi_mem_arlen => s_axi_mem_arlen,
       s_axi_mem_arsize => s_axi_mem_arsize,
@@ -493,6 +502,7 @@ BEGIN
       s_axi_mem_arprot => s_axi_mem_arprot,
       s_axi_mem_arvalid => s_axi_mem_arvalid,
       s_axi_mem_arready => s_axi_mem_arready,
+      s_axi_mem_rid => s_axi_mem_rid,
       s_axi_mem_rdata => s_axi_mem_rdata,
       s_axi_mem_rresp => s_axi_mem_rresp,
       s_axi_mem_rlast => s_axi_mem_rlast,

@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Fri Dec 20 21:35:46 2019
--- Host        : imac running 64-bit Arch Linux
+-- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
+-- Date        : Sun Dec 22 03:04:16 2019
+-- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
---               /home/thu-skyworks/meow/Desktop/workspace/cod19grp3/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_Router_0/meowrouter_Router_0_stub.vhdl
+--               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_Router_0/meowrouter_Router_0_stub.vhdl
 -- Design      : meowrouter_Router_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a100tfgg676-2L
@@ -42,6 +42,6 @@ attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
 attribute black_box_pad_pin of stub : architecture is "clock,reset,io_rx_clk,io_tx_clk,io_rx_tdata[7:0],io_rx_tvalid,io_rx_tlast,io_tx_tdata[7:0],io_tx_tvalid,io_tx_tlast,io_tx_tready,io_tx_tuser,io_buf_clk,io_buf_addr[31:0],io_buf_din[7:0],io_buf_dout[7:0],io_buf_we,io_cmd[63:0]";
 attribute X_CORE_INFO : string;
-attribute X_CORE_INFO of stub : architecture is "Top,Vivado 2018.3";
+attribute X_CORE_INFO of stub : architecture is "Top,Vivado 2018.3_AR71898";
 begin
 end;

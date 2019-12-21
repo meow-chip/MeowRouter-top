@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Sat Dec 14 03:32:57 2019
+// Date        : Sat Dec 21 23:32:01 2019
 // Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
 //               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_axi_emc_0_1/meowrouter_axi_emc_0_1_sim_netlist.v
@@ -18,6 +18,7 @@ module meowrouter_axi_emc_0_1
    (s_axi_aclk,
     s_axi_aresetn,
     rdclk,
+    s_axi_mem_awid,
     s_axi_mem_awaddr,
     s_axi_mem_awlen,
     s_axi_mem_awsize,
@@ -32,9 +33,11 @@ module meowrouter_axi_emc_0_1
     s_axi_mem_wlast,
     s_axi_mem_wvalid,
     s_axi_mem_wready,
+    s_axi_mem_bid,
     s_axi_mem_bresp,
     s_axi_mem_bvalid,
     s_axi_mem_bready,
+    s_axi_mem_arid,
     s_axi_mem_araddr,
     s_axi_mem_arlen,
     s_axi_mem_arsize,
@@ -44,6 +47,7 @@ module meowrouter_axi_emc_0_1
     s_axi_mem_arprot,
     s_axi_mem_arvalid,
     s_axi_mem_arready,
+    s_axi_mem_rid,
     s_axi_mem_rdata,
     s_axi_mem_rresp,
     s_axi_mem_rlast,
@@ -69,7 +73,8 @@ module meowrouter_axi_emc_0_1
   (* sigis = "Clk" *) (* x_interface_info = "xilinx.com:signal:clock:1.0 aclk CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME aclk, ASSOCIATED_BUSIF s_axi_mem:s_axi_reg, ASSOCIATED_RESET s_axi_aresetn, FREQ_HZ 70000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, INSERT_VIP 0" *) input s_axi_aclk;
   (* sigis = "Rst" *) (* x_interface_info = "xilinx.com:signal:reset:1.0 aresetn RST" *) (* x_interface_parameter = "XIL_INTERFACENAME aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *) input s_axi_aresetn;
   (* sigis = "Clk" *) (* x_interface_info = "xilinx.com:signal:clock:1.0 rdclk CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME rdclk, ASSOCIATED_BUSIF EMC_INTF, FREQ_HZ 70000000, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, INSERT_VIP 0" *) input rdclk;
-  (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWADDR" *) (* x_interface_parameter = "XIL_INTERFACENAME S_AXI_MEM, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input [31:0]s_axi_mem_awaddr;
+  (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWID" *) (* x_interface_parameter = "XIL_INTERFACENAME S_AXI_MEM, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 70000000, ID_WIDTH 6, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 256, PHASE 0.000, CLK_DOMAIN meowrouter_cpu_clk, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input [5:0]s_axi_mem_awid;
+  (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWADDR" *) input [31:0]s_axi_mem_awaddr;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWLEN" *) input [7:0]s_axi_mem_awlen;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWSIZE" *) input [2:0]s_axi_mem_awsize;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM AWBURST" *) input [1:0]s_axi_mem_awburst;
@@ -83,9 +88,11 @@ module meowrouter_axi_emc_0_1
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM WLAST" *) input s_axi_mem_wlast;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM WVALID" *) input s_axi_mem_wvalid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM WREADY" *) output s_axi_mem_wready;
+  (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM BID" *) output [5:0]s_axi_mem_bid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM BRESP" *) output [1:0]s_axi_mem_bresp;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM BVALID" *) output s_axi_mem_bvalid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM BREADY" *) input s_axi_mem_bready;
+  (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARID" *) input [5:0]s_axi_mem_arid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARADDR" *) input [31:0]s_axi_mem_araddr;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARLEN" *) input [7:0]s_axi_mem_arlen;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARSIZE" *) input [2:0]s_axi_mem_arsize;
@@ -95,6 +102,7 @@ module meowrouter_axi_emc_0_1
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARPROT" *) input [2:0]s_axi_mem_arprot;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARVALID" *) input s_axi_mem_arvalid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM ARREADY" *) output s_axi_mem_arready;
+  (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM RID" *) output [5:0]s_axi_mem_rid;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM RDATA" *) output [63:0]s_axi_mem_rdata;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM RRESP" *) output [1:0]s_axi_mem_rresp;
   (* x_interface_info = "xilinx.com:interface:aximm:1.0 S_AXI_MEM RLAST" *) output s_axi_mem_rlast;
@@ -136,20 +144,24 @@ module meowrouter_axi_emc_0_1
   wire s_axi_aresetn;
   wire [31:0]s_axi_mem_araddr;
   wire [1:0]s_axi_mem_arburst;
+  wire [5:0]s_axi_mem_arid;
   wire [7:0]s_axi_mem_arlen;
   wire s_axi_mem_arready;
   wire [2:0]s_axi_mem_arsize;
   wire s_axi_mem_arvalid;
   wire [31:0]s_axi_mem_awaddr;
   wire [1:0]s_axi_mem_awburst;
+  wire [5:0]s_axi_mem_awid;
   wire [7:0]s_axi_mem_awlen;
   wire s_axi_mem_awready;
   wire [2:0]s_axi_mem_awsize;
   wire s_axi_mem_awvalid;
+  wire [5:0]s_axi_mem_bid;
   wire s_axi_mem_bready;
   wire [1:1]\^s_axi_mem_bresp ;
   wire s_axi_mem_bvalid;
   wire [63:0]s_axi_mem_rdata;
+  wire [5:0]s_axi_mem_rid;
   wire s_axi_mem_rlast;
   wire s_axi_mem_rready;
   wire [1:1]\^s_axi_mem_rresp ;
@@ -170,7 +182,8 @@ module meowrouter_axi_emc_0_1
   GND GND
        (.G(\<const0> ));
   meowrouter_axi_emc_0_1_axi_emc U0
-       (.mem_a(mem_a),
+       (.E(s_axi_mem_awready),
+        .mem_a(mem_a),
         .mem_ben(mem_ben),
         .mem_ce(mem_ce),
         .mem_cen(mem_cen),
@@ -187,20 +200,23 @@ module meowrouter_axi_emc_0_1
         .s_axi_aresetn(s_axi_aresetn),
         .s_axi_mem_araddr(s_axi_mem_araddr),
         .s_axi_mem_arburst(s_axi_mem_arburst),
+        .s_axi_mem_arid(s_axi_mem_arid),
         .s_axi_mem_arlen(s_axi_mem_arlen),
-        .s_axi_mem_arready(s_axi_mem_arready),
         .s_axi_mem_arsize(s_axi_mem_arsize[1:0]),
         .s_axi_mem_arvalid(s_axi_mem_arvalid),
         .s_axi_mem_awaddr(s_axi_mem_awaddr),
         .s_axi_mem_awburst(s_axi_mem_awburst),
+        .s_axi_mem_awid(s_axi_mem_awid),
         .s_axi_mem_awlen(s_axi_mem_awlen),
-        .s_axi_mem_awready(s_axi_mem_awready),
         .s_axi_mem_awsize(s_axi_mem_awsize[1:0]),
         .s_axi_mem_awvalid(s_axi_mem_awvalid),
+        .s_axi_mem_awvalid_0(s_axi_mem_arready),
+        .s_axi_mem_bid(s_axi_mem_bid),
         .s_axi_mem_bready(s_axi_mem_bready),
         .s_axi_mem_bresp(\^s_axi_mem_bresp ),
         .s_axi_mem_bvalid_reg_reg(s_axi_mem_bvalid),
         .s_axi_mem_rdata(s_axi_mem_rdata),
+        .s_axi_mem_rid(s_axi_mem_rid),
         .s_axi_mem_rlast(s_axi_mem_rlast),
         .s_axi_mem_rready(s_axi_mem_rready),
         .s_axi_mem_rresp(\^s_axi_mem_rresp ),
@@ -1319,6 +1335,10 @@ endmodule
 module meowrouter_axi_emc_0_1_axi_emc
    (s_axi_mem_wready,
     s_axi_mem_rdata,
+    s_axi_mem_bid,
+    E,
+    s_axi_mem_rid,
+    s_axi_mem_awvalid_0,
     mem_wen,
     mem_dq_o,
     mem_dq_t,
@@ -1331,8 +1351,6 @@ module meowrouter_axi_emc_0_1_axi_emc
     mem_rnw,
     mem_a,
     s_axi_mem_rresp,
-    s_axi_mem_awready,
-    s_axi_mem_arready,
     s_axi_mem_bvalid_reg_reg,
     s_axi_mem_rlast,
     s_axi_mem_rvalid,
@@ -1340,6 +1358,8 @@ module meowrouter_axi_emc_0_1_axi_emc
     s_axi_mem_awburst,
     s_axi_mem_wvalid,
     s_axi_aclk,
+    s_axi_mem_awid,
+    s_axi_mem_arid,
     s_axi_mem_wdata,
     mem_dq_i,
     rdclk,
@@ -1359,6 +1379,10 @@ module meowrouter_axi_emc_0_1_axi_emc
     s_axi_mem_bready);
   output s_axi_mem_wready;
   output [63:0]s_axi_mem_rdata;
+  output [5:0]s_axi_mem_bid;
+  output [0:0]E;
+  output [5:0]s_axi_mem_rid;
+  output [0:0]s_axi_mem_awvalid_0;
   output mem_wen;
   output [63:0]mem_dq_o;
   output [63:0]mem_dq_t;
@@ -1371,8 +1395,6 @@ module meowrouter_axi_emc_0_1_axi_emc
   output mem_rnw;
   output [31:0]mem_a;
   output [0:0]s_axi_mem_rresp;
-  output s_axi_mem_awready;
-  output s_axi_mem_arready;
   output s_axi_mem_bvalid_reg_reg;
   output s_axi_mem_rlast;
   output s_axi_mem_rvalid;
@@ -1380,6 +1402,8 @@ module meowrouter_axi_emc_0_1_axi_emc
   input [1:0]s_axi_mem_awburst;
   input s_axi_mem_wvalid;
   input s_axi_aclk;
+  input [5:0]s_axi_mem_awid;
+  input [5:0]s_axi_mem_arid;
   input [63:0]s_axi_mem_wdata;
   input [63:0]mem_dq_i;
   input rdclk;
@@ -1417,6 +1441,7 @@ module meowrouter_axi_emc_0_1_axi_emc
   wire AXI_EMC_NATIVE_INTERFACE_I_n_38;
   wire AXI_EMC_NATIVE_INTERFACE_I_n_82;
   wire Bus2IP_RdReq_emc;
+  wire [0:0]E;
   wire EMC_CTRL_I_n_13;
   wire EMC_CTRL_I_n_14;
   wire EMC_CTRL_I_n_18;
@@ -1466,20 +1491,23 @@ module meowrouter_axi_emc_0_1_axi_emc
   wire s_axi_aresetn;
   wire [31:0]s_axi_mem_araddr;
   wire [1:0]s_axi_mem_arburst;
+  wire [5:0]s_axi_mem_arid;
   wire [7:0]s_axi_mem_arlen;
-  wire s_axi_mem_arready;
   wire [1:0]s_axi_mem_arsize;
   wire s_axi_mem_arvalid;
   wire [31:0]s_axi_mem_awaddr;
   wire [1:0]s_axi_mem_awburst;
+  wire [5:0]s_axi_mem_awid;
   wire [7:0]s_axi_mem_awlen;
-  wire s_axi_mem_awready;
   wire [1:0]s_axi_mem_awsize;
   wire s_axi_mem_awvalid;
+  wire [0:0]s_axi_mem_awvalid_0;
+  wire [5:0]s_axi_mem_bid;
   wire s_axi_mem_bready;
   wire [0:0]s_axi_mem_bresp;
   wire s_axi_mem_bvalid_reg_reg;
   wire [63:0]s_axi_mem_rdata;
+  wire [5:0]s_axi_mem_rid;
   wire s_axi_mem_rlast;
   wire s_axi_mem_rready;
   wire [0:0]s_axi_mem_rresp;
@@ -1504,6 +1532,7 @@ module meowrouter_axi_emc_0_1_axi_emc
         .Bus2IP_RdReq_d1(\MEM_STATE_MACHINE_I/Bus2IP_RdReq_d1 ),
         .Bus2IP_RdReq_d1_reg(AXI_EMC_NATIVE_INTERFACE_I_n_36),
         .Bus2IP_RdReq_emc(Bus2IP_RdReq_emc),
+        .E(E),
         .\FSM_sequential_crnt_state[1]_i_5 (EMC_CTRL_I_n_21),
         .\FSM_sequential_crnt_state[1]_i_5_0 (EMC_CTRL_I_n_20),
         .\FSM_sequential_crnt_state_reg[2] (AXI_EMC_NATIVE_INTERFACE_I_n_32),
@@ -1548,20 +1577,23 @@ module meowrouter_axi_emc_0_1_axi_emc
         .s_axi_aresetn(s_axi_aresetn),
         .s_axi_mem_araddr(s_axi_mem_araddr),
         .s_axi_mem_arburst(s_axi_mem_arburst),
+        .s_axi_mem_arid(s_axi_mem_arid),
         .s_axi_mem_arlen(s_axi_mem_arlen),
-        .s_axi_mem_arready(s_axi_mem_arready),
         .s_axi_mem_arsize(s_axi_mem_arsize),
         .s_axi_mem_arvalid(s_axi_mem_arvalid),
         .s_axi_mem_awaddr(s_axi_mem_awaddr),
         .s_axi_mem_awburst(s_axi_mem_awburst),
+        .s_axi_mem_awid(s_axi_mem_awid),
         .s_axi_mem_awlen(s_axi_mem_awlen),
-        .s_axi_mem_awready(s_axi_mem_awready),
         .s_axi_mem_awsize(s_axi_mem_awsize),
         .s_axi_mem_awvalid(s_axi_mem_awvalid),
+        .s_axi_mem_awvalid_0(s_axi_mem_awvalid_0),
+        .s_axi_mem_bid(s_axi_mem_bid),
         .s_axi_mem_bready(s_axi_mem_bready),
         .s_axi_mem_bresp(s_axi_mem_bresp),
         .s_axi_mem_bvalid_reg_reg_0(s_axi_mem_bvalid_reg_reg),
         .s_axi_mem_rdata(s_axi_mem_rdata),
+        .s_axi_mem_rid(s_axi_mem_rid),
         .s_axi_mem_rlast(s_axi_mem_rlast),
         .s_axi_mem_rready(s_axi_mem_rready),
         .s_axi_mem_rresp(s_axi_mem_rresp),
@@ -1920,7 +1952,7 @@ module meowrouter_axi_emc_0_1_axi_emc_addr_gen
     \BUS2IP_ADDR_GEN_DATA_WDTH_64.internal_count[0]_i_2_0 ,
     last_data_acked,
     s_axi_mem_rready,
-    \FSM_sequential_emc_addr_ps[2]_i_11 ,
+    \FSM_sequential_emc_addr_ps[2]_i_10 ,
     s_axi_aresetn,
     \BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i_reg[6]_1 ,
     \BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i_reg[3]_1 ,
@@ -1970,7 +2002,7 @@ module meowrouter_axi_emc_0_1_axi_emc_addr_gen
   input [1:0]\BUS2IP_ADDR_GEN_DATA_WDTH_64.internal_count[0]_i_2_0 ;
   input last_data_acked;
   input s_axi_mem_rready;
-  input [7:0]\FSM_sequential_emc_addr_ps[2]_i_11 ;
+  input [7:0]\FSM_sequential_emc_addr_ps[2]_i_10 ;
   input s_axi_aresetn;
   input [3:0]\BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i_reg[6]_1 ;
   input [0:0]\BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i_reg[3]_1 ;
@@ -2018,7 +2050,7 @@ module meowrouter_axi_emc_0_1_axi_emc_addr_gen
   wire \BUS2IP_ADDR_GEN_DATA_WDTH_64.internal_count_reg_n_0_[0] ;
   wire \BUS2IP_ADDR_GEN_DATA_WDTH_64.internal_count_reg_n_0_[1] ;
   wire \BUS2IP_ADDR_GEN_DATA_WDTH_64.internal_count_reg_n_0_[2] ;
-  wire [7:0]\FSM_sequential_emc_addr_ps[2]_i_11 ;
+  wire [7:0]\FSM_sequential_emc_addr_ps[2]_i_10 ;
   wire \FSM_sequential_emc_addr_ps_reg[0] ;
   wire \FSM_sequential_emc_addr_ps_reg[1] ;
   wire \FSM_sequential_emc_addr_ps_reg[2] ;
@@ -2498,11 +2530,6 @@ module meowrouter_axi_emc_0_1_axi_emc_addr_gen
         .I4(s_axi_mem_arburst[1]),
         .I5(\bus2ip_addr_i_reg[12]_1 ),
         .O(s_axi_mem_awvalid_0));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \FSM_sequential_emc_addr_ps[2]_i_1 
-       (.I0(s_axi_aresetn),
-        .O(SR));
   LUT4 #(
     .INIT(16'hFFFE)) 
     \burst_addr_cnt[4]_i_2 
@@ -2873,8 +2900,8 @@ module meowrouter_axi_emc_0_1_axi_emc_addr_gen
     rnw_reg_i_2
        (.I0(last_data_acked),
         .I1(s_axi_mem_rready),
-        .I2(\FSM_sequential_emc_addr_ps[2]_i_11 [4]),
-        .I3(\FSM_sequential_emc_addr_ps[2]_i_11 [5]),
+        .I2(\FSM_sequential_emc_addr_ps[2]_i_10 [4]),
+        .I3(\FSM_sequential_emc_addr_ps[2]_i_10 [5]),
         .I4(\rd_data_count_reg[7] ),
         .O(last_data_acked_reg));
   LUT3 #(
@@ -2887,13 +2914,18 @@ module meowrouter_axi_emc_0_1_axi_emc_addr_gen
   LUT6 #(
     .INIT(64'hFFFFFFFFFFFFFFFE)) 
     rnw_reg_i_4
-       (.I0(\FSM_sequential_emc_addr_ps[2]_i_11 [7]),
-        .I1(\FSM_sequential_emc_addr_ps[2]_i_11 [6]),
-        .I2(\FSM_sequential_emc_addr_ps[2]_i_11 [0]),
-        .I3(\FSM_sequential_emc_addr_ps[2]_i_11 [1]),
-        .I4(\FSM_sequential_emc_addr_ps[2]_i_11 [2]),
-        .I5(\FSM_sequential_emc_addr_ps[2]_i_11 [3]),
+       (.I0(\FSM_sequential_emc_addr_ps[2]_i_10 [7]),
+        .I1(\FSM_sequential_emc_addr_ps[2]_i_10 [6]),
+        .I2(\FSM_sequential_emc_addr_ps[2]_i_10 [0]),
+        .I3(\FSM_sequential_emc_addr_ps[2]_i_10 [1]),
+        .I4(\FSM_sequential_emc_addr_ps[2]_i_10 [2]),
+        .I5(\FSM_sequential_emc_addr_ps[2]_i_10 [3]),
         .O(\rd_data_count_reg[7] ));
+  LUT1 #(
+    .INIT(2'h1)) 
+    \s_axi_mem_bid_reg[5]_i_1 
+       (.I0(s_axi_aresetn),
+        .O(SR));
   LUT5 #(
     .INIT(32'h00000001)) 
     s_axi_mem_wready_INST_0_i_4
@@ -3631,8 +3663,8 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
     IP2Bus_RdAck_reg,
     \burst_addr_cnt_reg[5]_0 ,
     bus2ip_wr_req_reg_reg_0,
-    s_axi_mem_awready,
-    s_axi_mem_arready,
+    E,
+    s_axi_mem_awvalid_0,
     \MEM_DECODE_GEN[0].rdce_out_i_reg[0] ,
     \MEM_DECODE_GEN[0].cs_out_i_reg[0] ,
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0 ,
@@ -3651,6 +3683,8 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
     Bus2IP_Addr,
     \MEM_DECODE_GEN[0].cs_out_i_reg[0]_4 ,
     s_axi_mem_rdata,
+    s_axi_mem_bid,
+    s_axi_mem_rid,
     \bus2ip_data_reg_reg[63]_0 ,
     bus2ip_reset,
     s_axi_aclk,
@@ -3689,6 +3723,8 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
     transaction_done_i,
     rd_fifo_wr_en,
     \INFERRED_GEN.data_reg[255][8]_srl32__0 ,
+    s_axi_mem_awid,
+    s_axi_mem_arid,
     s_axi_mem_wdata);
   output [0:0]SR;
   output temp_bus2ip_cs;
@@ -3709,8 +3745,8 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
   output IP2Bus_RdAck_reg;
   output \burst_addr_cnt_reg[5]_0 ;
   output bus2ip_wr_req_reg_reg_0;
-  output s_axi_mem_awready;
-  output s_axi_mem_arready;
+  output [0:0]E;
+  output [0:0]s_axi_mem_awvalid_0;
   output \MEM_DECODE_GEN[0].rdce_out_i_reg[0] ;
   output \MEM_DECODE_GEN[0].cs_out_i_reg[0] ;
   output \MEM_DECODE_GEN[0].cs_out_i_reg[0]_0 ;
@@ -3729,6 +3765,8 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
   output [0:31]Bus2IP_Addr;
   output \MEM_DECODE_GEN[0].cs_out_i_reg[0]_4 ;
   output [63:0]s_axi_mem_rdata;
+  output [5:0]s_axi_mem_bid;
+  output [5:0]s_axi_mem_rid;
   output [63:0]\bus2ip_data_reg_reg[63]_0 ;
   input bus2ip_reset;
   input s_axi_aclk;
@@ -3767,6 +3805,8 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
   input transaction_done_i;
   input rd_fifo_wr_en;
   input [63:0]\INFERRED_GEN.data_reg[255][8]_srl32__0 ;
+  input [5:0]s_axi_mem_awid;
+  input [5:0]s_axi_mem_arid;
   input [63:0]s_axi_mem_wdata;
 
   wire \ADDRESS_STORE_GEN[30].ADDRESS_REG_i_2_n_0 ;
@@ -3807,6 +3847,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
   wire Bus2IP_RdReq_d1_i_3_n_0;
   wire Bus2IP_RdReq_d1_reg;
   wire Bus2IP_RdReq_emc;
+  wire [0:0]E;
   wire \FSM_sequential_crnt_state[1]_i_5 ;
   wire \FSM_sequential_crnt_state[1]_i_5_0 ;
   wire \FSM_sequential_crnt_state[2]_i_13_n_0 ;
@@ -3824,10 +3865,10 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
   wire \FSM_sequential_emc_addr_ps[1]_i_7_n_0 ;
   wire \FSM_sequential_emc_addr_ps[2]_i_10_n_0 ;
   wire \FSM_sequential_emc_addr_ps[2]_i_11_n_0 ;
-  wire \FSM_sequential_emc_addr_ps[2]_i_12_n_0 ;
+  wire \FSM_sequential_emc_addr_ps[2]_i_2_n_0 ;
   wire \FSM_sequential_emc_addr_ps[2]_i_3_n_0 ;
   wire \FSM_sequential_emc_addr_ps[2]_i_4_n_0 ;
-  wire \FSM_sequential_emc_addr_ps[2]_i_5_n_0 ;
+  wire \FSM_sequential_emc_addr_ps[2]_i_6_n_0 ;
   wire \FSM_sequential_emc_addr_ps[2]_i_7_n_0 ;
   wire \FSM_sequential_emc_addr_ps[2]_i_8_n_0 ;
   wire \FSM_sequential_emc_addr_ps[2]_i_9_n_0 ;
@@ -3975,22 +4016,25 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
   wire s_axi_aresetn;
   wire [31:0]s_axi_mem_araddr;
   wire [1:0]s_axi_mem_arburst;
+  wire [5:0]s_axi_mem_arid;
   wire [7:0]s_axi_mem_arlen;
-  wire s_axi_mem_arready;
   wire [1:0]s_axi_mem_arsize;
   wire s_axi_mem_arvalid;
   wire [31:0]s_axi_mem_awaddr;
   wire [1:0]s_axi_mem_awburst;
+  wire [5:0]s_axi_mem_awid;
   wire [7:0]s_axi_mem_awlen;
-  wire s_axi_mem_awready;
   wire [1:0]s_axi_mem_awsize;
   wire s_axi_mem_awvalid;
+  wire [0:0]s_axi_mem_awvalid_0;
+  wire [5:0]s_axi_mem_bid;
   wire s_axi_mem_bready;
   wire [0:0]s_axi_mem_bresp;
   wire s_axi_mem_bvalid_reg0;
   wire s_axi_mem_bvalid_reg_i_1_n_0;
   wire s_axi_mem_bvalid_reg_reg_0;
   wire [63:0]s_axi_mem_rdata;
+  wire [5:0]s_axi_mem_rid;
   wire s_axi_mem_rlast;
   wire s_axi_mem_rlast_INST_0_i_1_n_0;
   wire s_axi_mem_rready;
@@ -4106,7 +4150,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .\BUS2IP_ADDR_GEN_DATA_WDTH_64.internal_count[0]_i_2_0 ({\derived_size_reg_reg_n_0_[1] ,\derived_size_reg_reg_n_0_[0] }),
         .\BUS2IP_ADDR_GEN_DATA_WDTH_64.internal_count[2]_i_3 (burst_data_cnt[7:6]),
         .\BUS2IP_ADDR_GEN_DATA_WDTH_64.internal_count_reg[0]_0 (IP2Bus_RdAck_reg),
-        .\FSM_sequential_emc_addr_ps[2]_i_11 (rd_data_count_reg__0),
+        .\FSM_sequential_emc_addr_ps[2]_i_10 (rd_data_count_reg__0),
         .\FSM_sequential_emc_addr_ps_reg[0] (AXI_EMC_ADDR_GEN_INSTANCE_I_n_17),
         .\FSM_sequential_emc_addr_ps_reg[1] (AXI_EMC_ADDR_GEN_INSTANCE_I_n_19),
         .\FSM_sequential_emc_addr_ps_reg[2] (AXI_EMC_ADDR_GEN_INSTANCE_I_n_6),
@@ -4142,56 +4186,56 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .s_axi_mem_awvalid(s_axi_mem_awvalid),
         .s_axi_mem_awvalid_0(AXI_EMC_ADDR_GEN_INSTANCE_I_n_16),
         .s_axi_mem_rready(s_axi_mem_rready));
-  (* SOFT_HLUTNM = "soft_lutpair92" *) 
+  (* SOFT_HLUTNM = "soft_lutpair91" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \BEN_STORE_GEN[0].BEN_REG_i_1 
        (.I0(temp_bus2ip_be[0]),
         .I1(Type_of_xfer),
         .O(Bus2IP_BE[0]));
-  (* SOFT_HLUTNM = "soft_lutpair92" *) 
+  (* SOFT_HLUTNM = "soft_lutpair91" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \BEN_STORE_GEN[1].BEN_REG_i_1 
        (.I0(temp_bus2ip_be[1]),
         .I1(Type_of_xfer),
         .O(Bus2IP_BE[1]));
-  (* SOFT_HLUTNM = "soft_lutpair93" *) 
+  (* SOFT_HLUTNM = "soft_lutpair92" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \BEN_STORE_GEN[2].BEN_REG_i_1 
        (.I0(temp_bus2ip_be[2]),
         .I1(Type_of_xfer),
         .O(Bus2IP_BE[2]));
-  (* SOFT_HLUTNM = "soft_lutpair93" *) 
+  (* SOFT_HLUTNM = "soft_lutpair92" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \BEN_STORE_GEN[3].BEN_REG_i_1 
        (.I0(temp_bus2ip_be[3]),
         .I1(Type_of_xfer),
         .O(Bus2IP_BE[3]));
-  (* SOFT_HLUTNM = "soft_lutpair94" *) 
+  (* SOFT_HLUTNM = "soft_lutpair93" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \BEN_STORE_GEN[4].BEN_REG_i_1 
        (.I0(temp_bus2ip_be[4]),
         .I1(Type_of_xfer),
         .O(Bus2IP_BE[4]));
-  (* SOFT_HLUTNM = "soft_lutpair94" *) 
+  (* SOFT_HLUTNM = "soft_lutpair93" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \BEN_STORE_GEN[5].BEN_REG_i_1 
        (.I0(temp_bus2ip_be[5]),
         .I1(Type_of_xfer),
         .O(Bus2IP_BE[5]));
-  (* SOFT_HLUTNM = "soft_lutpair95" *) 
+  (* SOFT_HLUTNM = "soft_lutpair94" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \BEN_STORE_GEN[6].BEN_REG_i_1 
        (.I0(temp_bus2ip_be[6]),
         .I1(Type_of_xfer),
         .O(Bus2IP_BE[6]));
-  (* SOFT_HLUTNM = "soft_lutpair95" *) 
+  (* SOFT_HLUTNM = "soft_lutpair94" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \BEN_STORE_GEN[7].BEN_REG_i_1 
@@ -4208,7 +4252,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(Q[7]),
         .I5(Q[6]),
         .O(Bus2IP_RdReq_d1_i_3_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair86" *) 
+  (* SOFT_HLUTNM = "soft_lutpair84" *) 
   LUT4 #(
     .INIT(16'hBFFF)) 
     \FSM_sequential_crnt_state[2]_i_13 
@@ -4227,7 +4271,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(temp_bus2ip_be[0]),
         .I5(temp_bus2ip_be[3]),
         .O(\FSM_sequential_crnt_state[2]_i_14_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair87" *) 
+  (* SOFT_HLUTNM = "soft_lutpair90" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \FSM_sequential_emc_addr_ps[0]_i_3 
@@ -4244,7 +4288,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(emc_addr_ps[0]),
         .I5(emc_addr_ps[1]),
         .O(\FSM_sequential_emc_addr_ps[0]_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair87" *) 
+  (* SOFT_HLUTNM = "soft_lutpair86" *) 
   LUT4 #(
     .INIT(16'h0E00)) 
     \FSM_sequential_emc_addr_ps[0]_i_5 
@@ -4263,7 +4307,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(\FSM_sequential_emc_addr_ps[1]_i_3_n_0 ),
         .I5(\FSM_sequential_emc_addr_ps[1]_i_4_n_0 ),
         .O(emc_addr_ns__0[1]));
-  (* SOFT_HLUTNM = "soft_lutpair76" *) 
+  (* SOFT_HLUTNM = "soft_lutpair77" *) 
   LUT3 #(
     .INIT(8'hD0)) 
     \FSM_sequential_emc_addr_ps[1]_i_2 
@@ -4271,7 +4315,6 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I1(emc_addr_ps[1]),
         .I2(emc_addr_ps[2]),
         .O(\FSM_sequential_emc_addr_ps[1]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair91" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \FSM_sequential_emc_addr_ps[1]_i_3 
@@ -4284,11 +4327,11 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
        (.I0(\FSM_sequential_emc_addr_ps[1]_i_5_n_0 ),
         .I1(last_len_cmb),
         .I2(\FSM_sequential_emc_addr_ps[1]_i_6_n_0 ),
-        .I3(\FSM_sequential_emc_addr_ps[2]_i_4_n_0 ),
+        .I3(\FSM_sequential_emc_addr_ps[2]_i_3_n_0 ),
         .I4(\FSM_sequential_emc_addr_ps_reg[0]_0 ),
-        .I5(\FSM_sequential_emc_addr_ps[2]_i_3_n_0 ),
+        .I5(\FSM_sequential_emc_addr_ps[2]_i_2_n_0 ),
         .O(\FSM_sequential_emc_addr_ps[1]_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair83" *) 
+  (* SOFT_HLUTNM = "soft_lutpair81" *) 
   LUT4 #(
     .INIT(16'h1511)) 
     \FSM_sequential_emc_addr_ps[1]_i_5 
@@ -4318,75 +4361,65 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I5(s_axi_mem_awburst[0]),
         .O(\FSM_sequential_emc_addr_ps[1]_i_7_n_0 ));
   LUT6 #(
-    .INIT(64'hFFFFFFFACCCCCCFA)) 
-    \FSM_sequential_emc_addr_ps[2]_i_10 
-       (.I0(s_axi_mem_awlen[5]),
-        .I1(s_axi_mem_arlen[5]),
-        .I2(s_axi_mem_awlen[4]),
-        .I3(\burstlength_reg[7]_i_4_n_0 ),
-        .I4(\FSM_sequential_emc_addr_ps[2]_i_11_n_0 ),
-        .I5(s_axi_mem_arlen[4]),
-        .O(\FSM_sequential_emc_addr_ps[2]_i_10_n_0 ));
+    .INIT(64'hFFFFFFFF0202FF02)) 
+    \FSM_sequential_emc_addr_ps[2]_i_1 
+       (.I0(\FSM_sequential_emc_addr_ps[2]_i_2_n_0 ),
+        .I1(\FSM_sequential_emc_addr_ps_reg[0]_0 ),
+        .I2(\FSM_sequential_emc_addr_ps[2]_i_3_n_0 ),
+        .I3(\FSM_sequential_emc_addr_ps[2]_i_4_n_0 ),
+        .I4(last_len_cmb),
+        .I5(\FSM_sequential_emc_addr_ps[2]_i_6_n_0 ),
+        .O(emc_addr_ns__0[2]));
   LUT6 #(
     .INIT(64'hFFFFFFBFAAAAAAAA)) 
-    \FSM_sequential_emc_addr_ps[2]_i_11 
+    \FSM_sequential_emc_addr_ps[2]_i_10 
        (.I0(\burstlength_reg[7]_i_3_n_0 ),
         .I1(last_data_acked),
         .I2(s_axi_mem_rready),
-        .I3(\FSM_sequential_emc_addr_ps[2]_i_12_n_0 ),
+        .I3(\FSM_sequential_emc_addr_ps[2]_i_11_n_0 ),
         .I4(AXI_EMC_ADDR_GEN_INSTANCE_I_n_23),
         .I5(\burstlength_reg[7]_i_2_n_0 ),
-        .O(\FSM_sequential_emc_addr_ps[2]_i_11_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair79" *) 
+        .O(\FSM_sequential_emc_addr_ps[2]_i_10_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair74" *) 
   LUT2 #(
     .INIT(4'hE)) 
-    \FSM_sequential_emc_addr_ps[2]_i_12 
+    \FSM_sequential_emc_addr_ps[2]_i_11 
        (.I0(rd_data_count_reg__0[4]),
         .I1(rd_data_count_reg__0[5]),
-        .O(\FSM_sequential_emc_addr_ps[2]_i_12_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFF0202FF02)) 
-    \FSM_sequential_emc_addr_ps[2]_i_2 
-       (.I0(\FSM_sequential_emc_addr_ps[2]_i_3_n_0 ),
-        .I1(\FSM_sequential_emc_addr_ps_reg[0]_0 ),
-        .I2(\FSM_sequential_emc_addr_ps[2]_i_4_n_0 ),
-        .I3(\FSM_sequential_emc_addr_ps[2]_i_5_n_0 ),
-        .I4(last_len_cmb),
-        .I5(\FSM_sequential_emc_addr_ps[2]_i_7_n_0 ),
-        .O(emc_addr_ns__0[2]));
-  (* SOFT_HLUTNM = "soft_lutpair78" *) 
+        .O(\FSM_sequential_emc_addr_ps[2]_i_11_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair86" *) 
   LUT3 #(
     .INIT(8'h40)) 
-    \FSM_sequential_emc_addr_ps[2]_i_3 
+    \FSM_sequential_emc_addr_ps[2]_i_2 
        (.I0(emc_addr_ps[2]),
         .I1(emc_addr_ps[1]),
         .I2(emc_addr_ps[0]),
-        .O(\FSM_sequential_emc_addr_ps[2]_i_3_n_0 ));
+        .O(\FSM_sequential_emc_addr_ps[2]_i_2_n_0 ));
   LUT6 #(
     .INIT(64'hAAAAAAAAAAAAA8AA)) 
-    \FSM_sequential_emc_addr_ps[2]_i_4 
+    \FSM_sequential_emc_addr_ps[2]_i_3 
        (.I0(s_axi_mem_wvalid),
-        .I1(\FSM_sequential_emc_addr_ps[2]_i_8_n_0 ),
+        .I1(\FSM_sequential_emc_addr_ps[2]_i_7_n_0 ),
         .I2(burst_addr_cnt_reg__0[1]),
         .I3(burst_addr_cnt_reg__1),
         .I4(burst_addr_cnt_reg__0[3]),
         .I5(burst_addr_cnt_reg__0[2]),
-        .O(\FSM_sequential_emc_addr_ps[2]_i_4_n_0 ));
+        .O(\FSM_sequential_emc_addr_ps[2]_i_3_n_0 ));
   LUT6 #(
     .INIT(64'h00000000000000E0)) 
-    \FSM_sequential_emc_addr_ps[2]_i_5 
+    \FSM_sequential_emc_addr_ps[2]_i_4 
        (.I0(s_axi_mem_awburst[0]),
         .I1(s_axi_mem_awburst[1]),
         .I2(bus2ip_addr_i_reg_12_sn_1),
         .I3(emc_addr_ps[2]),
         .I4(emc_addr_ps[1]),
         .I5(emc_addr_ps[0]),
-        .O(\FSM_sequential_emc_addr_ps[2]_i_5_n_0 ));
+        .O(\FSM_sequential_emc_addr_ps[2]_i_4_n_0 ));
   LUT6 #(
     .INIT(64'hFFFFFFFFFFFFFFFE)) 
-    \FSM_sequential_emc_addr_ps[2]_i_6 
-       (.I0(\FSM_sequential_emc_addr_ps[2]_i_9_n_0 ),
-        .I1(\FSM_sequential_emc_addr_ps[2]_i_10_n_0 ),
+    \FSM_sequential_emc_addr_ps[2]_i_5 
+       (.I0(\FSM_sequential_emc_addr_ps[2]_i_8_n_0 ),
+        .I1(\FSM_sequential_emc_addr_ps[2]_i_9_n_0 ),
         .I2(burst_length_cmb[2]),
         .I3(burst_length_cmb[3]),
         .I4(burst_length_cmb[1]),
@@ -4394,32 +4427,42 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .O(last_len_cmb));
   LUT6 #(
     .INIT(64'hF7F7F0F007F7F0F0)) 
-    \FSM_sequential_emc_addr_ps[2]_i_7 
+    \FSM_sequential_emc_addr_ps[2]_i_6 
        (.I0(s_axi_mem_bvalid_reg_reg_0),
         .I1(s_axi_mem_bready),
         .I2(\FSM_sequential_emc_addr_ps[1]_i_3_n_0 ),
         .I3(s_axi_mem_wvalid),
         .I4(\FSM_sequential_emc_addr_ps[1]_i_2_n_0 ),
         .I5(\burst_addr_cnt_reg[5]_0 ),
-        .O(\FSM_sequential_emc_addr_ps[2]_i_7_n_0 ));
+        .O(\FSM_sequential_emc_addr_ps[2]_i_6_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair85" *) 
   LUT4 #(
     .INIT(16'hFFFE)) 
-    \FSM_sequential_emc_addr_ps[2]_i_8 
+    \FSM_sequential_emc_addr_ps[2]_i_7 
        (.I0(burst_addr_cnt_reg__0[7]),
         .I1(burst_addr_cnt_reg__0[4]),
         .I2(burst_addr_cnt_reg__0[6]),
         .I3(burst_addr_cnt_reg__0[5]),
-        .O(\FSM_sequential_emc_addr_ps[2]_i_8_n_0 ));
+        .O(\FSM_sequential_emc_addr_ps[2]_i_7_n_0 ));
   LUT6 #(
     .INIT(64'hFFFFFFFACCCCCCFA)) 
-    \FSM_sequential_emc_addr_ps[2]_i_9 
+    \FSM_sequential_emc_addr_ps[2]_i_8 
        (.I0(s_axi_mem_awlen[6]),
         .I1(s_axi_mem_arlen[6]),
         .I2(s_axi_mem_awlen[7]),
         .I3(\burstlength_reg[7]_i_4_n_0 ),
-        .I4(\FSM_sequential_emc_addr_ps[2]_i_11_n_0 ),
+        .I4(\FSM_sequential_emc_addr_ps[2]_i_10_n_0 ),
         .I5(s_axi_mem_arlen[7]),
+        .O(\FSM_sequential_emc_addr_ps[2]_i_8_n_0 ));
+  LUT6 #(
+    .INIT(64'hFFFFFFFACCCCCCFA)) 
+    \FSM_sequential_emc_addr_ps[2]_i_9 
+       (.I0(s_axi_mem_awlen[5]),
+        .I1(s_axi_mem_arlen[5]),
+        .I2(s_axi_mem_awlen[4]),
+        .I3(\burstlength_reg[7]_i_4_n_0 ),
+        .I4(\FSM_sequential_emc_addr_ps[2]_i_10_n_0 ),
+        .I5(s_axi_mem_arlen[4]),
         .O(\FSM_sequential_emc_addr_ps[2]_i_9_n_0 ));
   (* FSM_ENCODED_STATES = "rd:010,rd_last:001,wr_wait:100,wr:011,wr_last:101,resp:110,idle:000" *) 
   FDRE \FSM_sequential_emc_addr_ps_reg[0] 
@@ -4594,8 +4637,8 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
   LUT6 #(
     .INIT(64'h00010000FFFFFFFF)) 
     addr_sm_ps_IDLE_reg_i_3
-       (.I0(\FSM_sequential_emc_addr_ps[2]_i_9_n_0 ),
-        .I1(\FSM_sequential_emc_addr_ps[2]_i_10_n_0 ),
+       (.I0(\FSM_sequential_emc_addr_ps[2]_i_8_n_0 ),
+        .I1(\FSM_sequential_emc_addr_ps[2]_i_9_n_0 ),
         .I2(addr_sm_ps_IDLE_reg_i_4_n_0),
         .I3(addr_sm_ps_IDLE_reg_i_5_n_0),
         .I4(AXI_EMC_ADDR_GEN_INSTANCE_I_n_16),
@@ -4608,7 +4651,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I1(s_axi_mem_arlen[2]),
         .I2(s_axi_mem_awlen[3]),
         .I3(\burstlength_reg[7]_i_4_n_0 ),
-        .I4(\FSM_sequential_emc_addr_ps[2]_i_11_n_0 ),
+        .I4(\FSM_sequential_emc_addr_ps[2]_i_10_n_0 ),
         .I5(s_axi_mem_arlen[3]),
         .O(addr_sm_ps_IDLE_reg_i_4_n_0));
   LUT6 #(
@@ -4618,7 +4661,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I1(s_axi_mem_arlen[1]),
         .I2(s_axi_mem_awlen[0]),
         .I3(\burstlength_reg[7]_i_4_n_0 ),
-        .I4(\FSM_sequential_emc_addr_ps[2]_i_11_n_0 ),
+        .I4(\FSM_sequential_emc_addr_ps[2]_i_10_n_0 ),
         .I5(s_axi_mem_arlen[0]),
         .O(addr_sm_ps_IDLE_reg_i_5_n_0));
   FDSE addr_sm_ps_IDLE_reg_reg
@@ -4672,7 +4715,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(rnw_cmb),
         .I5(s_axi_mem_awlen[3]),
         .O(p_0_in__0[3]));
-  (* SOFT_HLUTNM = "soft_lutpair81" *) 
+  (* SOFT_HLUTNM = "soft_lutpair78" *) 
   LUT3 #(
     .INIT(8'hFE)) 
     \burst_addr_cnt[3]_i_2 
@@ -4700,7 +4743,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(rnw_cmb),
         .I5(s_axi_mem_awlen[5]),
         .O(p_0_in__0[5]));
-  (* SOFT_HLUTNM = "soft_lutpair81" *) 
+  (* SOFT_HLUTNM = "soft_lutpair78" *) 
   LUT5 #(
     .INIT(32'h00000001)) 
     \burst_addr_cnt[5]_i_2 
@@ -4868,7 +4911,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(rnw_cmb),
         .I5(s_axi_mem_awlen[4]),
         .O(p_2_in[4]));
-  (* SOFT_HLUTNM = "soft_lutpair74" *) 
+  (* SOFT_HLUTNM = "soft_lutpair76" *) 
   LUT4 #(
     .INIT(16'hFFFE)) 
     \burst_data_cnt[4]_i_2 
@@ -4887,7 +4930,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(rnw_cmb),
         .I5(s_axi_mem_awlen[5]),
         .O(p_2_in[5]));
-  (* SOFT_HLUTNM = "soft_lutpair74" *) 
+  (* SOFT_HLUTNM = "soft_lutpair76" *) 
   LUT5 #(
     .INIT(32'hFFFFFFFE)) 
     \burst_data_cnt[5]_i_2 
@@ -5058,7 +5101,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(\burstlength_reg[7]_i_4_n_0 ),
         .I5(s_axi_mem_awlen[7]),
         .O(data[7]));
-  (* SOFT_HLUTNM = "soft_lutpair71" *) 
+  (* SOFT_HLUTNM = "soft_lutpair73" *) 
   LUT4 #(
     .INIT(16'h0028)) 
     \burstlength_reg[7]_i_2 
@@ -5067,7 +5110,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I2(emc_addr_ps[1]),
         .I3(emc_addr_ps[2]),
         .O(\burstlength_reg[7]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair83" *) 
+  (* SOFT_HLUTNM = "soft_lutpair81" *) 
   LUT4 #(
     .INIT(16'h4000)) 
     \burstlength_reg[7]_i_3 
@@ -5076,7 +5119,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I2(emc_addr_ps[1]),
         .I3(emc_addr_ps[0]),
         .O(\burstlength_reg[7]_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair71" *) 
+  (* SOFT_HLUTNM = "soft_lutpair73" *) 
   LUT5 #(
     .INIT(32'h20A320A0)) 
     \burstlength_reg[7]_i_4 
@@ -5174,7 +5217,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(p_0_out),
         .I5(temp_bus2ip_be[0]),
         .O(\bus2ip_BE_reg[1]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair73" *) 
+  (* SOFT_HLUTNM = "soft_lutpair71" *) 
   LUT5 #(
     .INIT(32'hFFFFFFB8)) 
     \bus2ip_BE_reg[1]_i_3 
@@ -5234,7 +5277,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(p_0_out),
         .I5(temp_bus2ip_be[2]),
         .O(\bus2ip_BE_reg[3]_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair73" *) 
+  (* SOFT_HLUTNM = "soft_lutpair70" *) 
   LUT5 #(
     .INIT(32'hFFB8FFFF)) 
     \bus2ip_BE_reg[3]_i_4 
@@ -5284,7 +5327,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(p_0_out),
         .I5(temp_bus2ip_be[4]),
         .O(\bus2ip_BE_reg[5]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair70" *) 
+  (* SOFT_HLUTNM = "soft_lutpair71" *) 
   LUT5 #(
     .INIT(32'hFFFDDDFD)) 
     \bus2ip_BE_reg[5]_i_3 
@@ -5314,7 +5357,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(p_0_out),
         .I5(temp_bus2ip_be[5]),
         .O(\bus2ip_BE_reg[6]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair84" *) 
+  (* SOFT_HLUTNM = "soft_lutpair82" *) 
   LUT4 #(
     .INIT(16'h02A2)) 
     \bus2ip_BE_reg[6]_i_3 
@@ -5381,7 +5424,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I3(rnw_cmb),
         .I4(s_axi_mem_arsize[1]),
         .O(\bus2ip_BE_reg[7]_i_6_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair84" *) 
+  (* SOFT_HLUTNM = "soft_lutpair82" *) 
   LUT4 #(
     .INIT(16'h0151)) 
     \bus2ip_BE_reg[7]_i_7 
@@ -5390,7 +5433,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I2(rnw_cmb),
         .I3(s_axi_mem_arsize[0]),
         .O(\bus2ip_BE_reg[7]_i_7_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair88" *) 
+  (* SOFT_HLUTNM = "soft_lutpair87" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \bus2ip_BE_reg[7]_i_8 
@@ -5864,14 +5907,14 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(bus2ip_rd_req_cmb),
         .I5(Bus2IP_RdReq_emc),
         .O(bus2ip_rd_req_reg_i_1_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair77" *) 
+  (* SOFT_HLUTNM = "soft_lutpair79" *) 
   LUT2 #(
     .INIT(4'hB)) 
     bus2ip_rd_req_reg_i_2
        (.I0(emc_addr_ps[0]),
         .I1(emc_addr_ps[1]),
         .O(bus2ip_rd_req_reg_i_2_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair77" *) 
+  (* SOFT_HLUTNM = "soft_lutpair79" *) 
   LUT5 #(
     .INIT(32'h00000070)) 
     bus2ip_rd_req_reg_i_3
@@ -5881,7 +5924,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I3(emc_addr_ps[1]),
         .I4(emc_addr_ps[0]),
         .O(bus2ip_rd_req_reg_i_3_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair91" *) 
+  (* SOFT_HLUTNM = "soft_lutpair90" *) 
   LUT2 #(
     .INIT(4'h1)) 
     bus2ip_rd_req_reg_i_4
@@ -5904,7 +5947,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(emc_addr_ps[2]),
         .I5(bus2ip_wrreq_i),
         .O(bus2ip_wr_req_reg_i_1_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair88" *) 
+  (* SOFT_HLUTNM = "soft_lutpair87" *) 
   LUT4 #(
     .INIT(16'h8088)) 
     bus2ip_wr_req_reg_i_2
@@ -5919,6 +5962,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .D(bus2ip_wr_req_reg_i_1_n_0),
         .Q(bus2ip_wrreq_i),
         .R(SR));
+  (* SOFT_HLUTNM = "soft_lutpair88" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \derived_burst_reg[0]_i_1 
@@ -5926,7 +5970,6 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I1(rnw_cmb),
         .I2(s_axi_mem_awburst[0]),
         .O(\derived_burst_reg[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair90" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \derived_burst_reg[1]_i_1 
@@ -5946,7 +5989,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .D(\derived_burst_reg[1]_i_1_n_0 ),
         .Q(derived_burst_reg[1]),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair90" *) 
+  (* SOFT_HLUTNM = "soft_lutpair88" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \derived_size_reg[0]_i_1 
@@ -5989,7 +6032,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I3(ip2bus_rdack),
         .I4(addr_sm_ps_idle_cmb),
         .O(last_data_acked_i_1_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair79" *) 
+  (* SOFT_HLUTNM = "soft_lutpair74" *) 
   LUT5 #(
     .INIT(32'hFFFFFFFE)) 
     last_data_acked_i_2
@@ -6005,7 +6048,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .D(last_data_acked_i_1_n_0),
         .Q(last_data_acked),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair82" *) 
+  (* SOFT_HLUTNM = "soft_lutpair83" *) 
   LUT3 #(
     .INIT(8'h8B)) 
     \rd_data_count[0]_i_1 
@@ -6013,7 +6056,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I1(p_0_out),
         .I2(rd_data_count_reg__0[0]),
         .O(p_0_in[0]));
-  (* SOFT_HLUTNM = "soft_lutpair82" *) 
+  (* SOFT_HLUTNM = "soft_lutpair83" *) 
   LUT4 #(
     .INIT(16'hF909)) 
     \rd_data_count[1]_i_1 
@@ -6182,8 +6225,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I3(s_axi_mem_arvalid),
         .I4(s_axi_aresetn),
         .I5(rw_flag_reg_reg_0),
-        .O(s_axi_mem_arready));
-  (* SOFT_HLUTNM = "soft_lutpair76" *) 
+        .O(s_axi_mem_awvalid_0));
   LUT5 #(
     .INIT(32'h00020000)) 
     s_axi_mem_awready_INST_0
@@ -6192,7 +6234,43 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I2(emc_addr_ps[2]),
         .I3(emc_addr_ps[0]),
         .I4(bus2ip_addr_i_reg_12_sn_1),
-        .O(s_axi_mem_awready));
+        .O(E));
+  FDRE \s_axi_mem_bid_reg_reg[0] 
+       (.C(s_axi_aclk),
+        .CE(E),
+        .D(s_axi_mem_awid[0]),
+        .Q(s_axi_mem_bid[0]),
+        .R(SR));
+  FDRE \s_axi_mem_bid_reg_reg[1] 
+       (.C(s_axi_aclk),
+        .CE(E),
+        .D(s_axi_mem_awid[1]),
+        .Q(s_axi_mem_bid[1]),
+        .R(SR));
+  FDRE \s_axi_mem_bid_reg_reg[2] 
+       (.C(s_axi_aclk),
+        .CE(E),
+        .D(s_axi_mem_awid[2]),
+        .Q(s_axi_mem_bid[2]),
+        .R(SR));
+  FDRE \s_axi_mem_bid_reg_reg[3] 
+       (.C(s_axi_aclk),
+        .CE(E),
+        .D(s_axi_mem_awid[3]),
+        .Q(s_axi_mem_bid[3]),
+        .R(SR));
+  FDRE \s_axi_mem_bid_reg_reg[4] 
+       (.C(s_axi_aclk),
+        .CE(E),
+        .D(s_axi_mem_awid[4]),
+        .Q(s_axi_mem_bid[4]),
+        .R(SR));
+  FDRE \s_axi_mem_bid_reg_reg[5] 
+       (.C(s_axi_aclk),
+        .CE(E),
+        .D(s_axi_mem_awid[5]),
+        .Q(s_axi_mem_bid[5]),
+        .R(SR));
   FDRE \s_axi_mem_bresp_reg_reg[1] 
        (.C(s_axi_aclk),
         .CE(1'b1),
@@ -6209,7 +6287,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I4(emc_addr_ps[2]),
         .I5(emc_addr_ps[1]),
         .O(s_axi_mem_bvalid_reg_i_1_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair86" *) 
+  (* SOFT_HLUTNM = "soft_lutpair84" *) 
   LUT2 #(
     .INIT(4'h2)) 
     s_axi_mem_bvalid_reg_i_2
@@ -6222,6 +6300,42 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .D(s_axi_mem_bvalid_reg_i_1_n_0),
         .Q(s_axi_mem_bvalid_reg_reg_0),
         .R(1'b0));
+  FDRE \s_axi_mem_rid_reg_reg[0] 
+       (.C(s_axi_aclk),
+        .CE(s_axi_mem_awvalid_0),
+        .D(s_axi_mem_arid[0]),
+        .Q(s_axi_mem_rid[0]),
+        .R(SR));
+  FDRE \s_axi_mem_rid_reg_reg[1] 
+       (.C(s_axi_aclk),
+        .CE(s_axi_mem_awvalid_0),
+        .D(s_axi_mem_arid[1]),
+        .Q(s_axi_mem_rid[1]),
+        .R(SR));
+  FDRE \s_axi_mem_rid_reg_reg[2] 
+       (.C(s_axi_aclk),
+        .CE(s_axi_mem_awvalid_0),
+        .D(s_axi_mem_arid[2]),
+        .Q(s_axi_mem_rid[2]),
+        .R(SR));
+  FDRE \s_axi_mem_rid_reg_reg[3] 
+       (.C(s_axi_aclk),
+        .CE(s_axi_mem_awvalid_0),
+        .D(s_axi_mem_arid[3]),
+        .Q(s_axi_mem_rid[3]),
+        .R(SR));
+  FDRE \s_axi_mem_rid_reg_reg[4] 
+       (.C(s_axi_aclk),
+        .CE(s_axi_mem_awvalid_0),
+        .D(s_axi_mem_arid[4]),
+        .Q(s_axi_mem_rid[4]),
+        .R(SR));
+  FDRE \s_axi_mem_rid_reg_reg[5] 
+       (.C(s_axi_aclk),
+        .CE(s_axi_mem_awvalid_0),
+        .D(s_axi_mem_arid[5]),
+        .Q(s_axi_mem_rid[5]),
+        .R(SR));
   LUT6 #(
     .INIT(64'h0000000000000002)) 
     s_axi_mem_rlast_INST_0
@@ -6241,7 +6355,7 @@ module meowrouter_axi_emc_0_1_axi_emc_native_interface
         .I2(rd_data_count_reg__0[1]),
         .I3(rd_data_count_reg__0[0]),
         .O(s_axi_mem_rlast_INST_0_i_1_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair78" *) 
+  (* SOFT_HLUTNM = "soft_lutpair77" *) 
   LUT5 #(
     .INIT(32'h030203C2)) 
     s_axi_mem_wready_INST_0
@@ -21374,21 +21488,21 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(read_ack_reg_reg_0),
         .I5(bus2Mem_RdReq),
         .O(\ADDRESS_STORE_GEN[0].ADDRESS_REG_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair112" *) 
+  (* SOFT_HLUTNM = "soft_lutpair111" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \ADDRESS_STORE_GEN[0].ADDRESS_REG_i_5 
        (.I0(Q[1]),
         .I1(crnt_state[3]),
         .O(\ADDRESS_STORE_GEN[0].ADDRESS_REG_i_5_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair111" *) 
+  (* SOFT_HLUTNM = "soft_lutpair110" *) 
   LUT2 #(
     .INIT(4'h1)) 
     \ADDRESS_STORE_GEN[0].ADDRESS_REG_i_6 
        (.I0(crnt_state[4]),
         .I1(Q[0]),
         .O(\ADDRESS_STORE_GEN[0].ADDRESS_REG_i_6_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair98" *) 
+  (* SOFT_HLUTNM = "soft_lutpair97" *) 
   LUT5 #(
     .INIT(32'h00800000)) 
     \ADDRESS_STORE_GEN[0].ADDRESS_REG_i_7 
@@ -21398,7 +21512,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I3(Q[1]),
         .I4(Q[0]),
         .O(\ADDRESS_STORE_GEN[0].ADDRESS_REG_i_7_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair100" *) 
+  (* SOFT_HLUTNM = "soft_lutpair99" *) 
   LUT4 #(
     .INIT(16'h4001)) 
     \BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i[11]_i_11 
@@ -21407,7 +21521,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I2(Q[1]),
         .I3(Q[2]),
         .O(\BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i[11]_i_11_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair108" *) 
+  (* SOFT_HLUTNM = "soft_lutpair107" *) 
   LUT3 #(
     .INIT(8'hDF)) 
     \BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i[11]_i_13 
@@ -21445,7 +21559,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(\BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i[11]_i_3_0 ),
         .I5(\BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i[11]_i_3_1 ),
         .O(\BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i[11]_i_8_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair97" *) 
+  (* SOFT_HLUTNM = "soft_lutpair96" *) 
   LUT5 #(
     .INIT(32'hFFFF4000)) 
     \BUS2IP_ADDR_GEN_DATA_WDTH_64.bus2ip_addr_i[11]_i_9 
@@ -21493,7 +21607,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(\FSM_sequential_crnt_state[0]_i_4_0 ),
         .I5(bus2ip_wrreq_i),
         .O(\FSM_sequential_crnt_state[0]_i_10_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair96" *) 
+  (* SOFT_HLUTNM = "soft_lutpair95" *) 
   LUT5 #(
     .INIT(32'h0FF305F0)) 
     \FSM_sequential_crnt_state[0]_i_12 
@@ -21513,7 +21627,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[1]),
         .I5(Q[0]),
         .O(\FSM_sequential_crnt_state[0]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair97" *) 
+  (* SOFT_HLUTNM = "soft_lutpair96" *) 
   LUT2 #(
     .INIT(4'h1)) 
     \FSM_sequential_crnt_state[0]_i_3 
@@ -21530,7 +21644,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(\FSM_sequential_crnt_state[0]_i_9_n_0 ),
         .I5(\FSM_sequential_crnt_state[0]_i_10_n_0 ),
         .O(\FSM_sequential_crnt_state[0]_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair110" *) 
+  (* SOFT_HLUTNM = "soft_lutpair109" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \FSM_sequential_crnt_state[0]_i_5 
@@ -21557,7 +21671,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(new_page),
         .I5(bus2Mem_RdReq),
         .O(\FSM_sequential_crnt_state[0]_i_7_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair96" *) 
+  (* SOFT_HLUTNM = "soft_lutpair95" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \FSM_sequential_crnt_state[0]_i_9 
@@ -21574,7 +21688,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(\FSM_sequential_crnt_state[1]_i_4_n_0 ),
         .I5(\FSM_sequential_crnt_state[1]_i_5_n_0 ),
         .O(\FSM_sequential_crnt_state[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair98" *) 
+  (* SOFT_HLUTNM = "soft_lutpair97" *) 
   LUT3 #(
     .INIT(8'h04)) 
     \FSM_sequential_crnt_state[1]_i_10 
@@ -21582,7 +21696,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I1(\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_0 ),
         .I2(bus2Mem_RdReq),
         .O(\FSM_sequential_crnt_state[1]_i_10_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair113" *) 
+  (* SOFT_HLUTNM = "soft_lutpair112" *) 
   LUT2 #(
     .INIT(4'h1)) 
     \FSM_sequential_crnt_state[1]_i_12 
@@ -21639,7 +21753,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[1]),
         .I5(crnt_state[3]),
         .O(\FSM_sequential_crnt_state[1]_i_6_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair101" *) 
+  (* SOFT_HLUTNM = "soft_lutpair100" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \FSM_sequential_crnt_state[1]_i_7 
@@ -21656,7 +21770,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(read_break_reg_d1),
         .I5(crnt_state[4]),
         .O(\FSM_sequential_crnt_state[1]_i_8_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair108" *) 
+  (* SOFT_HLUTNM = "soft_lutpair107" *) 
   LUT4 #(
     .INIT(16'hFFAE)) 
     \FSM_sequential_crnt_state[1]_i_9 
@@ -21681,14 +21795,14 @@ module meowrouter_axi_emc_0_1_mem_state_machine
        (.I0(crnt_state[3]),
         .I1(Q[2]),
         .O(\FSM_sequential_crnt_state[2]_i_10_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair114" *) 
+  (* SOFT_HLUTNM = "soft_lutpair113" *) 
   LUT2 #(
     .INIT(4'h1)) 
     \FSM_sequential_crnt_state[2]_i_11 
        (.I0(Q[0]),
         .I1(Q[1]),
         .O(\FSM_sequential_crnt_state[2]_i_11_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair100" *) 
+  (* SOFT_HLUTNM = "soft_lutpair99" *) 
   LUT5 #(
     .INIT(32'hFF1F0000)) 
     \FSM_sequential_crnt_state[2]_i_12 
@@ -21708,7 +21822,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(crnt_state[4]),
         .I5(Q[2]),
         .O(\FSM_sequential_crnt_state[2]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair113" *) 
+  (* SOFT_HLUTNM = "soft_lutpair112" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \FSM_sequential_crnt_state[2]_i_4 
@@ -21755,7 +21869,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(crnt_state[3]),
         .I5(\FSM_sequential_crnt_state[3]_i_5_n_0 ),
         .O(\FSM_sequential_crnt_state[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair102" *) 
+  (* SOFT_HLUTNM = "soft_lutpair101" *) 
   LUT5 #(
     .INIT(32'h5BA0FA00)) 
     \FSM_sequential_crnt_state[3]_i_2 
@@ -21765,7 +21879,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I3(crnt_state[3]),
         .I4(Q[0]),
         .O(\FSM_sequential_crnt_state[3]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair112" *) 
+  (* SOFT_HLUTNM = "soft_lutpair111" *) 
   LUT3 #(
     .INIT(8'hFE)) 
     \FSM_sequential_crnt_state[3]_i_3 
@@ -21809,7 +21923,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[2]),
         .I5(read_ack_reg_reg_0),
         .O(\FSM_sequential_crnt_state[4]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair106" *) 
+  (* SOFT_HLUTNM = "soft_lutpair105" *) 
   LUT5 #(
     .INIT(32'h5FFF5FBF)) 
     \FSM_sequential_crnt_state[4]_i_2 
@@ -21864,7 +21978,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .D(\FSM_sequential_crnt_state[4]_i_1_n_0 ),
         .Q(crnt_state[4]),
         .R(bus2ip_reset));
-  (* SOFT_HLUTNM = "soft_lutpair107" *) 
+  (* SOFT_HLUTNM = "soft_lutpair106" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \FSM_sequential_emc_addr_ps[0]_i_10 
@@ -22042,14 +22156,14 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(crnt_state[3]),
         .I5(\PERBIT_GEN[0].FF_RST0_GEN.FDRE_i1_0 ),
         .O(CE_3));
-  (* SOFT_HLUTNM = "soft_lutpair115" *) 
+  (* SOFT_HLUTNM = "soft_lutpair114" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_1__1 
        (.I0(\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0 ),
         .I1(twph_cnt_en),
         .O(CE_4));
-  (* SOFT_HLUTNM = "soft_lutpair102" *) 
+  (* SOFT_HLUTNM = "soft_lutpair101" *) 
   LUT4 #(
     .INIT(16'h0001)) 
     \PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2 
@@ -22078,14 +22192,14 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1_n_0 ),
         .I5(\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3__1_n_0 ),
         .O(CE_1));
-  (* SOFT_HLUTNM = "soft_lutpair115" *) 
+  (* SOFT_HLUTNM = "soft_lutpair114" *) 
   LUT2 #(
     .INIT(4'hE)) 
     \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_1__1 
        (.I0(twr_cnt_en),
         .I1(\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0 ),
         .O(CE_5));
-  (* SOFT_HLUTNM = "soft_lutpair103" *) 
+  (* SOFT_HLUTNM = "soft_lutpair102" *) 
   LUT5 #(
     .INIT(32'h0000BFBE)) 
     \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2 
@@ -22105,7 +22219,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[2]),
         .I5(Q[1]),
         .O(\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair109" *) 
+  (* SOFT_HLUTNM = "soft_lutpair108" *) 
   LUT2 #(
     .INIT(4'h9)) 
     \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_2__1 
@@ -22122,7 +22236,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[0]),
         .I5(read_ack_reg_reg_0),
         .O(\PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair111" *) 
+  (* SOFT_HLUTNM = "soft_lutpair110" *) 
   LUT3 #(
     .INIT(8'h01)) 
     \PERBIT_GEN[4].FF_RST1_GEN.FDSE_i1_i_3__0 
@@ -22169,14 +22283,14 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[2]),
         .I5(\FSM_sequential_crnt_state_reg[1]_3 ),
         .O(twr_cnt_en));
-  (* SOFT_HLUTNM = "soft_lutpair114" *) 
+  (* SOFT_HLUTNM = "soft_lutpair113" *) 
   LUT2 #(
     .INIT(4'h1)) 
     \PERBIT_GEN[4].MULT_AND_i1_i_2 
        (.I0(Q[1]),
         .I1(crnt_state[4]),
         .O(\PERBIT_GEN[4].MULT_AND_i1_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair99" *) 
+  (* SOFT_HLUTNM = "soft_lutpair98" *) 
   LUT5 #(
     .INIT(32'hFFFEFDFF)) 
     \PERBIT_GEN[4].MULT_AND_i1_i_3 
@@ -22241,7 +22355,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(bus2Mem_RdReq),
         .I5(read_ack_reg_reg_0),
         .O(\PERBIT_GEN[7].MULT_AND_i1_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair107" *) 
+  (* SOFT_HLUTNM = "soft_lutpair106" *) 
   LUT4 #(
     .INIT(16'h0040)) 
     \PERBIT_GEN[7].MULT_AND_i1_i_5 
@@ -22298,7 +22412,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(read_break_reg),
         .I5(\READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_1 ),
         .O(read_complete_cmb));
-  (* SOFT_HLUTNM = "soft_lutpair106" *) 
+  (* SOFT_HLUTNM = "soft_lutpair105" *) 
   LUT3 #(
     .INIT(8'h40)) 
     \READ_COMPLETE_PIPE_GEN[0].READ_COMPLETE_PIPE_i_2 
@@ -22356,7 +22470,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(\mem_ce_reg[0]_i_3_n_0 ),
         .I5(\PERBIT_GEN[4].FF_RST0_GEN.FDRE_i1_i_2_n_0 ),
         .O(\mem_ce_reg[0]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair110" *) 
+  (* SOFT_HLUTNM = "soft_lutpair109" *) 
   LUT4 #(
     .INIT(16'h0EF0)) 
     \mem_ce_reg[0]_i_3 
@@ -22385,7 +22499,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[0]),
         .I5(Q[2]),
         .O(mem_dqt_t_d_reg));
-  (* SOFT_HLUTNM = "soft_lutpair105" *) 
+  (* SOFT_HLUTNM = "soft_lutpair104" *) 
   LUT5 #(
     .INIT(32'h0001F3FD)) 
     mem_dqt_t_d_i_1
@@ -22415,7 +22529,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[1]),
         .I5(crnt_state[4]),
         .O(\mem_oen_reg[0]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair101" *) 
+  (* SOFT_HLUTNM = "soft_lutpair100" *) 
   LUT5 #(
     .INIT(32'h04040004)) 
     \mem_oen_reg[0]_i_3 
@@ -22505,7 +22619,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(Q[2]),
         .I5(Mem_Ben[7]),
         .O(\FSM_sequential_crnt_state_reg[4]_2 [0]));
-  (* SOFT_HLUTNM = "soft_lutpair103" *) 
+  (* SOFT_HLUTNM = "soft_lutpair102" *) 
   LUT5 #(
     .INIT(32'h33303037)) 
     mem_rnw_reg_i_1
@@ -22588,7 +22702,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .D(read_break_reg),
         .Q(read_break_reg_d1),
         .R(bus2ip_reset));
-  (* SOFT_HLUTNM = "soft_lutpair99" *) 
+  (* SOFT_HLUTNM = "soft_lutpair98" *) 
   LUT5 #(
     .INIT(32'h00000001)) 
     s_axi_mem_arready_INST_0_i_2
@@ -22626,7 +22740,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I3(\mem_a_int_reg[0] ),
         .I4(\FSM_sequential_crnt_state_reg[3]_0 ),
         .O(\FSM_sequential_crnt_state_reg[1]_1 ));
-  (* SOFT_HLUTNM = "soft_lutpair105" *) 
+  (* SOFT_HLUTNM = "soft_lutpair104" *) 
   LUT4 #(
     .INIT(16'h0010)) 
     s_axi_mem_wready_INST_0_i_7
@@ -22654,7 +22768,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(\FSM_sequential_crnt_state_reg[4]_0 ),
         .I5(\mem_a_int_reg[0] ),
         .O(transaction_complete_reg_i_2_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair104" *) 
+  (* SOFT_HLUTNM = "soft_lutpair103" *) 
   LUT5 #(
     .INIT(32'h000104A0)) 
     transaction_complete_reg_i_3
@@ -22664,7 +22778,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I3(Q[0]),
         .I4(crnt_state[4]),
         .O(transaction_complete_reg_i_3_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair104" *) 
+  (* SOFT_HLUTNM = "soft_lutpair103" *) 
   LUT5 #(
     .INIT(32'hAAAAAAA9)) 
     transaction_complete_reg_i_4
@@ -22716,7 +22830,7 @@ module meowrouter_axi_emc_0_1_mem_state_machine
         .I4(wlast_reg_i_4_n_0),
         .I5(wlast_reg_i_5_n_0),
         .O(wlast_reg_i_3_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair109" *) 
+  (* SOFT_HLUTNM = "soft_lutpair108" *) 
   LUT4 #(
     .INIT(16'h00F7)) 
     wlast_reg_i_4
