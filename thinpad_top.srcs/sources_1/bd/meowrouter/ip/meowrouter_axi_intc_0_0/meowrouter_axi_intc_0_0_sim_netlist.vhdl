@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sat Dec 14 03:32:36 2019
--- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_axi_intc_0_0/meowrouter_axi_intc_0_0_sim_netlist.vhdl
+-- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+-- Date        : Thu Dec 19 18:19:16 2019
+-- Host        : imac running 64-bit Arch Linux
+-- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_axi_intc_0_0 -prefix
+--               meowrouter_axi_intc_0_0_ meowrouter_axi_intc_0_0_sim_netlist.vhdl
 -- Design      : meowrouter_axi_intc_0_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -54,8 +54,6 @@ entity meowrouter_axi_intc_0_0_address_decoder is
     \REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]\ : in STD_LOGIC;
     Bus_RNW_reg_reg_3 : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_intc_0_0_address_decoder : entity is "address_decoder";
 end meowrouter_axi_intc_0_0_address_decoder;
 
 architecture STRUCTURE of meowrouter_axi_intc_0_0_address_decoder is
@@ -857,8 +855,6 @@ entity meowrouter_axi_intc_0_0_intc_core is
     p_19_in : in STD_LOGIC;
     p_17_in : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_intc_0_0_intc_core : entity is "intc_core";
 end meowrouter_axi_intc_0_0_intc_core;
 
 architecture STRUCTURE of meowrouter_axi_intc_0_0_intc_core is
@@ -1138,8 +1134,6 @@ entity meowrouter_axi_intc_0_0_slave_attachment is
     cie : in STD_LOGIC;
     \REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_intc_0_0_slave_attachment : entity is "slave_attachment";
 end meowrouter_axi_intc_0_0_slave_attachment;
 
 architecture STRUCTURE of meowrouter_axi_intc_0_0_slave_attachment is
@@ -1948,8 +1942,6 @@ entity meowrouter_axi_intc_0_0_axi_lite_ipif is
     cie : in STD_LOGIC;
     \REG_GEN[0].IAR_NORMAL_MODE_GEN.iar_reg[0]\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_intc_0_0_axi_lite_ipif : entity is "axi_lite_ipif";
 end meowrouter_axi_intc_0_0_axi_lite_ipif;
 
 architecture STRUCTURE of meowrouter_axi_intc_0_0_axi_lite_ipif is
@@ -2093,8 +2085,6 @@ entity meowrouter_axi_intc_0_0_axi_intc is
   attribute C_S_AXI_ADDR_WIDTH of meowrouter_axi_intc_0_0_axi_intc : entity is 9;
   attribute C_S_AXI_DATA_WIDTH : integer;
   attribute C_S_AXI_DATA_WIDTH of meowrouter_axi_intc_0_0_axi_intc : entity is 32;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_intc_0_0_axi_intc : entity is "axi_intc";
   attribute hdl : string;
   attribute hdl of meowrouter_axi_intc_0_0_axi_intc : entity is "VHDL";
   attribute imp_netlist : string;

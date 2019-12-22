@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Sat Dec 21 23:32:01 2019
-// Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Sun Dec 22 20:24:26 2019
+// Host        : imac running 64-bit Arch Linux
 // Command     : write_verilog -force -mode synth_stub
-//               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_axi_emc_0_1/meowrouter_axi_emc_0_1_stub.v
+//               /home/thu-skyworks/meow/Desktop/workspace/cod19grp3/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_axi_emc_0_1/meowrouter_axi_emc_0_1_stub.v
 // Design      : meowrouter_axi_emc_0_1
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tfgg676-2L
@@ -13,7 +13,7 @@
 // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
 // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
-(* x_core_info = "axi_emc,Vivado 2018.3_AR71898" *)
+(* x_core_info = "axi_emc,Vivado 2018.3" *)
 module meowrouter_axi_emc_0_1(s_axi_aclk, s_axi_aresetn, rdclk, 
   s_axi_mem_awid, s_axi_mem_awaddr, s_axi_mem_awlen, s_axi_mem_awsize, s_axi_mem_awburst, 
   s_axi_mem_awlock, s_axi_mem_awcache, s_axi_mem_awprot, s_axi_mem_awvalid, 
@@ -25,11 +25,11 @@ module meowrouter_axi_emc_0_1(s_axi_aclk, s_axi_aresetn, rdclk,
   s_axi_mem_rvalid, s_axi_mem_rready, mem_dq_i, mem_dq_o, mem_dq_t, mem_a, mem_ce, mem_cen, 
   mem_oen, mem_wen, mem_ben, mem_qwen, mem_rpn, mem_adv_ldn, mem_lbon, mem_cken, mem_rnw, mem_cre, 
   mem_wait)
-/* synthesis syn_black_box black_box_pad_pin="s_axi_aclk,s_axi_aresetn,rdclk,s_axi_mem_awid[5:0],s_axi_mem_awaddr[31:0],s_axi_mem_awlen[7:0],s_axi_mem_awsize[2:0],s_axi_mem_awburst[1:0],s_axi_mem_awlock,s_axi_mem_awcache[3:0],s_axi_mem_awprot[2:0],s_axi_mem_awvalid,s_axi_mem_awready,s_axi_mem_wdata[63:0],s_axi_mem_wstrb[7:0],s_axi_mem_wlast,s_axi_mem_wvalid,s_axi_mem_wready,s_axi_mem_bid[5:0],s_axi_mem_bresp[1:0],s_axi_mem_bvalid,s_axi_mem_bready,s_axi_mem_arid[5:0],s_axi_mem_araddr[31:0],s_axi_mem_arlen[7:0],s_axi_mem_arsize[2:0],s_axi_mem_arburst[1:0],s_axi_mem_arlock,s_axi_mem_arcache[3:0],s_axi_mem_arprot[2:0],s_axi_mem_arvalid,s_axi_mem_arready,s_axi_mem_rid[5:0],s_axi_mem_rdata[63:0],s_axi_mem_rresp[1:0],s_axi_mem_rlast,s_axi_mem_rvalid,s_axi_mem_rready,mem_dq_i[63:0],mem_dq_o[63:0],mem_dq_t[63:0],mem_a[31:0],mem_ce[0:0],mem_cen[0:0],mem_oen[0:0],mem_wen,mem_ben[7:0],mem_qwen[7:0],mem_rpn,mem_adv_ldn,mem_lbon,mem_cken,mem_rnw,mem_cre,mem_wait[0:0]" */;
+/* synthesis syn_black_box black_box_pad_pin="s_axi_aclk,s_axi_aresetn,rdclk,s_axi_mem_awid[6:0],s_axi_mem_awaddr[31:0],s_axi_mem_awlen[7:0],s_axi_mem_awsize[2:0],s_axi_mem_awburst[1:0],s_axi_mem_awlock,s_axi_mem_awcache[3:0],s_axi_mem_awprot[2:0],s_axi_mem_awvalid,s_axi_mem_awready,s_axi_mem_wdata[63:0],s_axi_mem_wstrb[7:0],s_axi_mem_wlast,s_axi_mem_wvalid,s_axi_mem_wready,s_axi_mem_bid[6:0],s_axi_mem_bresp[1:0],s_axi_mem_bvalid,s_axi_mem_bready,s_axi_mem_arid[6:0],s_axi_mem_araddr[31:0],s_axi_mem_arlen[7:0],s_axi_mem_arsize[2:0],s_axi_mem_arburst[1:0],s_axi_mem_arlock,s_axi_mem_arcache[3:0],s_axi_mem_arprot[2:0],s_axi_mem_arvalid,s_axi_mem_arready,s_axi_mem_rid[6:0],s_axi_mem_rdata[63:0],s_axi_mem_rresp[1:0],s_axi_mem_rlast,s_axi_mem_rvalid,s_axi_mem_rready,mem_dq_i[63:0],mem_dq_o[63:0],mem_dq_t[63:0],mem_a[31:0],mem_ce[0:0],mem_cen[0:0],mem_oen[0:0],mem_wen,mem_ben[7:0],mem_qwen[7:0],mem_rpn,mem_adv_ldn,mem_lbon,mem_cken,mem_rnw,mem_cre,mem_wait[0:0]" */;
   input s_axi_aclk;
   input s_axi_aresetn;
   input rdclk;
-  input [5:0]s_axi_mem_awid;
+  input [6:0]s_axi_mem_awid;
   input [31:0]s_axi_mem_awaddr;
   input [7:0]s_axi_mem_awlen;
   input [2:0]s_axi_mem_awsize;
@@ -44,11 +44,11 @@ module meowrouter_axi_emc_0_1(s_axi_aclk, s_axi_aresetn, rdclk,
   input s_axi_mem_wlast;
   input s_axi_mem_wvalid;
   output s_axi_mem_wready;
-  output [5:0]s_axi_mem_bid;
+  output [6:0]s_axi_mem_bid;
   output [1:0]s_axi_mem_bresp;
   output s_axi_mem_bvalid;
   input s_axi_mem_bready;
-  input [5:0]s_axi_mem_arid;
+  input [6:0]s_axi_mem_arid;
   input [31:0]s_axi_mem_araddr;
   input [7:0]s_axi_mem_arlen;
   input [2:0]s_axi_mem_arsize;
@@ -58,7 +58,7 @@ module meowrouter_axi_emc_0_1(s_axi_aclk, s_axi_aresetn, rdclk,
   input [2:0]s_axi_mem_arprot;
   input s_axi_mem_arvalid;
   output s_axi_mem_arready;
-  output [5:0]s_axi_mem_rid;
+  output [6:0]s_axi_mem_rid;
   output [63:0]s_axi_mem_rdata;
   output [1:0]s_axi_mem_rresp;
   output s_axi_mem_rlast;

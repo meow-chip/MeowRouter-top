@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Tue Nov  5 03:24:57 2019
-// Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/ip/eth_mac/eth_mac_stub.v
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Wed Oct 30 20:35:01 2019
+// Host        : imac running 64-bit Arch Linux
+// Command     : write_verilog -force -mode synth_stub -rename_top eth_mac -prefix
+//               eth_mac_ eth_mac_stub.v
 // Design      : eth_mac
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tfgg676-2L
@@ -13,7 +13,7 @@
 // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
 // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
-(* X_CORE_INFO = "eth_mac_support,Vivado 2018.3_AR71898" *)
+(* X_CORE_INFO = "eth_mac_support,Vivado 2018.3" *)
 module eth_mac(gtx_clk, gtx_clk_out, gtx_clk90_out, refclk, 
   glbl_rstn, rx_axi_rstn, tx_axi_rstn, rx_enable, rx_statistics_vector, rx_statistics_valid, 
   rx_mac_aclk, rx_reset, rx_axis_mac_tdata, rx_axis_mac_tvalid, rx_axis_mac_tlast, 

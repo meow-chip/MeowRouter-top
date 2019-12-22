@@ -1,11 +1,11 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Tue Nov  5 03:37:50 2019
--- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
+-- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+-- Date        : Fri Dec 20 15:13:11 2019
+-- Host        : imac running 64-bit Arch Linux
 -- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_util_vector_logic_0_0 -prefix
---               meowrouter_util_vector_logic_0_0_ meowrouter_util_vector_logic_0_0_sim_netlist.vhdl
--- Design      : meowrouter_util_vector_logic_0_0
+--               meowrouter_util_vector_logic_0_0_ meowrouter_NRST_0_sim_netlist.vhdl
+-- Design      : meowrouter_NRST_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
 -- Device      : xc7a100tfgg676-2L
@@ -22,7 +22,7 @@ entity meowrouter_util_vector_logic_0_0 is
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of meowrouter_util_vector_logic_0_0 : entity is true;
   attribute CHECK_LICENSE_TYPE : string;
-  attribute CHECK_LICENSE_TYPE of meowrouter_util_vector_logic_0_0 : entity is "meowrouter_util_vector_logic_0_0,util_vector_logic_v2_0_1_util_vector_logic,{}";
+  attribute CHECK_LICENSE_TYPE of meowrouter_util_vector_logic_0_0 : entity is "meowrouter_NRST_0,util_vector_logic_v2_0_1_util_vector_logic,{}";
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of meowrouter_util_vector_logic_0_0 : entity is "yes";
   attribute X_CORE_INFO : string;

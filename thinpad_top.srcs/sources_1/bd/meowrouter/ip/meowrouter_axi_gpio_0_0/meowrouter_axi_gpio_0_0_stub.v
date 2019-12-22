@@ -1,8 +1,8 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Tue Nov  5 03:43:29 2019
-// Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Sun Dec 22 08:08:37 2019
+// Host        : imac running 64-bit Arch Linux
 // Command     : write_verilog -force -mode synth_stub -rename_top meowrouter_axi_gpio_0_0 -prefix
 //               meowrouter_axi_gpio_0_0_ meowrouter_axi_gpio_0_0_stub.v
 // Design      : meowrouter_axi_gpio_0_0
@@ -13,7 +13,7 @@
 // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
 // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
-(* x_core_info = "axi_gpio,Vivado 2018.3_AR71898" *)
+(* x_core_info = "axi_gpio,Vivado 2018.3" *)
 module meowrouter_axi_gpio_0_0(s_axi_aclk, s_axi_aresetn, s_axi_awaddr, 
   s_axi_awvalid, s_axi_awready, s_axi_wdata, s_axi_wstrb, s_axi_wvalid, s_axi_wready, 
   s_axi_bresp, s_axi_bvalid, s_axi_bready, s_axi_araddr, s_axi_arvalid, s_axi_arready, 

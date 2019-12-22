@@ -1,8 +1,8 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Sat Dec 21 23:31:55 2019
-// Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Sun Dec 22 07:46:16 2019
+// Host        : imac running 64-bit Arch Linux
 // Command     : write_verilog -force -mode funcsim -rename_top meowrouter_auto_cc_0 -prefix
 //               meowrouter_auto_cc_0_ meowrouter_auto_cc_0_sim_netlist.v
 // Design      : meowrouter_auto_cc_0
@@ -865,7 +865,7 @@ module meowrouter_auto_cc_0_axi_clock_converter_v2_1_17_axi_clock_converter
         .O(\gen_clock_conv.async_conv_reset_n ));
 endmodule
 
-(* CHECK_LICENSE_TYPE = "meowrouter_auto_cc_0,axi_clock_converter_v2_1_17_axi_clock_converter,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "axi_clock_converter_v2_1_17_axi_clock_converter,Vivado 2018.3_AR71898" *) 
+(* CHECK_LICENSE_TYPE = "meowrouter_auto_cc_0,axi_clock_converter_v2_1_17_axi_clock_converter,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "axi_clock_converter_v2_1_17_axi_clock_converter,Vivado 2018.3" *) 
 (* NotValidForBitStream *)
 module meowrouter_auto_cc_0
    (s_axi_aclk,

@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Sat Dec 21 23:35:22 2019
-// Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Sun Dec 22 17:09:45 2019
+// Host        : imac running 64-bit Arch Linux
 // Command     : write_verilog -force -mode synth_stub
-//               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_CPU_0/meowrouter_CPU_0_stub.v
+//               /home/thu-skyworks/meow/Desktop/workspace/cod19grp3/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_CPU_0/meowrouter_CPU_0_stub.v
 // Design      : meowrouter_CPU_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tfgg676-2L
@@ -13,7 +13,7 @@
 // This empty module with port declaration file causes synthesis tools to infer a black box for IP.
 // The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
-(* X_CORE_INFO = "Core,Vivado 2018.3_AR71898" *)
+(* X_CORE_INFO = "Core,Vivado 2018.3" *)
 module meowrouter_CPU_0(clock, reset, io_iaxi_AWID, io_iaxi_AWADDR, 
   io_iaxi_AWLEN, io_iaxi_AWSIZE, io_iaxi_AWBURST, io_iaxi_AWCACHE, io_iaxi_AWPROT, 
   io_iaxi_AWQOS, io_iaxi_AWREGION, io_iaxi_AWVALID, io_iaxi_AWREADY, io_iaxi_WDATA, 

@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Tue Nov  5 03:24:57 2019
--- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub
---               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/ip/eth_mac/eth_mac_stub.vhdl
+-- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+-- Date        : Wed Oct 30 20:35:01 2019
+-- Host        : imac running 64-bit Arch Linux
+-- Command     : write_vhdl -force -mode synth_stub -rename_top eth_mac -prefix
+--               eth_mac_ eth_mac_stub.vhdl
 -- Design      : eth_mac
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a100tfgg676-2L
@@ -66,6 +66,6 @@ attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
 attribute black_box_pad_pin of stub : architecture is "gtx_clk,gtx_clk_out,gtx_clk90_out,refclk,glbl_rstn,rx_axi_rstn,tx_axi_rstn,rx_enable,rx_statistics_vector[27:0],rx_statistics_valid,rx_mac_aclk,rx_reset,rx_axis_mac_tdata[7:0],rx_axis_mac_tvalid,rx_axis_mac_tlast,rx_axis_mac_tuser,tx_enable,tx_ifg_delay[7:0],tx_statistics_vector[31:0],tx_statistics_valid,tx_mac_aclk,tx_reset,tx_axis_mac_tdata[7:0],tx_axis_mac_tvalid,tx_axis_mac_tlast,tx_axis_mac_tuser,tx_axis_mac_tready,pause_req,pause_val[15:0],speedis100,speedis10100,rgmii_txd[3:0],rgmii_tx_ctl,rgmii_txc,rgmii_rxd[3:0],rgmii_rx_ctl,rgmii_rxc,inband_link_status,inband_clock_speed[1:0],inband_duplex_status,rx_configuration_vector[79:0],tx_configuration_vector[79:0]";
 attribute X_CORE_INFO : string;
-attribute X_CORE_INFO of stub : architecture is "eth_mac_support,Vivado 2018.3_AR71898";
+attribute X_CORE_INFO of stub : architecture is "eth_mac_support,Vivado 2018.3";
 begin
 end;

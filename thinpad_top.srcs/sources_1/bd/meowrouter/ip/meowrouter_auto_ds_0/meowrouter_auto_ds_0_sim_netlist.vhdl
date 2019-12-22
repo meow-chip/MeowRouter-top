@@ -1,11 +1,11 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sat Dec 21 23:33:22 2019
--- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
+-- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+-- Date        : Sun Dec 22 07:44:46 2019
+-- Host        : imac running 64-bit Arch Linux
 -- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_auto_ds_0 -prefix
---               meowrouter_auto_ds_0_ meowrouter_auto_ds_4_sim_netlist.vhdl
--- Design      : meowrouter_auto_ds_4
+--               meowrouter_auto_ds_0_ meowrouter_auto_ds_1_sim_netlist.vhdl
+-- Design      : meowrouter_auto_ds_1
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
 -- Device      : xc7a100tfgg676-2L
@@ -28534,11 +28534,11 @@ entity meowrouter_auto_ds_0 is
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of meowrouter_auto_ds_0 : entity is true;
   attribute CHECK_LICENSE_TYPE : string;
-  attribute CHECK_LICENSE_TYPE of meowrouter_auto_ds_0 : entity is "meowrouter_auto_ds_4,axi_dwidth_converter_v2_1_18_top,{}";
+  attribute CHECK_LICENSE_TYPE of meowrouter_auto_ds_0 : entity is "meowrouter_auto_ds_1,axi_dwidth_converter_v2_1_18_top,{}";
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of meowrouter_auto_ds_0 : entity is "yes";
   attribute X_CORE_INFO : string;
-  attribute X_CORE_INFO of meowrouter_auto_ds_0 : entity is "axi_dwidth_converter_v2_1_18_top,Vivado 2018.3_AR71898";
+  attribute X_CORE_INFO of meowrouter_auto_ds_0 : entity is "axi_dwidth_converter_v2_1_18_top,Vivado 2018.3";
 end meowrouter_auto_ds_0;
 
 architecture STRUCTURE of meowrouter_auto_ds_0 is

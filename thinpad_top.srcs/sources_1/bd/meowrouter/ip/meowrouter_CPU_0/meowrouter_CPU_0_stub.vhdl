@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sat Dec 21 23:35:22 2019
--- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
+-- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+-- Date        : Sun Dec 22 17:09:45 2019
+-- Host        : imac running 64-bit Arch Linux
 -- Command     : write_vhdl -force -mode synth_stub
---               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_CPU_0/meowrouter_CPU_0_stub.vhdl
+--               /home/thu-skyworks/meow/Desktop/workspace/cod19grp3/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_CPU_0/meowrouter_CPU_0_stub.vhdl
 -- Design      : meowrouter_CPU_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a100tfgg676-2L
@@ -139,6 +139,6 @@ attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
 attribute black_box_pad_pin of stub : architecture is "clock,reset,io_iaxi_AWID[3:0],io_iaxi_AWADDR[47:0],io_iaxi_AWLEN[7:0],io_iaxi_AWSIZE[2:0],io_iaxi_AWBURST[1:0],io_iaxi_AWCACHE[3:0],io_iaxi_AWPROT[2:0],io_iaxi_AWQOS[2:0],io_iaxi_AWREGION[3:0],io_iaxi_AWVALID,io_iaxi_AWREADY,io_iaxi_WDATA[63:0],io_iaxi_WSTRB[7:0],io_iaxi_WLAST,io_iaxi_WVALID,io_iaxi_WREADY,io_iaxi_BID[3:0],io_iaxi_BRESP[1:0],io_iaxi_BVALID,io_iaxi_BREADY,io_iaxi_ARID[3:0],io_iaxi_ARADDR[47:0],io_iaxi_ARLEN[7:0],io_iaxi_ARSIZE[2:0],io_iaxi_ARBURST[1:0],io_iaxi_ARCACHE[3:0],io_iaxi_ARPROT[2:0],io_iaxi_ARQOS[2:0],io_iaxi_ARREGION[3:0],io_iaxi_ARVALID,io_iaxi_ARREADY,io_iaxi_RID[3:0],io_iaxi_RDATA[63:0],io_iaxi_RRESP[1:0],io_iaxi_RLAST,io_iaxi_RVALID,io_iaxi_RREADY,io_daxi_AWID[3:0],io_daxi_AWADDR[47:0],io_daxi_AWLEN[7:0],io_daxi_AWSIZE[2:0],io_daxi_AWBURST[1:0],io_daxi_AWCACHE[3:0],io_daxi_AWPROT[2:0],io_daxi_AWQOS[2:0],io_daxi_AWREGION[3:0],io_daxi_AWVALID,io_daxi_AWREADY,io_daxi_WDATA[63:0],io_daxi_WSTRB[7:0],io_daxi_WLAST,io_daxi_WVALID,io_daxi_WREADY,io_daxi_BID[3:0],io_daxi_BRESP[1:0],io_daxi_BVALID,io_daxi_BREADY,io_daxi_ARID[3:0],io_daxi_ARADDR[47:0],io_daxi_ARLEN[7:0],io_daxi_ARSIZE[2:0],io_daxi_ARBURST[1:0],io_daxi_ARCACHE[3:0],io_daxi_ARPROT[2:0],io_daxi_ARQOS[2:0],io_daxi_ARREGION[3:0],io_daxi_ARVALID,io_daxi_ARREADY,io_daxi_RID[3:0],io_daxi_RDATA[63:0],io_daxi_RRESP[1:0],io_daxi_RLAST,io_daxi_RVALID,io_daxi_RREADY,io_uaxi_AWID[3:0],io_uaxi_AWADDR[47:0],io_uaxi_AWLEN[7:0],io_uaxi_AWSIZE[2:0],io_uaxi_AWBURST[1:0],io_uaxi_AWCACHE[3:0],io_uaxi_AWPROT[2:0],io_uaxi_AWQOS[2:0],io_uaxi_AWREGION[3:0],io_uaxi_AWVALID,io_uaxi_AWREADY,io_uaxi_WDATA[63:0],io_uaxi_WSTRB[7:0],io_uaxi_WLAST,io_uaxi_WVALID,io_uaxi_WREADY,io_uaxi_BID[3:0],io_uaxi_BRESP[1:0],io_uaxi_BVALID,io_uaxi_BREADY,io_uaxi_ARID[3:0],io_uaxi_ARADDR[47:0],io_uaxi_ARLEN[7:0],io_uaxi_ARSIZE[2:0],io_uaxi_ARBURST[1:0],io_uaxi_ARCACHE[3:0],io_uaxi_ARPROT[2:0],io_uaxi_ARQOS[2:0],io_uaxi_ARREGION[3:0],io_uaxi_ARVALID,io_uaxi_ARREADY,io_uaxi_RID[3:0],io_uaxi_RDATA[63:0],io_uaxi_RRESP[1:0],io_uaxi_RLAST,io_uaxi_RVALID,io_uaxi_RREADY,io_eint,io_pc[47:0]";
 attribute X_CORE_INFO : string;
-attribute X_CORE_INFO of stub : architecture is "Core,Vivado 2018.3_AR71898";
+attribute X_CORE_INFO of stub : architecture is "Core,Vivado 2018.3";
 begin
 end;

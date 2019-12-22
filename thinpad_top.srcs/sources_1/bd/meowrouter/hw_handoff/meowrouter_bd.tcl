@@ -208,9 +208,6 @@ proc create_root_design { parentCell } {
  ] $rst
   set vio_rst [ create_bd_port -dir O -from 0 -to 0 vio_rst ]
 
-  # Create instance: AXIVerif, and set properties
-  set AXIVerif [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_vip:1.1 AXIVerif ]
-
   # Create instance: Board, and set properties
   set Board [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 Board ]
   set_property -dict [ list \
@@ -263,7 +260,7 @@ proc create_root_design { parentCell } {
    CONFIG.Use_Byte_Write_Enable {true} \
    CONFIG.Use_RSTA_Pin {true} \
    CONFIG.Use_RSTB_Pin {false} \
-   CONFIG.Write_Depth_A {4096} \
+   CONFIG.Write_Depth_A {32768} \
    CONFIG.Write_Width_A {32} \
    CONFIG.Write_Width_B {8} \
    CONFIG.use_bram_block {Stand_Alone} \
@@ -315,16 +312,24 @@ proc create_root_design { parentCell } {
    CONFIG.LOGO_FILE {data/sym_notgate.png} \
  ] $NRST
 
+  # Create instance: NRTRST, and set properties
+  set NRTRST [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 NRTRST ]
+  set_property -dict [ list \
+   CONFIG.C_OPERATION {not} \
+   CONFIG.C_SIZE {1} \
+   CONFIG.LOGO_FILE {data/sym_notgate.png} \
+ ] $NRTRST
+
   # Create instance: Primary, and set properties
   set Primary [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 Primary ]
   set_property -dict [ list \
    CONFIG.ENABLE_ADVANCED_OPTIONS {0} \
-   CONFIG.M00_HAS_DATA_FIFO {0} \
    CONFIG.NUM_MI {7} \
    CONFIG.NUM_SI {3} \
    CONFIG.S00_HAS_DATA_FIFO {2} \
    CONFIG.S01_HAS_DATA_FIFO {2} \
    CONFIG.S02_HAS_DATA_FIFO {2} \
+   CONFIG.S03_HAS_DATA_FIFO {2} \
    CONFIG.STRATEGY {2} \
  ] $Primary
 
@@ -338,6 +343,10 @@ proc create_root_design { parentCell } {
    CONFIG.C_MEM1_WIDTH {16} \
    CONFIG.C_NUM_BANKS_MEM {1} \
    CONFIG.C_S_AXI_MEM_DATA_WIDTH {64} \
+   CONFIG.C_TAVDV_PS_MEM_0 {10000} \
+   CONFIG.C_TCEDV_PS_MEM_0 {10000} \
+   CONFIG.C_THZCE_PS_MEM_0 {10000} \
+   CONFIG.C_THZOE_PS_MEM_0 {6500} \
  ] $RAMEMC
 
   # Create instance: Reset, and set properties
@@ -367,6 +376,9 @@ proc create_root_design { parentCell } {
   # Create instance: RouterCmdConcat, and set properties
   set RouterCmdConcat [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 RouterCmdConcat ]
 
+  # Create instance: RouterRst, and set properties
+  set RouterRst [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 RouterRst ]
+
   # Create instance: UART, and set properties
   set UART [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uartlite:2.0 UART ]
   set_property -dict [ list \
@@ -383,28 +395,40 @@ proc create_root_design { parentCell } {
    CONFIG.C_NUM_PROBE_OUT {1} \
  ] $VIO
 
+  # Create instance: axi_interconnect_0, and set properties
+  set axi_interconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_0 ]
+  set_property -dict [ list \
+   CONFIG.NUM_MI {1} \
+   CONFIG.NUM_SI {2} \
+   CONFIG.S00_HAS_DATA_FIFO {2} \
+   CONFIG.S01_HAS_DATA_FIFO {2} \
+   CONFIG.STRATEGY {2} \
+ ] $axi_interconnect_0
+
   # Create interface connections
   connect_bd_intf_net -intf_net Board_GPIO [get_bd_intf_ports SWITCH] [get_bd_intf_pins Board/GPIO]
-  connect_bd_intf_net -intf_net CPU_io_daxi [get_bd_intf_pins AXIVerif/S_AXI] [get_bd_intf_pins CPU/io_daxi]
-  connect_bd_intf_net -intf_net CPU_io_iaxi [get_bd_intf_pins CPU/io_iaxi] [get_bd_intf_pins Primary/S01_AXI]
-  connect_bd_intf_net -intf_net CPU_io_uaxi [get_bd_intf_pins CPU/io_uaxi] [get_bd_intf_pins Primary/S02_AXI]
   connect_bd_intf_net -intf_net EthBufCtrl_BRAM_PORTA [get_bd_intf_pins EthBuf/BRAM_PORTA] [get_bd_intf_pins EthBufCtrl/BRAM_PORTA]
   connect_bd_intf_net -intf_net FlashEMC_EMC_INTF [get_bd_intf_ports FlashEMC] [get_bd_intf_pins FlashEMC/EMC_INTF]
-  connect_bd_intf_net -intf_net Primary_M00_AXI [get_bd_intf_pins Board/S_AXI] [get_bd_intf_pins Primary/M00_AXI]
-  connect_bd_intf_net -intf_net Primary_M01_AXI [get_bd_intf_pins Primary/M01_AXI] [get_bd_intf_pins UART/S_AXI]
-  connect_bd_intf_net -intf_net Primary_M03_AXI [get_bd_intf_pins Primary/M03_AXI] [get_bd_intf_pins RAMEMC/S_AXI_MEM]
-  connect_bd_intf_net -intf_net Primary_M04_AXI [get_bd_intf_pins FlashEMC/S_AXI_MEM] [get_bd_intf_pins Primary/M04_AXI]
-  connect_bd_intf_net -intf_net Primary_M05_AXI [get_bd_intf_pins IntCont/s_axi] [get_bd_intf_pins Primary/M05_AXI]
-  connect_bd_intf_net -intf_net Primary_M06_AXI [get_bd_intf_pins Primary/M06_AXI] [get_bd_intf_pins RouterCmd/S_AXI]
   connect_bd_intf_net -intf_net RAMEMC_EMC_INTF [get_bd_intf_ports RAMEMC] [get_bd_intf_pins RAMEMC/EMC_INTF]
+  connect_bd_intf_net -intf_net Router_io_axi [get_bd_intf_pins Router/io_axi] [get_bd_intf_pins axi_interconnect_0/S01_AXI]
   connect_bd_intf_net -intf_net Router_io_tx [get_bd_intf_ports data_tx] [get_bd_intf_pins Router/io_tx]
+  connect_bd_intf_net -intf_net S00_AXI_1 [get_bd_intf_pins CPU/io_daxi] [get_bd_intf_pins Primary/S00_AXI]
+  connect_bd_intf_net -intf_net S00_AXI_2 [get_bd_intf_pins Primary/M06_AXI] [get_bd_intf_pins axi_interconnect_0/S00_AXI]
+  connect_bd_intf_net -intf_net S01_AXI_1 [get_bd_intf_pins CPU/io_iaxi] [get_bd_intf_pins Primary/S01_AXI]
+  connect_bd_intf_net -intf_net S02_AXI_1 [get_bd_intf_pins CPU/io_uaxi] [get_bd_intf_pins Primary/S02_AXI]
   connect_bd_intf_net -intf_net axi_gpio_0_GPIO2 [get_bd_intf_ports DISP] [get_bd_intf_pins Board/GPIO2]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M02_AXI [get_bd_intf_pins EthBufCtrl/S_AXI] [get_bd_intf_pins Primary/M02_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins IntCont/s_axi] [get_bd_intf_pins Primary/M00_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI1 [get_bd_intf_pins RAMEMC/S_AXI_MEM] [get_bd_intf_pins axi_interconnect_0/M00_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins EthBufCtrl/S_AXI] [get_bd_intf_pins Primary/M01_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M02_AXI [get_bd_intf_pins Primary/M02_AXI] [get_bd_intf_pins RouterCmd/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M03_AXI [get_bd_intf_pins Board/S_AXI] [get_bd_intf_pins Primary/M03_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M04_AXI [get_bd_intf_pins Primary/M04_AXI] [get_bd_intf_pins UART/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M05_AXI [get_bd_intf_pins FlashEMC/S_AXI_MEM] [get_bd_intf_pins Primary/M05_AXI]
   connect_bd_intf_net -intf_net axi_uartlite_0_UART [get_bd_intf_ports UART] [get_bd_intf_pins UART/UART]
-  connect_bd_intf_net -intf_net axi_vip_0_M_AXI [get_bd_intf_pins AXIVerif/M_AXI] [get_bd_intf_pins Primary/S00_AXI]
   connect_bd_intf_net -intf_net io_rx_1 [get_bd_intf_ports data_rx] [get_bd_intf_pins Router/io_rx]
 
   # Create port connections
+  connect_bd_net -net ARESETN_1 [get_bd_pins Primary/ARESETN] [get_bd_pins Reset/interconnect_aresetn]
   connect_bd_net -net EthBufCtrl_bram_addr_a [get_bd_pins BufAddrSlice/Din] [get_bd_pins EthBufCtrl/bram_addr_a]
   connect_bd_net -net EthBufCtrl_bram_clk_a [get_bd_pins EthBuf/clka] [get_bd_pins EthBufCtrl/bram_clk_a]
   connect_bd_net -net EthBufCtrl_bram_en_a [get_bd_pins EthBuf/ena] [get_bd_pins EthBufCtrl/bram_en_a]
@@ -415,47 +439,69 @@ proc create_root_design { parentCell } {
   connect_bd_net -net EthBuf_doutb [get_bd_pins EthBuf/doutb] [get_bd_pins Router/io_buf_dout]
   connect_bd_net -net RouterCmd_gpio2_io_o [get_bd_pins RouterCmd/gpio2_io_o] [get_bd_pins RouterCmdConcat/In1]
   connect_bd_net -net RouterCmd_gpio_io_o [get_bd_pins RouterCmd/gpio_io_o] [get_bd_pins RouterCmdConcat/In0]
+  connect_bd_net -net RouterRst_mb_reset [get_bd_pins NRTRST/Op1] [get_bd_pins Router/reset] [get_bd_pins RouterRst/mb_reset]
   connect_bd_net -net Router_io_buf_addr [get_bd_pins EthBuf/addrb] [get_bd_pins Router/io_buf_addr]
   connect_bd_net -net Router_io_buf_clk [get_bd_pins EthBuf/clkb] [get_bd_pins Router/io_buf_clk]
   connect_bd_net -net Router_io_buf_din [get_bd_pins EthBuf/dinb] [get_bd_pins Router/io_buf_din]
   connect_bd_net -net Router_io_buf_we [get_bd_pins EthBuf/web] [get_bd_pins Router/io_buf_we]
+  connect_bd_net -net S03_ARESETN_1 [get_bd_pins NRTRST/Res] [get_bd_pins Primary/M02_ARESETN] [get_bd_pins RAMEMC/s_axi_aresetn] [get_bd_pins RouterCmd/s_axi_aresetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/S01_ARESETN]
   connect_bd_net -net axi_intc_0_irq [get_bd_pins CPU/io_eint] [get_bd_pins IntCont/irq]
   connect_bd_net -net axi_uartlite_0_interrupt [get_bd_pins IntCont/intr] [get_bd_pins UART/interrupt]
-  connect_bd_net -net clk_1 [get_bd_ports cpu_clk] [get_bd_pins AXIVerif/aclk] [get_bd_pins Board/s_axi_aclk] [get_bd_pins CPU/clock] [get_bd_pins EthBufCtrl/s_axi_aclk] [get_bd_pins FlashEMC/rdclk] [get_bd_pins FlashEMC/s_axi_aclk] [get_bd_pins IntCont/s_axi_aclk] [get_bd_pins Primary/ACLK] [get_bd_pins Primary/M00_ACLK] [get_bd_pins Primary/M01_ACLK] [get_bd_pins Primary/M02_ACLK] [get_bd_pins Primary/M03_ACLK] [get_bd_pins Primary/M04_ACLK] [get_bd_pins Primary/M05_ACLK] [get_bd_pins Primary/S00_ACLK] [get_bd_pins Primary/S01_ACLK] [get_bd_pins Primary/S02_ACLK] [get_bd_pins RAMEMC/rdclk] [get_bd_pins RAMEMC/s_axi_aclk] [get_bd_pins Reset/slowest_sync_clk] [get_bd_pins UART/s_axi_aclk] [get_bd_pins VIO/clk]
-  connect_bd_net -net proc_sys_reset_0_interconnect_aresetn [get_bd_pins Primary/ARESETN] [get_bd_pins Reset/interconnect_aresetn]
-  connect_bd_net -net proc_sys_reset_0_mb_reset [get_bd_pins CPU/reset] [get_bd_pins NRST/Op1] [get_bd_pins Reset/mb_reset] [get_bd_pins Router/reset]
-  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins Board/s_axi_aresetn] [get_bd_pins EthBufCtrl/s_axi_aresetn] [get_bd_pins FlashEMC/s_axi_aresetn] [get_bd_pins IntCont/s_axi_aresetn] [get_bd_pins Primary/M00_ARESETN] [get_bd_pins Primary/M01_ARESETN] [get_bd_pins Primary/M02_ARESETN] [get_bd_pins Primary/M03_ARESETN] [get_bd_pins Primary/M04_ARESETN] [get_bd_pins Primary/M05_ARESETN] [get_bd_pins Primary/M06_ARESETN] [get_bd_pins RAMEMC/s_axi_aresetn] [get_bd_pins Reset/peripheral_aresetn] [get_bd_pins RouterCmd/s_axi_aresetn] [get_bd_pins UART/s_axi_aresetn]
-  connect_bd_net -net rst_1 [get_bd_ports rst] [get_bd_pins Reset/ext_reset_in]
-  connect_bd_net -net rtclk_1 [get_bd_ports data_clk] [get_bd_pins Primary/M06_ACLK] [get_bd_pins Router/clock] [get_bd_pins RouterCmd/s_axi_aclk]
+  connect_bd_net -net clk_1 [get_bd_ports cpu_clk] [get_bd_pins Board/s_axi_aclk] [get_bd_pins CPU/clock] [get_bd_pins EthBufCtrl/s_axi_aclk] [get_bd_pins FlashEMC/rdclk] [get_bd_pins FlashEMC/s_axi_aclk] [get_bd_pins IntCont/s_axi_aclk] [get_bd_pins Primary/ACLK] [get_bd_pins Primary/M00_ACLK] [get_bd_pins Primary/M01_ACLK] [get_bd_pins Primary/M03_ACLK] [get_bd_pins Primary/M04_ACLK] [get_bd_pins Primary/M05_ACLK] [get_bd_pins Primary/M06_ACLK] [get_bd_pins Primary/S00_ACLK] [get_bd_pins Primary/S01_ACLK] [get_bd_pins Primary/S02_ACLK] [get_bd_pins Reset/slowest_sync_clk] [get_bd_pins UART/s_axi_aclk] [get_bd_pins VIO/clk] [get_bd_pins axi_interconnect_0/S00_ACLK]
+  connect_bd_net -net proc_sys_reset_0_mb_reset [get_bd_pins CPU/reset] [get_bd_pins NRST/Op1] [get_bd_pins Reset/mb_reset]
+  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins Board/s_axi_aresetn] [get_bd_pins EthBufCtrl/s_axi_aresetn] [get_bd_pins FlashEMC/s_axi_aresetn] [get_bd_pins IntCont/s_axi_aresetn] [get_bd_pins Primary/M00_ARESETN] [get_bd_pins Primary/M01_ARESETN] [get_bd_pins Primary/M03_ARESETN] [get_bd_pins Primary/M04_ARESETN] [get_bd_pins Primary/M05_ARESETN] [get_bd_pins Primary/M06_ARESETN] [get_bd_pins Reset/peripheral_aresetn] [get_bd_pins UART/s_axi_aresetn] [get_bd_pins axi_interconnect_0/S00_ARESETN]
+  connect_bd_net -net rst_1 [get_bd_ports rst] [get_bd_pins Reset/ext_reset_in] [get_bd_pins RouterRst/ext_reset_in]
+  connect_bd_net -net rtclk_1 [get_bd_ports data_clk] [get_bd_pins Primary/M02_ACLK] [get_bd_pins RAMEMC/rdclk] [get_bd_pins RAMEMC/s_axi_aclk] [get_bd_pins Router/clock] [get_bd_pins RouterCmd/s_axi_aclk] [get_bd_pins RouterRst/slowest_sync_clk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/S01_ACLK]
   connect_bd_net -net rx_clk_1 [get_bd_ports data_rx_clk] [get_bd_pins Router/io_rx_clk]
   connect_bd_net -net tx_clk_1 [get_bd_ports data_tx_clk] [get_bd_pins Router/io_tx_clk]
-  connect_bd_net -net util_vector_logic_0_Res [get_bd_pins AXIVerif/aresetn] [get_bd_pins NRST/Res] [get_bd_pins Primary/S00_ARESETN] [get_bd_pins Primary/S01_ARESETN] [get_bd_pins Primary/S02_ARESETN]
+  connect_bd_net -net util_vector_logic_0_Res [get_bd_pins NRST/Res] [get_bd_pins Primary/S00_ARESETN] [get_bd_pins Primary/S01_ARESETN] [get_bd_pins Primary/S02_ARESETN]
   connect_bd_net -net vio_0_probe_out0 [get_bd_ports vio_rst] [get_bd_pins VIO/probe_out0]
   connect_bd_net -net xlconcat_0_dout [get_bd_pins Router/io_cmd] [get_bd_pins RouterCmdConcat/dout]
   connect_bd_net -net xlslice_0_Dout [get_bd_pins BufAddrSlice/Dout] [get_bd_pins EthBuf/addra]
 
   # Create address segments
-  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF10000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs Board/S_AXI/Reg] SEG_Board_Reg
-  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF10000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs Board/S_AXI/Reg] SEG_Board_Reg
   create_bd_addr_seg -range 0x00100000 -offset 0xFFFF10000000 [get_bd_addr_spaces CPU/io_uaxi] [get_bd_addr_segs Board/S_AXI/Reg] SEG_Board_Reg
-  create_bd_addr_seg -range 0x00004000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
-  create_bd_addr_seg -range 0x00004000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
-  create_bd_addr_seg -range 0x00004000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_uaxi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF10000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs Board/S_AXI/Reg] SEG_Board_Reg
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF10000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs Board/S_AXI/Reg] SEG_Board_Reg
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_uaxi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF30000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
   create_bd_addr_seg -range 0x00800000 -offset 0xFFFF20000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs FlashEMC/S_AXI_MEM/Mem0] SEG_FlashEMC_Mem0
-  create_bd_addr_seg -range 0x00800000 -offset 0xFFFF20000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs FlashEMC/S_AXI_MEM/Mem0] SEG_FlashEMC_Mem0
   create_bd_addr_seg -range 0x00800000 -offset 0xFFFF20000000 [get_bd_addr_spaces CPU/io_uaxi] [get_bd_addr_segs FlashEMC/S_AXI_MEM/Mem0] SEG_FlashEMC_Mem0
-  create_bd_addr_seg -range 0x00010000 -offset 0xF00000000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs IntCont/S_AXI/Reg] SEG_IntCont_Reg
+  create_bd_addr_seg -range 0x00800000 -offset 0xFFFF20000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs FlashEMC/S_AXI_MEM/Mem0] SEG_FlashEMC_Mem0
   create_bd_addr_seg -range 0x00010000 -offset 0xF00000000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs IntCont/S_AXI/Reg] SEG_IntCont_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0xF00000000000 [get_bd_addr_spaces CPU/io_uaxi] [get_bd_addr_segs IntCont/S_AXI/Reg] SEG_IntCont_Reg
-  create_bd_addr_seg -range 0x00800000 -offset 0x00000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs RAMEMC/S_AXI_MEM/Mem0] SEG_RAMEMC_Mem0
+  create_bd_addr_seg -range 0x00010000 -offset 0xF00000000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs IntCont/S_AXI/Reg] SEG_IntCont_Reg
   create_bd_addr_seg -range 0x00800000 -offset 0x00000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs RAMEMC/S_AXI_MEM/Mem0] SEG_RAMEMC_Mem0
+  create_bd_addr_seg -range 0x00800000 -offset 0x00000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs RAMEMC/S_AXI_MEM/Mem0] SEG_RAMEMC_Mem0
   create_bd_addr_seg -range 0x00800000 -offset 0x00000000 [get_bd_addr_spaces CPU/io_uaxi] [get_bd_addr_segs RAMEMC/S_AXI_MEM/Mem0] SEG_RAMEMC_Mem0
-  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF40000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs RouterCmd/S_AXI/Reg] SEG_RouterCmd_Reg
   create_bd_addr_seg -range 0x00100000 -offset 0xFFFF40000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs RouterCmd/S_AXI/Reg] SEG_RouterCmd_Reg
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF40000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs RouterCmd/S_AXI/Reg] SEG_RouterCmd_Reg
   create_bd_addr_seg -range 0x00100000 -offset 0xFFFF40000000 [get_bd_addr_spaces CPU/io_uaxi] [get_bd_addr_segs RouterCmd/S_AXI/Reg] SEG_RouterCmd_Reg
-  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF00000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs UART/S_AXI/Reg] SEG_UART_Reg
   create_bd_addr_seg -range 0x00100000 -offset 0xFFFF00000000 [get_bd_addr_spaces CPU/io_iaxi] [get_bd_addr_segs UART/S_AXI/Reg] SEG_UART_Reg
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF00000000 [get_bd_addr_spaces CPU/io_daxi] [get_bd_addr_segs UART/S_AXI/Reg] SEG_UART_Reg
   create_bd_addr_seg -range 0x00100000 -offset 0xFFFF00000000 [get_bd_addr_spaces CPU/io_uaxi] [get_bd_addr_segs UART/S_AXI/Reg] SEG_UART_Reg
+  create_bd_addr_seg -range 0x00800000 -offset 0x00000000 [get_bd_addr_spaces Router/io_axi] [get_bd_addr_segs RAMEMC/S_AXI_MEM/Mem0] SEG_RAMEMC_Mem0
+
+  # Exclude Address Segments
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF10000000 [get_bd_addr_spaces Router/io_axi] [get_bd_addr_segs Board/S_AXI/Reg] SEG_Board_Reg
+  exclude_bd_addr_seg [get_bd_addr_segs Router/io_axi/SEG_Board_Reg]
+
+  create_bd_addr_seg -range 0x00004000 -offset 0xFFFF30000000 [get_bd_addr_spaces Router/io_axi] [get_bd_addr_segs EthBufCtrl/S_AXI/Mem0] SEG_EthBufCtrl_Mem0
+  exclude_bd_addr_seg [get_bd_addr_segs Router/io_axi/SEG_EthBufCtrl_Mem0]
+
+  create_bd_addr_seg -range 0x00800000 -offset 0xFFFF20000000 [get_bd_addr_spaces Router/io_axi] [get_bd_addr_segs FlashEMC/S_AXI_MEM/Mem0] SEG_FlashEMC_Mem0
+  exclude_bd_addr_seg [get_bd_addr_segs Router/io_axi/SEG_FlashEMC_Mem0]
+
+  create_bd_addr_seg -range 0x00010000 -offset 0xF00000000000 [get_bd_addr_spaces Router/io_axi] [get_bd_addr_segs IntCont/S_AXI/Reg] SEG_IntCont_Reg
+  exclude_bd_addr_seg [get_bd_addr_segs Router/io_axi/SEG_IntCont_Reg]
+
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF40000000 [get_bd_addr_spaces Router/io_axi] [get_bd_addr_segs RouterCmd/S_AXI/Reg] SEG_RouterCmd_Reg
+  exclude_bd_addr_seg [get_bd_addr_segs Router/io_axi/SEG_RouterCmd_Reg]
+
+  create_bd_addr_seg -range 0x00100000 -offset 0xFFFF00000000 [get_bd_addr_spaces Router/io_axi] [get_bd_addr_segs UART/S_AXI/Reg] SEG_UART_Reg
+  exclude_bd_addr_seg [get_bd_addr_segs Router/io_axi/SEG_UART_Reg]
+
 
 
   # Restore current instance

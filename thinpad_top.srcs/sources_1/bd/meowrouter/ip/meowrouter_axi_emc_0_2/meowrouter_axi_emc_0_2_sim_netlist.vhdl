@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sat Dec 14 03:32:55 2019
--- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_axi_emc_0_2/meowrouter_axi_emc_0_2_sim_netlist.vhdl
+-- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+-- Date        : Thu Dec 19 18:19:38 2019
+-- Host        : imac running 64-bit Arch Linux
+-- Command     : write_vhdl -force -mode funcsim -rename_top meowrouter_axi_emc_0_2 -prefix
+--               meowrouter_axi_emc_0_2_ meowrouter_axi_emc_0_2_sim_netlist.vhdl
 -- Design      : meowrouter_axi_emc_0_2
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -60,8 +60,6 @@ entity meowrouter_axi_emc_0_2_axi_emc_addr_gen is
     \BUS2IP_ADDR_GEN_DATA_WDTH_32.internal_count_reg[1]_1\ : in STD_LOGIC;
     E : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_axi_emc_addr_gen : entity is "axi_emc_addr_gen";
 end meowrouter_axi_emc_0_2_axi_emc_addr_gen;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_addr_gen is
@@ -1290,8 +1288,6 @@ entity meowrouter_axi_emc_0_2_axi_emc_address_decode is
     s_axi_mem_bresp : in STD_LOGIC_VECTOR ( 0 to 0 );
     \s_axi_mem_bresp_reg_reg[1]_1\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_axi_emc_address_decode : entity is "axi_emc_address_decode";
 end meowrouter_axi_emc_0_2_axi_emc_address_decode;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_address_decode is
@@ -1844,8 +1840,6 @@ entity meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f is
     SS : in STD_LOGIC_VECTOR ( 0 to 0 );
     s_axi_aclk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f : entity is "cntr_incr_decr_addn_f";
 end meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_cntr_incr_decr_addn_f is
@@ -2219,8 +2213,6 @@ entity meowrouter_axi_emc_0_2_dynshreg_f is
     A : in STD_LOGIC_VECTOR ( 1 downto 0 );
     addr : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_dynshreg_f : entity is "dynshreg_f";
 end meowrouter_axi_emc_0_2_dynshreg_f;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_dynshreg_f is
@@ -8695,8 +8687,6 @@ entity meowrouter_axi_emc_0_2_io_registers is
     \mem_qwen_reg_reg[0]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     \mem_ben_reg_reg[0]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_io_registers : entity is "io_registers";
 end meowrouter_axi_emc_0_2_io_registers;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_io_registers is
@@ -9260,8 +9250,6 @@ entity meowrouter_axi_emc_0_2_ld_arith_reg is
     set_pend_rdreq : in STD_LOGIC;
     pend_rdreq : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_ld_arith_reg : entity is "ld_arith_reg";
 end meowrouter_axi_emc_0_2_ld_arith_reg;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_ld_arith_reg is
@@ -12455,8 +12443,6 @@ entity meowrouter_axi_emc_0_2_mem_state_machine is
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_6\ : in STD_LOGIC_VECTOR ( 3 downto 0 );
     \PERBIT_GEN[0].FF_RST1_GEN.FDSE_i1_7\ : in STD_LOGIC_VECTOR ( 3 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_mem_state_machine : entity is "mem_state_machine";
 end meowrouter_axi_emc_0_2_mem_state_machine;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_mem_state_machine is
@@ -14440,8 +14426,6 @@ entity meowrouter_axi_emc_0_2_mem_steer is
     \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1_reg[0]_0\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     SR : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_mem_steer : entity is "mem_steer";
 end meowrouter_axi_emc_0_2_mem_steer;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_mem_steer is
@@ -15813,8 +15797,6 @@ entity meowrouter_axi_emc_0_2_addr_counter_mux is
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_5\ : in STD_LOGIC;
     \DATAWIDTH_MATCH_GEN.addr_cnt_i_reg[1]_6\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_addr_counter_mux : entity is "addr_counter_mux";
 end meowrouter_axi_emc_0_2_addr_counter_mux;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_addr_counter_mux is
@@ -16550,8 +16532,6 @@ entity meowrouter_axi_emc_0_2_counters is
     \FSM_sequential_crnt_state[2]_i_4\ : in STD_LOGIC;
     \RDDATA_PATH_MUX_GEN.ASYNC_ADDR_CNT_GEN.addr_cnt_d1[0]_i_3\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_counters : entity is "counters";
 end meowrouter_axi_emc_0_2_counters;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_counters is
@@ -16744,8 +16724,6 @@ entity meowrouter_axi_emc_0_2_ipic_if is
     pend_rdreq_reg_1 : in STD_LOGIC;
     D : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_ipic_if : entity is "ipic_if";
 end meowrouter_axi_emc_0_2_ipic_if;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_ipic_if is
@@ -17187,8 +17165,6 @@ entity meowrouter_axi_emc_0_2_srl_fifo_rbu_f is
     rd_fifo_wr_en : in STD_LOGIC;
     \in\ : in STD_LOGIC_VECTOR ( 0 to 32 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_srl_fifo_rbu_f : entity is "srl_fifo_rbu_f";
 end meowrouter_axi_emc_0_2_srl_fifo_rbu_f;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_srl_fifo_rbu_f is
@@ -17630,8 +17606,6 @@ entity meowrouter_axi_emc_0_2_EMC is
     mem_dq_i : in STD_LOGIC_VECTOR ( 15 downto 0 );
     rdclk : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_EMC : entity is "EMC";
 end meowrouter_axi_emc_0_2_EMC;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_EMC is
@@ -18453,8 +18427,6 @@ entity meowrouter_axi_emc_0_2_axi_emc_native_interface is
     \INFERRED_GEN.data_reg[255][8]_srl32__0\ : in STD_LOGIC_VECTOR ( 31 downto 0 );
     s_axi_mem_wdata : in STD_LOGIC_VECTOR ( 31 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_axi_emc_native_interface : entity is "axi_emc_native_interface";
 end meowrouter_axi_emc_0_2_axi_emc_native_interface;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc_native_interface is
@@ -21096,8 +21068,6 @@ entity meowrouter_axi_emc_0_2_axi_emc is
     s_axi_mem_bready : in STD_LOGIC;
     s_axi_mem_wlast : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of meowrouter_axi_emc_0_2_axi_emc : entity is "axi_emc";
 end meowrouter_axi_emc_0_2_axi_emc;
 
 architecture STRUCTURE of meowrouter_axi_emc_0_2_axi_emc is

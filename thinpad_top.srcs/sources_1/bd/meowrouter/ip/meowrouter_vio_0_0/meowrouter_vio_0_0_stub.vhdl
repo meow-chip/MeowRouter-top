@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.3_AR71898 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
--- Date        : Sat Dec 14 03:32:40 2019
--- Host        : DESKTOP-39BAGNG running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub
---               C:/workspace/Networking/thinpad_top/thinpad_top.srcs/sources_1/bd/meowrouter/ip/meowrouter_vio_0_0/meowrouter_vio_0_0_stub.vhdl
+-- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+-- Date        : Thu Dec 19 18:20:37 2019
+-- Host        : imac running 64-bit Arch Linux
+-- Command     : write_vhdl -force -mode synth_stub -rename_top meowrouter_vio_0_0 -prefix
+--               meowrouter_vio_0_0_ meowrouter_vio_0_0_stub.vhdl
 -- Design      : meowrouter_vio_0_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a100tfgg676-2L
