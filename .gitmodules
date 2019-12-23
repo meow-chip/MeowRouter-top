@@ -1,9 +1,9 @@
 [submodule "MeowRouter"]
 	path = MeowRouter
-	url = git@git.tsinghua.edu.cn:meow/MeowRouter.git
+	url = https://github.cpm/meow-chip/MeowRouter.git
 [submodule "MeowV64"]
 	path = MeowV64
-	url = git@git.tsinghua.edu.cn:meow/MeowV64.git
+	url = https://github.com/meow-chip/MeowV64.git
 [submodule "software"]
 	path = software
-	url = git@git.tsinghua.edu.cn:meow/RouterSoftware.git
+	url = https://github.com/meow-chip/RouterSoftware.git

@@ -1,92 +1,92 @@
 {
    "ExpandedHierarchyInLayout":"",
-   "PinnedBlocks":"",
+   "PinnedBlocks":"/RouterCmd|/RouterCmdConcat|/EthBuf|",
    "commentid":"",
-   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 TLS
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
 #  -string -flagsOSRD
-preplace port RAMEMC -pg 1 -y 1010 -defaultsOSRD
-preplace port UART -pg 1 -y 750 -defaultsOSRD
-preplace port SWITCH -pg 1 -y 590 -defaultsOSRD
-preplace port DISP -pg 1 -y 620 -defaultsOSRD
-preplace port cpu_clk -pg 1 -y 460 -defaultsOSRD
-preplace port rst -pg 1 -y 540 -defaultsOSRD
-preplace port FlashEMC -pg 1 -y 450 -defaultsOSRD
-preplace port data_tx -pg 1 -y 1210 -defaultsOSRD
-preplace port data_tx_clk -pg 1 -y 1280 -defaultsOSRD
-preplace port data_clk -pg 1 -y 1000 -defaultsOSRD
-preplace port data_rx_clk -pg 1 -y 1250 -defaultsOSRD
-preplace port data_rx -pg 1 -y 1200 -defaultsOSRD
-preplace portBus vio_rst -pg 1 -y 880 -defaultsOSRD
-preplace inst Primary -pg 1 -lvl 3 -y 580 -defaultsOSRD
-preplace inst NRTRST -pg 1 -lvl 2 -y 1060 -defaultsOSRD
-preplace inst RouterCmdConcat -pg 1 -lvl 2 -y 1350 -defaultsOSRD
-preplace inst RouterCmd -pg 1 -lvl 4 -y 1100 -defaultsOSRD
-preplace inst CPU -pg 1 -lvl 2 -y 370 -defaultsOSRD
-preplace inst BufAddrSlice -pg 1 -lvl 4 -y 320 -defaultsOSRD
-preplace inst RouterRst -pg 1 -lvl 1 -y 1100 -defaultsOSRD
-preplace inst UART -pg 1 -lvl 5 -y 760 -defaultsOSRD
-preplace inst RAMEMC -pg 1 -lvl 5 -y 1010 -defaultsOSRD
-preplace inst EthBuf -pg 1 -lvl 5 -y 190 -defaultsOSRD
-preplace inst NRST -pg 1 -lvl 2 -y 520 -defaultsOSRD
-preplace inst FlashEMC -pg 1 -lvl 5 -y 450 -defaultsOSRD
-preplace inst Board -pg 1 -lvl 5 -y 600 -defaultsOSRD
-preplace inst axi_interconnect_0 -pg 1 -lvl 4 -y 860 -defaultsOSRD
-preplace inst Router -pg 1 -lvl 3 -y 1260 -defaultsOSRD
-preplace inst IntCont -pg 1 -lvl 3 -y 990 -defaultsOSRD -orient R180 -resize 160 136
-preplace inst Reset -pg 1 -lvl 1 -y 560 -defaultsOSRD
-preplace inst VIO -pg 1 -lvl 5 -y 880 -defaultsOSRD
-preplace inst EthBufCtrl -pg 1 -lvl 4 -y 130 -defaultsOSRD
-preplace netloc axi_interconnect_0_M00_AXI1 1 4 1 1570
-preplace netloc FlashEMC_EMC_INTF 1 5 1 NJ
-preplace netloc RouterRst_mb_reset 1 1 2 400 1000 710
-preplace netloc EthBufCtrl_bram_wrdata_a 1 4 1 N
-preplace netloc EthBufCtrl_bram_en_a 1 4 1 N
-preplace netloc Router_io_buf_din 1 3 2 1200J 410 1600
-preplace netloc Board_GPIO 1 5 1 NJ
-preplace netloc RouterCmd_gpio_io_o 1 1 4 390 1130 NJ 1130 1160J 1190 1590
-preplace netloc axi_uartlite_0_interrupt 1 3 3 1150J 1230 NJ 1230 1890
-preplace netloc EthBufCtrl_bram_clk_a 1 4 1 N
-preplace netloc S03_ARESETN_1 1 2 3 740 880 1230 1220 1620J
-preplace netloc rst_1 1 0 1 20
-preplace netloc axi_interconnect_0_M02_AXI 1 3 1 1120
+preplace port RAMEMC -pg 1 -y 1000 -defaultsOSRD
+preplace port UART -pg 1 -y 790 -defaultsOSRD
+preplace port SWITCH -pg 1 -y 810 -defaultsOSRD
+preplace port DISP -pg 1 -y 830 -defaultsOSRD
+preplace port cpu_clk -pg 1 -y 510 -defaultsOSRD
+preplace port rst -pg 1 -y 420 -defaultsOSRD
+preplace port FlashEMC -pg 1 -y 650 -defaultsOSRD
+preplace port data_tx -pg 1 -y 1140 -defaultsOSRD
+preplace port data_tx_clk -pg 1 -y 1120 -defaultsOSRD
+preplace port data_clk -pg 1 -y 1060 -defaultsOSRD
+preplace port data_rx_clk -pg 1 -y 1100 -defaultsOSRD
+preplace port data_rx -pg 1 -y 1030 -defaultsOSRD
+preplace portBus vio_rst -pg 1 -y 760 -defaultsOSRD
+preplace inst Primary -pg 1 -lvl 3 -y 740 -defaultsOSRD
+preplace inst NRTRST -pg 1 -lvl 5 -y 1280 -defaultsOSRD
+preplace inst RouterCmdConcat -pg 1 -lvl 3 -y 1200 -defaultsOSRD
+preplace inst RouterCmd -pg 1 -lvl 2 -y 1270 -defaultsOSRD
+preplace inst CPU -pg 1 -lvl 2 -y 530 -defaultsOSRD
+preplace inst BufAddrSlice -pg 1 -lvl 5 -y 570 -defaultsOSRD
+preplace inst RouterRst -pg 1 -lvl 4 -y 1290 -defaultsOSRD
+preplace inst UART -pg 1 -lvl 4 -y 800 -defaultsOSRD
+preplace inst RAMEMC -pg 1 -lvl 7 -y 1000 -defaultsOSRD
+preplace inst EthBuf -pg 1 -lvl 6 -y 460 -defaultsOSRD
+preplace inst NRST -pg 1 -lvl 2 -y 700 -defaultsOSRD
+preplace inst FlashEMC -pg 1 -lvl 4 -y 650 -defaultsOSRD
+preplace inst Board -pg 1 -lvl 4 -y 960 -defaultsOSRD
+preplace inst Router -pg 1 -lvl 5 -y 1100 -defaultsOSRD
+preplace inst IntCont -pg 1 -lvl 5 -y 420 -defaultsOSRD -resize 160 136
+preplace inst Reset -pg 1 -lvl 1 -y 730 -defaultsOSRD
+preplace inst Mem -pg 1 -lvl 6 -y 970 -defaultsOSRD
+preplace inst VIO -pg 1 -lvl 1 -y 970 -defaultsOSRD
+preplace inst EthBufCtrl -pg 1 -lvl 4 -y 430 -defaultsOSRD
+preplace netloc FlashEMC_EMC_INTF 1 4 4 NJ 650 NJ 650 NJ 650 N
+preplace netloc axi_interconnect_0_M00_AXI1 1 6 1 N
+preplace netloc RouterRst_mb_reset 1 4 1 1700
+preplace netloc EthBufCtrl_bram_wrdata_a 1 4 2 1720J 670 2110
+preplace netloc EthBufCtrl_bram_en_a 1 4 2 1750J 510 2100
+preplace netloc Router_io_buf_din 1 5 1 2190
+preplace netloc Board_GPIO 1 4 4 1690 810 NJ 810 NJ 810 N
+preplace netloc RouterCmd_gpio_io_o 1 2 1 900
+preplace netloc axi_uartlite_0_interrupt 1 4 1 1680
+preplace netloc EthBufCtrl_bram_clk_a 1 4 2 1660J 320 2110
+preplace netloc S03_ARESETN_1 1 1 6 420 1040 940 1040 NJ 1040 1730J 970 2240 780 2540
+preplace netloc rst_1 1 0 4 30 420 NJ 420 NJ 420 1260J
 preplace netloc S02_AXI_1 1 2 1 N
-preplace netloc ARESETN_1 1 1 2 390J 460 720
-preplace netloc EthBufCtrl_bram_rst_a 1 4 1 N
-preplace netloc proc_sys_reset_0_mb_reset 1 1 1 400
-preplace netloc util_vector_logic_0_Res 1 2 1 740
-preplace netloc Router_io_axi 1 3 1 1110
-preplace netloc rtclk_1 1 0 5 30 990 NJ 990 720 1080 1100 1010 1570
-preplace netloc Router_io_tx 1 3 3 NJ 1210 NJ 1210 NJ
-preplace netloc EthBufCtrl_BRAM_PORTA 1 4 1 N
-preplace netloc RouterCmd_gpio2_io_o 1 1 4 410 1140 NJ 1140 1100J 1200 1550
-preplace netloc tx_clk_1 1 0 3 NJ 1280 NJ 1280 NJ
-preplace netloc vio_0_probe_out0 1 5 1 NJ
-preplace netloc axi_interconnect_0_M04_AXI 1 3 2 1210 710 1580J
-preplace netloc xlconcat_0_dout 1 2 1 740
-preplace netloc EthBuf_douta 1 4 1 N
-preplace netloc clk_1 1 0 5 20 350 410 280 750 270 1130 560 1620
+preplace netloc axi_interconnect_0_M02_AXI 1 1 3 410 410 N 410 1250
+preplace netloc ARESETN_1 1 1 2 380 620 890J
+preplace netloc EthBufCtrl_bram_rst_a 1 4 2 1700J 630 2130
+preplace netloc proc_sys_reset_0_mb_reset 1 1 1 390
+preplace netloc util_vector_logic_0_Res 1 2 1 910
+preplace netloc Router_io_axi 1 5 1 2220
+preplace netloc rtclk_1 1 0 7 NJ 1060 390 1060 930 1060 1270 1060 1750 980 2230 770 2550
+preplace netloc EthBufCtrl_BRAM_PORTA 1 4 2 1670 330 N
+preplace netloc Router_io_tx 1 5 3 2200J 800 NJ 800 2820
+preplace netloc RouterCmd_gpio2_io_o 1 2 1 930
+preplace netloc tx_clk_1 1 0 5 NJ 1120 NJ 1120 NJ 1120 NJ 1120 NJ
+preplace netloc vio_0_probe_out0 1 1 7 NJ 970 890J 1070 NJ 1070 1720J 780 2180J 760 NJ 760 NJ
+preplace netloc axi_interconnect_0_M04_AXI 1 3 1 1310
+preplace netloc xlconcat_0_dout 1 3 2 1310 1160 NJ
+preplace netloc EthBuf_douta 1 4 2 1710J 660 2120
+preplace netloc clk_1 1 0 6 20 510 390 440 900 440 1320 290 1740 760 2140J
 preplace netloc S00_AXI_1 1 2 1 N
-preplace netloc axi_gpio_0_GPIO2 1 5 1 1890J
-preplace netloc io_rx_1 1 0 3 NJ 1200 NJ 1200 NJ
-preplace netloc EthBuf_doutb 1 2 3 770 260 NJ 260 1560J
-preplace netloc S00_AXI_2 1 3 1 1190
+preplace netloc io_rx_1 1 0 5 NJ 1030 390 1050 N 1050 N 1050 1740
+preplace netloc axi_gpio_0_GPIO2 1 4 4 1700 820 NJ 820 NJ 820 2810
+preplace netloc EthBuf_doutb 1 4 2 1760 680 2150J
+preplace netloc S00_AXI_2 1 3 3 1280 880 N 880 N
+preplace netloc axi_interconnect_0_M00_AXI 1 3 2 1290 560 1670
+preplace netloc axi_interconnect_0_M05_AXI 1 3 1 1300
+preplace netloc axi_uartlite_0_UART 1 4 4 N 790 N 790 N 790 N
 preplace netloc S01_AXI_1 1 2 1 N
-preplace netloc axi_interconnect_0_M05_AXI 1 3 2 1150 420 NJ
-preplace netloc axi_interconnect_0_M00_AXI 1 3 1 1090
-preplace netloc axi_uartlite_0_UART 1 5 1 NJ
-preplace netloc Router_io_buf_addr 1 3 2 1170 390 1580J
-preplace netloc rx_clk_1 1 0 3 NJ 1250 NJ 1250 730J
-preplace netloc proc_sys_reset_0_peripheral_aresetn 1 1 4 NJ 600 760 280 1140 570 1630
-preplace netloc axi_interconnect_0_M01_AXI 1 3 1 1120
-preplace netloc EthBufCtrl_bram_addr_a 1 3 2 1200 380 1550
-preplace netloc Router_io_buf_clk 1 3 2 1180 400 1590J
-preplace netloc RAMEMC_EMC_INTF 1 5 1 NJ
-preplace netloc EthBufCtrl_bram_we_a 1 4 1 N
-preplace netloc Router_io_buf_we 1 3 2 1220J 550 1610
-preplace netloc axi_intc_0_irq 1 1 2 410 980 730J
-preplace netloc axi_interconnect_0_M03_AXI 1 3 2 N 580 NJ
-preplace netloc xlslice_0_Dout 1 4 1 1570J
-levelinfo -pg 1 0 210 560 930 1390 1760 1910 -top 0 -bot 1430
+preplace netloc Router_io_buf_addr 1 5 1 2160
+preplace netloc rx_clk_1 1 0 5 NJ 1100 NJ 1100 NJ 1100 NJ 1100 NJ
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 1 5 N 770 920 430 1270 300 1730 770 2100J
+preplace netloc axi_interconnect_0_M01_AXI 1 3 1 1280
+preplace netloc EthBufCtrl_bram_addr_a 1 4 1 1760J
+preplace netloc Router_io_buf_clk 1 5 1 2170
+preplace netloc RAMEMC_EMC_INTF 1 7 1 N
+preplace netloc EthBufCtrl_bram_we_a 1 4 2 1690J 640 2140
+preplace netloc Router_io_buf_we 1 5 1 2210
+preplace netloc axi_intc_0_irq 1 1 5 400 280 NJ 280 NJ 280 NJ 280 2080
+preplace netloc axi_interconnect_0_M03_AXI 1 3 1 1290
+preplace netloc xlslice_0_Dout 1 5 1 2090
+levelinfo -pg 1 0 210 740 1100 1490 1920 2390 2680 2840 -top 0 -bot 1500
 "
 }
 0
